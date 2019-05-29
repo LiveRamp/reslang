@@ -1,0 +1,27 @@
+import Garage from simple-resource;
+
+resource Car {
+	operations:
+		POST; /* this is a get comment */ GET; MULTIGET;
+	attributes:
+		id: int;
+		bought: date output;
+		brand: BrandEnum;
+		engine: Specification;
+		components: Specification[];
+		home: linked Garage;
+		rented: linked Garage[];
+}
+	
+structure Specification {
+	type: string;
+	documentation: string;
+}
+	
+subresource Wheel of Car {
+	operations:
+		GET; PUT; POST; MULTIGET;
+	attributes:
+		id: int;
+		radius: double;
+}

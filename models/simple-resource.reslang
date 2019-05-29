@@ -1,0 +1,11 @@
+resource Garage {
+	operations:
+		// this is a PUT comment
+		PUT;
+		// this is a POST comment
+		POST;
+		GET; DELETE;
+	attributes:
+		id: string;
+		name: string;
+};
