@@ -1,27 +1,42 @@
-start = _ import* _ (resource / structure / subresource)* _
+start = import* (resource / structure / subresource)*
 
 
 // import from another module
-import = "import" _ name:name _ "from" _ file:filename _ ";"? { return {"import": name, "file": file} }
+import = _ "import" _ name:name _ "from" _ file:filename _ ";"? _ {
+    return {"import": name, "file": file}
+}
 
 // defining a resource
-resource = _ "resource" _ comment? _ name _ "{" _
-    operations? _ attributes? _
-"}" _ ";"?
+resource = _ comment:comment? _ "resource" _ name:name _ "{" _
+    operations:operations? _ attributes:attributes? _
+"}" _ ";"? _ {
+    return {"resource": name, "comment": comment, "attributes": attributes, "operations": operations }
+}
 
-subresource = _ "subresource" _ comment? _ name _ "of" _ name _ "{" _
-    operations? _ attributes? _
-"}" _ ";"?
+subresource = _ comment:comment? _ "subresource" _ name:name _ "of" _ parent:name _ "{" _
+    operations:operations? _ attributes:attributes? _
+"}" _ ";"? _ {
+    return {"subresource": name, "parent": parent, "comment": comment, "attributes": attributes, "operations": operations }
+}
 
-structure = _ "structure" _ comment? _ name _ "{" _
-    attr+ _
-"}" _ ";"?
+structure = _ comment:comment? _ "structure"  _ name:name _ "{" _
+    attrs:attr+ _
+"}" _ ";"? _ {
+    return {"structure": name, "comment": comment, "attributes": attrs}
+}
 
-operations = _ "operations:" _ op+ _;
-op = _ comment? _ ("GET" / "PUT" / "POST" / "DELETE" / "MULTIGET") _ ";"
+operations = _ "operations:" _ ops:op+ _ {
+    return ops;
+}
 
-attributes = "attributes:" + attr+
-attr = _ comment? _ name _ ":" _ "linked"? _ type _ "[]"? _ "output"? ";" _
+op = _ comment:comment? _ operation:("GET" / "PUT" / "POST" / "DELETE" / "MULTIGET") _ ";" _ {
+    return {"operation": operation, "comment": comment}
+}
+
+attributes = _ "attributes:" + attrs:attr+ _ { return attrs; }
+attr = _ comment:comment? _ name:name _ ":" _ "linked"? _ type:type _ mult:"[]"? _ out:"output"? ";" _ { 
+    return {"name": name, "comment": comment, "type": type, "multiple": mult !== null, "output": out !== null}
+}
 
 // identifiers
 type = name
@@ -29,10 +44,11 @@ name = name:[a-zA-Z]+[a-zA-Z0-9]* { return name.join(""); }
 filename = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
 // comments
-comment = _ p:(single / multi) {return ['COMMENT', p]}
-single = '//' p:([^\n]*) {return p.join('')}
-multi = "/*" inner:(!"*/" i:. {return i})* "*/" {return inner.join('')}
+comment = _ p:(single / multi) {return p}
+single = "//" _ p:([^\n]*) {return p.join('')}
+multi = "/*" _ inner:(!"*/" i:. {return i})* "*/" {return inner.join('')}
 
 // whitespace
-_  = [ \t\r\n]* { return null; }
+_  = [ \t\r\n]*
+
 

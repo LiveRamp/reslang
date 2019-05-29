@@ -1,5 +1,7 @@
 import Garage from simple-resource;
 
+/* this is a Car resource
+   so there */
 resource Car {
 	operations:
 		POST; /* this is a get comment */ GET; MULTIGET;
@@ -13,6 +15,7 @@ resource Car {
 		rented: linked Garage[];
 }
 	
+// this is a specification!
 structure Specification {
 	type: string;
 	documentation: string;

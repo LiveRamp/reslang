@@ -32,6 +32,7 @@ try {
     JSON.stringify(parser.parse(contents, { output: "parser" }), null, 2)
   )
 } catch (error) {
+  console.error(error)
   console.error(
     `Problem parsing: ${error.message}, location: ${
       error.location.start.line
