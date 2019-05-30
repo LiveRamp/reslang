@@ -3,28 +3,33 @@ import Garage from simple-resource;
 /* this is a Car resource
    so there */
 resource Car {
-	operations:
-		POST; /* this is a get comment */ GET; MULTIGET;
-	attributes:
-		id: int;
-		bought: date output;
-		brand: BrandEnum;
-		engine: Specification;
-		components: Specification[];
-		home: linked Garage;
-		rented: linked Garage[];
+	id: int
+	bought: date output
+	brand: BrandEnum
+	engine: Specification
+	components: Specification[]
+	home: linked Garage
+	rented: linked Garage[]
+
+	operations
+		POST /* this is a get comment */ GET MULTIGET
 }
 	
 // this is a specification!
 structure Specification {
-	type: string;
-	documentation: string;
+	type: string
+	documentation: string
 }
 	
 subresource Wheel of Car {
-	operations:
-		GET; PUT; POST; MULTIGET;
-	attributes:
-		id: int;
-		radius: double;
+	id: int
+	radius: double
+
+	operations
+		GET PUT POST MULTIGET
+}
+
+enum BrandEnum {
+	TOYOTA
+	FORD
 }

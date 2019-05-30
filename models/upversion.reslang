@@ -1,0 +1,34 @@
+
+resource ResourceA {
+    operations:
+        GET;
+    attributes:
+        id: int;
+        name: string;
+        b: linked ResourceB;
+        newB: linked v2/ResourceB;
+}
+
+resource ResourceB {
+    operations:
+        POST; GET; PUT;
+    attributes:
+        id: int;
+        size: int;
+}
+
+resource v2/ResourceB {
+    operations:
+        POST; GET;
+    attributes:
+        id: int;
+        totalSize: int;
+}
+
+subresource Sub of v2/ResourceB {
+    operations:
+        POST; GET;
+    attributes:
+        id: int;
+        name: string;
+}

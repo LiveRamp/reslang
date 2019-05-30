@@ -1,1 +1,1 @@
-ResLang is a simple language for constructing resource-oriented APIs in Swagger
+Reslang is a simple language for constructing resource-oriented APIs in Swagger

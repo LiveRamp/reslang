@@ -1,0 +1,47 @@
+request Car {
+	operations:
+		POST; GET; MULTIGET;
+	attributes:
+		id: int;
+		name: string;
+        status: UploadRequestStatusEnum;
+        client: string;
+}
+
+singleton subresource Status of Car {
+    operations:
+        GET;
+    attributes:
+        recordsProcessed: int;
+        completed: boolean;
+}
+
+verb StartProcessingVerb of Car {
+    operations:
+        POST;
+}
+
+verb StopProcessingVerb of Car {
+    operations:
+        POST; GET;
+    attributes:
+        id: int;
+        when: datetime;
+}
+
+subresource RecordSet of Car {
+    id: int;
+    company: string;
+    records: Record[]
+}
+
+structure Record {
+    details: string;
+    address: string;
+}
+
+enum UploadRequestStatusEnum {
+    STARTED;
+    STOPPED;
+    COMPLETED;
+}
