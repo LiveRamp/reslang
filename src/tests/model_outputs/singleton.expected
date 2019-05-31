@@ -1,0 +1,52 @@
+[
+  {
+    "type": "resource",
+    "name": "Resource",
+    "singleton": true,
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "POST"
+      },
+      {
+        "operation": "PUT"
+      },
+      {
+        "operation": "GET"
+      }
+    ]
+  },
+  {
+    "type": "subresource",
+    "name": "Metadata",
+    "singleton": true,
+    "parent": "Resource",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "info",
+        "type": "string"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "PUT"
+      },
+      {
+        "operation": "GET"
+      }
+    ]
+  }
+]

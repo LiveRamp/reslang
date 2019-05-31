@@ -12,7 +12,7 @@ resource Car {
 	rented: linked Garage[]
 
 	operations
-		POST /* this is a get comment */ GET MULTIGET
+		POST /* this is a get comment */ GET MULTIGET id, brand
 }
 	
 // this is a specification!
@@ -26,7 +26,7 @@ subresource Wheel of Car {
 	radius: double
 
 	operations
-		GET PUT POST MULTIGET
+		GET PUT POST MULTIGET id
 }
 
 enum BrandEnum {

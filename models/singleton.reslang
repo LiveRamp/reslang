@@ -1,16 +1,16 @@
 
-resource Resource {
-    operations: 
-        POST; PUT; GET;
-    attributes:
-        id: int;
-        name: string;
+singleton resource Resource {
+    id: int
+    name: string
+
+    operations
+        POST PUT GET
 }
 
 singleton subresource Metadata of Resource {
-    operations:
-        PUT; GET;
-    attributes:
-        id: int;
-        info: string;
+    id: int
+    info: string
+
+    operations
+        PUT GET
 }

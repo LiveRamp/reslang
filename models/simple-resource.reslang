@@ -1,11 +1,10 @@
 resource Garage {
-	operations:
+	id: string
+	name: string
+
+	operations
 		// this is a PUT comment
-		PUT;
+		PUT
 		// this is a POST comment
-		POST;
-		GET; DELETE;
-	attributes:
-		id: string;
-		name: string;
+		POST GET DELETE
 };

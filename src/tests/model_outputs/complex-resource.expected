@@ -1,0 +1,115 @@
+[
+  {
+    "import": "Garage",
+    "file": "simple-resource"
+  },
+  {
+    "type": "resource",
+    "name": "Car",
+    "comment": "this is a Car resource\n   so there ",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "bought",
+        "type": "date",
+        "output": true
+      },
+      {
+        "name": "brand",
+        "type": "BrandEnum"
+      },
+      {
+        "name": "engine",
+        "type": "Specification"
+      },
+      {
+        "name": "components",
+        "type": "Specification",
+        "multiple": true
+      },
+      {
+        "name": "home",
+        "type": "Garage",
+        "linked": true
+      },
+      {
+        "name": "rented",
+        "type": "Garage",
+        "multiple": true,
+        "linked": true
+      }
+    ],
+    "operations": [
+      {
+        "operation": "POST"
+      },
+      {
+        "operation": "GET",
+        "comment": "this is a get comment "
+      },
+      {
+        "operation": "MULTIGET",
+        "ids": [
+          "id",
+          "brand"
+        ]
+      }
+    ]
+  },
+  {
+    "structure": "Specification",
+    "comment": "this is a specification!",
+    "attributes": [
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "documentation",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "type": "subresource",
+    "name": "Wheel",
+    "parent": "Car",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "radius",
+        "type": "double"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "GET"
+      },
+      {
+        "operation": "PUT"
+      },
+      {
+        "operation": "POST"
+      },
+      {
+        "operation": "MULTIGET",
+        "ids": [
+          "id"
+        ]
+      }
+    ]
+  },
+  {
+    "enum": "BrandEnum",
+    "literals": [
+      "TOYOTA",
+      "FORD"
+    ]
+  }
+]

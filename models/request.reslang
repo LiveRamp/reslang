@@ -1,47 +1,50 @@
 request Car {
-	operations:
-		POST; GET; MULTIGET;
-	attributes:
-		id: int;
-		name: string;
-        status: UploadRequestStatusEnum;
-        client: string;
+    id: int
+    name: string
+    status: UploadRequestStatusEnum
+    client: string
+
+	operations
+		POST GET MULTIGET id name
 }
 
 singleton subresource Status of Car {
-    operations:
-        GET;
-    attributes:
-        recordsProcessed: int;
-        completed: boolean;
+    recordsProcessed: int
+    completed: boolean
+
+    operations
+        GET
 }
 
 verb StartProcessingVerb of Car {
-    operations:
-        POST;
+    operations
+        POST
 }
 
 verb StopProcessingVerb of Car {
-    operations:
-        POST; GET;
-    attributes:
-        id: int;
-        when: datetime;
+    id: int
+    when: datetime
+
+    operations
+        POST GET
 }
 
 subresource RecordSet of Car {
     id: int;
     company: string;
     records: Record[]
+
+    operations 
+        GET POST
 }
 
 structure Record {
-    details: string;
-    address: string;
+    details: string
+    address: string
 }
 
 enum UploadRequestStatusEnum {
-    STARTED;
-    STOPPED;
-    COMPLETED;
+    STARTED
+    STOPPED
+    COMPLETED
 }

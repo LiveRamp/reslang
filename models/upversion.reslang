@@ -1,34 +1,34 @@
 
 resource ResourceA {
-    operations:
-        GET;
-    attributes:
-        id: int;
-        name: string;
-        b: linked ResourceB;
-        newB: linked v2/ResourceB;
+    id: int
+    name: string
+    b: linked ResourceB
+    newB: linked v2/ResourceB
+    
+    operations
+        GET
 }
 
 resource ResourceB {
-    operations:
-        POST; GET; PUT;
-    attributes:
-        id: int;
-        size: int;
+    id: int
+    size: int
+
+    operations
+        POST GET PUT
 }
 
 resource v2/ResourceB {
-    operations:
-        POST; GET;
-    attributes:
-        id: int;
-        totalSize: int;
+    id: int
+    totalSize: int
+
+    operations
+        POST GET
 }
 
 subresource Sub of v2/ResourceB {
-    operations:
-        POST; GET;
-    attributes:
-        id: int;
-        name: string;
+    id: int
+    name: string
+
+    operations
+        POST GET
 }

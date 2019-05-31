@@ -1,0 +1,142 @@
+[
+  {
+    "type": "request",
+    "name": "Car",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "UploadRequestStatusEnum"
+      },
+      {
+        "name": "client",
+        "type": "string"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "POST"
+      },
+      {
+        "operation": "GET"
+      },
+      {
+        "operation": "MULTIGET",
+        "ids": [
+          "id",
+          "name"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "subresource",
+    "name": "Status",
+    "singleton": true,
+    "parent": "Car",
+    "attributes": [
+      {
+        "name": "recordsProcessed",
+        "type": "int"
+      },
+      {
+        "name": "completed",
+        "type": "boolean"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "GET"
+      }
+    ]
+  },
+  {
+    "type": "verb",
+    "name": "StartProcessingVerb",
+    "parent": "Car",
+    "operations": [
+      {
+        "operation": "POST"
+      }
+    ]
+  },
+  {
+    "type": "verb",
+    "name": "StopProcessingVerb",
+    "parent": "Car",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "when",
+        "type": "datetime"
+      }
+    ],
+    "operations": [
+      {
+        "operation": "POST"
+      },
+      {
+        "operation": "GET"
+      }
+    ]
+  },
+  {
+    "type": "subresource",
+    "name": "RecordSet",
+    "parent": "Car",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "company",
+        "type": "string"
+      },
+      {
+        "name": "records",
+        "type": "Record",
+        "multiple": true
+      }
+    ],
+    "operations": [
+      {
+        "operation": "GET"
+      },
+      {
+        "operation": "POST"
+      }
+    ]
+  },
+  {
+    "structure": "Record",
+    "attributes": [
+      {
+        "name": "details",
+        "type": "string"
+      },
+      {
+        "name": "address",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "enum": "UploadRequestStatusEnum",
+    "literals": [
+      "STARTED",
+      "STOPPED",
+      "COMPLETED"
+    ]
+  }
+]
