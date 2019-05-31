@@ -1,7 +1,11 @@
+/* This is a more complex example, featuring
+a car with a set of wheel subresources*/
+
+version 0.0.1
+
 import Garage from simple-resource;
 
-/* this is a Car resource
-   so there */
+/* this is a Car resource */
 resource Car {
 	id: int
 	bought: date output
@@ -20,7 +24,8 @@ structure Specification {
 	type: string
 	documentation: string
 }
-	
+
+// A wheel is owned by a car
 subresource Wheel of Car {
 	id: int
 	radius: double

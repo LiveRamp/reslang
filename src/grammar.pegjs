@@ -1,5 +1,8 @@
-start = (import / resource / structure / subresource / enum)*
+start = details import* (resource / structure / subresource / enum)*
 
+
+details = _ desc:comment? _ "version" _ semver:semver _ ";"? _
+    { return {"description": desc, "version": semver} }
 
 // import from another module
 import "import" = _ "import" _ name:name _ "from" _ file:filename _ ";"? _ {
@@ -36,7 +39,7 @@ id "id" = _ name:name _ ","? _ {return name}
 structure = _ comment:comment? _ "structure"  _ name:name _ "{" _
     attrs:attr+ _
 "}" _ ";"? _ {
-    return {"structure": name, "comment": comment, "attributes": attrs}
+    return {"type": "structure", "name": name, "comment": comment, "attributes": attrs}
 }
 
 attributes = _ attrs:attr+ _ { return attrs; }
@@ -48,7 +51,7 @@ attr = _ comment:comment? _ name:name _ ":" _ linked:"linked"? _ type:type _ mul
 enum = _ comment:comment? _ "enum"  _ name:name _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
-    return {"enum": name, "comment": comment, "literals": literals}
+    return {"type": "enum", "name": name, "comment": comment, "literals": literals}
 }
 
 literal = _ comment:comment? _ name:literalname _ ";"? _ { return name }
@@ -64,6 +67,9 @@ filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 comment = _ p:(single / multi) {return p}
 single = "//" _ p:([^\n]*) {return p.join("")}
 multi = "/*" _ inner:(!"*/" i:. {return i})* "*/" {return inner.join("")}
+
+// version
+semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }
 
 // whitespace
 _  = [ \t\r\n]*

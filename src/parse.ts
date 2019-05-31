@@ -34,7 +34,7 @@ export function parseFile(file: string) {
   }
 }
 
-function clean(obj: any) {
+export function clean(obj: any) {
   for (var propName in obj) {
     const val = obj[propName]
     if (val === null || val === undefined || val === false) {
