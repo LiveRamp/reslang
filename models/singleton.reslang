@@ -1,10 +1,13 @@
+/* this is a simple resource
+   designed to show the potential */
+version 0.0.1
 
 singleton resource Resource {
     id: int
     name: string
 
     operations
-        POST PUT GET
+        PUT GET
 }
 
 singleton subresource Metadata of Resource {

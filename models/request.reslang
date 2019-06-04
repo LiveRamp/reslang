@@ -12,6 +12,7 @@ request UploadRequest {
 }
 
 singleton subresource Status of UploadRequest {
+    id: int
     recordsProcessed: int
     completed: boolean
 

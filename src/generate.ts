@@ -17,12 +17,13 @@ interface IAttribute {
 interface IOperation {
     operation: string
     comment: string
+    ids?: string[]
 }
 
 interface IDefinition {
-    input: boolean
-    output: boolean
-    multi: boolean
+    input?: boolean
+    output?: boolean
+    multi?: boolean
 }
 
 export default function generateSwagger(title: string, tree: any[]) {
@@ -46,126 +47,304 @@ export default function generateSwagger(title: string, tree: any[]) {
     }
 
     // tags
-    formTags(tree, tags)
+    const defs = tree[2]
+    const tagKeys = {}
+    formTags(defs, tags, tagKeys)
 
     // form the paths
-    for (const el of tree[2]) {
-        if ("resource" === el.type) {
-            const name = pluralizeName(fixName(el.name))
-            const version = getVersion(el.name)
+    for (const el of defs) {
+        shouldDef[el.name] = {}
+        if (["resource", "subresource", "request", "verb"].includes(el.type)) {
+            const parent = el.parent ? el.parent : null
+            const parentName = parent ? pluralizeName(fixName(parent)) : null
+            const sname = fixName(el.name)
+            const name = pluralizeName(sname)
+            const version = parent ? getVersion(el.parent) : getVersion(el.name)
             const singleton = el.singleton
-            if (!singleton) {
-                const get = extractOp(el, "GET")
-                const put = extractOp(el, "PUT")
-                const del = extractOp(el, "DELETE")
 
-                const path: any = {}
-                if (get || put || del) {
-                    paths[`/${version}/${name}/{id}`] = path
+            let path: any = {}
+
+            /**
+             * non-id definitions
+             */
+            const post = extractOp(el, "POST")
+            const multiget = extractOp(el, "MULTIGET")
+
+            if (singleton && (post || multiget)) {
+                throw new Error(
+                    `${el.name} is a singleton - cannot have POST or MULTIGET`
+                )
+            }
+
+            if (!singleton && (post || multiget)) {
+                if (parent) {
+                    paths[`/${version}/${parentName}/{parentId}/${name}`] = path
+                } else {
+                    paths[`/${version}/${name}`] = path
                 }
-                shouldDef[el.name] = {
-                    input: !!put,
-                    output: !!get,
-                    multi: false
+
+                if (post) {
+                    shouldDef[el.name].input = true
                 }
-                if (get) {
-                    const idtype = extractId(el)
-                    path.get = {
-                        tags: [el.name],
-                        operationId: "retrieve" + el.name,
-                        description: get.comment,
-                        parameters: [
-                            addType(idtype, {
-                                in: "path",
-                                name: "id",
-                                required: true
-                            })
-                        ],
-                        responses: {
-                            200: {
-                                description:
-                                    el.name + " retrieved successfully",
-                                schema: {
-                                    $ref: "#/definitions/" + el.name + "Output"
-                                }
-                            },
-                            default: {
-                                description: "Error retrieving " + el.name,
-                                schema: {
-                                    $ref: "#/definitions/ErrorBody"
-                                }
-                            }
-                        }
+                if (multiget) {
+                    shouldDef[el.name].multi = true
+                    shouldDef[el.name].output = true
+                }
+                formNonIdOperations(el, path, defs, tagKeys, post, multiget)
+            }
+
+            /**
+             * id definitions
+             */
+            const get = extractOp(el, "GET")
+            const put = extractOp(el, "PUT")
+            const del = extractOp(el, "DELETE")
+
+            path = {}
+            if (get || put || del) {
+                if (singleton) {
+                    if (parent) {
+                        paths[
+                            `/${version}/${parentName}/{parentId}/${sname}`
+                        ] = path
+                    } else {
+                        paths[`/${version}/${sname}`] = path
                     }
-                }
-                if (put) {
-                    const idtype = extractId(el)
-                    path.put = {
-                        tags: [el.name],
-                        operationId: "modify" + el.name,
-                        description: put.comment,
-                        parameters: [
-                            addType(idtype, {
-                                in: "path",
-                                name: "id",
-                                required: true
-                            })
-                        ],
-                        responses: {
-                            200: {
-                                description: el.name + " modified successfully",
-                                schema: {
-                                    $ref: "#/definitions/" + el.name + "Input"
-                                }
-                            },
-                            default: {
-                                description: "Error modifying " + el.name,
-                                schema: {
-                                    $ref: "#/definitions/ErrorBody"
-                                }
-                            }
-                        }
-                    }
-                }
-                if (del) {
-                    const idtype = extractId(el)
-                    path.delete = {
-                        tags: [el.name],
-                        operationId: "delete" + el.name,
-                        description: del.comment,
-                        parameters: [
-                            addType(idtype, {
-                                in: "path",
-                                name: "id",
-                                required: true
-                            })
-                        ],
-                        responses: {
-                            200: {
-                                description: el.name + " deleted successfully"
-                            },
-                            default: {
-                                description: "Error deleting " + el.name,
-                                schema: {
-                                    $ref: "#/definitions/ErrorBody"
-                                }
-                            }
-                        }
+                } else {
+                    if (parent) {
+                        paths[
+                            `/${version}/${parentName}/{parentId}/${name}/{id}`
+                        ] = path
+                    } else {
+                        paths[`/${version}/${name}/{id}`] = path
                     }
                 }
             }
+
+            if (put) {
+                shouldDef[el.name].input = true
+            }
+            if (get) {
+                shouldDef[el.name].output = true
+            }
+            formIdOperations(el, path, singleton, defs, tagKeys, get, put, del)
         }
     }
 
     // model definitions
-    formDefinitions(tree, shouldDef, definitions)
+    formDefinitions(defs, shouldDef, definitions)
 
     return swag
 }
 
+function formNonIdOperations(
+    el: any,
+    path: any,
+    defs: any[],
+    tagKeys: { [key: string]: string },
+    post: IOperation | null,
+    multiget: IOperation | null
+) {
+    if (post) {
+        path.post = {
+            tags: [tagKeys[el.name]],
+            operationId: "create" + el.name,
+            description: post.comment,
+            parameters: [
+                {
+                    in: "body",
+                    name: el.name + "Input",
+                    required: true,
+                    schema: {
+                        $ref: "#/definitions/" + el.name + "Input"
+                    }
+                }
+            ],
+            responses: {
+                200: {
+                    description: el.name + " created successfully"
+                },
+                default: {
+                    description: "Error creating " + el.name,
+                    schema: {
+                        $ref: "#/definitions/ErrorBody"
+                    }
+                }
+            }
+        }
+        addParentPathId(el, path.post, defs)
+    }
+    if (multiget) {
+        if (el.attributes && multiget.ids) {
+            const params: any[] = []
+
+            for (const attr of el.attributes as IAttribute[]) {
+                if (multiget.ids.includes(attr.name)) {
+                    params.push(
+                        addType(attr, {
+                            in: "query",
+                            name: attr.name,
+                            description: attr.comment,
+                            required: false
+                        })
+                    )
+                }
+            }
+
+            path.get = {
+                tags: [tagKeys[el.name]],
+                operationId: "multiget" + el.name,
+                description: multiget.comment,
+                parameters: params,
+                responses: {
+                    200: {
+                        description:
+                            pluralizeName(el.name) + " retrieved successfully",
+                        schema: {
+                            $ref: "#/definitions/" + el.name + "MultiResponse"
+                        }
+                    },
+                    default: {
+                        description:
+                            "Error retrieving " + pluralizeName(el.name),
+                        schema: {
+                            $ref: "#/definitions/ErrorBody"
+                        }
+                    }
+                }
+            }
+            addParentPathId(el, path.get, defs)
+        }
+    }
+}
+
+function addParentPathId(el: any, path: any, defs: any[]) {
+    if (el.parent) {
+        const param = addType(extractDefinitionId(el.parent, defs), {
+            in: "path",
+            name: "parentId",
+            description: "Id of parent " + el.parent,
+            required: true
+        })
+        if (path.parameters) {
+            path.parameters.push(param)
+        } else {
+            path.parameters = [param]
+        }
+    }
+}
+
+function formIdOperations(
+    el: any,
+    path: any,
+    singleton: boolean,
+    defs: any[],
+    tagKeys: { [key: string]: string },
+    get: IOperation | null,
+    put: IOperation | null,
+    del: IOperation | null
+) {
+    if (get) {
+        const idtype = extractId(el)
+        path.get = {
+            tags: [tagKeys[el.name]],
+            operationId: "retrieve" + el.name,
+            description: get.comment,
+            responses: {
+                200: {
+                    description: el.name + " retrieved successfully",
+                    schema: {
+                        $ref: "#/definitions/" + el.name + "Output"
+                    }
+                },
+                default: {
+                    description: "Error retrieving " + el.name,
+                    schema: {
+                        $ref: "#/definitions/ErrorBody"
+                    }
+                }
+            }
+        }
+        if (!singleton) {
+            path.get.parameters = [
+                addType(idtype, {
+                    in: "path",
+                    name: "id",
+                    required: true
+                })
+            ]
+        }
+        addParentPathId(el, path.get, defs)
+    }
+    if (put) {
+        const idtype = extractId(el)
+        path.put = {
+            tags: [tagKeys[el.name]],
+            operationId: "modify" + el.name,
+            description: put.comment,
+            responses: {
+                200: {
+                    description: el.name + " modified successfully",
+                    schema: {
+                        $ref: "#/definitions/" + el.name + "Input"
+                    }
+                },
+                default: {
+                    description: "Error modifying " + el.name,
+                    schema: {
+                        $ref: "#/definitions/ErrorBody"
+                    }
+                }
+            }
+        }
+        if (!singleton) {
+            path.put.parameters = [
+                addType(idtype, {
+                    in: "path",
+                    name: "id",
+                    required: true
+                })
+            ]
+        }
+        addParentPathId(el, path.put, defs)
+    }
+    if (del) {
+        const idtype = extractId(el)
+        path.delete = {
+            tags: [tagKeys[el.name]],
+            operationId: "delete" + el.name,
+            description: del.comment,
+            responses: {
+                200: {
+                    description: el.name + " deleted successfully"
+                },
+                default: {
+                    description: "Error deleting " + el.name,
+                    schema: {
+                        $ref: "#/definitions/ErrorBody"
+                    }
+                }
+            }
+        }
+        if (!singleton) {
+            path.delete.parameters = [
+                addType(idtype, {
+                    in: "path",
+                    name: "id",
+                    required: true
+                })
+            ]
+        }
+        addParentPathId(el, path.delete, defs)
+    }
+}
+
 function addType(attr: IAttribute, obj: any) {
     const type = attr.type
-    obj.description = attr.comment
+    // allow description overrides by caller
+    if (!obj.description) {
+        obj.description = attr.comment
+    }
     switch (type) {
         case "string":
             obj.type = "string"
@@ -199,6 +378,15 @@ function addType(attr: IAttribute, obj: any) {
     return obj
 }
 
+function extractDefinitionId(definitionName: string, defs: any[]) {
+    for (const def of defs) {
+        if (def.name === definitionName) {
+            return extractId(def)
+        }
+    }
+    throw new Error("Cannot find definition for " + definitionName)
+}
+
 function extractId(node: any): IAttribute {
     if (node.attributes) {
         for (const attr of node.attributes) {
@@ -221,69 +409,118 @@ function extractOp(el: any, op: string): IOperation | null {
     return null
 }
 
-function formTags(tree: any[], tags: any[]) {
-    const defs: Array<{
+function formTags(
+    defs: Array<{
         type: string
         name: string
         parent?: string
         comment: string
-    }> = tree[2]
+    }>,
+    tags: any[],
+    tagKeys: { [key: string]: string }
+) {
     for (const el of defs) {
         if ("resource" === el.type) {
-            tags.push({
+            const tag = {
                 name: el.name,
                 description: el.comment
-            })
+            }
+            tags.push(tag)
+            tagKeys[el.name] = tag.name
         }
         if ("request" === el.type) {
-            tags.push({
+            const tag = {
                 name: el.name,
                 description: `(request) ${el.comment}`
-            })
+            }
+            tags.push(tag)
+            tagKeys[el.name] = tag.name
         }
         if ("subresource" === el.type) {
-            tags.push({
+            const tag = {
                 name: `${el.parent} / ${el.name}`,
                 description: el.comment
-            })
+            }
+            tags.push(tag)
+            tagKeys[el.name] = tag.name
         }
         if (["verb"].includes(el.type)) {
-            tags.push({
+            const tag = {
                 name: `${el.parent} / ${el.name}`,
                 description: el.comment
-            })
+            }
+            tags.push(tag)
+            tagKeys[el.name] = tag.name
         }
     }
 }
 
-function addDefinition(definitions: any, def: any, out: boolean) {
+function addDefinition(
+    definitions: any,
+    def: any,
+    out: boolean,
+    suffix: string
+) {
     if (def.attributes) {
         const properties: any = {}
         const request = { type: "object", properties }
         for (const attr of def.attributes as IAttribute[]) {
-            if (out || attr.name !== "id") {
+            if ((attr.name === "id" && !out) || (attr.output && !out)) {
+                // omit
+            } else {
                 properties[attr.name] = addType(attr, {
                     description: attr.comment
                 })
             }
         }
-        definitions[def.name + (out ? "Output" : "Input")] = request
+        definitions[def.name + suffix] = request
     }
 }
 
 function formDefinitions(
-    tree: any,
+    defs: any,
     shouldDef: { [key: string]: IDefinition },
     definitions: any
 ) {
-    for (const def of tree[2]) {
-        if (def.type === "resource") {
-            if (shouldDef[def.name].input) {
-                addDefinition(definitions, def, false)
+    for (const def of defs) {
+        if (["resource", "subresource", "request", "verb"].includes(def.type)) {
+            const should = shouldDef[def.name]
+            if (should.input) {
+                addDefinition(definitions, def, false, "Input")
             }
-            if (shouldDef[def.name].output) {
-                addDefinition(definitions, def, true)
+            if (should.output) {
+                addDefinition(definitions, def, true, "Output")
             }
+
+            // handle multiget
+            if (should.multi) {
+                definitions[def.name + "MultiResponse"] = {
+                    type: "object",
+                    properties: {
+                        page: {
+                            description: "Page offset, starting from 1",
+                            type: "integer",
+                            format: "int32"
+                        },
+                        "page-size": {
+                            description: "Size of returned page",
+                            type: "integer",
+                            format: "int32"
+                        },
+                        elements: {
+                            description:
+                                "Array of retrieved " + pluralizeName(def.name),
+                            type: "array",
+                            items: {
+                                $ref: "#/definitions/" + def.name + "Output"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if ("structure" == def.type) {
+            addDefinition(definitions, def, true, "Structure")
         }
     }
 

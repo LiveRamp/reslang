@@ -2,6 +2,7 @@
    designed to show the potential */
 version 0.0.1
 
+// A garage is a place to store cars
 resource Garage {
 	// simple id 
 	id: string
@@ -11,5 +12,5 @@ resource Garage {
 		// this is a PUT comment
 		PUT
 		// this is a POST comment
-		POST GET DELETE
+		POST GET DELETE MULTIGET id name
 };
