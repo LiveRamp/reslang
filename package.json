@@ -9,14 +9,14 @@
     "@types/jest": "^24.0.13",
     "@types/pegjs": "^0.10.1",
     "@types/js-yaml": "^3.12.1",
-     "jest": "^24.8.0",
+    "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5"
   },
   "dependencies": {
-   "clipboardy": "^2.0.0",
+    "clipboardy": "^2.0.0",
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",
     "pegjs": "^0.10.0"
@@ -28,6 +28,7 @@
     "test": "jest"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "tabWidth": 4
   }
 }

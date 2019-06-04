@@ -3,6 +3,7 @@
 version 0.0.1
 
 resource Garage {
+	// simple id 
 	id: string
 	name: string
 

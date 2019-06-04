@@ -1,7 +1,7 @@
 /* requests model async workflows */
 version 0.0.1
 
-request Car {
+request UploadRequest {
     id: int
     name: string
     status: UploadRequestStatusEnum
@@ -11,7 +11,7 @@ request Car {
 		POST GET MULTIGET id name
 }
 
-singleton subresource Status of Car {
+singleton subresource Status of UploadRequest {
     recordsProcessed: int
     completed: boolean
 
@@ -19,20 +19,7 @@ singleton subresource Status of Car {
         GET
 }
 
-verb StartProcessingVerb of Car {
-    operations
-        POST
-}
-
-verb StopProcessingVerb of Car {
-    id: int
-    when: datetime
-
-    operations
-        POST GET
-}
-
-subresource RecordSet of Car {
+subresource RecordSet of UploadRequest {
     id: int;
     company: string;
     records: Record[]
@@ -44,6 +31,19 @@ subresource RecordSet of Car {
 structure Record {
     details: string
     address: string
+}
+
+verb StartProcessingVerb of UploadRequest {
+    operations
+        POST
+}
+
+verb StopProcessingVerb of UploadRequest {
+    id: int
+    when: datetime
+
+    operations
+        POST GET
 }
 
 enum UploadRequestStatusEnum {
