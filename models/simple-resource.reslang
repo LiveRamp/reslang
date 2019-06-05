@@ -13,4 +13,4 @@ resource Garage {
 		PUT
 		// this is a POST comment
 		POST GET DELETE MULTIGET id name
-};
+}
