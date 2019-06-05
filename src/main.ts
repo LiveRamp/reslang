@@ -1,6 +1,6 @@
 import clip from "clipboardy"
 import yaml from "js-yaml"
-import SwagGen from "./generate"
+import SwagGen from "./swaggen"
 import { parseFile, clean } from "./parse"
 
 if (process.argv.length !== 3) {

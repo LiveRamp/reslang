@@ -1,27 +1,12 @@
 import { fixName, pluralizeName, getVersion } from "./names"
 import { parseFile } from "./parse"
-import { parse } from "@babel/parser"
+import * as types from "./treetypes"
 
 /**
  * generate swagger from the parsed representation
  */
 
-interface IAttribute {
-    name: string
-    type: string
-    output: boolean
-    multiple: boolean
-    linked: boolean
-    comment: string
-}
-
-interface IOperation {
-    operation: string
-    comment: string
-    ids?: string[]
-}
-
-interface IDefinition {
+interface IShouldDef {
     input?: boolean
     output?: boolean
     multi?: boolean
@@ -29,7 +14,7 @@ interface IDefinition {
 
 export default class SwagGen {
     private imports: any[]
-    private defs: any[]
+    private defs: types.IDefinition[]
 
     public constructor(
         private path: string,
@@ -46,15 +31,22 @@ export default class SwagGen {
             const timp = imp as { import: string; file: string }
             const itree = parseFile(this.path + timp.file + ".reslang")
             const idef = this.extractDefinition(imp.import, itree[2])
+
+            if (this.extractDefinitionGently(idef.name, this.defs)) {
+                throw new Error(
+                    `Cannot import ${idef.name} from namespace ${
+                        timp.file
+                    } as it already exists in ${this.title}`
+                )
+            }
             this.defs.push(idef)
-            console.log(`Processed: ${timp}`)
         }
     }
 
     public generateSwagger() {
         const tags: any[] = []
         const paths: any = {}
-        const shouldDef: { [key: string]: IDefinition } = {}
+        const shouldDef: { [key: string]: IShouldDef } = {}
         const definitions: any = {}
         const swag: object = {
             swagger: "2.0",
@@ -90,7 +82,7 @@ export default class SwagGen {
                 const sname = fixName(el.name)
                 const name = pluralizeName(sname)
                 const version = parent
-                    ? getVersion(el.parent)
+                    ? getVersion(el.parent!)
                     : getVersion(el.name)
                 const singleton = el.singleton
 
@@ -166,7 +158,7 @@ export default class SwagGen {
                 this.formIdOperations(
                     el,
                     path,
-                    singleton,
+                    !!singleton,
                     tagKeys,
                     get,
                     put,
@@ -185,8 +177,8 @@ export default class SwagGen {
         el: any,
         path: any,
         tagKeys: { [key: string]: string },
-        post: IOperation | null,
-        multiget: IOperation | null
+        post: types.IOperation | null,
+        multiget: types.IOperation | null
     ) {
         if (post) {
             path.post = {
@@ -221,7 +213,7 @@ export default class SwagGen {
             if (el.attributes && multiget.ids) {
                 const params: any[] = []
 
-                for (const attr of el.attributes as IAttribute[]) {
+                for (const attr of el.attributes as types.IAttribute[]) {
                     if (multiget.ids.includes(attr.name)) {
                         params.push(
                             this.addType(attr, {
@@ -263,6 +255,25 @@ export default class SwagGen {
         }
     }
 
+    /**
+     * make a parameter
+     */
+    private makeProperty(attr: types.IAttribute): { name: string; prop: any } {
+        const def = this.extractDefinitionGently(attr.type, this.defs)
+        let name = attr.name
+        if (def && def.type === "resource") {
+            name = attr.name + "-" + fixName(attr.type) + "-id"
+            if (attr.multiple) {
+                name = name + "s"
+            }
+        }
+        const prop = {
+            description: attr.comment
+        }
+        this.addType(attr, prop)
+        return { name, prop }
+    }
+
     private addParentPathId(el: any, path: any) {
         if (el.parent) {
             const param = this.addType(
@@ -287,9 +298,9 @@ export default class SwagGen {
         path: any,
         singleton: boolean,
         tagKeys: { [key: string]: string },
-        get: IOperation | null,
-        put: IOperation | null,
-        del: IOperation | null
+        get?: types.IOperation | null,
+        put?: types.IOperation | null,
+        del?: types.IOperation | null
     ) {
         if (get) {
             const idtype = this.extractId(el)
@@ -386,7 +397,7 @@ export default class SwagGen {
         }
     }
 
-    private addType(attr: IAttribute, obj: any) {
+    private addType(attr: types.IAttribute, obj: any) {
         const type = attr.type
         // allow description overrides by caller
         if (!obj.description) {
@@ -425,6 +436,29 @@ export default class SwagGen {
                     case "structure":
                         obj.$ref = `#/definitions/${attr.type}Structure`
                         break
+                    case "resource":
+                        // must have a linked annotation
+                        if (!attr.linked) {
+                            throw new Error(
+                                `Attribute ${attr.name} references resource ${
+                                    attr.type
+                                } but doesn't use linked`
+                            )
+                        }
+                        obj.type = "string"
+                        obj.example = "Link to garage via id(s)"
+                        break
+                    case "enum":
+                        obj.type = "string"
+                        obj.enum = def.literals
+                        break
+                    default:
+                        throw Error(
+                            `Cannot resolve attribute type ${
+                                obj.type
+                            } of name ${obj.name}`
+                        )
+                        break
                 }
                 break
         }
@@ -453,16 +487,30 @@ export default class SwagGen {
         throw new Error("Cannot find definition for " + definitionName)
     }
 
-    private extractDefinition(definitionName: string, defs: any[]) {
+    private extractDefinition(
+        definitionName: string,
+        defs: types.IDefinition[]
+    ) {
+        const def = this.extractDefinitionGently(definitionName, defs)
+        if (def) {
+            return def
+        }
+        throw new Error("Cannot find definition for " + definitionName)
+    }
+
+    private extractDefinitionGently(
+        definitionName: string,
+        defs: types.IDefinition[]
+    ) {
         for (const def of defs) {
             if (def.name === definitionName) {
                 return def
             }
         }
-        throw new Error("Cannot find definition for " + definitionName)
+        return null
     }
 
-    private extractId(node: any): IAttribute {
+    private extractId(node: any): types.IAttribute {
         if (node.attributes) {
             for (const attr of node.attributes) {
                 if (attr.name === "id") {
@@ -473,7 +521,7 @@ export default class SwagGen {
         throw new Error("Cannot find id attribute for " + node.name)
     }
 
-    private extractOp(el: any, op: string): IOperation | null {
+    private extractOp(el: any, op: string): types.IOperation | null {
         if (el.operations) {
             for (const oper of el.operations) {
                 if (oper.operation === op) {
@@ -539,13 +587,12 @@ export default class SwagGen {
         if (def.attributes) {
             const properties: any = {}
             const request = { type: "object", properties }
-            for (const attr of def.attributes as IAttribute[]) {
+            for (const attr of def.attributes as types.IAttribute[]) {
                 if ((attr.name === "id" && !out) || (attr.output && !out)) {
                     // omit
                 } else {
-                    properties[attr.name] = this.addType(attr, {
-                        description: attr.comment
-                    })
+                    const prop = this.makeProperty(attr)
+                    properties[prop.name] = prop.prop
                 }
             }
             definitions[def.name + suffix] = request
@@ -553,7 +600,7 @@ export default class SwagGen {
     }
 
     private formDefinitions(
-        shouldDef: { [key: string]: IDefinition },
+        shouldDef: { [key: string]: IShouldDef },
         definitions: any
     ) {
         for (const def of this.defs) {
