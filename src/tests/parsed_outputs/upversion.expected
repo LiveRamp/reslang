@@ -1,0 +1,140 @@
+[
+  {
+    "description": "this is a simple resource\n   designed to show the potential ",
+    "version": "0.0.1"
+  },
+  [],
+  [
+    {
+      "type": "resource",
+      "name": "ResourceA",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "b",
+          "type": "ResourceB",
+          "multiple": false,
+          "output": false,
+          "linked": true
+        },
+        {
+          "name": "newB",
+          "type": "v2/ResourceB",
+          "multiple": false,
+          "output": false,
+          "linked": true
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        }
+      ]
+    },
+    {
+      "type": "resource",
+      "name": "ResourceB",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "size",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "PUT"
+        }
+      ]
+    },
+    {
+      "type": "resource",
+      "name": "v2/ResourceB",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "totalSize",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
+        }
+      ]
+    },
+    {
+      "type": "subresource",
+      "name": "Sub",
+      "singleton": false,
+      "parent": "v2/ResourceB",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
+        }
+      ]
+    }
+  ]
+]

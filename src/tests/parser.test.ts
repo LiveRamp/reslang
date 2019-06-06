@@ -1,9 +1,10 @@
 import { parseFile, readFile } from "../parse"
+import { strip } from "./utilities"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
  */
-xdescribe("reslang parsing tests", () => {
+describe("reslang parsing tests", () => {
     test("strip", () => {
         expect(
             strip(` a   b
@@ -40,18 +41,10 @@ function compare(module: string) {
     const got = JSON.stringify(tree, null, 2)
     const sgot = strip(got)
     const expected = strip(
-        readFile(`src/tests/model_outputs/${module}.expected`)
+        readFile(`src/tests/parsed_outputs/${module}.expected`)
     )
     if (sgot !== expected) {
         console.log(got)
     }
     expect(sgot).toBe(expected)
-}
-
-function strip(line: string) {
-    return line
-        .replace(/^[\ \t]+/g, "")
-        .replace(/\n[\ \t]+/g, "\n")
-        .replace(/[\ \t]+/g, " ")
-        .replace(/\s*$/, "")
 }

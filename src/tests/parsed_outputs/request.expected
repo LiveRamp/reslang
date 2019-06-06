@@ -1,0 +1,200 @@
+[
+  {
+    "description": "requests model async workflows ",
+    "version": "0.0.1"
+  },
+  [],
+  [
+    {
+      "type": "request",
+      "name": "UploadRequest",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "status",
+          "type": "UploadRequestStatusEnum",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "client",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "id",
+            "name"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "subresource",
+      "name": "Status",
+      "singleton": true,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "recordsProcessed",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "completed",
+          "type": "boolean",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        }
+      ]
+    },
+    {
+      "type": "subresource",
+      "name": "RecordSet",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "company",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "records",
+          "type": "Record",
+          "multiple": true,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "POST"
+        }
+      ]
+    },
+    {
+      "type": "structure",
+      "name": "Record",
+      "attributes": [
+        {
+          "name": "details",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ]
+    },
+    {
+      "type": "verb",
+      "name": "StartProcessingVerb",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "operations": [
+        {
+          "operation": "POST"
+        }
+      ]
+    },
+    {
+      "type": "verb",
+      "name": "StopProcessingVerb",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "when",
+          "type": "datetime",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
+        }
+      ]
+    },
+    {
+      "type": "enum",
+      "name": "UploadRequestStatusEnum",
+      "literals": [
+        "STARTED",
+        "STOPPED",
+        "COMPLETED"
+      ]
+    }
+  ]
+]

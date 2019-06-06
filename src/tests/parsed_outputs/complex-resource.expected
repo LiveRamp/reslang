@@ -1,6 +1,6 @@
 [
   {
-    "description": "this is a simple resource\n   designed to show the potential ",
+    "description": "This is a more complex example, featuring\na car with a set of wheel subresources",
     "version": "0.0.1"
   },
   [
@@ -13,39 +13,56 @@
     {
       "type": "resource",
       "name": "Car",
-      "comment": "this is a Car resource\n   so there ",
+      "singleton": false,
+      "comment": "this is a Car resource ",
       "attributes": [
         {
           "name": "id",
-          "type": "int"
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
         },
         {
           "name": "bought",
           "type": "date",
-          "output": true
+          "multiple": false,
+          "output": true,
+          "linked": false
         },
         {
           "name": "brand",
-          "type": "BrandEnum"
+          "type": "BrandEnum",
+          "multiple": false,
+          "output": false,
+          "linked": false
         },
         {
           "name": "engine",
-          "type": "Specification"
+          "type": "Specification",
+          "multiple": false,
+          "output": false,
+          "linked": false
         },
         {
           "name": "components",
           "type": "Specification",
-          "multiple": true
+          "multiple": true,
+          "output": false,
+          "linked": false
         },
         {
           "name": "home",
           "type": "Garage",
+          "multiple": false,
+          "output": false,
           "linked": true
         },
         {
           "name": "rented",
           "type": "Garage",
           "multiple": true,
+          "output": false,
           "linked": true
         }
       ],
@@ -73,26 +90,40 @@
       "attributes": [
         {
           "name": "type",
-          "type": "string"
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
         },
         {
           "name": "documentation",
-          "type": "string"
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
         }
       ]
     },
     {
       "type": "subresource",
       "name": "Wheel",
+      "singleton": false,
       "parent": "Car",
+      "comment": "A wheel is owned by a car",
       "attributes": [
         {
           "name": "id",
-          "type": "int"
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
         },
         {
           "name": "radius",
-          "type": "double"
+          "type": "double",
+          "multiple": false,
+          "output": false,
+          "linked": false
         }
       ],
       "operations": [

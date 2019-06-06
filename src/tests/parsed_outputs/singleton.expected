@@ -1,0 +1,68 @@
+[
+  {
+    "description": "this is a simple resource\n   designed to show the potential ",
+    "version": "0.0.1"
+  },
+  [],
+  [
+    {
+      "type": "resource",
+      "name": "Resource",
+      "singleton": true,
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT"
+        },
+        {
+          "operation": "GET"
+        }
+      ]
+    },
+    {
+      "type": "subresource",
+      "name": "Metadata",
+      "singleton": true,
+      "parent": "Resource",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "info",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT"
+        },
+        {
+          "operation": "GET"
+        }
+      ]
+    }
+  ]
+]

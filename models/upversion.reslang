@@ -1,3 +1,6 @@
+/* this is a simple resource
+   designed to show the potential */
+version 0.0.1
 
 resource ResourceA {
     id: int

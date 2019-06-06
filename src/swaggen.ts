@@ -43,7 +43,7 @@ export default class SwagGen {
         }
     }
 
-    public generateSwagger() {
+    public generate() {
         const tags: any[] = []
         const paths: any = {}
         const shouldDef: { [key: string]: IShouldDef } = {}

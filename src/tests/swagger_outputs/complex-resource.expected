@@ -1,0 +1,430 @@
+swagger: '2.0'
+info:
+  title: Simple API overview
+  description: |-
+    This is a more complex example, featuring
+    a car with a set of wheel subresources
+  version: 0.0.1
+host: liveramp.net
+basePath: /complex-resource
+schemes:
+  - http
+  - https
+tags:
+  - name: Car
+    description: 'this is a Car resource '
+  - name: Car / Wheel
+    description: A wheel is owned by a car
+  - name: Garage
+    description: A garage is a place to store cars
+paths:
+  /v1/cars:
+    post:
+      tags:
+        - Car
+      operationId: createCar
+      parameters:
+        - in: body
+          name: CarInput
+          required: true
+          schema:
+            $ref: '#/definitions/CarInput'
+      responses:
+        '200':
+          description: Car created successfully
+        default:
+          description: Error creating Car
+          schema:
+            $ref: '#/definitions/ErrorBody'
+    get:
+      tags:
+        - Car
+      operationId: multigetCar
+      parameters:
+        - in: query
+          name: id
+          required: false
+          type: integer
+          format: int32
+        - in: query
+          name: brand
+          required: false
+          type: string
+          enum: &ref_0
+            - TOYOTA
+            - FORD
+      responses:
+        '200':
+          description: Cars retrieved successfully
+          schema:
+            $ref: '#/definitions/CarMultiResponse'
+        default:
+          description: Error retrieving Cars
+          schema:
+            $ref: '#/definitions/ErrorBody'
+  '/v1/cars/{id}':
+    get:
+      tags:
+        - Car
+      operationId: retrieveCar
+      description: 'this is a get comment '
+      responses:
+        '200':
+          description: Car retrieved successfully
+          schema:
+            $ref: '#/definitions/CarOutput'
+        default:
+          description: Error retrieving Car
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+  '/v1/cars/{parentId}/wheels':
+    post:
+      tags:
+        - Car / Wheel
+      operationId: createWheel
+      parameters:
+        - in: body
+          name: WheelInput
+          required: true
+          schema:
+            $ref: '#/definitions/WheelInput'
+        - in: path
+          name: parentId
+          description: Id of parent Car
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Wheel created successfully
+        default:
+          description: Error creating Wheel
+          schema:
+            $ref: '#/definitions/ErrorBody'
+    get:
+      tags:
+        - Car / Wheel
+      operationId: multigetWheel
+      parameters:
+        - in: query
+          name: id
+          required: false
+          type: integer
+          format: int32
+        - in: path
+          name: parentId
+          description: Id of parent Car
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Wheels retrieved successfully
+          schema:
+            $ref: '#/definitions/WheelMultiResponse'
+        default:
+          description: Error retrieving Wheels
+          schema:
+            $ref: '#/definitions/ErrorBody'
+  '/v1/cars/{parentId}/wheels/{id}':
+    get:
+      tags:
+        - Car / Wheel
+      operationId: retrieveWheel
+      responses:
+        '200':
+          description: Wheel retrieved successfully
+          schema:
+            $ref: '#/definitions/WheelOutput'
+        default:
+          description: Error retrieving Wheel
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: parentId
+          description: Id of parent Car
+          required: true
+          type: integer
+          format: int32
+    put:
+      tags:
+        - Car / Wheel
+      operationId: modifyWheel
+      responses:
+        '200':
+          description: Wheel modified successfully
+          schema:
+            $ref: '#/definitions/WheelInput'
+        default:
+          description: Error modifying Wheel
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: parentId
+          description: Id of parent Car
+          required: true
+          type: integer
+          format: int32
+  /v1/garages:
+    post:
+      tags:
+        - Garage
+      operationId: createGarage
+      description: this is a POST comment
+      parameters:
+        - in: body
+          name: GarageInput
+          required: true
+          schema:
+            $ref: '#/definitions/GarageInput'
+      responses:
+        '200':
+          description: Garage created successfully
+        default:
+          description: Error creating Garage
+          schema:
+            $ref: '#/definitions/ErrorBody'
+    get:
+      tags:
+        - Garage
+      operationId: multigetGarage
+      parameters:
+        - in: query
+          name: id
+          description: 'simple id '
+          required: false
+          type: string
+        - in: query
+          name: name
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Garages retrieved successfully
+          schema:
+            $ref: '#/definitions/GarageMultiResponse'
+        default:
+          description: Error retrieving Garages
+          schema:
+            $ref: '#/definitions/ErrorBody'
+  '/v1/garages/{id}':
+    get:
+      tags:
+        - Garage
+      operationId: retrieveGarage
+      responses:
+        '200':
+          description: Garage retrieved successfully
+          schema:
+            $ref: '#/definitions/GarageOutput'
+        default:
+          description: Error retrieving Garage
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: 'simple id '
+          type: string
+    put:
+      tags:
+        - Garage
+      operationId: modifyGarage
+      description: this is a PUT comment
+      responses:
+        '200':
+          description: Garage modified successfully
+          schema:
+            $ref: '#/definitions/GarageInput'
+        default:
+          description: Error modifying Garage
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: 'simple id '
+          type: string
+    delete:
+      tags:
+        - Garage
+      operationId: deleteGarage
+      responses:
+        '200':
+          description: Garage deleted successfully
+        default:
+          description: Error deleting Garage
+          schema:
+            $ref: '#/definitions/ErrorBody'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: 'simple id '
+          type: string
+definitions:
+  CarInput:
+    type: object
+    properties:
+      brand:
+        type: string
+        enum: *ref_0
+      engine:
+        $ref: '#/definitions/SpecificationStructure'
+      components:
+        items:
+          $ref: '#/definitions/SpecificationStructure'
+        type: array
+      home-garage-id:
+        type: string
+        example: Link to garage via id(s)
+      rented-garage-ids:
+        items:
+          type: string
+          example: Link to garage via id(s)
+        type: array
+  CarOutput:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      bought:
+        type: string
+        example: 2019-04-13 (date)
+      brand:
+        type: string
+        enum: *ref_0
+      engine:
+        $ref: '#/definitions/SpecificationStructure'
+      components:
+        items:
+          $ref: '#/definitions/SpecificationStructure'
+        type: array
+      home-garage-id:
+        type: string
+        example: Link to garage via id(s)
+      rented-garage-ids:
+        items:
+          type: string
+          example: Link to garage via id(s)
+        type: array
+  CarMultiResponse:
+    type: object
+    properties:
+      page:
+        description: 'Page offset, starting from 1'
+        type: integer
+        format: int32
+      page-size:
+        description: Size of returned page
+        type: integer
+        format: int32
+      elements:
+        description: Array of retrieved Cars
+        type: array
+        items:
+          $ref: '#/definitions/CarOutput'
+  SpecificationStructure:
+    type: object
+    properties:
+      type:
+        type: string
+      documentation:
+        type: string
+  WheelInput:
+    type: object
+    properties:
+      radius:
+        type: number
+  WheelOutput:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      radius:
+        type: number
+  WheelMultiResponse:
+    type: object
+    properties:
+      page:
+        description: 'Page offset, starting from 1'
+        type: integer
+        format: int32
+      page-size:
+        description: Size of returned page
+        type: integer
+        format: int32
+      elements:
+        description: Array of retrieved Wheels
+        type: array
+        items:
+          $ref: '#/definitions/WheelOutput'
+  GarageInput:
+    type: object
+    properties:
+      name:
+        type: string
+  GarageOutput:
+    type: object
+    properties:
+      id:
+        description: 'simple id '
+        type: string
+      name:
+        type: string
+  GarageMultiResponse:
+    type: object
+    properties:
+      page:
+        description: 'Page offset, starting from 1'
+        type: integer
+        format: int32
+      page-size:
+        description: Size of returned page
+        type: integer
+        format: int32
+      elements:
+        description: Array of retrieved Garages
+        type: array
+        items:
+          $ref: '#/definitions/GarageOutput'
+  ErrorBody:
+    type: object
+    properties:
+      http-status:
+        type: number
+        description: The integer HTTP error status code for this problem
+      error-code:
+        type: string
+        description: 'Service specific error code, more granular'
+      message:
+        type: string
+        description: 'General, human readable error message'
+      detail:
+        type: string
+        description: Human readable message specific to this occurrence
+      path:
+        type: string
+        description: The request field that the error is about

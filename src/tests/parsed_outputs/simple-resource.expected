@@ -1,0 +1,55 @@
+[
+  {
+    "description": "this is a simple resource\n   designed to show the potential ",
+    "version": "0.0.1"
+  },
+  [],
+  [
+    {
+      "type": "resource",
+      "name": "Garage",
+      "singleton": false,
+      "comment": "A garage is a place to store cars",
+      "attributes": [
+        {
+          "name": "id",
+          "comment": "simple id ",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "comment": "this is a PUT comment"
+        },
+        {
+          "operation": "POST",
+          "comment": "this is a POST comment"
+        },
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "DELETE"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "id",
+            "name"
+          ]
+        }
+      ]
+    }
+  ]
+]
