@@ -1,6 +1,7 @@
 import { fixName, pluralizeName, getVersion } from "./names"
 import { parseFile } from "./parse"
-import * as types from "./treetypes"
+import { IImport, IDefinition, IAttribute, IOperation } from "./treetypes"
+import { BaseGen } from "./basegen"
 
 /**
  * generate swagger from the parsed representation
@@ -12,37 +13,7 @@ interface IShouldDef {
     multi?: boolean
 }
 
-export default class SwagGen {
-    private imports: any[]
-    private defs: types.IDefinition[]
-
-    public constructor(
-        private path: string,
-        private title: string,
-        private tree: any[]
-    ) {
-        this.imports = tree[1]
-        this.defs = tree[2]
-    }
-
-    public processImports() {
-        for (const imp of this.imports) {
-            // process each file
-            const timp = imp as { import: string; file: string }
-            const itree = parseFile(this.path + timp.file + ".reslang")
-            const idef = this.extractDefinition(imp.import, itree[2])
-
-            if (this.extractDefinitionGently(idef.name, this.defs)) {
-                throw new Error(
-                    `Cannot import ${idef.name} from namespace ${
-                        timp.file
-                    } as it already exists in ${this.title}`
-                )
-            }
-            this.defs.push(idef)
-        }
-    }
-
+export default class SwagGen extends BaseGen {
     public generate() {
         const tags: any[] = []
         const paths: any = {}
@@ -174,11 +145,11 @@ export default class SwagGen {
     }
 
     private formNonIdOperations(
-        el: any,
+        el: IDefinition,
         path: any,
         tagKeys: { [key: string]: string },
-        post: types.IOperation | null,
-        multiget: types.IOperation | null
+        post: IOperation | null,
+        multiget: IOperation | null
     ) {
         if (post) {
             path.post = {
@@ -213,7 +184,7 @@ export default class SwagGen {
             if (el.attributes && multiget.ids) {
                 const params: any[] = []
 
-                for (const attr of el.attributes as types.IAttribute[]) {
+                for (const attr of el.attributes as IAttribute[]) {
                     if (multiget.ids.includes(attr.name)) {
                         params.push(
                             this.addType(attr, {
@@ -258,7 +229,7 @@ export default class SwagGen {
     /**
      * make a parameter
      */
-    private makeProperty(attr: types.IAttribute): { name: string; prop: any } {
+    private makeProperty(attr: IAttribute): { name: string; prop: any } {
         const def = this.extractDefinitionGently(attr.type, this.defs)
         let name = attr.name
         if (def && def.type === "resource") {
@@ -294,13 +265,13 @@ export default class SwagGen {
     }
 
     private formIdOperations(
-        el: any,
+        el: IDefinition,
         path: any,
         singleton: boolean,
         tagKeys: { [key: string]: string },
-        get?: types.IOperation | null,
-        put?: types.IOperation | null,
-        del?: types.IOperation | null
+        get?: IOperation | null,
+        put?: IOperation | null,
+        del?: IOperation | null
     ) {
         if (get) {
             const idtype = this.extractId(el)
@@ -397,7 +368,7 @@ export default class SwagGen {
         }
     }
 
-    private addType(attr: types.IAttribute, obj: any) {
+    private addType(attr: IAttribute, obj: any) {
         const type = attr.type
         // allow description overrides by caller
         if (!obj.description) {
@@ -478,50 +449,7 @@ export default class SwagGen {
         return obj
     }
 
-    private extractDefinitionId(definitionName: string, defs: any[]) {
-        for (const def of defs) {
-            if (def.name === definitionName) {
-                return this.extractId(def)
-            }
-        }
-        throw new Error("Cannot find definition for " + definitionName)
-    }
-
-    private extractDefinition(
-        definitionName: string,
-        defs: types.IDefinition[]
-    ) {
-        const def = this.extractDefinitionGently(definitionName, defs)
-        if (def) {
-            return def
-        }
-        throw new Error("Cannot find definition for " + definitionName)
-    }
-
-    private extractDefinitionGently(
-        definitionName: string,
-        defs: types.IDefinition[]
-    ) {
-        for (const def of defs) {
-            if (def.name === definitionName) {
-                return def
-            }
-        }
-        return null
-    }
-
-    private extractId(node: any): types.IAttribute {
-        if (node.attributes) {
-            for (const attr of node.attributes) {
-                if (attr.name === "id") {
-                    return attr
-                }
-            }
-        }
-        throw new Error("Cannot find id attribute for " + node.name)
-    }
-
-    private extractOp(el: any, op: string): types.IOperation | null {
+    private extractOp(el: any, op: string): IOperation | null {
         if (el.operations) {
             for (const oper of el.operations) {
                 if (oper.operation === op) {
@@ -587,7 +515,7 @@ export default class SwagGen {
         if (def.attributes) {
             const properties: any = {}
             const request = { type: "object", properties }
-            for (const attr of def.attributes as types.IAttribute[]) {
+            for (const attr of def.attributes as IAttribute[]) {
                 if ((attr.name === "id" && !out) || (attr.output && !out)) {
                     // omit
                 } else {

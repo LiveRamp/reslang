@@ -13,8 +13,8 @@ export interface IDefinition {
     name: string
     type: string
     comment: string
-    attrs?: IAttribute[]
-    ops?: IOperation[]
+    attributes?: IAttribute[]
+    operations?: IOperation[]
     literals?: string[]
     parent?: string
     singleton?: boolean

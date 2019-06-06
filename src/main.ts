@@ -1,9 +1,10 @@
 import clip from "clipboardy"
 import yaml from "js-yaml"
+import DotvizGen from "./dotvizgen"
 import SwagGen from "./swaggen"
 import { parseFile, clean } from "./parse"
 import yargs from "yargs"
-import { DotvizGen } from "./dotvizgen"
+import open from "open"
 
 // parse the cmd line
 const args = yargs
@@ -19,6 +20,10 @@ const args = yargs
     .option("stdout", {
         type: "boolean",
         describe: "write output to stdout as well as clipboard"
+    })
+    .option("open", {
+        type: "boolean",
+        describe: "open browser to the appropriate website for output"
     })
     .check(args => {
         if (args._.length != 1) throw new Error("Needs 1 module to process")
@@ -52,6 +57,7 @@ try {
     // generate .viz?
     else if (args.dotviz) {
         const dot = new DotvizGen(path, title, tree)
+        dot.processImports()
         const dotviz = dot.generate()
         if (args.stdout) {
             console.log(dotviz)
@@ -59,6 +65,9 @@ try {
             console.log("Success - dotviz copied to clipboard")
         }
         clip.writeSync(dotviz)
+        if (args.open) {
+            open("https://dreampuf.github.io/GraphvizOnline")
+        }
     }
     // generate swagger
     else {
@@ -72,6 +81,9 @@ try {
             console.log("Success - swagger copied to clipboard")
         }
         clip.writeSync(yml)
+        if (args.open) {
+            open("https://editor.swagger.io")
+        }
     }
 } catch (error) {
     console.error(error.message)
