@@ -11,7 +11,7 @@ const args = yargs
     .usage("Usage: reslang module.reslang")
     .option("dotviz", {
         type: "boolean",
-        describe: "hello"
+        describe: "create dotviz graphical output of the resources"
     })
     .option("parsed", {
         type: "boolean",
