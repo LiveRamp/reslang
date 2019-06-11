@@ -430,7 +430,8 @@ export default class SwagGen extends BaseGen {
                         break
                     case "enum":
                         obj.type = "string"
-                        obj.enum = def.literals
+                        // collect any inherited literals
+                        obj.enum = this.collectInheritedLiterals(def)
                         break
                     default:
                         throw Error(
@@ -456,6 +457,18 @@ export default class SwagGen extends BaseGen {
             obj.type = "array"
         }
         return obj
+    }
+
+    private collectInheritedLiterals(def: IDefinition): string[] {
+        if (def && def.literals) {
+            const plits = def.extends
+                ? this.collectInheritedLiterals(
+                      this.extractDefinition(def.extends, this.defs)
+                  )
+                : []
+            return plits.concat(def.literals)
+        }
+        return []
     }
 
     private extractOp(el: any, op: string): IOperation | null {

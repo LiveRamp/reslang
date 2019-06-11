@@ -23,6 +23,13 @@ resource DirectSegment extends BaseSegment {
         GET POST
 }
 
+request FooBar extends BaseSegment {
+    eee: SubEnum
+    
+    operations 
+        GET POST
+}
+
 
 resource ListOfPeople {
     id: int
@@ -33,7 +40,19 @@ resource ListOfPeople {
         GET POST PUT
 }
 
-structure Foo {
+structure BaseStruct {
+    c: string
+}
+
+structure Foo extends BaseStruct {
     b: string
     a: linked ListOfPeople
+}
+
+enum BaseEnum {
+    A B
+}
+
+enum SubEnum extends BaseEnum {
+    C D
 }

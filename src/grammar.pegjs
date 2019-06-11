@@ -20,10 +20,10 @@ resource = _ comment:comment? _ singleton:"singleton"? _ type:("resource" / "req
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-subresource = _ comment:comment? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _ "{" _
+subresource = _ comment:comment? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _  ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"type": type, "name": name, "singleton": singleton !== null, "parent": parent,
+    return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "parent": parent,
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 
@@ -40,10 +40,10 @@ multiget = _ comment:comment? _ "MULTIGET" ids:ids {return {"operation": "MULTIG
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
-structure = _ comment:comment? _ "structure"  _ name:name _ "{" _
+structure = _ comment:comment? _ "structure"  _ name:name  _ ext:extends? _ "{" _
     attrs:attr+ _
 "}" _ ";"? _ {
-    return {"type": "structure", "name": name, "comment": comment, "attributes": attrs}
+    return {"type": "structure", "name": name, "comment": comment, "extends": ext, "attributes": attrs}
 }
 
 attributes = _ attrs:attr+ _ { return attrs; }
@@ -52,10 +52,10 @@ attr = _ comment:comment? _ name:name _ ":" _ linked:"linked"? _ type:type _ mul
 }
 
 // enum
-enum = _ comment:comment? _ "enum"  _ name:name _ "{" _
+enum = _ comment:comment? _ "enum"  _ name:name _ ext:extends? _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
-    return {"type": "enum", "name": name, "comment": comment, "literals": literals}
+    return {"type": "enum", "name": name, "comment": comment, "extends": ext, "literals": literals}
 }
 
 literal = _ comment:comment? _ name:literalname _ ";"? _ { return name }
