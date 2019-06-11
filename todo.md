@@ -5,7 +5,7 @@
 -   Cleanup code
 -   Link to binary
 
--  ~~Inheritance~~
+-  ~~Inheritance~~ add anyOff + discriminator
 -  ~~Structure with only links~~
 -  ~~StartProcessingVerb~~
 -  ~~Fix up garage import issue~~

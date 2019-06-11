@@ -48,7 +48,7 @@ paths:
           name: brand
           required: false
           type: string
-          enum: &ref_0
+          enum:
             - TOYOTA
             - FORD
       responses:
@@ -187,7 +187,9 @@ definitions:
     properties:
       brand:
         type: string
-        enum: *ref_0
+        enum:
+          - TOYOTA
+          - FORD
       engine:
         $ref: '#/definitions/SpecificationStructure'
       components:
@@ -213,7 +215,9 @@ definitions:
         example: 2019-04-13 (date)
       brand:
         type: string
-        enum: *ref_0
+        enum:
+          - TOYOTA
+          - FORD
       engine:
         $ref: '#/definitions/SpecificationStructure'
       components:

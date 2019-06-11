@@ -230,7 +230,7 @@ definitions:
         type: string
       status:
         type: string
-        enum: &ref_0
+        enum:
           - STARTED
           - STOPPED
           - COMPLETED
@@ -246,7 +246,10 @@ definitions:
         type: string
       status:
         type: string
-        enum: *ref_0
+        enum:
+          - STARTED
+          - STOPPED
+          - COMPLETED
       client:
         type: string
   UploadRequestMultiResponse:
