@@ -53,9 +53,9 @@ export default class DotvizGen extends BaseGen {
                     <tr><td><b>${def.name}  </b></td></tr>`
 
                 if ("structure" === def.type) {
-                    viz += `"${
-                        def.name
-                    }" [label=<${box}<hr/>${attrs}</table> >];\n`
+                    viz += `"${def.name}" [label=<${box}${
+                        attrs ? "<hr/>" : ""
+                    }${attrs}</table> >];\n`
                 } else if (imported) {
                     viz += `"${def.name}" [label=<${box}</table>>];\n`
                 } else {

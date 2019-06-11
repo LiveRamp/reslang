@@ -1,12 +1,11 @@
 import clip from "clipboardy"
 import yaml from "js-yaml"
-import DotvizGen from "./dotvizgen"
-import SwagGen from "./swaggen"
-import { parseFile, clean } from "./parse"
+import DotvizGen from "./gendotviz"
+import SwagGen from "./genswagger"
+import { clean } from "./parse"
 import yargs from "yargs"
 import open from "open"
-import { BaseGen } from "./basegen"
-import ParseGen from "./parsegen"
+import ParseGen from "./genparse"
 
 // parse the cmd line
 const args = yargs

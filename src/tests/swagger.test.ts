@@ -1,6 +1,6 @@
 import { parseFile, readFile, clean } from "../parse"
 import { strip } from "./utilities"
-import SwagGen from "../swaggen"
+import SwagGen from "../genswagger"
 import yaml from "js-yaml"
 
 /** swagger generation tests

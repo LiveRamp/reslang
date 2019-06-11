@@ -518,19 +518,18 @@ export default class SwagGen extends BaseGen {
         out: boolean,
         suffix: string
     ) {
-        if (def.attributes) {
-            const properties: any = {}
-            const request = { type: "object", properties }
-            for (const attr of def.attributes as IAttribute[]) {
-                if ((attr.name === "id" && !out) || (attr.output && !out)) {
-                    // omit
-                } else {
-                    const prop = this.makeProperty(attr)
-                    properties[prop.name] = prop.prop
-                }
+        const attrs = def.attributes || []
+        const properties: any = {}
+        const request = { type: "object", properties }
+        for (const attr of attrs as IAttribute[]) {
+            if ((attr.name === "id" && !out) || (attr.output && !out)) {
+                // omit
+            } else {
+                const prop = this.makeProperty(attr)
+                properties[prop.name] = prop.prop
             }
-            definitions[def.name + suffix] = request
         }
+        definitions[def.name + suffix] = request
     }
 
     private formDefinitions(

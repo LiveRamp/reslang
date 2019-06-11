@@ -1,6 +1,6 @@
 import { parseFile, readFile, clean } from "../parse"
 import { strip } from "./utilities"
-import DotvizGen from "../dotvizgen"
+import DotvizGen from "../gendotviz"
 
 /** dotviz generation tests
  */
