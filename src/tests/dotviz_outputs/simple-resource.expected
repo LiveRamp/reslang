@@ -1,5 +1,9 @@
-digraph G { node [shape=none];
+digraph G { 
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
 "Garage" [label=<
-                    <table border="6" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#F3FADF'> 
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'> 
                     <tr><td><b>Garage  </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST GET DELETE MULTIGET id name</font></td></tr></table>>];
 }

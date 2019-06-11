@@ -28,10 +28,7 @@ describe("dotviz generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const tree = parseFile(`models/${module}.reslang`)
-
-    const dotviz = new DotvizGen("models/", module, tree)
-    dotviz.processImports()
+    const dotviz = new DotvizGen([`models/${module}.reslang`])
     const out = dotviz.generate()
 
     let got = strip(out)

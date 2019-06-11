@@ -1,6 +1,10 @@
-digraph G { node [shape=none];
+digraph G { 
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
 "Resource" [label=<
-                    <table border="6" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#F3FADF'> 
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'> 
                     <tr><td><b>Resource  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr></table>>];
 "Metadata" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  > 

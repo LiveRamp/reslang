@@ -6,6 +6,7 @@
 
 -   Cleanup code
 -   Link to binary
--   Fix up garage import issue
--   Allow graphing of multiple files
 -   Simpleinputverb
+
+-   Fix up garage import issue
+-   ~~Allow graphing of multiple files~~

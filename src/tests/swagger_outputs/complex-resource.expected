@@ -15,8 +15,6 @@ tags:
     description: 'this is a Car resource '
   - name: Car / Wheel
     description: A wheel is owned by a car
-  - name: Garage
-    description: A garage is a place to store cars
 paths:
   /v1/cars:
     post:
@@ -183,105 +181,6 @@ paths:
           required: true
           type: integer
           format: int32
-  /v1/garages:
-    post:
-      tags:
-        - Garage
-      operationId: createGarage
-      description: this is a POST comment
-      parameters:
-        - in: body
-          name: GarageInput
-          required: true
-          schema:
-            $ref: '#/definitions/GarageInput'
-      responses:
-        '200':
-          description: Garage created successfully
-        default:
-          description: Error creating Garage
-          schema:
-            $ref: '#/definitions/ErrorBody'
-    get:
-      tags:
-        - Garage
-      operationId: multigetGarage
-      parameters:
-        - in: query
-          name: id
-          description: 'simple id '
-          required: false
-          type: string
-        - in: query
-          name: name
-          required: false
-          type: string
-      responses:
-        '200':
-          description: Garages retrieved successfully
-          schema:
-            $ref: '#/definitions/GarageMultiResponse'
-        default:
-          description: Error retrieving Garages
-          schema:
-            $ref: '#/definitions/ErrorBody'
-  '/v1/garages/{id}':
-    get:
-      tags:
-        - Garage
-      operationId: retrieveGarage
-      responses:
-        '200':
-          description: Garage retrieved successfully
-          schema:
-            $ref: '#/definitions/GarageOutput'
-        default:
-          description: Error retrieving Garage
-          schema:
-            $ref: '#/definitions/ErrorBody'
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: 'simple id '
-          type: string
-    put:
-      tags:
-        - Garage
-      operationId: modifyGarage
-      description: this is a PUT comment
-      responses:
-        '200':
-          description: Garage modified successfully
-          schema:
-            $ref: '#/definitions/GarageInput'
-        default:
-          description: Error modifying Garage
-          schema:
-            $ref: '#/definitions/ErrorBody'
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: 'simple id '
-          type: string
-    delete:
-      tags:
-        - Garage
-      operationId: deleteGarage
-      responses:
-        '200':
-          description: Garage deleted successfully
-        default:
-          description: Error deleting Garage
-          schema:
-            $ref: '#/definitions/ErrorBody'
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: 'simple id '
-          type: string
 definitions:
   CarInput:
     type: object
@@ -381,35 +280,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/WheelOutput'
-  GarageInput:
-    type: object
-    properties:
-      name:
-        type: string
-  GarageOutput:
-    type: object
-    properties:
-      id:
-        description: 'simple id '
-        type: string
-      name:
-        type: string
-  GarageMultiResponse:
-    type: object
-    properties:
-      page:
-        description: 'Page offset, starting from 1'
-        type: integer
-        format: int32
-      page-size:
-        description: Size of returned page
-        type: integer
-        format: int32
-      elements:
-        description: Array of retrieved Garages
-        type: array
-        items:
-          $ref: '#/definitions/GarageOutput'
   ErrorBody:
     type: object
     properties:
@@ -428,3 +298,4 @@ definitions:
       path:
         type: string
         description: The request field that the error is about
+

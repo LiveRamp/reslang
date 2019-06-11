@@ -29,10 +29,7 @@ describe("swagger generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const tree = parseFile(`models/${module}.reslang`)
-
-    const swag = new SwagGen("models/", module, tree)
-    swag.processImports()
+    const swag = new SwagGen([`models/${module}.reslang`])
     const swagger = swag.generate()
 
     let got = strip(yaml.dump(clean(swagger)))

@@ -4,8 +4,13 @@ import { StringifyOptions } from "querystring"
  * types for the parse tree
  */
 
+export interface IVersion {
+    description: string
+    version: string
+}
+
 export interface IImport {
-    name: string
+    import: string
     file: string
 }
 

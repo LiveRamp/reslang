@@ -1,6 +1,10 @@
-digraph G { node [shape=none];
+digraph G { 
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
 "UploadRequest" [label=<
-                    <table border="6" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#F3FADF'> 
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'> 
                     <tr><td><b>UploadRequest  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">status: UploadRequestStatusEnum</td></tr><tr><td align="left">client: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id name</font></td></tr></table>>];
 "Status" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  > 

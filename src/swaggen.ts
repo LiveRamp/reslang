@@ -38,11 +38,13 @@ export default class SwagGen extends BaseGen {
         const tagKeys = {}
         this.formTags(this.defs, tags, tagKeys)
 
-        // process imports
-
         // form the paths
         for (const el of this.defs) {
             shouldDef[el.name] = {}
+            // don't generate for any imported def
+            if (this.imported[el.name]) {
+                continue
+            }
             if (
                 ["resource", "subresource", "request", "verb"].includes(el.type)
             ) {
@@ -471,6 +473,10 @@ export default class SwagGen extends BaseGen {
         tagKeys: { [key: string]: string }
     ) {
         for (const el of defs) {
+            // don't generate for any imported def
+            if (this.imported[el.name]) {
+                continue
+            }
             if ("resource" === el.type) {
                 const tag = {
                     name: el.name,
@@ -532,6 +538,11 @@ export default class SwagGen extends BaseGen {
         definitions: any
     ) {
         for (const def of this.defs) {
+            // don't generate for any imported def
+            if (this.imported[def.name]) {
+                continue
+            }
+
             if (
                 ["resource", "subresource", "request", "verb"].includes(
                     def.type
