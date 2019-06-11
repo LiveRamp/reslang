@@ -5,7 +5,7 @@
 -   Cleanup code
 -   Link to binary
 
--   Inheritance
+-   Inheritance (struct, enum, resource, subresource, request, verb) + diagramming
 -  ~~Structure with only links~~
 -  ~~StartProcessingVerb~~
 -  ~~Fix up garage import issue~~

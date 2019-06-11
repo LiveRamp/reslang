@@ -1,7 +1,7 @@
 import { fixName, pluralizeName, getVersion } from "./names"
 import { parseFile } from "./parse"
 import { IImport, IDefinition, IAttribute, IOperation } from "./treetypes"
-import { BaseGen } from "./basegen"
+import { BaseGen } from "./genbase"
 
 /**
  * expose the parse tree

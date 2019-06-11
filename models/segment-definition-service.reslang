@@ -8,9 +8,7 @@ resource BaseSegment {
         GET MULTIGET id
 }
 
-resource DerivedSegment {
-    id: int
-    label: string
+resource DerivedSegment extends BaseSegment {
     /* json rule referencing base segment ids */
     rule: string
 
@@ -18,9 +16,7 @@ resource DerivedSegment {
         GET POST
 }
 
-resource DirectSegment {
-    id: int
-    label: string
+resource DirectSegment extends BaseSegment {
     listOfPeopleIds: linked ListOfPeople
 
     operations

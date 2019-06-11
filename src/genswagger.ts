@@ -1,7 +1,8 @@
 import { fixName, pluralizeName, getVersion } from "./names"
 import { parseFile } from "./parse"
 import { IImport, IDefinition, IAttribute, IOperation } from "./treetypes"
-import { BaseGen } from "./basegen"
+import { BaseGen } from "./genbase"
+import { identifier } from "@babel/types"
 
 /**
  * generate swagger from the parsed representation
@@ -86,10 +87,16 @@ export default class SwagGen extends BaseGen {
 
                     if (post) {
                         shouldDef[el.name].input = true
+                        if (el.extends) {
+                            shouldDef[el.extends].input = true
+                        }
                     }
                     if (multiget) {
                         shouldDef[el.name].multi = true
                         shouldDef[el.name].output = true
+                        if (el.extends) {
+                            shouldDef[el.extends].output = true
+                        }
                     }
                     this.formNonIdOperations(el, path, tagKeys, post, multiget)
                 }
@@ -514,13 +521,17 @@ export default class SwagGen extends BaseGen {
 
     private addDefinition(
         definitions: any,
-        def: any,
+        def: IDefinition,
         out: boolean,
         suffix: string
     ) {
         const attrs = def.attributes || []
         const properties: any = {}
-        const request = { type: "object", properties }
+        const request = { type: "object", properties } as {
+            type: string
+            properties: any
+            allOf: {}
+        }
         for (const attr of attrs as IAttribute[]) {
             if ((attr.name === "id" && !out) || (attr.output && !out)) {
                 // omit
@@ -529,6 +540,11 @@ export default class SwagGen extends BaseGen {
                 properties[prop.name] = prop.prop
             }
         }
+        // a base definition?
+        if (def.extends) {
+            request.allOf = [{ $ref: `#/definitions/${def.extends}${suffix}` }]
+        }
+
         definitions[def.name + suffix] = request
     }
 

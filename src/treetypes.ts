@@ -23,6 +23,7 @@ export interface IDefinition {
     literals?: string[]
     parent?: string
     singleton?: boolean
+    extends?: string
 }
 
 export interface IAttribute {

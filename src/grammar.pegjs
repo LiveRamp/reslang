@@ -9,11 +9,15 @@ import "import" = _ "import" _ name:name _ "from" _ file:filename _ ";"? _ {
     return {"import": name, "file": file}
 }
 
+extends = _ "extends" _ name: name _ {
+    return name
+}
+
 // defining a resource
-resource = _ comment:comment? _ singleton:"singleton"? _ type:("resource" / "request") _ name:resname _ "{" _
+resource = _ comment:comment? _ singleton:"singleton"? _ type:("resource" / "request") _ name:resname _ ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"type": type, "name": name, "singleton": singleton !== null, "comment": comment, "attributes": attributes, "operations": operations }
+    return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
 subresource = _ comment:comment? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _ "{" _

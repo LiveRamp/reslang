@@ -76,15 +76,6 @@ export abstract class BaseGen {
         }
     }
 
-    protected extractDefinitionId(definitionName: string, defs: any[]) {
-        for (const def of defs) {
-            if (def.name === definitionName) {
-                return this.extractId(def)
-            }
-        }
-        throw new Error("Cannot find definition for " + definitionName)
-    }
-
     protected extractDefinition(definitionName: string, defs: IDefinition[]) {
         const def = this.extractDefinitionGently(definitionName, defs)
         if (def) {
@@ -105,7 +96,16 @@ export abstract class BaseGen {
         return null
     }
 
-    protected extractId(node: any): IAttribute {
+    protected extractDefinitionId(definitionName: string, defs: IDefinition[]) {
+        for (const def of defs) {
+            if (def.name === definitionName) {
+                return this.extractId(def)
+            }
+        }
+        throw new Error("Cannot find definition for " + definitionName)
+    }
+
+    protected extractId(node: IDefinition): IAttribute {
         if (node.attributes) {
             for (const attr of node.attributes) {
                 if (attr.name === "id") {
@@ -113,6 +113,11 @@ export abstract class BaseGen {
                 }
             }
         }
+        // ask base if this doesn't have one
+        if (node.extends) {
+            return this.extractDefinitionId(node.extends, this.defs)
+        }
+
         throw new Error("Cannot find id attribute for " + node.name)
     }
 }

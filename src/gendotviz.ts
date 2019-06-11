@@ -1,6 +1,6 @@
 import { IDefinition } from "./treetypes"
 import { parseFile } from "./parse"
-import { BaseGen } from "./basegen"
+import { BaseGen } from "./genbase"
 
 /**
  * generate .viz output for a graphical view of the resources
@@ -19,7 +19,8 @@ export default class DotvizGen extends BaseGen {
         graph [fontname = "helvetica"];
         node [fontname = "helvetica"];
         edge [fontname = "helvetica"];
-        node [shape=none];\n`
+        node [shape=none];
+        rankdir="LR";\n`
         const links: Link[] = []
         for (const def of this.defs) {
             const attrs = this.formAttributes(def, links)
@@ -105,6 +106,17 @@ export default class DotvizGen extends BaseGen {
                 viz += `"${link.from}" -> "${
                     link.to
                 }" [dir="back" arrowtail="diamond" label=${label}];\n`
+            }
+        }
+
+        // handle inheritance
+        for (const def of this.defs) {
+            if (def.extends) {
+                viz += `"${def.name}" -> "${
+                    def.extends
+                }" [arrowhead="onormal" label=${this.makeLabelText(
+                    "inherits"
+                )}];\n`
             }
         }
 
