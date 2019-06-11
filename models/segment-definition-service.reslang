@@ -1,0 +1,43 @@
+/** definitions for segment def service */
+version 0.0.1
+
+resource BaseSegment {
+    id: int
+    label: string
+    operations
+        GET MULTIGET id
+}
+
+resource DerivedSegment {
+    id: int
+    label: string
+    /* json rule referencing base segment ids */
+    rule: string
+
+    operations 
+        GET POST
+}
+
+resource DirectSegment {
+    id: int
+    label: string
+    listOfPeopleIds: linked ListOfPeople
+
+    operations
+        GET POST
+}
+
+
+resource ListOfPeople {
+    id: int
+    pels: string[]
+    foo: Foo[]
+
+    operations
+        GET POST PUT
+}
+
+structure Foo {
+    b: string
+    a: linked ListOfPeople
+}

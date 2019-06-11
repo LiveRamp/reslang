@@ -25,8 +25,10 @@ const args = yargs
         type: "boolean",
         describe: "open browser to the appropriate website for output"
     })
-    .check(args => {
-        if (args._.length != 1) throw new Error("Needs 1 module to process")
+    .check(arg => {
+        if (arg._.length != 1) {
+            throw new Error("Needs 1 module to process")
+        }
         return true
     }).argv
 

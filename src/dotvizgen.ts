@@ -15,7 +15,11 @@ interface Link {
 
 export default class DotvizGen extends BaseGen {
     public generate() {
-        let viz = "digraph G { node [shape=none];\n"
+        let viz = `digraph G { 
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];\n`
         const links: Link[] = []
         for (const def of this.defs) {
             const attrs = this.formAttributes(def, links)
@@ -23,7 +27,7 @@ export default class DotvizGen extends BaseGen {
             const imported = def.name in this.imported
             const color = imported ? "color='gray'" : ""
             const bgcolor = ["resource", "request"].includes(def.type)
-                ? "bgcolor='#F3FADF'"
+                ? "bgcolor='#ffffcc'"
                 : ""
 
             if (
@@ -35,7 +39,7 @@ export default class DotvizGen extends BaseGen {
                     "verb"
                 ].includes(def.type)
             ) {
-                const width = ["resource", "request"].includes(def.type) ? 6 : 1
+                const width = ["resource", "request"].includes(def.type) ? 3 : 1
                 const rounded = [
                     "resource",
                     "request",
