@@ -1,0 +1,76 @@
+// API for accessing LiveRamp's Distribution Service.
+version 0.0.1
+
+// The properties that are included when fetching a list of DistributionRequests or a given DistributionRequest.
+resource DistributionRequest {
+    id: int
+        // Status of the given DistributionRequest
+    status: StatusEnum
+        // Datetime in UTC when the request was created.
+    createdAt: datetime
+        // Reference to a destination's integration to be used for distributing the data.
+    integration: linked Integration
+        // A map of keys and values needed to use the selected integration.
+    integrationProperties: string[]
+        // Path of the file on GCS (Google Cloud Storage) to be distributed.
+    datePath: string
+        // Configuation options for formatting the data before it is sent to the desired destination
+    dateFormatConfig: SegmentFormat[]
+
+    operations
+        GET POST DELETE MULTIGET id
+}
+
+
+// The properties that are included when fetching the metadata for a given DistributionRequest.
+singleton subresource Metadata of DistributionRequest {
+    id: string
+    deliveryType: DeliveryTypeEnum
+    // Total number of records sent to the destination for this request
+    recordCount: int
+    // Total number of files sent to the destination for this request
+    fileCount: int
+    // Detail of each file sent to the destination
+    fileDetails: FileDetailsStructure[]
+    // Location where the output data was placed on the destination's server
+    dataPath: string
+    // Total size of the distributed data in bytes
+    dataSize: int
+
+    operations
+        GET
+}
+
+verb Cancel of DistributionRequest {
+    operations POST
+}
+
+structure SegmentFormat {
+    inputSegmentId: string
+    outputSegmentId: string
+    outputKey: string
+    outputValue: string
+}
+
+structure FileDetailsStructure {
+    fileName: string
+    recordCount: int
+}
+
+enum DeliveryTypeEnum {
+    BATCH
+    STREAMING
+}
+
+enum StatusEnum {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+    FAILED
+    CANCELLING
+}
+
+// Integration resource, should really be imported
+resource Integration {
+    id: int
+}
