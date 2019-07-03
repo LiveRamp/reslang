@@ -1,0 +1,46 @@
+-- API for dm
+namespace dm version 1.0.0
+
+-- Distribution request
+request DistributionRequest {
+    input-state:
+        inputDataURL: url
+        description: string
+    output-state:
+        id: int
+        displayType: DisplayTypeEnum output
+        outputDataURL: url output
+        status: StatusEnum
+
+    operations
+        GET MULTIGET id status
+
+    processing-errors:
+        StoppedErrorCode PausedErrorCode
+}
+
+verb DistributionRequest:Cancel {
+    operations:
+        POST
+}
+
+verb DistributionRequest:Retry {
+    operations:
+        POST
+}
+
+verb DistributionRequest:Reprioritize {
+    input-state:
+        priority: int
+    operations:
+        POST
+}
+
+error StoppedErrorCode {
+    errorCode: string 
+}
+
+error PausedErrorCode {
+    reason: string
+    description: string
+}
