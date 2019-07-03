@@ -19,17 +19,17 @@ request DistributionRequest {
         StoppedErrorCode PausedErrorCode
 }
 
-verb DistributionRequest:Cancel {
+action DistributionRequest:Cancel {
     operations:
         POST
 }
 
-verb DistributionRequest:Retry {
+action DistributionRequest:Retry {
     operations:
         POST
 }
 
-verb DistributionRequest:Reprioritize {
+action DistributionRequest:Reprioritize {
     input-state:
         priority: int
     operations:
