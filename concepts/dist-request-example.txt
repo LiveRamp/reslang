@@ -1,7 +1,7 @@
--- API for dm
+"API for dm"
 namespace dm version 1.0.0
 
--- Distribution request
+"Distribution request"
 request DistributionRequest {
     input-state:
         inputDataURL: url
