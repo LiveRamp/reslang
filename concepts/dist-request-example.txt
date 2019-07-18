@@ -1,22 +1,43 @@
+- events come from errors + state change
+- asset resources
+- different characteristics of resource types
+    - permissions + ownership
+    - async + actions
+    - reusable configs
+- must be able to put resources for a namespace in several files
+    - separate file for namespace + top level version
+    - title description, schemes
+- request must have *Request, enum has *Enum
+- mutable attribute (for PUTs)
+- union concept - e.g. field mappings
+
+
+
 "API for dm"
+// notes for developer
 namespace dm version 1.0.0
 
 "Distribution request"
-request DistributionRequest {
-    input-state:
-        inputDataURL: url
-        description: string
-    output-state:
-        id: int
-        displayType: DisplayTypeEnum output
-        outputDataURL: url output
-        status: StatusEnum
+request-resource DistributionRequest {
+    inputDataURL: url
+    description: string mutable
+    id: int output
+    deliveryType: DeliveryTypeEnum output
+    outputDataURL: url output
+    status: StatusEnum output
 
     operations
         GET MULTIGET id status
 
     processing-errors:
         StoppedErrorCode PausedErrorCode
+}
+
+"We can either deliver via batch or streaming"
+enum DeliveryTypeEnum {
+    "Batch mode allows us to send multiple records"
+    BATCH
+    STREAMING
 }
 
 action DistributionRequest:Cancel {
