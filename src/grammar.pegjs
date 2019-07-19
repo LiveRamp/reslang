@@ -1,7 +1,7 @@
 start = details import* (resource / structure / subresource / enum)*
 
 
-details = _ desc:comment? _ "version" _ semver:semver _ ";"? _
+details = _ desc:description? _ "version" _ semver:semver _ ";"? _
     { return {"description": desc, "version": semver} }
 
 // import from another module
@@ -14,13 +14,13 @@ extends = _ "extends" _ name: name _ {
 }
 
 // defining a resource
-resource = _ comment:comment? _ singleton:"singleton"? _ type:("resource" / "request") _ name:resname _ ext:extends? _ "{" _
+resource = _ comment:description? _ singleton:"singleton"? _ type:("resource" / "request") _ name:resname _ ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-subresource = _ comment:comment? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _  ext:extends? _ "{" _
+subresource = _ comment:description? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _  ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "parent": parent,
@@ -35,30 +35,30 @@ op = _ operation:(ops / multiget) _ ";"? _ {
     return operation
 }
 
-ops = _ comment:comment? _ op:("GET" / "PUT" / "POST" / "DELETE") _ {return {"operation": op, "comment": comment}}
-multiget = _ comment:comment? _ "MULTIGET" ids:ids {return {"operation": "MULTIGET", "comment": comment, "ids": ids}}
+ops = _ comment:description? _ op:("GET" / "PUT" / "POST" / "DELETE") _ {return {"operation": op, "comment": comment}}
+multiget = _ comment:description? _ "MULTIGET" ids:ids {return {"operation": "MULTIGET", "comment": comment, "ids": ids}}
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
-structure = _ comment:comment? _ "structure"  _ name:name  _ ext:extends? _ "{" _
+structure = _ comment:description? _ "structure"  _ name:name  _ ext:extends? _ "{" _
     attrs:attr+ _
 "}" _ ";"? _ {
     return {"type": "structure", "name": name, "comment": comment, "extends": ext, "attributes": attrs}
 }
 
 attributes = _ attrs:attr+ _ { return attrs; }
-attr = _ comment:comment? _ name:name _ ":" _ linked:"linked"? _ type:type _ mult:"[]"? _ out:"output"? _ ";"? _ { 
+attr = _ comment:description? _ name:name _ ":" _ linked:"linked"? _ type:type _ mult:"[]"? _ out:"output"? _ ";"? _ { 
     return {"name": name, "comment": comment, "type": type, "multiple": mult !== null, "output": out !== null, "linked": linked !== null}
 }
 
 // enum
-enum = _ comment:comment? _ "enum"  _ name:name _ ext:extends? _ "{" _
+enum = _ comment:description? _ "enum"  _ name:name _ ext:extends? _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
     return {"type": "enum", "name": name, "comment": comment, "extends": ext, "literals": literals}
 }
 
-literal = _ comment:comment? _ name:literalname _ ";"? _ { return name }
+literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 
 // identifiers
 literalname "literalname" = name:[A-Z_]+[A-Z0-9_]* { return name.join(""); }
@@ -67,14 +67,17 @@ name "name" = name:[a-zA-Z]+[a-zA-Z0-9]* { return name.join(""); }
 resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join("") }
 filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
-// comments
-comment = _ p:(single / multi) {return p}
-single = "//" _ p:([^\n]*) {return p.join("")}
-multi = "/*" _ inner:(!"*/" i:. {return i})* "*/" {return inner.join("")}
+// descriptions
+description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("")}
 
 // version
 semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }
 
-// whitespace
-_  = [ \t\r\n]*
+// whitespace or comment
+_  = ([ \t\r\n]+ / comment)*
+
+// comments
+comment = p:(single / multi) {return p}
+single = "//" p:([^\n]*)
+multi = "/*" inner:(!"*/" i:. {return i})* "*/"
 

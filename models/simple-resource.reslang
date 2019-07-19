@@ -1,16 +1,20 @@
 /* this is a simple resource
    designed to show the potential */
+"API title"
 version 0.0.1
 
 // A garage is a place to store cars
+"This is a description of a garage"
 resource Garage {
 	// simple id 
 	id: string
 	name: string
 
 	operations
+		"Actual PUT comment"
 		// this is a PUT comment
 		PUT
 		// this is a POST comment
+		"Actual GET comment"
 		POST GET DELETE MULTIGET id name
 }

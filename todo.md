@@ -1,5 +1,15 @@
 -   Up version
 
+*   namespace across multiple files + collisions
+*   asset, request, configuration, action
+*   separate API title file
+*   map + union
+*   error bodies + references
+
+*   synchronous operations or actions (look at abilitec API)
+*   update to OpenAPI 3
+*   mutable, required, optional
+
 -   Names: fix param names, check on verb, resource, enum
 
 -   Cleanup code
@@ -7,13 +17,12 @@
 
 -   Inheritance - add anyOff + discriminator
 
--   required + optional
--   name collisions
 -   no id needed for singleton GET
--   title of API
 -   MULTIGET w/out id
--   map
--   urns instead of ids
 -   string(\$uri)
 -   errors & defined error bodies
--   examples for attributes
+-   example text for attributes
+
+Don't do:
+
+-   urns instead of ids
