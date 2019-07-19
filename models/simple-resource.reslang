@@ -15,6 +15,6 @@ resource Garage {
 		// this is a PUT comment
 		PUT
 		// this is a POST comment
-		"Actual GET comment"
+		"Actual POST comment"
 		POST GET DELETE MULTIGET id name
 }

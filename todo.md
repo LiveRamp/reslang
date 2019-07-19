@@ -1,5 +1,6 @@
 -   Up version
 
+*   ~~descriptions versus comments~~ 0.5 of 3
 *   namespace across multiple files + collisions
 *   asset, request, configuration, action
 *   separate API title file
@@ -12,9 +13,6 @@
 
 -   Names: fix param names, check on verb, resource, enum
 
--   Cleanup code
--   Link to binary
-
 -   Inheritance - add anyOff + discriminator
 
 -   no id needed for singleton GET
@@ -22,6 +20,12 @@
 -   string(\$uri)
 -   errors & defined error bodies
 -   example text for attributes
+
+Admin:
+
+-   Cleanup code
+-   Link to binary
+-   manual
 
 Don't do:
 
