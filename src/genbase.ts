@@ -1,78 +1,69 @@
-import { IDefinition, IAttribute, IVersion, IImport } from "./treetypes"
+import { IDefinition, IAttribute, IImport, INamespace } from "./treetypes"
 import { parseFile } from "./parse"
-import { importDeclaration } from "@babel/types"
+import { readdirSync } from "fs"
 
 export abstract class BaseGen {
-    protected tree!: any[]
+    protected namespace!: INamespace
     protected defs: IDefinition[] = []
-    protected title!: string
-    protected version!: IVersion
-    protected imported: { [key: string]: IDefinition } = {}
+    private loaded = new Set<string>()
 
-    public constructor(private files: string[]) {
+    public constructor(private dirs: string[]) {
         this.processDefinitions()
     }
 
     public processDefinitions() {
-        let single = this.files.length == 1
-        let first = true
+        let main = true
+        for (const dirname of this.dirs) {
+            this.processDefinition(dirname, main)
+            main = false
+        }
+    }
 
-        // parse the files
-        const infos: { path: string; tree: any[] }[] = []
-        for (const fname of this.files) {
-            const match = fname.match(/(?<path>.*\/)?(?<file>.*).reslang/)
-            if (!match) {
-                console.error(`Filename ${fname} must have .reslang extension`)
-                process.exit(-1)
-            }
-            const path = match!.groups!.path ? match!.groups!.path : "./"
-            this.tree = parseFile(fname)
-            infos.push({ path, tree: this.tree })
-            if (!this.title) {
-                this.title = match!.groups!.file
-                this.version = this.tree[0] as IVersion
-            }
+    public processDefinition(dirname: string, main: boolean) {
+        // parse the files in the directory
+        const match = dirname.match(/(?<path>.*\/)?(?<last>.+)/)
+        if (!match) {
+            throw new Error(`Cannot locate directory: ${dirname}`)
         }
 
-        // process normal defs first, then imports if not in the namespace
-        for (let lp = 0; lp < 2; lp++) {
-            for (const info of infos) {
-                const mydefs = info.tree[2] as IDefinition[]
-                if (lp == 0) {
-                    for (const mydef of mydefs) {
-                        this.defs.push(mydef)
-                    }
-                } else {
-                    // handle imports
-                    const imports = info.tree[1] as IImport[]
-                    for (const imp of imports) {
-                        const itree = parseFile(
-                            info.path + imp.file + ".reslang"
-                        )
-                        const idef = this.extractDefinition(
-                            imp.import,
-                            itree[2]
-                        )
-                        const exist = this.extractDefinitionGently(
-                            idef.name,
-                            this.defs
-                        )
+        const path = match!.groups!.path || "./"
+        const nspace = match!.groups!.last || "??"
 
-                        if (exist && single) {
-                            console.log(exist)
-                            throw new Error(
-                                `Cannot import ${idef.name} from namespace ${
-                                    imp.file
-                                } as it already exists in ${this.title}`
-                            )
-                        }
-                        if (!exist) {
-                            this.imported[idef.name] = idef
-                            this.defs.push(idef)
-                        }
+        // if we have loaded this namespace previously, don't do it again
+        if (this.loaded.has(nspace)) {
+            return
+        }
+        this.loaded.add(nspace)
+
+        // process all files in this directory
+        for (const fname of readdirSync(dirname)) {
+            if (fname.endsWith(".reslang")) {
+                const local = parseFile(path + nspace + "/" + fname, nspace)
+                if (local[0] && main) {
+                    if (!this.namespace) {
+                        this.namespace = local[0]
+                    } else {
+                        throw new Error(
+                            "Cannot specify more than one namespace in a directory: " +
+                                local[0]
+                        )
                     }
                 }
+                // copy over all the defs
+                for (const def of local[2] as IDefinition[]) {
+                    def.secondary = !main
+                    this.defs.push(def)
+                }
+
+                // handle any imports
+                for (const imp of local[1] as IImport[]) {
+                    this.processDefinition(path + imp.import, false)
+                }
             }
+        }
+        // must have a namespace
+        if (!this.namespace) {
+            throw new Error(`No namespace present in ${dirname}`)
         }
     }
 
@@ -115,7 +106,7 @@ export abstract class BaseGen {
         }
         // ask base if this doesn't have one
         if (node.extends) {
-            return this.extractDefinitionId(node.extends, this.defs)
+            return this.extractDefinitionId(node.extends.name, this.defs)
         }
 
         throw new Error("Cannot find id attribute for " + node.name)

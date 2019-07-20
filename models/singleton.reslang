@@ -10,7 +10,7 @@ singleton resource Resource {
         PUT GET
 }
 
-singleton subresource Metadata of Resource {
+singleton subresource Resource::Metadata {
     id: int
     info: string
 

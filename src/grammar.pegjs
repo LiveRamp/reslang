@@ -1,12 +1,15 @@
-start = details import* (resource / structure / subresource / enum)*
+start = namespace? import* (resource / structure / subresource / enum)*
 
-
-details = _ desc:description? _ "version" _ semver:semver _ ";"? _
-    { return {"description": desc, "version": semver} }
+// defining a namespace
+namespace = _ comment:description? _ "namespace" _ "{"
+    _ "title" _ title:description _
+    _ "version" _ version:semver _ "}" _ ";"? _ {
+    return {"comment":comment, "title": title, "version": version}
+}
 
 // import from another module
-import "import" = _ "import" _ name:name _ "from" _ file:filename _ ";"? _ {
-    return {"import": name, "file": file}
+import "import" = _ "import" _ namespace:filename _ ";"? _ {
+    return {"import": namespace}
 }
 
 extends = _ "extends" _ name: name _ {
@@ -20,7 +23,7 @@ resource = _ comment:description? _ singleton:"singleton"? _ type:("resource" / 
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-subresource = _ comment:description? _ singleton:"singleton"? _ type:("subresource" / "verb") _ name:resname _ "of" _ parent:resname _  ext:extends? _ "{" _
+subresource = _ comment:description? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "parent": parent,
@@ -47,7 +50,7 @@ structure = _ comment:description? _ "structure"  _ name:name  _ ext:extends? _ 
 }
 
 attributes = _ attrs:attr+ _ { return attrs; }
-attr = _ comment:description? _ name:name _ ":" _ linked:"linked"? _ type:type _ mult:"[]"? _ out:"output"? _ ";"? _ { 
+attr = _ comment:description? _ name:name _ ":" _ linked:"linked"? _ type:ref _ mult:"[]"? _ out:"output"? _ ";"? _ { 
     return {"name": name, "comment": comment, "type": type, "multiple": mult !== null, "output": out !== null, "linked": linked !== null}
 }
 
@@ -61,8 +64,10 @@ enum = _ comment:description? _ "enum"  _ name:name _ ext:extends? _ "{" _
 literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 
 // identifiers
+ref = parent:(filename ".")? name:resname {
+    return {"parent": parent ? parent[0] : null, "name": name}
+}
 literalname "literalname" = name:[A-Z_]+[A-Z0-9_]* { return name.join(""); }
-type "type" = resname
 name "name" = name:[a-zA-Z]+[a-zA-Z0-9]* { return name.join(""); }
 resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join("") }
 filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
@@ -77,7 +82,7 @@ semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }
 _  = ([ \t\r\n]+ / comment)*
 
 // comments
-comment = p:(single / multi) {return p}
+comment = p:(single / multi) {return null}
 single = "//" p:([^\n]*)
 multi = "/*" inner:(!"*/" i:. {return i})* "*/"
 

@@ -9,7 +9,7 @@ import ParseGen from "./genparse"
 
 // parse the cmd line
 const args = yargs
-    .usage("Usage: reslang module.reslang")
+    .usage("Usage: reslang namespace_directory(s)")
     .option("dotviz", {
         type: "boolean",
         describe: "create dotviz graphical output of the resources"
@@ -76,5 +76,5 @@ try {
         }
     }
 } catch (error) {
-    console.error(error.message)
+    console.error(error)
 }

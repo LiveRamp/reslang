@@ -1,34 +1,55 @@
-import { StringifyOptions } from "querystring"
-
 /**
  * types for the parse tree
  */
 
-export interface IVersion {
-    description: string
+export interface INamespace {
+    comment: string
+    title: string
     version: string
 }
 
 export interface IImport {
     import: string
-    file: string
+}
+
+export interface IReference {
+    name: string
+    parent?: string
 }
 
 export interface IDefinition {
     name: string
-    type: string
+    parent?: string
+    type: ResourceType
     comment: string
     attributes?: IAttribute[]
     operations?: IOperation[]
     literals?: string[]
-    parent?: string
     singleton?: boolean
-    extends?: string
+    extends?: IReference
+    secondary?: boolean
 }
+
+export type ResourceType =
+    | "resource"
+    | "subresource"
+    | "enum"
+    | "action"
+    | "structure"
+
+export let PrimitiveType = [
+    "int",
+    "string",
+    "boolean",
+    "double",
+    "date",
+    "time",
+    "datetime"
+]
 
 export interface IAttribute {
     name: string
-    type: string
+    type: IReference
     output: boolean
     multiple: boolean
     linked: boolean

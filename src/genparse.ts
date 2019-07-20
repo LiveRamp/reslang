@@ -1,6 +1,3 @@
-import { fixName, pluralizeName, getVersion } from "./names"
-import { parseFile } from "./parse"
-import { IImport, IDefinition, IAttribute, IOperation } from "./treetypes"
 import { BaseGen } from "./genbase"
 
 /**
@@ -9,6 +6,10 @@ import { BaseGen } from "./genbase"
 
 export default class ParseGen extends BaseGen {
     public generate() {
-        return JSON.stringify(this.tree, null, 2)
+        return JSON.stringify(
+            { namespace: this.namespace, defs: this.defs },
+            null,
+            2
+        )
     }
 }

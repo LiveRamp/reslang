@@ -1,9 +1,6 @@
-/* this is a simple resource
-   designed to show the potential */
-"API title"
-version 0.0.1
-
 // A garage is a place to store cars
+// hello
+// opdaslads
 "This is a description of a garage"
 resource Garage {
 	// simple id 

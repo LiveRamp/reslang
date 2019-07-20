@@ -1,9 +1,4 @@
-/* This is a more complex example, featuring
-a car with a set of wheel subresources*/
-
-version 0.0.1
-
-import simple-resource;
+import simple-resource
 
 /* this is a Car resource */
 resource Car {

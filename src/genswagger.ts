@@ -1,8 +1,13 @@
 import { fixName, pluralizeName, getVersion } from "./names"
-import { parseFile } from "./parse"
-import { IImport, IDefinition, IAttribute, IOperation } from "./treetypes"
+import {
+    IImport,
+    IDefinition,
+    IAttribute,
+    IOperation,
+    PrimitiveType
+} from "./treetypes"
 import { BaseGen } from "./genbase"
-import { identifier } from "@babel/types"
+import { isPrimitiveType } from "./parse"
 
 /**
  * generate swagger from the parsed representation
@@ -23,12 +28,12 @@ export default class SwagGen extends BaseGen {
         const swag: object = {
             swagger: "2.0",
             info: {
-                title: "Simple API overview",
-                description: this.tree[0].description,
-                version: this.tree[0].version
+                title: this.namespace.title,
+                description: this.namespace.comment,
+                version: this.namespace.version
             },
             host: "liveramp.net",
-            basePath: "/" + this.title,
+            basePath: "/" + this.namespace.title,
             schemes: ["http", "https"],
             tags,
             paths,
@@ -43,9 +48,9 @@ export default class SwagGen extends BaseGen {
         for (const el of this.defs) {
             shouldDef[el.name] = {}
             // don't generate for any imported def
-            if (this.imported[el.name]) {
-                continue
-            }
+            // if (this.imported[el.name]) {
+            //     continue
+            // }
             if (
                 ["resource", "subresource", "request", "verb"].includes(el.type)
             ) {
@@ -88,14 +93,14 @@ export default class SwagGen extends BaseGen {
                     if (post) {
                         shouldDef[el.name].input = true
                         if (el.extends) {
-                            shouldDef[el.extends].input = true
+                            shouldDef[el.extends.name].input = true
                         }
                     }
                     if (multiget) {
                         shouldDef[el.name].multi = true
                         shouldDef[el.name].output = true
                         if (el.extends) {
-                            shouldDef[el.extends].output = true
+                            shouldDef[el.extends.name].output = true
                         }
                     }
                     this.formNonIdOperations(el, path, tagKeys, post, multiget)
@@ -239,10 +244,10 @@ export default class SwagGen extends BaseGen {
      * make a parameter
      */
     private makeProperty(attr: IAttribute): { name: string; prop: any } {
-        const def = this.extractDefinitionGently(attr.type, this.defs)
+        const def = this.extractDefinitionGently(attr.type.name, this.defs)
         let name = attr.name
         if (def && def.type === "resource") {
-            name = attr.name + "-" + fixName(attr.type) + "-id"
+            name = attr.name + "-" + fixName(attr.type.name) + "-id"
             if (attr.multiple) {
                 name = name + "s"
             }
@@ -383,65 +388,67 @@ export default class SwagGen extends BaseGen {
         if (!obj.description) {
             obj.description = attr.comment
         }
-        switch (type) {
-            case "string":
-                obj.type = "string"
-                break
-            case "int":
-                obj.type = "integer"
-                obj.format = "int32"
-                break
-            case "boolean":
-                obj.type = "boolean"
-                break
-            case "double":
-                obj.type = "number"
-                break
-            case "date":
-                obj.type = "string"
-                obj.example = "2019-04-13 (date)"
-                break
-            case "time":
-                obj.type = "string"
-                obj.example = "22:00:01 (time)"
-                break
-            case "datetime":
-                obj.type = "string"
-                obj.example = "2019-04-13T03:35:34Z (datetime)"
-                break
-            default:
-                // is this a structure, an enum or a linked resource
-                const def = this.extractDefinition(attr.type, this.defs)
-                switch (def.type) {
-                    case "structure":
-                        obj.$ref = `#/definitions/${attr.type}Structure`
-                        break
-                    case "resource":
-                        // must have a linked annotation
-                        if (!attr.linked) {
-                            throw new Error(
-                                `Attribute ${attr.name} references resource ${
-                                    attr.type
-                                } but doesn't use linked`
-                            )
-                        }
-                        obj.type = "string"
-                        obj.example = "Link to garage via id(s)"
-                        break
-                    case "enum":
-                        obj.type = "string"
-                        // collect any inherited literals
-                        obj.enum = this.collectInheritedLiterals(def)
-                        break
-                    default:
-                        throw Error(
-                            `Cannot resolve attribute type ${
-                                obj.type
-                            } of name ${obj.name}`
+        const name = type.name
+        const prim = isPrimitiveType(name)
+        if (prim) {
+            switch (name) {
+                case "string":
+                    obj.type = "string"
+                    break
+                case "int":
+                    obj.type = "integer"
+                    obj.format = "int32"
+                    break
+                case "boolean":
+                    obj.type = "boolean"
+                    break
+                case "double":
+                    obj.type = "number"
+                    break
+                case "date":
+                    obj.type = "string"
+                    obj.example = "2019-04-13 (date)"
+                    break
+                case "time":
+                    obj.type = "string"
+                    obj.example = "22:00:01 (time)"
+                    break
+                case "datetime":
+                    obj.type = "string"
+                    obj.example = "2019-04-13T03:35:34Z (datetime)"
+                    break
+            }
+        } else {
+            // is this a structure, an enum or a linked resource
+            const def = this.extractDefinition(attr.type.name, this.defs)
+            switch (def.type) {
+                case "structure":
+                    obj.$ref = `#/definitions/${attr.type.name}Structure`
+                    break
+                case "resource":
+                    // must have a linked annotation
+                    if (!attr.linked) {
+                        throw new Error(
+                            `Attribute ${attr.name} references resource ${
+                                attr.type
+                            } but doesn't use linked`
                         )
-                        break
-                }
-                break
+                    }
+                    obj.type = "string"
+                    obj.example = "Link to garage via id(s)"
+                    break
+                case "enum":
+                    obj.type = "string"
+                    // collect any inherited literals
+                    obj.enum = this.collectInheritedLiterals(def)
+                    break
+                default:
+                    throw Error(
+                        `Cannot resolve attribute type ${
+                            obj.type.name
+                        } of name ${obj.name}`
+                    )
+            }
         }
 
         // if multi, then push down to an array
@@ -463,7 +470,7 @@ export default class SwagGen extends BaseGen {
         if (def && def.literals) {
             const plits = def.extends
                 ? this.collectInheritedLiterals(
-                      this.extractDefinition(def.extends, this.defs)
+                      this.extractDefinition(def.extends.name, this.defs)
                   )
                 : []
             return plits.concat(def.literals)
@@ -494,9 +501,9 @@ export default class SwagGen extends BaseGen {
     ) {
         for (const el of defs) {
             // don't generate for any imported def
-            if (this.imported[el.name]) {
-                continue
-            }
+            // if (this.imported[el.name]) {
+            //     continue
+            // }
             if ("resource" === el.type) {
                 const tag = {
                     name: el.name,
@@ -567,9 +574,9 @@ export default class SwagGen extends BaseGen {
     ) {
         for (const def of this.defs) {
             // don't generate for any imported def
-            if (this.imported[def.name]) {
-                continue
-            }
+            // if (this.imported[def.name]) {
+            //     continue
+            // }
 
             if (
                 ["resource", "subresource", "request", "verb"].includes(

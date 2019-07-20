@@ -25,7 +25,7 @@ export default class DotvizGen extends BaseGen {
         for (const def of this.defs) {
             const attrs = this.formAttributes(def, links)
             const ops = this.formOperations(def)
-            const imported = def.name in this.imported
+            const imported = false //def.name in this.imported
             const color = imported ? "color='gray'" : ""
             const bgcolor = ["resource", "request"].includes(def.type)
                 ? "bgcolor='#ffffcc'"
@@ -74,7 +74,7 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to verb
-                if ("verb" === def.type) {
+                if ("action" === def.type) {
                     const label = this.makeLabelText("verb")
                     viz += `"${def.parent}" -> "${
                         def.name
@@ -132,12 +132,15 @@ export default class DotvizGen extends BaseGen {
                 const output = attr.output ? " (out)" : ""
 
                 // if this is linked do it that way
-                const type = this.extractDefinitionGently(attr.type, this.defs)
+                const type = this.extractDefinitionGently(
+                    attr.type.name,
+                    this.defs
+                )
                 if (attr.linked) {
                     links.push({
                         type: "resource",
                         from: def.name,
-                        to: attr.type,
+                        to: attr.type.name,
                         label: ` ${attr.name}${multi}${output}`
                     })
                     continue
@@ -146,7 +149,7 @@ export default class DotvizGen extends BaseGen {
                     links.push({
                         type: "structure",
                         from: def.name,
-                        to: attr.type,
+                        to: attr.type.name,
                         label: ` ${attr.name}${multi}${output}`
                     })
                     continue
