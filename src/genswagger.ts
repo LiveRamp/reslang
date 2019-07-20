@@ -52,7 +52,13 @@ export default class SwagGen extends BaseGen {
             //     continue
             // }
             if (
-                ["resource", "subresource", "request", "verb"].includes(el.type)
+                [
+                    "asset-resource",
+                    "configuration-resource",
+                    "subresource",
+                    "request-resource",
+                    "verb"
+                ].includes(el.type)
             ) {
                 const parent = el.parent ? el.parent : null
                 const parentName = parent
@@ -504,7 +510,9 @@ export default class SwagGen extends BaseGen {
             // if (this.imported[el.name]) {
             //     continue
             // }
-            if ("resource" === el.type) {
+            if (
+                ["asset-resource", "configuration-resource"].includes(el.type)
+            ) {
                 const tag = {
                     name: el.name,
                     description: el.comment
@@ -512,7 +520,7 @@ export default class SwagGen extends BaseGen {
                 tags.push(tag)
                 tagKeys[el.name] = tag.name
             }
-            if ("request" === el.type) {
+            if ("request-resource" === el.type) {
                 const tag = {
                     name: el.name,
                     description: `(request) ${el.comment}`

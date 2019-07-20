@@ -1,7 +1,7 @@
 import simple-resource
 
 /* this is a Car resource */
-resource Car {
+asset-resource Car {
 	id: int
 	bought: date output
 	brand: BrandEnum

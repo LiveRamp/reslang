@@ -2,7 +2,7 @@
 // hello
 // opdaslads
 "This is a description of a garage"
-resource Garage {
+configuration-resource Garage {
 	// simple id 
 	id: string
 	name: string
