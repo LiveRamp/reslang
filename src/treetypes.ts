@@ -20,22 +20,34 @@ export interface IReference {
 export interface IDefinition {
     name: string
     parent?: string
-    type: ResourceType
+    type: DefinitionType
     comment: string
     attributes?: IAttribute[]
     operations?: IOperation[]
     literals?: string[]
     singleton?: boolean
     extends?: IReference
+
+    // used to see if we generate definitions or not
     secondary?: boolean
+    generateOutput: boolean
+    generateInput: boolean
 }
 
-export type ResourceType =
-    | "resource"
+export type DefinitionType =
+    | "request-resource"
+    | "asset-resource"
+    | "configuration-resource"
     | "subresource"
     | "enum"
     | "action"
     | "structure"
+
+export let ResourceType = [
+    "request-resource",
+    "asset-resource",
+    "configuration-resource"
+]
 
 export let PrimitiveType = [
     "int",

@@ -4,7 +4,8 @@ import {
     IDefinition,
     IAttribute,
     IOperation,
-    PrimitiveType
+    PrimitiveType,
+    ResourceType
 } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
@@ -13,17 +14,10 @@ import { isPrimitiveType } from "./parse"
  * generate swagger from the parsed representation
  */
 
-interface IShouldDef {
-    input?: boolean
-    output?: boolean
-    multi?: boolean
-}
-
 export default class SwagGen extends BaseGen {
     public generate() {
         const tags: any[] = []
         const paths: any = {}
-        const shouldDef: { [key: string]: IShouldDef } = {}
         const definitions: any = {}
         const swag: object = {
             swagger: "2.0",
@@ -46,7 +40,6 @@ export default class SwagGen extends BaseGen {
 
         // form the paths
         for (const el of this.defs) {
-            shouldDef[el.name] = {}
             // don't generate for any imported def
             // if (this.imported[el.name]) {
             //     continue
@@ -97,17 +90,17 @@ export default class SwagGen extends BaseGen {
                     }
 
                     if (post) {
-                        shouldDef[el.name].input = true
-                        if (el.extends) {
-                            shouldDef[el.extends.name].input = true
-                        }
+                        // shouldDef[el.name].input = true
+                        // if (el.extends) {
+                        //     shouldDef[el.extends.name].input = true
+                        // }
                     }
                     if (multiget) {
-                        shouldDef[el.name].multi = true
-                        shouldDef[el.name].output = true
-                        if (el.extends) {
-                            shouldDef[el.extends.name].output = true
-                        }
+                        // shouldDef[el.name].multi = true
+                        // shouldDef[el.name].output = true
+                        // if (el.extends) {
+                        //     shouldDef[el.extends.name].output = true
+                        // }
                     }
                     this.formNonIdOperations(el, path, tagKeys, post, multiget)
                 }
@@ -141,10 +134,10 @@ export default class SwagGen extends BaseGen {
                 }
 
                 if (put) {
-                    shouldDef[el.name].input = true
+                    // shouldDef[el.name].input = true
                 }
                 if (get) {
-                    shouldDef[el.name].output = true
+                    // shouldDef[el.name].output = true
                 }
                 this.formIdOperations(
                     el,
@@ -159,7 +152,7 @@ export default class SwagGen extends BaseGen {
         }
 
         // model definitions
-        this.formDefinitions(shouldDef, definitions)
+        this.formDefinitions(definitions)
 
         return swag
     }
@@ -252,7 +245,7 @@ export default class SwagGen extends BaseGen {
     private makeProperty(attr: IAttribute): { name: string; prop: any } {
         const def = this.extractDefinitionGently(attr.type.name, this.defs)
         let name = attr.name
-        if (def && def.type === "resource") {
+        if (def && ResourceType.includes(def.type)) {
             name = attr.name + "-" + fixName(attr.type.name) + "-id"
             if (attr.multiple) {
                 name = name + "s"
@@ -431,7 +424,9 @@ export default class SwagGen extends BaseGen {
                 case "structure":
                     obj.$ref = `#/definitions/${attr.type.name}Structure`
                     break
-                case "resource":
+                case "request-resource":
+                case "asset-resource":
+                case "configuration-resource":
                     // must have a linked annotation
                     if (!attr.linked) {
                         throw new Error(
@@ -450,9 +445,9 @@ export default class SwagGen extends BaseGen {
                     break
                 default:
                     throw Error(
-                        `Cannot resolve attribute type ${
-                            obj.type.name
-                        } of name ${obj.name}`
+                        `Cannot resolve attribute type ${obj.type} of name ${
+                            obj.name
+                        }`
                     )
             }
         }
@@ -576,10 +571,7 @@ export default class SwagGen extends BaseGen {
         definitions[def.name + suffix] = request
     }
 
-    private formDefinitions(
-        shouldDef: { [key: string]: IShouldDef },
-        definitions: any
-    ) {
+    private formDefinitions(definitions: any) {
         for (const def of this.defs) {
             // don't generate for any imported def
             // if (this.imported[def.name]) {
@@ -587,11 +579,15 @@ export default class SwagGen extends BaseGen {
             // }
 
             if (
-                ["resource", "subresource", "request", "verb"].includes(
-                    def.type
-                )
+                [
+                    "asset-resource",
+                    "configuration-resource",
+                    "subresource",
+                    "request-resource",
+                    "action"
+                ].includes(def.type)
             ) {
-                const should = shouldDef[def.name]
+                const should = { input: true, output: true, multi: true } //shouldDef[def.name]
                 if (should.input) {
                     this.addDefinition(definitions, def, false, "Input")
                 }
