@@ -2,7 +2,16 @@
 // {direction:topDown}
 // {generate:true}
 
-[note: You can stick notes on diagrams too!{bg:cornsilk}]
+[INamespace|comment:string;title:string;version:string{bg:orange}]
+[IDefinition|name:string;parent?:string;comment:string{bg:orange}]
+[DefinitionType|"request-resource" "asset-resource" "configuration-resource";{bg:orange}]
+[IDefinition]-type>[DefinitionType]
+[IAttribute|name:string;output:boolean{bg:orange}]
+[IDefinition]-attributes*>[IAttribute]
+[IOperation|operation:string;comment:string;ids?:string*{bg:orange}]
+[IDefinition]-operations*>[IOperation]
+
+
 [Customer]<>1-orders 0..*>[Order]
 [Order]++*-*>[LineItem]
 [Order]-1>[DeliveryMethod]
