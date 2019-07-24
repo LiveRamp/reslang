@@ -1,0 +1,618 @@
+openapi: 3.0.0
+info:
+  title: Distribution API - BETA
+  version: 0.0.1
+  description: API for accessing LiveRamp's Distribution Service.
+paths:
+  /v1/distribution-requests:
+    get:
+      summary: List Distribution Requests
+      operationId: findDistributionRequests
+      responses:
+        "200":
+          description: ""
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  distributionRequests:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/distribution-request-output"
+                required:
+                  - distributionRequests
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "422":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "500":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+      description: >-
+        Use this endpoint to find existing DistributionRequests. 
+
+        The result set is paginated for performance and sorted by createdAt descending by default. Response of this method includes a header “T-Total-Count” to indicate the total number of records. Use this value along with query parameters, offset and limit, to iterate through the entire result set.
+      tags:
+        - Distribution Request
+      parameters:
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - in: query
+          name: sort
+          description: >-
+            Sort key and order. The syntax is: 
+
+            sort=key1:asc,key2:desc
+
+            If a key is specified multiple times, we'll use the sort order associated with the last occurrence of the key. 
+
+            Example:
+
+            * sort=createdAt:asc
+
+            * sort=statusUpdatedAt:desc,createdAt:asc
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - createdAt:asc
+                - createdAt:desc
+                - statusUpdatedAt:asc
+                - statusUpdatedAt:desc
+        - in: query
+          name: status
+          description: |-
+            Filter the list of DistributionRequests by status.
+            Example:
+            * status=QUEUED
+            * status=QUEUED,IN_PROGRESS
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - QUEUED
+                - IN_PROGRESS
+                - COMPLETED
+                - CANCELLED
+                - FAILED
+        - in: query
+          name: createdAfter
+          description: >-
+            Filter the list of DistributionRequests by when it was created. The
+            date-time value must be in UTC, formatted in ISO-8601.
+
+            Example:
+
+            * createdAfter=2019-06-20T16:53:07Z
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: createdBefore
+          description: >-
+            Filter the list of DistributionRequests by when it was created. The
+            date-time value must be in UTC, formatted in ISO-8601.
+
+            Example:
+
+            * createdBefore=2019-06-20T16:53:07Z
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: statusUpdatedAfter
+          description: >-
+            Filter the list of DistributionRequests by when it's status was last
+            updated. The date-time value must be in UTC, formatted in ISO-8601.
+
+            Example:
+
+            * statusUpdatedAfter=2019-06-20T16:53:07Z
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: statusUpdatedBefore
+          description: >-
+            Filter the list of DistributionRequests by when it's status was last
+            updated. The date-time value must be in UTC, formatted in ISO-8601.
+
+            Example:
+
+            * statusUpdatedBefore=2019-06-20T16:53:07Z
+          schema:
+            type: string
+            format: date-time
+    post:
+      summary: Create Distribution Request
+      operationId: createDistributionRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/distribution-request-input"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "422":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+        "500":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errors"
+      description: Use this endpoint to create a new DistributionRequest.
+      tags:
+        - Distribution Request
+  "/v1/distribution-requests/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get Distribution Request Overview
+      operationId: getDistributionRequest
+      responses:
+        "200":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/distribution-request-output"
+        "400":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "401":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "403":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "422":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "500":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+      description: "Use this endpoint to fetch the overview of a given DistributionRequest,
+        including current status, input configuration as well as output
+        metadata, if the request has completed. "
+      tags:
+        - Distribution Request
+  "/v1/distribution-requests/{id}/actions/cancel":
+    post:
+      responses:
+        "200":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "401":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "403":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "422":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "500":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+      summary: Cancel Distribution Request
+      description: >-
+        Use this method to cancel a given DistributionRequest. This will prevent
+        the request from moving to the next stage, but may not halt or reverse
+        any current processing of this request. A side-effect of this is that we
+        may deliver data to a destination, even if it was cancelled.
+
+
+        The cancelled DistributionRequest will still be kept in the system for bookkeeping.
+      operationId: cancelDistributionRequest
+      tags:
+        - Distribution Request
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  "/v1/distribution-requests/{id}/actions/retry":
+    post:
+      responses:
+        "200":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "401":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "403":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "422":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+        "500":
+          description: ""
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/errors"
+      summary: Retry Failed Distribution Request
+      description: "Use this method to retry a failed DistributionRequest. This will try to
+        resume a failed request from the last successful step. "
+      operationId: retryDistributionRequest
+      tags:
+        - Distribution Request
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+tags:
+  - name: Distribution Request
+servers:
+  - url: https://api.liveramp.com/distribution
+components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Offset of the record (starting from 0) to include in the response.
+      schema:
+        type: number
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: Number of records to return. If unspecified, 10 records will be
+        returned. Maximum value for limit can be 100.
+      schema:
+        type: number
+        maximum: 100
+        default: 10
+  schemas:
+    distribution-request-input:
+      title: Distribution Request Input
+      description: The properties that are allowed when creating a DistributionRequest.
+      type: object
+      properties:
+        destinationEndpointID:
+          type: string
+          example: urn:lr:endpoint:1234
+          description: Reference to a destination's endpoints to be used for distributing
+            the data.
+        destinationEndpointProperties:
+          type: object
+          example:
+            clientID: "8234"
+          description: A map of keys and values needed to use the selected destination
+            endpoint.
+        inputDataURL:
+          type: string
+          description: "URL of the data to be distributed. Currently, we only support files
+            in GCS.  "
+          format: uri
+          example: https://storage.google.com/buckets/my-bucket/dog-lovers-campaign.csv
+        dataMappingConfigs:
+          type: array
+          description: >-
+            A destination platform might require a particular key/value data
+            field to be passed as segment IDs or as different key/value
+            information than is contained in the input file. An application user
+            can use the mapping configuration parameters to map a given input
+            data field to the output type or values required by the destination
+            platform.
+
+
+            For each data field that needs to be transformed, use the input parameters “key” and “value” to specify the key/value pair that should be transformed.
+
+
+            To map a particular input key/value pair into a specific segment ID, use the “destinationSegmentID” output parameter to specify the required value.  For example, to map a data field with the key/value of “gender=female” to the segment ID “MM1234”, "Pets=Dogs" to segment ID "MM5678", etc.
+
+
+            To map a particular input key/value pair into different values for the key and value, use the “key” and “value” output parameters to specify the required values.  For example, to map a data field with the key/value of “gender=female” to the key/value of “G=F”, "Pets=Dogs" to "Pets in Houshold=Dogs".
+
+
+            Note: If you need to pass the input key/value data without any transformation, you still need to create entries for those keys in this array. For example, to pass all values of key "country" without any transformation, do not set "value" in both the input and output key/value parameters.
+
+
+            Note: This array can only accept upto 500 entries. For requests with more than 500 entries, an error with status code 422 will be returned.
+          items:
+            $ref: "#/components/schemas/data-mapping-config"
+      required:
+        - destinationEndpointID
+        - destinationEndpointProperties
+        - inputDataURL
+        - dataMappingConfigs
+    distribution-request-output:
+      title: Distribution Request Output
+      description: The properties that are included when fetching a list of
+        DistributionRequests or a given DistributionRequest.
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              example: abc-123-456
+          required:
+            - id
+        - $ref: "#/components/schemas/distribution-request-input"
+        - type: object
+          properties:
+            createdAt:
+              type: string
+              description: Datetime in UTC, formatted as ISO-8601, when the request was
+                created.
+              format: date-time
+            status:
+              $ref: "#/components/schemas/distribution-request-status-enum"
+            statusUpdatedAt:
+              type: string
+              format: date-time
+              description: Datetime in UTC, formatted as ISO-8601, when the status of the
+                request last changed.
+            outputMetadata:
+              oneOf:
+                - $ref: "#/components/schemas/batch-output-metadata"
+                - $ref: "#/components/schemas/streaming-output-metadata"
+            deliveryType:
+              type: string
+              enum:
+                - BATCH
+                - STREAMING
+          required:
+            - createdAt
+            - status
+            - statusUpdatedAt
+            - deliveryType
+    error:
+      type: object
+      title: Error
+      description: Error details, only available if there was an issue in processing this
+        request.
+      properties:
+        httpStatusCode:
+          type: integer
+          description: The HTTP error status code for this problem.
+        message:
+          type: string
+          description: Human readable error message.
+        errorCode:
+          type: string
+          description: Optional, more granular error code for this problem.
+          example: BAD_HEADER_PARAMETER
+      required:
+        - httpStatusCode
+        - message
+    distribution-request-status-enum:
+      type: string
+      title: Distribution Request Status Enum
+      enum:
+        - QUEUED
+        - IN_PROGRESS
+        - COMPLETED
+        - FAILED
+        - CANCELLED
+      description: "TODO: Work with Greg for description of different statuses. "
+    input-key-value-format:
+      type: object
+      title: Input Key Value Format
+      properties:
+        key:
+          type: number
+          example: 43132312
+        value:
+          example: "342"
+          oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+      required:
+        - key
+    output-segment-id-format:
+      type: object
+      title: Output Segment ID Format
+      required:
+        - destinationSegmentID
+      properties:
+        destinationSegmentID:
+          type: string
+          example: MM1234
+    errors:
+      type: object
+      title: Errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/error"
+    batch-output-metadata:
+      type: object
+      title: Batch Output Metadata
+      properties:
+        fileDetails:
+          type: array
+          description: Detail of each file sent to the destination.
+          items:
+            type: object
+            properties:
+              fileName:
+                type: string
+                example: a.txt
+              lineCount:
+                type: number
+                example: 5000
+            required:
+              - fileName
+              - lineCount
+        totalOutputSize:
+          type: number
+          description: Total size of the distributed data in bytes.
+          example: 1023214000
+      required:
+        - fileDetails
+        - totalOutputSize
+    streaming-output-metadata:
+      type: object
+      title: Streaming Output Metadata
+      required:
+        - deliveryStartedAt
+        - totalOutputSize
+      properties:
+        deliveryStartedAt:
+          type: string
+          format: date-time
+          description: "Start time of delivery, in UTC, formatted as ISO-8601. "
+        totalOutputSize:
+          type: number
+          description: Total size of the distributed data in bytes.
+          example: 1023214000
+    output-key-value-format:
+      type: object
+      title: Output Key Value Format
+      required:
+        - key
+      properties:
+        key:
+          type: string
+          example: PETS
+        value:
+          type: string
+          example: DOGS
+    data-mapping-config:
+      type: object
+      title: Data Mapping Config
+      properties:
+        input:
+          oneOf:
+            - $ref: "#/components/schemas/input-key-value-format"
+        output:
+          oneOf:
+            - $ref: "#/components/schemas/output-key-value-format"
+            - $ref: "#/components/schemas/output-segment-id-format"
+      required:
+        - input
+        - output
