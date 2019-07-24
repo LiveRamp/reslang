@@ -1,12 +1,13 @@
 import fs from "fs"
 import peg from "pegjs"
 import { IDefinition, PrimitiveType } from "./treetypes"
+import * as path from "path"
 
 export function readFile(name: string) {
     return fs.readFileSync(name, { encoding: "utf8" })
 }
 
-const grammar = readFile("src/grammar.pegjs")
+const grammar = readFile(path.join(__dirname, "grammar.pegjs"))
 
 export function loadParser() {
     try {
