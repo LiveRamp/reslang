@@ -1,9 +1,9 @@
 -   Up version
 
-*   ~~descriptions versus comments~~ 0.5 of 3
+*   ~~descriptions versus comments~~
+*   ~~separate API title file~~
 *   namespace across multiple files + collisions
 *   asset, request, configuration, action
-*   separate API title file
 *   map + union
 *   error bodies + references
 
@@ -18,7 +18,6 @@
 -   no id needed for singleton GET
 -   MULTIGET w/out id
 -   string(\$uri)
--   errors & defined error bodies
 -   example text for attributes
 
 Admin:
@@ -26,7 +25,3 @@ Admin:
 -   Cleanup code
 -   Link to binary
 -   manual
-
-Don't do:
-
--   urns instead of ids
