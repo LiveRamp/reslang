@@ -1,6 +1,6 @@
 
 "This is the description of the API"
 namespace {
-    title "Simple resource API"
-    version 0.0.1
+    title "A simple resource API"
+    version 0.1.2
 }

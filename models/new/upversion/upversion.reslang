@@ -1,8 +1,10 @@
-/* this is a simple resource
-   designed to show the potential */
-version 0.0.1
 
-resource ResourceA {
+"This is the description of the API"
+namespace {
+    title "An API showing evolution"
+    version 0.1.2
+}
+asset-resource ResourceA {
     id: int
     name: string
     b: linked ResourceB
@@ -12,7 +14,7 @@ resource ResourceA {
         GET
 }
 
-resource ResourceB {
+asset-resource ResourceB {
     id: int
     size: int
 
@@ -20,7 +22,7 @@ resource ResourceB {
         POST GET PUT
 }
 
-resource v2/ResourceB {
+asset-resource v2/ResourceB {
     id: int
     totalSize: int
 
@@ -28,7 +30,7 @@ resource v2/ResourceB {
         POST GET
 }
 
-subresource Sub of v2/ResourceB {
+subresource v2/ResourceB::Sub {
     id: int
     name: string
 

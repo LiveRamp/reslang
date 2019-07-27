@@ -1,6 +1,5 @@
-import { fixName, pluralizeName, getVersion } from "./names"
+import { fixName, pluralizeName, getVersion, sanitize } from "./names"
 import {
-    IImport,
     IDefinition,
     IAttribute,
     IOperation,
@@ -41,28 +40,37 @@ export default class SwagGen extends BaseGen {
         // form the paths
         for (const el of this.defs) {
             // don't generate for any imported def
-            // if (this.imported[el.name]) {
-            //     continue
-            // }
+            if (el.secondary) {
+                continue
+            }
             if (
                 [
                     "asset-resource",
                     "configuration-resource",
                     "subresource",
                     "request-resource",
-                    "verb"
+                    "action"
                 ].includes(el.type)
             ) {
-                const parent = el.parent ? el.parent : null
-                const parentName = parent
-                    ? pluralizeName(fixName(parent))
-                    : null
-                const sname = fixName(el.name)
+                // locate the parent
+                let parentName = null
+                if (el.parent) {
+                    const parent = this.extractDefinition(el.parent)
+                    parentName = sanitize(parent.name)
+                    if (!parent.singleton) {
+                        parentName = pluralizeName(parentName)
+                    }
+                }
+                const sname = fixName(el.short)
                 const name = pluralizeName(sname)
-                const version = parent
-                    ? getVersion(el.parent!)
+                const version = parentName
+                    ? getVersion(parentName!)
                     : getVersion(el.name)
                 const singleton = el.singleton
+                // now we can remove the version
+                if (parentName) {
+                    parentName = fixName(parentName)
+                }
 
                 let path: any = {}
 
@@ -81,7 +89,7 @@ export default class SwagGen extends BaseGen {
                 }
 
                 if (!singleton && (post || multiget)) {
-                    if (parent) {
+                    if (parentName) {
                         paths[
                             `/${version}/${parentName}/{parentId}/${name}`
                         ] = path
@@ -90,17 +98,19 @@ export default class SwagGen extends BaseGen {
                     }
 
                     if (post) {
-                        // shouldDef[el.name].input = true
-                        // if (el.extends) {
-                        //     shouldDef[el.extends.name].input = true
-                        // }
+                        el.generateInput = true
+                        if (el.extends) {
+                            const ext = this.extractDefinition(el.extends.name)
+                            ext.generateInput = true
+                        }
                     }
                     if (multiget) {
-                        // shouldDef[el.name].multi = true
-                        // shouldDef[el.name].output = true
-                        // if (el.extends) {
-                        //     shouldDef[el.extends.name].output = true
-                        // }
+                        el.generateMulti = true
+                        el.generateOutput = true
+                        if (el.extends) {
+                            const ext = this.extractDefinition(el.extends.name)
+                            ext.generateOutput = true
+                        }
                     }
                     this.formNonIdOperations(el, path, tagKeys, post, multiget)
                 }
@@ -115,7 +125,7 @@ export default class SwagGen extends BaseGen {
                 path = {}
                 if (get || put || del) {
                     if (singleton) {
-                        if (parent) {
+                        if (parentName) {
                             paths[
                                 `/${version}/${parentName}/{parentId}/${sname}`
                             ] = path
@@ -123,7 +133,7 @@ export default class SwagGen extends BaseGen {
                             paths[`/${version}/${sname}`] = path
                         }
                     } else {
-                        if (parent) {
+                        if (parentName) {
                             paths[
                                 `/${version}/${parentName}/{parentId}/${name}/{id}`
                             ] = path
@@ -134,10 +144,10 @@ export default class SwagGen extends BaseGen {
                 }
 
                 if (put) {
-                    // shouldDef[el.name].input = true
+                    el.generateInput = true
                 }
                 if (get) {
-                    // shouldDef[el.name].output = true
+                    el.generateOutput = true
                 }
                 this.formIdOperations(
                     el,
@@ -165,9 +175,10 @@ export default class SwagGen extends BaseGen {
         multiget: IOperation | null
     ) {
         if (post) {
+            const short = el.short
             path.post = {
-                tags: [tagKeys[el.name]],
-                operationId: "create" + el.name,
+                tags: [tagKeys[short]],
+                operationId: "create" + short,
                 description: post.comment,
                 parameters: [
                     {
@@ -181,10 +192,10 @@ export default class SwagGen extends BaseGen {
                 ],
                 responses: {
                     200: {
-                        description: el.name + " created successfully"
+                        description: short + " created successfully"
                     },
                     default: {
-                        description: "Error creating " + el.name,
+                        description: "Error creating " + short,
                         schema: {
                             $ref: "#/definitions/ErrorBody"
                         }
@@ -210,15 +221,16 @@ export default class SwagGen extends BaseGen {
                     }
                 }
 
+                const short = el.short
                 path.get = {
-                    tags: [tagKeys[el.name]],
+                    tags: [tagKeys[short]],
                     operationId: "multiget" + el.name,
                     description: multiget.comment,
                     parameters: params,
                     responses: {
                         200: {
                             description:
-                                pluralizeName(el.name) +
+                                pluralizeName(short) +
                                 " retrieved successfully",
                             schema: {
                                 $ref:
@@ -227,7 +239,7 @@ export default class SwagGen extends BaseGen {
                         },
                         default: {
                             description:
-                                "Error retrieving " + pluralizeName(el.name),
+                                "Error retrieving " + pluralizeName(short),
                             schema: {
                                 $ref: "#/definitions/ErrorBody"
                             }
@@ -243,10 +255,13 @@ export default class SwagGen extends BaseGen {
      * make a parameter
      */
     private makeProperty(attr: IAttribute): { name: string; prop: any } {
-        const def = this.extractDefinitionGently(attr.type.name, this.defs)
+        const def = this.extractDefinitionGently(attr.type.name)
+        if (def) {
+            def.generateInput = true
+        }
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
-            name = attr.name + "-" + fixName(attr.type.name) + "-id"
+            name = attr.name + "-" + fixName(attr.type.short) + "-id"
             if (attr.multiple) {
                 name = name + "s"
             }
@@ -260,15 +275,12 @@ export default class SwagGen extends BaseGen {
 
     private addParentPathId(el: any, path: any) {
         if (el.parent) {
-            const param = this.addType(
-                this.extractDefinitionId(el.parent, this.defs),
-                {
-                    in: "path",
-                    name: "parentId",
-                    description: "Id of parent " + el.parent,
-                    required: true
-                }
-            )
+            const param = this.addType(this.extractDefinitionId(el.parent), {
+                in: "path",
+                name: "parentId",
+                description: "Id of parent " + el.parent,
+                required: true
+            })
             if (path.parameters) {
                 path.parameters.push(param)
             } else {
@@ -288,13 +300,14 @@ export default class SwagGen extends BaseGen {
     ) {
         if (get) {
             const idtype = this.extractId(el)
+            const short = el.short
             path.get = {
-                tags: [tagKeys[el.name]],
+                tags: [tagKeys[short]],
                 operationId: "retrieve" + el.name,
                 description: get.comment,
                 responses: {
                     200: {
-                        description: el.name + " retrieved successfully",
+                        description: short + " retrieved successfully",
                         schema: {
                             $ref: "#/definitions/" + el.name + "Output"
                         }
@@ -320,19 +333,20 @@ export default class SwagGen extends BaseGen {
         }
         if (put) {
             const idtype = this.extractId(el)
+            const short = el.short
             path.put = {
-                tags: [tagKeys[el.name]],
+                tags: [tagKeys[short]],
                 operationId: "modify" + el.name,
                 description: put.comment,
                 responses: {
                     200: {
-                        description: el.name + " modified successfully",
+                        description: short + " modified successfully",
                         schema: {
                             $ref: "#/definitions/" + el.name + "Input"
                         }
                     },
                     default: {
-                        description: "Error modifying " + el.name,
+                        description: "Error modifying " + short,
                         schema: {
                             $ref: "#/definitions/ErrorBody"
                         }
@@ -352,16 +366,17 @@ export default class SwagGen extends BaseGen {
         }
         if (del) {
             const idtype = this.extractId(el)
+            const short = el.short
             path.delete = {
-                tags: [tagKeys[el.name]],
+                tags: [tagKeys[short]],
                 operationId: "delete" + el.name,
                 description: del.comment,
                 responses: {
                     200: {
-                        description: el.name + " deleted successfully"
+                        description: short + " deleted successfully"
                     },
                     default: {
-                        description: "Error deleting " + el.name,
+                        description: "Error deleting " + short,
                         schema: {
                             $ref: "#/definitions/ErrorBody"
                         }
@@ -419,7 +434,7 @@ export default class SwagGen extends BaseGen {
             }
         } else {
             // is this a structure, an enum or a linked resource
-            const def = this.extractDefinition(attr.type.name, this.defs)
+            const def = this.extractDefinition(attr.type.name)
             switch (def.type) {
                 case "structure":
                     obj.$ref = `#/definitions/${attr.type.name}Structure`
@@ -471,7 +486,7 @@ export default class SwagGen extends BaseGen {
         if (def && def.literals) {
             const plits = def.extends
                 ? this.collectInheritedLiterals(
-                      this.extractDefinition(def.extends.name, this.defs)
+                      this.extractDefinition(def.extends.name)
                   )
                 : []
             return plits.concat(def.literals)
@@ -491,53 +506,49 @@ export default class SwagGen extends BaseGen {
     }
 
     private formTags(
-        defs: Array<{
-            type: string
-            name: string
-            parent?: string
-            comment: string
-        }>,
+        defs: IDefinition[],
         tags: any[],
         tagKeys: { [key: string]: string }
     ) {
         for (const el of defs) {
             // don't generate for any imported def
-            // if (this.imported[el.name]) {
-            //     continue
-            // }
+            if (el.secondary) {
+                continue
+            }
+            const short = el.short
             if (
                 ["asset-resource", "configuration-resource"].includes(el.type)
             ) {
                 const tag = {
-                    name: el.name,
+                    name: short,
                     description: el.comment
                 }
                 tags.push(tag)
-                tagKeys[el.name] = tag.name
+                tagKeys[short] = tag.name
             }
             if ("request-resource" === el.type) {
                 const tag = {
-                    name: el.name,
+                    name: short,
                     description: `(request) ${el.comment}`
                 }
                 tags.push(tag)
-                tagKeys[el.name] = tag.name
+                tagKeys[short] = tag.name
             }
             if ("subresource" === el.type) {
                 const tag = {
-                    name: `${el.parent} / ${el.name}`,
+                    name: `${el.parentShort} / ${short}`,
                     description: el.comment
                 }
                 tags.push(tag)
-                tagKeys[el.name] = tag.name
+                tagKeys[short] = tag.name
             }
-            if ("verb" === el.type) {
+            if ("action" === el.type) {
                 const tag = {
-                    name: `${el.parent} / ${el.name}`,
+                    name: `${el.parent} / ${short}`,
                     description: el.comment
                 }
                 tags.push(tag)
-                tagKeys[el.name] = tag.name
+                tagKeys[short] = tag.name
             }
         }
     }
@@ -573,11 +584,6 @@ export default class SwagGen extends BaseGen {
 
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
-            // don't generate for any imported def
-            // if (this.imported[def.name]) {
-            //     continue
-            // }
-
             if (
                 [
                     "asset-resource",
@@ -585,18 +591,18 @@ export default class SwagGen extends BaseGen {
                     "subresource",
                     "request-resource",
                     "action"
-                ].includes(def.type)
+                ].includes(def.type) &&
+                !def.secondary
             ) {
-                const should = { input: true, output: true, multi: true } //shouldDef[def.name]
-                if (should.input) {
+                if (def.generateInput) {
                     this.addDefinition(definitions, def, false, "Input")
                 }
-                if (should.output) {
+                if (def.generateOutput) {
                     this.addDefinition(definitions, def, true, "Output")
                 }
 
                 // handle multiget
-                if (should.multi) {
+                if (def.generateMulti) {
                     definitions[def.name + "MultiResponse"] = {
                         type: "object",
                         properties: {
@@ -623,7 +629,7 @@ export default class SwagGen extends BaseGen {
                     }
                 }
             }
-            if ("structure" === def.type) {
+            if ("structure" === def.type && def.generateInput) {
                 this.addDefinition(definitions, def, false, "Structure")
             }
         }

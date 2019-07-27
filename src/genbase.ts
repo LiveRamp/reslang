@@ -6,6 +6,7 @@ export abstract class BaseGen {
     protected namespace!: INamespace
     protected defs: IDefinition[] = []
     private loaded = new Set<string>()
+    private mainNamespace?: string
 
     public constructor(private dirs: string[]) {
         this.processDefinitions()
@@ -21,7 +22,7 @@ export abstract class BaseGen {
 
     public processDefinition(dirname: string, main: boolean) {
         // parse the files in the directory
-        const match = dirname.match(/(?<path>.*\/)?(?<last>.+)/)
+        const match = dirname.match(/(?<path>.*\/)?(?<last>[^/]+)/)
         if (!match) {
             throw new Error(`Cannot locate directory: ${dirname}`)
         }
@@ -34,11 +35,18 @@ export abstract class BaseGen {
             return
         }
         this.loaded.add(nspace)
+        if (main) {
+            this.mainNamespace = nspace
+        }
 
         // process all files in this directory
         for (const fname of readdirSync(dirname)) {
             if (fname.endsWith(".reslang")) {
-                const local = parseFile(path + nspace + "/" + fname, nspace)
+                const local = parseFile(
+                    path + nspace + "/" + fname,
+                    nspace,
+                    this.mainNamespace!
+                )
                 if (local[0] && main) {
                     if (!this.namespace) {
                         this.namespace = local[0]
@@ -67,19 +75,16 @@ export abstract class BaseGen {
         }
     }
 
-    protected extractDefinition(definitionName: string, defs: IDefinition[]) {
-        const def = this.extractDefinitionGently(definitionName, defs)
+    protected extractDefinition(definitionName: string) {
+        const def = this.extractDefinitionGently(definitionName)
         if (def) {
             return def
         }
         throw new Error("Cannot find definition for " + definitionName)
     }
 
-    protected extractDefinitionGently(
-        definitionName: string,
-        defs: IDefinition[]
-    ) {
-        for (const def of defs) {
+    protected extractDefinitionGently(definitionName: string) {
+        for (const def of this.defs) {
             if (def.name === definitionName) {
                 return def
             }
@@ -87,8 +92,8 @@ export abstract class BaseGen {
         return null
     }
 
-    protected extractDefinitionId(definitionName: string, defs: IDefinition[]) {
-        for (const def of defs) {
+    protected extractDefinitionId(definitionName: string) {
+        for (const def of this.defs) {
             if (def.name === definitionName) {
                 return this.extractId(def)
             }
@@ -106,7 +111,7 @@ export abstract class BaseGen {
         }
         // ask base if this doesn't have one
         if (node.extends) {
-            return this.extractDefinitionId(node.extends.name, this.defs)
+            return this.extractDefinitionId(node.extends.name)
         }
 
         throw new Error("Cannot find id attribute for " + node.name)

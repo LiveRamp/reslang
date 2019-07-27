@@ -45,9 +45,8 @@ try {
             console.log("Success - parse tree copied to clipboard")
         }
         clip.writeSync(json)
-    }
-    // generate .viz?
-    else if (args.dotviz) {
+    } else if (args.dotviz) {
+        // generate .viz?
         const dot = new DotvizGen(files)
         const dotviz = dot.generate()
         if (args.stdout) {
@@ -59,12 +58,11 @@ try {
         if (args.open) {
             open("https://dreampuf.github.io/GraphvizOnline")
         }
-    }
-    // generate swagger
-    else {
+    } else {
+        // generate swagger
         const swag = new SwagGen(files)
         const swagger = swag.generate()
-        let yml = yaml.dump(clean(swagger))
+        const yml = yaml.dump(clean(swagger))
         if (args.stdout) {
             console.log(yml)
         } else {

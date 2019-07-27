@@ -14,12 +14,15 @@ export interface IImport {
 
 export interface IReference {
     name: string
+    short: string
     parent?: string
 }
 
 export interface IDefinition {
     name: string
+    short: string
     parent?: string
+    parentShort?: string
     type: DefinitionType
     comment: string
     attributes?: IAttribute[]
@@ -32,6 +35,7 @@ export interface IDefinition {
     secondary?: boolean
     generateOutput: boolean
     generateInput: boolean
+    generateMulti: boolean
 }
 
 export type DefinitionType =

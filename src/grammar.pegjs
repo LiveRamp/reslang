@@ -17,7 +17,7 @@ extends = _ "extends" _ name: name _ {
 }
 
 // defining a resource
-resource = _ comment:description? _ singleton:"singleton"? _ type:("resource-request" / "asset-resource" / "configuration-resource") _ name:resname _ ext:extends? _ "{" _
+resource = _ comment:description? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }

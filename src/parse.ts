@@ -2,6 +2,7 @@ import fs from "fs"
 import peg from "pegjs"
 import { IDefinition, PrimitiveType } from "./treetypes"
 import * as path from "path"
+import { makeShort, makeLong, fixName, sanitize } from "./names"
 
 export function readFile(name: string) {
     return fs.readFileSync(name, { encoding: "utf8" })
@@ -21,7 +22,11 @@ export function loadParser() {
     }
 }
 
-export function parseFile(file: string, namespace: string) {
+export function parseFile(
+    file: string,
+    parsingNamespace: string,
+    mainNamespace: string
+) {
     const contents = readFile(file)
 
     let tree: any[]
@@ -37,28 +42,46 @@ export function parseFile(file: string, namespace: string) {
             }, ${error.location.start.column}`
         )
     }
-    addNamespace(tree[2] as IDefinition[], namespace)
+    addNamespace(tree[2] as IDefinition[], parsingNamespace, mainNamespace)
     return tree
 }
 
-function addNamespace(defs: IDefinition[], namespace: string) {
-    // add to all defs
+function addNamespace(
+    defs: IDefinition[],
+    namespace: string,
+    mainNamespace: string
+) {
+    const fixLong = (name: string) =>
+        sanitize(makeLong(namespace, mainNamespace, name))
+
+    // normalize all the names: name is unique to doc, short is acceptable display form
+    // refs are always in terms of name
     for (const def of defs || []) {
-        def.name =
-            namespace + "." + (def.parent ? def.parent + "::" : "") + def.name
+        def.short = def.name
         if (def.parent) {
-            def.parent = namespace + "." + def.parent
+            def.parentShort = makeShort(def.parent)
+            def.parent = fixLong(def.parent)
         }
+        def.name = fixLong(
+            (def.parent ? fixLong(def.parent) + "::" : "") + def.name
+        )
         if (def.extends) {
-            def.extends.name =
-                def.extends.parent || namespace + "." + def.extends.name
+            def.extends.name = fixLong(
+                (def.extends.parent ? def.extends.parent + "." : "") +
+                    def.extends.name
+            )
         }
 
         // add to all references
         for (const attr of def.attributes || []) {
             const type = attr.type
             if (!isPrimitiveType(type.name)) {
-                type.name = (type.parent || namespace) + "." + type.name
+                type.short = makeShort(type.name)
+                type.name = fixLong(
+                    (type.parent ? type.parent + "." : "") + type.name
+                )
+            } else {
+                type.short = type.name
             }
         }
     }

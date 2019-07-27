@@ -1,7 +1,11 @@
-"Requests model async workflows"
-version 0.0.1
 
-request UploadRequest {
+"This is the description of the API"
+namespace {
+    title "API of a request"
+    version 0.0.1
+}
+
+request-resource UploadRequest {
     id: int
     name: string
     status: UploadRequestStatusEnum
@@ -34,12 +38,12 @@ structure Record {
     address: string
 }
 
-action UploadRequest::StartProcessingVerb  {
+action UploadRequest::StartProcessingAction  {
     operations
         POST
 }
 
-action UploadRequest::StopProcessingVerb {
+action UploadRequest::StopProcessingAction {
     id: int
     when: datetime
 

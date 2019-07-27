@@ -2,23 +2,22 @@
 
 *   ~~descriptions versus comments~~
 *   ~~separate API title file~~
-*   namespace across multiple files + collisions
-*   asset, request, configuration, action
+*   ~~namespace across multiple files + collisions~~
+*   ~~asset, request, configuration, action~~
 *   map + union
 *   error bodies + references
-
-*   synchronous operations or actions (look at abilitec API)
+*   concept of a future resource for linking to
 *   update to OpenAPI 3
-*   mutable, required, optional
 
 -   Names: fix param names, check on verb, resource, enum
-
--   Inheritance - add anyOff + discriminator
-
 -   no id needed for singleton GET
 -   MULTIGET w/out id
 -   string(\$uri)
 -   example text for attributes
+
+-   synchronous operations or actions (look at abilitec API)
+-   mutable, required, optional
+-   Inheritance - add anyOff + discriminator
 
 Admin:
 
