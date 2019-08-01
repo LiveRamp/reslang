@@ -8,11 +8,11 @@ You can think of it as a Domain Specific Language for creating APIs, specificall
 
 Why use Reslang when Swagger is clearly more expressive? There are a few reasons:
 
-- Swagger is very verbose & low-level
+- Reslang is far more concise & preserves the intent of the API creator better
   - Reslang describes APIs in a higher-level, more succinct way, allowing for preservation of intent. When working directly with Swagger, it is easy to get stuck on the details, particularly when reviewing and commenting. It is common that the Reslang file is one-tenth the size of the Swagger equivalent.
   - Reslang specifies how versioning works. Swagger, on the other hand, expresses no opinion on API or resource versioning, or the different classification of resources.
   - Reslang enforces a resource perspective. Swagger itself expresses no preference, and API creators can easily default to RPC.
-- Swagger is often *too* expressive
+- Reslang guarantees full conformance with our API spec
   - It is extremely difficult to write Swagger that conforms to the dozens of rules expressed in our API standards RFC. This is non-trivial concern, as we are aiming for uniformity.
 
 ## Features
@@ -39,7 +39,7 @@ Here is an example of a simple API for creating and manipulating files and direc
 ```File API
 "This is a simple API for manipulating files"
 namespace {
-  title "file"
+  title "API for modeling directories and files"
   version 1.0.0
 }
 
@@ -182,6 +182,41 @@ The directory structure is "namespace/*.reslang". You can import another namespa
 
 Currently the primary id field of any resource needs to be called "id". You only require an id for (sub)resources that are not singleton and have a PUT or DELETE operation.
 
+### Error Codes and Responses
+
+You can specify a set of error codes and bodies after each operation. The following example shows a response for 404, 405 and 403 error codes.
+
+````Error code example
+configuration-resource FileType {
+	id: string
+	type: string
+	format: string
+	spec: linked Specification
+	operations
+		"Get a FileType"
+		GET 
+			"Cannot find file type" 404
+			"Not Allowed" 405
+				StandardError
+			"Forbidden" 403
+				SpecialError	
+		POST
+		MULTIGET type id
+}
+````
+
+Note that StandardError is an internally defined structure that should be used for most errors. SpecialError above shows that you can also define your own error bodies as structures.
+
+### Future Resources
+
+It's common, when defining an API, to want to refer to resources that haven't yet been created. The "future" keyword allows you to define a theoretical resource, which will generate no Swagger. The purpose of this is so you can do a "linked" reference to it, in the expectation that you will add the full resource in the future.
+
+```Future resource
+future configuration-resource Specification {
+	id: string
+}
+```
+
 ### Links
 
 To refer to one resource from another, used the "linked" keyword in front of the attribute type.
@@ -213,7 +248,4 @@ A multi-GET is a GET on the plural resource, returning a collection of resources
 ## Currently Unsupported
 
 - Maps & Unions
-- OpenAPI 3
-- Better API titles
-- Reusable error bodies
 - Attribute & model examples

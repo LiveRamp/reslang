@@ -17,16 +17,16 @@ extends = _ "extends" _ name: name _ {
 }
 
 // defining a resource
-resource = _ comment:description? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ ext:extends? _ "{" _
+resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
+    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-subresource = _ comment:description? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  ext:extends? _ "{" _
+subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  ext:extends? _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"type": type, "name": name, "singleton": singleton !== null, "extends": ext, "parent": parent,
+    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "extends": ext, "parent": parent,
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 
@@ -34,8 +34,16 @@ operations = _ "operations" _ ops:op+ _ {
     return ops;
 }
 
-op = _ operation:(ops / multiget) _ ";"? _ {
+op = _ operation:(ops / multiget) _ errors: errors* _ ";"? _ {
+    operation.errors = errors;
     return operation
+}
+
+errors = _ codes:errorcode+ _ struct:ref _ {
+    return {codes: codes, "struct": struct}
+}
+errorcode = _ comment:description? _ code:[0-9]+ {
+    return {"code": code.join(""), "comment": comment}
 }
 
 ops = _ comment:description? _ op:("GET" / "PUT" / "POST" / "DELETE") _ {return {"operation": op, "comment": comment}}

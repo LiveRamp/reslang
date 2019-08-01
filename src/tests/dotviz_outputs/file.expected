@@ -6,21 +6,28 @@ digraph G {
         rankdir="LR";
 "Directory" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Directory  </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET name id</font></td></tr></table>>];
+                    <tr><td><b>Directory  </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET name id</font></td></tr>"}</table>>];
 "FileType" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>FileType  </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET type id</font></td></tr></table>>];
+                    <tr><td><b>FileType  </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET type id</font></td></tr>"}</table>>];
+"Specification" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
+                    <tr><td><b>Specification  </b></td></tr></table>>];
 "File" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>File  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr></table>>];
+                    <tr><td><b>File  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr>"}</table>>];
 "Directory" -> "File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "DirectoryDeleteRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>DirectoryDeleteRequest  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr></table>>];
+                    <tr><td><b>DirectoryDeleteRequest  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr>"}</table>>];
 "Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Cancel  </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
+                    <tr><td><b>Cancel  </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "DirectoryDeleteRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
+"SpecialError" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>SpecialError  </b></td></tr><hr/><tr><td align="left">message: string</td></tr><tr><td align="left">time: datetime</td></tr></table> >];
+"FileType" -> "Specification" [label=< <font point-size="8"> spec</font> > arrowhead="vee"];
 "File" -> "FileType" [label=< <font point-size="8"> fileType</font> > arrowhead="vee"];
 "DirectoryDeleteRequest" -> "Directory" [label=< <font point-size="8"> directory</font> > arrowhead="vee"];
 }

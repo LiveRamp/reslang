@@ -6,6 +6,7 @@
   },
   "defs": [
     {
+      "future": false,
       "type": "configuration-resource",
       "name": "Garage",
       "singleton": false,
@@ -45,24 +46,29 @@
       "operations": [
         {
           "operation": "PUT",
-          "comment": "Actual PUT comment"
+          "comment": "Actual PUT comment",
+          "errors": []
         },
         {
           "operation": "POST",
-          "comment": "Actual POST comment"
+          "comment": "Actual POST comment",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
-          "operation": "DELETE"
+          "operation": "DELETE",
+          "errors": []
         },
         {
           "operation": "MULTIGET",
           "ids": [
             "id",
             "name"
-          ]
+          ],
+          "errors": []
         }
       ],
       "short": "Garage",

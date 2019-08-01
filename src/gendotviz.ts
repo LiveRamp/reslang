@@ -25,7 +25,7 @@ export default class DotvizGen extends BaseGen {
         for (const def of this.defs) {
             const attrs = this.formAttributes(def, links)
             const ops = this.formOperations(def)
-            const imported = def.secondary
+            const imported = def.secondary || def.future
             const color = imported ? "color='gray'" : ""
             const bgcolor = [
                 "request-resource",
@@ -75,7 +75,7 @@ export default class DotvizGen extends BaseGen {
                 } else {
                     viz += `"${
                         def.short
-                    }" [label=<${box}<hr/>${attrs}${ops}</table>>];\n`
+                    }" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
                 }
 
                 // from parent to subresource
@@ -178,8 +178,11 @@ export default class DotvizGen extends BaseGen {
         if (def.singleton) {
             ops += "singleton "
         }
-        if (def.operations) {
-            for (const op of def.operations) {
+        if (def.future) {
+            ops += "FUTURE "
+        }
+        if (def.operations || def.future || def.singleton) {
+            for (const op of def.operations || []) {
                 if (ops) {
                     ops += " "
                 }

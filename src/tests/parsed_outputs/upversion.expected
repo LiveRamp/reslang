@@ -6,6 +6,7 @@
   },
   "defs": [
     {
+      "future": false,
       "type": "asset-resource",
       "name": "ResourceA",
       "singleton": false,
@@ -53,13 +54,15 @@
       ],
       "operations": [
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "ResourceA",
       "secondary": false
     },
     {
+      "future": false,
       "type": "asset-resource",
       "name": "ResourceB",
       "singleton": false,
@@ -87,19 +90,23 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
-          "operation": "PUT"
+          "operation": "PUT",
+          "errors": []
         }
       ],
       "short": "ResourceB",
       "secondary": false
     },
     {
+      "future": false,
       "type": "asset-resource",
       "name": "v2-ResourceB",
       "singleton": false,
@@ -127,16 +134,19 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "v2/ResourceB",
       "secondary": false
     },
     {
+      "future": false,
       "type": "subresource",
       "name": "v2-ResourceB--Sub",
       "singleton": false,
@@ -165,10 +175,12 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "Sub",

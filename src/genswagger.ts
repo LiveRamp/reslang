@@ -40,7 +40,7 @@ export default class SwagGen extends BaseGen {
         // form the paths
         for (const el of this.defs) {
             // don't generate for any imported def
-            if (el.secondary) {
+            if (el.secondary || el.future) {
                 continue
             }
             if (
@@ -177,6 +177,22 @@ export default class SwagGen extends BaseGen {
         if (post) {
             const short = el.short
             const idtype = this.extractId(el)
+            const responses = {
+                201: {
+                    description: short + " created successfully",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    id: this.addType(idtype, {}, false)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            this.formErrors(post, responses)
             path.post = {
                 tags: [tagKeys[short]],
                 operationId: "create" + short,
@@ -190,27 +206,7 @@ export default class SwagGen extends BaseGen {
                         }
                     }
                 },
-                responses: {
-                    201: {
-                        description: short + " created successfully",
-                        content: {
-                            "application/json": {
-                                schema: {
-                                    type: "object",
-                                    properties: {
-                                        id: this.addType(idtype, {}, false)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    // default: {
-                    //     description: "Error creating " + short,
-                    //     schema: {
-                    //         $ref: "#/components/schemas/ErrorBody"
-                    //     }
-                    // }
-                }
+                responses
             }
             this.addParentPathId(el, path.post)
         }
@@ -232,35 +228,29 @@ export default class SwagGen extends BaseGen {
                 }
 
                 const short = el.short
+                const responses = {
+                    200: {
+                        description:
+                            pluralizeName(short) + " retrieved successfully",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref:
+                                        "#/components/schemas/" +
+                                        el.name +
+                                        "MultiResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+                this.formErrors(multiget, responses)
                 path.get = {
                     tags: [tagKeys[short]],
                     operationId: "multiget" + el.name,
                     description: multiget.comment,
                     parameters: params,
-                    responses: {
-                        200: {
-                            description:
-                                pluralizeName(short) +
-                                " retrieved successfully",
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        $ref:
-                                            "#/components/schemas/" +
-                                            el.name +
-                                            "MultiResponse"
-                                    }
-                                }
-                            }
-                        }
-                        // default: {
-                        //     description:
-                        //         "Error retrieving " + pluralizeName(short),
-                        //     schema: {
-                        //         $ref: "#/components/schemas/ErrorBody"
-                        //     }
-                        // }
-                    }
+                    responses
                 }
                 this.addParentPathId(el, path.get)
             }
@@ -317,31 +307,25 @@ export default class SwagGen extends BaseGen {
         if (get) {
             const idtype = this.extractId(el)
             const short = el.short
+            const responses = {
+                200: {
+                    description: short + " retrieved successfully",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref:
+                                    "#/components/schemas/" + el.name + "Output"
+                            }
+                        }
+                    }
+                }
+            }
+            this.formErrors(get, responses)
             path.get = {
                 tags: [tagKeys[short]],
                 operationId: "retrieve" + el.name,
                 description: get.comment,
-                responses: {
-                    200: {
-                        description: short + " retrieved successfully",
-                        content: {
-                            "application/json": {
-                                schema: {
-                                    $ref:
-                                        "#/components/schemas/" +
-                                        el.name +
-                                        "Output"
-                                }
-                            }
-                        }
-                    }
-                    // default: {
-                    //     description: "Error retrieving " + el.name,
-                    //     schema: {
-                    //         $ref: "#/components/schemas/ErrorBody"
-                    //     }
-                    // }
-                }
+                responses
             }
             if (!singleton) {
                 path.get.parameters = [
@@ -357,31 +341,25 @@ export default class SwagGen extends BaseGen {
         if (put) {
             const idtype = this.extractId(el)
             const short = el.short
+            const responses = {
+                200: {
+                    description: short + " modified successfully",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref:
+                                    "#/components/schemas/" + el.name + "Input"
+                            }
+                        }
+                    }
+                }
+            }
+            this.formErrors(put, responses)
             path.put = {
                 tags: [tagKeys[short]],
                 operationId: "modify" + el.name,
                 description: put.comment,
-                responses: {
-                    200: {
-                        description: short + " modified successfully",
-                        content: {
-                            "application/json": {
-                                schema: {
-                                    $ref:
-                                        "#/components/schemas/" +
-                                        el.name +
-                                        "Input"
-                                }
-                            }
-                        }
-                    }
-                    // default: {
-                    //     description: "Error modifying " + short,
-                    //     schema: {
-                    //         $ref: "#/components/schemas/ErrorBody"
-                    //     }
-                    // }
-                }
+                responses
             }
             if (!singleton) {
                 path.put.parameters = [
@@ -397,21 +375,17 @@ export default class SwagGen extends BaseGen {
         if (del) {
             const idtype = this.extractId(el)
             const short = el.short
+            const responses = {
+                200: {
+                    description: short + " deleted successfully"
+                }
+            }
+            this.formErrors(del, responses)
             path.delete = {
                 tags: [tagKeys[short]],
                 operationId: "delete" + el.name,
                 description: del.comment,
-                responses: {
-                    200: {
-                        description: short + " deleted successfully"
-                    }
-                    // default: {
-                    //     description: "Error deleting " + short,
-                    //     schema: {
-                    //         $ref: "#/components/schemas/ErrorBody"
-                    //     }
-                    // }
-                }
+                responses
             }
             if (!singleton) {
                 path.delete.parameters = [
@@ -423,6 +397,29 @@ export default class SwagGen extends BaseGen {
                 ]
             }
             this.addParentPathId(el, path.delete)
+        }
+    }
+
+    private formErrors(del: IOperation, responses: any) {
+        for (const err of del.errors || []) {
+            // locate the error type and mark it for generation
+            if (err.struct.name !== "StandardError") {
+                this.extractDefinition(err.struct.name).generateInput = true
+            }
+            for (const code of err.codes) {
+                responses[code.code] = {
+                    description: code.comment || " ",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: `#/components/schemas/${
+                                    err.struct.name
+                                }Structure`
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -487,7 +484,15 @@ export default class SwagGen extends BaseGen {
                         )
                     }
                     schema.type = "string"
-                    schema.example = "Link to garage via id(s)"
+                    if (attr.multiple) {
+                        schema.example = `Link to ${attr.type.name} ${
+                            def.future ? "(to be defined in the future)" : ""
+                        } resource(s) via id(s)`
+                    } else {
+                        schema.example = `Link to a ${attr.type.name} ${
+                            def.future ? "(to be defined in the future)" : ""
+                        } resource via its id`
+                    }
                     break
                 case "enum":
                     schema.type = "string"
@@ -548,7 +553,7 @@ export default class SwagGen extends BaseGen {
     ) {
         for (const el of defs) {
             // don't generate for any imported def
-            if (el.secondary) {
+            if (el.secondary || el.future) {
                 continue
             }
             const short = el.short
@@ -675,30 +680,24 @@ export default class SwagGen extends BaseGen {
             }
         }
 
-        definitions.ErrorBody = {
+        definitions.StandardErrorStructure = {
+            description:
+                "Error details, only available if there was an issue in processing",
             type: "object",
             properties: {
-                "http-status": {
+                httpStatusCode: {
                     type: "number",
                     description:
                         "The integer HTTP error status code for this problem"
                 },
-                "error-code": {
+                errorCode: {
                     type: "string",
-                    description: "Service specific error code, more granular"
+                    description:
+                        " Optional, more granular error code for this problem"
                 },
                 message: {
                     type: "string",
-                    description: "General, human readable error message"
-                },
-                detail: {
-                    type: "string",
-                    description:
-                        "Human readable message specific to this occurrence"
-                },
-                path: {
-                    type: "string",
-                    description: "The request field that the error is about"
+                    description: "Human readable error message"
                 }
             }
         }

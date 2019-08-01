@@ -6,6 +6,7 @@
   },
   "defs": [
     {
+      "future": false,
       "type": "request-resource",
       "name": "UploadRequest",
       "singleton": false,
@@ -53,23 +54,27 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
           "operation": "MULTIGET",
           "ids": [
             "id",
             "name"
-          ]
+          ],
+          "errors": []
         }
       ],
       "short": "UploadRequest",
       "secondary": false
     },
     {
+      "future": false,
       "type": "subresource",
       "name": "UploadRequest--Status",
       "singleton": true,
@@ -108,7 +113,8 @@
       ],
       "operations": [
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "Status",
@@ -116,6 +122,7 @@
       "secondary": false
     },
     {
+      "future": false,
       "type": "subresource",
       "name": "UploadRequest--RecordSet",
       "singleton": false,
@@ -154,10 +161,12 @@
       ],
       "operations": [
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         }
       ],
       "short": "RecordSet",
@@ -193,13 +202,27 @@
       "secondary": false
     },
     {
+      "future": false,
       "type": "action",
       "name": "UploadRequest--StartProcessingAction",
       "singleton": false,
       "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         }
       ],
       "short": "StartProcessingAction",
@@ -207,6 +230,7 @@
       "secondary": false
     },
     {
+      "future": false,
       "type": "action",
       "name": "UploadRequest--StopProcessingAction",
       "singleton": false,
@@ -235,10 +259,12 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "StopProcessingAction",

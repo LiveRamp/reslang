@@ -6,6 +6,7 @@
   },
   "defs": [
     {
+      "future": false,
       "type": "asset-resource",
       "name": "Resource",
       "singleton": true,
@@ -33,16 +34,19 @@
       ],
       "operations": [
         {
-          "operation": "PUT"
+          "operation": "PUT",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "Resource",
       "secondary": false
     },
     {
+      "future": false,
       "type": "subresource",
       "name": "Resource--Metadata",
       "singleton": true,
@@ -71,10 +75,12 @@
       ],
       "operations": [
         {
-          "operation": "PUT"
+          "operation": "PUT",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         }
       ],
       "short": "Metadata",

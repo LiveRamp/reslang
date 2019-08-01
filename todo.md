@@ -4,16 +4,16 @@
 *   ~~separate API title file~~
 *   ~~namespace across multiple files + collisions~~
 *   ~~asset, request, configuration, action~~
+*   ~~update to OpenAPI 3~~
+*   ~~error bodies + references~~
+*   ~~concept of a future resource for linking to~~
 *   map + union
-*   error bodies + references
-*   concept of a future resource for linking to
-*   update to OpenAPI 3
 
 -   Names: fix param names, check on verb, resource, enum
 -   no id needed for singleton GET
 -   MULTIGET w/out id
 -   string(\$uri)
--   example text for attributes
+-   example text for attributes & bodies
 
 -   synchronous operations or actions (look at abilitec API)
 -   mutable, required, optional

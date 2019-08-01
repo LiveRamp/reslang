@@ -24,8 +24,16 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequestInput'
       responses:
-        '200':
+        '201':
           description: UploadRequest created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
     get:
       tags:
         - UploadRequest
@@ -99,8 +107,16 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequest--RecordSetInput'
       responses:
-        '200':
+        '201':
           description: RecordSet created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
       parameters:
         - in: path
           name: parentId
@@ -146,8 +162,15 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequest--StartProcessingActionInput'
       responses:
-        '200':
+        '201':
           description: StartProcessingAction created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
       parameters:
         - in: path
           name: parentId
@@ -167,8 +190,16 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequest--StopProcessingActionInput'
       responses:
-        '200':
+        '201':
           description: StopProcessingAction created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
       parameters:
         - in: path
           name: parentId
@@ -308,22 +339,17 @@ components:
         when:
           type: string
           example: '2019-04-13T03:35:34Z (datetime)'
-    ErrorBody:
+    StandardErrorStructure:
+      description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:
-        http-status:
+        httpStatusCode:
           type: number
           description: The integer HTTP error status code for this problem
-        error-code:
+        errorCode:
           type: string
-          description: 'Service specific error code, more granular'
+          description: ' Optional, more granular error code for this problem'
         message:
           type: string
-          description: 'General, human readable error message'
-        detail:
-          type: string
-          description: Human readable message specific to this occurrence
-        path:
-          type: string
-          description: The request field that the error is about
+          description: Human readable error message
 

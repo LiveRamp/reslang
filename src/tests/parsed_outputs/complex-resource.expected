@@ -6,6 +6,7 @@
   },
   "defs": [
     {
+      "future": false,
       "type": "asset-resource",
       "name": "Car",
       "singleton": false,
@@ -97,17 +98,20 @@
       ],
       "operations": [
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
           "operation": "MULTIGET",
           "ids": [
             "id",
             "brand"
-          ]
+          ],
+          "errors": []
         }
       ],
       "short": "Car",
@@ -143,6 +147,7 @@
       "secondary": false
     },
     {
+      "future": false,
       "type": "subresource",
       "name": "Car--Wheel",
       "singleton": false,
@@ -172,19 +177,23 @@
       ],
       "operations": [
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
-          "operation": "PUT"
+          "operation": "PUT",
+          "errors": []
         },
         {
-          "operation": "POST"
+          "operation": "POST",
+          "errors": []
         },
         {
           "operation": "MULTIGET",
           "ids": [
             "id"
-          ]
+          ],
+          "errors": []
         }
       ],
       "short": "Wheel",
@@ -202,6 +211,7 @@
       "secondary": false
     },
     {
+      "future": false,
       "type": "configuration-resource",
       "name": "simple-resource-Garage",
       "singleton": false,
@@ -241,24 +251,29 @@
       "operations": [
         {
           "operation": "PUT",
-          "comment": "Actual PUT comment"
+          "comment": "Actual PUT comment",
+          "errors": []
         },
         {
           "operation": "POST",
-          "comment": "Actual POST comment"
+          "comment": "Actual POST comment",
+          "errors": []
         },
         {
-          "operation": "GET"
+          "operation": "GET",
+          "errors": []
         },
         {
-          "operation": "DELETE"
+          "operation": "DELETE",
+          "errors": []
         },
         {
           "operation": "MULTIGET",
           "ids": [
             "id",
             "name"
-          ]
+          ],
+          "errors": []
         }
       ],
       "short": "Garage",

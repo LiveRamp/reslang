@@ -12,8 +12,21 @@ configuration-resource FileType {
 	id: string
 	type: string
 	format: string
+	spec: linked Specification
 	operations
-		GET POST MULTIGET type id
+		"Get a FileType"
+		GET 
+			"Cannot find file type" 404
+			"Not Allowed" 405
+				StandardError
+			"Forbidden" 403
+				SpecialError	
+		POST
+		MULTIGET type id
+}
+
+future configuration-resource Specification {
+	id: string
 }
 
 "This models a file in a directory"
@@ -42,4 +55,10 @@ action DirectoryDeleteRequest::Cancel {
 	
     operations
 		POST
+}
+
+"A non-standard error response"
+structure SpecialError {
+	message: string
+	time: datetime
 }

@@ -29,6 +29,7 @@ export interface IDefinition {
     operations?: IOperation[]
     literals?: string[]
     singleton?: boolean
+    future?: boolean
     extends?: IReference
 
     // used to see if we generate definitions or not
@@ -76,4 +77,10 @@ export interface IOperation {
     operation: string
     comment: string
     ids?: string[]
+    errors: IError[]
+}
+
+export interface IError {
+    codes: Array<{ code: string; comment: string }>
+    struct: IReference
 }
