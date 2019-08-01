@@ -1,5 +1,5 @@
 "This is a simple API for manipulating files"
 namespace {
-	title "file"
+	title "API for modeling directories and files"
 	version 1.0.0
 }

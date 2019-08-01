@@ -127,7 +127,7 @@ You can use the "singleton" keyword before a resource definition to indicate the
 
 ### Primitive Types
 
-The following primitive types are available. These are translated into correct Swagger types - in some cases (datetime etc) the primitives are translated into a string type because Swagger has no notion of time-based values. If a translation occurs, then an appropriate comment / example text will be inserted as documentation
+The following primitive types are available. These are translated into appropriate Swagger types - in some cases (datetime etc) the primitive type is translated into a string type because Swagger has no notion of time-based values. If a translation occurs, then an appropriate comment / example text will be inserted as documentation
 
 | Type     | Description                                                  |
 | -------- | ------------------------------------------------------------ |
@@ -137,7 +137,7 @@ The following primitive types are available. These are translated into correct S
 | boolean  | True or false                                                |
 | date     | Date in ISO8601 format (2019-04-13)                          |
 | time     | Time in ISO8601 format (22:00:01)                            |
-| Datetime | Date+time in ISO8601 format, always with timezone (2019-04-13T03:35:34Z) |
+| datetime | Date+time in ISO8601 format, always with timezone<br />(2019-04-13T03:35:34Z) |
 |          |                                                              |
 
 
