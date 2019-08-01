@@ -4,7 +4,7 @@ Relang is a simple language for describing resource-oriented APIs & turning them
 
 ## Manual
 
-Please see the ![manual here](./.docs/manual.md].
+Please see the [manual here](./docs/manual.md).
 
 ## Installation
 
@@ -43,7 +43,7 @@ Reslang can generate dotviz output, which provides a nice graphical view of the 
 
 will copy the dotviz output to the clipboard.
 
-If you use --open, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphjical view.
+If you use --open, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
 
     ./reslang models/simple-resource.reslang --dotviz --open
 
