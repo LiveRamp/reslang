@@ -39,53 +39,53 @@ Here is an example of a simple API for creating and manipulating files and direc
 ```File API
 "This is a simple API for manipulating files"
 namespace {
-	title "file"
-	version 1.0.0
+  title "file"
+  version 1.0.0
 }
 
 "This models a directory we might create"
 asset-resource Directory {
-	id: string
-	name: string
+  id: string
+  name: string
 	
-	operations
-		GET POST MULTIGET name id
+  operations
+    GET POST MULTIGET name id
 }
 
 "This configures up a file type, e.g. .gif"
 configuration-resource FileType {
-	id: string
-	type: string
-	format: string
+  id: string
+  type: string
+  format: string
 	
-	operations
-		GET POST MULTIGET type id
+  operations
+    GET POST MULTIGET type id
 }
 
 "This models a file in a directory"
 subresource Directory::File {
-	id: int
-	name: string
-	url: string
-	fileType: linked FileType
+  id: int
+  name: string
+  url: string
+  fileType: linked FileType
 	
-	operations
-		GET POST MULTIGET id
+  operations
+    GET POST MULTIGET id
 }
 
 "This models a long running request"
 request-resource DirectoryDeleteRequest {
-	id: int
-	directory: linked Directory
+  id: int
+  directory: linked Directory
 	
-	operations
-		GET POST MULTIGET id
+  operations
+    GET POST MULTIGET id
 }
 
 "This models an action on a request"
 action DirectoryDeleteRequest::Cancel {
-	operations
-		POST
+  operations
+    POST
 }
 ```
 
@@ -137,7 +137,7 @@ An example of evolution is contained in the models/new/upversion directory:
 
 ```upversioning example
 asset-resource v2/ResourceB {
-	id: int
+  id: int
   totalSize: int
 
   operations
