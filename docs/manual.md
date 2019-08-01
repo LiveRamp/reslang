@@ -225,7 +225,7 @@ To refer to one resource from another, used the "linked" keyword in front of the
 
 You can define as reusable set of attributes using the "structure" keyword. The systax is like a resource but it does not support operations or the singleton modifier.
 
-###Arrays
+### Arrays
 
 Use [] after an attribute type to indicate an array.
 
