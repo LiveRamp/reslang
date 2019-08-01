@@ -4,7 +4,7 @@ Relang is a simple language for describing resource-oriented APIs & turning them
 
 ## Manual
 
-Please see the [manual here](./.docs/manual.md].
+Please see the ![manual here](./.docs/manual.md].
 
 ## Installation
 
