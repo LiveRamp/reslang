@@ -1,18 +1,16 @@
 swagger: '2.0'
 info:
-  title: Simple API overview
-  description: |-
-    This is a more complex example, featuring
-    a car with a set of wheel subresources
+  title: Complex resource API
+  description: This is the description of the API
   version: 0.0.1
 host: liveramp.net
-basePath: /complex-resource
+basePath: /Complex resource API
 schemes:
   - http
   - https
 tags:
   - name: Car
-    description: 'this is a Car resource '
+    description: this is a Car resource
   - name: Car / Wheel
     description: A wheel is owned by a car
 paths:
@@ -65,7 +63,6 @@ paths:
       tags:
         - Car
       operationId: retrieveCar
-      description: 'this is a get comment '
       responses:
         '200':
           description: Car retrieved successfully
@@ -88,10 +85,10 @@ paths:
       operationId: createWheel
       parameters:
         - in: body
-          name: WheelInput
+          name: Car--WheelInput
           required: true
           schema:
-            $ref: '#/definitions/WheelInput'
+            $ref: '#/definitions/Car--WheelInput'
         - in: path
           name: parentId
           description: Id of parent Car
@@ -108,7 +105,7 @@ paths:
     get:
       tags:
         - Car / Wheel
-      operationId: multigetWheel
+      operationId: multigetCar--Wheel
       parameters:
         - in: query
           name: id
@@ -125,7 +122,7 @@ paths:
         '200':
           description: Wheels retrieved successfully
           schema:
-            $ref: '#/definitions/WheelMultiResponse'
+            $ref: '#/definitions/Car--WheelMultiResponse'
         default:
           description: Error retrieving Wheels
           schema:
@@ -134,14 +131,14 @@ paths:
     get:
       tags:
         - Car / Wheel
-      operationId: retrieveWheel
+      operationId: retrieveCar--Wheel
       responses:
         '200':
           description: Wheel retrieved successfully
           schema:
-            $ref: '#/definitions/WheelOutput'
+            $ref: '#/definitions/Car--WheelOutput'
         default:
-          description: Error retrieving Wheel
+          description: Error retrieving Car--Wheel
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -159,12 +156,12 @@ paths:
     put:
       tags:
         - Car / Wheel
-      operationId: modifyWheel
+      operationId: modifyCar--Wheel
       responses:
         '200':
           description: Wheel modified successfully
           schema:
-            $ref: '#/definitions/WheelInput'
+            $ref: '#/definitions/Car--WheelInput'
         default:
           description: Error modifying Wheel
           schema:
@@ -199,6 +196,8 @@ definitions:
       home-garage-id:
         type: string
         example: Link to garage via id(s)
+      manufacturer:
+        $ref: '#/definitions/simple-resource-ManufacturerStructure'
       rented-garage-ids:
         items:
           type: string
@@ -227,6 +226,8 @@ definitions:
       home-garage-id:
         type: string
         example: Link to garage via id(s)
+      manufacturer:
+        $ref: '#/definitions/simple-resource-ManufacturerStructure'
       rented-garage-ids:
         items:
           type: string
@@ -255,12 +256,12 @@ definitions:
         type: string
       documentation:
         type: string
-  WheelInput:
+  Car--WheelInput:
     type: object
     properties:
       radius:
         type: number
-  WheelOutput:
+  Car--WheelOutput:
     type: object
     properties:
       id:
@@ -268,7 +269,7 @@ definitions:
         format: int32
       radius:
         type: number
-  WheelMultiResponse:
+  Car--WheelMultiResponse:
     type: object
     properties:
       page:
@@ -280,10 +281,15 @@ definitions:
         type: integer
         format: int32
       elements:
-        description: Array of retrieved Wheels
+        description: Array of retrieved Car--Wheels
         type: array
         items:
-          $ref: '#/definitions/WheelOutput'
+          $ref: '#/definitions/Car--WheelOutput'
+  simple-resource-ManufacturerStructure:
+    type: object
+    properties:
+      company:
+        type: string
   ErrorBody:
     type: object
     properties:

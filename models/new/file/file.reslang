@@ -1,8 +1,3 @@
-"This is a simple API for manipulating files"
-namespace {
-	title "file"
-	version 1.0.0
-}
 
 "This models a directory we might create"
 asset-resource Directory {

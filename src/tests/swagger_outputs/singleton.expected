@@ -1,12 +1,10 @@
 swagger: '2.0'
 info:
-  title: Simple API overview
-  description: |-
-    this is a simple resource
-       designed to show the potential 
-  version: 0.0.1
+  title: An API with a singleton asset resource
+  description: This is the description of the API
+  version: 0.1.2
 host: liveramp.net
-basePath: /singleton
+basePath: /An API with a singleton asset resource
 schemes:
   - http
   - https
@@ -41,18 +39,18 @@ paths:
           description: Error modifying Resource
           schema:
             $ref: '#/definitions/ErrorBody'
-  '/v1/resources/{parentId}/metadata':
+  '/v1/resource/{parentId}/metadata':
     get:
       tags:
         - Resource / Metadata
-      operationId: retrieveMetadata
+      operationId: retrieveResource--Metadata
       responses:
         '200':
           description: Metadata retrieved successfully
           schema:
-            $ref: '#/definitions/MetadataOutput'
+            $ref: '#/definitions/Resource--MetadataOutput'
         default:
-          description: Error retrieving Metadata
+          description: Error retrieving Resource--Metadata
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -65,12 +63,12 @@ paths:
     put:
       tags:
         - Resource / Metadata
-      operationId: modifyMetadata
+      operationId: modifyResource--Metadata
       responses:
         '200':
           description: Metadata modified successfully
           schema:
-            $ref: '#/definitions/MetadataInput'
+            $ref: '#/definitions/Resource--MetadataInput'
         default:
           description: Error modifying Metadata
           schema:
@@ -96,12 +94,12 @@ definitions:
         format: int32
       name:
         type: string
-  MetadataInput:
+  Resource--MetadataInput:
     type: object
     properties:
       info:
         type: string
-  MetadataOutput:
+  Resource--MetadataOutput:
     type: object
     properties:
       id:
@@ -127,3 +125,4 @@ definitions:
       path:
         type: string
         description: The request field that the error is about
+

@@ -1,5 +1,6 @@
 import { parseFile, readFile } from "../parse"
 import { strip } from "./utilities"
+import ParseGen from "../genparse"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
@@ -37,8 +38,8 @@ c d`)
 })
 
 function compare(module: string) {
-    const tree = parseFile(`models/${module}.reslang`)
-    const got = JSON.stringify(tree, null, 2)
+    const parser = new ParseGen([`models/new/${module}`])
+    const got = parser.generate()
     const sgot = strip(got)
     const expected = strip(
         readFile(`src/tests/parsed_outputs/${module}.expected`)

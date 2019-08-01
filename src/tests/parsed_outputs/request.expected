@@ -1,39 +1,51 @@
-[
-  {
-    "description": "requests model async workflows ",
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "API of a request",
     "version": "0.0.1"
   },
-  [],
-  [
+  "defs": [
     {
-      "type": "request",
+      "type": "request-resource",
       "name": "UploadRequest",
       "singleton": false,
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "status",
-          "type": "UploadRequestStatusEnum",
+          "type": {
+            "name": "UploadRequestStatusEnum",
+            "short": "UploadRequestStatusEnum"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "client",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -53,31 +65,42 @@
             "name"
           ]
         }
-      ]
+      ],
+      "short": "UploadRequest",
+      "secondary": false
     },
     {
       "type": "subresource",
-      "name": "Status",
+      "name": "UploadRequest--Status",
       "singleton": true,
       "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "recordsProcessed",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "completed",
-          "type": "boolean",
+          "type": {
+            "name": "boolean",
+            "short": "boolean"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -87,31 +110,43 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "Status",
+      "parentShort": "UploadRequest",
+      "secondary": false
     },
     {
       "type": "subresource",
-      "name": "RecordSet",
+      "name": "UploadRequest--RecordSet",
       "singleton": false,
       "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "company",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "records",
-          "type": "Record",
+          "type": {
+            "name": "Record",
+            "short": "Record"
+          },
           "multiple": true,
           "output": false,
           "linked": false
@@ -124,7 +159,10 @@
         {
           "operation": "POST"
         }
-      ]
+      ],
+      "short": "RecordSet",
+      "parentShort": "UploadRequest",
+      "secondary": false
     },
     {
       "type": "structure",
@@ -132,47 +170,64 @@
       "attributes": [
         {
           "name": "details",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "address",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         }
-      ]
+      ],
+      "short": "Record",
+      "secondary": false
     },
     {
-      "type": "verb",
-      "name": "StartProcessingVerb",
+      "type": "action",
+      "name": "UploadRequest--StartProcessingAction",
       "singleton": false,
       "parent": "UploadRequest",
       "operations": [
         {
           "operation": "POST"
         }
-      ]
+      ],
+      "short": "StartProcessingAction",
+      "parentShort": "UploadRequest",
+      "secondary": false
     },
     {
-      "type": "verb",
-      "name": "StopProcessingVerb",
+      "type": "action",
+      "name": "UploadRequest--StopProcessingAction",
       "singleton": false,
       "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "when",
-          "type": "datetime",
+          "type": {
+            "name": "datetime",
+            "short": "datetime"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -185,7 +240,10 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "StopProcessingAction",
+      "parentShort": "UploadRequest",
+      "secondary": false
     },
     {
       "type": "enum",
@@ -194,7 +252,9 @@
         "STARTED",
         "STOPPED",
         "COMPLETED"
-      ]
+      ],
+      "short": "UploadRequestStatusEnum",
+      "secondary": false
     }
   ]
-]
+}

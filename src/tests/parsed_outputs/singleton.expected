@@ -1,25 +1,31 @@
-[
-  {
-    "description": "this is a simple resource\n   designed to show the potential ",
-    "version": "0.0.1"
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "An API with a singleton asset resource",
+    "version": "0.1.2"
   },
-  [],
-  [
+  "defs": [
     {
-      "type": "resource",
+      "type": "asset-resource",
       "name": "Resource",
       "singleton": true,
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -32,24 +38,32 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "Resource",
+      "secondary": false
     },
     {
       "type": "subresource",
-      "name": "Metadata",
+      "name": "Resource--Metadata",
       "singleton": true,
       "parent": "Resource",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "info",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -62,7 +76,10 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "Metadata",
+      "parentShort": "Resource",
+      "secondary": false
     }
   ]
-]
+}

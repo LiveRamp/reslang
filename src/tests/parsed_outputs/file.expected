@@ -1,0 +1,234 @@
+{
+  "namespace": {
+    "comment": "This is a simple API for manipulating files",
+    "title": "file",
+    "version": "1.0.0"
+  },
+  "defs": [
+    {
+      "type": "asset-resource",
+      "name": "Directory",
+      "singleton": false,
+      "comment": "This models a directory we might create",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "name",
+            "id"
+          ]
+        }
+      ],
+      "short": "Directory",
+      "secondary": false
+    },
+    {
+      "type": "configuration-resource",
+      "name": "FileType",
+      "singleton": false,
+      "comment": "This configures up a file type, e.g. .gif",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "type",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "format",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "type",
+            "id"
+          ]
+        }
+      ],
+      "short": "FileType",
+      "secondary": false
+    },
+    {
+      "type": "subresource",
+      "name": "Directory--File",
+      "singleton": false,
+      "parent": "Directory",
+      "comment": "This models a file in a directory",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "url",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "fileType",
+          "type": {
+            "name": "FileType",
+            "short": "FileType"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": true
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "id"
+          ]
+        }
+      ],
+      "short": "File",
+      "parentShort": "Directory",
+      "secondary": false
+    },
+    {
+      "type": "request-resource",
+      "name": "DirectoryDeleteRequest",
+      "singleton": false,
+      "comment": "This models a long running request",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "directory",
+          "type": {
+            "name": "Directory",
+            "short": "Directory"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": true
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "id"
+          ]
+        }
+      ],
+      "short": "DirectoryDeleteRequest",
+      "secondary": false
+    },
+    {
+      "type": "action",
+      "name": "DirectoryDeleteRequest--Cancel",
+      "singleton": false,
+      "parent": "DirectoryDeleteRequest",
+      "comment": "This models an action on a request",
+      "operations": [
+        {
+          "operation": "POST"
+        }
+      ],
+      "short": "Cancel",
+      "parentShort": "DirectoryDeleteRequest",
+      "secondary": false
+    }
+  ]
+}

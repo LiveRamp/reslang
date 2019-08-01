@@ -25,11 +25,15 @@ describe("swagger generation tests", () => {
     test("request", () => {
         compare("request")
     })
+
+    test("file", () => {
+        compare("file")
+    })
 })
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const swag = new SwagGen([`models/${module}.reslang`])
+    const swag = new SwagGen([`models/new/${module}`])
     const swagger = swag.generate()
 
     let got = strip(yaml.dump(clean(swagger)))

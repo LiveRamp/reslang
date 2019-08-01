@@ -24,14 +24,18 @@ describe("dotviz generation tests", () => {
     test("request", () => {
         compare("request")
     })
+
+    test("file", () => {
+        compare("file")
+    })
 })
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const dotviz = new DotvizGen([`models/${module}.reslang`])
+    const dotviz = new DotvizGen([`models//new/${module}`])
     const out = dotviz.generate()
 
-    let got = strip(out)
+    const got = strip(out)
     const expected = strip(
         readFile(`src/tests/dotviz_outputs/${module}.expected`)
     )

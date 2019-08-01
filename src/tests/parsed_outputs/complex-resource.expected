@@ -1,66 +1,95 @@
-[
-  {
-    "description": "This is a more complex example, featuring\na car with a set of wheel subresources",
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "Complex resource API",
     "version": "0.0.1"
   },
-  [
+  "defs": [
     {
-      "import": "Garage",
-      "file": "simple-resource"
-    }
-  ],
-  [
-    {
-      "type": "resource",
+      "type": "asset-resource",
       "name": "Car",
       "singleton": false,
-      "comment": "this is a Car resource ",
+      "comment": "this is a Car resource",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "bought",
-          "type": "date",
+          "type": {
+            "name": "date",
+            "short": "date"
+          },
           "multiple": false,
           "output": true,
           "linked": false
         },
         {
           "name": "brand",
-          "type": "BrandEnum",
+          "type": {
+            "name": "BrandEnum",
+            "short": "BrandEnum"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "engine",
-          "type": "Specification",
+          "type": {
+            "name": "Specification",
+            "short": "Specification"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "components",
-          "type": "Specification",
+          "type": {
+            "name": "Specification",
+            "short": "Specification"
+          },
           "multiple": true,
           "output": false,
           "linked": false
         },
         {
           "name": "home",
-          "type": "Garage",
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Garage",
+            "short": "Garage"
+          },
           "multiple": false,
           "output": false,
           "linked": true
         },
         {
+          "name": "manufacturer",
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Manufacturer",
+            "short": "Manufacturer"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
           "name": "rented",
-          "type": "Garage",
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Garage",
+            "short": "Garage"
+          },
           "multiple": true,
           "output": false,
           "linked": true
@@ -71,8 +100,7 @@
           "operation": "POST"
         },
         {
-          "operation": "GET",
-          "comment": "this is a get comment "
+          "operation": "GET"
         },
         {
           "operation": "MULTIGET",
@@ -81,7 +109,9 @@
             "brand"
           ]
         }
-      ]
+      ],
+      "short": "Car",
+      "secondary": false
     },
     {
       "type": "structure",
@@ -90,37 +120,51 @@
       "attributes": [
         {
           "name": "type",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "documentation",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         }
-      ]
+      ],
+      "short": "Specification",
+      "secondary": false
     },
     {
       "type": "subresource",
-      "name": "Wheel",
+      "name": "Car--Wheel",
       "singleton": false,
       "parent": "Car",
       "comment": "A wheel is owned by a car",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "radius",
-          "type": "double",
+          "type": {
+            "name": "double",
+            "short": "double"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -142,7 +186,10 @@
             "id"
           ]
         }
-      ]
+      ],
+      "short": "Wheel",
+      "parentShort": "Car",
+      "secondary": false
     },
     {
       "type": "enum",
@@ -150,7 +197,90 @@
       "literals": [
         "TOYOTA",
         "FORD"
-      ]
+      ],
+      "short": "BrandEnum",
+      "secondary": false
+    },
+    {
+      "type": "configuration-resource",
+      "name": "simple-resource-Garage",
+      "singleton": false,
+      "comment": "This is a description of a garage",
+      "attributes": [
+        {
+          "name": "id",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "name",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "manufacturer",
+          "type": {
+            "name": "simple-resource-Manufacturer",
+            "short": "Manufacturer"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "comment": "Actual PUT comment"
+        },
+        {
+          "operation": "POST",
+          "comment": "Actual POST comment"
+        },
+        {
+          "operation": "GET"
+        },
+        {
+          "operation": "DELETE"
+        },
+        {
+          "operation": "MULTIGET",
+          "ids": [
+            "id",
+            "name"
+          ]
+        }
+      ],
+      "short": "Garage",
+      "secondary": true
+    },
+    {
+      "type": "structure",
+      "name": "simple-resource-Manufacturer",
+      "attributes": [
+        {
+          "name": "company",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "short": "Manufacturer",
+      "secondary": true
     }
   ]
-]
+}

@@ -1,39 +1,51 @@
-[
-  {
-    "description": "this is a simple resource\n   designed to show the potential ",
-    "version": "0.0.1"
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "An API showing evolution",
+    "version": "0.1.2"
   },
-  [],
-  [
+  "defs": [
     {
-      "type": "resource",
+      "type": "asset-resource",
       "name": "ResourceA",
       "singleton": false,
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "b",
-          "type": "ResourceB",
+          "type": {
+            "name": "ResourceB",
+            "short": "ResourceB"
+          },
           "multiple": false,
           "output": false,
           "linked": true
         },
         {
           "name": "newB",
-          "type": "v2/ResourceB",
+          "type": {
+            "name": "v2-ResourceB",
+            "short": "v2/ResourceB"
+          },
           "multiple": false,
           "output": false,
           "linked": true
@@ -43,23 +55,31 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "ResourceA",
+      "secondary": false
     },
     {
-      "type": "resource",
+      "type": "asset-resource",
       "name": "ResourceB",
       "singleton": false,
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "size",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -75,23 +95,31 @@
         {
           "operation": "PUT"
         }
-      ]
+      ],
+      "short": "ResourceB",
+      "secondary": false
     },
     {
-      "type": "resource",
-      "name": "v2/ResourceB",
+      "type": "asset-resource",
+      "name": "v2-ResourceB",
       "singleton": false,
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "totalSize",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -104,24 +132,32 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "v2/ResourceB",
+      "secondary": false
     },
     {
       "type": "subresource",
-      "name": "Sub",
+      "name": "v2-ResourceB--Sub",
       "singleton": false,
-      "parent": "v2/ResourceB",
+      "parent": "v2-ResourceB",
       "attributes": [
         {
           "name": "id",
-          "type": "int",
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -134,7 +170,10 @@
         {
           "operation": "GET"
         }
-      ]
+      ],
+      "short": "Sub",
+      "parentShort": "v2/ResourceB",
+      "secondary": false
     }
   ]
-]
+}

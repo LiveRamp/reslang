@@ -1,0 +1,5 @@
+"This is a simple API for manipulating files"
+namespace {
+	title "file"
+	version 1.0.0
+}

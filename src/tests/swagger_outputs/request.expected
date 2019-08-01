@@ -1,10 +1,10 @@
 swagger: '2.0'
 info:
-  title: Simple API overview
-  description: 'requests model async workflows '
+  title: API of a request
+  description: This is the description of the API
   version: 0.0.1
 host: liveramp.net
-basePath: /request
+basePath: /API of a request
 schemes:
   - http
   - https
@@ -13,8 +13,8 @@ tags:
     description: (request) undefined
   - name: UploadRequest / Status
   - name: UploadRequest / RecordSet
-  - name: UploadRequest / StartProcessingVerb
-  - name: UploadRequest / StopProcessingVerb
+  - name: UploadRequest / StartProcessingAction
+  - name: UploadRequest / StopProcessingAction
 paths:
   /v1/upload-requests:
     post:
@@ -81,14 +81,14 @@ paths:
     get:
       tags:
         - UploadRequest / Status
-      operationId: retrieveStatus
+      operationId: retrieveUploadRequest--Status
       responses:
         '200':
           description: Status retrieved successfully
           schema:
-            $ref: '#/definitions/StatusOutput'
+            $ref: '#/definitions/UploadRequest--StatusOutput'
         default:
-          description: Error retrieving Status
+          description: Error retrieving UploadRequest--Status
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -105,10 +105,10 @@ paths:
       operationId: createRecordSet
       parameters:
         - in: body
-          name: RecordSetInput
+          name: UploadRequest--RecordSetInput
           required: true
           schema:
-            $ref: '#/definitions/RecordSetInput'
+            $ref: '#/definitions/UploadRequest--RecordSetInput'
         - in: path
           name: parentId
           description: Id of parent UploadRequest
@@ -126,14 +126,14 @@ paths:
     get:
       tags:
         - UploadRequest / RecordSet
-      operationId: retrieveRecordSet
+      operationId: retrieveUploadRequest--RecordSet
       responses:
         '200':
           description: RecordSet retrieved successfully
           schema:
-            $ref: '#/definitions/RecordSetOutput'
+            $ref: '#/definitions/UploadRequest--RecordSetOutput'
         default:
-          description: Error retrieving RecordSet
+          description: Error retrieving UploadRequest--RecordSet
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -148,17 +148,17 @@ paths:
           required: true
           type: integer
           format: int32
-  '/v1/upload-requests/{parentId}/start-processing-verbs':
+  '/v1/upload-requests/{parentId}/start-processing-actions':
     post:
       tags:
-        - UploadRequest / StartProcessingVerb
-      operationId: createStartProcessingVerb
+        - UploadRequest / StartProcessingAction
+      operationId: createStartProcessingAction
       parameters:
         - in: body
-          name: StartProcessingVerbInput
+          name: UploadRequest--StartProcessingActionInput
           required: true
           schema:
-            $ref: '#/definitions/StartProcessingVerbInput'
+            $ref: '#/definitions/UploadRequest--StartProcessingActionInput'
         - in: path
           name: parentId
           description: Id of parent UploadRequest
@@ -167,22 +167,22 @@ paths:
           format: int32
       responses:
         '200':
-          description: StartProcessingVerb created successfully
+          description: StartProcessingAction created successfully
         default:
-          description: Error creating StartProcessingVerb
+          description: Error creating StartProcessingAction
           schema:
             $ref: '#/definitions/ErrorBody'
-  '/v1/upload-requests/{parentId}/stop-processing-verbs':
+  '/v1/upload-requests/{parentId}/stop-processing-actions':
     post:
       tags:
-        - UploadRequest / StopProcessingVerb
-      operationId: createStopProcessingVerb
+        - UploadRequest / StopProcessingAction
+      operationId: createStopProcessingAction
       parameters:
         - in: body
-          name: StopProcessingVerbInput
+          name: UploadRequest--StopProcessingActionInput
           required: true
           schema:
-            $ref: '#/definitions/StopProcessingVerbInput'
+            $ref: '#/definitions/UploadRequest--StopProcessingActionInput'
         - in: path
           name: parentId
           description: Id of parent UploadRequest
@@ -191,23 +191,23 @@ paths:
           format: int32
       responses:
         '200':
-          description: StopProcessingVerb created successfully
+          description: StopProcessingAction created successfully
         default:
-          description: Error creating StopProcessingVerb
+          description: Error creating StopProcessingAction
           schema:
             $ref: '#/definitions/ErrorBody'
-  '/v1/upload-requests/{parentId}/stop-processing-verbs/{id}':
+  '/v1/upload-requests/{parentId}/stop-processing-actions/{id}':
     get:
       tags:
-        - UploadRequest / StopProcessingVerb
-      operationId: retrieveStopProcessingVerb
+        - UploadRequest / StopProcessingAction
+      operationId: retrieveUploadRequest--StopProcessingAction
       responses:
         '200':
-          description: StopProcessingVerb retrieved successfully
+          description: StopProcessingAction retrieved successfully
           schema:
-            $ref: '#/definitions/StopProcessingVerbOutput'
+            $ref: '#/definitions/UploadRequest--StopProcessingActionOutput'
         default:
-          description: Error retrieving StopProcessingVerb
+          description: Error retrieving UploadRequest--StopProcessingAction
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -268,7 +268,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/UploadRequestOutput'
-  StatusOutput:
+  UploadRequest--StatusOutput:
     type: object
     properties:
       id:
@@ -279,7 +279,7 @@ definitions:
         format: int32
       completed:
         type: boolean
-  RecordSetInput:
+  UploadRequest--RecordSetInput:
     type: object
     properties:
       company:
@@ -288,7 +288,7 @@ definitions:
         items:
           $ref: '#/definitions/RecordStructure'
         type: array
-  RecordSetOutput:
+  UploadRequest--RecordSetOutput:
     type: object
     properties:
       id:
@@ -307,16 +307,16 @@ definitions:
         type: string
       address:
         type: string
-  StartProcessingVerbInput:
+  UploadRequest--StartProcessingActionInput:
     type: object
     properties: {}
-  StopProcessingVerbInput:
+  UploadRequest--StopProcessingActionInput:
     type: object
     properties:
       when:
         type: string
         example: '2019-04-13T03:35:34Z (datetime)'
-  StopProcessingVerbOutput:
+  UploadRequest--StopProcessingActionOutput:
     type: object
     properties:
       id:

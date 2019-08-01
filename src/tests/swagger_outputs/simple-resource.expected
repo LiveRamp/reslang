@@ -1,25 +1,23 @@
 swagger: '2.0'
 info:
-  title: Simple API overview
-  description: |-
-    this is a simple resource
-       designed to show the potential 
-  version: 0.0.1
+  title: A simple resource API
+  description: This is the description of the API
+  version: 0.1.2
 host: liveramp.net
-basePath: /simple-resource
+basePath: /A simple resource API
 schemes:
   - http
   - https
 tags:
   - name: Garage
-    description: A garage is a place to store cars
+    description: This is a description of a garage
 paths:
   /v1/garages:
     post:
       tags:
         - Garage
       operationId: createGarage
-      description: this is a POST comment
+      description: Actual POST comment
       parameters:
         - in: body
           name: GarageInput
@@ -40,7 +38,6 @@ paths:
       parameters:
         - in: query
           name: id
-          description: 'simple id '
           required: false
           type: string
         - in: query
@@ -74,13 +71,12 @@ paths:
         - in: path
           name: id
           required: true
-          description: 'simple id '
           type: string
     put:
       tags:
         - Garage
       operationId: modifyGarage
-      description: this is a PUT comment
+      description: Actual PUT comment
       responses:
         '200':
           description: Garage modified successfully
@@ -94,7 +90,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: 'simple id '
           type: string
     delete:
       tags:
@@ -111,7 +106,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: 'simple id '
           type: string
 definitions:
   GarageInput:
@@ -119,14 +113,17 @@ definitions:
     properties:
       name:
         type: string
+      manufacturer:
+        $ref: '#/definitions/ManufacturerStructure'
   GarageOutput:
     type: object
     properties:
       id:
-        description: 'simple id '
         type: string
       name:
         type: string
+      manufacturer:
+        $ref: '#/definitions/ManufacturerStructure'
   GarageMultiResponse:
     type: object
     properties:
@@ -143,6 +140,11 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/GarageOutput'
+  ManufacturerStructure:
+    type: object
+    properties:
+      company:
+        type: string
   ErrorBody:
     type: object
     properties:
@@ -161,3 +163,4 @@ definitions:
       path:
         type: string
         description: The request field that the error is about
+

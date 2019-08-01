@@ -1,27 +1,42 @@
-[
-  {
-    "description": "this is a simple resource\n   designed to show the potential ",
-    "version": "0.0.1"
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "A simple resource API",
+    "version": "0.1.2"
   },
-  [],
-  [
+  "defs": [
     {
-      "type": "resource",
+      "type": "configuration-resource",
       "name": "Garage",
       "singleton": false,
-      "comment": "A garage is a place to store cars",
+      "comment": "This is a description of a garage",
       "attributes": [
         {
           "name": "id",
-          "comment": "simple id ",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
           "multiple": false,
           "output": false,
           "linked": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        },
+        {
+          "name": "manufacturer",
+          "type": {
+            "name": "Manufacturer",
+            "short": "Manufacturer"
+          },
           "multiple": false,
           "output": false,
           "linked": false
@@ -30,11 +45,11 @@
       "operations": [
         {
           "operation": "PUT",
-          "comment": "this is a PUT comment"
+          "comment": "Actual PUT comment"
         },
         {
           "operation": "POST",
-          "comment": "this is a POST comment"
+          "comment": "Actual POST comment"
         },
         {
           "operation": "GET"
@@ -49,7 +64,27 @@
             "name"
           ]
         }
-      ]
+      ],
+      "short": "Garage",
+      "secondary": false
+    },
+    {
+      "type": "structure",
+      "name": "Manufacturer",
+      "attributes": [
+        {
+          "name": "company",
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "multiple": false,
+          "output": false,
+          "linked": false
+        }
+      ],
+      "short": "Manufacturer",
+      "secondary": false
     }
   ]
-]
+}

@@ -1,9 +1,4 @@
 
-"This is the description of the API"
-namespace {
-    title "An API with a singleton asset resource"
-    version 0.1.2
-}
 
 singleton asset-resource Resource {
     id: int

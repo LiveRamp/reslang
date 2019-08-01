@@ -123,6 +123,32 @@ The 3 resource types are "configuration-resource", "asset-resource" and "request
 
 You can use the "singleton" keyword before a resource definition to indicate there is only 1 instance of this resource.
 
+### Versioning
+
+Granular versioning is possible on toplevel resources and other elements, but is not possible (or necessary) for subresources. By default all definitions are v1 if not specified. However, we can place another version at the front to indicate a breaking change in the resource e.g. v2/resource.
+
+Note that this can also inherit from the v1 resource. We do not need more than the major version in the semver, as the assumption is that if you introduce minor changes in a resource it will be backwards compatible.
+
+Also note that it is perfectly possible to support multiple major versions of a resource in a single API.
+
+An example of evolution is contained in the models/new/upversion directory:
+
+`asset-resource v2/ResourceB {`
+	`id: int`
+`totalSize: int`
+
+`operations`
+    `POST GET`
+`}`
+
+`subresource v2/ResourceB::Sub {`
+    `id: int`
+    `name: string`
+
+`operations`
+    `POST GET`
+`}`
+
 ### Inheritance
 
 Resources, structures and enums can inherit from each other using the "extends" keyword. This currently only inherits the attributes of a resource, not the operations.

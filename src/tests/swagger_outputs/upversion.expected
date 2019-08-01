@@ -1,12 +1,10 @@
 swagger: '2.0'
 info:
-  title: Simple API overview
-  description: |-
-    this is a simple resource
-       designed to show the potential 
-  version: 0.0.1
+  title: An API showing evolution
+  description: This is the description of the API
+  version: 0.1.2
 host: liveramp.net
-basePath: /upversion
+basePath: /An API showing evolution
 schemes:
   - http
   - https
@@ -100,10 +98,10 @@ paths:
       operationId: createv2/ResourceB
       parameters:
         - in: body
-          name: v2/ResourceBInput
+          name: v2-ResourceBInput
           required: true
           schema:
-            $ref: '#/definitions/v2/ResourceBInput'
+            $ref: '#/definitions/v2-ResourceBInput'
       responses:
         '200':
           description: v2/ResourceB created successfully
@@ -115,14 +113,14 @@ paths:
     get:
       tags:
         - v2/ResourceB
-      operationId: retrievev2/ResourceB
+      operationId: retrievev2-ResourceB
       responses:
         '200':
           description: v2/ResourceB retrieved successfully
           schema:
-            $ref: '#/definitions/v2/ResourceBOutput'
+            $ref: '#/definitions/v2-ResourceBOutput'
         default:
-          description: Error retrieving v2/ResourceB
+          description: Error retrieving v2-ResourceB
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -138,13 +136,13 @@ paths:
       operationId: createSub
       parameters:
         - in: body
-          name: SubInput
+          name: v2-ResourceB--SubInput
           required: true
           schema:
-            $ref: '#/definitions/SubInput'
+            $ref: '#/definitions/v2-ResourceB--SubInput'
         - in: path
           name: parentId
-          description: Id of parent v2/ResourceB
+          description: Id of parent v2-ResourceB
           required: true
           type: integer
           format: int32
@@ -159,14 +157,14 @@ paths:
     get:
       tags:
         - v2/ResourceB / Sub
-      operationId: retrieveSub
+      operationId: retrievev2-ResourceB--Sub
       responses:
         '200':
           description: Sub retrieved successfully
           schema:
-            $ref: '#/definitions/SubOutput'
+            $ref: '#/definitions/v2-ResourceB--SubOutput'
         default:
-          description: Error retrieving Sub
+          description: Error retrieving v2-ResourceB--Sub
           schema:
             $ref: '#/definitions/ErrorBody'
       parameters:
@@ -177,7 +175,7 @@ paths:
           format: int32
         - in: path
           name: parentId
-          description: Id of parent v2/ResourceB
+          description: Id of parent v2-ResourceB
           required: true
           type: integer
           format: int32
@@ -211,13 +209,13 @@ definitions:
       size:
         type: integer
         format: int32
-  v2/ResourceBInput:
+  v2-ResourceBInput:
     type: object
     properties:
       totalSize:
         type: integer
         format: int32
-  v2/ResourceBOutput:
+  v2-ResourceBOutput:
     type: object
     properties:
       id:
@@ -226,12 +224,12 @@ definitions:
       totalSize:
         type: integer
         format: int32
-  SubInput:
+  v2-ResourceB--SubInput:
     type: object
     properties:
       name:
         type: string
-  SubOutput:
+  v2-ResourceB--SubOutput:
     type: object
     properties:
       id:
@@ -257,3 +255,4 @@ definitions:
       path:
         type: string
         description: The request field that the error is about
+
