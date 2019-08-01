@@ -36,56 +36,58 @@ Each resource specifies the attributes it holds, followed by the possible operat
 
 Here is an example of a simple API for creating and manipulating files and directories:
 
-`"This is a simple API for manipulating files"`
-`namespace {`
-	`title "file"`
-	`version 1.0.0`
-`}`
+```File API
+"This is a simple API for manipulating files"
+namespace {
+	title "file"
+	version 1.0.0
+}
 
-`"This models a directory we might create"`
-`asset-resource Directory {`
-	`id: string`
-	`name: string`
-	`operations`
+"This models a directory we might create"
+asset-resource Directory {
+	id: string
+	name: string
+	
+	operations
+		GET POST MULTIGET name id
+}
 
-​		`GET POST MULTIGET name id`
-`}`
+"This configures up a file type, e.g. .gif"
+configuration-resource FileType {
+	id: string
+	type: string
+	format: string
+	
+	operations
+		GET POST MULTIGET type id
+}
 
-`"This configures up a file type, e.g. .gif"`
-`configuration-resource FileType {`
-	`id: string`
-	`type: string`
-	`format: string`
-	`operations`
-		`GET POST MULTIGET type id`
-`}`
+"This models a file in a directory"
+subresource Directory::File {
+	id: int
+	name: string
+	url: string
+	fileType: linked FileType
+	
+	operations
+		GET POST MULTIGET id
+}
 
-`"This models a file in a directory"`
-`subresource Directory::File {`
-	`id: int`
-	`name: string`
-	`url: string`
-	`fileType: linked FileType`
+"This models a long running request"
+request-resource DirectoryDeleteRequest {
+	id: int
+	directory: linked Directory
+	
+	operations
+		GET POST MULTIGET id
+}
 
-​	`operations`
-​		`GET POST MULTIGET id`
-`}`
-
-`"This models a long running request"`
-`request-resource DirectoryDeleteRequest {`
-	`id: int`
-	`directory: linked Directory`
-
-​	`operations`
-
-​		`GET POST MULTIGET id`
-`}`
-
-`"This models an action on a request"`
-`action DirectoryDeleteRequest::Cancel {`
-	`operations`
-		`POST`
-`}`
+"This models an action on a request"
+action DirectoryDeleteRequest::Cancel {
+	operations
+		POST
+}
+```
 
 The description above models a Directory as an asset-resource. We can create any number of directories via POST. Files are contained within these directories, represented by the Directory subresource named File. Each File refers to a configuration-resource of FileType (e.g. png) via the "linked" keyword.
 
@@ -133,21 +135,23 @@ Also note that it is perfectly possible to support multiple major versions of a 
 
 An example of evolution is contained in the models/new/upversion directory:
 
-​    asset-resource v2/ResourceB {
-​    	id: int
-​    totalSize: int
+```upversioning example
+asset-resource v2/ResourceB {
+	id: int
+  totalSize: int
 
-​    operations
-​        POST GET
-​    }
+  operations
+    POST GET
+}
 
-​    subresource v2/ResourceB::Sub {
-​        id: int
-​        name: string
-
-​    operations
-​        POST GET
-​    }
+subresource v2/ResourceB::Sub {
+  id: int
+  name: string
+  
+  operations
+    POST GET
+}
+```
 
 ### Inheritance
 
