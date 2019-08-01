@@ -1,11 +1,5 @@
 import { fixName, pluralizeName, getVersion, sanitize } from "./names"
-import {
-    IDefinition,
-    IAttribute,
-    IOperation,
-    PrimitiveType,
-    ResourceType
-} from "./treetypes"
+import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
 
@@ -17,20 +11,26 @@ export default class SwagGen extends BaseGen {
     public generate() {
         const tags: any[] = []
         const paths: any = {}
-        const definitions: any = {}
+        const schemas: any = {}
+        const parameters: any = {}
         const swag: object = {
-            swagger: "2.0",
+            openapi: "3.0.1",
             info: {
                 title: this.namespace.title,
                 description: this.namespace.comment,
                 version: this.namespace.version
             },
-            host: "liveramp.net",
-            basePath: "/" + this.namespace.title,
-            schemes: ["http", "https"],
+            servers: [
+                {
+                    url: `https://api.liveramp.com/${this.mainNamespace}`
+                }
+            ],
             tags,
             paths,
-            definitions
+            components: {
+                parameters,
+                schemas
+            }
         }
 
         // tags
@@ -162,7 +162,7 @@ export default class SwagGen extends BaseGen {
         }
 
         // model definitions
-        this.formDefinitions(definitions)
+        this.formDefinitions(schemas)
 
         return swag
     }
@@ -180,26 +180,25 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[short]],
                 operationId: "create" + short,
                 description: post.comment,
-                parameters: [
-                    {
-                        in: "body",
-                        name: el.name + "Input",
-                        required: true,
-                        schema: {
-                            $ref: "#/definitions/" + el.name + "Input"
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: `#/components/schemas/${el.name}Input`
+                            }
                         }
                     }
-                ],
+                },
                 responses: {
                     200: {
                         description: short + " created successfully"
-                    },
-                    default: {
-                        description: "Error creating " + short,
-                        schema: {
-                            $ref: "#/definitions/ErrorBody"
-                        }
                     }
+                    // default: {
+                    //     description: "Error creating " + short,
+                    //     schema: {
+                    //         $ref: "#/components/schemas/ErrorBody"
+                    //     }
+                    // }
                 }
             }
             this.addParentPathId(el, path.post)
@@ -232,18 +231,24 @@ export default class SwagGen extends BaseGen {
                             description:
                                 pluralizeName(short) +
                                 " retrieved successfully",
-                            schema: {
-                                $ref:
-                                    "#/definitions/" + el.name + "MultiResponse"
-                            }
-                        },
-                        default: {
-                            description:
-                                "Error retrieving " + pluralizeName(short),
-                            schema: {
-                                $ref: "#/definitions/ErrorBody"
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        $ref:
+                                            "#/components/schemas/" +
+                                            el.name +
+                                            "MultiResponse"
+                                    }
+                                }
                             }
                         }
+                        // default: {
+                        //     description:
+                        //         "Error retrieving " + pluralizeName(short),
+                        //     schema: {
+                        //         $ref: "#/components/schemas/ErrorBody"
+                        //     }
+                        // }
                     }
                 }
                 this.addParentPathId(el, path.get)
@@ -269,7 +274,7 @@ export default class SwagGen extends BaseGen {
         const prop = {
             description: attr.comment
         }
-        this.addType(attr, prop)
+        this.addType(attr, prop, false)
         return { name, prop }
     }
 
@@ -308,16 +313,23 @@ export default class SwagGen extends BaseGen {
                 responses: {
                     200: {
                         description: short + " retrieved successfully",
-                        schema: {
-                            $ref: "#/definitions/" + el.name + "Output"
-                        }
-                    },
-                    default: {
-                        description: "Error retrieving " + el.name,
-                        schema: {
-                            $ref: "#/definitions/ErrorBody"
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref:
+                                        "#/components/schemas/" +
+                                        el.name +
+                                        "Output"
+                                }
+                            }
                         }
                     }
+                    // default: {
+                    //     description: "Error retrieving " + el.name,
+                    //     schema: {
+                    //         $ref: "#/components/schemas/ErrorBody"
+                    //     }
+                    // }
                 }
             }
             if (!singleton) {
@@ -341,16 +353,23 @@ export default class SwagGen extends BaseGen {
                 responses: {
                     200: {
                         description: short + " modified successfully",
-                        schema: {
-                            $ref: "#/definitions/" + el.name + "Input"
-                        }
-                    },
-                    default: {
-                        description: "Error modifying " + short,
-                        schema: {
-                            $ref: "#/definitions/ErrorBody"
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    $ref:
+                                        "#/components/schemas/" +
+                                        el.name +
+                                        "Input"
+                                }
+                            }
                         }
                     }
+                    // default: {
+                    //     description: "Error modifying " + short,
+                    //     schema: {
+                    //         $ref: "#/components/schemas/ErrorBody"
+                    //     }
+                    // }
                 }
             }
             if (!singleton) {
@@ -374,13 +393,13 @@ export default class SwagGen extends BaseGen {
                 responses: {
                     200: {
                         description: short + " deleted successfully"
-                    },
-                    default: {
-                        description: "Error deleting " + short,
-                        schema: {
-                            $ref: "#/definitions/ErrorBody"
-                        }
                     }
+                    // default: {
+                    //     description: "Error deleting " + short,
+                    //     schema: {
+                    //         $ref: "#/components/schemas/ErrorBody"
+                    //     }
+                    // }
                 }
             }
             if (!singleton) {
@@ -396,40 +415,44 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private addType(attr: IAttribute, obj: any) {
+    private addType(attr: IAttribute, obj: any, schemaLevel = true) {
         const type = attr.type
         // allow description overrides by caller
         if (!obj.description) {
             obj.description = attr.comment
         }
         const name = type.name
+        if (schemaLevel) {
+            obj.schema = {}
+        }
+        const schema = schemaLevel ? obj.schema : obj
         const prim = isPrimitiveType(name)
         if (prim) {
             switch (name) {
                 case "string":
-                    obj.type = "string"
+                    schema.type = "string"
                     break
                 case "int":
-                    obj.type = "integer"
-                    obj.format = "int32"
+                    schema.type = "integer"
+                    schema.format = "int32"
                     break
                 case "boolean":
-                    obj.type = "boolean"
+                    schema.type = "boolean"
                     break
                 case "double":
-                    obj.type = "number"
+                    schema.type = "number"
                     break
                 case "date":
-                    obj.type = "string"
-                    obj.example = "2019-04-13 (date)"
+                    schema.type = "string"
+                    schema.example = "2019-04-13 (date)"
                     break
                 case "time":
-                    obj.type = "string"
-                    obj.example = "22:00:01 (time)"
+                    schema.type = "string"
+                    schema.example = "22:00:01 (time)"
                     break
                 case "datetime":
-                    obj.type = "string"
-                    obj.example = "2019-04-13T03:35:34Z (datetime)"
+                    schema.type = "string"
+                    schema.example = "2019-04-13T03:35:34Z (datetime)"
                     break
             }
         } else {
@@ -437,7 +460,9 @@ export default class SwagGen extends BaseGen {
             const def = this.extractDefinition(attr.type.name)
             switch (def.type) {
                 case "structure":
-                    obj.$ref = `#/definitions/${attr.type.name}Structure`
+                    schema.$ref = `#/components/schemas/${
+                        attr.type.name
+                    }Structure`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -450,13 +475,13 @@ export default class SwagGen extends BaseGen {
                             } but doesn't use linked`
                         )
                     }
-                    obj.type = "string"
-                    obj.example = "Link to garage via id(s)"
+                    schema.type = "string"
+                    schema.example = "Link to garage via id(s)"
                     break
                 case "enum":
-                    obj.type = "string"
+                    schema.type = "string"
                     // collect any inherited literals
-                    obj.enum = this.collectInheritedLiterals(def)
+                    schema.enum = this.collectInheritedLiterals(def)
                     break
                 default:
                     throw Error(
@@ -469,15 +494,15 @@ export default class SwagGen extends BaseGen {
 
         // if multi, then push down to an array
         if (attr.multiple) {
-            obj.items = {
+            schema.items = {
                 type: obj.type,
                 example: obj.example,
                 $ref: obj.$ref
             }
-            delete obj.type
-            delete obj.example
-            delete obj.$ref
-            obj.type = "array"
+            delete schema.type
+            delete schema.example
+            delete schema.$ref
+            schema.type = "array"
         }
         return obj
     }
@@ -576,7 +601,9 @@ export default class SwagGen extends BaseGen {
         }
         // a base definition?
         if (def.extends) {
-            request.allOf = [{ $ref: `#/definitions/${def.extends}${suffix}` }]
+            request.allOf = [
+                { $ref: `#/components/schemas/${def.extends}${suffix}` }
+            ]
         }
 
         definitions[def.name + suffix] = request
@@ -622,7 +649,10 @@ export default class SwagGen extends BaseGen {
                                     pluralizeName(def.name),
                                 type: "array",
                                 items: {
-                                    $ref: "#/definitions/" + def.name + "Output"
+                                    $ref:
+                                        "#/components/schemas/" +
+                                        def.name +
+                                        "Output"
                                 }
                             }
                         }

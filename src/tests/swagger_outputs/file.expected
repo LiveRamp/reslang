@@ -1,13 +1,10 @@
-swagger: '2.0'
+openapi: 3.0.1
 info:
   title: file
   description: This is a simple API for manipulating files
   version: 1.0.0
-host: liveramp.net
-basePath: /file
-schemes:
-  - http
-  - https
+servers:
+  - url: 'https://api.liveramp.com/file'
 tags:
   - name: Directory
     description: This models a directory we might create
@@ -25,19 +22,14 @@ paths:
       tags:
         - Directory
       operationId: createDirectory
-      parameters:
-        - in: body
-          name: DirectoryInput
-          required: true
-          schema:
-            $ref: '#/definitions/DirectoryInput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectoryInput'
       responses:
         '200':
           description: Directory created successfully
-        default:
-          description: Error creating Directory
-          schema:
-            $ref: '#/definitions/ErrorBody'
     get:
       tags:
         - Directory
@@ -46,20 +38,20 @@ paths:
         - in: query
           name: id
           required: false
-          type: string
+          schema:
+            type: string
         - in: query
           name: name
           required: false
-          type: string
+          schema:
+            type: string
       responses:
         '200':
           description: Directories retrieved successfully
-          schema:
-            $ref: '#/definitions/DirectoryMultiResponse'
-        default:
-          description: Error retrieving Directories
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryMultiResponse'
   '/v1/directories/{id}':
     get:
       tags:
@@ -68,35 +60,29 @@ paths:
       responses:
         '200':
           description: Directory retrieved successfully
-          schema:
-            $ref: '#/definitions/DirectoryOutput'
-        default:
-          description: Error retrieving Directory
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryOutput'
       parameters:
         - in: path
           name: id
           required: true
-          type: string
+          schema:
+            type: string
   /v1/file-types:
     post:
       tags:
         - FileType
       operationId: createFileType
-      parameters:
-        - in: body
-          name: FileTypeInput
-          required: true
-          schema:
-            $ref: '#/definitions/FileTypeInput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileTypeInput'
       responses:
         '200':
           description: FileType created successfully
-        default:
-          description: Error creating FileType
-          schema:
-            $ref: '#/definitions/ErrorBody'
     get:
       tags:
         - FileType
@@ -105,20 +91,20 @@ paths:
         - in: query
           name: id
           required: false
-          type: string
+          schema:
+            type: string
         - in: query
           name: type
           required: false
-          type: string
+          schema:
+            type: string
       responses:
         '200':
           description: FileTypes retrieved successfully
-          schema:
-            $ref: '#/definitions/FileTypeMultiResponse'
-        default:
-          description: Error retrieving FileTypes
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileTypeMultiResponse'
   '/v1/file-types/{id}':
     get:
       tags:
@@ -127,40 +113,36 @@ paths:
       responses:
         '200':
           description: FileType retrieved successfully
-          schema:
-            $ref: '#/definitions/FileTypeOutput'
-        default:
-          description: Error retrieving FileType
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileTypeOutput'
       parameters:
         - in: path
           name: id
           required: true
-          type: string
+          schema:
+            type: string
   '/v1/directories/{parentId}/files':
     post:
       tags:
         - Directory / File
       operationId: createFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Directory--FileInput'
+      responses:
+        '200':
+          description: File created successfully
       parameters:
-        - in: body
-          name: Directory--FileInput
-          required: true
-          schema:
-            $ref: '#/definitions/Directory--FileInput'
         - in: path
           name: parentId
           description: Id of parent Directory
           required: true
-          type: string
-      responses:
-        '200':
-          description: File created successfully
-        default:
-          description: Error creating File
           schema:
-            $ref: '#/definitions/ErrorBody'
+            type: string
     get:
       tags:
         - Directory / File
@@ -169,22 +151,22 @@ paths:
         - in: query
           name: id
           required: false
-          type: integer
-          format: int32
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: parentId
           description: Id of parent Directory
           required: true
-          type: string
+          schema:
+            type: string
       responses:
         '200':
           description: Files retrieved successfully
-          schema:
-            $ref: '#/definitions/Directory--FileMultiResponse'
-        default:
-          description: Error retrieving Files
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Directory--FileMultiResponse'
   '/v1/directories/{parentId}/files/{id}':
     get:
       tags:
@@ -193,41 +175,36 @@ paths:
       responses:
         '200':
           description: File retrieved successfully
-          schema:
-            $ref: '#/definitions/Directory--FileOutput'
-        default:
-          description: Error retrieving Directory--File
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Directory--FileOutput'
       parameters:
         - in: path
           name: id
           required: true
-          type: integer
-          format: int32
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: parentId
           description: Id of parent Directory
           required: true
-          type: string
+          schema:
+            type: string
   /v1/directory-delete-requests:
     post:
       tags:
         - DirectoryDeleteRequest
       operationId: createDirectoryDeleteRequest
-      parameters:
-        - in: body
-          name: DirectoryDeleteRequestInput
-          required: true
-          schema:
-            $ref: '#/definitions/DirectoryDeleteRequestInput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectoryDeleteRequestInput'
       responses:
         '200':
           description: DirectoryDeleteRequest created successfully
-        default:
-          description: Error creating DirectoryDeleteRequest
-          schema:
-            $ref: '#/definitions/ErrorBody'
     get:
       tags:
         - DirectoryDeleteRequest
@@ -236,17 +213,16 @@ paths:
         - in: query
           name: id
           required: false
-          type: integer
-          format: int32
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: DirectoryDeleteRequests retrieved successfully
-          schema:
-            $ref: '#/definitions/DirectoryDeleteRequestMultiResponse'
-        default:
-          description: Error retrieving DirectoryDeleteRequests
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryDeleteRequestMultiResponse'
   '/v1/directory-delete-requests/{id}':
     get:
       tags:
@@ -255,192 +231,190 @@ paths:
       responses:
         '200':
           description: DirectoryDeleteRequest retrieved successfully
-          schema:
-            $ref: '#/definitions/DirectoryDeleteRequestOutput'
-        default:
-          description: Error retrieving DirectoryDeleteRequest
-          schema:
-            $ref: '#/definitions/ErrorBody'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
       parameters:
         - in: path
           name: id
           required: true
-          type: integer
-          format: int32
+          schema:
+            type: integer
+            format: int32
   '/v1/directory-delete-requests/{parentId}/cancels':
     post:
       tags:
         - DirectoryDeleteRequest / Cancel
       operationId: createCancel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectoryDeleteRequest--CancelInput'
+      responses:
+        '200':
+          description: Cancel created successfully
       parameters:
-        - in: body
-          name: DirectoryDeleteRequest--CancelInput
-          required: true
-          schema:
-            $ref: '#/definitions/DirectoryDeleteRequest--CancelInput'
         - in: path
           name: parentId
           description: Id of parent DirectoryDeleteRequest
           required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    DirectoryInput:
+      type: object
+      properties:
+        name:
+          type: string
+    DirectoryOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    DirectoryMultiResponse:
+      type: object
+      properties:
+        page:
+          description: 'Page offset, starting from 1'
           type: integer
           format: int32
-      responses:
-        '200':
-          description: Cancel created successfully
-        default:
-          description: Error creating Cancel
-          schema:
-            $ref: '#/definitions/ErrorBody'
-definitions:
-  DirectoryInput:
-    type: object
-    properties:
-      name:
-        type: string
-  DirectoryOutput:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-  DirectoryMultiResponse:
-    type: object
-    properties:
-      page:
-        description: 'Page offset, starting from 1'
-        type: integer
-        format: int32
-      page-size:
-        description: Size of returned page
-        type: integer
-        format: int32
-      elements:
-        description: Array of retrieved Directories
-        type: array
-        items:
-          $ref: '#/definitions/DirectoryOutput'
-  FileTypeInput:
-    type: object
-    properties:
-      type:
-        type: string
-      format:
-        type: string
-  FileTypeOutput:
-    type: object
-    properties:
-      id:
-        type: string
-      type:
-        type: string
-      format:
-        type: string
-  FileTypeMultiResponse:
-    type: object
-    properties:
-      page:
-        description: 'Page offset, starting from 1'
-        type: integer
-        format: int32
-      page-size:
-        description: Size of returned page
-        type: integer
-        format: int32
-      elements:
-        description: Array of retrieved FileTypes
-        type: array
-        items:
-          $ref: '#/definitions/FileTypeOutput'
-  Directory--FileInput:
-    type: object
-    properties:
-      name:
-        type: string
-      url:
-        type: string
-      fileType-file-type-id:
-        type: string
-        example: Link to garage via id(s)
-  Directory--FileOutput:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-      name:
-        type: string
-      url:
-        type: string
-      fileType-file-type-id:
-        type: string
-        example: Link to garage via id(s)
-  Directory--FileMultiResponse:
-    type: object
-    properties:
-      page:
-        description: 'Page offset, starting from 1'
-        type: integer
-        format: int32
-      page-size:
-        description: Size of returned page
-        type: integer
-        format: int32
-      elements:
-        description: Array of retrieved Directory--Files
-        type: array
-        items:
-          $ref: '#/definitions/Directory--FileOutput'
-  DirectoryDeleteRequestInput:
-    type: object
-    properties:
-      directory-directory-id:
-        type: string
-        example: Link to garage via id(s)
-  DirectoryDeleteRequestOutput:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-      directory-directory-id:
-        type: string
-        example: Link to garage via id(s)
-  DirectoryDeleteRequestMultiResponse:
-    type: object
-    properties:
-      page:
-        description: 'Page offset, starting from 1'
-        type: integer
-        format: int32
-      page-size:
-        description: Size of returned page
-        type: integer
-        format: int32
-      elements:
-        description: Array of retrieved DirectoryDeleteRequests
-        type: array
-        items:
-          $ref: '#/definitions/DirectoryDeleteRequestOutput'
-  DirectoryDeleteRequest--CancelInput:
-    type: object
-    properties: {}
-  ErrorBody:
-    type: object
-    properties:
-      http-status:
-        type: number
-        description: The integer HTTP error status code for this problem
-      error-code:
-        type: string
-        description: 'Service specific error code, more granular'
-      message:
-        type: string
-        description: 'General, human readable error message'
-      detail:
-        type: string
-        description: Human readable message specific to this occurrence
-      path:
-        type: string
-        description: The request field that the error is about
+        page-size:
+          description: Size of returned page
+          type: integer
+          format: int32
+        elements:
+          description: Array of retrieved Directories
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryOutput'
+    FileTypeInput:
+      type: object
+      properties:
+        type:
+          type: string
+        format:
+          type: string
+    FileTypeOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        format:
+          type: string
+    FileTypeMultiResponse:
+      type: object
+      properties:
+        page:
+          description: 'Page offset, starting from 1'
+          type: integer
+          format: int32
+        page-size:
+          description: Size of returned page
+          type: integer
+          format: int32
+        elements:
+          description: Array of retrieved FileTypes
+          type: array
+          items:
+            $ref: '#/components/schemas/FileTypeOutput'
+    Directory--FileInput:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        fileType-file-type-id:
+          type: string
+          example: Link to garage via id(s)
+    Directory--FileOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        url:
+          type: string
+        fileType-file-type-id:
+          type: string
+          example: Link to garage via id(s)
+    Directory--FileMultiResponse:
+      type: object
+      properties:
+        page:
+          description: 'Page offset, starting from 1'
+          type: integer
+          format: int32
+        page-size:
+          description: Size of returned page
+          type: integer
+          format: int32
+        elements:
+          description: Array of retrieved Directory--Files
+          type: array
+          items:
+            $ref: '#/components/schemas/Directory--FileOutput'
+    DirectoryDeleteRequestInput:
+      type: object
+      properties:
+        directory-directory-id:
+          type: string
+          example: Link to garage via id(s)
+    DirectoryDeleteRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        directory-directory-id:
+          type: string
+          example: Link to garage via id(s)
+    DirectoryDeleteRequestMultiResponse:
+      type: object
+      properties:
+        page:
+          description: 'Page offset, starting from 1'
+          type: integer
+          format: int32
+        page-size:
+          description: Size of returned page
+          type: integer
+          format: int32
+        elements:
+          description: Array of retrieved DirectoryDeleteRequests
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
+    DirectoryDeleteRequest--CancelInput:
+      type: object
+      properties: {}
+    ErrorBody:
+      type: object
+      properties:
+        http-status:
+          type: number
+          description: The integer HTTP error status code for this problem
+        error-code:
+          type: string
+          description: 'Service specific error code, more granular'
+        message:
+          type: string
+          description: 'General, human readable error message'
+        detail:
+          type: string
+          description: Human readable message specific to this occurrence
+        path:
+          type: string
+          description: The request field that the error is about
 

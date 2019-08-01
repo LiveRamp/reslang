@@ -6,7 +6,7 @@ export abstract class BaseGen {
     protected namespace!: INamespace
     protected defs: IDefinition[] = []
     private loaded = new Set<string>()
-    private mainNamespace?: string
+    protected mainNamespace?: string
 
     public constructor(private dirs: string[]) {
         this.processDefinitions()
