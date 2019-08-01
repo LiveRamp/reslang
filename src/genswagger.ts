@@ -176,6 +176,7 @@ export default class SwagGen extends BaseGen {
     ) {
         if (post) {
             const short = el.short
+            const idtype = this.extractId(el)
             path.post = {
                 tags: [tagKeys[short]],
                 operationId: "create" + short,
@@ -190,8 +191,18 @@ export default class SwagGen extends BaseGen {
                     }
                 },
                 responses: {
-                    200: {
-                        description: short + " created successfully"
+                    201: {
+                        description: short + " created successfully",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        id: this.addType(idtype, {}, false)
+                                    }
+                                }
+                            }
+                        }
                     }
                     // default: {
                     //     description: "Error creating " + short,

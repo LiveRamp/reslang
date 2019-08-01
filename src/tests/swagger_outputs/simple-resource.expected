@@ -21,8 +21,19 @@ paths:
             schema:
               $ref: '#/components/schemas/GarageInput'
       responses:
-        '200':
+        '201':
           description: Garage created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    in: path
+                    name: id
+                    required: true
+                    schema:
+                      type: string
     get:
       tags:
         - Garage

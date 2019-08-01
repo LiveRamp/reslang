@@ -105,15 +105,15 @@ If you want a diagram, use the flag —dotviz, which will copy a diagram format 
 
 The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API descripotion is 48 lines, whereas the Swagger is 445 lines)
 
-![API header](./api.png)
+![API header](api.png)
 
 The Swagger itself reflects the set of routes available. Note that any quoted text just before an element gets inserted as documentation into the Swagger.
 
-![Routes](./swagger.png)
+![Routes](swagger.png)
 
 Generating a dotviz file creates the following diagram of the API:
 
-![Diagram](./dotviz.png)
+![Diagram](dotviz.png)
 
 Top level resources are yellow. Links from one resource to another are shown via arrows.
 
@@ -124,6 +124,23 @@ Top level resources are yellow. Links from one resource to another are shown via
 The 3 resource types are "configuration-resource", "asset-resource" and "request-resource". Each resource can have any number of 1-level-deep subresources. Deeper levels are unsupported.
 
 You can use the "singleton" keyword before a resource definition to indicate there is only 1 instance of this resource.
+
+### Primitive Types
+
+The following primitive types are available. These are translated into correct Swagger types - in some cases (datetime etc) the primitives are translated into a string type because Swagger has no notion of time-based values. If a translation occurs, then an appropriate comment / example text will be inserted as documentation
+
+| Type     | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| int      | 32-bit integer                                               |
+| string   | Standard string                                              |
+| double   | Double floating point                                        |
+| boolean  | True or false                                                |
+| date     | Date in ISO8601 format (2019-04-13)                          |
+| time     | Time in ISO8601 format (22:00:01)                            |
+| Datetime | Date+time in ISO8601 format, always with timezone (2019-04-13T03:35:34Z) |
+|          |                                                              |
+
+
 
 ### Versioning
 

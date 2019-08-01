@@ -38,6 +38,8 @@ request-resource DirectoryDeleteRequest {
 
 "This models an action on a request"
 action DirectoryDeleteRequest::Cancel {
+	id: int
+	
     operations
 		POST
 }
