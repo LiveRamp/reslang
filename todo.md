@@ -7,17 +7,18 @@
 *   ~~update to OpenAPI 3~~
 *   ~~error bodies + references~~
 *   ~~concept of a future resource for linking to~~
+*   ~~abhishek's pagination~~
 *   map + union
+*   multiget query parameters
+*   string(\$uri)
+*   Names: fix param names, check on verb, resource, enum
 
--   Names: fix param names, check on verb, resource, enum
 -   no id needed for singleton GET
 -   MULTIGET w/out id
--   string(\$uri)
 -   example text for attributes & bodies
 
 -   synchronous operations or actions (look at abilitec API)
 -   mutable, required, optional
--   Inheritance - add anyOff + discriminator
 
 Admin:
 

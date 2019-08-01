@@ -4,9 +4,9 @@ import { readdirSync } from "fs"
 
 export abstract class BaseGen {
     protected namespace!: INamespace
+    protected mainNamespace?: string
     protected defs: IDefinition[] = []
     private loaded = new Set<string>()
-    protected mainNamespace?: string
 
     public constructor(private dirs: string[]) {
         this.processDefinitions()

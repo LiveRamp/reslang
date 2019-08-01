@@ -226,6 +226,26 @@ export default class SwagGen extends BaseGen {
                         )
                     }
                 }
+                params.push({
+                    in: "query",
+                    name: "offset",
+                    description:
+                        "Offset of the record (starting from 0) to include in the response.",
+                    schema: {
+                        type: "integer",
+                        format: "int32"
+                    }
+                })
+                params.push({
+                    in: "query",
+                    name: "limit",
+                    description: `Number of records to return. If unspecified, 10 records will be returned.\
+ Maximum value for limit can be 100`,
+                    schema: {
+                        type: "integer",
+                        format: "int32"
+                    }
+                })
 
                 const short = el.short
                 const responses = {
@@ -649,16 +669,6 @@ export default class SwagGen extends BaseGen {
                     definitions[def.name + "MultiResponse"] = {
                         type: "object",
                         properties: {
-                            page: {
-                                description: "Page offset, starting from 1",
-                                type: "integer",
-                                format: "int32"
-                            },
-                            "page-size": {
-                                description: "Size of returned page",
-                                type: "integer",
-                                format: "int32"
-                            },
                             elements: {
                                 description:
                                     "Array of retrieved " +
