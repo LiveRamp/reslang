@@ -2,6 +2,8 @@
 
 Relang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.
 
+Please see the [manual here](./.docs/manual.md].
+
 ## Installation
 
 1. ensure node & yarn are installed
