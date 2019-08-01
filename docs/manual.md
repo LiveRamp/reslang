@@ -133,21 +133,21 @@ Also note that it is perfectly possible to support multiple major versions of a 
 
 An example of evolution is contained in the models/new/upversion directory:
 
-`asset-resource v2/ResourceB {`
-	`id: int`
-`totalSize: int`
+​    asset-resource v2/ResourceB {
+​    	id: int
+​    totalSize: int
 
-`operations`
-    `POST GET`
-`}`
+​    operations
+​        POST GET
+​    }
 
-`subresource v2/ResourceB::Sub {`
-    `id: int`
-    `name: string`
+​    subresource v2/ResourceB::Sub {
+​        id: int
+​        name: string
 
-`operations`
-    `POST GET`
-`}`
+​    operations
+​        POST GET
+​    }
 
 ### Inheritance
 
