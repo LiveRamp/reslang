@@ -99,23 +99,23 @@ This copies the swagger to the clipboard (& opens the Swagger editor in the brow
 
 If you want a diagram, use the flag —dotviz, which will copy a diagram format into the clipboard and open up the graphviz viewer.
 
-##Example Swagger Output
+## Example Swagger Output
 
 The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API descripotion is 48 lines, whereas the Swagger is 445 lines)
 
-![API header](/Users/amcvei/projects/reslang/docs/api.png)
+![API header](./api.png)
 
 The Swagger itself reflects the set of routes available. Note that any quoted text just before an element gets inserted as documentation into the Swagger.
 
-![Routes](/Users/amcvei/projects/reslang/docs/swagger.png)
+![Routes](./swagger.png)
 
 Generating a dotviz file creates the following diagram of the API:
 
-![Diagram](/Users/amcvei/projects/reslang/docs/dotviz.png)
+![Diagram](./dotviz.png)
 
 Top level resources are yellow. Links from one resource to another are shown via arrows.
 
-##Reference Manual
+## Reference Manual
 
 ### Resource types
 
@@ -131,7 +131,7 @@ Resources, structures and enums can inherit from each other using the "extends" 
 
 The directory structure is "namespace/*.reslang". You can import another namespace  at the peer level into your current file using "import othernamespace". You should then refer to the imported elements by their full name "othernamespace.Resource".
 
-###Id
+### Id
 
 Currently the primary id field of any resource needs to be called "id". You only require an id for (sub)resources that are not singleton and have a PUT or DELETE operation.
 
@@ -139,7 +139,7 @@ Currently the primary id field of any resource needs to be called "id". You only
 
 To refer to one resource from another, used the "linked" keyword in front of the attribute type.
 
-###Structures
+### Structures
 
 You can define as reusable set of attributes using the "structure" keyword. The systax is like a resource but it does not support operations or the singleton modifier.
 
@@ -147,7 +147,7 @@ You can define as reusable set of attributes using the "structure" keyword. The 
 
 Use [] after an attribute type to indicate an array.
 
-###Enums
+### Enums
 
 You can define a set of literals using the "enum" keyword.
 
@@ -163,7 +163,7 @@ Use the "namespace" keyword to indicate the title and version of an API. There s
 
 A multi-GET is a GET on the plural resource, returning a collection of resources. Currently at least 1 filter parameter needs to be specified after the MULTIGET.
 
-##Currently Unsupported
+## Currently Unsupported
 
 - Maps & Unions
 - OpenAPI 3
