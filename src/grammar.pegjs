@@ -72,8 +72,8 @@ enum = _ comment:description? _ "enum"  _ name:name _ ext:extends? _ "{" _
 literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 
 // identifiers
-ref = parent:(filename ".")? name:resname {
-    return {"parent": parent ? parent[0] : null, "name": name}
+ref = parent:(filename ".")? _ toplevel:(resname "::")? _ name:resname {
+    return {"parent": parent ? parent[0] : null, "toplevel": toplevel ? toplevel[0]: null, "name": name}
 }
 literalname "literalname" = name:[A-Z_]+[A-Z0-9_]* { return name.join(""); }
 name "name" = name:[a-zA-Z]+[a-zA-Z0-9]* { return name.join(""); }

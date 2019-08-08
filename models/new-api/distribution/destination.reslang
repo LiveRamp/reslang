@@ -1,0 +1,99 @@
+import identity
+
+"A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook"
+configuration-resource Destination {
+    id: int
+    name: string
+
+    operations
+        "Create a new destination"
+        POST
+        "Retrieve a current destination"
+        GET
+        "Get all destinations"
+        MULTIGET name
+}
+
+subresource Destination::Endpoint {
+    id: int
+    name: string
+    url: string
+    packager: linked Destination::Packager
+    formatter: linked Destination::Formatter
+    deliverer: linked Destination::Deliverer
+    endpointProperties: EndpointProperty[]
+    // other stuff like formatter, packager
+    operations
+        POST PUT GET MULTIGET id
+}
+
+enum CompressionTypeEnum {
+    NONE
+    BZ2
+    GZIP
+    LZO
+}
+
+subresource Destination::Packager {
+    id: int
+    macro: string
+    compressionType: CompressionTypeEnum
+}
+
+subresource Destination::Formatter {
+    id: int
+    macro: string
+}
+
+subresource Destination::Deliverer {
+    id: int
+    protocol: ProtocolEnum
+    macro: string
+}
+
+enum ProtocolEnum {
+    SFTP FTP FTPS_EXPLICIT
+    S3 FS_COPY APP_NEXUS /* NO_OP FTPS_IMPLICIT
+    IRON_BOX YAHOO ACXIOM_FULFILLMENT FACEBOOK
+    LINKEDIN GOOGLE KBM PINTEREST GOOGLE_CUSTOMER_MATCH LR_FULFILLMENT
+    SNAPCHAT BIGQUERY GOOGLE_STORE_TRANSACTIONS AZURE */
+}
+
+structure EndpointProperty {
+    name: string
+    default: string
+    externallyConfigurable: boolean
+}
+
+subresource Destination::TaxonomyConfiguration {
+    id: int
+    name: string
+    mappingsMacro: string
+    operations
+        POST PUT GET MULTIGET id
+}
+
+"An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store"
+subresource Destination::Integration {
+    id: int
+    name: string
+    mapping: IdentifierTypeMapping[]
+    taxonomyConfiguration: linked TaxonomyConfiguration
+
+    operations
+        "Create an integration"
+        POST
+        "Alter an integration"
+        PUT
+        "Retrieve an integration"
+        GET
+        "Retrieve many integrations"
+        MULTIGET id
+}
+
+structure IdentifierTypeMapping {
+    identifierPool: linked identity.IdentifierPool
+    endpoint: linked Destination::Endpoint
+}
+
+

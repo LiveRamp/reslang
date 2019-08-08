@@ -1,4 +1,10 @@
-import { fixName, pluralizeName, getVersion, sanitize } from "./names"
+import {
+    fixName,
+    pluralizeName,
+    getVersion,
+    sanitize,
+    fixNameCamel
+} from "./names"
 import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
@@ -287,7 +293,12 @@ export default class SwagGen extends BaseGen {
         }
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
-            name = attr.name + "-" + fixName(attr.type.short) + "-id"
+            const fix = fixNameCamel(attr.type.short)
+            if (attr.name.toLowerCase() === fix.toLowerCase()) {
+                name = attr.name + "Id"
+            } else {
+                name = attr.name + fix + "Id"
+            }
             if (attr.multiple) {
                 name = name + "s"
             }
@@ -443,6 +454,36 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    private translatePrimitive(prim: string, schema: any) {
+        switch (prim) {
+            case "string":
+                schema.type = "string"
+                break
+            case "int":
+                schema.type = "integer"
+                schema.format = "int32"
+                break
+            case "boolean":
+                schema.type = "boolean"
+                break
+            case "double":
+                schema.type = "number"
+                break
+            case "date":
+                schema.type = "string"
+                schema.example = "2019-04-13 (date)"
+                break
+            case "time":
+                schema.type = "string"
+                schema.example = "22:00:01 (time)"
+                break
+            case "datetime":
+                schema.type = "string"
+                schema.example = "2019-04-13T03:35:34Z (datetime)"
+                break
+        }
+    }
+
     private addType(attr: IAttribute, obj: any, schemaLevel = true) {
         const type = attr.type
         // allow description overrides by caller
@@ -456,33 +497,7 @@ export default class SwagGen extends BaseGen {
         const schema = schemaLevel ? obj.schema : obj
         const prim = isPrimitiveType(name)
         if (prim) {
-            switch (name) {
-                case "string":
-                    schema.type = "string"
-                    break
-                case "int":
-                    schema.type = "integer"
-                    schema.format = "int32"
-                    break
-                case "boolean":
-                    schema.type = "boolean"
-                    break
-                case "double":
-                    schema.type = "number"
-                    break
-                case "date":
-                    schema.type = "string"
-                    schema.example = "2019-04-13 (date)"
-                    break
-                case "time":
-                    schema.type = "string"
-                    schema.example = "22:00:01 (time)"
-                    break
-                case "datetime":
-                    schema.type = "string"
-                    schema.example = "2019-04-13T03:35:34Z (datetime)"
-                    break
-            }
+            this.translatePrimitive(type.name, schema)
         } else {
             // is this a structure, an enum or a linked resource
             const def = this.extractDefinition(attr.type.name)
@@ -495,6 +510,7 @@ export default class SwagGen extends BaseGen {
                 case "request-resource":
                 case "asset-resource":
                 case "configuration-resource":
+                case "subresource":
                     // must have a linked annotation
                     if (!attr.linked) {
                         throw new Error(
@@ -503,7 +519,10 @@ export default class SwagGen extends BaseGen {
                             } but doesn't use linked`
                         )
                     }
-                    schema.type = "string"
+                    this.translatePrimitive(
+                        this.extractId(def).type.name,
+                        schema
+                    )
                     if (attr.multiple) {
                         schema.example = `Link to ${attr.type.name} ${
                             def.future ? "(to be defined in the future)" : ""

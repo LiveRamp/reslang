@@ -6,7 +6,7 @@ asset-resource Car {
 	bought: date output
 	brand: BrandEnum
 	engine: Specification
-	components: Specification[]
+	components: Specification
 	home: linked simple-resource.Garage
 	manufacturer: simple-resource.Manufacturer
 	rented: linked simple-resource.Garage[]

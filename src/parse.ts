@@ -2,7 +2,7 @@ import fs from "fs"
 import peg from "pegjs"
 import { IDefinition, PrimitiveType } from "./treetypes"
 import * as path from "path"
-import { makeShort, makeLong, fixName, sanitize } from "./names"
+import { makeShort, makeLong, sanitize } from "./names"
 
 export function readFile(name: string) {
     return fs.readFileSync(name, { encoding: "utf8" })
@@ -58,13 +58,11 @@ function addNamespace(
     // refs are always in terms of name
     for (const def of defs || []) {
         def.short = def.name
+        def.name = fixLong((def.parent ? def.parent + "::" : "") + def.name)
         if (def.parent) {
             def.parentShort = makeShort(def.parent)
             def.parent = fixLong(def.parent)
         }
-        def.name = fixLong(
-            (def.parent ? fixLong(def.parent) + "::" : "") + def.name
-        )
         if (def.extends) {
             def.extends.name = fixLong(
                 (def.extends.parent ? def.extends.parent + "." : "") +
@@ -77,9 +75,11 @@ function addNamespace(
             const type = attr.type
             if (!isPrimitiveType(type.name)) {
                 type.short = makeShort(type.name)
-                type.name = fixLong(
-                    (type.parent ? type.parent + "." : "") + type.name
-                )
+                const full =
+                    (type.parent ? type.parent + "." : "") +
+                    (type.toplevel ? type.toplevel + "::" : "") +
+                    type.name
+                type.name = fixLong(full)
             } else {
                 type.short = type.name
             }

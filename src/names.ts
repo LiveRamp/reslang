@@ -22,6 +22,16 @@ export function fixName(name: string) {
     return fix
 }
 
+export function fixNameCamel(name: string) {
+    let fix = ""
+    for (const ch of name) {
+        if (/^[A-Za-z0-9_\$]$/.test(ch)) {
+            fix = fix.concat(ch)
+        }
+    }
+    return fix
+}
+
 export function sanitize(name: string) {
     let fix = ""
     for (const ch of name) {

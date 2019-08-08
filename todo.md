@@ -13,7 +13,7 @@
 *   string(\$uri)
 *   Names: fix param names, check on verb, resource, enum
 
--   no id needed for singleton GET
+-   no id needed for singleton GET or POST only
 -   MULTIGET w/out id
 -   example text for attributes & bodies
 

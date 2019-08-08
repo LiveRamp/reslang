@@ -16,6 +16,7 @@ export interface IReference {
     name: string
     short: string
     parent?: string
+    toplevel?: string
 }
 
 export interface IDefinition {
@@ -51,7 +52,8 @@ export type DefinitionType =
 export let ResourceType = [
     "request-resource",
     "asset-resource",
-    "configuration-resource"
+    "configuration-resource",
+    "subresource"
 ]
 
 export let PrimitiveType = [

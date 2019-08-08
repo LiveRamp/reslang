@@ -1,0 +1,53 @@
+import identity
+import distribution
+
+
+request-resource DeliverToEndpoint {
+    id: int
+    endpoint: linked distribution.Destination::Endpoint
+
+    operations
+        POST GET
+}
+
+request-resource SegmentDeliveryRequest {
+    id: int
+    mapping: distribution.IdentifierTypeMapping[]
+    externallyConfigurableEndpointProperties: ExternallyConfigurableEndpointProperties[]
+
+    operations
+        POST GET
+}
+
+singleton subresource SegmentDeliveryRequest::Segments {
+    id: int
+    segments: linked Segment[]
+
+    operations
+        GET
+}
+
+action SegmentDeliveryRequest::AddSegment {
+    id: int
+    segments: linked Segment[]
+
+    operations
+        POST
+}
+
+future asset-resource Segment {
+    id: int
+}
+
+singleton subresource SegmentDeliveryRequest::TaxonomyConfiguration {
+    id: int
+    name: string
+    mappingsMacro: string
+    operations
+        PUT GET
+}
+
+structure ExternallyConfigurableEndpointProperties {
+    name: string
+    value: string
+}

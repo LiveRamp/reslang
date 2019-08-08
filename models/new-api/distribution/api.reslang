@@ -1,0 +1,13 @@
+
+// destination side:
+// - taxonomy endpoints
+// - endpoint properties
+//
+// delivery request:
+// - 
+
+"New Onboarding API"
+namespace {
+    title "Distribution API"
+    version 0.0.1
+}

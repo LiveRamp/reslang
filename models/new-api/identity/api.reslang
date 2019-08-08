@@ -1,0 +1,5 @@
+"New Onboarding API - Identity"
+namespace {
+    title "Identity API"
+    version 0.0.1
+}
