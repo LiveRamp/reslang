@@ -9,46 +9,64 @@ import ParseGen from "./genparse"
 
 // parse the cmd line
 const args = yargs
-    .usage("Usage: reslang namespace_directory(s)")
+    .usage("Usage: reslang namespace_directory [focus.reslang]*")
     .option("dotviz", {
         type: "boolean",
-        describe: "create dotviz graphical output of the resources"
+        describe:
+            "Create dotviz graphical output of the resources. note optional focus files, for generation or diagramming"
+    })
+    .option("dotvizlr", {
+        type: "boolean",
+        describe: "Create lr dotviz graphical output of the resources"
     })
     .option("parsed", {
         type: "boolean",
-        describe: "write the parsed output as a tree"
+        describe: "Write the parsed output as a tree"
     })
     .option("stdout", {
         type: "boolean",
-        describe: "write output to stdout as well as clipboard"
+        describe: "Write output to stdout as well as clipboard"
     })
     .option("open", {
         type: "boolean",
-        describe: "open browser to the appropriate website for output"
+        describe: "Open browser to the appropriate website for output"
+    })
+    .option("stacktrace", {
+        type: "boolean",
+        describe: "Show full stacktrace of any errors"
     })
     .check(arg => {
         if (arg._.length < 1) {
-            throw new Error("Needs 1 or more modules to process")
+            throw new Error("Needs a module at least to process")
         }
         return true
     }).argv
 
-const files = args._
+// filter out the directories and focus files
+const files = new Array<string>()
+const focus = new Array<string>()
+for (const arg of args._) {
+    if (arg.endsWith(".reslang")) {
+        focus.push(arg)
+    } else {
+        files.push(arg)
+    }
+}
 
 try {
     // generate a parse tree?
     if (args.parsed) {
-        const json = new ParseGen(files).generate()
+        const json = new ParseGen(files, focus).generate()
         if (args.stdout) {
             console.log(json)
         } else {
             console.log("Success - parse tree copied to clipboard")
         }
         clip.writeSync(json)
-    } else if (args.dotviz) {
+    } else if (args.dotviz || args.dotvizlr) {
         // generate .viz?
-        const dot = new DotvizGen(files)
-        const dotviz = dot.generate()
+        const dot = new DotvizGen(files, focus)
+        const dotviz = dot.generate(!!args.dotvizlr)
         if (args.stdout) {
             console.log(dotviz)
         } else {
@@ -60,7 +78,7 @@ try {
         }
     } else {
         // generate swagger
-        const swag = new SwagGen(files)
+        const swag = new SwagGen(files, focus)
         const swagger = swag.generate()
         const yml = yaml.dump(clean(swagger))
         if (args.stdout) {
@@ -74,5 +92,5 @@ try {
         }
     }
 } catch (error) {
-    console.error(error)
+    console.error(args.stacktrace ? error.message : error)
 }

@@ -14,57 +14,6 @@ configuration-resource Destination {
         MULTIGET name
 }
 
-subresource Destination::Endpoint {
-    id: int
-    name: string
-    url: string
-    packager: linked Destination::Packager
-    formatter: linked Destination::Formatter
-    deliverer: linked Destination::Deliverer
-    endpointProperties: EndpointProperty[]
-    // other stuff like formatter, packager
-    operations
-        POST PUT GET MULTIGET id
-}
-
-enum CompressionTypeEnum {
-    NONE
-    BZ2
-    GZIP
-    LZO
-}
-
-subresource Destination::Packager {
-    id: int
-    macro: string
-    compressionType: CompressionTypeEnum
-}
-
-subresource Destination::Formatter {
-    id: int
-    macro: string
-}
-
-subresource Destination::Deliverer {
-    id: int
-    protocol: ProtocolEnum
-    macro: string
-}
-
-enum ProtocolEnum {
-    SFTP FTP FTPS_EXPLICIT
-    S3 FS_COPY APP_NEXUS /* NO_OP FTPS_IMPLICIT
-    IRON_BOX YAHOO ACXIOM_FULFILLMENT FACEBOOK
-    LINKEDIN GOOGLE KBM PINTEREST GOOGLE_CUSTOMER_MATCH LR_FULFILLMENT
-    SNAPCHAT BIGQUERY GOOGLE_STORE_TRANSACTIONS AZURE */
-}
-
-structure EndpointProperty {
-    name: string
-    default: string
-    externallyConfigurable: boolean
-}
-
 subresource Destination::TaxonomyConfiguration {
     id: int
     name: string
@@ -78,7 +27,7 @@ subresource Destination::Integration {
     id: int
     name: string
     mapping: IdentifierTypeMapping[]
-    taxonomyConfiguration: linked TaxonomyConfiguration
+    taxonomyConfiguration: linked Destination::TaxonomyConfiguration
 
     operations
         "Create an integration"

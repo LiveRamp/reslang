@@ -1,6 +1,7 @@
 import { IDefinition } from "./treetypes"
 import { parseFile } from "./parse"
 import { BaseGen } from "./genbase"
+import { importDeclaration } from "@babel/types"
 
 /**
  * generate .viz output for a graphical view of the resources
@@ -14,18 +15,43 @@ interface ILink {
 }
 
 export default class DotvizGen extends BaseGen {
-    public generate() {
+    public generate(lrRank: boolean) {
+        // don't include errors
+        this.markGenerate(false)
+
         let viz = `digraph G {
         graph [fontname = "helvetica"];
         node [fontname = "helvetica"];
         edge [fontname = "helvetica"];
         node [shape=none];
-        rankdir="LR";\n`
+        ${lrRank ? 'rankdir="LR";' : ""}\n`
         const links: ILink[] = []
+        const ignored = new Set<string>()
+        const imports = new Set<string>()
         for (const def of this.defs) {
-            const attrs = this.formAttributes(def, links)
+            // should we skip this
+            let ignore =
+                def.secondary &&
+                !(def.generateInput || def.generateOutput || def.generateMulti)
+
+            // make an exception for a subresource whose parent is main
+            if (def.type === "subresource" || def.type === "action") {
+                const parent = this.extractDefinition(def.parent!)
+                if (!parent.secondary) {
+                    ignore = false
+                }
+            }
+            if (ignore) {
+                ignored.add(def.short)
+                continue
+            }
+
+            const imported = def.secondary && !ignore
+            if (imported) {
+                imports.add(def.short)
+            }
+            const attrs = this.formAttributes(def, links, ignored, imports)
             const ops = this.formOperations(def)
-            const imported = def.secondary || def.future
             const color = imported ? "color='gray'" : ""
             const bgcolor = [
                 "request-resource",
@@ -62,12 +88,13 @@ export default class DotvizGen extends BaseGen {
                 ].includes(def.type)
                     ? "style='rounded'"
                     : ""
+                const padding = "        "
                 const box = `
                     <table border="${width}" cellborder="0" cellspacing="1" ${rounded} ${color} ${bgcolor}>
-                    <tr><td><b>${def.short}  </b></td></tr>`
+                    <tr><td><b>${def.short}${padding}</b></td></tr>`
 
                 if ("structure" === def.type) {
-                    viz += `"${def.short}" [label=<${box}${
+                    viz += `"${def.short}" [label=<${box}${padding}${
                         attrs ? "<hr/>" : ""
                     }${attrs}</table> >];\n`
                 } else if (imported) {
@@ -79,7 +106,10 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to subresource
-                if ("subresource" === def.type) {
+                if (
+                    "subresource" === def.type &&
+                    !ignored.has(def.parentShort!)
+                ) {
                     const label = this.makeLabelText("subresource")
                     viz += `"${def.parentShort}" -> "${
                         def.short
@@ -93,7 +123,7 @@ export default class DotvizGen extends BaseGen {
                         def.short
                     }" [dir="none" label=${label}];\n`
                 }
-            } else if ("enum" === def.type) {
+            } else if ("enum" === def.type && !imported) {
                 const box = `
                     <table border="1" cellborder="0" cellspacing="1" ${color}>
                     <tr><td align="left"><b>${def.short}  </b></td></tr>`
@@ -109,6 +139,9 @@ export default class DotvizGen extends BaseGen {
 
         // process additional links
         for (const link of links) {
+            if (ignored.has(link.from) || ignored.has(link.to)) {
+                continue
+            }
             const label = this.makeLabelText(link.label)
             if (link.type === "resource") {
                 viz += `"${link.from}" -> "${
@@ -137,10 +170,21 @@ export default class DotvizGen extends BaseGen {
         return viz
     }
 
-    private formAttributes(def: IDefinition, links: ILink[]) {
+    private formAttributes(
+        def: IDefinition,
+        links: ILink[],
+        ignored: Set<string>,
+        imports: Set<string>
+    ) {
         let attrs = ""
+        if (ignored.has(def.short) || imports.has(def.short)) {
+            return
+        }
         if (def.attributes) {
             for (const attr of def.attributes) {
+                if (ignored.has(attr.type.short)) {
+                    continue
+                }
                 const multi = attr.multiple ? "[]" : ""
                 const output = attr.output ? " (out)" : ""
 

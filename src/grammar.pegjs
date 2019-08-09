@@ -75,8 +75,8 @@ literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 ref = parent:(filename ".")? _ toplevel:(resname "::")? _ name:resname {
     return {"parent": parent ? parent[0] : null, "toplevel": toplevel ? toplevel[0]: null, "name": name}
 }
-literalname "literalname" = name:[A-Z_]+[A-Z0-9_]* { return name.join(""); }
-name "name" = name:[a-zA-Z]+[a-zA-Z0-9]* { return name.join(""); }
+literalname "literalname" = name:([A-Z][A-Z0-9_]*) { return name.flat().join(""); }
+name "name" = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
 resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join("") }
 filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 

@@ -15,6 +15,7 @@ import { isPrimitiveType } from "./parse"
 
 export default class SwagGen extends BaseGen {
     public generate() {
+        this.markGenerate(true)
         const tags: any[] = []
         const paths: any = {}
         const schemas: any = {}
@@ -102,22 +103,6 @@ export default class SwagGen extends BaseGen {
                     } else {
                         paths[`/${version}/${name}`] = path
                     }
-
-                    if (post) {
-                        el.generateInput = true
-                        if (el.extends) {
-                            const ext = this.extractDefinition(el.extends.name)
-                            ext.generateInput = true
-                        }
-                    }
-                    if (multiget) {
-                        el.generateMulti = true
-                        el.generateOutput = true
-                        if (el.extends) {
-                            const ext = this.extractDefinition(el.extends.name)
-                            ext.generateOutput = true
-                        }
-                    }
                     this.formNonIdOperations(el, path, tagKeys, post, multiget)
                 }
 
@@ -147,13 +132,6 @@ export default class SwagGen extends BaseGen {
                             paths[`/${version}/${name}/{id}`] = path
                         }
                     }
-                }
-
-                if (put) {
-                    el.generateInput = true
-                }
-                if (get) {
-                    el.generateOutput = true
                 }
                 this.formIdOperations(
                     el,
@@ -288,9 +266,6 @@ export default class SwagGen extends BaseGen {
      */
     private makeProperty(attr: IAttribute): { name: string; prop: any } {
         const def = this.extractDefinitionGently(attr.type.name)
-        if (def) {
-            def.generateInput = true
-        }
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
             const fix = fixNameCamel(attr.type.short)
@@ -433,10 +408,6 @@ export default class SwagGen extends BaseGen {
 
     private formErrors(del: IOperation, responses: any) {
         for (const err of del.errors || []) {
-            // locate the error type and mark it for generation
-            if (err.struct.name !== "StandardError") {
-                this.extractDefinition(err.struct.name).generateInput = true
-            }
             for (const code of err.codes) {
                 responses[code.code] = {
                     description: code.comment || " ",
@@ -574,17 +545,6 @@ export default class SwagGen extends BaseGen {
         return []
     }
 
-    private extractOp(el: any, op: string): IOperation | null {
-        if (el.operations) {
-            for (const oper of el.operations) {
-                if (oper.operation === op) {
-                    return oper
-                }
-            }
-        }
-        return null
-    }
-
     private formTags(
         defs: IDefinition[],
         tags: any[],
@@ -596,12 +556,19 @@ export default class SwagGen extends BaseGen {
                 continue
             }
             const short = el.short
-            if (
-                ["asset-resource", "configuration-resource"].includes(el.type)
-            ) {
+            const comment = el.comment || ""
+            if ("configuration-resource" === el.type) {
                 const tag = {
                     name: short,
-                    description: el.comment
+                    description: `(configuration) ${comment}`
+                }
+                tags.push(tag)
+                tagKeys[short] = tag.name
+            }
+            if ("asset-resource" === el.type) {
+                const tag = {
+                    name: short,
+                    description: `(asset) ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[short] = tag.name
@@ -609,7 +576,7 @@ export default class SwagGen extends BaseGen {
             if ("request-resource" === el.type) {
                 const tag = {
                     name: short,
-                    description: `(request) ${el.comment}`
+                    description: `(request) ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[short] = tag.name
@@ -617,7 +584,7 @@ export default class SwagGen extends BaseGen {
             if ("subresource" === el.type) {
                 const tag = {
                     name: `${el.parentShort} / ${short}`,
-                    description: el.comment
+                    description: `(subresource) ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[short] = tag.name
@@ -625,7 +592,7 @@ export default class SwagGen extends BaseGen {
             if ("action" === el.type) {
                 const tag = {
                     name: `${el.parent} / ${short}`,
-                    description: el.comment
+                    description: `(action) ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[short] = tag.name

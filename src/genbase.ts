@@ -1,6 +1,13 @@
-import { IDefinition, IAttribute, IImport, INamespace } from "./treetypes"
+import {
+    IDefinition,
+    IAttribute,
+    IImport,
+    INamespace,
+    IOperation
+} from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
+import { array } from "prop-types"
 
 export abstract class BaseGen {
     protected namespace!: INamespace
@@ -8,7 +15,7 @@ export abstract class BaseGen {
     protected defs: IDefinition[] = []
     private loaded = new Set<string>()
 
-    public constructor(private dirs: string[]) {
+    public constructor(private dirs: string[], private focus: string[]) {
         this.processDefinitions()
     }
 
@@ -41,6 +48,8 @@ export abstract class BaseGen {
 
         // process all files in this directory
         for (const fname of readdirSync(dirname)) {
+            const reallyMain =
+                main && (!this.focus.length || this.focus.includes(fname))
             if (fname.endsWith(".reslang")) {
                 const local = parseFile(
                     path + nspace + "/" + fname,
@@ -59,7 +68,7 @@ export abstract class BaseGen {
                 }
                 // copy over all the defs
                 for (const def of local[2] as IDefinition[]) {
-                    def.secondary = !main
+                    def.secondary = !reallyMain
                     this.defs.push(def)
                 }
 
@@ -115,5 +124,90 @@ export abstract class BaseGen {
         }
 
         throw new Error("Cannot find id attribute for " + node.name)
+    }
+
+    /** determine if we should generate input or output definitions for each entity */
+    protected markGenerate(includeErrors: boolean) {
+        // handle each primary structure and work out if we should generate structures for it
+        for (const el of this.defs) {
+            // don't generate for any imported def
+            if (el.secondary || el.future) {
+                continue
+            }
+
+            if (
+                [
+                    "asset-resource",
+                    "configuration-resource",
+                    "subresource",
+                    "request-resource",
+                    "action"
+                ].includes(el.type)
+            ) {
+                const post = this.extractOp(el, "POST")
+                const multiget = this.extractOp(el, "MULTIGET")
+
+                if (!el.singleton && (post || multiget)) {
+                    if (post) {
+                        el.generateInput = true
+                        if (el.extends) {
+                            const ext = this.extractDefinition(el.extends.name)
+                            ext.generateInput = true
+                        }
+                    }
+                    if (multiget) {
+                        el.generateMulti = true
+                        el.generateOutput = true
+                        if (el.extends) {
+                            const ext = this.extractDefinition(el.extends.name)
+                            ext.generateOutput = true
+                        }
+                    }
+                }
+
+                const get = this.extractOp(el, "GET")
+                const put = this.extractOp(el, "PUT")
+
+                if (put) {
+                    el.generateInput = true
+                }
+                if (get) {
+                    el.generateOutput = true
+                }
+            }
+
+            // now work out if attributes reference any structures or other resources
+            for (const attr of el.attributes || []) {
+                const def = this.extractDefinitionGently(attr.type.name)
+                if (def) {
+                    def.generateInput = true
+                }
+            }
+
+            // now process errors
+            if (includeErrors) {
+                for (const op of el.operations || []) {
+                    for (const err of op.errors || []) {
+                        // locate the error type and mark it for generation
+                        if (err.struct.name !== "StandardError") {
+                            this.extractDefinition(
+                                err.struct.name
+                            ).generateInput = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected extractOp(el: any, op: string): IOperation | null {
+        if (el.operations) {
+            for (const oper of el.operations) {
+                if (oper.operation === op) {
+                    return oper
+                }
+            }
+        }
+        return null
     }
 }
