@@ -12,8 +12,8 @@ import "import" = _ "import" _ namespace:filename _ ";"? _ {
     return {"import": namespace}
 }
 
-extends = _ "extends" _ name: name _ {
-    return name
+extends = _ "extends" _ ref: ref _ {
+    return ref
 }
 
 // defining a resource

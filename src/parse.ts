@@ -66,6 +66,7 @@ function addNamespace(
         if (def.extends) {
             def.extends.name = fixLong(
                 (def.extends.parent ? def.extends.parent + "." : "") +
+                    (def.extends.toplevel ? def.extends.toplevel + "::" : "") +
                     def.extends.name
             )
         }

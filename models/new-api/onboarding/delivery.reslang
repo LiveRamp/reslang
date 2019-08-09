@@ -5,12 +5,14 @@ import distribution
 request-resource DeliverToEndpoint {
     id: int
     endpoint: linked distribution.Destination::Endpoint
+    identifierType: identity.IdentifierTypeEnum
+    produces: linked SegmentDeliveryInstructions output
 
     operations
         POST GET
 }
 
-request-resource SegmentDeliveryRequest {
+request-resource SegmentDeliveryInstructions {
     id: int
     mapping: distribution.IdentifierTypeMapping[]
     externallyConfigurableEndpointProperties: ExternallyConfigurableEndpointProperties[]
@@ -19,7 +21,7 @@ request-resource SegmentDeliveryRequest {
         POST GET
 }
 
-singleton subresource SegmentDeliveryRequest::Segments {
+singleton subresource SegmentDeliveryInstructions::Segments {
     id: int
     segments: linked Segment[]
 
@@ -27,7 +29,7 @@ singleton subresource SegmentDeliveryRequest::Segments {
         GET
 }
 
-action SegmentDeliveryRequest::AddSegment {
+action SegmentDeliveryInstructions::AddSegments {
     id: int
     segments: linked Segment[]
 
@@ -39,7 +41,7 @@ future asset-resource Segment {
     id: int
 }
 
-singleton subresource SegmentDeliveryRequest::TaxonomyConfiguration {
+singleton subresource SegmentDeliveryInstructions::TaxonomyConfiguration {
     id: int
     name: string
     mappingsMacro: string
