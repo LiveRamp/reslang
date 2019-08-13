@@ -46,7 +46,6 @@ export default class DotvizGen extends BaseGen {
                 ignored.add(def.name)
                 continue
             }
-
             const imported = def.secondary
             if (imported) {
                 imports.add(def.name)
@@ -207,7 +206,7 @@ export default class DotvizGen extends BaseGen {
         folded: Set<string>
     ) {
         let attrs = ""
-        if (ignored.has(def.name) || imports.has(def.name)) {
+        if (ignored.has(def.name)) {
             return
         }
         if (def.attributes) {
