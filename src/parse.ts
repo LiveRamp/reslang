@@ -1,6 +1,6 @@
 import fs from "fs"
 import peg from "pegjs"
-import { IDefinition, PrimitiveType } from "./treetypes"
+import { IDefinition, PrimitiveType, IDiagram, IReference } from "./treetypes"
 import * as path from "path"
 import { makeShort, makeLong, sanitize } from "./names"
 
@@ -43,6 +43,7 @@ export function parseFile(
         )
     }
     addNamespace(tree[2] as IDefinition[], parsingNamespace, mainNamespace)
+    addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
     return tree
 }
 
@@ -84,6 +85,39 @@ function addNamespace(
             } else {
                 type.short = type.name
             }
+        }
+    }
+}
+
+function addDiagramNamespace(
+    diagrams: IDiagram[],
+    namespace: string,
+    mainNamespace: string
+) {
+    const fixLong = (name: string) =>
+        sanitize(makeLong(namespace, mainNamespace, name))
+    const fixRef = (ref: IReference) => {
+        if (ref.parent) {
+            ref.parent = fixLong(ref.parent)
+        }
+        const full =
+            (ref.parent ? ref.parent + "." : "") +
+            (ref.toplevel ? ref.toplevel + "::" : "") +
+            ref.name
+        ref.short = makeShort(ref.name)
+        ref.name = fixLong(full)
+    }
+
+    // normalize all the references
+    for (const diag of diagrams) {
+        for (const incl of diag.include || []) {
+            fixRef(incl)
+        }
+        for (const incl of diag.exclude || []) {
+            fixRef(incl)
+        }
+        for (const fold of diag.fold || []) {
+            fixRef(fold.of)
         }
     }
 }

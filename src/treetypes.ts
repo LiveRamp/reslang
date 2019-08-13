@@ -20,6 +20,7 @@ export interface IReference {
 }
 
 export interface IDefinition {
+    file: string
     name: string
     short: string
     parent?: string
@@ -75,6 +76,15 @@ export interface IAttribute {
     comment: string
 }
 
+export interface IDiagram {
+    diagram: string
+    layout: string
+    includeAll: string
+    include: IReference[]
+    exclude: IReference[]
+    fold: { attr: string; of: IReference }[]
+}
+
 export interface IOperation {
     operation: string
     comment: string
@@ -83,6 +93,6 @@ export interface IOperation {
 }
 
 export interface IError {
-    codes: Array<{ code: string; comment: string }>
+    codes: { code: string; comment: string }[]
     struct: IReference
 }

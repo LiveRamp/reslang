@@ -10,14 +10,9 @@ import ParseGen from "./genparse"
 // parse the cmd line
 const args = yargs
     .usage("Usage: reslang namespace_directory [focus.reslang]*")
-    .option("dotviz", {
-        type: "boolean",
-        describe:
-            "Create dotviz graphical output of the resources. note optional focus files, for generation or diagramming"
-    })
-    .option("dotvizlr", {
-        type: "boolean",
-        describe: "Create lr dotviz graphical output of the resources"
+    .option("diagram", {
+        type: "string",
+        describe: "Create dotviz graphical output of the declared diagram"
     })
     .option("parsed", {
         type: "boolean",
@@ -43,30 +38,22 @@ const args = yargs
     }).argv
 
 // filter out the directories and focus files
-const files = new Array<string>()
-const focus = new Array<string>()
-for (const arg of args._) {
-    if (arg.endsWith(".reslang")) {
-        focus.push(arg)
-    } else {
-        files.push(arg)
-    }
-}
+const files = args._
 
 try {
     // generate a parse tree?
     if (args.parsed) {
-        const json = new ParseGen(files, focus).generate()
+        const json = new ParseGen(files).generate()
         if (args.stdout) {
             console.log(json)
         } else {
             console.log("Success - parse tree copied to clipboard")
         }
         clip.writeSync(json)
-    } else if (args.dotviz || args.dotvizlr) {
+    } else if (args.diagram) {
         // generate .viz?
-        const dot = new DotvizGen(files, focus)
-        const dotviz = dot.generate(!!args.dotvizlr)
+        const dot = new DotvizGen(files)
+        const dotviz = dot.generate(args.diagram)
         if (args.stdout) {
             console.log(dotviz)
         } else {
@@ -78,7 +65,7 @@ try {
         }
     } else {
         // generate swagger
-        const swag = new SwagGen(files, focus)
+        const swag = new SwagGen(files)
         const swagger = swag.generate()
         const yml = yaml.dump(clean(swagger))
         if (args.stdout) {
@@ -92,5 +79,5 @@ try {
         }
     }
 } catch (error) {
-    console.error(args.stacktrace ? error.message : error)
+    console.error(args.stacktrace ? error : error.message)
 }

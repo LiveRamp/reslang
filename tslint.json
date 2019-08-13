@@ -9,7 +9,8 @@
         "trailing-comma": [false],
         "ordered-imports": [false],
         "object-literal-key-quotes": [false],
-        "arrow-parens": [false]
+        "arrow-parens": [false],
+        "array-type": [false]
     },
     "rulesDirectory": []
 }

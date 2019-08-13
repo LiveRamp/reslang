@@ -1,4 +1,4 @@
-start = namespace? import* (resource / structure / subresource / enum)*
+start = namespace? import* (resource / structure / subresource / enum)* diagram*
 
 // defining a namespace
 namespace = _ comment:description? _ "namespace" _ "{"
@@ -94,3 +94,32 @@ comment = p:(single / multi) {return null}
 single = "//" p:([^\n]*)
 multi = "/*" inner:(!"*/" i:. {return i})* "*/"
 
+// diagram details
+diagram = _ "diagram" _ name:name _ "{" _ layout:layout? _ includeAll:includeAll? _ includes:includes? _ excludes:excludes? _ folds:folds? _ "}" _ {
+    return {"diagram": name, "layout": layout, "includeAll": includeAll, "include": includes, "exclude": excludes, "fold": folds}
+}
+
+layout = _ "layout" _ layout:("LR") {
+    return layout
+}
+includeAll = "/includeAll" _ includeAll:(name) ".reslang" {
+    return includeAll + ".reslang"
+}
+includes = _ "/include" _ includes:include+ _ {
+    return includes;
+}
+include = _ ref:ref _ {
+    return ref;
+}
+excludes = _ "/exclude" _ excludes:exclude+ _ {
+    return excludes;
+}
+exclude = _ ref:ref _ {
+    return ref;
+}
+folds = _ "/fold" _ folds:fold+ _ {
+    return folds;
+}
+fold = _ attr:name _ "of" _ ref:ref _ {
+    return {"attr": attr, "of": ref}
+}

@@ -1,7 +1,6 @@
-import { IDefinition } from "./treetypes"
-import { parseFile } from "./parse"
+import { IDefinition, IDiagram } from "./treetypes"
 import { BaseGen } from "./genbase"
-import { importDeclaration } from "@babel/types"
+import { tsMethodSignature } from "@babel/types"
 
 /**
  * generate .viz output for a graphical view of the resources
@@ -10,47 +9,55 @@ import { importDeclaration } from "@babel/types"
 interface ILink {
     type: string
     from: string
+    fromName: string
     to: string
+    toName: string
     label: string
 }
 
 export default class DotvizGen extends BaseGen {
-    public generate(lrRank: boolean) {
+    public generate(diagramName: string) {
         // don't include errors
         this.markGenerate(false)
+
+        const diagram = (this.diagrams || []).find(
+            diag => diag.diagram === diagramName
+        )
+        if (!diagram) {
+            throw new Error("Cannot find diagram definition for " + diagramName)
+        }
+        // find exclusions etc
+        const exclude = this.formExclusions(diagram)
+        const include = this.formInclusions(diagram, exclude)
+        const folds = this.formFolds(diagram)
 
         let viz = `digraph G {
         graph [fontname = "helvetica"];
         node [fontname = "helvetica"];
         edge [fontname = "helvetica"];
         node [shape=none];
-        ${lrRank ? 'rankdir="LR";' : ""}\n`
+        ${diagram.layout === "LR" ? 'rankdir="LR";' : ""}\n`
         const links: ILink[] = []
         const ignored = new Set<string>()
         const imports = new Set<string>()
         for (const def of this.defs) {
             // should we skip this
-            let ignore =
-                def.secondary &&
-                !(def.generateInput || def.generateOutput || def.generateMulti)
-
-            // make an exception for a subresource whose parent is main
-            if (def.type === "subresource" || def.type === "action") {
-                const parent = this.extractDefinition(def.parent!)
-                if (!parent.secondary) {
-                    ignore = false
-                }
-            }
-            if (ignore) {
-                ignored.add(def.short)
+            if (!include.has(def.name)) {
+                ignored.add(def.name)
                 continue
             }
 
-            const imported = def.secondary && !ignore
+            const imported = def.secondary
             if (imported) {
-                imports.add(def.short)
+                imports.add(def.name)
             }
-            const attrs = this.formAttributes(def, links, ignored, imports)
+            const attrs = this.formAttributes(
+                def,
+                links,
+                ignored,
+                imports,
+                folds
+            )
             const ops = this.formOperations(def)
             const color = imported ? "color='gray'" : ""
             const bgcolor = [
@@ -106,10 +113,7 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to subresource
-                if (
-                    "subresource" === def.type &&
-                    !ignored.has(def.parentShort!)
-                ) {
+                if ("subresource" === def.type && !ignored.has(def.parent!)) {
                     const label = this.makeLabelText("subresource")
                     viz += `"${def.parentShort}" -> "${
                         def.short
@@ -136,10 +140,9 @@ export default class DotvizGen extends BaseGen {
                 }" [label=<${box}<hr/>${literals}</table>>];\n`
             }
         }
-
         // process additional links
         for (const link of links) {
-            if (ignored.has(link.from) || ignored.has(link.to)) {
+            if (ignored.has(link.fromName) || ignored.has(link.toName)) {
                 continue
             }
             const label = this.makeLabelText(link.label)
@@ -170,48 +173,82 @@ export default class DotvizGen extends BaseGen {
         return viz
     }
 
+    private formFolds(diagram: IDiagram) {
+        return new Set<string>(
+            (diagram.fold || []).map(fold => fold.attr + "/" + fold.of.name)
+        )
+    }
+
+    private formExclusions(diagram: IDiagram) {
+        return new Set<string>((diagram.exclude || []).map(ref => ref.name))
+    }
+
+    private formInclusions(diagram: IDiagram, exclude: Set<string>) {
+        const include = new Set<string>(
+            (this.defs || [])
+                .filter(
+                    def =>
+                        !diagram.includeAll || diagram.includeAll === def.file
+                )
+                .map(def => def.name)
+        )
+        if (diagram.include) {
+            diagram.include.forEach(incl => include.add(incl.name))
+        }
+        exclude.forEach(excl => include.delete(excl))
+        return include
+    }
+
     private formAttributes(
         def: IDefinition,
         links: ILink[],
         ignored: Set<string>,
-        imports: Set<string>
+        imports: Set<string>,
+        folded: Set<string>
     ) {
         let attrs = ""
-        if (ignored.has(def.short) || imports.has(def.short)) {
+        if (ignored.has(def.name) || imports.has(def.name)) {
             return
         }
         if (def.attributes) {
             for (const attr of def.attributes) {
-                if (ignored.has(attr.type.short)) {
+                const fold = attr.name + "/" + def.name
+                if (ignored.has(attr.type.name) && !folded.has(fold)) {
                     continue
                 }
                 const multi = attr.multiple ? "[]" : ""
                 const output = attr.output ? " (out)" : ""
 
                 // if this is linked do it that way
-                const type = this.extractDefinitionGently(attr.type.name)
-                if (attr.linked) {
-                    links.push({
-                        type: "resource",
-                        from: def.short,
-                        to: attr.type.short,
-                        label: ` ${attr.name}${multi}${output}`
-                    })
-                    continue
-                }
-                if (type && type.type === "structure") {
-                    links.push({
-                        type: "structure",
-                        from: def.short,
-                        to: attr.type.short,
-                        label: ` ${attr.name}${multi}${output}`
-                    })
-                    continue
+                if (!folded.has(fold)) {
+                    const type = this.extractDefinitionGently(attr.type.name)
+                    if (attr.linked) {
+                        links.push({
+                            type: "resource",
+                            from: def.short,
+                            fromName: def.name,
+                            to: attr.type.short,
+                            toName: attr.type.name,
+                            label: ` ${attr.name}${multi}${output}`
+                        })
+                        continue
+                    }
+                    if (type && type.type === "structure") {
+                        links.push({
+                            type: "structure",
+                            from: def.short,
+                            fromName: def.name,
+                            to: attr.type.short,
+                            toName: attr.type.name,
+                            label: ` ${attr.name}${multi}${output}`
+                        })
+                        continue
+                    }
                 }
 
                 attrs += `<tr><td align="left">${attr.name}: ${
-                    attr.type.short
-                }${multi}${output}</td></tr>`
+                    attr.linked ? "linked " : ""
+                }${attr.type.short}${multi}${output}</td></tr>`
             }
         }
         return attrs

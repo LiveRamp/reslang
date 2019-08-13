@@ -3,19 +3,20 @@ import {
     IAttribute,
     IImport,
     INamespace,
-    IOperation
+    IOperation,
+    IDiagram
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
-import { array } from "prop-types"
 
 export abstract class BaseGen {
     protected namespace!: INamespace
     protected mainNamespace?: string
     protected defs: IDefinition[] = []
+    protected diagrams: IDiagram[] = []
     private loaded = new Set<string>()
 
-    public constructor(private dirs: string[], private focus: string[]) {
+    public constructor(private dirs: string[]) {
         this.processDefinitions()
     }
 
@@ -48,8 +49,7 @@ export abstract class BaseGen {
 
         // process all files in this directory
         for (const fname of readdirSync(dirname)) {
-            const reallyMain =
-                main && (!this.focus.length || this.focus.includes(fname))
+            const reallyMain = main
             if (fname.endsWith(".reslang")) {
                 const local = parseFile(
                     path + nspace + "/" + fname,
@@ -66,15 +66,20 @@ export abstract class BaseGen {
                         )
                     }
                 }
-                // copy over all the defs
-                for (const def of local[2] as IDefinition[]) {
-                    def.secondary = !reallyMain
-                    this.defs.push(def)
-                }
 
                 // handle any imports
                 for (const imp of local[1] as IImport[]) {
                     this.processDefinition(path + imp.import, false)
+                }
+                // copy over all the defs
+                for (const def of local[2] as IDefinition[]) {
+                    def.secondary = !reallyMain
+                    def.file = fname
+                    this.defs.push(def)
+                }
+                // copy over all the diagrams
+                for (const diag of local[3] as IDiagram[]) {
+                    this.diagrams.push(diag)
                 }
             }
         }
