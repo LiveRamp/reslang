@@ -3377,7 +3377,8 @@
 								"$ref": "AAAAAAFsjHt+hELxEa4="
 							},
 							"name": "creating swagger",
-							"documentation": "->README.md:## Creating swagger"
+							"documentation": "->README.md:## Creating swagger",
+							"type": ""
 						}
 					]
 				}
