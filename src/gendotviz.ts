@@ -1,6 +1,5 @@
 import { IDefinition, IDiagram } from "./treetypes"
 import { BaseGen } from "./genbase"
-import { tsMethodSignature } from "@babel/types"
 
 /**
  * generate .viz output for a graphical view of the resources
@@ -28,7 +27,8 @@ export default class DotvizGen extends BaseGen {
         }
         // find exclusions etc
         const exclude = this.formExclusions(diagram)
-        const include = this.formInclusions(diagram, exclude)
+        const imports = this.formImports(diagram)
+        const include = this.formInclusions(diagram, exclude, imports)
         const folds = this.formFolds(diagram)
 
         let viz = `digraph G {
@@ -38,27 +38,15 @@ export default class DotvizGen extends BaseGen {
         node [shape=none];
         ${diagram.layout === "LR" ? 'rankdir="LR";' : ""}\n`
         const links: ILink[] = []
-        const ignored = new Set<string>()
-        const imports = new Set<string>()
         for (const def of this.defs) {
-            // should we skip this
             if (!include.has(def.name)) {
-                ignored.add(def.name)
                 continue
             }
-            const imported = def.secondary
-            if (imported) {
-                imports.add(def.name)
-            }
-            const attrs = this.formAttributes(
-                def,
-                links,
-                ignored,
-                imports,
-                folds
-            )
+
+            const imported = imports.has(def.name)
+            const attrs = this.formAttributes(def, links, include, folds)
             const ops = this.formOperations(def)
-            const color = imported ? "color='gray'" : ""
+            const color = def.secondary ? "color='gray'" : ""
             const bgcolor = [
                 "request-resource",
                 "asset-resource",
@@ -112,7 +100,7 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to subresource
-                if ("subresource" === def.type && !ignored.has(def.parent!)) {
+                if ("subresource" === def.type && include.has(def.parent!)) {
                     const label = this.makeLabelText("subresource")
                     viz += `"${def.parentShort}" -> "${
                         def.short
@@ -126,7 +114,7 @@ export default class DotvizGen extends BaseGen {
                         def.short
                     }" [dir="none" label=${label}];\n`
                 }
-            } else if ("enum" === def.type && !imported) {
+            } else if ("enum" === def.type) {
                 const box = `
                     <table border="1" cellborder="0" cellspacing="1" ${color}>
                     <tr><td align="left"><b>${def.short}  </b></td></tr>`
@@ -141,7 +129,7 @@ export default class DotvizGen extends BaseGen {
         }
         // process additional links
         for (const link of links) {
-            if (ignored.has(link.fromName) || ignored.has(link.toName)) {
+            if (!include.has(link.fromName) || !include.has(link.toName)) {
                 continue
             }
             const label = this.makeLabelText(link.label)
@@ -168,6 +156,20 @@ export default class DotvizGen extends BaseGen {
             }
         }
 
+        // add the groups
+        let count = 0
+        console.log(diagram.groups)
+        for (const group of diagram.groups || []) {
+            viz += `subgraph cluster${count++} \{
+                style = dashed;
+                color=blue;
+                label = "${group.comment}";`
+            for (const ref of group.include || []) {
+                viz += `"${ref.short}" `
+            }
+            viz += "}\n"
+        }
+
         viz += "}"
         return viz
     }
@@ -182,7 +184,15 @@ export default class DotvizGen extends BaseGen {
         return new Set<string>((diagram.exclude || []).map(ref => ref.name))
     }
 
-    private formInclusions(diagram: IDiagram, exclude: Set<string>) {
+    private formImports(diagram: IDiagram) {
+        return new Set<string>((diagram.import || []).map(ref => ref.name))
+    }
+
+    private formInclusions(
+        diagram: IDiagram,
+        exclude: Set<string>,
+        imports: Set<string>
+    ) {
         const include = new Set<string>(
             (this.defs || [])
                 .filter(
@@ -194,33 +204,35 @@ export default class DotvizGen extends BaseGen {
         if (diagram.include) {
             diagram.include.forEach(incl => include.add(incl.name))
         }
+        if (diagram.import) {
+            diagram.import.forEach(incl => include.add(incl.name))
+        }
         exclude.forEach(excl => include.delete(excl))
+        console.log(diagram.includeAll)
         return include
     }
 
     private formAttributes(
         def: IDefinition,
         links: ILink[],
-        ignored: Set<string>,
-        imports: Set<string>,
+        include: Set<string>,
         folded: Set<string>
     ) {
         let attrs = ""
-        if (ignored.has(def.name)) {
+        if (!include.has(def.name)) {
             return
         }
         if (def.attributes) {
             for (const attr of def.attributes) {
                 const fold = attr.name + "/" + def.name
-                if (ignored.has(attr.type.name) && !folded.has(fold)) {
-                    continue
-                }
+                const foldThis =
+                    folded.has(fold) || !include.has(attr.type.name)
                 const multi = attr.multiple ? "[]" : ""
                 const output = attr.output ? " (out)" : ""
 
                 // if this is linked do it that way
-                if (!folded.has(fold)) {
-                    const type = this.extractDefinitionGently(attr.type.name)
+                const type = this.extractDefinitionGently(attr.type.name)
+                if (!foldThis) {
                     if (attr.linked) {
                         links.push({
                             type: "resource",

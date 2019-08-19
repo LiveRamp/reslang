@@ -113,11 +113,19 @@ function addDiagramNamespace(
         for (const incl of diag.include || []) {
             fixRef(incl)
         }
+        for (const incl of diag.import || []) {
+            fixRef(incl)
+        }
         for (const incl of diag.exclude || []) {
             fixRef(incl)
         }
         for (const fold of diag.fold || []) {
             fixRef(fold.of)
+        }
+        for (const group of diag.groups || []) {
+            for (const incl of group.include) {
+                fixRef(incl)
+            }
         }
     }
 }

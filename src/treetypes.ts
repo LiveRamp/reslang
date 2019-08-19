@@ -1,3 +1,5 @@
+import { string } from "prop-types"
+
 /**
  * types for the parse tree
  */
@@ -81,8 +83,15 @@ export interface IDiagram {
     layout: string
     includeAll: string
     include: IReference[]
+    import: IReference[]
     exclude: IReference[]
     fold: { attr: string; of: IReference }[]
+    groups: IGroup[]
+}
+
+export interface IGroup {
+    comment: string
+    include: IReference[]
 }
 
 export interface IOperation {
