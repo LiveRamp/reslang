@@ -1,5 +1,3 @@
-import { string } from "prop-types"
-
 /**
  * types for the parse tree
  */
