@@ -89,9 +89,7 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && (post || multiget)) {
                     throw new Error(
-                        `${
-                            el.name
-                        } is a singleton - cannot have POST or MULTIGET`
+                        `${el.name} is a singleton - cannot have POST or MULTIGET`
                     )
                 }
 
@@ -178,7 +176,7 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(post, responses)
             path.post = {
-                tags: [tagKeys[short]],
+                tags: [tagKeys[el.name]],
                 operationId: "create" + short,
                 description: post.comment,
                 requestBody: {
@@ -250,7 +248,7 @@ export default class SwagGen extends BaseGen {
                 }
                 this.formErrors(multiget, responses)
                 path.get = {
-                    tags: [tagKeys[short]],
+                    tags: [tagKeys[el.name]],
                     operationId: "multiget" + el.name,
                     description: multiget.comment,
                     parameters: params,
@@ -328,7 +326,7 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(get, responses)
             path.get = {
-                tags: [tagKeys[short]],
+                tags: [tagKeys[el.name]],
                 operationId: "retrieve" + el.name,
                 description: get.comment,
                 responses
@@ -362,7 +360,7 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(put, responses)
             path.put = {
-                tags: [tagKeys[short]],
+                tags: [tagKeys[el.name]],
                 operationId: "modify" + el.name,
                 description: put.comment,
                 responses
@@ -388,7 +386,7 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(del, responses)
             path.delete = {
-                tags: [tagKeys[short]],
+                tags: [tagKeys[el.name]],
                 operationId: "delete" + el.name,
                 description: del.comment,
                 responses
@@ -414,9 +412,7 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${
-                                    err.struct.name
-                                }Structure`
+                                $ref: `#/components/schemas/${err.struct.name}Structure`
                             }
                         }
                     }
@@ -474,9 +470,7 @@ export default class SwagGen extends BaseGen {
             const def = this.extractDefinition(attr.type.name)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${
-                        attr.type.name
-                    }Structure`
+                    schema.$ref = `#/components/schemas/${attr.type.name}Structure`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -485,9 +479,7 @@ export default class SwagGen extends BaseGen {
                     // must have a linked annotation
                     if (!attr.linked) {
                         throw new Error(
-                            `Attribute ${attr.name} references resource ${
-                                attr.type
-                            } but doesn't use linked`
+                            `Attribute ${attr.name} references resource ${attr.type} but doesn't use linked`
                         )
                     }
                     this.translatePrimitive(
@@ -511,9 +503,7 @@ export default class SwagGen extends BaseGen {
                     break
                 default:
                     throw Error(
-                        `Cannot resolve attribute type ${obj.type} of name ${
-                            obj.name
-                        }`
+                        `Cannot resolve attribute type ${obj.type} of name ${obj.name}`
                     )
             }
         }
@@ -555,6 +545,7 @@ export default class SwagGen extends BaseGen {
             if (el.secondary || el.future) {
                 continue
             }
+            const name = el.name
             const short = el.short
             const comment = el.comment || ""
             if ("configuration-resource" === el.type) {
@@ -563,7 +554,7 @@ export default class SwagGen extends BaseGen {
                     description: `(configuration) ${comment}`
                 }
                 tags.push(tag)
-                tagKeys[short] = tag.name
+                tagKeys[name] = tag.name
             }
             if ("asset-resource" === el.type) {
                 const tag = {
@@ -571,7 +562,7 @@ export default class SwagGen extends BaseGen {
                     description: `(asset) ${comment}`
                 }
                 tags.push(tag)
-                tagKeys[short] = tag.name
+                tagKeys[name] = tag.name
             }
             if ("request-resource" === el.type) {
                 const tag = {
@@ -579,7 +570,7 @@ export default class SwagGen extends BaseGen {
                     description: `(request) ${comment}`
                 }
                 tags.push(tag)
-                tagKeys[short] = tag.name
+                tagKeys[name] = tag.name
             }
             if ("subresource" === el.type) {
                 const tag = {
@@ -587,7 +578,7 @@ export default class SwagGen extends BaseGen {
                     description: `(subresource) ${comment}`
                 }
                 tags.push(tag)
-                tagKeys[short] = tag.name
+                tagKeys[name] = tag.name
             }
             if ("action" === el.type) {
                 const tag = {
@@ -595,7 +586,7 @@ export default class SwagGen extends BaseGen {
                     description: `(action) ${comment}`
                 }
                 tags.push(tag)
-                tagKeys[short] = tag.name
+                tagKeys[name] = tag.name
             }
         }
     }

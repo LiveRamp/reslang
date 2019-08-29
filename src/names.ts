@@ -53,7 +53,7 @@ export function getVersion(name: string) {
 
 export function pluralizeName(name: string) {
     if (name.endsWith("s")) {
-        return name + "es"
+        return name
     }
     if (name.endsWith("y")) {
         return name.substring(0, name.length - 1) + "ies"
