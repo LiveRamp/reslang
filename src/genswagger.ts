@@ -5,7 +5,13 @@ import {
     sanitize,
     fixNameCamel
 } from "./names"
-import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
+import {
+    IDefinition,
+    IAttribute,
+    IOperation,
+    ResourceType,
+    IReference
+} from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
 
@@ -14,6 +20,9 @@ import { isPrimitiveType } from "./parse"
  */
 
 export default class SwagGen extends BaseGen {
+    private readonly stringMaps: { [typeName: string]: IAttribute } = {}
+    private stringMapCount: number = 0
+
     public generate() {
         this.markGenerate(true)
         const tags: any[] = []
@@ -145,6 +154,7 @@ export default class SwagGen extends BaseGen {
 
         // model definitions
         this.formDefinitions(schemas)
+        this.formStringMaps(schemas)
 
         return swag
     }
@@ -451,26 +461,37 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private addType(attr: IAttribute, obj: any, schemaLevel = true) {
+    private addType(
+        attr: IAttribute,
+        obj: any,
+        schemaLevel = true,
+        suppressStringmap = false
+    ) {
+        // if this is a stringmap then add it
         const type = attr.type
+        const name = type.name
         // allow description overrides by caller
         if (!obj.description) {
             obj.description = attr.comment
         }
-        const name = type.name
         if (schemaLevel) {
             obj.schema = {}
         }
         const schema = schemaLevel ? obj.schema : obj
+
         const prim = isPrimitiveType(name)
-        if (prim) {
+        if (attr.stringMap && !suppressStringmap) {
+            const sname = "stringmap-" + this.stringMapCount++
+            this.stringMaps[sname] = attr
+            schema.$ref = `#/components/schemas/${sname}`
+        } else if (prim) {
             this.translatePrimitive(type.name, schema)
         } else {
             // is this a structure, an enum or a linked resource
-            const def = this.extractDefinition(attr.type.name)
+            const def = this.extractDefinition(name)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${attr.type.name}Structure`
+                    schema.$ref = `#/components/schemas/${name}Structure`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -520,6 +541,7 @@ export default class SwagGen extends BaseGen {
             delete schema.$ref
             schema.type = "array"
         }
+
         return obj
     }
 
@@ -620,6 +642,26 @@ export default class SwagGen extends BaseGen {
         }
 
         definitions[def.name + suffix] = request
+    }
+
+    private formStringMaps(definitions: any) {
+        for (const name in this.stringMaps) {
+            if (this.stringMaps[name]) {
+                const attr = this.stringMaps[name]
+                if (attr) {
+                    const details = {
+                        type: "object",
+                        additionalProperties: this.addType(
+                            attr,
+                            {},
+                            false,
+                            true
+                        )
+                    }
+                    definitions[name] = details
+                }
+            }
+        }
     }
 
     private formDefinitions(definitions: any) {

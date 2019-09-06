@@ -72,6 +72,7 @@ export interface IAttribute {
     type: IReference
     output: boolean
     multiple: boolean
+    stringMap: boolean
     linked: boolean
     comment: string
 }

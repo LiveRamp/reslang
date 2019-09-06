@@ -1,0 +1,18 @@
+
+asset-resource SMap {
+    id: int
+    map: stringmap<int>
+    maps: stringmap<Struct2>[]
+    test: string
+
+    operations
+        PUT POST
+}
+
+structure Struct1 {
+    text: string
+}
+
+structure Struct2 {
+    notes: string
+}

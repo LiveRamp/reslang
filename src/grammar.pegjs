@@ -58,8 +58,9 @@ structure = _ comment:description? _ "structure"  _ name:name  _ ext:extends? _ 
 }
 
 attributes = _ attrs:attr+ _ { return attrs; }
-attr = _ comment:description? _ name:name _ ":" _ linked:"linked"? _ type:ref _ mult:"[]"? _ out:"output"? _ ";"? _ { 
-    return {"name": name, "comment": comment, "type": type, "multiple": mult !== null, "output": out !== null, "linked": linked !== null}
+attr = _ comment:description? _ name:name _ ":" _
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ ";"? _ { 
+    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "multiple": mult !== null, "output": out !== null, "linked": linked !== null}
 }
 
 // enum

@@ -1,0 +1,6 @@
+
+"Stringmap etc"
+namespace {
+    title "Testing out some of the stringmap and other advanced attribute modifiers"
+    version 0.1.2
+}
