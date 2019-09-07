@@ -4,7 +4,9 @@ import {
     IImport,
     INamespace,
     IOperation,
-    IDiagram
+    IDiagram,
+    IDocumentation,
+    IDocEntry
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
@@ -14,6 +16,7 @@ export abstract class BaseGen {
     protected mainNamespace?: string
     protected defs: IDefinition[] = []
     protected diagrams: IDiagram[] = []
+    protected documentation: { [name: string]: IDocEntry[] } = {}
     private loaded = new Set<string>()
 
     public constructor(private dirs: string[]) {
@@ -80,6 +83,11 @@ export abstract class BaseGen {
                 // copy over all the diagrams
                 for (const diag of local[3] as IDiagram[]) {
                     this.diagrams.push(diag)
+                }
+
+                // copy over all the documentation
+                for (const doc of local[4] as IDocumentation[]) {
+                    this.documentation[doc.name] = doc.entries
                 }
             }
         }

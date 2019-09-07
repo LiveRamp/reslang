@@ -1,4 +1,4 @@
-start = namespace? import* (resource / structure / subresource / enum)* diagram*
+start = namespace? import* (resource / structure / subresource / enum )* diagram* docs*
 
 // defining a namespace
 namespace = _ comment:description? _ "namespace" _ "{"
@@ -10,6 +10,15 @@ namespace = _ comment:description? _ "namespace" _ "{"
 // import from another module
 import "import" = _ "import" _ namespace:filename _ ";"? _ {
     return {"import": namespace}
+}
+
+// documentation
+docs = _ "docs" _ name:resname _ "{" _ docEntries:docEntry* _ "}" _ {
+    return {name:name, entries:docEntries}
+}
+
+docEntry = _ name:resname _ "=" _ doc:description _ {
+    return {name:name, documentation:doc}
 }
 
 // defining a resource

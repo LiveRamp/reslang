@@ -3082,7 +3082,7 @@
 							}
 						}
 					],
-					"documentation": "->src/genswagger.ts:export default class SwagGen extends BaseGen {",
+					"documentation": "->src/genswagger.ts:",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",

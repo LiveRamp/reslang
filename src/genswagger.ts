@@ -8,6 +8,7 @@ import { isPrimitiveType } from "./parse"
  */
 
 export default class SwagGen extends BaseGen {
+    private static readonly COMMENT_REGEX = /See docs:\s*(?<doc>\w+)\.(?<entry>\w+)/
     private readonly stringMaps: { [typeName: string]: IAttribute } = {}
     private stringMapCount: number = 0
 
@@ -21,7 +22,7 @@ export default class SwagGen extends BaseGen {
             openapi: "3.0.1",
             info: {
                 title: this.namespace.title,
-                description: this.namespace.comment,
+                description: this.translate(this.namespace.comment),
                 version: this.namespace.version
             },
             servers: [
@@ -147,6 +148,27 @@ export default class SwagGen extends BaseGen {
         return swag
     }
 
+    private translate(comment?: string) {
+        if (!comment) {
+            return ""
+        }
+        const match = comment.match(SwagGen.COMMENT_REGEX)
+        if (!match) {
+            return comment
+        }
+        const [_, doc, entry] = match
+        // search for the docs
+        const docs = this.documentation[doc]
+        for (const ent of docs || []) {
+            if (ent.name === entry) {
+                return ent.documentation
+            }
+        }
+        throw new Error(
+            "Cannot find documentation entry for " + doc + "." + entry
+        )
+    }
+
     private formNonIdOperations(
         el: IDefinition,
         path: any,
@@ -176,7 +198,7 @@ export default class SwagGen extends BaseGen {
             path.post = {
                 tags: [tagKeys[el.name]],
                 operationId: "Create " + short,
-                description: post.comment,
+                description: this.translate(post.comment),
                 requestBody: {
                     content: {
                         "application/json": {
@@ -221,7 +243,7 @@ export default class SwagGen extends BaseGen {
                         this.addType(attr, {
                             in: "query",
                             name: attr.name,
-                            description: attr.comment,
+                            description: this.translate(attr.comment),
                             required: false
                         })
                     )
@@ -255,7 +277,7 @@ export default class SwagGen extends BaseGen {
             path.get = {
                 tags: [tagKeys[el.name]],
                 operationId: "Find " + pluralizeName(el.name),
-                description: multiget.comment,
+                description: this.translate(multiget.comment),
                 parameters: params,
                 responses
             }
@@ -285,7 +307,7 @@ export default class SwagGen extends BaseGen {
         const prop = {
             description:
                 (attr.modifiers.synthetic ? "(synthetic) " : "") +
-                (attr.comment || "")
+                this.translate(attr.comment)
         }
         this.addType(attr, prop, false)
         return { name, prop }
@@ -336,7 +358,7 @@ export default class SwagGen extends BaseGen {
             path.get = {
                 tags: [tagKeys[el.name]],
                 operationId: "Get 1 " + el.name,
-                description: get.comment,
+                description: this.translate(get.comment),
                 responses
             }
             if (!singleton) {
@@ -362,7 +384,7 @@ export default class SwagGen extends BaseGen {
             path.put = {
                 tags: [tagKeys[el.name]],
                 operationId: "Modify a " + el.name,
-                description: put.comment,
+                description: this.translate(put.comment),
                 requestBody: {
                     content: {
                         "application/json": {
@@ -400,7 +422,7 @@ export default class SwagGen extends BaseGen {
             path.delete = {
                 tags: [tagKeys[el.name]],
                 operationId: "Delete a " + el.name,
-                description: del.comment,
+                description: this.translate(del.comment),
                 responses
             }
             if (!singleton) {
@@ -420,7 +442,7 @@ export default class SwagGen extends BaseGen {
         for (const err of del.errors || []) {
             for (const code of err.codes) {
                 responses[code.code] = {
-                    description: code.comment || " ",
+                    description: this.translate(code.comment),
                     content: {
                         "application/json": {
                             schema: {
@@ -493,7 +515,7 @@ export default class SwagGen extends BaseGen {
         const name = type.name
         // allow description overrides by caller
         if (!obj.description) {
-            obj.description = attr.comment
+            obj.description = this.translate(attr.comment)
         }
         if (schemaLevel) {
             obj.schema = {}
@@ -585,7 +607,7 @@ export default class SwagGen extends BaseGen {
             }
             const name = el.name
             const short = el.short
-            const comment = el.comment || ""
+            const comment = this.translate(el.comment)
             if ("configuration-resource" === el.type) {
                 const tag = {
                     name: short,
@@ -685,6 +707,10 @@ export default class SwagGen extends BaseGen {
             }
         }
 
+        if (request.required.length === 0) {
+            delete request.required
+        }
+
         definitions[def.name + suffix] = request
     }
 
@@ -750,6 +776,9 @@ export default class SwagGen extends BaseGen {
                     }
                 ]
             }
+        }
+        if (request.required.length === 0) {
+            delete request.required
         }
     }
     private formStringMaps(definitions: any) {

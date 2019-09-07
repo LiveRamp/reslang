@@ -100,6 +100,16 @@ export interface IDiagram {
     groups: IGroup[]
 }
 
+export interface IDocumentation {
+    name: string
+    entries: IDocEntry[]
+}
+
+export interface IDocEntry {
+    name: string
+    documentation: string
+}
+
 export interface IGroup {
     comment: string
     include: IReference[]
