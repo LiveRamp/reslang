@@ -1,0 +1,5 @@
+
+diagram distribution {
+    /include
+        distribution-mvp.resland
+}

@@ -162,7 +162,7 @@ export abstract class BaseGen {
                 const put = this.extractOp(el, "PUT")
 
                 if (put) {
-                    el.generateInput = true
+                    el.generateMutable = true
                 }
                 if (get) {
                     el.generateOutput = true

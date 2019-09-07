@@ -96,8 +96,8 @@ enum StatusEnum {
 }
 
 structure DataMappingConfig {
-    input: MappingInputUnion
-    out: MappingOutputUnion
+    input: MappingInputUnion;
+    output: MappingOutputUnion
 }
 
 union MappingInputUnion {
@@ -116,7 +116,7 @@ union MappingOutputUnion {
 
 structure MappingKeyValueLabel {
     keyLabel: string
-    valueLabel: string
+    valueLabel: string optional
 }
 
 structure MappingIdLabel {

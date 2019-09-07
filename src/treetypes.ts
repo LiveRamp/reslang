@@ -37,6 +37,7 @@ export interface IDefinition {
     secondary?: boolean
     generateOutput: boolean
     generateInput: boolean
+    generateMutable: boolean
     generateMulti: boolean
 }
 
@@ -71,14 +72,21 @@ export let PrimitiveType = [
 export interface IAttribute {
     name: string
     type: IReference
-    output: boolean
-    query: boolean
-    queryOnly: boolean
     inline: boolean
     multiple: boolean
     stringMap: boolean
     linked: boolean
     comment: string
+    modifiers: IModifiers
+}
+
+export interface IModifiers {
+    synthetic: boolean
+    mutable: boolean
+    optional: boolean
+    output: boolean
+    query: boolean
+    queryOnly: boolean
 }
 
 export interface IDiagram {

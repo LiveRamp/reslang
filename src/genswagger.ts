@@ -1,17 +1,5 @@
-import {
-    fixName,
-    pluralizeName,
-    getVersion,
-    sanitize,
-    fixNameCamel
-} from "./names"
-import {
-    IDefinition,
-    IAttribute,
-    IOperation,
-    ResourceType,
-    IReference
-} from "./treetypes"
+import { fixName, pluralizeName, getVersion, sanitize } from "./names"
+import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
 
@@ -228,7 +216,7 @@ export default class SwagGen extends BaseGen {
             })
 
             for (const attr of el.attributes as IAttribute[]) {
-                if (attr.query || attr.queryOnly) {
+                if (attr.modifiers.query || attr.modifiers.queryOnly) {
                     params.push(
                         this.addType(attr, {
                             in: "query",
@@ -295,7 +283,9 @@ export default class SwagGen extends BaseGen {
             }
         }
         const prop = {
-            description: attr.comment
+            description:
+                (attr.modifiers.synthetic ? "(synthetic) " : "") +
+                (attr.comment || "")
         }
         this.addType(attr, prop, false)
         return { name, prop }
@@ -365,15 +355,7 @@ export default class SwagGen extends BaseGen {
             const short = el.short
             const responses = {
                 200: {
-                    description: short + " modified successfully",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                $ref:
-                                    "#/components/schemas/" + el.name + "Input"
-                            }
-                        }
-                    }
+                    description: short + " modified successfully"
                 }
             }
             this.formErrors(put, responses)
@@ -381,6 +363,18 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[el.name]],
                 operationId: "Modify a " + el.name,
                 description: put.comment,
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref:
+                                    "#/components/schemas/" +
+                                    el.name +
+                                    "Mutable"
+                            }
+                        }
+                    }
+                },
                 responses
             }
             if (!singleton) {
@@ -512,7 +506,11 @@ export default class SwagGen extends BaseGen {
             this.stringMaps[sname] = attr
             schema.$ref = `#/components/schemas/${sname}`
         } else if (prim) {
-            this.translatePrimitive(type.name, schema, !attr.queryOnly)
+            this.translatePrimitive(
+                type.name,
+                schema,
+                !attr.modifiers.queryOnly
+            )
         } else {
             // is this a structure, an enum or a linked resource
             const def = this.extractDefinition(name)
@@ -635,41 +633,55 @@ export default class SwagGen extends BaseGen {
         definitions: any,
         def: IDefinition,
         out: boolean,
+        mutable: boolean,
         suffix: string
     ) {
         const attrs = def.attributes || []
         const properties: any = {}
-        const request = { type: "object", properties } as {
+        const required: string[] = []
+        const request = { type: "object", properties, required } as {
             type: string
             properties: any
+            required: string[]
             allOf: {}
         }
         for (const attr of attrs as IAttribute[]) {
-            if (attr.queryOnly) {
+            if (attr.modifiers.queryOnly) {
                 continue
             }
-            if ((attr.name === "id" && !out) || (attr.output && !out)) {
-                // omit
-            } else {
-                if (attr.inline) {
-                    const indef = this.extractDefinition(attr.type.name)
-                    if (indef.type !== "structure") {
-                        throw new Error(
-                            "Inline attribute " +
-                                attr.name +
-                                " of " +
-                                def.short +
-                                " has to be a structure"
-                        )
-                    }
-                    for (const att of indef.attributes || []) {
-                        const prop = this.makeProperty(att)
-                        properties[prop.name] = prop.prop
-                    }
-                } else {
-                    const prop = this.makeProperty(attr)
+            // no id types unless they we are an output struct
+            if (
+                (attr.name === "id" && !out) ||
+                (attr.modifiers.output && !out)
+            ) {
+                continue
+            }
+            // if we are mutable only take mutable attributes
+            if (mutable && !attr.modifiers.mutable) {
+                continue
+            }
+
+            if (!attr.modifiers.optional && !mutable) {
+                required.push(attr.name)
+            }
+            if (attr.inline) {
+                const indef = this.extractDefinition(attr.type.name)
+                if (indef.type !== "structure") {
+                    throw new Error(
+                        "Inline attribute " +
+                            attr.name +
+                            " of " +
+                            def.short +
+                            " has to be a structure"
+                    )
+                }
+                for (const att of indef.attributes || []) {
+                    const prop = this.makeProperty(att)
                     properties[prop.name] = prop.prop
                 }
+            } else {
+                const prop = this.makeProperty(attr)
+                properties[prop.name] = prop.prop
             }
         }
 
@@ -690,6 +702,7 @@ export default class SwagGen extends BaseGen {
             mapping[attr.name] =
                 "#/components/schemas/" + name + "-" + attr.name
         }
+        const required: string[] = ["type"]
         const request = {
             type: "object",
             properties: { type: { type: "string" } },
@@ -697,7 +710,7 @@ export default class SwagGen extends BaseGen {
                 propertyName: "type",
                 mapping
             },
-            required: ["type"]
+            required
         }
         definitions[name] = request
 
@@ -718,9 +731,15 @@ export default class SwagGen extends BaseGen {
                 for (const att of indef.attributes || []) {
                     const prop = this.makeProperty(att)
                     properties[prop.name] = prop.prop
+                    if (!att.modifiers.optional) {
+                        required.push(att.name)
+                    }
                 }
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
+                if (!attr.modifiers.optional) {
+                    required.push(attr.name)
+                }
             }
             definitions[name + "-" + attr.name] = {
                 allOf: [
@@ -766,10 +785,13 @@ export default class SwagGen extends BaseGen {
                 !def.secondary
             ) {
                 if (def.generateInput) {
-                    this.addDefinition(definitions, def, false, "Input")
+                    this.addDefinition(definitions, def, false, false, "Input")
                 }
                 if (def.generateOutput) {
-                    this.addDefinition(definitions, def, true, "Output")
+                    this.addDefinition(definitions, def, true, false, "Output")
+                }
+                if (def.generateMutable) {
+                    this.addDefinition(definitions, def, false, true, "Mutable")
                 }
 
                 // handle multiget
@@ -794,7 +816,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
             if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, true, "Structure")
+                this.addDefinition(definitions, def, true, false, "Structure")
             }
             if ("union" === def.type && def.generateInput) {
                 this.addUnionDefinition(definitions, def, true, "Union")

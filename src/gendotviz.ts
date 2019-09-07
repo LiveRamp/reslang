@@ -205,7 +205,7 @@ export default class DotvizGen extends BaseGen {
                 const foldThis =
                     folded.has(fold) || !include.has(attr.type.name)
                 const multi = attr.multiple ? "[]" : ""
-                const output = attr.output ? " (out)" : ""
+                const output = attr.modifiers.output ? " (out)" : ""
 
                 // if this is linked do it that way
                 const type = this.extractDefinitionGently(attr.type.name)

@@ -55,8 +55,15 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attr+ _ { return attrs; }
 attr = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ queryOnly:"queryOnly"? _ query: "query"?  _ inline:"inline"? _";"? _ { 
-    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "inline": !!inline, "query": !!query, "queryOnly": !!queryOnly, "multiple": !!mult, "output": !!out, "linked": !!linked}
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ modifiers:modifiers _ inline:"inline"? _";"? _ { 
+    return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, multiple: !!mult, linked: !!linked, modifiers: modifiers}
+}
+
+modifiers = modifiers:( _ ("synthetic" / "mutable" / "queryOnly" / "query" / "optional" / "output") _ )* {
+    var flat = modifiers.flat()
+    return {synthetic: flat.includes("synthetic"), mutable: flat.includes("mutable"),
+            queryOnly: flat.includes("queryOnly"), query: flat.includes("query"),
+            optional: flat.includes("optional"), output: flat.includes("output")}
 }
 
 // enum
