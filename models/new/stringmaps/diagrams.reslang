@@ -1,0 +1,4 @@
+diagram stringmaps {
+    /include
+        resources.reslang
+}

@@ -12,25 +12,21 @@ import "import" = _ "import" _ namespace:filename _ ";"? _ {
     return {"import": namespace}
 }
 
-extends = _ "extends" _ ref: ref _ {
-    return ref
-}
-
 // defining a resource
-resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ ext:extends? _ "{" _
+resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "extends": ext, "comment": comment, "attributes": attributes, "operations": operations }
+    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  ext:extends? _ "{" _
+subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "extends": ext, "parent": parent,
+    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "parent": parent,
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-operations = _ "operations" _ ops:op+ _ {
+operations = _ "/"? "operations" _ ops:op+ _ {
     return ops;
 }
 
@@ -51,23 +47,24 @@ multiget = _ comment:description? _ "MULTIGET" ids:ids {return {"operation": "MU
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
-structure = _ comment:description? _ "structure"  _ name:name  _ ext:extends? _ "{" _
+structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ "{" _
     attrs:attr+ _
 "}" _ ";"? _ {
-    return {"type": "structure", "name": name, "comment": comment, "extends": ext, "attributes": attrs}
+    return {"type": type, "name": name, "comment": comment, "attributes": attrs}
 }
 
+// attributes also handle stringmaps
 attributes = _ attrs:attr+ _ { return attrs; }
 attr = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ ";"? _ { 
-    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "multiple": mult !== null, "output": out !== null, "linked": linked !== null}
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ inline:"inline" _";"? _ { 
+    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "inline": !!inline, "multiple": !!mult, "output": !!out, "linked": !!linked}
 }
 
 // enum
-enum = _ comment:description? _ "enum"  _ name:name _ ext:extends? _ "{" _
+enum = _ comment:description? _ "enum"  _ name:name _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
-    return {"type": "enum", "name": name, "comment": comment, "extends": ext, "literals": literals}
+    return {"type": "enum", "name": name, "comment": comment, "literals": literals}
 }
 
 literal = _ comment:description? _ name:literalname _ ";"? _ { return name }

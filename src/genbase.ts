@@ -123,10 +123,6 @@ export abstract class BaseGen {
                 }
             }
         }
-        // ask base if this doesn't have one
-        if (node.extends) {
-            return this.extractDefinitionId(node.extends.name)
-        }
 
         throw new Error("Cannot find id attribute for " + node.name)
     }
@@ -155,18 +151,10 @@ export abstract class BaseGen {
                 if (!el.singleton && (post || multiget)) {
                     if (post) {
                         el.generateInput = true
-                        if (el.extends) {
-                            const ext = this.extractDefinition(el.extends.name)
-                            ext.generateInput = true
-                        }
                     }
                     if (multiget) {
                         el.generateMulti = true
                         el.generateOutput = true
-                        if (el.extends) {
-                            const ext = this.extractDefinition(el.extends.name)
-                            ext.generateOutput = true
-                        }
                     }
                 }
 

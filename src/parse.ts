@@ -15,9 +15,7 @@ export function loadParser() {
         return peg.generate(grammar)
     } catch (error) {
         throw new Error(
-            `Problem reading grammar: ${error.message}, location: ${
-                error.location.start.line
-            }, ${error.location.start.column}`
+            `Problem reading grammar: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
         )
     }
 }
@@ -37,9 +35,7 @@ export function parseFile(
     } catch (error) {
         console.log(error)
         throw new Error(
-            `Problem parsing file ${file}: ${error.message}, location: ${
-                error.location.start.line
-            }, ${error.location.start.column}`
+            `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
         )
     }
     addNamespace(tree[2] as IDefinition[], parsingNamespace, mainNamespace)
@@ -63,13 +59,6 @@ function addNamespace(
         if (def.parent) {
             def.parentShort = makeShort(def.parent)
             def.parent = fixLong(def.parent)
-        }
-        if (def.extends) {
-            def.extends.name = fixLong(
-                (def.extends.parent ? def.extends.parent + "." : "") +
-                    (def.extends.toplevel ? def.extends.toplevel + "::" : "") +
-                    def.extends.name
-            )
         }
 
         // add to all references

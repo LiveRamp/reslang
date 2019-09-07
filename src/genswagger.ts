@@ -493,6 +493,9 @@ export default class SwagGen extends BaseGen {
                 case "structure":
                     schema.$ref = `#/components/schemas/${name}Structure`
                     break
+                case "union":
+                    schema.$ref = `#/components/schemas/${name}Union`
+                    break
                 case "request-resource":
                 case "asset-resource":
                 case "configuration-resource":
@@ -520,7 +523,7 @@ export default class SwagGen extends BaseGen {
                 case "enum":
                     schema.type = "string"
                     // collect any inherited literals
-                    schema.enum = this.collectInheritedLiterals(def)
+                    schema.enum = def.literals
                     break
                 default:
                     throw Error(
@@ -543,18 +546,6 @@ export default class SwagGen extends BaseGen {
         }
 
         return obj
-    }
-
-    private collectInheritedLiterals(def: IDefinition): string[] {
-        if (def && def.literals) {
-            const plits = def.extends
-                ? this.collectInheritedLiterals(
-                      this.extractDefinition(def.extends.name)
-                  )
-                : []
-            return plits.concat(def.literals)
-        }
-        return []
     }
 
     private formTags(
@@ -634,16 +625,50 @@ export default class SwagGen extends BaseGen {
                 properties[prop.name] = prop.prop
             }
         }
-        // a base definition?
-        if (def.extends) {
-            request.allOf = [
-                { $ref: `#/components/schemas/${def.extends}${suffix}` }
-            ]
-        }
 
         definitions[def.name + suffix] = request
     }
 
+    private addUnionDefinition(
+        definitions: any,
+        def: IDefinition,
+        out: boolean,
+        suffix: string
+    ) {
+        const attrs = def.attributes || []
+        const mapping: { [key: string]: string } = {}
+
+        const name = def.name + suffix
+        for (const attr of attrs) {
+            mapping[attr.name] =
+                "#/components/schemas/" + name + "-" + attr.name
+        }
+        const request = {
+            type: "object",
+            properties: { type: { type: "string" } },
+            discriminator: {
+                properties: { type: { type: "string" } },
+                mapping
+            },
+            required: ["type"]
+        }
+        definitions[name] = request
+
+        // now do the options
+        for (const attr of attrs) {
+            const properties: any = {}
+            properties[attr.name] = this.addType(attr, {}, false)
+            definitions[name + "-" + attr.name] = {
+                allOf: [
+                    { $ref: `#/components/schemas/${name}` },
+                    {
+                        type: "object",
+                        properties
+                    }
+                ]
+            }
+        }
+    }
     private formStringMaps(definitions: any) {
         for (const name in this.stringMaps) {
             if (this.stringMaps[name]) {
@@ -705,7 +730,10 @@ export default class SwagGen extends BaseGen {
                 }
             }
             if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, false, "Structure")
+                this.addDefinition(definitions, def, true, "Structure")
+            }
+            if ("union" === def.type && def.generateInput) {
+                this.addUnionDefinition(definitions, def, true, "Union")
             }
         }
 

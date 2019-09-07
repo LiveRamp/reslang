@@ -94,25 +94,19 @@ export default class DotvizGen extends BaseGen {
                 } else if (imported) {
                     viz += `"${def.short}" [label=<${box}</table>>];\n`
                 } else {
-                    viz += `"${
-                        def.short
-                    }" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
+                    viz += `"${def.short}" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
                 }
 
                 // from parent to subresource
                 if ("subresource" === def.type && include.has(def.parent!)) {
                     const label = this.makeLabelText("subresource")
-                    viz += `"${def.parentShort}" -> "${
-                        def.short
-                    }" [dir="back" arrowtail="ediamond" label=${label}];\n`
+                    viz += `"${def.parentShort}" -> "${def.short}" [dir="back" arrowtail="ediamond" label=${label}];\n`
                 }
 
                 // from parent to action
                 if ("action" === def.type) {
                     const label = this.makeLabelText("action")
-                    viz += `"${def.parentShort}" -> "${
-                        def.short
-                    }" [dir="none" label=${label}];\n`
+                    viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
                 }
             } else if ("enum" === def.type) {
                 const box = `
@@ -122,9 +116,7 @@ export default class DotvizGen extends BaseGen {
                 for (const lit of def.literals!) {
                     literals += `<tr><td align="left">${lit}</td></tr>`
                 }
-                viz += `"${
-                    def.short
-                }" [label=<${box}<hr/>${literals}</table>>];\n`
+                viz += `"${def.short}" [label=<${box}<hr/>${literals}</table>>];\n`
             }
         }
         // process additional links
@@ -134,25 +126,10 @@ export default class DotvizGen extends BaseGen {
             }
             const label = this.makeLabelText(link.label)
             if (link.type === "resource") {
-                viz += `"${link.from}" -> "${
-                    link.to
-                }" [label=${label} arrowhead="vee"];\n`
+                viz += `"${link.from}" -> "${link.to}" [label=${label} arrowhead="vee"];\n`
             }
             if (link.type === "structure") {
-                viz += `"${link.from}" -> "${
-                    link.to
-                }" [dir="back" arrowtail="diamond" label=${label}];\n`
-            }
-        }
-
-        // handle inheritance
-        for (const def of this.defs) {
-            if (def.extends) {
-                viz += `"${def.name}" -> "${
-                    def.extends
-                }" [arrowhead="onormal" label=${this.makeLabelText(
-                    "inherits"
-                )}];\n`
+                viz += `"${link.from}" -> "${link.to}" [dir="back" arrowtail="diamond" label=${label}];\n`
             }
         }
 

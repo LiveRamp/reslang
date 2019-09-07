@@ -32,7 +32,6 @@ export interface IDefinition {
     literals?: string[]
     singleton?: boolean
     future?: boolean
-    extends?: IReference
 
     // used to see if we generate definitions or not
     secondary?: boolean
@@ -49,6 +48,7 @@ export type DefinitionType =
     | "enum"
     | "action"
     | "structure"
+    | "union"
 
 export let ResourceType = [
     "request-resource",
@@ -71,6 +71,7 @@ export interface IAttribute {
     name: string
     type: IReference
     output: boolean
+    inline: boolean
     multiple: boolean
     stringMap: boolean
     linked: boolean

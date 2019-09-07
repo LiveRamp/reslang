@@ -4,8 +4,9 @@ asset-resource SMap {
     map: stringmap<int>
     maps: stringmap<Struct2>[]
     test: string
+    key: InputKey
 
-    operations
+    /operations
         PUT POST
 }
 
@@ -15,4 +16,9 @@ structure Struct1 {
 
 structure Struct2 {
     notes: string
+}
+
+union InputKey {
+    num: int
+    struct: Struct2
 }
