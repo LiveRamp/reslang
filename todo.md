@@ -8,20 +8,20 @@
 *   ~~error bodies + references~~
 *   ~~concept of a future resource for linking to~~
 *   ~~abhishek's pagination~~
-*   map + union
-*   multiget query parameters
-*   string(\$uri)
-*   Names: fix param names, check on verb, resource, enum
+*   ~~map + union~~
+*   ~~multiget query parameters~~
+*   ~~string(\$uri)~~
+*   ~~MULTIGET w/out id~~
+*   ~~mutable, required, optional~~
 
+-   Names: fix param names, check on verb, resource, enum
 -   no id needed for singleton GET or POST only
--   MULTIGET w/out id
 -   example text for attributes & bodies
-
 -   synchronous operations or actions (look at abilitec API)
--   mutable, required, optional
 
 Admin:
 
--   Cleanup code
+-   Cleanup code: better name code
+-   Granular tests
 -   Link to binary
 -   manual
