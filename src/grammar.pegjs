@@ -56,7 +56,7 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attr+ _ { return attrs; }
 attr = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ inline:"inline" _";"? _ { 
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ inline:"inline"? _";"? _ { 
     return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "inline": !!inline, "multiple": !!mult, "output": !!out, "linked": !!linked}
 }
 

@@ -621,8 +621,25 @@ export default class SwagGen extends BaseGen {
             if ((attr.name === "id" && !out) || (attr.output && !out)) {
                 // omit
             } else {
-                const prop = this.makeProperty(attr)
-                properties[prop.name] = prop.prop
+                if (attr.inline) {
+                    const indef = this.extractDefinition(attr.type.name)
+                    if (indef.type !== "structure") {
+                        throw new Error(
+                            "Inline attribute " +
+                                attr.name +
+                                " of " +
+                                def.short +
+                                " has to be a structure"
+                        )
+                    }
+                    for (const att of indef.attributes || []) {
+                        const prop = this.makeProperty(att)
+                        properties[prop.name] = prop.prop
+                    }
+                } else {
+                    const prop = this.makeProperty(attr)
+                    properties[prop.name] = prop.prop
+                }
             }
         }
 
@@ -657,7 +674,24 @@ export default class SwagGen extends BaseGen {
         // now do the options
         for (const attr of attrs) {
             const properties: any = {}
-            properties[attr.name] = this.addType(attr, {}, false)
+            if (attr.inline) {
+                const indef = this.extractDefinition(attr.type.name)
+                if (indef.type !== "structure") {
+                    throw new Error(
+                        "Inline attribute " +
+                            attr.name +
+                            " of " +
+                            def.short +
+                            " has to be a structure"
+                    )
+                }
+                for (const att of indef.attributes || []) {
+                    const prop = this.makeProperty(att)
+                    properties[prop.name] = prop.prop
+                }
+            } else {
+                properties[attr.name] = this.addType(attr, {}, false)
+            }
             definitions[name + "-" + attr.name] = {
                 allOf: [
                     { $ref: `#/components/schemas/${name}` },
