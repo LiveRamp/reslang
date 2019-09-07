@@ -46,7 +46,7 @@ request-resource DistributionRequest {
     statusUpdatedBefore: datetime queryOnly
 
     /operations
-          "Get a request. See docs: DistMVP:GET"
+          "Get a request. See docs: DistMVP.GET"
         GET
           "Use this endpoint to create a new DistributionRequest"
         POST
