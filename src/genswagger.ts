@@ -187,7 +187,7 @@ export default class SwagGen extends BaseGen {
             this.formErrors(post, responses)
             path.post = {
                 tags: [tagKeys[el.name]],
-                operationId: "create" + short,
+                operationId: "Create " + short,
                 description: post.comment,
                 requestBody: {
                     content: {
@@ -203,69 +203,75 @@ export default class SwagGen extends BaseGen {
             this.addParentPathId(el, path.post)
         }
         if (multiget) {
-            if (el.attributes && multiget.ids) {
-                const params: any[] = []
+            const params: any[] = []
 
-                for (const attr of el.attributes as IAttribute[]) {
-                    if (multiget.ids.includes(attr.name)) {
-                        params.push(
-                            this.addType(attr, {
-                                in: "query",
-                                name: attr.name,
-                                description: attr.comment,
-                                required: false
-                            })
-                        )
-                    }
+            params.push({
+                in: "query",
+                name: "offset",
+                description:
+                    "Offset of the record (starting from 0) to include in the response.",
+                schema: {
+                    type: "number",
+                    default: 0
                 }
-                params.push({
-                    in: "query",
-                    name: "offset",
-                    description:
-                        "Offset of the record (starting from 0) to include in the response.",
-                    schema: {
-                        type: "integer",
-                        format: "int32"
-                    }
-                })
-                params.push({
-                    in: "query",
-                    name: "limit",
-                    description: `Number of records to return. If unspecified, 10 records will be returned.\
+            })
+            params.push({
+                in: "query",
+                name: "limit",
+                description: `Number of records to return. If unspecified, 10 records will be returned.\
  Maximum value for limit can be 100`,
-                    schema: {
-                        type: "integer",
-                        format: "int32"
-                    }
-                })
+                schema: {
+                    type: "number",
+                    default: 10,
+                    maximum: 100
+                }
+            })
 
-                const short = el.short
-                const responses = {
-                    200: {
-                        description:
-                            pluralizeName(short) + " retrieved successfully",
-                        content: {
-                            "application/json": {
-                                schema: {
-                                    $ref:
-                                        "#/components/schemas/" +
-                                        el.name +
-                                        "MultiResponse"
-                                }
+            for (const attr of el.attributes as IAttribute[]) {
+                if (attr.query || attr.queryOnly) {
+                    params.push(
+                        this.addType(attr, {
+                            in: "query",
+                            name: attr.name,
+                            description: attr.comment,
+                            required: false
+                        })
+                    )
+                }
+            }
+            const short = el.short
+            const responses = {
+                200: {
+                    description:
+                        pluralizeName(short) + " retrieved successfully",
+                    headers: {
+                        "X-Total-Count": {
+                            description:
+                                "Total number of records in the data set.",
+                            schema: { type: "number" }
+                        }
+                    },
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref:
+                                    "#/components/schemas/" +
+                                    el.name +
+                                    "MultiResponse"
                             }
                         }
                     }
                 }
-                this.formErrors(multiget, responses)
-                path.get = {
-                    tags: [tagKeys[el.name]],
-                    operationId: "multiget" + el.name,
-                    description: multiget.comment,
-                    parameters: params,
-                    responses
-                }
-                this.addParentPathId(el, path.get)
             }
+            this.formErrors(multiget, responses)
+            path.get = {
+                tags: [tagKeys[el.name]],
+                operationId: "Find " + pluralizeName(el.name),
+                description: multiget.comment,
+                parameters: params,
+                responses
+            }
+            this.addParentPathId(el, path.get)
         }
     }
 
@@ -276,13 +282,15 @@ export default class SwagGen extends BaseGen {
         const def = this.extractDefinitionGently(attr.type.name)
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
-            const fix = fixNameCamel(attr.type.short)
-            if (attr.name.toLowerCase() === fix.toLowerCase()) {
-                name = attr.name + "Id"
-            } else {
-                name = attr.name + fix + "Id"
+            if (
+                (attr.multiple && !name.endsWith("Ids")) ||
+                (!attr.multiple && !name.endsWith("Id"))
+            ) {
+                throw new Error(
+                    `Link to resource must end in Id or Ids - ${attr.name}`
+                )
             }
-            if (attr.multiple) {
+            if (attr.multiple && !name.endsWith("s")) {
                 name = name + "s"
             }
         }
@@ -337,7 +345,7 @@ export default class SwagGen extends BaseGen {
             this.formErrors(get, responses)
             path.get = {
                 tags: [tagKeys[el.name]],
-                operationId: "retrieve" + el.name,
+                operationId: "Get 1 " + el.name,
                 description: get.comment,
                 responses
             }
@@ -371,7 +379,7 @@ export default class SwagGen extends BaseGen {
             this.formErrors(put, responses)
             path.put = {
                 tags: [tagKeys[el.name]],
-                operationId: "modify" + el.name,
+                operationId: "Modify a " + el.name,
                 description: put.comment,
                 responses
             }
@@ -397,7 +405,7 @@ export default class SwagGen extends BaseGen {
             this.formErrors(del, responses)
             path.delete = {
                 tags: [tagKeys[el.name]],
-                operationId: "delete" + el.name,
+                operationId: "Delete a " + el.name,
                 description: del.comment,
                 responses
             }
@@ -431,14 +439,24 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private translatePrimitive(prim: string, schema: any) {
+    private translatePrimitive(
+        prim: string,
+        schema: any,
+        example: boolean = true
+    ) {
         switch (prim) {
             case "string":
                 schema.type = "string"
                 break
+            case "url":
+                schema.type = "string"
+                schema.format = "url"
+                if (example) {
+                    schema.example = "https://www.domain.com (url)"
+                }
+                break
             case "int":
-                schema.type = "integer"
-                schema.format = "int32"
+                schema.type = "number"
                 break
             case "boolean":
                 schema.type = "boolean"
@@ -448,15 +466,24 @@ export default class SwagGen extends BaseGen {
                 break
             case "date":
                 schema.type = "string"
-                schema.example = "2019-04-13 (date)"
+                schema.format = "ISO8601 UTC date"
+                if (example) {
+                    schema.example = "2019-04-13"
+                }
                 break
             case "time":
                 schema.type = "string"
-                schema.example = "22:00:01 (time)"
+                schema.format = "time"
+                if (example) {
+                    schema.example = "22:00:01"
+                }
                 break
             case "datetime":
                 schema.type = "string"
-                schema.example = "2019-04-13T03:35:34Z (datetime)"
+                schema.format = "ISO8601 UTC date-time"
+                if (example) {
+                    schema.example = "2019-04-13T03:35:34Z"
+                }
                 break
         }
     }
@@ -485,7 +512,7 @@ export default class SwagGen extends BaseGen {
             this.stringMaps[sname] = attr
             schema.$ref = `#/components/schemas/${sname}`
         } else if (prim) {
-            this.translatePrimitive(type.name, schema)
+            this.translatePrimitive(type.name, schema, !attr.queryOnly)
         } else {
             // is this a structure, an enum or a linked resource
             const def = this.extractDefinition(name)
@@ -618,6 +645,9 @@ export default class SwagGen extends BaseGen {
             allOf: {}
         }
         for (const attr of attrs as IAttribute[]) {
+            if (attr.queryOnly) {
+                continue
+            }
             if ((attr.name === "id" && !out) || (attr.output && !out)) {
                 // omit
             } else {
@@ -664,7 +694,7 @@ export default class SwagGen extends BaseGen {
             type: "object",
             properties: { type: { type: "string" } },
             discriminator: {
-                properties: { type: { type: "string" } },
+                propertyName: "type",
                 mapping
             },
             required: ["type"]

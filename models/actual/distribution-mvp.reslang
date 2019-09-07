@@ -1,76 +1,149 @@
-// API for accessing LiveRamp's Distribution Service.
-version 0.0.1
 
-// The properties that are included when fetching a list of DistributionRequests or a given DistributionRequest.
-resource DistributionRequest {
-    id: int
-        // Status of the given DistributionRequest
-    status: StatusEnum
-        // Datetime in UTC when the request was created.
-    createdAt: datetime
-        // Reference to a destination's integration to be used for distributing the data.
-    integration: linked Integration
-        // A map of keys and values needed to use the selected integration.
-    integrationProperties: string[]
-        // Path of the file on GCS (Google Cloud Storage) to be distributed.
-    datePath: string
-        // Configuation options for formatting the data before it is sent to the desired destination
-    dateFormatConfig: SegmentFormat[]
-
-    operations
-        GET POST DELETE MULTIGET id
-}
-
-
-// The properties that are included when fetching the metadata for a given DistributionRequest.
-singleton subresource Metadata of DistributionRequest {
+request-resource DistributionRequest {
     id: string
-    deliveryType: DeliveryTypeEnum
-    // Total number of records sent to the destination for this request
-    recordCount: int
-    // Total number of files sent to the destination for this request
-    fileCount: int
-    // Detail of each file sent to the destination
-    fileDetails: FileDetailsStructure[]
-    // Location where the output data was placed on the destination's server
-    dataPath: string
-    // Total size of the distributed data in bytes
-    dataSize: int
 
-    operations
+      "Reference to a destination's endpoints to be used for distributing the data"
+    destionationEndpointId: linked Destination::Endpoint
+
+      "A map of keys and values needed to use the selected destination endpoint"
+    destinationEndpointProperties: stringmap<string>
+
+      "URL of the data to be distributed. Currently, we only support files in GCS"
+    inputDataURL: url
+
+      "A destination platform might require a particular key/value data field to be passed as segment IDs or as different key/value information than is contained in the input file. An application user can use the mapping configuration parameters to map a given input data field to the output type or values required by the destination platform.
+      \nFor each data field that needs to be transformed, use the input parameters “key” and “value” to specify the key/value pair that should be transformed.
+      \nTo map a particular input key/value pair into a specific segment ID, use the “destinationSegmentID” output parameter to specify the required value. For example, to map a data field with the key/value of “gender=female” to the segment ID 'MM1234', 'Pets=Dogs' to segment ID 'MM5678', etc.
+      \nTo map a particular input key/value pair into different values for the key and value, use the “key” and “value” output parameters to specify the required values. For example, to map a data field with the key/value of “gender=female” to the key/value of 'G=F', 'Pets=Dogs' to 'Pets in Household=Dogs'.
+      \nNote: If you need to pass the input key/value data without any transformation, you still need to create entries for those keys in this array. For example, to pass all values of key 'country' without any transformation, do not set 'value' in both the input and output key/value parameters.
+      \nNote: This array can only accept upto 500 entries. For requests with more than 500 entries, an error with status code 422 will be returned"
+    datMappingConfigs: DataMappingConfig[]
+
+      "Datetime in UTC, formatted as ISO-8601, when the request was created"
+    createdAt: datetime output
+
+      "Status of the given DistributionRequest"
+    status: StatusEnum output query
+
+      "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed"
+    statusUpdatedAt: datetime output
+
+      "Metadata about the batch output"
+    outputMetaData: BatchOutputMetadata output
+    
+    distributionType: DistributionTypeEnum output
+
+    // query only params
+      "Sort key and order. The syntax is: sort=key1:asc,key2:desc If a key is specified multiple times, we'll use the sort order associated with the last occurrence of the key. Example:\n\n* sort=createdAt:asc\n* sort=statusUpdatedAt:desc,createdAt:asc"
+    sort: SortTypeEnum queryOnly
+
+      "Default: timestamp 30 days (2592000 seconds) before current request.
+      \nFilter the list of DistributionRequests by when it was created. The date-time value must be in UTC, formatted in ISO-8601. Defaults to 30 days before the request when statusUpdatedBefore or statusUpdatedAfter are not set. Example:\n\n* createdAfter=2019-06-20T16:53:07Z"
+    createdAfter: datetime queryOnly
+
+      "Default: timestamp of current request
+      \nFilter the list of DistributionRequests by when it was created. The date-time value must be in UTC, formatted in ISO-8601. Defaults to the timestamp that the request was made when statusUpdatedBefore or statusUpdatedAfter are not set. Example:\n\n* createdBefore=2019-06-20T16:53:07Z"
+    createdBefore: datetime queryOnly
+
+      "Filter the list of DistributionRequests by when it's status was last updated. The date-time value must be in UTC, formatted in ISO-8601. Example:\n\n* statusUpdatedAfter=2019-06-20T16:53:07Z"
+    statusUpdatedAfter: datetime queryOnly
+
+      "Filter the list of DistributionRequests by when it's status was last updated. The date-time value must be in UTC, formatted in ISO-8601. Defaults to the timestamp of the request when statusUpdatedAfter is set. Example:\n\n* statusUpdatedBefore=2019-06-20T16:53:07Z"
+    statusUpdatedBefore: datetime queryOnly
+
+    /operations
+          "Use this endpoint to fetch the overview of a given DistributionRequest, including current status, input configuration as well as output metadata, if the request has completed"
         GET
+          "Use this endpoint to create a new DistributionRequest"
+        POST
+          "Use this endpoint to find existing DistributionRequests. The result set is paginated for performance and sorted by createdAt descending by default. Response of this method includes a header “T-Total-Count” to indicate the total number of records. Use this value along with query parameters, offset and limit, to iterate through the entire result set"
+        MULTIGET
 }
 
-verb Cancel of DistributionRequest {
-    operations POST
+"Use this action to cancel a given DistributionRequest. This will prevent the request from moving to the next stage, but may not halt or reverse any current processing of this request. A side-effect of this is that we may deliver data to a destination, even if it was cancelled. The cancelled DistributionRequest will still be kept in the system for bookkeeping"
+action DistributionRequest::Cancel {
+    id: int
+
+    /operations
+    POST
 }
 
-structure SegmentFormat {
-    inputSegmentId: string
-    outputSegmentId: string
-    outputKey: string
-    outputValue: string
+"Use this action to retry a failed DistributionRequest. This will try to resume a failed request from the last successful step"
+action DistributionRequest::Retry {
+    id: int
+
+    /operations
+    POST
 }
 
-structure FileDetailsStructure {
-    fileName: string
-    recordCount: int
-}
-
-enum DeliveryTypeEnum {
+enum DistributionTypeEnum {
     BATCH
-    STREAMING
+}
+
+enum SortTypeEnum {
+    CREATED_AT_DESC
+    CREATED_AT_ASC
+    STATUS_UPDATED_DESC
+    STATUS_UPDATED_ASC
 }
 
 enum StatusEnum {
-    PENDING
+    QUEUED
     IN_PROGRESS
     COMPLETED
     FAILED
-    CANCELLING
+    CANCELLED
 }
 
-// Integration resource, should really be imported
-resource Integration {
+structure DataMappingConfig {
+    input: MappingInputUnion
+    out: MappingOutputUnion
+}
+
+union MappingInputUnion {
+    keyValue: MappingInputKey inline
+}
+
+structure MappingInputKey {
+    key: int
+    value: int
+}
+
+union MappingOutputUnion {
+    id: MappingIdLabel inline
+    keyValue: MappingKeyValueLabel inline
+}
+
+structure MappingKeyValueLabel {
+    keyLabel: string
+    valueLabel: string
+}
+
+structure MappingIdLabel {
+    idLabel: string
+}
+
+structure BatchOutputMetadata {
+    fileDetails: FileLineCounts[]
+    "Total size of the distributed data in bytes"
+    totalOutputSize: int
+    "The number of distribution records in the file initially passed to this endpoint's corresponding POST route. Each record corresponds to an end user targeted by the distribution request"
+    totalDistributionRecords: int
+}
+
+structure FileLineCounts {
+    fileName: string
+    lineCount: int
+}
+
+/**
+  future resources, for linking
+  */
+
+future configuration-resource Destination {
     id: int
 }
+
+future subresource Destination::Endpoint {
+    id: int
+} 

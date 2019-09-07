@@ -257,8 +257,8 @@ export default class DotvizGen extends BaseGen {
                 }
                 ops += op.operation
                 if (op.operation === "MULTIGET") {
-                    for (const id of op.ids!) {
-                        ops += " " + id
+                    for (const attr of def.attributes || []) {
+                        ops += " " + attr.name
                     }
                 }
             }

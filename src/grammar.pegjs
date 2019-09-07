@@ -30,7 +30,7 @@ operations = _ "/"? "operations" _ ops:op+ _ {
     return ops;
 }
 
-op = _ operation:(ops / multiget) _ errors: errors* _ ";"? _ {
+op = _ operation:ops _ errors: errors* _ ";"? _ {
     operation.errors = errors;
     return operation
 }
@@ -42,8 +42,7 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-ops = _ comment:description? _ op:("GET" / "PUT" / "POST" / "DELETE") _ {return {"operation": op, "comment": comment}}
-multiget = _ comment:description? _ "MULTIGET" ids:ids {return {"operation": "MULTIGET", "comment": comment, "ids": ids}}
+ops = _ comment:description? _ op:("GET" / "PUT" / "POST" / "DELETE"/ "MULTIGET") _ {return {"operation": op, "comment": comment}}
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
@@ -56,8 +55,8 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attr+ _ { return attrs; }
 attr = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ inline:"inline"? _";"? _ { 
-    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "inline": !!inline, "multiple": !!mult, "output": !!out, "linked": !!linked}
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ out:"output"? _ queryOnly:"queryOnly"? _ query: "query"?  _ inline:"inline"? _";"? _ { 
+    return {"name": name, "comment": comment, stringMap: !!smap, "type": type, "inline": !!inline, "query": !!query, "queryOnly": !!queryOnly, "multiple": !!mult, "output": !!out, "linked": !!linked}
 }
 
 // enum
@@ -79,7 +78,7 @@ resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.fl
 filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
 // descriptions
-description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("")}
+description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("").replace(/\\n/g, "\n")}
 
 // version
 semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }

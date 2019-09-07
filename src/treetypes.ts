@@ -64,13 +64,16 @@ export let PrimitiveType = [
     "double",
     "date",
     "time",
-    "datetime"
+    "datetime",
+    "url"
 ]
 
 export interface IAttribute {
     name: string
     type: IReference
     output: boolean
+    query: boolean
+    queryOnly: boolean
     inline: boolean
     multiple: boolean
     stringMap: boolean
@@ -97,7 +100,6 @@ export interface IGroup {
 export interface IOperation {
     operation: string
     comment: string
-    ids?: string[]
     errors: IError[]
 }
 
