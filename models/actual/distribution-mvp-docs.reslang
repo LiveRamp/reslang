@@ -32,7 +32,7 @@ GET =
 "Use this endpoint to fetch the overview of a given DistributionRequest, including current status, input
           configuration as well as output metadata, if the request has completed"
 MULTIGET = 
-"Use this endpoint to find existing DistributionRequests. The result set is paginated for performance and sorted by createdAt descending by default. Response of this method includes a header “T-Total-Count” to indicate the total number of records. Use this value along with query parameters, offset and limit, to iterate through the entire result set"
+"Use this endpoint to find existing DistributionRequests. The result set is paginated for performance and sorted by createdAt descending by default. Response of this method includes a header “X-Total-Count” to indicate the total number of records. Use this value along with query parameters, offset and limit, to iterate through the entire result set"
 
 Cancel =
 "Use this action to cancel a given DistributionRequest. This will prevent the request from moving to the next stage, but may not halt or reverse any current processing of this request. A side-effect of this is that we may deliver data to a destination, even if it was cancelled. The cancelled DistributionRequest will still be kept in the system for bookkeeping"
