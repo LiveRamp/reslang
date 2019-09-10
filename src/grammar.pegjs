@@ -1,4 +1,4 @@
-start = namespace? import* (resource / structure / subresource / enum )* diagram* docs*
+start = namespace? import* (resource / structure / subresource / action / enum )* diagram* docs*
 
 // defining a namespace
 namespace = _ comment:description? _ "namespace" _ "{"
@@ -32,6 +32,13 @@ subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"?
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "parent": parent,
+    "comment": comment, "attributes": attributes, "operations": operations }
+}
+
+action = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ async:("sync" / "async") _ "action" _ parent:resname "::" name:resname _  "{" _
+    attributes:attributes? _ operations:operations? _
+"}" _ ";"? _ {
+    return {"type": "action", "async": async === "async", "name": name, "singleton": !!singleton, "parent": parent,
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 

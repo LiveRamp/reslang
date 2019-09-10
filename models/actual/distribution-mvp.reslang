@@ -55,7 +55,7 @@ request-resource DistributionRequest {
 }
 
 "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel"
-action DistributionRequest::Cancel {
+async action DistributionRequest::Cancel {
     id: int
 
     /operations
@@ -63,7 +63,7 @@ action DistributionRequest::Cancel {
 }
 
 "Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry"
-action DistributionRequest::Retry {
+async action DistributionRequest::Retry {
     id: int
 
     /operations

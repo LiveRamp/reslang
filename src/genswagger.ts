@@ -179,7 +179,7 @@ export default class SwagGen extends BaseGen {
         if (post) {
             const short = el.short
             const idtype = this.extractId(el)
-            const responses = {
+            let responses: { [code: number]: any } = {
                 201: {
                     description: short + " created successfully",
                     content: {
@@ -192,6 +192,76 @@ export default class SwagGen extends BaseGen {
                             }
                         }
                     }
+                }
+            }
+
+            if (el.type === "action" && post) {
+                if (!el.async) {
+                    responses = {
+                        201: {
+                            description: short + " action completed",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "object",
+                                        properties: {
+                                            id: this.addType(idtype, {}, false)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    responses = {
+                        202: {
+                            description:
+                                short +
+                                " action has been accepted, but is not yet complete",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "object",
+                                        properties: {
+                                            id: this.addType(idtype, {}, false)
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        208: {
+                            description:
+                                short +
+                                " action has already been submitted and we are currently doing it",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "object",
+                                        properties: {
+                                            id: this.addType(idtype, {}, false)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!post.errors) {
+                        post.errors = []
+                    }
+                    post.errors.push({
+                        codes: [
+                            {
+                                code: "409",
+                                comment:
+                                    short +
+                                    " action has been accepted but cannot be processed due to current state"
+                            }
+                        ],
+                        struct: {
+                            name: "StandardError",
+                            short: "StandardError"
+                        }
+                    })
                 }
             }
             this.formErrors(post, responses)
@@ -438,8 +508,8 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private formErrors(del: IOperation, responses: any) {
-        for (const err of del.errors || []) {
+    private formErrors(op: IOperation, responses: any) {
+        for (const err of op.errors || []) {
             for (const code of err.codes) {
                 responses[code.code] = {
                     description: this.translate(code.comment),

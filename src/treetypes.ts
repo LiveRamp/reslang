@@ -32,6 +32,7 @@ export interface IDefinition {
     literals?: string[]
     singleton?: boolean
     future?: boolean
+    async?: boolean
 
     // used to see if we generate definitions or not
     secondary?: boolean
