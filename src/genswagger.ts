@@ -9,8 +9,6 @@ import { isPrimitiveType } from "./parse"
 
 export default class SwagGen extends BaseGen {
     private static readonly COMMENT_REGEX = /See docs:\s*(?<doc>\w+)\.(?<entry>\w+)/
-    private readonly stringMaps: { [typeName: string]: IAttribute } = {}
-    private stringMapCount: number = 0
 
     public generate() {
         this.markGenerate(true)
@@ -143,7 +141,6 @@ export default class SwagGen extends BaseGen {
 
         // model definitions
         this.formDefinitions(schemas)
-        this.formStringMaps(schemas)
 
         return swag
     }
@@ -229,20 +226,10 @@ export default class SwagGen extends BaseGen {
                                 }
                             }
                         },
-                        208: {
+                        204: {
                             description:
                                 short +
-                                " action has already been submitted and we are currently doing it",
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            id: this.addType(idtype, {}, false)
-                                        }
-                                    }
-                                }
-                            }
+                                " action has already been submitted and we are currently doing it"
                         }
                     }
                     if (!post.errors) {
@@ -308,7 +295,7 @@ export default class SwagGen extends BaseGen {
             })
 
             for (const attr of el.attributes as IAttribute[]) {
-                if (attr.modifiers.query || attr.modifiers.queryOnly) {
+                if (attr.modifiers.query || attr.modifiers.queryonly) {
                     params.push(
                         this.addType(attr, {
                             in: "query",
@@ -346,7 +333,7 @@ export default class SwagGen extends BaseGen {
             this.formErrors(multiget, responses)
             path.get = {
                 tags: [tagKeys[el.name]],
-                operationId: "Find " + pluralizeName(el.name),
+                operationId: "List " + pluralizeName(el.name),
                 description: this.translate(multiget.comment),
                 parameters: params,
                 responses
@@ -578,13 +565,14 @@ export default class SwagGen extends BaseGen {
         attr: IAttribute,
         obj: any,
         schemaLevel = true,
-        suppressStringmap = false
+        suppressStringmap = false,
+        suppressDescription = false
     ) {
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
         // allow description overrides by caller
-        if (!obj.description) {
+        if (!obj.description && !suppressDescription) {
             obj.description = this.translate(attr.comment)
         }
         if (schemaLevel) {
@@ -594,14 +582,19 @@ export default class SwagGen extends BaseGen {
 
         const prim = isPrimitiveType(name)
         if (attr.stringMap && !suppressStringmap) {
-            const sname = "stringmap-" + this.stringMapCount++
-            this.stringMaps[sname] = attr
-            schema.$ref = `#/components/schemas/${sname}`
+            schema.type = "object"
+            schema.additionalProperties = this.addType(
+                attr,
+                {},
+                false,
+                true,
+                true
+            )
         } else if (prim) {
             this.translatePrimitive(
                 type.name,
                 schema,
-                !attr.modifiers.queryOnly
+                !attr.modifiers.queryonly
             )
         } else {
             // is this a structure, an enum or a linked resource
@@ -713,7 +706,9 @@ export default class SwagGen extends BaseGen {
             if ("action" === el.type) {
                 const tag = {
                     name: `${el.parent} / ${short}`,
-                    description: `(action) ${comment}`
+                    description: `(${
+                        el.async ? "async" : "sync"
+                    } action) ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[name] = tag.name
@@ -738,7 +733,7 @@ export default class SwagGen extends BaseGen {
             allOf: {}
         }
         for (const attr of attrs as IAttribute[]) {
-            if (attr.modifiers.queryOnly) {
+            if (attr.modifiers.queryonly) {
                 continue
             }
             // no id types unless they we are an output struct
@@ -849,25 +844,6 @@ export default class SwagGen extends BaseGen {
         }
         if (request.required.length === 0) {
             delete request.required
-        }
-    }
-    private formStringMaps(definitions: any) {
-        for (const name in this.stringMaps) {
-            if (this.stringMaps[name]) {
-                const attr = this.stringMaps[name]
-                if (attr) {
-                    const details = {
-                        type: "object",
-                        additionalProperties: this.addType(
-                            attr,
-                            {},
-                            false,
-                            true
-                        )
-                    }
-                    definitions[name] = details
-                }
-            }
         }
     }
 

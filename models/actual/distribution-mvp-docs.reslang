@@ -9,7 +9,8 @@ dataMappingConfig =
 \nNote: This array can only accept upto 500 entries. For requests with more than 500 entries, an error with status code 422 will be returned"
 
 sort =
-"Sort key and order. The syntax is: sort=key1:asc,key2:desc If a key is specified multiple times, we'll use the sort order associated
+"Default: createdAt:desc
+\nSort key and order. The syntax is: sort=key1:asc,key2:desc If a key is specified multiple times, we'll use the sort order associated
 with the last occurrence of the key. Example:\n\n* sort=createdAt:asc\n* sort=statusUpdatedAt:desc,createdAt:asc"
 
 createdAfter =

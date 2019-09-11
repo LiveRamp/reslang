@@ -42,7 +42,7 @@ action = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ as
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-operations = _ "/"? "operations" _ ops:op+ _ {
+operations = _ "/operations" _ ops:op+ _ {
     return ops;
 }
 
@@ -75,10 +75,10 @@ attr = _ comment:description? _ name:name _ ":" _
     return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, multiple: !!mult, linked: !!linked, modifiers: modifiers}
 }
 
-modifiers = modifiers:( _ ("synthetic" / "mutable" / "queryOnly" / "query" / "optional" / "output") _ )* {
+modifiers = modifiers:( _ ("synthetic" / "mutable" / "queryonly" / "query" / "optional" / "output") _ )* {
     var flat = modifiers.flat()
     return {synthetic: flat.includes("synthetic"), mutable: flat.includes("mutable"),
-            queryOnly: flat.includes("queryOnly"), query: flat.includes("query"),
+            queryonly: flat.includes("queryonly"), query: flat.includes("query"),
             optional: flat.includes("optional"), output: flat.includes("output")}
 }
 
@@ -95,7 +95,7 @@ literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 ref = parent:(filename ".")? _ toplevel:(resname "::")? _ name:resname {
     return {"parent": parent ? parent[0] : null, "toplevel": toplevel ? toplevel[0]: null, "name": name}
 }
-literalname "literalname" = name:([A-Z][A-Z0-9_]*) { return name.flat().join(""); }
+literalname "literalname" = name:([a-zA-Z0-9_:\-]+) { return name.flat().join(""); }
 name "name" = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
 resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join("") }
 filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }

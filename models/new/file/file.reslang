@@ -1,19 +1,19 @@
 
 "This models a directory we might create"
 asset-resource Directory {
-	id: string
-	name: string
-	operations
-        GET POST MULTIGET name id
+	id: string query
+	name: string query
+	/operations
+        GET POST MULTIGET
 }
 
 "This configures up a file type, e.g. .gif"
 configuration-resource FileType {
 	id: string
-	type: string
+	type: string query
 	format: string
-	spec: linked Specification
-	operations
+	specId: linked Specification
+	/operations
 		"Get a FileType"
 		GET 
 			"Cannot find file type" 404
@@ -22,7 +22,7 @@ configuration-resource FileType {
 			"Forbidden" 403
 				SpecialError	
 		POST
-		MULTIGET type id
+		MULTIGET
 }
 
 future configuration-resource Specification {
@@ -34,26 +34,28 @@ subresource Directory::File {
 	id: int
 	name: string
 	url: string
-	fileType: linked FileType
+	fileTypeId: linked FileType
 
-    operations
-        GET POST MULTIGET id
+	contents: string queryonly
+
+    /operations
+        GET POST MULTIGET
 }
 
 "This models a long running request"
 request-resource DirectoryDeleteRequest {
-	id: int
-	directory: linked Directory
+	id: int query
+	directoryId: linked Directory
 
-    operations
-        GET POST MULTIGET id
+    /operations
+        GET POST MULTIGET
 }
 
 "This models an action on a request"
-action DirectoryDeleteRequest::Cancel {
+sync action DirectoryDeleteRequest::Cancel {
 	id: int
 	
-    operations
+    /operations
 		POST
 }
 

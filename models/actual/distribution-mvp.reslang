@@ -4,46 +4,33 @@ request-resource DistributionRequest {
 
       "Reference to a destination's endpoints to be used for distributing the data"
     destinationEndpointId: linked Destination::Endpoint
-
       "A map of keys and values needed to use the selected destination endpoint"
     destinationEndpointProperties: stringmap<string>
-
       "URL of the data to be distributed. Currently, we only support files in GCS"
     inputDataURL: url
-
-    "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig"
-    datMappingConfigs: DataMappingConfig[]
-
+      "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig"
+    dataMappingConfigs: DataMappingConfig[]
       "Datetime in UTC, formatted as ISO-8601, when the request was created"
     createdAt: datetime output
-
       "Status of the given DistributionRequest"
     status: StatusEnum output query
-
       "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed"
     statusUpdatedAt: datetime output
-
       "Metadata about the batch output"
-    outputMetaData: BatchOutputMetadata output
-    
+    outputMetaData: BatchOutputMetadata output    
     distributionType: DistributionTypeEnum output
 
     // query only params
-
       "Sort key and order. See docs: DistMVP.sort"
-    sort: SortTypeEnum queryOnly
-
+    sort: SortTypeEnum queryonly
       "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdAfter"
-    createdAfter: datetime queryOnly
-
+    createdAfter: datetime queryonly
       "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdBefore"
-    createdBefore: datetime queryOnly
-
+    createdBefore: datetime queryonly
       "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedAfter"
-    statusUpdatedAfter: datetime queryOnly
-
+    statusUpdatedAfter: datetime queryonly
       "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedBefore"
-    statusUpdatedBefore: datetime queryOnly
+    statusUpdatedBefore: datetime queryonly
 
     /operations
           "Get a request. See docs: DistMVP.GET"
@@ -56,7 +43,7 @@ request-resource DistributionRequest {
 
 "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel"
 async action DistributionRequest::Cancel {
-    id: int
+    id: string
 
     /operations
     POST
@@ -64,7 +51,7 @@ async action DistributionRequest::Cancel {
 
 "Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry"
 async action DistributionRequest::Retry {
-    id: int
+    id: string
 
     /operations
     POST
@@ -75,10 +62,10 @@ enum DistributionTypeEnum {
 }
 
 enum SortTypeEnum {
-    CREATED_AT_DESC
-    CREATED_AT_ASC
-    STATUS_UPDATED_DESC
-    STATUS_UPDATED_ASC
+    createdAt:asc
+    createdAt:desc
+    statusUpdatedAt:asc
+    statusUpdatedAt:desc
 }
 
 enum StatusEnum {
@@ -95,7 +82,7 @@ structure DataMappingConfig {
 }
 
 union MappingInputUnion {
-    keyValue: MappingInputKey inline
+    inputKeyValue: MappingInputKey inline
 }
 
 structure MappingInputKey {
@@ -104,8 +91,8 @@ structure MappingInputKey {
 }
 
 union MappingOutputUnion {
-    id: MappingIdLabel inline
-    keyValue: MappingKeyValueLabel inline
+    outputKeyValueLabel: MappingKeyValueLabel inline
+    outputIdLabel: MappingIdLabel inline
 }
 
 structure MappingKeyValueLabel {

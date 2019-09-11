@@ -87,7 +87,7 @@ export interface IModifiers {
     optional: boolean
     output: boolean
     query: boolean
-    queryOnly: boolean
+    queryonly: boolean
 }
 
 export interface IDiagram {
