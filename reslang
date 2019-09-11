@@ -1,1 +1,3 @@
-./node_modules/.bin/ts-node src/main.ts $*
+#!/usr/bin/env ts-node
+
+require("./src/main.ts")
