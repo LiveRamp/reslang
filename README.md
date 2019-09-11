@@ -2,9 +2,14 @@
 
 Relang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.
 
-## Manual
+## Docs
 
-Please see the [manual here](./docs/manual.md).
+|                                                      |                                                                            |
+| ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| [Why reslang?](./docs/why.md)                        | Why do we need this tool and what does it offer?                           |
+| [Intro tutorial](./docs/intro.md)                    | Describes making a top API for manipulating files and directories.         |
+| [Direct2Dist API](./docs.direct2dist-explanation.md) | This is a more complex example which recreates the entire Direct2Dist API. |
+| [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.}                     |
 
 ## Installation
 
@@ -21,7 +26,7 @@ Test it out by typing:
 
 This should bring up the options.
 
-## Creating swagger
+## Creating & viewing the swagger
 
 To create swagger, you first create a reslang file. Then you simply ask the reslang program to turn this into swagger.
 
@@ -35,15 +40,28 @@ If you want it to open the swagger editor for you, use --open. You will then hav
 
     ./reslang models/simple-resource.reslang --stdout --open
 
+## Viewing in ReDoc
+
+ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use this, first install the redoc-cli command:
+
+`npm -g install redoc-cli`
+
+Then copy the swagger into a file, say swagger.yaml and serve it up using:
+
+`redoc-cli serve --watch swagger.yaml`
+
+and point your browser at localhost:8080
+
 ## Creating a graphical view
 
 Reslang can generate dotviz output, which provides a nice graphical view of the resources.
 
-    ./reslang models/simple-resource.reslang --dotviz
+The following command will copy the dotviz output to the clipboard.
 
-will copy the dotviz output to the clipboard.
+    ./reslang models/simple-resource.reslang --diagram name
 
-If you use --open, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
+Note that you will need to make a diagram definition first. See [here](./docs/diagrams.md) for how it is done.
 
-    ./reslang models/simple-resource.reslang --dotviz --open
+If you use the --open switch, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
 
+    ./reslang models/simple-resource.reslang --diagram name --open
