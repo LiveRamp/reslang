@@ -33,7 +33,7 @@ xdescribe("dotviz generation tests", () => {
 /** compare the output with saved swagger */
 function compare(module: string) {
     const dotviz = new DotvizGen([`models//new/${module}`])
-    const out = dotviz.generate()
+    const out = dotviz.generate("foo")
 
     const got = strip(out)
     const expected = strip(
