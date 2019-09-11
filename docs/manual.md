@@ -2,7 +2,7 @@
 
 Reslang (aka Resource Language) is a fast and expressive way to create resource-oriented Swagger API definitions.
 
-You can think of it as a Domain Specific Language for creating APIs, specifically tailored for the LiveRamp environment. The Swagger output produced automatically conforms to the documented [LiveRamp API standards](https://docs.google.com/document/d/1HHkdHXVj8vQ4XLKlmwD5QggV0lTg08_tI9J_tF5Qe9Q/edit?usp=sharing).
+You can think of it as a Domain Specific Language for creating APIs, specifically tailored for the LiveRamp environment. The Swagger output produced automatically conforms to the documented [LiveRamp API standards](https://docs.google.com/document/d/1HHkdHXVj8vQ4XLKlmwD5QggV0lTg08_tI9J_tF5Qe9Q/edit?usp=sharing){:target="\_blank"}.
 
 ## Key Advantages Over Swagger
 
@@ -39,7 +39,7 @@ Each API lives in a namespace, e.g. /distribution/... the API for each namespace
 
 ## Example - File and Directory API
 
-Here is an example of a simple API for creating and [manipulating files and directories](../models/actual):
+Here is an example of a simple API for creating and [manipulating files and directories](../models/new/file){:target="\_blank"}:
 
 (NOTE: we've used a lot of features below to illustrate them, but it makes the example a bit more complex than it should be...)
 
@@ -174,11 +174,11 @@ and point your browser at localhost:8080
 
 ## Reference Manual
 
-Note that we will draw heavily on the example specified [here](../models/actual). This demo namespace models the complete Direct2Dist specification, which allows ids to be sent directly to a destination.
+Note that we will draw heavily on the example specified [here](../models/direct2dist){:target="\_blank"}. This demo namespace models the complete Direct2Dist specification, which allows ids to be sent directly to a destination.
 
 ## The Grammar
 
-The reslang grammar is fully described by these [railroad diagrams](./bnf/grammar.html).
+The reslang grammar is fully described by these [railroad diagrams](./bnf/railroad-for-reslang.pdf){:target="\_blank"}.
 
 ### Resource types
 

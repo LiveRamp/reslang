@@ -1,6 +1,0 @@
-
-"An API for setting up destinations and segment deliveries"
-namespace {
-    title "Matching & Delivering"
-    version 0.0.1
-}
