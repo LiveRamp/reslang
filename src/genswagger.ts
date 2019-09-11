@@ -739,7 +739,7 @@ export default class SwagGen extends BaseGen {
             // no id types unless they we are an output struct
             if (
                 (attr.name === "id" && !out) ||
-                (attr.modifiers.output && !out)
+                ((attr.modifiers.output || attr.modifiers.synthetic) && !out)
             ) {
                 continue
             }

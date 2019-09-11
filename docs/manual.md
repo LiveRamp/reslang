@@ -23,7 +23,7 @@ Reslang elevates the description of your API to a higher level of abstraction.
 -   Full support for subresources, singletons, structures, enums, linkage from one resource to another, arrays. Maps and enums will be done soon .
 -   Create Swagger or a diagram from your Reslang spec.
 
-## The basics: Resources and Namespaces
+## The Basics: Resources and Namespaces
 
 There are 3 different resource types in Reslang:
 
@@ -33,13 +33,15 @@ There are 3 different resource types in Reslang:
 
 Each resource specifies the attributes it holds, followed by the possible operations / verbs. The reason for the three different types is that they will eventually have different audit and ownership structures - e.g. we might have full history available for configuration resources.
 
+Each resource type can have 1 level of subresources. Further, a request-resource can also have actions, representing either synchronous or asynchronous operations.
+
 Each API lives in a namespace, e.g. /distribution/... the API for each namespace lives in its own directory, which can contain many reslang files.
 
 ## Example - File and Directory API
 
-Here is an example of a simple API for creating and manipulating files and directories:
+Here is an example of a simple API for creating and [manipulating files and directories](../models/actual):
 
-(NOTE: we've used a lot of features below to illustrate them, but it makes the example a bit more complex...)
+(NOTE: we've used a lot of features below to illustrate them, but it makes the example a bit more complex than it should be...)
 
 ```
 "This is a simple API for manipulating files"
@@ -115,7 +117,7 @@ structure SpecialError {
 }
 ```
 
-The namespace declaration at the top defines the API for the entire namespace and versions it. Note that the namespace name is the directory name.
+The namespace declaration at the top defines the API for the entire namespace and versions it. Note that the namespace name is the folder name that the file is contained in.
 
 The API models a Directory as an asset-resource. We can create any number of directories via POST. Files are contained within these directories, represented by the Directory subresource named File. Each File refers to a configuration-resource of FileType (e.g. png) via the "linked" keyword.
 
@@ -144,7 +146,7 @@ This copies the dotviz to the clipboard (and opens the Dotviz viewer in the brow
 
 ## Example Swagger Output
 
-The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API descripotion is 48 lines, whereas the Swagger is 445 lines)
+The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API descripotion is 48 lines, whereas the Swagger is 440+ lines)
 
 ![API header](api.png)
 
@@ -158,7 +160,25 @@ Generating a dotviz file creates the following diagram of the API:
 
 Top level resources are yellow. Links from one resource to another are shown via arrows.
 
+## Using ReDoc
+
+ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use this, first install the redoc-cli command:
+
+`npm -g redoc-cli`
+
+Then copy the swagger into a file, say swagger.yaml and serve it up using:
+
+`redoc-cli serve --watch swagger.yaml`
+
+and point your browser at localhost:8080
+
 ## Reference Manual
+
+Note that we will draw heavily on the example specified [here](../models/actual). This demo namespace models the complete Direct2Dist specification, which allows ids to be sent directly to a destination.
+
+## The Grammar
+
+The reslang grammar is fully described by these [railroad diagrams](./bnf/grammar.html).
 
 ### Resource types
 
@@ -211,7 +231,7 @@ subresource v2/ResourceB::Sub {
 
 ### Imports & Directory Structure
 
-The directory structure is "namespace/\*.reslang". You can import another namespace at the peer level into your current file using "import othernamespace". You should then refer to the imported elements by their full name "othernamespace.Resource".
+The directory structure for APIs is "namespace/\*.reslang". You can import another namespace at the peer level into your current file using "import othernamespace". You should then refer to the imported elements by their full name "othernamespace.Resource".
 
 ```
 import identity
@@ -232,10 +252,10 @@ You can specify a set of error codes and bodies after each operation. The follow
 ```Error code example
 configuration-resource FileType {
 	id: string
-	type: string
+	type: string query
 	format: string
-	spec: linked Specification
-	operations
+	specId: linked Specification
+	/operations
 		"Get a FileType"
 		GET
 			"Cannot find file type" 404
@@ -244,7 +264,7 @@ configuration-resource FileType {
 			"Forbidden" 403
 				SpecialError
 		POST
-		MULTIGET type id
+		MULTIGET
 }
 ```
 
@@ -262,23 +282,62 @@ future configuration-resource Specification {
 
 ### Links
 
-To refer to one resource from another, used the "linked" keyword in front of the attribute type.
+To refer to one resource from another, used the "linked" keyword in front of the attribute type. The attribute must end in "Id" or "Ids"
+
+````
+    destinationEndpointId: linked Destination::Endpoint
+	```
 
 ### Structures
 
-You can define as reusable set of attributes using the "structure" keyword. The systax is like a resource but it does not support operations or the singleton modifier.
+You can define as reusable set of attributes using the "structure" keyword.
+
+````
+
+structure MappingInputKey {
+key: int
+value: int
+}
+
+```
 
 ### Arrays
 
 Use [] after an attribute type to indicate an array.
 
+```
+
+    dataMappingConfigs: DataMappingConfig[]
+    ```
+
 ### Enums
 
 You can define a set of literals using the "enum" keyword.
 
+```
+enum StatusEnum {
+QUEUED
+IN_PROGRESS
+COMPLETED
+FAILED
+CANCELLED
+}
+```
+
+Note that the literals can include the lowercase, colons, numbers etc.
+
 ### API Spec
 
-Use the "namespace" keyword to indicate the title and version of an API. There should only be one API spec per directory.
+Use the "namespace" keyword to indicate the title and version of an API. There should only be one API spec per directory. It can live inside any reslang file.
+
+```
+"API for accessing LiveRamp's Direct to Distribution Service"
+namespace {
+title "Direct to Distribution API - BETA "
+version 0.0.1
+}
+
+```
 
 ### 2 types of comments
 
@@ -286,9 +345,58 @@ Use the "namespace" keyword to indicate the title and version of an API. There s
 
 ### Multiget
 
-A multi-GET is a GET on the plural resource, returning a collection of resources. Currently at least 1 filter parameter needs to be specified after the MULTIGET.
+A multi-GET is a GET on the plural resource, returning a collection of resources. The filter parameters can be specified by placing a "query" modifier after the type, or "queryonly" after the type if the parameter is not an attribute also.
 
-## Currently Unsupported
+```
+    // query only params
+      "Sort key and order. See docs: DistMVP.sort"
+    sort: SortTypeEnum queryonly
+```
 
--   Maps & Unions
--   Attribute & model examples
+## Stringmaps
+
+Reslang supports dictionary structures where the keys are always strings. To specify this, use the stringmap<> syntax:
+
+```
+    destinationEndpointProperties: stringmap<string>
+```
+
+## Unions
+
+Reslang supports unions, as per the Swagger oneOf specification. The discriminator field is always called type, and it is created implicitly. The names of the union attributes are used as the string value for the type field.
+
+```
+union MappingOutputUnion {
+outputKeyValueLabel: MappingKeyValueLabel inline
+outputIdLabel: MappingIdLabel inline
+}
+```
+
+## Inline expansion
+
+You can see above that we used the optional inline keyword. This expands all the structure attributes into the union directly.
+
+## Request actions
+
+We model synchronous or asynchronous actions as subresources of a request-resource. You specify either "sync" or "async" in front of the specification. For instance, the Direct2Dist API models an asynchronous retry action as follows:
+
+```
+async action DistributionRequest::Retry {
+id: string
+/operations
+POST
+}
+```
+
+## Attribute Modifiers
+
+The following modifiers can be placed after the attribute type:
+
+-   output
+    This indicates that the attribute does not need to be specified on a POST and is only present on an output representation. Id is automatically output only.
+-   optional
+    This indicates that the attribute is not always required. By default, non-optional attributes are marked as required in the generated Swagger.
+-   mutable
+    This indicated that the attribute can be mutated using a PUT.
+-   synthetic
+    This indicates that the attribute is derived, or synthetic. i.e. it is formed out of other state. By default is is output only.

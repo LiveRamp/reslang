@@ -1,7 +1,7 @@
-start = namespace? import* (resource / structure / subresource / action / enum )* diagram* docs*
+reslang = namespacedefinition? import* (resource / structure / subresource / action / enum )* diagram* docs*
 
 // defining a namespace
-namespace = _ comment:description? _ "namespace" _ "{"
+namespacedefinition = _ comment:description? _ "namespace" _ "{"
     _ "title" _ title:description _
     _ "version" _ version:semver _ "}" _ ";"? _ {
     return {"comment":comment, "title": title, "version": version}
@@ -42,11 +42,11 @@ action = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ as
     "comment": comment, "attributes": attributes, "operations": operations }
 }
 
-operations = _ "/operations" _ ops:op+ _ {
+operations = _ "/operations" _ ops:operation+ _ {
     return ops;
 }
 
-op = _ operation:ops _ errors: errors* _ ";"? _ {
+operation = _ operation:ops _ errors: errors* _ ";"? _ {
     operation.errors = errors;
     return operation
 }
@@ -63,14 +63,14 @@ ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
 structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ "{" _
-    attrs:attr+ _
+    attrs:attribute+ _
 "}" _ ";"? _ {
     return {"type": type, "name": name, "comment": comment, "attributes": attrs}
 }
 
 // attributes also handle stringmaps
-attributes = _ attrs:attr+ _ { return attrs; }
-attr = _ comment:description? _ name:name _ ":" _
+attributes = _ attrs:attribute+ _ { return attrs; }
+attribute = _ comment:description? _ name:name _ ":" _
     smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ modifiers:modifiers _ inline:"inline"? _";"? _ { 
     return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, multiple: !!mult, linked: !!linked, modifiers: modifiers}
 }
