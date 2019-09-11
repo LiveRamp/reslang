@@ -39,6 +39,6 @@
         "tabWidth": 4
     },
     "bin": {
-        "reslang": "./reslang"
+        "reslang": "./src/main.ts"
     }
 }
