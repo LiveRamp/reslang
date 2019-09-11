@@ -174,7 +174,7 @@ and point your browser at localhost:8080
 
 ## Extended Example
 
-Please see here for a real-life example, explaining the [./direct2dist.md](Direct2Dist API).
+Please see [this page](./direct2dist-explanation.md) for a real-life example, explaining the [Direct2Dist API](../models/direct2dist).
 
 ## Reference Manual
 
@@ -301,8 +301,8 @@ You can define as reusable set of attributes using the "structure" keyword.
 ```
 
 structure MappingInputKey {
-key: int
-value: int
+  key: int
+  value: int
 }
 
 ```
@@ -360,6 +360,8 @@ A multi-GET is a GET on the plural resource, returning a collection of resources
 
       "Sort key and order. See docs: DistMVP.sort"
     sort: SortTypeEnum queryonly
+	/operations
+	  MULTIGET
 
 ```
 
@@ -380,8 +382,8 @@ Reslang supports unions, as per the Swagger oneOf specification. The discriminat
 ```
 
 union MappingOutputUnion {
-outputKeyValueLabel: MappingKeyValueLabel inline
-outputIdLabel: MappingIdLabel inline
+  outputKeyValueLabel: MappingKeyValueLabel inline
+  outputIdLabel: MappingIdLabel inline
 }
 
 ```
@@ -409,10 +411,10 @@ async action DistributionRequest::Retry {
 The following modifiers can be placed after the attribute type:
 
 -   output
-    This indicates that the attribute does not need to be specified on a POST and is only present on an output representation. Id is automatically output only.
+    -   This indicates that the attribute does not need to be specified on a POST and is only present on an output representation from GET or MULTIGET. Id is always automatically output only.
 -   optional
-    This indicates that the attribute is not always required. By default, non-optional attributes are marked as required in the generated Swagger.
+    -   This indicates that the attribute is not always required. By default, non-optional attributes are marked as required in the generated Swagger.
 -   mutable
-    This indicated that the attribute can be mutated using a PUT.
+    -   This indicated that the attribute can be mutated using a PUT.
 -   synthetic
-    This indicates that the attribute is derived, or synthetic. i.e. it is formed out of other state. By default is is output only.
+    -   This indicates that the attribute is derived, or synthetic. i.e. it is formed out of other state. By default is is output only.
