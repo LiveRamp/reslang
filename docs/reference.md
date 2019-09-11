@@ -57,7 +57,7 @@ Note that this can also inherit from the v1 resource. We do not need more than t
 
 Also note that it is perfectly possible to support multiple major versions of a resource in a single API.
 
-An example of evolution is contained in the models/new/upversion directory:
+An example of evolution is contained in the models/upversion directory:
 
 ```upversioning example
 asset-resource v2/ResourceB {

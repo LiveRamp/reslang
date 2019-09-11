@@ -1,0 +1,539 @@
+{
+  "namespace": {
+    "comment": "This is a simple API for manipulating files",
+    "title": "API for modeling directories and files",
+    "version": "1.0.0"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "Directory",
+      "singleton": false,
+      "comment": "This models a directory we might create",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Directory",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "configuration-resource",
+      "name": "FileType",
+      "singleton": false,
+      "comment": "This configures up a file type, e.g. .gif",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "type",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "format",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "specId",
+          "stringMap": false,
+          "type": {
+            "name": "Specification",
+            "short": "Specification"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "comment": "Get a FileType",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find file type"
+                },
+                {
+                  "code": "405",
+                  "comment": "Not Allowed"
+                }
+              ],
+              "struct": {
+                "name": "StandardError"
+              }
+            },
+            {
+              "codes": [
+                {
+                  "code": "403",
+                  "comment": "Forbidden"
+                }
+              ],
+              "struct": {
+                "name": "SpecialError"
+              }
+            }
+          ]
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "FileType",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": true,
+      "type": "configuration-resource",
+      "name": "Specification",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Specification",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Directory--File",
+      "singleton": false,
+      "parent": "Directory",
+      "comment": "This models a file in a directory",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "url",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "fileTypeId",
+          "stringMap": false,
+          "type": {
+            "name": "FileType",
+            "short": "FileType"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "contents",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": true,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "File",
+      "parentShort": "Directory",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "request-resource",
+      "name": "DirectoryDeleteRequest",
+      "singleton": false,
+      "comment": "This models a long running request",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "directoryId",
+          "stringMap": false,
+          "type": {
+            "name": "Directory",
+            "short": "Directory"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "DirectoryDeleteRequest",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "type": "action",
+      "async": false,
+      "name": "DirectoryDeleteRequest--Cancel",
+      "singleton": false,
+      "parent": "DirectoryDeleteRequest",
+      "comment": "This models an action on a request",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "short": "Cancel",
+      "parentShort": "DirectoryDeleteRequest",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "structure",
+      "name": "SpecialError",
+      "comment": "A non-standard error response",
+      "attributes": [
+        {
+          "name": "message",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "time",
+          "stringMap": false,
+          "type": {
+            "name": "datetime",
+            "short": "datetime"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "SpecialError",
+      "secondary": false,
+      "file": "file.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "files",
+      "include": [
+        {
+          "name": "all",
+          "short": "all"
+        },
+        {
+          "parent": "files",
+          "name": "files-reslang",
+          "short": "reslang"
+        }
+      ],
+      "groups": []
+    }
+  ]
+}

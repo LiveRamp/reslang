@@ -4,7 +4,7 @@ import DotvizGen from "../gendotviz"
 
 /** dotviz generation tests
  */
-describe("dotviz generation tests", () => {
+xdescribe("dotviz generation tests", () => {
     test("simple-resource", () => {
         compare("simple-resource")
     })

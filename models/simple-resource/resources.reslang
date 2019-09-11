@@ -1,0 +1,22 @@
+// A garage is a place to store cars
+// hello
+// opdaslads
+"This is a description of a garage"
+configuration-resource Garage {
+	// simple id 
+	id: string query
+	name: string query
+	manufacturer: Manufacturer
+
+	/operations
+		"Actual PUT comment"
+		// this is a PUT comment
+		PUT
+		// this is a POST comment
+		"Actual POST comment"
+		POST GET DELETE MULTIGET
+}
+
+structure Manufacturer {
+	company: string
+}

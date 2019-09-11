@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: Testing out some of the stringmap and other advanced attribute modifiers
+  description: Stringmap etc
+  version: 0.1.2
+servers:
+  - url: 'https://api.liveramp.com/stringmaps'
+tags:
+  - name: SMap
+    description: '(asset) '
+paths:
+  /v1/s-maps:
+    post:
+      tags:
+        - SMap
+      operationId: Create SMap
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SMapInput'
+      responses:
+        '201':
+          description: SMap created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+  '/v1/s-maps/{id}':
+    put:
+      tags:
+        - SMap
+      operationId: Modify a SMap
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SMapMutable'
+      responses:
+        '200':
+          description: SMap modified successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+components:
+  parameters: {}
+  schemas:
+    SMapInput:
+      type: object
+      properties:
+        map:
+          description: ''
+          type: object
+          additionalProperties:
+            type: number
+        test:
+          description: ''
+          type: string
+        key:
+          description: ''
+          $ref: '#/components/schemas/InputKeyUnion'
+        a:
+          description: ''
+          type: number
+        b:
+          description: ''
+          type: string
+        c:
+          description: ''
+          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+        - map
+        - test
+        - key
+        - test2
+    SMapMutable:
+      type: object
+      properties:
+        test:
+          description: ''
+          type: string
+        key:
+          description: ''
+          $ref: '#/components/schemas/InputKeyUnion'
+    Struct2Structure:
+      type: object
+      properties:
+        notes:
+          description: ''
+          type: string
+        text:
+          description: ''
+          type: string
+      required:
+        - notes
+        - text
+    InputKeyUnion:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          num: '#/components/schemas/InputKeyUnion-num'
+          struct: '#/components/schemas/InputKeyUnion-struct'
+          struct2: '#/components/schemas/InputKeyUnion-struct2'
+      required:
+        - type
+        - num
+        - struct
+        - notes
+        - text
+    InputKeyUnion-num:
+      allOf:
+        - $ref: '#/components/schemas/InputKeyUnion'
+        - type: object
+          properties:
+            num:
+              description: ''
+              type: number
+    InputKeyUnion-struct:
+      allOf:
+        - $ref: '#/components/schemas/InputKeyUnion'
+        - type: object
+          properties:
+            struct:
+              description: ''
+              $ref: '#/components/schemas/Struct2Structure'
+    InputKeyUnion-struct2:
+      allOf:
+        - $ref: '#/components/schemas/InputKeyUnion'
+        - type: object
+          properties:
+            notes:
+              description: ''
+              type: string
+            text:
+              description: ''
+              type: string
+    Struct3Structure:
+      type: object
+      properties:
+        a:
+          description: ''
+          type: number
+        b:
+          description: ''
+          type: string
+        c:
+          description: ''
+          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+        - a
+        - b
+        - c
+    StandardErrorStructure:
+      description: 'Error details, only available if there was an issue in processing'
+      type: object
+      properties:
+        httpStatusCode:
+          type: number
+          description: The integer HTTP error status code for this problem
+        errorCode:
+          type: string
+          description: ' Optional, more granular error code for this problem'
+        message:
+          type: string
+          description: Human readable error message
+

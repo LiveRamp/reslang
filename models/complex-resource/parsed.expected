@@ -1,0 +1,452 @@
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "Complex resource API",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "configuration-resource",
+      "name": "simple-resource-Garage",
+      "singleton": false,
+      "comment": "This is a description of a garage",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "manufacturer",
+          "stringMap": false,
+          "type": {
+            "name": "simple-resource-Manufacturer",
+            "short": "Manufacturer"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "comment": "Actual PUT comment",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "comment": "Actual POST comment",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Garage",
+      "secondary": true,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "structure",
+      "name": "simple-resource-Manufacturer",
+      "attributes": [
+        {
+          "name": "company",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Manufacturer",
+      "secondary": true,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "Car",
+      "singleton": false,
+      "comment": "this is a Car resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "bought",
+          "stringMap": false,
+          "type": {
+            "name": "date",
+            "short": "date"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": true
+          }
+        },
+        {
+          "name": "brand",
+          "stringMap": false,
+          "type": {
+            "name": "BrandEnum",
+            "short": "BrandEnum"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "engine",
+          "stringMap": false,
+          "type": {
+            "name": "Specification",
+            "short": "Specification"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "components",
+          "stringMap": false,
+          "type": {
+            "name": "Specification",
+            "short": "Specification"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "homeGarageId",
+          "stringMap": false,
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Garage",
+            "short": "Garage"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "manufacturer",
+          "stringMap": false,
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Manufacturer",
+            "short": "Manufacturer"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "rentedGarageIds",
+          "stringMap": false,
+          "type": {
+            "parent": "simple-resource",
+            "name": "simple-resource-Garage",
+            "short": "Garage"
+          },
+          "inline": false,
+          "multiple": true,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Car",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "type": "structure",
+      "name": "Specification",
+      "comment": "this is a specification!",
+      "attributes": [
+        {
+          "name": "type",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "documentation",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Specification",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Car--Wheel",
+      "singleton": false,
+      "parent": "Car",
+      "comment": "A wheel is owned by a car",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "radius",
+          "stringMap": false,
+          "type": {
+            "name": "double",
+            "short": "double"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Wheel",
+      "parentShort": "Car",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generateMutable": true
+    },
+    {
+      "type": "enum",
+      "name": "BrandEnum",
+      "literals": [
+        "TOYOTA",
+        "FORD"
+      ],
+      "short": "BrandEnum",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": []
+}

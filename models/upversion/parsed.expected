@@ -1,0 +1,294 @@
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "An API showing evolution",
+    "version": "0.1.2"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "ResourceA",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "bId",
+          "stringMap": false,
+          "type": {
+            "name": "ResourceB",
+            "short": "ResourceB"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "newBId",
+          "stringMap": false,
+          "type": {
+            "name": "v2-ResourceB",
+            "short": "v2/ResourceB"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "ResourceA",
+      "secondary": false,
+      "file": "upversion.reslang",
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "ResourceB",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "size",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "short": "ResourceB",
+      "secondary": false,
+      "file": "upversion.reslang",
+      "generateInput": true,
+      "generateMutable": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "v2-ResourceB",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "totalSize",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "v2/ResourceB",
+      "secondary": false,
+      "file": "upversion.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "v2-ResourceB--Sub",
+      "singleton": false,
+      "parent": "v2-ResourceB",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Sub",
+      "parentShort": "v2/ResourceB",
+      "secondary": false,
+      "file": "upversion.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    }
+  ],
+  "diagrams": []
+}

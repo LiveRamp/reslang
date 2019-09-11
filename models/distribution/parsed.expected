@@ -1,0 +1,895 @@
+{
+  "namespace": {
+    "comment": "New Onboarding API",
+    "title": "Distribution API",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "configuration-resource",
+      "name": "Destination",
+      "singleton": false,
+      "comment": "A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "comment": "Create a new destination",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "comment": "Retrieve a current destination",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "comment": "Get all destinations",
+          "errors": []
+        }
+      ],
+      "short": "Destination",
+      "secondary": false,
+      "file": "destination.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--TaxonomyConfiguration",
+      "singleton": false,
+      "parent": "Destination",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "mappingsMacro",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "TaxonomyConfiguration",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "destination.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generateMutable": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--Integration",
+      "singleton": false,
+      "parent": "Destination",
+      "comment": "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "mapping",
+          "stringMap": false,
+          "type": {
+            "name": "IdentifierTypeMapping",
+            "short": "IdentifierTypeMapping"
+          },
+          "inline": false,
+          "multiple": true,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "taxonomyConfigurationId",
+          "stringMap": false,
+          "type": {
+            "toplevel": "Destination",
+            "name": "Destination--TaxonomyConfiguration",
+            "short": "TaxonomyConfiguration"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "comment": "Create an integration",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "comment": "Alter an integration",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "comment": "Retrieve an integration",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "comment": "Retrieve many integrations",
+          "errors": []
+        }
+      ],
+      "short": "Integration",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "destination.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generateMutable": true
+    },
+    {
+      "type": "structure",
+      "name": "IdentifierTypeMapping",
+      "attributes": [
+        {
+          "name": "identifierPoolId",
+          "stringMap": false,
+          "type": {
+            "name": "IdentifierPool",
+            "short": "IdentifierPool"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "endpointId",
+          "stringMap": false,
+          "type": {
+            "toplevel": "Destination",
+            "name": "Destination--Endpoint",
+            "short": "Endpoint"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "IdentifierTypeMapping",
+      "secondary": false,
+      "file": "destination.reslang",
+      "generateInput": true
+    },
+    {
+      "future": true,
+      "type": "configuration-resource",
+      "name": "IdentifierPool",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "IdentifierPool",
+      "secondary": false,
+      "file": "destination.reslang",
+      "generateInput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--Endpoint",
+      "singleton": false,
+      "parent": "Destination",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "url",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "packagerId",
+          "stringMap": false,
+          "type": {
+            "toplevel": "Destination",
+            "name": "Destination--Packager",
+            "short": "Packager"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "formatterId",
+          "stringMap": false,
+          "type": {
+            "toplevel": "Destination",
+            "name": "Destination--Formatter",
+            "short": "Formatter"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "delivererId",
+          "stringMap": false,
+          "type": {
+            "toplevel": "Destination",
+            "name": "Destination--Deliverer",
+            "short": "Deliverer"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "endpointProperties",
+          "stringMap": false,
+          "type": {
+            "name": "EndpointProperty",
+            "short": "EndpointProperty"
+          },
+          "inline": false,
+          "multiple": true,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Endpoint",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "endpoint.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generateMutable": true
+    },
+    {
+      "type": "structure",
+      "name": "EndpointProperty",
+      "attributes": [
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "default",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "externallyConfigurable",
+          "stringMap": false,
+          "type": {
+            "name": "boolean",
+            "short": "boolean"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "EndpointProperty",
+      "secondary": false,
+      "file": "endpoint.reslang",
+      "generateInput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--Packager",
+      "singleton": false,
+      "parent": "Destination",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "macro",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "compressionType",
+          "stringMap": false,
+          "type": {
+            "name": "CompressionTypeEnum",
+            "short": "CompressionTypeEnum"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Packager",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "endpoint.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--Formatter",
+      "singleton": false,
+      "parent": "Destination",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "macro",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Formatter",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "endpoint.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Destination--Deliverer",
+      "singleton": false,
+      "parent": "Destination",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "protocol",
+          "stringMap": false,
+          "type": {
+            "name": "ProtocolEnum",
+            "short": "ProtocolEnum"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "macro",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Deliverer",
+      "parentShort": "Destination",
+      "secondary": false,
+      "file": "endpoint.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "type": "enum",
+      "name": "CompressionTypeEnum",
+      "literals": [
+        "NONE",
+        "BZ2",
+        "GZIP",
+        "LZO"
+      ],
+      "short": "CompressionTypeEnum",
+      "secondary": false,
+      "file": "enums.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "name": "ProtocolEnum",
+      "literals": [
+        "SFTP",
+        "FTP",
+        "FTPS_EXPLICIT",
+        "S3",
+        "FS_COPY",
+        "APP_NEXUS",
+        "NO_OP",
+        "FTPS_IMPLICIT",
+        "IRON_BOX",
+        "YAHOO",
+        "ACXIOM_FULFILLMENT",
+        "FACEBOOK",
+        "LINKEDIN",
+        "GOOGLE",
+        "KBM",
+        "PINTEREST",
+        "GOOGLE_CUSTOMER_MATCH",
+        "LR_FULFILLMENT",
+        "SNAPCHAT",
+        "BIGQUERY",
+        "GOOGLE_STORE_TRANSACTIONS",
+        "AZURE"
+      ],
+      "short": "ProtocolEnum",
+      "secondary": false,
+      "file": "enums.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": []
+}

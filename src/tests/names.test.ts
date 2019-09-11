@@ -21,7 +21,7 @@ describe("name tests", () => {
         expect(pluralizeName("name")).toBe("names")
     })
     test("pluralize3", () => {
-        expect(pluralizeName("sheeps")).toBe("sheepses")
+        expect(pluralizeName("sheeps")).toBe("sheeps")
     })
 
     test("version1", () => {
@@ -36,28 +36,28 @@ describe("name tests", () => {
     test("makeshort2", () => {
         expect(makeShort("bar")).toBe("bar")
     })
-    test("indexOf", () => {
+    test("indexOf1", () => {
         expect("a.b".indexOf(".")).toBe(1)
     })
-    test("indexOf", () => {
+    test("indexOf2", () => {
         expect("ab".indexOf(".")).toBe(-1)
     })
-    test("makeLong", () => {
+    test("makeLong1", () => {
         expect(makeLong("foo", "xxx", "bar")).toBe("foo.bar")
     })
-    test("makeLong", () => {
+    test("makeLong2", () => {
         expect(makeLong("foo", "foo", "bar")).toBe("bar")
     })
-    test("makeLong", () => {
+    test("makeLong3", () => {
         expect(makeLong("foo", "foo", "bar.bar")).toBe("bar.bar")
     })
-    test("makeLong", () => {
+    test("makeLong4", () => {
         expect(makeLong("foo", "bar", "bar")).toBe("foo.bar")
     })
-    test("makeLong", () => {
+    test("makeLong5", () => {
         expect(makeLong("foo", "bar", "bar.bar")).toBe("bar")
     })
-    test("makeLong", () => {
+    test("makeLong6", () => {
         expect(makeLong("foo", "xxx", "bar.bar")).toBe("bar.bar")
     })
 })

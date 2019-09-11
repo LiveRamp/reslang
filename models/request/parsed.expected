@@ -1,0 +1,436 @@
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "API of a request",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "request-resource",
+      "name": "UploadRequest",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "status",
+          "stringMap": false,
+          "type": {
+            "name": "UploadRequestStatusEnum",
+            "short": "UploadRequestStatusEnum"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "client",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "UploadRequest--Status",
+      "singleton": true,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "recordsProcessed",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "completed",
+          "stringMap": false,
+          "type": {
+            "name": "boolean",
+            "short": "boolean"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Status",
+      "parentShort": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "UploadRequest--RecordSet",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "company",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "records",
+          "stringMap": false,
+          "type": {
+            "name": "Record",
+            "short": "Record"
+          },
+          "inline": false,
+          "multiple": true,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "short": "RecordSet",
+      "parentShort": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "type": "structure",
+      "name": "Record",
+      "attributes": [
+        {
+          "name": "details",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "address",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Record",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "action",
+      "async": true,
+      "name": "UploadRequest--StartProcessingAction",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "short": "StartProcessingAction",
+      "parentShort": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "action",
+      "async": false,
+      "name": "UploadRequest--StopProcessingAction",
+      "singleton": false,
+      "parent": "UploadRequest",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "when",
+          "stringMap": false,
+          "type": {
+            "name": "datetime",
+            "short": "datetime"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "StopProcessingAction",
+      "parentShort": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "type": "enum",
+      "name": "UploadRequestStatusEnum",
+      "literals": [
+        "STARTED",
+        "STOPPED",
+        "COMPLETED"
+      ],
+      "short": "UploadRequestStatusEnum",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": []
+}

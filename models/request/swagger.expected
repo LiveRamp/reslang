@@ -1,0 +1,426 @@
+openapi: 3.0.1
+info:
+  title: API of a request
+  description: This is the description of the API
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/request'
+tags:
+  - name: UploadRequest
+    description: '(request) '
+  - name: UploadRequest / Status
+    description: '(subresource) '
+  - name: UploadRequest / RecordSet
+    description: '(subresource) '
+  - name: UploadRequest / StartProcessingAction
+    description: '(async action) '
+  - name: UploadRequest / StopProcessingAction
+    description: '(sync action) '
+paths:
+  /v1/upload-requests:
+    post:
+      tags:
+        - UploadRequest
+      operationId: Create UploadRequest
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestInput'
+      responses:
+        '201':
+          description: UploadRequest created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+    get:
+      tags:
+        - UploadRequest
+      operationId: List UploadRequests
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: UploadRequests retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestMultiResponse'
+  '/v1/upload-requests/{id}':
+    get:
+      tags:
+        - UploadRequest
+      operationId: Get 1 UploadRequest
+      description: ''
+      responses:
+        '200':
+          description: UploadRequest retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/status':
+    get:
+      tags:
+        - UploadRequest / Status
+      operationId: Get 1 UploadRequest--Status
+      description: ''
+      responses:
+        '200':
+          description: Status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequest--StatusOutput'
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/record-sets':
+    post:
+      tags:
+        - UploadRequest / RecordSet
+      operationId: Create RecordSet
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest--RecordSetInput'
+      responses:
+        '201':
+          description: RecordSet created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/record-sets/{id}':
+    get:
+      tags:
+        - UploadRequest / RecordSet
+      operationId: Get 1 UploadRequest--RecordSet
+      description: ''
+      responses:
+        '200':
+          description: RecordSet retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequest--RecordSetOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/start-processing-actions':
+    post:
+      tags:
+        - UploadRequest / StartProcessingAction
+      operationId: Create StartProcessingAction
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest--StartProcessingActionInput'
+      responses:
+        '202':
+          description: >-
+            StartProcessingAction action has been accepted, but is not yet
+            complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
+        '204':
+          description: >-
+            StartProcessingAction action has already been submitted and we are
+            currently doing it
+        '409':
+          description: >-
+            StartProcessingAction action has been accepted but cannot be
+            processed due to current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardErrorStructure'
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/stop-processing-actions':
+    post:
+      tags:
+        - UploadRequest / StopProcessingAction
+      operationId: Create StopProcessingAction
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest--StopProcessingActionInput'
+      responses:
+        '201':
+          description: StopProcessingAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+  '/v1/upload-requests/{parentId}/stop-processing-actions/{id}':
+    get:
+      tags:
+        - UploadRequest / StopProcessingAction
+      operationId: Get 1 UploadRequest--StopProcessingAction
+      description: ''
+      responses:
+        '200':
+          description: StopProcessingAction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequest--StopProcessingActionOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: number
+components:
+  parameters: {}
+  schemas:
+    UploadRequestInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        status:
+          description: ''
+          type: string
+          enum: &ref_0
+            - STARTED
+            - STOPPED
+            - COMPLETED
+        client:
+          description: ''
+          type: string
+      required:
+        - name
+        - status
+        - client
+    UploadRequestOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        status:
+          description: ''
+          type: string
+          enum: *ref_0
+        client:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+        - status
+        - client
+    UploadRequestMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved UploadRequests
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadRequestOutput'
+    UploadRequest--StatusOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        recordsProcessed:
+          description: ''
+          type: number
+        completed:
+          description: ''
+          type: boolean
+      required:
+        - id
+        - recordsProcessed
+        - completed
+    UploadRequest--RecordSetInput:
+      type: object
+      properties:
+        company:
+          description: ''
+          type: string
+        records:
+          description: ''
+          items:
+            $ref: '#/components/schemas/RecordStructure'
+          type: array
+      required:
+        - company
+        - records
+    UploadRequest--RecordSetOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        company:
+          description: ''
+          type: string
+        records:
+          description: ''
+          items:
+            $ref: '#/components/schemas/RecordStructure'
+          type: array
+      required:
+        - id
+        - company
+        - records
+    RecordStructure:
+      type: object
+      properties:
+        details:
+          description: ''
+          type: string
+        address:
+          description: ''
+          type: string
+      required:
+        - details
+        - address
+    UploadRequest--StartProcessingActionInput:
+      type: object
+      properties: {}
+    UploadRequest--StopProcessingActionInput:
+      type: object
+      properties:
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    UploadRequest--StopProcessingActionOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    StandardErrorStructure:
+      description: 'Error details, only available if there was an issue in processing'
+      type: object
+      properties:
+        httpStatusCode:
+          type: number
+          description: The integer HTTP error status code for this problem
+        errorCode:
+          type: string
+          description: ' Optional, more granular error code for this problem'
+        message:
+          type: string
+          description: Human readable error message
+

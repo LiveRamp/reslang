@@ -1,0 +1,136 @@
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "A simple resource API",
+    "version": "0.1.2"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "configuration-resource",
+      "name": "Garage",
+      "singleton": false,
+      "comment": "This is a description of a garage",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": true,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "manufacturer",
+          "stringMap": false,
+          "type": {
+            "name": "Manufacturer",
+            "short": "Manufacturer"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "comment": "Actual PUT comment",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "comment": "Actual POST comment",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Garage",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generateMutable": true
+    },
+    {
+      "type": "structure",
+      "name": "Manufacturer",
+      "attributes": [
+        {
+          "name": "company",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Manufacturer",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": []
+}

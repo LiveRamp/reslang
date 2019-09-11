@@ -14,7 +14,7 @@ Each resource specifies the attributes it holds, followed by the possible operat
 
 ## The API
 
-Without further ado, here is the [API in reslang](../models/new/file):
+Without further ado, here is the [API in reslang](../models/file):
 
 ```
 "This is a simple API for manipulating files"

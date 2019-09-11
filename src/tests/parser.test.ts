@@ -16,34 +16,48 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
-    test("simple-resource", () => {
-        compare("simple-resource")
-    })
-
     test("complex-resource", () => {
         compare("complex-resource")
+    })
+
+    test("direct2dist", () => {
+        compare("direct2dist")
+    })
+
+    test("distribution", () => {
+        compare("distribution")
+    })
+
+    test("file", () => {
+        compare("file")
+    })
+
+    test("request", () => {
+        compare("request")
+    })
+
+    test("simple-resource", () => {
+        compare("simple-resource")
     })
 
     test("singleton", () => {
         compare("singleton")
     })
 
-    test("upversion", () => {
-        compare("upversion")
+    test("stringmaps", () => {
+        compare("stringmaps")
     })
 
-    test("request", () => {
-        compare("request")
+    test("upversion", () => {
+        compare("upversion")
     })
 })
 
 function compare(module: string) {
-    const parser = new ParseGen([`models/new/${module}`])
+    const parser = new ParseGen([`models/${module}`])
     const got = parser.generate()
     const sgot = strip(got)
-    const expected = strip(
-        readFile(`src/tests/parsed_outputs/${module}.expected`)
-    )
+    const expected = strip(readFile(`models/${module}/parsed.expected`))
     if (sgot !== expected) {
         console.log(got)
     }

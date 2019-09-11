@@ -1,0 +1,34 @@
+
+asset-resource ResourceA {
+    id: int
+    name: string
+    bId: linked ResourceB
+    newBId: linked v2/ResourceB
+    
+    /operations
+        GET
+}
+
+asset-resource ResourceB {
+    id: int
+    size: int
+
+    /operations
+        POST GET PUT
+}
+
+asset-resource v2/ResourceB {
+    id: int
+    totalSize: int
+
+    /operations
+        POST GET
+}
+
+subresource v2/ResourceB::Sub {
+    id: int
+    name: string
+
+    /operations
+        POST GET
+}

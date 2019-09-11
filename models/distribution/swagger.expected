@@ -1,0 +1,1154 @@
+openapi: 3.0.1
+info:
+  title: Distribution API
+  description: New Onboarding API
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/distribution'
+tags:
+  - name: Destination
+    description: >-
+      (configuration) A Destination (aka DestinationCustomer) is some company
+      that LiveRamp distributes data to. An example is Facebook
+  - name: Destination / TaxonomyConfiguration
+    description: '(subresource) '
+  - name: Destination / Integration
+    description: >-
+      (subresource) An Integration (aka IntegrationGroup) is a particular
+      configuration for sending data to a destination. It specifies the
+      indentifier types, the endpoint that it is going to, and the taxonomy. An
+      example is Facebook UK data store
+  - name: Destination / Endpoint
+    description: '(subresource) '
+  - name: Destination / Packager
+    description: '(subresource) '
+  - name: Destination / Formatter
+    description: '(subresource) '
+  - name: Destination / Deliverer
+    description: '(subresource) '
+paths:
+  /v1/destinations:
+    post:
+      tags:
+        - Destination
+      operationId: Create Destination
+      description: Create a new destination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationInput'
+      responses:
+        '201':
+          description: Destination created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+    get:
+      tags:
+        - Destination
+      operationId: List Destinations
+      description: Get all destinations
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Destinations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationMultiResponse'
+  '/v1/destinations/{id}':
+    get:
+      tags:
+        - Destination
+      operationId: Get 1 Destination
+      description: Retrieve a current destination
+      responses:
+        '200':
+          description: Destination retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/taxonomy-configurations':
+    post:
+      tags:
+        - Destination / TaxonomyConfiguration
+      operationId: Create TaxonomyConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--TaxonomyConfigurationInput'
+      responses:
+        '201':
+          description: TaxonomyConfiguration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / TaxonomyConfiguration
+      operationId: List Destination--TaxonomyConfigurations
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: TaxonomyConfigurations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/Destination--TaxonomyConfigurationMultiResponse
+  '/v1/destinations/{parentId}/taxonomy-configurations/{id}':
+    get:
+      tags:
+        - Destination / TaxonomyConfiguration
+      operationId: Get 1 Destination--TaxonomyConfiguration
+      description: ''
+      responses:
+        '200':
+          description: TaxonomyConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--TaxonomyConfigurationOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    put:
+      tags:
+        - Destination / TaxonomyConfiguration
+      operationId: Modify a Destination--TaxonomyConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--TaxonomyConfigurationMutable'
+      responses:
+        '200':
+          description: TaxonomyConfiguration modified successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/integrations':
+    post:
+      tags:
+        - Destination / Integration
+      operationId: Create Integration
+      description: Create an integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--IntegrationInput'
+      responses:
+        '201':
+          description: Integration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / Integration
+      operationId: List Destination--Integrations
+      description: Retrieve many integrations
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Integrations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--IntegrationMultiResponse'
+  '/v1/destinations/{parentId}/integrations/{id}':
+    get:
+      tags:
+        - Destination / Integration
+      operationId: Get 1 Destination--Integration
+      description: Retrieve an integration
+      responses:
+        '200':
+          description: Integration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--IntegrationOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    put:
+      tags:
+        - Destination / Integration
+      operationId: Modify a Destination--Integration
+      description: Alter an integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--IntegrationMutable'
+      responses:
+        '200':
+          description: Integration modified successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/endpoints':
+    post:
+      tags:
+        - Destination / Endpoint
+      operationId: Create Endpoint
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--EndpointInput'
+      responses:
+        '201':
+          description: Endpoint created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / Endpoint
+      operationId: List Destination--Endpoints
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Endpoints retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--EndpointMultiResponse'
+  '/v1/destinations/{parentId}/endpoints/{id}':
+    get:
+      tags:
+        - Destination / Endpoint
+      operationId: Get 1 Destination--Endpoint
+      description: ''
+      responses:
+        '200':
+          description: Endpoint retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--EndpointOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    put:
+      tags:
+        - Destination / Endpoint
+      operationId: Modify a Destination--Endpoint
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--EndpointMutable'
+      responses:
+        '200':
+          description: Endpoint modified successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/packagers':
+    post:
+      tags:
+        - Destination / Packager
+      operationId: Create Packager
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--PackagerInput'
+      responses:
+        '201':
+          description: Packager created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / Packager
+      operationId: List Destination--Packagers
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Packagers retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--PackagerMultiResponse'
+  '/v1/destinations/{parentId}/packagers/{id}':
+    get:
+      tags:
+        - Destination / Packager
+      operationId: Get 1 Destination--Packager
+      description: ''
+      responses:
+        '200':
+          description: Packager retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--PackagerOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/formatters':
+    post:
+      tags:
+        - Destination / Formatter
+      operationId: Create Formatter
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--FormatterInput'
+      responses:
+        '201':
+          description: Formatter created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / Formatter
+      operationId: List Destination--Formatters
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Formatters retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--FormatterMultiResponse'
+  '/v1/destinations/{parentId}/formatters/{id}':
+    get:
+      tags:
+        - Destination / Formatter
+      operationId: Get 1 Destination--Formatter
+      description: ''
+      responses:
+        '200':
+          description: Formatter retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--FormatterOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+  '/v1/destinations/{parentId}/deliverers':
+    post:
+      tags:
+        - Destination / Deliverer
+      operationId: Create Deliverer
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination--DelivererInput'
+      responses:
+        '201':
+          description: Deliverer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+    get:
+      tags:
+        - Destination / Deliverer
+      operationId: List Destination--Deliverers
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Deliverers retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--DelivererMultiResponse'
+  '/v1/destinations/{parentId}/deliverers/{id}':
+    get:
+      tags:
+        - Destination / Deliverer
+      operationId: Get 1 Destination--Deliverer
+      description: ''
+      responses:
+        '200':
+          description: Deliverer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Destination--DelivererOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+        - in: path
+          name: parentId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: number
+components:
+  parameters: {}
+  schemas:
+    DestinationInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
+    DestinationOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+    DestinationMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destinations
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationOutput'
+    Destination--TaxonomyConfigurationInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        mappingsMacro:
+          description: ''
+          type: string
+      required:
+        - name
+        - mappingsMacro
+    Destination--TaxonomyConfigurationOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        mappingsMacro:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+        - mappingsMacro
+    Destination--TaxonomyConfigurationMutable:
+      type: object
+      properties: {}
+    Destination--TaxonomyConfigurationMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--TaxonomyConfigurations
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--TaxonomyConfigurationOutput'
+    Destination--IntegrationInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        mapping:
+          description: ''
+          items:
+            $ref: '#/components/schemas/IdentifierTypeMappingStructure'
+          type: array
+        taxonomyConfigurationId:
+          description: ''
+          type: number
+          example: Link to a Destination--TaxonomyConfiguration  resource via its id
+      required:
+        - name
+        - mapping
+        - taxonomyConfigurationId
+    Destination--IntegrationOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        mapping:
+          description: ''
+          items:
+            $ref: '#/components/schemas/IdentifierTypeMappingStructure'
+          type: array
+        taxonomyConfigurationId:
+          description: ''
+          type: number
+          example: Link to a Destination--TaxonomyConfiguration  resource via its id
+      required:
+        - id
+        - name
+        - mapping
+        - taxonomyConfigurationId
+    Destination--IntegrationMutable:
+      type: object
+      properties: {}
+    Destination--IntegrationMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--Integrations
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--IntegrationOutput'
+    IdentifierTypeMappingStructure:
+      type: object
+      properties:
+        identifierPoolId:
+          description: ''
+          type: string
+          example: >-
+            Link to a IdentifierPool (to be defined in the future) resource via
+            its id
+        endpointId:
+          description: ''
+          type: number
+          example: Link to a Destination--Endpoint  resource via its id
+      required:
+        - identifierPoolId
+        - endpointId
+    IdentifierPoolInput:
+      type: object
+      properties: {}
+    Destination--EndpointInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        url:
+          description: ''
+          type: string
+        packagerId:
+          description: ''
+          type: number
+          example: Link to a Destination--Packager  resource via its id
+        formatterId:
+          description: ''
+          type: number
+          example: Link to a Destination--Formatter  resource via its id
+        delivererId:
+          description: ''
+          type: number
+          example: Link to a Destination--Deliverer  resource via its id
+        endpointProperties:
+          description: ''
+          items:
+            $ref: '#/components/schemas/EndpointPropertyStructure'
+          type: array
+      required:
+        - name
+        - url
+        - packagerId
+        - formatterId
+        - delivererId
+        - endpointProperties
+    Destination--EndpointOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        url:
+          description: ''
+          type: string
+        packagerId:
+          description: ''
+          type: number
+          example: Link to a Destination--Packager  resource via its id
+        formatterId:
+          description: ''
+          type: number
+          example: Link to a Destination--Formatter  resource via its id
+        delivererId:
+          description: ''
+          type: number
+          example: Link to a Destination--Deliverer  resource via its id
+        endpointProperties:
+          description: ''
+          items:
+            $ref: '#/components/schemas/EndpointPropertyStructure'
+          type: array
+      required:
+        - id
+        - name
+        - url
+        - packagerId
+        - formatterId
+        - delivererId
+        - endpointProperties
+    Destination--EndpointMutable:
+      type: object
+      properties: {}
+    Destination--EndpointMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--Endpoints
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--EndpointOutput'
+    EndpointPropertyStructure:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        default:
+          description: ''
+          type: string
+        externallyConfigurable:
+          description: ''
+          type: boolean
+      required:
+        - name
+        - default
+        - externallyConfigurable
+    Destination--PackagerInput:
+      type: object
+      properties:
+        macro:
+          description: ''
+          type: string
+        compressionType:
+          description: ''
+          type: string
+          enum: &ref_0
+            - NONE
+            - BZ2
+            - GZIP
+            - LZO
+      required:
+        - macro
+        - compressionType
+    Destination--PackagerOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        macro:
+          description: ''
+          type: string
+        compressionType:
+          description: ''
+          type: string
+          enum: *ref_0
+      required:
+        - id
+        - macro
+        - compressionType
+    Destination--PackagerMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--Packagers
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--PackagerOutput'
+    Destination--FormatterInput:
+      type: object
+      properties:
+        macro:
+          description: ''
+          type: string
+      required:
+        - macro
+    Destination--FormatterOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        macro:
+          description: ''
+          type: string
+      required:
+        - id
+        - macro
+    Destination--FormatterMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--Formatters
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--FormatterOutput'
+    Destination--DelivererInput:
+      type: object
+      properties:
+        protocol:
+          description: ''
+          type: string
+          enum: &ref_1
+            - SFTP
+            - FTP
+            - FTPS_EXPLICIT
+            - S3
+            - FS_COPY
+            - APP_NEXUS
+            - NO_OP
+            - FTPS_IMPLICIT
+            - IRON_BOX
+            - YAHOO
+            - ACXIOM_FULFILLMENT
+            - FACEBOOK
+            - LINKEDIN
+            - GOOGLE
+            - KBM
+            - PINTEREST
+            - GOOGLE_CUSTOMER_MATCH
+            - LR_FULFILLMENT
+            - SNAPCHAT
+            - BIGQUERY
+            - GOOGLE_STORE_TRANSACTIONS
+            - AZURE
+        macro:
+          description: ''
+          type: string
+      required:
+        - protocol
+        - macro
+    Destination--DelivererOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        protocol:
+          description: ''
+          type: string
+          enum: *ref_1
+        macro:
+          description: ''
+          type: string
+      required:
+        - id
+        - protocol
+        - macro
+    Destination--DelivererMultiResponse:
+      type: object
+      properties:
+        elements:
+          description: Array of retrieved Destination--Deliverers
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination--DelivererOutput'
+    StandardErrorStructure:
+      description: 'Error details, only available if there was an issue in processing'
+      type: object
+      properties:
+        httpStatusCode:
+          type: number
+          description: The integer HTTP error status code for this problem
+        errorCode:
+          type: string
+          description: ' Optional, more granular error code for this problem'
+        message:
+          type: string
+          description: Human readable error message
+

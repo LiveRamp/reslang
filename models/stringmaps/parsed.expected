@@ -1,0 +1,369 @@
+{
+  "namespace": {
+    "comment": "Stringmap etc",
+    "title": "Testing out some of the stringmap and other advanced attribute modifiers",
+    "version": "0.1.2"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "SMap",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "map",
+          "stringMap": true,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "maps",
+          "stringMap": true,
+          "type": {
+            "name": "Struct2",
+            "short": "Struct2"
+          },
+          "inline": false,
+          "multiple": true,
+          "linked": false,
+          "modifiers": {
+            "synthetic": true,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "test",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": true,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "key",
+          "stringMap": false,
+          "type": {
+            "name": "InputKey",
+            "short": "InputKey"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": true,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "test2",
+          "stringMap": false,
+          "type": {
+            "name": "Struct3",
+            "short": "Struct3"
+          },
+          "inline": true,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "short": "SMap",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateMutable": true
+    },
+    {
+      "type": "structure",
+      "name": "Struct1",
+      "attributes": [
+        {
+          "name": "text",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Struct1",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "type": "structure",
+      "name": "Struct2",
+      "attributes": [
+        {
+          "name": "notes",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "text",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Struct2",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "union",
+      "name": "InputKey",
+      "attributes": [
+        {
+          "name": "num",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "struct",
+          "stringMap": false,
+          "type": {
+            "name": "Struct2",
+            "short": "Struct2"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "struct2",
+          "stringMap": false,
+          "type": {
+            "name": "Struct2",
+            "short": "Struct2"
+          },
+          "inline": true,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "InputKey",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "structure",
+      "name": "Struct3",
+      "attributes": [
+        {
+          "name": "a",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "b",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "c",
+          "stringMap": false,
+          "type": {
+            "name": "date",
+            "short": "date"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "Struct3",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "stringmaps",
+      "include": [
+        {
+          "parent": "resources",
+          "name": "resources-reslang",
+          "short": "reslang"
+        }
+      ],
+      "groups": []
+    }
+  ]
+}

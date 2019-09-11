@@ -1,0 +1,134 @@
+{
+  "namespace": {
+    "comment": "This is the description of the API",
+    "title": "An API with a singleton asset resource",
+    "version": "0.1.2"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "Resource",
+      "singleton": true,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Resource",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateMutable": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "Resource--Metadata",
+      "singleton": true,
+      "parent": "Resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "info",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Metadata",
+      "parentShort": "Resource",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateMutable": true,
+      "generateOutput": true
+    }
+  ],
+  "diagrams": []
+}

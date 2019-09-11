@@ -14,7 +14,7 @@ diagram files {
 To generate the dotviz, use a command like the following:
 
 ```
-./reslang models/new/file --diagram files --open
+./reslang models/file --diagram files --open
 ```
 
 This will open up the online graphviz viewer and copy the dotviz output to the clipboard. Replace the text in the browser with the clipboard text and voila, you have a diagram.

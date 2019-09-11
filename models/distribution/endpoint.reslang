@@ -1,0 +1,44 @@
+subresource Destination::Endpoint {
+    id: int
+    name: string query
+    url: string
+    packagerId: linked Destination::Packager
+    formatterId: linked Destination::Formatter
+    delivererId: linked Destination::Deliverer
+    endpointProperties: EndpointProperty[]
+    // other stuff like formatter, packager
+    /operations
+        POST PUT GET MULTIGET
+}
+
+structure EndpointProperty {
+    name: string
+    default: string
+    externallyConfigurable: boolean
+}
+
+subresource Destination::Packager {
+    id: int
+    macro: string
+    compressionType: CompressionTypeEnum
+
+    /operations
+        POST GET MULTIGET
+}
+
+subresource Destination::Formatter {
+    id: int
+    macro: string
+
+    /operations
+        POST GET MULTIGET
+}
+
+subresource Destination::Deliverer {
+    id: int
+    protocol: ProtocolEnum
+    macro: string
+    
+    /operations
+        POST GET MULTIGET
+}

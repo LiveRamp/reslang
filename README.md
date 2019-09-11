@@ -7,16 +7,16 @@ Relang is a simple language for describing resource-oriented APIs & turning them
 |                                                      |                                                                            |
 | ---------------------------------------------------- | -------------------------------------------------------------------------- |
 | [Why reslang?](./docs/why.md)                        | Why do we need this tool and what does it offer?                           |
-| [Intro tutorial](./docs/intro.md)                    | Describes making a top API for manipulating files and directories.         |
+| [Intro tutorial](./docs/intro.md)                    | Describes making a toy API for manipulating files and directories.         |
 | [Direct2Dist API](./docs.direct2dist-explanation.md) | This is a more complex example which recreates the entire Direct2Dist API. |
-| [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.}                     |
+| [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.                      |
 
 ## Installation
 
 1. ensure node & yarn are installed
 2. clone the repo
 3. yarn install
-4. yarn test
+4. yarn jest
 
 ## Running
 
@@ -34,11 +34,11 @@ Note that the models directory has a set of example definitions.
 
     ./reslang models/simple-resource.reslang
 
-This will also copy the swagger into the clipboard. If you want it to stdout also, use --stdout.
+This will copy the swagger into the clipboard. If you want it to stdout also, use --stdout.
 
 If you want it to open the swagger editor for you, use --open. You will then have to paste the clipboard into the editor.
 
-    ./reslang models/simple-resource.reslang --stdout --open
+    ./reslang models/simple-resource.reslang --open
 
 ## Viewing in ReDoc
 
@@ -46,11 +46,11 @@ ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use 
 
 `npm -g install redoc-cli`
 
-Then copy the swagger into a file, say swagger.yaml and serve it up using:
+Then copy the swagger into a file, say swagger.yaml, and serve it up using:
 
 `redoc-cli serve --watch swagger.yaml`
 
-and point your browser at localhost:8080
+Finally, point your browser at localhost:8080
 
 ## Creating a graphical view
 

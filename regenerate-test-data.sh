@@ -1,14 +1,13 @@
 #!/bin/bash
 
-apis=(simple-resource complex-resource singleton upversion request file)
+apis=(complex-resource direct2dist distribution file request simple-resource singleton stringmaps upversion)
 
 for api in "${apis[@]}"
 do
    : 
    echo Updating test data for ${api}
-    ./reslang ./models/new/${api} --stdout > ./src/tests/swagger_outputs/${api}.expected
-    ./reslang ./models/new/${api} --stdout --dotviz > ./src/tests/dotviz_outputs/${api}.expected
-    ./reslang ./models/new/${api} --stdout --parsed > ./src/tests/parsed_outputs/${api}.expected
+    ./reslang ./models/${api} --stdout > ./models/${api}/swagger.expected
+    ./reslang ./models/${api} --stdout --parsed > ./models/${api}/parsed.expected
 done
 
 echo Updated test data

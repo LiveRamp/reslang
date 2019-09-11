@@ -1,0 +1,55 @@
+
+
+request-resource UploadRequest {
+    id: int
+    name: string query
+    status: UploadRequestStatusEnum
+    client: string
+
+	/operations
+		POST GET MULTIGET
+}
+
+singleton subresource UploadRequest::Status {
+    id: int
+    recordsProcessed: int
+    completed: boolean
+
+    /operations
+        GET
+}
+
+subresource UploadRequest::RecordSet {
+    id: int
+    company: string
+    records: Record[]
+
+    /operations 
+        GET POST
+}
+
+structure Record {
+    details: string
+    address: string
+}
+
+async action UploadRequest::StartProcessingAction  {
+    id: string
+    
+    /operations
+        POST
+}
+
+sync action UploadRequest::StopProcessingAction {
+    id: int
+    when: datetime
+
+    /operations
+        POST GET
+}
+
+enum UploadRequestStatusEnum {
+    STARTED
+    STOPPED
+    COMPLETED
+}
