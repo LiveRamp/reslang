@@ -22,7 +22,7 @@ Relang is a simple language for describing resource-oriented APIs & turning them
 
 Test it out by typing:
 
-    ./reslang
+    yarn reslang
 
 This should bring up the options.
 
@@ -32,13 +32,13 @@ To create swagger, you first create a reslang file. Then you simply ask the resl
 
 Note that the models directory has a set of example definitions.
 
-    ./reslang models/simple-resource.reslang
+    yarn reslang models/simple-resource.reslang
 
 This will copy the swagger into the clipboard. If you want it to stdout also, use --stdout.
 
 If you want it to open the swagger editor for you, use --open. You will then have to paste the clipboard into the editor.
 
-    ./reslang models/simple-resource.reslang --open
+    yarn reslang models/simple-resource.reslang --open
 
 ## Viewing in ReDoc
 
@@ -58,10 +58,10 @@ Reslang can generate dotviz output, which provides a nice graphical view of the 
 
 The following command will copy the dotviz output to the clipboard.
 
-    ./reslang models/simple-resource.reslang --diagram name
+    yarn reslang models/simple-resource.reslang --diagram name
 
 Note that you will need to make a diagram definition first. See [here](./docs/diagrams.md) for how it is done.
 
 If you use the --open switch, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
 
-    ./reslang models/simple-resource.reslang --diagram name --open
+    yarn reslang models/simple-resource.reslang --diagram name --open
