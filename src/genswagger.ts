@@ -1,4 +1,11 @@
-import { fixName, pluralizeName, getVersion, sanitize } from "./names"
+import {
+    fixName,
+    pluralizeName,
+    getVersion,
+    sanitize,
+    capitalizeFirst,
+    lowercaseFirst
+} from "./names"
 import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
@@ -9,6 +16,7 @@ import { isPrimitiveType } from "./parse"
 
 export default class SwagGen extends BaseGen {
     private static readonly COMMENT_REGEX = /See docs:\s*(?<doc>\w+)\.(?<entry>\w+)/
+    private empty = new Set<string>()
 
     public generate() {
         this.markGenerate(true)
@@ -35,6 +43,9 @@ export default class SwagGen extends BaseGen {
                 schemas
             }
         }
+
+        // model definitions
+        this.formDefinitions(schemas)
 
         // tags
         const tagKeys = {}
@@ -139,9 +150,6 @@ export default class SwagGen extends BaseGen {
             }
         }
 
-        // model definitions
-        this.formDefinitions(schemas)
-
         return swag
     }
 
@@ -245,8 +253,8 @@ export default class SwagGen extends BaseGen {
                             }
                         ],
                         struct: {
-                            name: "StandardError",
-                            short: "StandardError"
+                            name: "Error",
+                            short: "Error"
                         }
                     })
                 }
@@ -266,6 +274,9 @@ export default class SwagGen extends BaseGen {
                     }
                 },
                 responses
+            }
+            if (this.empty.has(el.name + "Input")) {
+                delete path.post.requestBody
             }
             this.addParentPathId(el, path.post)
         }
@@ -401,15 +412,22 @@ export default class SwagGen extends BaseGen {
             const responses = {
                 200: {
                     description: short + " retrieved successfully",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                $ref:
-                                    "#/components/schemas/" + el.name + "Output"
-                            }
-                        }
-                    }
+                    content: this.empty.has(el.name + "Output")
+                        ? {}
+                        : {
+                              "application/json": {
+                                  schema: {
+                                      $ref:
+                                          "#/components/schemas/" +
+                                          el.name +
+                                          "Output"
+                                  }
+                              }
+                          }
                 }
+            }
+            if (this.empty.has(el.name + "Output")) {
+                delete responses[200].content
             }
             this.formErrors(get, responses)
             path.get = {
@@ -455,6 +473,9 @@ export default class SwagGen extends BaseGen {
                     }
                 },
                 responses
+            }
+            if (this.empty.has(el.name + "Mutable")) {
+                delete path.put.requestBody
             }
             if (!singleton) {
                 path.put.parameters = [
@@ -503,7 +524,7 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${err.struct.name}Structure`
+                                $ref: `#/components/schemas/${err.struct.name}`
                             }
                         }
                     }
@@ -601,10 +622,10 @@ export default class SwagGen extends BaseGen {
             const def = this.extractDefinition(name)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${name}Structure`
+                    schema.$ref = `#/components/schemas/${name}`
                     break
                 case "union":
-                    schema.$ref = `#/components/schemas/${name}Union`
+                    schema.$ref = `#/components/schemas/${name}`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -776,7 +797,11 @@ export default class SwagGen extends BaseGen {
             delete request.required
         }
 
-        definitions[def.name + suffix] = request
+        if (Object.keys(properties).length !== 0) {
+            definitions[def.name + suffix] = request
+        } else {
+            this.empty.add(def.name + suffix)
+        }
     }
 
     private addUnionDefinition(
@@ -790,8 +815,17 @@ export default class SwagGen extends BaseGen {
 
         const name = def.name + suffix
         for (const attr of attrs) {
-            mapping[attr.name] =
-                "#/components/schemas/" + name + "-" + attr.name
+            // cannot have a competing definition already
+            const camel = capitalizeFirst(attr.name)
+            const already = this.extractDefinitionGently(camel)
+            if (already && already.generateInput /* struct */) {
+                throw new Error(
+                    "Cannot have union attribute called " +
+                        camel +
+                        " as definition already exists"
+                )
+            }
+            mapping[attr.name] = "#/components/schemas/" + camel
         }
         const required: string[] = ["type"]
         const request = {
@@ -832,7 +866,7 @@ export default class SwagGen extends BaseGen {
                     required.push(attr.name)
                 }
             }
-            definitions[name + "-" + attr.name] = {
+            definitions[capitalizeFirst(attr.name)] = {
                 allOf: [
                     { $ref: `#/components/schemas/${name}` },
                     {
@@ -871,34 +905,33 @@ export default class SwagGen extends BaseGen {
 
                 // handle multiget
                 if (def.generateMulti) {
-                    definitions[def.name + "MultiResponse"] = {
-                        type: "object",
-                        properties: {
-                            elements: {
-                                description:
-                                    "Array of retrieved " +
-                                    pluralizeName(def.name),
-                                type: "array",
-                                items: {
-                                    $ref:
-                                        "#/components/schemas/" +
-                                        def.name +
-                                        "Output"
-                                }
-                            }
+                    const elements = {
+                        description:
+                            "Array of retrieved " + pluralizeName(def.name),
+                        type: "array",
+                        items: {
+                            $ref: "#/components/schemas/" + def.name + "Output"
                         }
                     }
+                    const props: { [name: string]: any } = {}
+                    const full = {
+                        type: "object",
+                        properties: props
+                    }
+                    const plural = lowercaseFirst(pluralizeName(def.short))
+                    props[plural] = elements
+                    definitions[def.name + "MultiResponse"] = full
                 }
             }
             if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, true, false, "Structure")
+                this.addDefinition(definitions, def, true, false, "")
             }
             if ("union" === def.type && def.generateInput) {
-                this.addUnionDefinition(definitions, def, true, "Union")
+                this.addUnionDefinition(definitions, def, true, "")
             }
         }
 
-        definitions.StandardErrorStructure = {
+        definitions.Error = {
             description:
                 "Error details, only available if there was an issue in processing",
             type: "object",

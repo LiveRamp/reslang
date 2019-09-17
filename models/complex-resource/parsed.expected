@@ -96,8 +96,7 @@
       ],
       "short": "Garage",
       "secondary": true,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "type": "structure",

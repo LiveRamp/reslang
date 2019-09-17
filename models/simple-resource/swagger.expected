@@ -101,11 +101,6 @@ paths:
         - Garage
       operationId: Modify a Garage
       description: Actual PUT comment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GarageMutable'
       responses:
         '200':
           description: Garage modified successfully
@@ -142,7 +137,7 @@ components:
           type: string
         manufacturer:
           description: ''
-          $ref: '#/components/schemas/ManufacturerStructure'
+          $ref: '#/components/schemas/Manufacturer'
       required:
         - name
         - manufacturer
@@ -157,23 +152,20 @@ components:
           type: string
         manufacturer:
           description: ''
-          $ref: '#/components/schemas/ManufacturerStructure'
+          $ref: '#/components/schemas/Manufacturer'
       required:
         - id
         - name
         - manufacturer
-    GarageMutable:
-      type: object
-      properties: {}
     GarageMultiResponse:
       type: object
       properties:
-        elements:
+        garages:
           description: Array of retrieved Garages
           type: array
           items:
             $ref: '#/components/schemas/GarageOutput'
-    ManufacturerStructure:
+    Manufacturer:
       type: object
       properties:
         company:
@@ -181,7 +173,7 @@ components:
           type: string
       required:
         - company
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
-  title: 'Direct to Distribution API - BETA '
+  title: "Direct to Distribution API - BETA "
   description: API for accessing LiveRamp's Direct to Distribution Service
   version: 0.0.1
 servers:
-  - url: 'https://api.liveramp.com/actual'
+  - url: "https://api.liveramp.com/direct2dist"
 tags:
   - name: DistributionRequest
-    description: '(request) '
+    description: "(request) "
   - name: DistributionRequest / Cancel
     description: >-
       (async action) Use this action to cancel a given DistributionRequest. This
@@ -31,9 +31,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DistributionRequestInput'
+              $ref: "#/components/schemas/DistributionRequestInput"
       responses:
-        '201':
+        "201":
           description: DistributionRequest created successfully
           content:
             application/json:
@@ -41,7 +41,7 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
+                    description: ""
                     type: string
     get:
       tags:
@@ -100,10 +100,10 @@ paths:
           schema:
             type: string
             enum:
-              - 'createdAt:asc'
-              - 'createdAt:desc'
-              - 'statusUpdatedAt:asc'
-              - 'statusUpdatedAt:desc'
+              - "createdAt:asc"
+              - "createdAt:desc"
+              - "statusUpdatedAt:asc"
+              - "statusUpdatedAt:desc"
         - in: query
           name: createdAfter
           description: >-
@@ -168,7 +168,7 @@ paths:
             type: string
             format: ISO8601 UTC date-time
       responses:
-        '200':
+        "200":
           description: DistributionRequests retrieved successfully
           headers:
             X-Total-Count:
@@ -178,8 +178,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DistributionRequestMultiResponse'
-  '/v1/distribution-requests/{id}':
+                $ref: "#/components/schemas/DistributionRequestMultiResponse"
+  "/v1/distribution-requests/{id}":
     get:
       tags:
         - DistributionRequest
@@ -189,53 +189,48 @@ paths:
         including current status, input
                   configuration as well as output metadata, if the request has completed
       responses:
-        '200':
+        "200":
           description: DistributionRequest retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DistributionRequestOutput'
+                $ref: "#/components/schemas/DistributionRequestOutput"
       parameters:
         - in: path
           name: id
           required: true
-          description: ''
+          description: ""
           schema:
             type: string
-  '/v1/distribution-requests/{parentId}/cancels':
+  "/v1/distribution-requests/{parentId}/cancels":
     post:
       tags:
         - DistributionRequest / Cancel
       operationId: Create Cancel
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DistributionRequest--CancelInput'
+      description: ""
       responses:
-        '202':
-          description: 'Cancel action has been accepted, but is not yet complete'
+        "202":
+          description: "Cancel action has been accepted, but is not yet complete"
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   id:
-                    description: ''
+                    description: ""
                     type: string
-        '204':
+        "204":
           description: >-
             Cancel action has already been submitted and we are currently doing
             it
-        '409':
+        "409":
           description: >-
             Cancel action has been accepted but cannot be processed due to
             current state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: "#/components/schemas/Error"
       parameters:
         - in: path
           name: parentId
@@ -243,40 +238,35 @@ paths:
           required: true
           schema:
             type: string
-  '/v1/distribution-requests/{parentId}/retries':
+  "/v1/distribution-requests/{parentId}/retries":
     post:
       tags:
         - DistributionRequest / Retry
       operationId: Create Retry
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DistributionRequest--RetryInput'
+      description: ""
       responses:
-        '202':
-          description: 'Retry action has been accepted, but is not yet complete'
+        "202":
+          description: "Retry action has been accepted, but is not yet complete"
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   id:
-                    description: ''
+                    description: ""
                     type: string
-        '204':
+        "204":
           description: >-
             Retry action has already been submitted and we are currently doing
             it
-        '409':
+        "409":
           description: >-
             Retry action has been accepted but cannot be processed due to
             current state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: "#/components/schemas/Error"
       parameters:
         - in: path
           name: parentId
@@ -311,7 +301,7 @@ components:
             in GCS
           type: string
           format: url
-          example: 'https://www.domain.com (url)'
+          example: "https://www.domain.com (url)"
         dataMappingConfigs:
           description: >-
             A destination platform might require a particular key/value data
@@ -352,7 +342,7 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfigStructure'
+            $ref: "#/components/schemas/DataMappingConfig"
           type: array
       required:
         - destinationEndpointId
@@ -363,7 +353,7 @@ components:
       type: object
       properties:
         id:
-          description: ''
+          description: ""
           type: string
         destinationEndpointId:
           description: >-
@@ -386,7 +376,7 @@ components:
             in GCS
           type: string
           format: url
-          example: 'https://www.domain.com (url)'
+          example: "https://www.domain.com (url)"
         dataMappingConfigs:
           description: >-
             A destination platform might require a particular key/value data
@@ -427,13 +417,13 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfigStructure'
+            $ref: "#/components/schemas/DataMappingConfig"
           type: array
         createdAt:
-          description: 'Datetime in UTC, formatted as ISO-8601, when the request was created'
+          description: "Datetime in UTC, formatted as ISO-8601, when the request was created"
           type: string
           format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
+          example: "2019-04-13T03:35:34Z"
         status:
           description: Status of the given DistributionRequest
           type: string
@@ -444,12 +434,12 @@ components:
             request last changed
           type: string
           format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
+          example: "2019-04-13T03:35:34Z"
         outputMetaData:
           description: Metadata about the batch output
-          $ref: '#/components/schemas/BatchOutputMetadataStructure'
+          $ref: "#/components/schemas/BatchOutputMetadata"
         distributionType:
-          description: ''
+          description: ""
           type: string
           enum:
             - BATCH
@@ -462,35 +452,28 @@ components:
         - createdAt
         - status
         - statusUpdatedAt
-        - outputMetaData
         - distributionType
     DistributionRequestMultiResponse:
       type: object
       properties:
-        elements:
+        distributionRequests:
           description: Array of retrieved DistributionRequests
           type: array
           items:
-            $ref: '#/components/schemas/DistributionRequestOutput'
-    DistributionRequest--CancelInput:
-      type: object
-      properties: {}
-    DistributionRequest--RetryInput:
-      type: object
-      properties: {}
-    DataMappingConfigStructure:
+            $ref: "#/components/schemas/DistributionRequestOutput"
+    DataMappingConfig:
       type: object
       properties:
         input:
-          description: ''
-          $ref: '#/components/schemas/MappingInputUnionUnion'
+          description: ""
+          $ref: "#/components/schemas/InputFormat"
         output:
-          description: ''
-          $ref: '#/components/schemas/MappingOutputUnionUnion'
+          description: ""
+          $ref: "#/components/schemas/OutputFormat"
       required:
         - input
         - output
-    MappingInputUnionUnion:
+    InputFormat:
       type: object
       properties:
         type:
@@ -498,35 +481,22 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          inputKeyValue: '#/components/schemas/MappingInputUnionUnion-inputKeyValue'
+          inputKeyValue: "#/components/schemas/InputKeyValue"
       required:
         - type
         - key
-        - value
-    MappingInputUnionUnion-inputKeyValue:
+    InputKeyValue:
       allOf:
-        - $ref: '#/components/schemas/MappingInputUnionUnion'
+        - $ref: "#/components/schemas/InputFormat"
         - type: object
           properties:
             key:
-              description: ''
+              description: ""
               type: number
             value:
-              description: ''
+              description: ""
               type: number
-    MappingInputKeyStructure:
-      type: object
-      properties:
-        key:
-          description: ''
-          type: number
-        value:
-          description: ''
-          type: number
-      required:
-        - key
-        - value
-    MappingOutputUnionUnion:
+    OutputFormat:
       type: object
       properties:
         type:
@@ -534,57 +504,38 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          outputKeyValueLabel: '#/components/schemas/MappingOutputUnionUnion-outputKeyValueLabel'
-          outputIdLabel: '#/components/schemas/MappingOutputUnionUnion-outputIdLabel'
+          outputKeyValueLabel: "#/components/schemas/OutputKeyValueLabel"
+          outputIdLabel: "#/components/schemas/OutputIdLabel"
       required:
         - type
         - keyLabel
         - idLabel
-    MappingOutputUnionUnion-outputKeyValueLabel:
+    OutputKeyValueLabel:
       allOf:
-        - $ref: '#/components/schemas/MappingOutputUnionUnion'
+        - $ref: "#/components/schemas/OutputFormat"
         - type: object
           properties:
             keyLabel:
-              description: ''
+              description: ""
               type: string
             valueLabel:
-              description: ''
+              description: ""
               type: string
-    MappingOutputUnionUnion-outputIdLabel:
+    OutputIdLabel:
       allOf:
-        - $ref: '#/components/schemas/MappingOutputUnionUnion'
+        - $ref: "#/components/schemas/OutputFormat"
         - type: object
           properties:
             idLabel:
-              description: ''
+              description: ""
               type: string
-    MappingKeyValueLabelStructure:
-      type: object
-      properties:
-        keyLabel:
-          description: ''
-          type: string
-        valueLabel:
-          description: ''
-          type: string
-      required:
-        - keyLabel
-    MappingIdLabelStructure:
-      type: object
-      properties:
-        idLabel:
-          description: ''
-          type: string
-      required:
-        - idLabel
-    BatchOutputMetadataStructure:
+    BatchOutputMetadata:
       type: object
       properties:
         fileDetails:
-          description: ''
+          description: ""
           items:
-            $ref: '#/components/schemas/FileLineCountsStructure'
+            $ref: "#/components/schemas/FileDetails"
           type: array
         totalOutputSize:
           description: Total size of the distributed data in bytes
@@ -599,23 +550,20 @@ components:
         - fileDetails
         - totalOutputSize
         - totalDistributionRecords
-    FileLineCountsStructure:
+    FileDetails:
       type: object
       properties:
         fileName:
-          description: ''
+          description: ""
           type: string
         lineCount:
-          description: ''
+          description: ""
           type: number
       required:
         - fileName
         - lineCount
-    Destination--EndpointInput:
-      type: object
-      properties: {}
-    StandardErrorStructure:
-      description: 'Error details, only available if there was an issue in processing'
+    Error:
+      description: "Error details, only available if there was an issue in processing"
       type: object
       properties:
         httpStatusCode:
@@ -623,7 +571,7 @@ components:
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
-          description: ' Optional, more granular error code for this problem'
+          description: " Optional, more granular error code for this problem"
         message:
           type: string
           description: Human readable error message

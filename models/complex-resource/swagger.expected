@@ -206,11 +206,6 @@ paths:
         - Car / Wheel
       operationId: Modify a Car--Wheel
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Car--WheelMutable'
       responses:
         '200':
           description: Wheel modified successfully
@@ -230,7 +225,7 @@ paths:
 components:
   parameters: {}
   schemas:
-    simple-resource-ManufacturerStructure:
+    simple-resource-Manufacturer:
       type: object
       properties:
         company:
@@ -247,17 +242,17 @@ components:
           enum: *ref_0
         engine:
           description: ''
-          $ref: '#/components/schemas/SpecificationStructure'
+          $ref: '#/components/schemas/Specification'
         components:
           description: ''
-          $ref: '#/components/schemas/SpecificationStructure'
+          $ref: '#/components/schemas/Specification'
         homeGarageId:
           description: ''
           type: string
           example: Link to a simple-resource-Garage  resource via its id
         manufacturer:
           description: ''
-          $ref: '#/components/schemas/simple-resource-ManufacturerStructure'
+          $ref: '#/components/schemas/simple-resource-Manufacturer'
         rentedGarageIds:
           description: ''
           items:
@@ -288,17 +283,17 @@ components:
           enum: *ref_0
         engine:
           description: ''
-          $ref: '#/components/schemas/SpecificationStructure'
+          $ref: '#/components/schemas/Specification'
         components:
           description: ''
-          $ref: '#/components/schemas/SpecificationStructure'
+          $ref: '#/components/schemas/Specification'
         homeGarageId:
           description: ''
           type: string
           example: Link to a simple-resource-Garage  resource via its id
         manufacturer:
           description: ''
-          $ref: '#/components/schemas/simple-resource-ManufacturerStructure'
+          $ref: '#/components/schemas/simple-resource-Manufacturer'
         rentedGarageIds:
           description: ''
           items:
@@ -317,12 +312,12 @@ components:
     CarMultiResponse:
       type: object
       properties:
-        elements:
+        cars:
           description: Array of retrieved Cars
           type: array
           items:
             $ref: '#/components/schemas/CarOutput'
-    SpecificationStructure:
+    Specification:
       type: object
       properties:
         type:
@@ -354,18 +349,15 @@ components:
       required:
         - id
         - radius
-    Car--WheelMutable:
-      type: object
-      properties: {}
     Car--WheelMultiResponse:
       type: object
       properties:
-        elements:
+        wheels:
           description: Array of retrieved Car--Wheels
           type: array
           items:
             $ref: '#/components/schemas/Car--WheelOutput'
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

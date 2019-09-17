@@ -361,8 +361,7 @@
       ],
       "short": "IdentifierPool",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true
+      "file": "destination.reslang"
     },
     {
       "future": false,

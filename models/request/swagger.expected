@@ -179,11 +179,6 @@ paths:
         - UploadRequest / StartProcessingAction
       operationId: Create StartProcessingAction
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UploadRequest--StartProcessingActionInput'
       responses:
         '202':
           description: >-
@@ -208,7 +203,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: '#/components/schemas/Error'
       parameters:
         - in: path
           name: parentId
@@ -318,7 +313,7 @@ components:
     UploadRequestMultiResponse:
       type: object
       properties:
-        elements:
+        uploadRequests:
           description: Array of retrieved UploadRequests
           type: array
           items:
@@ -348,7 +343,7 @@ components:
         records:
           description: ''
           items:
-            $ref: '#/components/schemas/RecordStructure'
+            $ref: '#/components/schemas/Record'
           type: array
       required:
         - company
@@ -365,13 +360,13 @@ components:
         records:
           description: ''
           items:
-            $ref: '#/components/schemas/RecordStructure'
+            $ref: '#/components/schemas/Record'
           type: array
       required:
         - id
         - company
         - records
-    RecordStructure:
+    Record:
       type: object
       properties:
         details:
@@ -383,9 +378,6 @@ components:
       required:
         - details
         - address
-    UploadRequest--StartProcessingActionInput:
-      type: object
-      properties: {}
     UploadRequest--StopProcessingActionInput:
       type: object
       properties:
@@ -410,7 +402,7 @@ components:
       required:
         - id
         - when
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

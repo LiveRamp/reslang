@@ -180,7 +180,7 @@ export abstract class BaseGen {
             // now work out if attributes reference any structures or other resources
             for (const attr of el.attributes || []) {
                 const def = this.extractDefinitionGently(attr.type.name)
-                if (def) {
+                if (def && !attr.inline && !attr.linked) {
                     def.generateInput = true
                 }
             }

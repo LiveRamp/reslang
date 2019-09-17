@@ -68,7 +68,7 @@ components:
           type: string
         key:
           description: ''
-          $ref: '#/components/schemas/InputKeyUnion'
+          $ref: '#/components/schemas/InputKey'
         a:
           description: ''
           type: number
@@ -93,8 +93,8 @@ components:
           type: string
         key:
           description: ''
-          $ref: '#/components/schemas/InputKeyUnion'
-    Struct2Structure:
+          $ref: '#/components/schemas/InputKey'
+    Struct2:
       type: object
       properties:
         notes:
@@ -106,7 +106,7 @@ components:
       required:
         - notes
         - text
-    InputKeyUnion:
+    InputKey:
       type: object
       properties:
         type:
@@ -114,34 +114,34 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          num: '#/components/schemas/InputKeyUnion-num'
-          struct: '#/components/schemas/InputKeyUnion-struct'
-          struct2: '#/components/schemas/InputKeyUnion-struct2'
+          num: '#/components/schemas/Num'
+          mystruct: '#/components/schemas/Mystruct'
+          mystruct2: '#/components/schemas/Mystruct2'
       required:
         - type
         - num
-        - struct
+        - mystruct
         - notes
         - text
-    InputKeyUnion-num:
+    Num:
       allOf:
-        - $ref: '#/components/schemas/InputKeyUnion'
+        - $ref: '#/components/schemas/InputKey'
         - type: object
           properties:
             num:
               description: ''
               type: number
-    InputKeyUnion-struct:
+    Mystruct:
       allOf:
-        - $ref: '#/components/schemas/InputKeyUnion'
+        - $ref: '#/components/schemas/InputKey'
         - type: object
           properties:
-            struct:
+            mystruct:
               description: ''
-              $ref: '#/components/schemas/Struct2Structure'
-    InputKeyUnion-struct2:
+              $ref: '#/components/schemas/Struct2'
+    Mystruct2:
       allOf:
-        - $ref: '#/components/schemas/InputKeyUnion'
+        - $ref: '#/components/schemas/InputKey'
         - type: object
           properties:
             notes:
@@ -150,25 +150,7 @@ components:
             text:
               description: ''
               type: string
-    Struct3Structure:
-      type: object
-      properties:
-        a:
-          description: ''
-          type: number
-        b:
-          description: ''
-          type: string
-        c:
-          description: ''
-          type: string
-          format: ISO8601 UTC date
-          example: '2019-04-13'
-      required:
-        - a
-        - b
-        - c
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

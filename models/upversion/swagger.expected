@@ -82,11 +82,6 @@ paths:
         - ResourceB
       operationId: Modify a ResourceB
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ResourceBMutable'
       responses:
         '200':
           description: ResourceB modified successfully
@@ -239,9 +234,6 @@ components:
       required:
         - id
         - size
-    ResourceBMutable:
-      type: object
-      properties: {}
     v2-ResourceBInput:
       type: object
       properties:
@@ -282,7 +274,7 @@ components:
       required:
         - id
         - name
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

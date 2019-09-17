@@ -187,7 +187,7 @@
             "mutable": false,
             "queryonly": false,
             "query": false,
-            "optional": false,
+            "optional": true,
             "output": true
           }
         },
@@ -463,8 +463,8 @@
           "name": "input",
           "stringMap": false,
           "type": {
-            "name": "MappingInputUnion",
-            "short": "MappingInputUnion"
+            "name": "InputFormat",
+            "short": "InputFormat"
           },
           "inline": false,
           "multiple": false,
@@ -482,8 +482,8 @@
           "name": "output",
           "stringMap": false,
           "type": {
-            "name": "MappingOutputUnion",
-            "short": "MappingOutputUnion"
+            "name": "OutputFormat",
+            "short": "OutputFormat"
           },
           "inline": false,
           "multiple": false,
@@ -505,14 +505,14 @@
     },
     {
       "type": "union",
-      "name": "MappingInputUnion",
+      "name": "InputFormat",
       "attributes": [
         {
           "name": "inputKeyValue",
           "stringMap": false,
           "type": {
-            "name": "MappingInputKey",
-            "short": "MappingInputKey"
+            "name": "InputKeyValue",
+            "short": "InputKeyValue"
           },
           "inline": true,
           "multiple": false,
@@ -527,14 +527,14 @@
           }
         }
       ],
-      "short": "MappingInputUnion",
+      "short": "InputFormat",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "MappingInputKey",
+      "name": "InputKeyValue",
       "attributes": [
         {
           "name": "key",
@@ -570,26 +570,25 @@
             "mutable": false,
             "queryonly": false,
             "query": false,
-            "optional": false,
+            "optional": true,
             "output": false
           }
         }
       ],
-      "short": "MappingInputKey",
+      "short": "InputKeyValue",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "type": "union",
-      "name": "MappingOutputUnion",
+      "name": "OutputFormat",
       "attributes": [
         {
           "name": "outputKeyValueLabel",
           "stringMap": false,
           "type": {
-            "name": "MappingKeyValueLabel",
-            "short": "MappingKeyValueLabel"
+            "name": "OutputKeyValueLabel",
+            "short": "OutputKeyValueLabel"
           },
           "inline": true,
           "multiple": false,
@@ -607,8 +606,8 @@
           "name": "outputIdLabel",
           "stringMap": false,
           "type": {
-            "name": "MappingIdLabel",
-            "short": "MappingIdLabel"
+            "name": "OutputIdLabel",
+            "short": "OutputIdLabel"
           },
           "inline": true,
           "multiple": false,
@@ -623,14 +622,14 @@
           }
         }
       ],
-      "short": "MappingOutputUnion",
+      "short": "OutputFormat",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "MappingKeyValueLabel",
+      "name": "OutputKeyValueLabel",
       "attributes": [
         {
           "name": "keyLabel",
@@ -671,14 +670,13 @@
           }
         }
       ],
-      "short": "MappingKeyValueLabel",
+      "short": "OutputKeyValueLabel",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "type": "structure",
-      "name": "MappingIdLabel",
+      "name": "OutputIdLabel",
       "attributes": [
         {
           "name": "idLabel",
@@ -700,10 +698,9 @@
           }
         }
       ],
-      "short": "MappingIdLabel",
+      "short": "OutputIdLabel",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "type": "structure",
@@ -713,8 +710,8 @@
           "name": "fileDetails",
           "stringMap": false,
           "type": {
-            "name": "FileLineCounts",
-            "short": "FileLineCounts"
+            "name": "FileDetails",
+            "short": "FileDetails"
           },
           "inline": false,
           "multiple": true,
@@ -776,7 +773,7 @@
     },
     {
       "type": "structure",
-      "name": "FileLineCounts",
+      "name": "FileDetails",
       "attributes": [
         {
           "name": "fileName",
@@ -817,7 +814,7 @@
           }
         }
       ],
-      "short": "FileLineCounts",
+      "short": "FileDetails",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
@@ -882,8 +879,7 @@
       "short": "Endpoint",
       "parentShort": "Destination",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     }
   ],
   "diagrams": [

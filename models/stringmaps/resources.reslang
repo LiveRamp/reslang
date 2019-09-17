@@ -22,8 +22,8 @@ structure Struct2 {
 
 union InputKey {
     num: int
-    struct: Struct2
-    struct2: Struct2 inline
+    mystruct: Struct2
+    mystruct2: Struct2 inline
 }
 
 structure Struct3 {

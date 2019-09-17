@@ -17,7 +17,7 @@ request-resource DistributionRequest {
       "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed"
     statusUpdatedAt: datetime output
       "Metadata about the batch output"
-    outputMetaData: BatchOutputMetadata output    
+    outputMetaData: BatchOutputMetadata output optional  
     distributionType: DistributionTypeEnum output
 
     // query only params
@@ -77,35 +77,35 @@ enum StatusEnum {
 }
 
 structure DataMappingConfig {
-    input: MappingInputUnion;
-    output: MappingOutputUnion
+    input: InputFormat;
+    output: OutputFormat
 }
 
-union MappingInputUnion {
-    inputKeyValue: MappingInputKey inline
+union InputFormat {
+    inputKeyValue: InputKeyValue inline
 }
 
-structure MappingInputKey {
+structure InputKeyValue {
     key: int
-    value: int
+    value: int optional
 }
 
-union MappingOutputUnion {
-    outputKeyValueLabel: MappingKeyValueLabel inline
-    outputIdLabel: MappingIdLabel inline
+union OutputFormat {
+    outputKeyValueLabel: OutputKeyValueLabel inline
+    outputIdLabel: OutputIdLabel inline
 }
 
-structure MappingKeyValueLabel {
+structure OutputKeyValueLabel {
     keyLabel: string
     valueLabel: string optional
 }
 
-structure MappingIdLabel {
+structure OutputIdLabel {
     idLabel: string
 }
 
 structure BatchOutputMetadata {
-    fileDetails: FileLineCounts[]
+    fileDetails: FileDetails[]
     "Total size of the distributed data in bytes"
     totalOutputSize: int
     
@@ -113,7 +113,7 @@ structure BatchOutputMetadata {
     totalDistributionRecords: int
 }
 
-structure FileLineCounts {
+structure FileDetails {
     fileName: string
     lineCount: int
 }

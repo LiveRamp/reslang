@@ -214,11 +214,6 @@ paths:
         - Destination / TaxonomyConfiguration
       operationId: Modify a Destination--TaxonomyConfiguration
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Destination--TaxonomyConfigurationMutable'
       responses:
         '200':
           description: TaxonomyConfiguration modified successfully
@@ -340,11 +335,6 @@ paths:
         - Destination / Integration
       operationId: Modify a Destination--Integration
       description: Alter an integration
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Destination--IntegrationMutable'
       responses:
         '200':
           description: Integration modified successfully
@@ -466,11 +456,6 @@ paths:
         - Destination / Endpoint
       operationId: Modify a Destination--Endpoint
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Destination--EndpointMutable'
       responses:
         '200':
           description: Endpoint modified successfully
@@ -795,7 +780,7 @@ components:
     DestinationMultiResponse:
       type: object
       properties:
-        elements:
+        destinations:
           description: Array of retrieved Destinations
           type: array
           items:
@@ -828,13 +813,10 @@ components:
         - id
         - name
         - mappingsMacro
-    Destination--TaxonomyConfigurationMutable:
-      type: object
-      properties: {}
     Destination--TaxonomyConfigurationMultiResponse:
       type: object
       properties:
-        elements:
+        taxonomyConfigurations:
           description: Array of retrieved Destination--TaxonomyConfigurations
           type: array
           items:
@@ -848,7 +830,7 @@ components:
         mapping:
           description: ''
           items:
-            $ref: '#/components/schemas/IdentifierTypeMappingStructure'
+            $ref: '#/components/schemas/IdentifierTypeMapping'
           type: array
         taxonomyConfigurationId:
           description: ''
@@ -870,7 +852,7 @@ components:
         mapping:
           description: ''
           items:
-            $ref: '#/components/schemas/IdentifierTypeMappingStructure'
+            $ref: '#/components/schemas/IdentifierTypeMapping'
           type: array
         taxonomyConfigurationId:
           description: ''
@@ -881,18 +863,15 @@ components:
         - name
         - mapping
         - taxonomyConfigurationId
-    Destination--IntegrationMutable:
-      type: object
-      properties: {}
     Destination--IntegrationMultiResponse:
       type: object
       properties:
-        elements:
+        integrations:
           description: Array of retrieved Destination--Integrations
           type: array
           items:
             $ref: '#/components/schemas/Destination--IntegrationOutput'
-    IdentifierTypeMappingStructure:
+    IdentifierTypeMapping:
       type: object
       properties:
         identifierPoolId:
@@ -908,9 +887,6 @@ components:
       required:
         - identifierPoolId
         - endpointId
-    IdentifierPoolInput:
-      type: object
-      properties: {}
     Destination--EndpointInput:
       type: object
       properties:
@@ -935,7 +911,7 @@ components:
         endpointProperties:
           description: ''
           items:
-            $ref: '#/components/schemas/EndpointPropertyStructure'
+            $ref: '#/components/schemas/EndpointProperty'
           type: array
       required:
         - name
@@ -971,7 +947,7 @@ components:
         endpointProperties:
           description: ''
           items:
-            $ref: '#/components/schemas/EndpointPropertyStructure'
+            $ref: '#/components/schemas/EndpointProperty'
           type: array
       required:
         - id
@@ -981,18 +957,15 @@ components:
         - formatterId
         - delivererId
         - endpointProperties
-    Destination--EndpointMutable:
-      type: object
-      properties: {}
     Destination--EndpointMultiResponse:
       type: object
       properties:
-        elements:
+        endpoints:
           description: Array of retrieved Destination--Endpoints
           type: array
           items:
             $ref: '#/components/schemas/Destination--EndpointOutput'
-    EndpointPropertyStructure:
+    EndpointProperty:
       type: object
       properties:
         name:
@@ -1045,7 +1018,7 @@ components:
     Destination--PackagerMultiResponse:
       type: object
       properties:
-        elements:
+        packagers:
           description: Array of retrieved Destination--Packagers
           type: array
           items:
@@ -1073,7 +1046,7 @@ components:
     Destination--FormatterMultiResponse:
       type: object
       properties:
-        elements:
+        formatters:
           description: Array of retrieved Destination--Formatters
           type: array
           items:
@@ -1133,12 +1106,12 @@ components:
     Destination--DelivererMultiResponse:
       type: object
       properties:
-        elements:
+        deliverers:
           description: Array of retrieved Destination--Deliverers
           type: array
           items:
             $ref: '#/components/schemas/Destination--DelivererOutput'
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

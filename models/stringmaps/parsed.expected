@@ -242,7 +242,7 @@
           }
         },
         {
-          "name": "struct",
+          "name": "mystruct",
           "stringMap": false,
           "type": {
             "name": "Struct2",
@@ -261,7 +261,7 @@
           }
         },
         {
-          "name": "struct2",
+          "name": "mystruct2",
           "stringMap": false,
           "type": {
             "name": "Struct2",
@@ -349,8 +349,7 @@
       ],
       "short": "Struct3",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     }
   ],
   "diagrams": [

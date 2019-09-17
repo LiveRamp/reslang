@@ -208,11 +208,6 @@ paths:
         - DistributionRequest / Cancel
       operationId: Create Cancel
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DistributionRequest--CancelInput'
       responses:
         '202':
           description: 'Cancel action has been accepted, but is not yet complete'
@@ -235,7 +230,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: '#/components/schemas/Error'
       parameters:
         - in: path
           name: parentId
@@ -249,11 +244,6 @@ paths:
         - DistributionRequest / Retry
       operationId: Create Retry
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DistributionRequest--RetryInput'
       responses:
         '202':
           description: 'Retry action has been accepted, but is not yet complete'
@@ -276,7 +266,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: '#/components/schemas/Error'
       parameters:
         - in: path
           name: parentId
@@ -352,7 +342,7 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfigStructure'
+            $ref: '#/components/schemas/DataMappingConfig'
           type: array
       required:
         - destinationEndpointId
@@ -427,7 +417,7 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfigStructure'
+            $ref: '#/components/schemas/DataMappingConfig'
           type: array
         createdAt:
           description: 'Datetime in UTC, formatted as ISO-8601, when the request was created'
@@ -447,7 +437,7 @@ components:
           example: '2019-04-13T03:35:34Z'
         outputMetaData:
           description: Metadata about the batch output
-          $ref: '#/components/schemas/BatchOutputMetadataStructure'
+          $ref: '#/components/schemas/BatchOutputMetadata'
         distributionType:
           description: ''
           type: string
@@ -462,35 +452,28 @@ components:
         - createdAt
         - status
         - statusUpdatedAt
-        - outputMetaData
         - distributionType
     DistributionRequestMultiResponse:
       type: object
       properties:
-        elements:
+        distributionRequests:
           description: Array of retrieved DistributionRequests
           type: array
           items:
             $ref: '#/components/schemas/DistributionRequestOutput'
-    DistributionRequest--CancelInput:
-      type: object
-      properties: {}
-    DistributionRequest--RetryInput:
-      type: object
-      properties: {}
-    DataMappingConfigStructure:
+    DataMappingConfig:
       type: object
       properties:
         input:
           description: ''
-          $ref: '#/components/schemas/MappingInputUnionUnion'
+          $ref: '#/components/schemas/InputFormat'
         output:
           description: ''
-          $ref: '#/components/schemas/MappingOutputUnionUnion'
+          $ref: '#/components/schemas/OutputFormat'
       required:
         - input
         - output
-    MappingInputUnionUnion:
+    InputFormat:
       type: object
       properties:
         type:
@@ -498,14 +481,13 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          inputKeyValue: '#/components/schemas/MappingInputUnionUnion-inputKeyValue'
+          inputKeyValue: '#/components/schemas/InputKeyValue'
       required:
         - type
         - key
-        - value
-    MappingInputUnionUnion-inputKeyValue:
+    InputKeyValue:
       allOf:
-        - $ref: '#/components/schemas/MappingInputUnionUnion'
+        - $ref: '#/components/schemas/InputFormat'
         - type: object
           properties:
             key:
@@ -514,19 +496,7 @@ components:
             value:
               description: ''
               type: number
-    MappingInputKeyStructure:
-      type: object
-      properties:
-        key:
-          description: ''
-          type: number
-        value:
-          description: ''
-          type: number
-      required:
-        - key
-        - value
-    MappingOutputUnionUnion:
+    OutputFormat:
       type: object
       properties:
         type:
@@ -534,15 +504,15 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          outputKeyValueLabel: '#/components/schemas/MappingOutputUnionUnion-outputKeyValueLabel'
-          outputIdLabel: '#/components/schemas/MappingOutputUnionUnion-outputIdLabel'
+          outputKeyValueLabel: '#/components/schemas/OutputKeyValueLabel'
+          outputIdLabel: '#/components/schemas/OutputIdLabel'
       required:
         - type
         - keyLabel
         - idLabel
-    MappingOutputUnionUnion-outputKeyValueLabel:
+    OutputKeyValueLabel:
       allOf:
-        - $ref: '#/components/schemas/MappingOutputUnionUnion'
+        - $ref: '#/components/schemas/OutputFormat'
         - type: object
           properties:
             keyLabel:
@@ -551,40 +521,21 @@ components:
             valueLabel:
               description: ''
               type: string
-    MappingOutputUnionUnion-outputIdLabel:
+    OutputIdLabel:
       allOf:
-        - $ref: '#/components/schemas/MappingOutputUnionUnion'
+        - $ref: '#/components/schemas/OutputFormat'
         - type: object
           properties:
             idLabel:
               description: ''
               type: string
-    MappingKeyValueLabelStructure:
-      type: object
-      properties:
-        keyLabel:
-          description: ''
-          type: string
-        valueLabel:
-          description: ''
-          type: string
-      required:
-        - keyLabel
-    MappingIdLabelStructure:
-      type: object
-      properties:
-        idLabel:
-          description: ''
-          type: string
-      required:
-        - idLabel
-    BatchOutputMetadataStructure:
+    BatchOutputMetadata:
       type: object
       properties:
         fileDetails:
           description: ''
           items:
-            $ref: '#/components/schemas/FileLineCountsStructure'
+            $ref: '#/components/schemas/FileDetails'
           type: array
         totalOutputSize:
           description: Total size of the distributed data in bytes
@@ -599,7 +550,7 @@ components:
         - fileDetails
         - totalOutputSize
         - totalDistributionRecords
-    FileLineCountsStructure:
+    FileDetails:
       type: object
       properties:
         fileName:
@@ -611,10 +562,7 @@ components:
       required:
         - fileName
         - lineCount
-    Destination--EndpointInput:
-      type: object
-      properties: {}
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:

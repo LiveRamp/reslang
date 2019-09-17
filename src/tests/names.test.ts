@@ -3,7 +3,9 @@ import {
     fixName,
     getVersion,
     makeShort,
-    makeLong
+    makeLong,
+    capitalizeFirst,
+    lowercaseFirst
 } from "../names"
 
 describe("name tests", () => {
@@ -59,5 +61,13 @@ describe("name tests", () => {
     })
     test("makeLong6", () => {
         expect(makeLong("foo", "xxx", "bar.bar")).toBe("bar.bar")
+    })
+
+    test("capitalizeFirst", () => {
+        expect(capitalizeFirst("fooBar")).toBe("FooBar")
+    })
+
+    test("lowercaseFirst", () => {
+        expect(lowercaseFirst("FooBar")).toBe("fooBar")
     })
 })

@@ -183,19 +183,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpecialErrorStructure'
+                $ref: '#/components/schemas/SpecialError'
         '404':
           description: Cannot find file type
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: '#/components/schemas/StandardError'
         '405':
           description: Not Allowed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardErrorStructure'
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id
@@ -390,11 +390,6 @@ paths:
         - DirectoryDeleteRequest / Cancel
       operationId: Create Cancel
       description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DirectoryDeleteRequest--CancelInput'
       responses:
         '201':
           description: Cancel action completed
@@ -439,7 +434,7 @@ components:
     DirectoryMultiResponse:
       type: object
       properties:
-        elements:
+        directories:
           description: Array of retrieved Directories
           type: array
           items:
@@ -489,14 +484,11 @@ components:
     FileTypeMultiResponse:
       type: object
       properties:
-        elements:
+        fileTypes:
           description: Array of retrieved FileTypes
           type: array
           items:
             $ref: '#/components/schemas/FileTypeOutput'
-    SpecificationInput:
-      type: object
-      properties: {}
     Directory--FileInput:
       type: object
       properties:
@@ -538,7 +530,7 @@ components:
     Directory--FileMultiResponse:
       type: object
       properties:
-        elements:
+        files:
           description: Array of retrieved Directory--Files
           type: array
           items:
@@ -568,15 +560,12 @@ components:
     DirectoryDeleteRequestMultiResponse:
       type: object
       properties:
-        elements:
+        directoryDeleteRequests:
           description: Array of retrieved DirectoryDeleteRequests
           type: array
           items:
             $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
-    DirectoryDeleteRequest--CancelInput:
-      type: object
-      properties: {}
-    SpecialErrorStructure:
+    SpecialError:
       type: object
       properties:
         message:
@@ -590,7 +579,7 @@ components:
       required:
         - message
         - time
-    StandardErrorStructure:
+    Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object
       properties:
