@@ -407,7 +407,6 @@ export default class SwagGen extends BaseGen {
         del?: IOperation | null
     ) {
         if (get) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -437,6 +436,7 @@ export default class SwagGen extends BaseGen {
                 responses
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.get.parameters = [
                     this.addType(idtype, {
                         in: "path",
@@ -448,7 +448,6 @@ export default class SwagGen extends BaseGen {
             this.addParentPathId(el, path.get)
         }
         if (put) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -478,6 +477,7 @@ export default class SwagGen extends BaseGen {
                 delete path.put.requestBody
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.put.parameters = [
                     this.addType(idtype, {
                         in: "path",
@@ -489,7 +489,6 @@ export default class SwagGen extends BaseGen {
             this.addParentPathId(el, path.put)
         }
         if (del) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -504,6 +503,7 @@ export default class SwagGen extends BaseGen {
                 responses
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.delete.parameters = [
                     this.addType(idtype, {
                         in: "path",
