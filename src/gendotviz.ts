@@ -173,8 +173,7 @@ export default class DotvizGen extends BaseGen {
         const include = new Set<string>(
             (this.defs || [])
                 .filter(
-                    def =>
-                        !diagram.includeAll || diagram.includeAll === def.file
+                    def => diagram.includeAll && diagram.includeAll === def.file
                 )
                 .map(def => def.name)
         )
