@@ -6,7 +6,7 @@ E.g. the File and Directory API diagram is as follows:
 
 ```
 diagram files {
-    /includeall
+    /includeAll
         files.reslang
 }
 ```

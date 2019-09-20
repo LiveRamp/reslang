@@ -108,7 +108,7 @@ To generate a diagram we must specify a diagram specification:
 
 ```
 diagram files {
-    /includeall
+    /includeAll
         files.reslang
 }
 ```
