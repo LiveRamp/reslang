@@ -9,7 +9,7 @@
       "future": false,
       "type": "asset-resource",
       "name": "Resource",
-      "singleton": true,
+      "singleton": false,
       "attributes": [
         {
           "name": "id",
@@ -52,7 +52,7 @@
       ],
       "operations": [
         {
-          "operation": "PUT",
+          "operation": "POST",
           "errors": []
         },
         {
@@ -63,7 +63,7 @@
       "short": "Resource",
       "secondary": false,
       "file": "resources.reslang",
-      "generateMutable": true,
+      "generateInput": true,
       "generateOutput": true
     },
     {
@@ -73,25 +73,6 @@
       "singleton": true,
       "parent": "Resource",
       "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "name": "int",
-            "short": "int"
-          },
-          "inline": false,
-          "multiple": false,
-          "linked": false,
-          "modifiers": {
-            "synthetic": false,
-            "mutable": false,
-            "queryonly": false,
-            "query": false,
-            "optional": false,
-            "output": false
-          }
-        },
         {
           "name": "info",
           "stringMap": false,
@@ -124,6 +105,92 @@
       ],
       "short": "Metadata",
       "parentShort": "Resource",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateMutable": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "SingletonResource",
+      "singleton": true,
+      "attributes": [
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "SingletonResource",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateMutable": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "subresource",
+      "name": "SingletonResource--Metadata",
+      "singleton": true,
+      "parent": "SingletonResource",
+      "attributes": [
+        {
+          "name": "info",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "multiple": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Metadata",
+      "parentShort": "SingletonResource",
       "secondary": false,
       "file": "resources.reslang",
       "generateMutable": true,
