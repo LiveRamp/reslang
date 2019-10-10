@@ -10,8 +10,34 @@ tags:
     description: '(asset) '
   - name: Resource / Metadata
     description: '(subresource) '
+  - name: SingletonResource
+    description: '(asset) '
+  - name: SingletonResource / Metadata
+    description: '(subresource) '
 paths:
-  /v1/resource:
+  /v1/resources:
+    post:
+      tags:
+        - Resource
+      operationId: Create Resource
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceInput'
+      responses:
+        '201':
+          description: Resource created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+  '/v1/resources/{id}':
     get:
       tags:
         - Resource
@@ -24,15 +50,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResourceOutput'
-    put:
-      tags:
-        - Resource
-      operationId: Modify a Resource
-      description: ''
-      responses:
-        '200':
-          description: Resource modified successfully
-  '/v1/resource/{parentId}/metadata':
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+  '/v1/resources/{parentId}/metadata':
     get:
       tags:
         - Resource / Metadata
@@ -67,9 +92,59 @@ paths:
           required: true
           schema:
             type: number
+  /v1/singleton-resource:
+    get:
+      tags:
+        - SingletonResource
+      operationId: Get 1 SingletonResource
+      description: ''
+      responses:
+        '200':
+          description: SingletonResource retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingletonResourceOutput'
+    put:
+      tags:
+        - SingletonResource
+      operationId: Modify a SingletonResource
+      description: ''
+      responses:
+        '200':
+          description: SingletonResource modified successfully
+  /v1/singleton-resource/metadata:
+    get:
+      tags:
+        - SingletonResource / Metadata
+      operationId: Get 1 SingletonResource--Metadata
+      description: ''
+      responses:
+        '200':
+          description: Metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingletonResource--MetadataOutput'
+    put:
+      tags:
+        - SingletonResource / Metadata
+      operationId: Modify a SingletonResource--Metadata
+      description: ''
+      responses:
+        '200':
+          description: Metadata modified successfully
 components:
   parameters: {}
   schemas:
+    ResourceInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
     ResourceOutput:
       type: object
       properties:
@@ -85,14 +160,26 @@ components:
     Resource--MetadataOutput:
       type: object
       properties:
-        id:
-          description: ''
-          type: number
         info:
           description: ''
           type: string
       required:
-        - id
+        - info
+    SingletonResourceOutput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
+    SingletonResource--MetadataOutput:
+      type: object
+      properties:
+        info:
+          description: ''
+          type: string
+      required:
         - info
     Error:
       description: 'Error details, only available if there was an issue in processing'
@@ -107,4 +194,3 @@ components:
         message:
           type: string
           description: Human readable error message
-

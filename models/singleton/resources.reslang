@@ -1,15 +1,28 @@
 
 
-singleton asset-resource Resource {
+asset-resource Resource {
     id: int
+    name: string
+
+    /operations
+        POST GET
+}
+
+singleton subresource Resource::Metadata {
+    info: string
+
+    /operations
+        PUT GET
+}
+
+singleton asset-resource SingletonResource {
     name: string
 
     /operations
         PUT GET
 }
 
-singleton subresource Resource::Metadata {
-    id: int
+singleton subresource SingletonResource::Metadata {
     info: string
 
     /operations

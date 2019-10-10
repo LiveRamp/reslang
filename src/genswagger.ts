@@ -67,9 +67,11 @@ export default class SwagGen extends BaseGen {
                 ].includes(el.type)
             ) {
                 // locate the parent
+                let parent = null
                 let parentName = null
+                let parentSubPath = null
                 if (el.parent) {
-                    const parent = this.extractDefinition(el.parent)
+                    parent = this.extractDefinition(el.parent)
                     parentName = sanitize(parent.name)
                     if (!parent.singleton) {
                         parentName = pluralizeName(parentName)
@@ -84,6 +86,11 @@ export default class SwagGen extends BaseGen {
                 // now we can remove the version
                 if (parentName) {
                     parentName = fixName(parentName)
+                }
+                if (parent) {
+                    parentSubPath = parent.singleton
+                        ? `${parentName}`
+                        : `${parentName}/{parentId}`
                 }
 
                 let path: any = {}
@@ -101,10 +108,8 @@ export default class SwagGen extends BaseGen {
                 }
 
                 if (!singleton && (post || multiget)) {
-                    if (parentName) {
-                        paths[
-                            `/${version}/${parentName}/{parentId}/${name}`
-                        ] = path
+                    if (parent) {
+                        paths[`/${version}/${parentSubPath}/${name}`] = path
                     } else {
                         paths[`/${version}/${name}`] = path
                     }
@@ -123,7 +128,7 @@ export default class SwagGen extends BaseGen {
                     if (singleton) {
                         if (parentName) {
                             paths[
-                                `/${version}/${parentName}/{parentId}/${sname}`
+                                `/${version}/${parentSubPath}/${sname}`
                             ] = path
                         } else {
                             paths[`/${version}/${sname}`] = path
@@ -131,7 +136,7 @@ export default class SwagGen extends BaseGen {
                     } else {
                         if (parentName) {
                             paths[
-                                `/${version}/${parentName}/{parentId}/${name}/{id}`
+                                `/${version}/${parentSubPath}/${name}/{id}`
                             ] = path
                         } else {
                             paths[`/${version}/${name}/{id}`] = path
@@ -382,7 +387,7 @@ export default class SwagGen extends BaseGen {
     }
 
     private addParentPathId(el: any, path: any) {
-        if (el.parent) {
+        if (el.parent && !this.extractDefinition(el.parent).singleton) {
             const param = this.addType(this.extractDefinitionId(el.parent), {
                 in: "path",
                 name: "parentId",
@@ -407,7 +412,6 @@ export default class SwagGen extends BaseGen {
         del?: IOperation | null
     ) {
         if (get) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -437,6 +441,7 @@ export default class SwagGen extends BaseGen {
                 responses
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.get.parameters = [
                     this.addType(idtype, {
                         in: "path",
@@ -448,7 +453,6 @@ export default class SwagGen extends BaseGen {
             this.addParentPathId(el, path.get)
         }
         if (put) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -478,6 +482,7 @@ export default class SwagGen extends BaseGen {
                 delete path.put.requestBody
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.put.parameters = [
                     this.addType(idtype, {
                         in: "path",
@@ -489,7 +494,6 @@ export default class SwagGen extends BaseGen {
             this.addParentPathId(el, path.put)
         }
         if (del) {
-            const idtype = this.extractId(el)
             const short = el.short
             const responses = {
                 200: {
@@ -504,6 +508,7 @@ export default class SwagGen extends BaseGen {
                 responses
             }
             if (!singleton) {
+                const idtype = this.extractId(el)
                 path.delete.parameters = [
                     this.addType(idtype, {
                         in: "path",
