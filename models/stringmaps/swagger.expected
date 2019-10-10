@@ -30,7 +30,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
   '/v1/s-maps/{id}':
     put:
       tags:
@@ -51,7 +51,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
 components:
   parameters: {}
   schemas:
@@ -62,7 +62,7 @@ components:
           description: ''
           type: object
           additionalProperties:
-            type: number
+            type: integer
         test:
           description: ''
           type: string
@@ -71,7 +71,7 @@ components:
           $ref: '#/components/schemas/InputKey'
         a:
           description: ''
-          type: number
+          type: integer
         b:
           description: ''
           type: string
@@ -130,7 +130,7 @@ components:
           properties:
             num:
               description: ''
-              type: number
+              type: integer
     Mystruct:
       allOf:
         - $ref: '#/components/schemas/InputKey'
@@ -155,7 +155,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
@@ -163,4 +163,3 @@ components:
         message:
           type: string
           description: Human readable error message
-

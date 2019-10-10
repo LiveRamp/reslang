@@ -48,7 +48,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
     get:
       tags:
         - Destination
@@ -59,7 +59,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -67,7 +67,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -83,7 +83,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -107,7 +107,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/taxonomy-configurations':
     post:
       tags:
@@ -129,14 +129,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / TaxonomyConfiguration
@@ -147,7 +147,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -155,7 +155,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -163,13 +163,13 @@ paths:
           description: ''
           required: false
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: TaxonomyConfigurations retrieved successfully
@@ -177,7 +177,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -202,13 +202,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - Destination / TaxonomyConfiguration
@@ -223,13 +223,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/integrations':
     post:
       tags:
@@ -251,14 +251,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / Integration
@@ -269,7 +269,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -277,7 +277,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -291,7 +291,7 @@ paths:
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Integrations retrieved successfully
@@ -299,7 +299,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -323,13 +323,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - Destination / Integration
@@ -344,13 +344,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/endpoints':
     post:
       tags:
@@ -372,14 +372,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / Endpoint
@@ -390,7 +390,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -398,7 +398,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -412,7 +412,7 @@ paths:
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Endpoints retrieved successfully
@@ -420,7 +420,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -444,13 +444,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - Destination / Endpoint
@@ -465,13 +465,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/packagers':
     post:
       tags:
@@ -493,14 +493,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / Packager
@@ -511,7 +511,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -519,7 +519,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: path
@@ -527,7 +527,7 @@ paths:
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Packagers retrieved successfully
@@ -535,7 +535,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -559,13 +559,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/formatters':
     post:
       tags:
@@ -587,14 +587,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / Formatter
@@ -605,7 +605,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -613,7 +613,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: path
@@ -621,7 +621,7 @@ paths:
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Formatters retrieved successfully
@@ -629,7 +629,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -653,13 +653,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
   '/v1/destinations/{parentId}/deliverers':
     post:
       tags:
@@ -681,14 +681,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Destination / Deliverer
@@ -699,7 +699,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -707,7 +707,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: path
@@ -715,7 +715,7 @@ paths:
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Deliverers retrieved successfully
@@ -723,7 +723,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -747,13 +747,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Destination
           required: true
           schema:
-            type: number
+            type: integer
 components:
   parameters: {}
   schemas:
@@ -770,7 +770,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -802,7 +802,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -834,7 +834,7 @@ components:
           type: array
         taxonomyConfigurationId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--TaxonomyConfiguration  resource via its id
       required:
         - name
@@ -845,7 +845,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -856,7 +856,7 @@ components:
           type: array
         taxonomyConfigurationId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--TaxonomyConfiguration  resource via its id
       required:
         - id
@@ -882,7 +882,7 @@ components:
             its id
         endpointId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Endpoint  resource via its id
       required:
         - identifierPoolId
@@ -898,15 +898,15 @@ components:
           type: string
         packagerId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Packager  resource via its id
         formatterId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Formatter  resource via its id
         delivererId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Deliverer  resource via its id
         endpointProperties:
           description: ''
@@ -925,7 +925,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -934,15 +934,15 @@ components:
           type: string
         packagerId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Packager  resource via its id
         formatterId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Formatter  resource via its id
         delivererId:
           description: ''
-          type: number
+          type: integer
           example: Link to a Destination--Deliverer  resource via its id
         endpointProperties:
           description: ''
@@ -1003,7 +1003,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         macro:
           description: ''
           type: string
@@ -1036,7 +1036,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         macro:
           description: ''
           type: string
@@ -1091,7 +1091,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         protocol:
           description: ''
           type: string
@@ -1116,7 +1116,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
@@ -1124,4 +1124,3 @@ components:
         message:
           type: string
           description: Human readable error message
-

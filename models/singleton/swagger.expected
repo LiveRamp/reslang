@@ -36,7 +36,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
   '/v1/resources/{id}':
     get:
       tags:
@@ -56,7 +56,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   '/v1/resources/{parentId}/metadata':
     get:
       tags:
@@ -76,7 +76,7 @@ paths:
           description: Id of parent Resource
           required: true
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - Resource / Metadata
@@ -91,7 +91,7 @@ paths:
           description: Id of parent Resource
           required: true
           schema:
-            type: number
+            type: integer
   /v1/singleton-resource:
     get:
       tags:
@@ -150,7 +150,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -186,7 +186,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string

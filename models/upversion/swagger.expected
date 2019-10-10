@@ -34,7 +34,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   /v1/resource-bs:
     post:
       tags:
@@ -56,7 +56,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
   '/v1/resource-bs/{id}':
     get:
       tags:
@@ -76,7 +76,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - ResourceB
@@ -91,7 +91,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   /v2/resource-bs:
     post:
       tags:
@@ -113,7 +113,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
   '/v2/resource-bs/{id}':
     get:
       tags:
@@ -133,7 +133,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   '/v2/resource-bs/{parentId}/subs':
     post:
       tags:
@@ -155,14 +155,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent v2-ResourceB
           required: true
           schema:
-            type: number
+            type: integer
   '/v2/resource-bs/{parentId}/subs/{id}':
     get:
       tags:
@@ -182,13 +182,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent v2-ResourceB
           required: true
           schema:
-            type: number
+            type: integer
 components:
   parameters: {}
   schemas:
@@ -197,17 +197,17 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
         bId:
           description: ''
-          type: number
+          type: integer
           example: Link to a ResourceB  resource via its id
         newBId:
           description: ''
-          type: number
+          type: integer
           example: Link to a v2-ResourceB  resource via its id
       required:
         - id
@@ -219,7 +219,7 @@ components:
       properties:
         size:
           description: ''
-          type: number
+          type: integer
       required:
         - size
     ResourceBOutput:
@@ -227,10 +227,10 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         size:
           description: ''
-          type: number
+          type: integer
       required:
         - id
         - size
@@ -239,7 +239,7 @@ components:
       properties:
         totalSize:
           description: ''
-          type: number
+          type: integer
       required:
         - totalSize
     v2-ResourceBOutput:
@@ -247,10 +247,10 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         totalSize:
           description: ''
-          type: number
+          type: integer
       required:
         - id
         - totalSize
@@ -267,7 +267,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         name:
           description: ''
           type: string
@@ -279,7 +279,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
@@ -287,4 +287,3 @@ components:
         message:
           type: string
           description: Human readable error message
-

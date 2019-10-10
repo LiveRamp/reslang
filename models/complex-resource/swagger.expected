@@ -32,7 +32,7 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
     get:
       tags:
         - Car
@@ -43,7 +43,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -51,7 +51,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -59,7 +59,7 @@ paths:
           description: ''
           required: false
           schema:
-            type: number
+            type: integer
         - in: query
           name: brand
           description: ''
@@ -76,7 +76,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -100,7 +100,7 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
   '/v1/cars/{parentId}/wheels':
     post:
       tags:
@@ -122,14 +122,14 @@ paths:
                 properties:
                   id:
                     description: ''
-                    type: number
+                    type: integer
       parameters:
         - in: path
           name: parentId
           description: Id of parent Car
           required: true
           schema:
-            type: number
+            type: integer
     get:
       tags:
         - Car / Wheel
@@ -140,7 +140,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -148,7 +148,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -156,13 +156,13 @@ paths:
           description: ''
           required: false
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Car
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: Wheels retrieved successfully
@@ -170,7 +170,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -194,13 +194,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Car
           required: true
           schema:
-            type: number
+            type: integer
     put:
       tags:
         - Car / Wheel
@@ -215,13 +215,13 @@ paths:
           required: true
           description: ''
           schema:
-            type: number
+            type: integer
         - in: path
           name: parentId
           description: Id of parent Car
           required: true
           schema:
-            type: number
+            type: integer
 components:
   parameters: {}
   schemas:
@@ -271,7 +271,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         bought:
           description: ''
           type: string
@@ -342,7 +342,7 @@ components:
       properties:
         id:
           description: ''
-          type: number
+          type: integer
         radius:
           description: ''
           type: number
@@ -362,7 +362,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
@@ -370,4 +370,3 @@ components:
         message:
           type: string
           description: Human readable error message
-

@@ -294,7 +294,7 @@ export default class SwagGen extends BaseGen {
                 description:
                     "Offset of the record (starting from 0) to include in the response.",
                 schema: {
-                    type: "number",
+                    type: "integer",
                     default: 0
                 }
             })
@@ -304,7 +304,7 @@ export default class SwagGen extends BaseGen {
                 description: `Number of records to return. If unspecified, 10 records will be returned.\
  Maximum value for limit can be 100`,
                 schema: {
-                    type: "number",
+                    type: "integer",
                     default: 10,
                     maximum: 100
                 }
@@ -331,7 +331,7 @@ export default class SwagGen extends BaseGen {
                         "X-Total-Count": {
                             description:
                                 "Total number of records in the data set.",
-                            schema: { type: "number" }
+                            schema: { type: "integer" }
                         }
                     },
                     content: {
@@ -555,7 +555,7 @@ export default class SwagGen extends BaseGen {
                 }
                 break
             case "int":
-                schema.type = "number"
+                schema.type = "integer"
                 break
             case "boolean":
                 schema.type = "boolean"
@@ -942,7 +942,7 @@ export default class SwagGen extends BaseGen {
             type: "object",
             properties: {
                 httpStatusCode: {
-                    type: "number",
+                    type: "integer",
                     description:
                         "The integer HTTP error status code for this problem"
                 },

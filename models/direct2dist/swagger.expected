@@ -58,7 +58,7 @@ paths:
           name: offset
           description: Offset of the record (starting from 0) to include in the response.
           schema:
-            type: number
+            type: integer
             default: 0
         - in: query
           name: limit
@@ -66,7 +66,7 @@ paths:
             Number of records to return. If unspecified, 10 records will be
             returned. Maximum value for limit can be 100
           schema:
-            type: number
+            type: integer
             default: 10
             maximum: 100
         - in: query
@@ -174,7 +174,7 @@ paths:
             X-Total-Count:
               description: Total number of records in the data set.
               schema:
-                type: number
+                type: integer
           content:
             application/json:
               schema:
@@ -284,7 +284,7 @@ components:
           description: >-
             Reference to a destination's endpoints to be used for distributing
             the data
-          type: number
+          type: integer
           example: >-
             Link to a Destination--Endpoint (to be defined in the future)
             resource via its id
@@ -359,7 +359,7 @@ components:
           description: >-
             Reference to a destination's endpoints to be used for distributing
             the data
-          type: number
+          type: integer
           example: >-
             Link to a Destination--Endpoint (to be defined in the future)
             resource via its id
@@ -492,10 +492,10 @@ components:
           properties:
             key:
               description: ''
-              type: number
+              type: integer
             value:
               description: ''
-              type: number
+              type: integer
     OutputFormat:
       type: object
       properties:
@@ -539,13 +539,13 @@ components:
           type: array
         totalOutputSize:
           description: Total size of the distributed data in bytes
-          type: number
+          type: integer
         totalDistributionRecords:
           description: >-
             The number of distribution records in the file initially passed to
             this endpoint's corresponding POST route. Each record corresponds to
             an end user targeted by the distribution request
-          type: number
+          type: integer
       required:
         - fileDetails
         - totalOutputSize
@@ -558,7 +558,7 @@ components:
           type: string
         lineCount:
           description: ''
-          type: number
+          type: integer
       required:
         - fileName
         - lineCount
@@ -567,7 +567,7 @@ components:
       type: object
       properties:
         httpStatusCode:
-          type: number
+          type: integer
           description: The integer HTTP error status code for this problem
         errorCode:
           type: string
@@ -575,4 +575,3 @@ components:
         message:
           type: string
           description: Human readable error message
-
