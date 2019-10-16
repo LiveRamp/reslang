@@ -1,0 +1,36 @@
+
+asset-resource User {
+    id: int
+    name: string
+
+    /operations
+        POST GET
+}
+
+singleton sync action User::Suspend {
+    /operations
+        PUT
+}
+
+singleton sync action User::Unsuspend {
+    /operations
+        PUT
+}
+
+asset-resource Organization {
+    id: int
+    name: string
+    parentOrganizationId: linked Organization optional
+
+    /operations
+        POST GET MULTIGET
+}
+
+asset-resource Role {
+    id: int
+    name: string
+    parentRoleId: linked Role
+
+    /operations
+        POST GET MULTIGET
+}
