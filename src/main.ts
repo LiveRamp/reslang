@@ -8,6 +8,7 @@ import { clean } from "./parse"
 import yargs from "yargs"
 import open from "open"
 import ParseGen from "./genparse"
+import { exec } from "shelljs"
 
 // parse the cmd line
 const args = yargs
@@ -27,6 +28,10 @@ const args = yargs
     .option("open", {
         type: "boolean",
         describe: "Open browser to the appropriate website for output"
+    })
+    .option("redoc", {
+        type: "boolean",
+        describe: "Open the redoc viewer rather than the swagger one"
     })
     .option("stacktrace", {
         type: "boolean",
@@ -77,7 +82,12 @@ try {
         }
         clip.writeSync(yml)
         if (args.open) {
-            open("https://editor.swagger.io")
+            if (args.redoc) {
+                // show redoc
+                exec("./show-redoc")
+            } else {
+                open("https://editor.swagger.io")
+            }
         }
     }
 } catch (error) {

@@ -1,0 +1,30 @@
+
+configuration-resource Organization {
+	id: int
+	parentId: linked Organization query
+	name: string mutable query
+	address: Address
+	info: OrgInfo
+
+	/operations
+		GET POST PUT MULTIGET
+}
+
+structure Address {
+	street: string
+	number: int
+}
+
+union OrgInfo {
+	public: string
+	private: string	
+}
+
+configuration-resource Role {
+	id: int
+	parentId: linked Role query
+	name: string mutable
+
+	/operations
+		GET POST PUT MULTIGET
+}
