@@ -1,0 +1,33 @@
+
+asset-resource ConsentFile {
+    id: string
+    createdSince: datetime queryonly
+    identifierType: IdentifierType
+    requestType: RequestType
+    dataController: DataController
+    fileUrl: string
+    timeStamp: datetime
+
+    /operations
+        MULTIGET
+}
+
+structure DataController {
+    controllerSpecifier: string
+    controllerIdentification: string
+    liveRampControlled: boolean
+}
+
+enum RequestType {
+    OPT_OUT
+    DELETE
+}
+
+enum IdentifierType {
+    IDENTITY_LINK
+    COOKIE
+    IDFA
+    AAID
+    MUID
+    CUSTOM_ID
+}
