@@ -32,13 +32,13 @@ To create swagger, you first create a reslang file. Then you simply ask the resl
 
 Note that the models directory has a set of example definitions.
 
-    ./reslang models/simple-resource.reslang
+    ./reslang models/simple-resource/
 
 This will copy the swagger into the clipboard. If you want it to stdout also, use --stdout.
 
 If you want it to open the swagger editor for you, use --open. You will then have to paste the clipboard into the editor.
 
-    ./reslang models/simple-resource.reslang --open
+    ./reslang models/simple-resource/ --open
 
 ## Viewing in ReDoc
 

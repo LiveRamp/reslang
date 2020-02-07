@@ -42,6 +42,20 @@
     "tabWidth": 4
   },
   "bin": {
-    "reslang": "./src/main.ts"
-  }
+    "reslang": "src/main.ts"
+  },
+  "description": "Relang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiveRamp/reslang.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/LiveRamp/reslang/issues"
+  },
+  "homepage": "https://github.com/LiveRamp/reslang#readme"
 }
