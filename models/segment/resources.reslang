@@ -1,0 +1,19 @@
+"A canonical Segment"
+asset-resource Segment {
+	id: string query
+	name: string query
+    identifierType: IdentifierTypeEnum query
+
+    // output params
+    createdAt: datetime output
+    updatedAt: datetime output
+
+	/operations
+		POST GET MULTIGET
+}
+
+enum IdentifierTypeEnum {
+    PEL
+    MEDIA_MATH_COOKIE
+}
+
