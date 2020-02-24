@@ -1,0 +1,28 @@
+future asset-resource Audience {
+    id: int
+}
+
+subresource Audience::Field {
+    id: int
+    name: string query // TODO: need to set maxlength
+    type: FieldTypeEnum query
+    enumerable: boolean
+    valueUniqueness: ValueUniquenessEnum
+
+    updatedAt: datetime output
+    createdAt: datetime output
+
+    /operations
+    GET POST MULTIGET
+}
+
+enum FieldTypeEnum {
+    STRING 
+    NUMERIC
+}
+
+enum ValueUniquenessEnum {
+    SINGLE_VALUED
+    MULTI_VALUED
+    MULTI_VALUED_WITH_DEDUPLICATION
+}
