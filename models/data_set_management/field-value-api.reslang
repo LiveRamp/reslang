@@ -3,17 +3,20 @@ future asset-resource Audience {
 }
 
 subresource Audience::Field {
-    id: int
+    // TODO: change from {parentId} to actual "resource" id
+    id: int query // TODO: need to support long
     name: string query // TODO: need to set maxlength
     type: FieldTypeEnum query
-    enumerable: boolean
+    enumerable: boolean query
     valueUniqueness: ValueUniquenessEnum
 
-    updatedAt: datetime output
+    // output attributes
+    enabled: boolean query output // TODO: create separate endpoint
     createdAt: datetime output
+    updatedAt: datetime output
 
     /operations
-    GET POST MULTIGET
+    GET POST MULTIGET // TODO: support MULTIPOST
 }
 
 enum FieldTypeEnum {
@@ -22,7 +25,8 @@ enum FieldTypeEnum {
 }
 
 enum ValueUniquenessEnum {
+    // TODO: rename
     SINGLE_VALUED
     MULTI_VALUED
-    MULTI_VALUED_WITH_DEDUPLICATION
+    MULTI_VALUED_WITH_DUPLICATION
 }
