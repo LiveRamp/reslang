@@ -2,18 +2,17 @@
 asset-resource Segment {
 	id: string query
 	name: string query
-    identifierType: IdentifierTypeEnum query
+    identifierType: IdentifierTypeEnum query //TODO: talk to Identity team to define this enum or union
 
     // output params
     createdAt: datetime output
     updatedAt: datetime output
 
 	/operations
-		POST GET MULTIGET
+    POST GET
 }
 
 enum IdentifierTypeEnum {
     PEL
-    MEDIA_MATH_COOKIE
 }
 
