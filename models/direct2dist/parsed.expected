@@ -888,8 +888,8 @@
       "include": [
         {
           "parent": "distribution-mvp",
-          "name": "distribution-mvp-resland",
-          "short": "resland"
+          "name": "distribution-mvp-reslang",
+          "short": "reslang"
         }
       ],
       "groups": []
