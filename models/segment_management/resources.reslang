@@ -23,7 +23,21 @@ request-resource SegmentIngestionRequest {
 
     createdAt: datetime output
     status: StatusEnum output // TODO: standardize a core StatusEnum
-    outputMetaData: OutputMetadata output optional  // TODO: Bug in reslang - "output" gets chopped
+    completedAt: datetime output optional
+    outputMetaData: SIROutputMetadata output optional  // TODO: Bug in reslang - "output" gets chopped
+
+    /operations
+    GET POST
+}
+
+request-resource SegmentExtractionRequest {
+    id: string
+    segmentId: linked Segment
+
+    createdAt: datetime output
+    status: StatusEnum output // TODO: standardize a core StatusEnum
+    completedAt: datetime output optional
+    outputMetaData: SEROutputMetadata output optional  // TODO: Bug in reslang - "output" gets chopped
 
     /operations
     GET POST
@@ -37,9 +51,14 @@ enum StatusEnum {
     CANCELLED
 }
 
-structure OutputMetadata {
+structure SIROutputMetadata {
     version: string
     totalInputRecordCount: int
+}
+
+structure SEROutputMetadata {
+    outputDataURL: url
+    totalOutputRecordCount: int
 }
 
 
