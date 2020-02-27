@@ -1,18 +1,47 @@
 "A canonical Segment"
 asset-resource Segment {
-	id: string query
-	name: string query
+    id: string query
+    name: string query
     identifierType: IdentifierTypeEnum query //TODO: talk to Identity team to define this enum or union
 
     // output params
     createdAt: datetime output
     updatedAt: datetime output
 
-	/operations
+    /operations
     POST GET
 }
 
 enum IdentifierTypeEnum {
     PEL
 }
+
+request-resource SegmentIngestionRequest {
+    id: string
+    segmentId: linked Segment
+    inputDataURL: url
+
+    createdAt: datetime output
+    status: StatusEnum output // TODO: standardize a core StatusEnum
+    outputMetaData: OutputMetadata output optional  // TODO: Bug in reslang - "output" gets chopped
+
+    /operations
+    GET POST
+}
+
+enum StatusEnum {
+    QUEUED
+    IN_PROGRESS
+    COMPLETED
+    FAILED
+    CANCELLED
+}
+
+structure OutputMetadata {
+    version: string
+    totalInputRecordCount: int
+}
+
+
+
 
