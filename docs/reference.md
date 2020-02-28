@@ -160,11 +160,12 @@ structure MappingInputKey {
 
 ### Arrays
 
-Use [] after an attribute type to indicate an array.
+Use [] after an attribute type to indicate an array. You can also represent a minimum and maximum number of items via [minItems..maxItems]. You can omit the minItems, or maxItems.
 
 ```test
 
     dataMappingConfigs: DataMappingConfig[]
+    name: string[..10]
 ```
 
 ### Enums
