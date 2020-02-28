@@ -41,10 +41,9 @@
     "yargs": "^13.2.4"
   },
   "scripts": {
-    "start_bak": "npm run build:live",
-    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node'",
+    "start": "npm run build:live",
     "build": "tsc -p .",
-    "build:live": "ts-node src/main.ts",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node'",
     "test": "jest"
   },
   "prettier": {
