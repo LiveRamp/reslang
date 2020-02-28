@@ -1,0 +1,81 @@
+//##############################################################################
+// DataStoreSegment resource
+//##############################################################################
+
+"This is a description of a data store segment"
+configuration-resource DataStoreSegment {
+	"Data Store segment ID"
+	id: string
+
+	"Name of the segment"
+	name: string
+
+	"Seller-provided description of the segment"
+	description: string
+
+	"Name of the seller of the segment"
+	seller: string
+
+	"Permited downstream use cases for segment"
+	useCases: UseCases
+
+	"Prices for the segment"
+	prices: Prices
+
+	"Advertisers prohibited from employing the segment for any permitted use case"
+	excludedAdvertisers: string[]
+
+	"Advertisers permitted to employ the segment for all permitted use cases"
+	permittedAdvertisers: string[]
+
+	/operations
+		"Retrieve a Data Store segment"
+		GET
+		"Get all permitted Data Store segments"
+		MULTIGET
+}
+
+//##############################################################################
+// DataStoreSegment resource supporting structures
+//##############################################################################
+
+structure UseCases {
+	adTargeting: boolean
+	audienceExtension: boolean
+	campaignAnalytics: boolean
+	tvTargeting: boolean
+	measurementAndAnalytics: boolean
+}
+
+structure Prices {
+		"Price to use segment for digital ad targeting"
+    digitalAdTargeting: Price optional
+
+		"Price to use segment for TV targeting"
+    tvTargeting: Price optional
+
+		"Cost-per-click price of segment"
+		costPerClick: Price optional
+
+		"Price to use segment for content marketing"
+		contentMarketing: Price optional
+}
+
+structure Price {
+	"Currency of segment price"
+	currenyCode: CurrencyCode
+
+	"Amount of segment price"
+	amount: int
+
+	"Unit of segment price amount"
+	unit: PriceUnit
+}
+
+enum CurrencyCode {
+	USD
+}
+
+enum PriceUnit {
+	CENTS
+}

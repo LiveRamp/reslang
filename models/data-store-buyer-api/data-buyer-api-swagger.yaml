@@ -1,0 +1,192 @@
+openapi: 3.0.1
+info:
+  title: Data Store Buyer API
+  description: Data Store Buyer API for platform buyers
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/data-buyer-api'
+tags:
+  - name: DataStoreSegment
+    description: (configuration) This is a description of a data store segment
+paths:
+  /v1/data-store-segments:
+    get:
+      tags:
+        - DataStoreSegment
+      operationId: List DataStoreSegments
+      description: Get all permitted Data Store segments
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: DataStoreSegments retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataStoreSegmentMultiResponse'
+  '/v1/data-store-segments/{id}':
+    get:
+      tags:
+        - DataStoreSegment
+      operationId: Get 1 DataStoreSegment
+      description: Retrieve a Data Store segment
+      responses:
+        '200':
+          description: DataStoreSegment retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataStoreSegmentOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Data Store segment ID
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    DataStoreSegmentOutput:
+      type: object
+      properties:
+        id:
+          description: Data Store segment ID
+          type: string
+        name:
+          description: Name of the segment
+          type: string
+        description:
+          description: Seller-provided description of the segment
+          type: string
+        seller:
+          description: Name of the seller of the segment
+          type: string
+        useCases:
+          description: Permited downstream use cases for segment
+          $ref: '#/components/schemas/UseCases'
+        prices:
+          description: Prices for the segment
+          $ref: '#/components/schemas/Prices'
+        excludedAdvertisers:
+          description: >-
+            Advertisers prohibited from employing the segment for any permitted
+            use case
+          items:
+            type: string
+          type: array
+        permittedAdvertisers:
+          description: >-
+            Advertisers permitted to employ the segment for all permitted use
+            cases
+          items:
+            type: string
+          type: array
+      required:
+        - id
+        - name
+        - description
+        - seller
+        - useCases
+        - prices
+        - excludedAdvertisers
+        - permittedAdvertisers
+    DataStoreSegmentMultiResponse:
+      type: object
+      properties:
+        dataStoreSegments:
+          description: Array of retrieved DataStoreSegments
+          type: array
+          items:
+            $ref: '#/components/schemas/DataStoreSegmentOutput'
+    UseCases:
+      type: object
+      properties:
+        adTargeting:
+          description: ''
+          type: boolean
+        audienceExtension:
+          description: ''
+          type: boolean
+        campaignAnalytics:
+          description: ''
+          type: boolean
+        tvTargeting:
+          description: ''
+          type: boolean
+        measurementAndAnalytics:
+          description: ''
+          type: boolean
+      required:
+        - adTargeting
+        - audienceExtension
+        - campaignAnalytics
+        - tvTargeting
+        - measurementAndAnalytics
+    Prices:
+      type: object
+      properties:
+        digitalAdTargeting:
+          description: Price to use segment for digital ad targeting
+          $ref: '#/components/schemas/Price'
+        tvTargeting:
+          description: Price to use segment for TV targeting
+          $ref: '#/components/schemas/Price'
+        costPerClick:
+          description: Cost-per-click price of segment
+          $ref: '#/components/schemas/Price'
+        contentMarketing:
+          description: Price to use segment for content marketing
+          $ref: '#/components/schemas/Price'
+    Price:
+      type: object
+      properties:
+        currenyCode:
+          description: Currency of segment price
+          type: string
+          enum:
+            - USD
+        amount:
+          description: Amount of segment price
+          type: number
+        unit:
+          description: Unit of segment price amount
+          type: string
+          enum:
+            - CENTS
+      required:
+        - currenyCode
+        - amount
+        - unit
+    Error:
+      description: 'Error details, only available if there was an issue in processing'
+      type: object
+      properties:
+        httpStatusCode:
+          type: number
+          description: The integer HTTP error status code for this problem
+        errorCode:
+          type: string
+          description: ' Optional, more granular error code for this problem'
+        message:
+          type: string
+          description: Human readable error message

@@ -1,0 +1,5 @@
+"Data Store Buyer API for platform buyers"
+namespace {
+    title "Data Store Buyer API"
+    version 0.0.1
+}
