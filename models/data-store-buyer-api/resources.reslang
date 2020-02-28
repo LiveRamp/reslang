@@ -63,7 +63,7 @@ structure Prices {
 
 structure Price {
 	"Currency of segment price"
-	currenyCode: CurrencyCode
+	currencyCode: CurrencyCode
 
 	"Amount of segment price"
 	amount: int

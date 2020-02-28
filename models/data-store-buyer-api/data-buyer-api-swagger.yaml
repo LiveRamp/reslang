@@ -160,7 +160,7 @@ components:
     Price:
       type: object
       properties:
-        currenyCode:
+        currencyCode:
           description: Currency of segment price
           type: string
           enum:
@@ -174,7 +174,7 @@ components:
           enum:
             - CENTS
       required:
-        - currenyCode
+        - currencyCode
         - amount
         - unit
     Error:
