@@ -1,16 +1,15 @@
 {
   "namespace": {
-    "comment": "This is the description of the API",
-    "title": "A simple resource API",
-    "version": "0.1.2"
+    "comment": "Multiplicity test",
+    "title": "MultiplicityAPI",
+    "version": "0.0.1"
   },
   "definitions": [
     {
       "future": false,
-      "type": "configuration-resource",
-      "name": "Garage",
+      "type": "asset-resource",
+      "name": "MTest",
       "singleton": false,
-      "comment": "This is a description of a garage",
       "attributes": [
         {
           "name": "id",
@@ -25,37 +24,89 @@
             "synthetic": false,
             "mutable": false,
             "queryonly": false,
-            "query": true,
+            "query": false,
             "optional": false,
             "output": false
           }
         },
         {
-          "name": "name",
+          "name": "names",
           "stringMap": false,
           "type": {
             "name": "string",
             "short": "string"
           },
           "inline": false,
+          "array": {
+            "type": 1,
+            "min": 1,
+            "max": 10
+          },
           "linked": false,
           "modifiers": {
             "synthetic": false,
             "mutable": false,
             "queryonly": false,
-            "query": true,
+            "query": false,
             "optional": false,
             "output": false
           }
         },
         {
-          "name": "manufacturer",
+          "name": "ages",
           "stringMap": false,
           "type": {
-            "name": "Manufacturer",
-            "short": "Manufacturer"
+            "name": "int",
+            "short": "int"
           },
           "inline": false,
+          "array": {
+            "type": 1,
+            "min": 13
+          },
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "addresses",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "array": {
+            "type": 1,
+            "max": 3
+          },
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "nicknames",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -69,62 +120,13 @@
       ],
       "operations": [
         {
-          "operation": "PUT",
-          "comment": "Actual PUT comment",
-          "errors": []
-        },
-        {
           "operation": "POST",
-          "comment": "Actual POST comment",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        },
-        {
-          "operation": "DELETE",
-          "errors": []
-        },
-        {
-          "operation": "MULTIGET",
           "errors": []
         }
       ],
-      "short": "Garage",
+      "short": "MTest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generateMutable": true
-    },
-    {
-      "type": "structure",
-      "name": "Manufacturer",
-      "attributes": [
-        {
-          "name": "company",
-          "stringMap": false,
-          "type": {
-            "name": "string",
-            "short": "string"
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "synthetic": false,
-            "mutable": false,
-            "queryonly": false,
-            "query": false,
-            "optional": false,
-            "output": false
-          }
-        }
-      ],
-      "short": "Manufacturer",
-      "secondary": false,
-      "file": "resources.reslang",
+      "file": "multi.reslang",
       "generateInput": true
     }
   ],
@@ -133,8 +135,8 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "resources",
-          "name": "resources-reslang",
+          "parent": "multi",
+          "name": "multi-reslang",
           "short": "reslang"
         }
       ],

@@ -1,0 +1,10 @@
+
+asset-resource MTest {
+    id: string
+    names: string[1..10]
+    ages: int[13..]
+    addresses: string[..3]
+    nicknames: string[]
+
+    /operations POST
+}

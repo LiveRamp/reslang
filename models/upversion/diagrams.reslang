@@ -1,5 +1,5 @@
 
 diagram main {
     /include
-        auth.reslang
+        upversion.reslang
 }

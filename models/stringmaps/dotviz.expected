@@ -1,0 +1,23 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"SMap" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>SMap        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">map: int</td></tr><tr><td align="left">test: string</td></tr><tr><td align="left">key: InputKey</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST</font></td></tr>"}</table>>];
+"Struct1" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Struct1        </b></td></tr>        <hr/><tr><td align="left">text: string</td></tr></table> >];
+"Struct2" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Struct2        </b></td></tr>        <hr/><tr><td align="left">notes: string</td></tr><tr><td align="left">text: string</td></tr></table> >];
+"Struct3" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Struct3        </b></td></tr>        <hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: string</td></tr><tr><td align="left">c: date</td></tr></table> >];
+"SMap" -> "Struct2" [dir="back" arrowtail="diamond" label=< <font point-size="8"> maps[]</font> >];
+"SMap" -> "Struct3" [dir="back" arrowtail="diamond" label=< <font point-size="8"> test2</font> >];
+"InputKey" -> "Struct2" [dir="back" arrowtail="diamond" label=< <font point-size="8"> mystruct</font> >];
+"InputKey" -> "Struct2" [dir="back" arrowtail="diamond" label=< <font point-size="8"> mystruct2</font> >];
+}

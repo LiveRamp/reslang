@@ -41,6 +41,10 @@ describe("swagger generation tests", () => {
     test("upversion", () => {
         compare("upversion")
     })
+
+    test("multiplicity", () => {
+        compare("multiplicity")
+    })
 })
 
 /** compare the output with saved swagger */

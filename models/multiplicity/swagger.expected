@@ -1,0 +1,82 @@
+openapi: 3.0.1
+info:
+  title: MultiplicityAPI
+  description: Multiplicity test
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/multiplicity'
+tags:
+  - name: MTest
+    description: '(asset) '
+paths:
+  /v1/m-tests:
+    post:
+      tags:
+        - MTest
+      operationId: Create MTest
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MTestInput'
+      responses:
+        '201':
+          description: MTest created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
+components:
+  parameters: {}
+  schemas:
+    MTestInput:
+      type: object
+      properties:
+        names:
+          description: ''
+          items:
+            type: string
+          minItems: 1
+          maxItems: 10
+          type: array
+        ages:
+          description: ''
+          items:
+            type: number
+          minItems: 13
+          type: array
+        addresses:
+          description: ''
+          items:
+            type: string
+          maxItems: 3
+          type: array
+        nicknames:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - names
+        - ages
+        - addresses
+        - nicknames
+    Error:
+      description: 'Error details, only available if there was an issue in processing'
+      type: object
+      properties:
+        httpStatusCode:
+          type: number
+          description: The integer HTTP error status code for this problem
+        errorCode:
+          type: string
+          description: ' Optional, more granular error code for this problem'
+        message:
+          type: string
+          description: Human readable error message
+

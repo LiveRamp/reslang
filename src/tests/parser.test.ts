@@ -51,6 +51,10 @@ c d`)
     test("upversion", () => {
         compare("upversion")
     })
+
+    test("multiplicity", () => {
+        compare("multiplicity")
+    })
 })
 
 function compare(module: string) {

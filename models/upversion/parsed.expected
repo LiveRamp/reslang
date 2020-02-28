@@ -19,7 +19,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -38,7 +37,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -57,7 +55,6 @@
             "short": "ResourceB"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -76,7 +73,6 @@
             "short": "v2/ResourceB"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -113,7 +109,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -132,7 +127,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -179,7 +173,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -198,7 +191,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -241,7 +233,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -260,7 +251,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -290,5 +280,17 @@
       "generateOutput": true
     }
   ],
-  "diagrams": []
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "parent": "upversion",
+          "name": "reslang",
+          "short": "reslang"
+        }
+      ],
+      "groups": []
+    }
+  ]
 }

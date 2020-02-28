@@ -71,9 +71,15 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attribute+ _ { return attrs; }
 attribute = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ mult:"[]"? _ modifiers:modifiers _ inline:"inline"? _";"? _ { 
-    return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, multiple: !!mult, linked: !!linked, modifiers: modifiers}
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ array:(array1 / array2)? _ modifiers:modifiers _ inline:"inline"? _";"? _ { 
+    return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, array: array, linked: !!linked, modifiers: modifiers}
 }
+
+array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
+    return {"type": 1, min: min ? parseInt(min.join("")) : null, max: max ? parseInt(max.join("")) : null} }
+
+array2 = "[]" {
+    return {"type": 2} }
 
 modifiers = modifiers:( _ ("synthetic" / "mutable" / "queryonly" / "query" / "optional" / "output") _ )* {
     var flat = modifiers.flat()

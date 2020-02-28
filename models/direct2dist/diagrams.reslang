@@ -1,5 +1,5 @@
 
-diagram distribution {
+diagram main {
     /include
         distribution-mvp.reslang
 }

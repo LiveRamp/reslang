@@ -19,7 +19,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -38,7 +37,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -81,7 +79,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -124,7 +121,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -167,7 +163,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -197,5 +192,17 @@
       "generateOutput": true
     }
   ],
-  "diagrams": []
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "parent": "resources",
+          "name": "resources-reslang",
+          "short": "reslang"
+        }
+      ],
+      "groups": []
+    }
+  ]
 }

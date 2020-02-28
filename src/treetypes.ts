@@ -74,11 +74,17 @@ export interface IAttribute {
     name: string
     type: IReference
     inline: boolean
-    multiple: boolean
+    array: IArray
     stringMap: boolean
     linked: boolean
     comment: string
     modifiers: IModifiers
+}
+
+export interface IArray {
+    type: number
+    min: number
+    max: number
 }
 
 export interface IModifiers {

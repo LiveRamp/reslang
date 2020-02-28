@@ -135,7 +135,6 @@ export default class DotvizGen extends BaseGen {
 
         // add the groups
         let count = 0
-        console.log(diagram.groups)
         for (const group of diagram.groups || []) {
             viz += `subgraph cluster${count++} \{
                 style = dashed;
@@ -185,7 +184,6 @@ export default class DotvizGen extends BaseGen {
             diagram.import.forEach(incl => include.add(incl.name))
         }
         exclude.forEach(excl => include.delete(excl))
-        console.log(diagram.includeAll)
         return include
     }
 
@@ -204,7 +202,16 @@ export default class DotvizGen extends BaseGen {
                 const fold = attr.name + "/" + def.name
                 const foldThis =
                     folded.has(fold) || !include.has(attr.type.name)
-                const multi = attr.multiple ? "[]" : ""
+                let multi = attr.array ? "[]" : ""
+                if (attr.array && attr.array.type === 1) {
+                    const ar = attr.array
+                    multi =
+                        "[" +
+                        (ar.min ? "" + ar.min : "") +
+                        ".." +
+                        (ar.max ? "" + ar.max : "") +
+                        "]"
+                }
                 const output = attr.modifiers.output ? " (out)" : ""
 
                 // if this is linked do it that way

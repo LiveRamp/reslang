@@ -20,7 +20,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -39,7 +38,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -87,7 +85,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -106,7 +103,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -125,7 +121,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -144,7 +139,6 @@
             "short": "Specification"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -219,7 +213,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -251,7 +244,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -270,7 +262,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -289,7 +280,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -308,7 +298,6 @@
             "short": "FileType"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -327,7 +316,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -376,7 +364,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -395,7 +382,6 @@
             "short": "Directory"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -444,7 +430,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -481,7 +466,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -500,7 +484,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -520,7 +503,7 @@
   ],
   "diagrams": [
     {
-      "diagram": "files",
+      "diagram": "main",
       "include": [
         {
           "name": "all",

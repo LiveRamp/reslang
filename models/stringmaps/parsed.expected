@@ -19,7 +19,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -38,7 +37,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -57,7 +55,9 @@
             "short": "Struct2"
           },
           "inline": false,
-          "multiple": true,
+          "array": {
+            "type": 2
+          },
           "linked": false,
           "modifiers": {
             "synthetic": true,
@@ -76,7 +76,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -95,7 +94,6 @@
             "short": "InputKey"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -114,7 +112,6 @@
             "short": "Struct3"
           },
           "inline": true,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -154,7 +151,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -182,7 +178,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -201,7 +196,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -230,7 +224,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -249,7 +242,6 @@
             "short": "Struct2"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -268,7 +260,6 @@
             "short": "Struct2"
           },
           "inline": true,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -297,7 +288,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -316,7 +306,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -335,7 +324,6 @@
             "short": "date"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -354,7 +342,7 @@
   ],
   "diagrams": [
     {
-      "diagram": "stringmaps",
+      "diagram": "main",
       "include": [
         {
           "parent": "resources",

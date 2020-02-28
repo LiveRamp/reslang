@@ -19,7 +19,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -40,7 +39,6 @@
             "short": "Endpoint"
           },
           "inline": false,
-          "multiple": false,
           "linked": true,
           "modifiers": {
             "synthetic": false,
@@ -60,7 +58,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -80,7 +77,6 @@
             "short": "url"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -100,7 +96,9 @@
             "short": "DataMappingConfig"
           },
           "inline": false,
-          "multiple": true,
+          "array": {
+            "type": 2
+          },
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -120,7 +118,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -140,7 +137,6 @@
             "short": "StatusEnum"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -160,7 +156,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -180,7 +175,6 @@
             "short": "BatchOutputMetadata"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -199,7 +193,6 @@
             "short": "DistributionTypeEnum"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -219,7 +212,6 @@
             "short": "SortTypeEnum"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -239,7 +231,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -259,7 +250,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -279,7 +269,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -299,7 +288,6 @@
             "short": "datetime"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -351,7 +339,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -391,7 +378,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -467,7 +453,6 @@
             "short": "InputFormat"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -486,7 +471,6 @@
             "short": "OutputFormat"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -515,7 +499,6 @@
             "short": "InputKeyValue"
           },
           "inline": true,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -544,7 +527,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -563,7 +545,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -591,7 +572,6 @@
             "short": "OutputKeyValueLabel"
           },
           "inline": true,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -610,7 +590,6 @@
             "short": "OutputIdLabel"
           },
           "inline": true,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -639,7 +618,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -658,7 +636,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -686,7 +663,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -714,7 +690,9 @@
             "short": "FileDetails"
           },
           "inline": false,
-          "multiple": true,
+          "array": {
+            "type": 2
+          },
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -734,7 +712,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -754,7 +731,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -783,7 +759,6 @@
             "short": "string"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -802,7 +777,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -833,7 +807,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -864,7 +837,6 @@
             "short": "int"
           },
           "inline": false,
-          "multiple": false,
           "linked": false,
           "modifiers": {
             "synthetic": false,
@@ -884,7 +856,7 @@
   ],
   "diagrams": [
     {
-      "diagram": "distribution",
+      "diagram": "main",
       "include": [
         {
           "parent": "distribution-mvp",

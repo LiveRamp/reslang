@@ -1,0 +1,21 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Resource" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Resource        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"Metadata" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Metadata        </b></td></tr><hr/><tr><td align="left">info: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr>"}</table>>];
+"Resource" -> "Metadata" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"SingletonResource" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>SingletonResource        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr>"}</table>>];
+"Metadata" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Metadata        </b></td></tr><hr/><tr><td align="left">info: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr>"}</table>>];
+"SingletonResource" -> "Metadata" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+}

@@ -1,5 +1,5 @@
 
-diagram consent {
+diagram main {
     /include
         consent.reslang
 }

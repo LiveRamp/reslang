@@ -13,11 +13,11 @@
 *   ~~string(\$uri)~~
 *   ~~MULTIGET w/out id~~
 *   ~~mutable, required, optional~~
+*   ~~synchronous operations or actions (look at abilitec API)~~
 
 -   Names: fix param names, check on verb, resource, enum
 -   no id needed for singleton GET or POST only
 -   example text for attributes & bodies
--   synchronous operations or actions (look at abilitec API)
 
 Admin:
 

@@ -194,3 +194,4 @@ components:
         message:
           type: string
           description: Human readable error message
+

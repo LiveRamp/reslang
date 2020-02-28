@@ -366,14 +366,14 @@ export default class SwagGen extends BaseGen {
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
             if (
-                (attr.multiple && !name.endsWith("Ids")) ||
-                (!attr.multiple && !name.endsWith("Id"))
+                (attr.array && !name.endsWith("Ids")) ||
+                (!attr.array && !name.endsWith("Id"))
             ) {
                 throw new Error(
                     `Link to resource must end in Id or Ids - ${attr.name}`
                 )
             }
-            if (attr.multiple && !name.endsWith("s")) {
+            if (attr.array && !name.endsWith("s")) {
                 name = name + "s"
             }
         }
@@ -646,7 +646,7 @@ export default class SwagGen extends BaseGen {
                         this.extractId(def).type.name,
                         schema
                     )
-                    if (attr.multiple) {
+                    if (attr.array) {
                         schema.example = `Link to ${attr.type.name} ${
                             def.future ? "(to be defined in the future)" : ""
                         } resource(s) via id(s)`
@@ -669,11 +669,17 @@ export default class SwagGen extends BaseGen {
         }
 
         // if multi, then push down to an array
-        if (attr.multiple) {
+        if (attr.array) {
             schema.items = {
                 type: obj.type,
                 example: obj.example,
                 $ref: obj.$ref
+            }
+            if (attr.array.min) {
+                schema.minItems = attr.array.min
+            }
+            if (attr.array.max) {
+                schema.maxItems = attr.array.max
             }
             delete schema.type
             delete schema.example

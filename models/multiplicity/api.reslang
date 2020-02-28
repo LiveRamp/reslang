@@ -1,0 +1,5 @@
+"Multiplicity test"
+namespace {
+    title "MultiplicityAPI"
+    version 0.0.1
+}
