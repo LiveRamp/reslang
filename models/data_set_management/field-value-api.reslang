@@ -1,32 +1,41 @@
-future asset-resource Audience {
-    id: int
+future asset-resource Dataset {
+  id: int
 }
 
-subresource Audience::Field {
-    // TODO: change from {parentId} to actual "resource" id
-    id: int query // TODO: need to support long
-    name: string query // TODO: need to set maxlength
-    type: FieldTypeEnum query
-    enumerable: boolean query
-    valueUniqueness: ValueUniquenessEnum
+subresource Dataset::Field {
+  // TODO: change from {parentId} to actual "resource" id
+  id: int query // TODO: need to support long
+  name: string  // TODO: need to set maxlength
+  type: FieldTypeEnum 
+  enumerable: boolean 
+  valueCollectionType: ValueCollectionTypeEnum
+  values: string[] mutable optional
 
-    // output attributes
-    enabled: boolean query output // TODO: create separate endpoint
-    createdAt: datetime output
-    updatedAt: datetime output
+  // output attributes
+  enabled: boolean query output optional
+  createdAt: datetime output
+  updatedAt: datetime output
 
-    /operations
-    GET POST MULTIGET // TODO: support MULTIPOST
+  /operations
+      "Get a Field"
+    GET
+      "Create a new Field"
+    POST
+      "Find existing Fields"
+    MULTIGET
+      "Disable a Field"
+    DELETE
+      "Add values to a Field"
+    PUT
 }
 
 enum FieldTypeEnum {
-    STRING 
-    NUMERIC
+  STRING 
+  NUMERIC
 }
 
-enum ValueUniquenessEnum {
-    // TODO: rename
-    SINGLE_VALUED
-    MULTI_VALUED
-    MULTI_VALUED_WITH_DUPLICATION
+enum ValueCollectionTypeEnum {
+  SINGLETON
+  SET
+  MULTISET
 }
