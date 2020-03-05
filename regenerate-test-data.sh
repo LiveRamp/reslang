@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apis=(complex-resource direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
+apis=(authorization complex-resource direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
 
 for api in "${apis[@]}"
 do

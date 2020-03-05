@@ -16,6 +16,10 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
+    test("authorization", () => {
+        compare("authorization")
+    })
+
     test("complex-resource", () => {
         compare("complex-resource")
     })

@@ -6,6 +6,10 @@ import yaml from "js-yaml"
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
+    test("authorization", () => {
+        compare("authorization")
+    })
+
     test("complex-resource", () => {
         compare("complex-resource")
     })

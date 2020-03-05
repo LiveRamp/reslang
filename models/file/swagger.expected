@@ -595,17 +595,4 @@ components:
         - httpStatus
         - errorCode
         - message
-    Error:
-      description: 'Error details, only available if there was an issue in processing'
-      type: object
-      properties:
-        httpStatusCode:
-          type: number
-          description: The integer HTTP error status code for this problem
-        errorCode:
-          type: string
-          description: ' Optional, more granular error code for this problem'
-        message:
-          type: string
-          description: Human readable error message
 

@@ -258,8 +258,8 @@ export default class SwagGen extends BaseGen {
                             }
                         ],
                         struct: {
-                            name: "Error",
-                            short: "Error"
+                            name: "StandardError",
+                            short: "StandardError"
                         }
                     })
                 }
@@ -939,28 +939,6 @@ export default class SwagGen extends BaseGen {
             }
             if ("union" === def.type && def.generateInput) {
                 this.addUnionDefinition(definitions, def, true, "")
-            }
-        }
-
-        definitions.Error = {
-            description:
-                "Error details, only available if there was an issue in processing",
-            type: "object",
-            properties: {
-                httpStatusCode: {
-                    type: "number",
-                    description:
-                        "The integer HTTP error status code for this problem"
-                },
-                errorCode: {
-                    type: "string",
-                    description:
-                        " Optional, more granular error code for this problem"
-                },
-                message: {
-                    type: "string",
-                    description: "Human readable error message"
-                }
             }
         }
     }

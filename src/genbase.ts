@@ -201,6 +201,8 @@ export abstract class BaseGen {
                 }
             }
         }
+        // mark the standarderror as included - it is referenced implicitly by some operations
+        this.extractDefinition("StandardError").generateInput = true
     }
 
     protected extractOp(el: any, op: string): IOperation | null {

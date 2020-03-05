@@ -929,7 +929,8 @@
       ],
       "short": "StandardError",
       "secondary": false,
-      "file": "local.reslang"
+      "file": "local.reslang",
+      "generateInput": true
     }
   ],
   "diagrams": [

@@ -9,6 +9,10 @@ describe("dotviz generation tests", () => {
         compare("simple-resource")
     })
 
+    test("authorization", () => {
+        compare("authorization")
+    })
+
     test("complex-resource", () => {
         compare("complex-resource")
     })

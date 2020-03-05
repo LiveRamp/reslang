@@ -230,7 +230,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: parentId
@@ -266,7 +266,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: parentId
@@ -562,17 +562,20 @@ components:
       required:
         - fileName
         - lineCount
-    Error:
-      description: 'Error details, only available if there was an issue in processing'
+    StandardError:
       type: object
       properties:
-        httpStatusCode:
+        httpStatus:
+          description: HTTP error status code for this problem
           type: number
-          description: The integer HTTP error status code for this problem
         errorCode:
+          description: 'Service specific error code, more granular'
           type: string
-          description: ' Optional, more granular error code for this problem'
         message:
+          description: 'General, human readable error message'
           type: string
-          description: Human readable error message
+      required:
+        - httpStatus
+        - errorCode
+        - message
 
