@@ -10,6 +10,9 @@ import {
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
+import lpath from "path"
+const LOCAL = "local.reslang"
+const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 
 export abstract class BaseGen {
     protected namespace!: INamespace
@@ -51,14 +54,15 @@ export abstract class BaseGen {
         }
 
         // process all files in this directory
-        for (const fname of readdirSync(dirname)) {
+        const files = readdirSync(dirname).map(fname => {
+            return { file: fname, full: path + nspace + "/" + fname }
+        })
+        files.push({ file: LOCAL, full: LOCAL_INCLUDE })
+        for (const lst of files) {
+            const fname = lst.full
             const reallyMain = main
             if (fname.endsWith(".reslang")) {
-                const local = parseFile(
-                    path + nspace + "/" + fname,
-                    nspace,
-                    this.mainNamespace!
-                )
+                const local = parseFile(fname, nspace, this.mainNamespace!)
                 if (local[0] && main) {
                     if (!this.namespace) {
                         this.namespace = local[0]
@@ -77,7 +81,7 @@ export abstract class BaseGen {
                 // copy over all the defs
                 for (const def of local[2] as IDefinition[]) {
                     def.secondary = !reallyMain
-                    def.file = fname
+                    def.file = lst.file
                     this.defs.push(def)
                 }
                 // copy over all the diagrams
@@ -190,11 +194,9 @@ export abstract class BaseGen {
                 for (const op of el.operations || []) {
                     for (const err of op.errors || []) {
                         // locate the error type and mark it for generation
-                        if (err.struct.name !== "StandardError") {
-                            this.extractDefinition(
-                                err.struct.name
-                            ).generateInput = true
-                        }
+                        this.extractDefinition(
+                            err.struct.name
+                        ).generateInput = true
                     }
                 }
             }

@@ -39,8 +39,6 @@ function compare(module: string) {
     const dotviz = new DotvizGen([`models/${module}`])
     const out = dotviz.generate("main")
 
-    console.log("Out = xxx" + out + "xxx")
-
     const got = strip(out)
     const expected = strip(readFile(`models/${module}/dotviz.expected`))
 

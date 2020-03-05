@@ -579,6 +579,22 @@ components:
       required:
         - message
         - time
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: number
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
     Error:
       description: 'Error details, only available if there was an issue in processing'
       type: object

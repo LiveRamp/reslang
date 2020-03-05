@@ -88,9 +88,11 @@ export default class DotvizGen extends BaseGen {
                     <tr><td><b>${def.short}${padding}</b></td></tr>`
 
                 if ("structure" === def.type) {
-                    viz += `"${def.short}" [label=<${box}${padding}${
-                        attrs ? "<hr/>" : ""
-                    }${attrs}</table> >];\n`
+                    if (def.short !== "StandardError") {
+                        viz += `"${def.short}" [label=<${box}${padding}${
+                            attrs ? "<hr/>" : ""
+                        }${attrs}</table> >];\n`
+                    }
                 } else if (imported) {
                     viz += `"${def.short}" [label=<${box}</table>>];\n`
                 } else {
@@ -229,14 +231,16 @@ export default class DotvizGen extends BaseGen {
                         continue
                     }
                     if (type && type.type === "structure") {
-                        links.push({
-                            type: "structure",
-                            from: def.short,
-                            fromName: def.name,
-                            to: attr.type.short,
-                            toName: attr.type.name,
-                            label: ` ${attr.name}${multi}${output}`
-                        })
+                        if (type.name !== "StandardError") {
+                            links.push({
+                                type: "structure",
+                                from: def.short,
+                                fromName: def.name,
+                                to: attr.type.short,
+                                toName: attr.type.name,
+                                label: ` ${attr.name}${multi}${output}`
+                            })
+                        }
                         continue
                     }
                 }
