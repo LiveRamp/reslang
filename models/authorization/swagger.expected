@@ -1,0 +1,357 @@
+openapi: 3.0.1
+info:
+  title: Authorization API
+  description: This is the authorization API for LiveRamp's Platform
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/authorization'
+tags:
+  - name: User
+    description: '(asset) '
+  - name: User / Suspend
+    description: '(sync action) '
+  - name: User / Unsuspend
+    description: '(sync action) '
+  - name: Organization
+    description: '(asset) '
+  - name: Role
+    description: '(asset) '
+paths:
+  /v1/users:
+    post:
+      tags:
+        - User
+      operationId: Create User
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+  '/v1/users/{id}':
+    get:
+      tags:
+        - User
+      operationId: Get 1 User
+      description: ''
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+  '/v1/users/{parentId}/suspend':
+    put:
+      tags:
+        - User / Suspend
+      operationId: Modify a User--Suspend
+      description: ''
+      responses:
+        '200':
+          description: Suspend modified successfully
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent User
+          required: true
+          schema:
+            type: number
+  '/v1/users/{parentId}/unsuspend':
+    put:
+      tags:
+        - User / Unsuspend
+      operationId: Modify a User--Unsuspend
+      description: ''
+      responses:
+        '200':
+          description: Unsuspend modified successfully
+      parameters:
+        - in: path
+          name: parentId
+          description: Id of parent User
+          required: true
+          schema:
+            type: number
+  /v1/organizations:
+    post:
+      tags:
+        - Organization
+      operationId: Create Organization
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationInput'
+      responses:
+        '201':
+          description: Organization created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+    get:
+      tags:
+        - Organization
+      operationId: List Organizations
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Organizations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMultiResponse'
+  '/v1/organizations/{id}':
+    get:
+      tags:
+        - Organization
+      operationId: Get 1 Organization
+      description: ''
+      responses:
+        '200':
+          description: Organization retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+  /v1/roles:
+    post:
+      tags:
+        - Role
+      operationId: Create Role
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+      responses:
+        '201':
+          description: Role created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: number
+    get:
+      tags:
+        - Role
+      operationId: List Roles
+      description: ''
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the record (starting from 0) to include in the response.
+          schema:
+            type: number
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of records to return. If unspecified, 10 records will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: number
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Roles retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of records in the data set.
+              schema:
+                type: number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMultiResponse'
+  '/v1/roles/{id}':
+    get:
+      tags:
+        - Role
+      operationId: Get 1 Role
+      description: ''
+      responses:
+        '200':
+          description: Role retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: number
+components:
+  parameters: {}
+  schemas:
+    UserInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
+    UserOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+    OrganizationInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        parentOrganizationId:
+          description: ''
+          type: number
+          example: Link to a Organization  resource via its id
+      required:
+        - name
+    OrganizationOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        parentOrganizationId:
+          description: ''
+          type: number
+          example: Link to a Organization  resource via its id
+      required:
+        - id
+        - name
+    OrganizationMultiResponse:
+      type: object
+      properties:
+        organizations:
+          description: Array of retrieved Organizations
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationOutput'
+    RoleInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        parentRoleId:
+          description: ''
+          type: number
+          example: Link to a Role  resource via its id
+      required:
+        - name
+        - parentRoleId
+    RoleOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: number
+        name:
+          description: ''
+          type: string
+        parentRoleId:
+          description: ''
+          type: number
+          example: Link to a Role  resource via its id
+      required:
+        - id
+        - name
+        - parentRoleId
+    RoleMultiResponse:
+      type: object
+      properties:
+        roles:
+          description: Array of retrieved Roles
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleOutput'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: number
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

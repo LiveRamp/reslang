@@ -1,0 +1,348 @@
+{
+  "namespace": {
+    "comment": "This is the authorization API for LiveRamp's Platform",
+    "title": "Authorization API",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "User",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "User",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "type": "action",
+      "async": false,
+      "name": "User--Suspend",
+      "singleton": true,
+      "parent": "User",
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "short": "Suspend",
+      "parentShort": "User",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generateMutable": true
+    },
+    {
+      "type": "action",
+      "async": false,
+      "name": "User--Unsuspend",
+      "singleton": true,
+      "parent": "User",
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "short": "Unsuspend",
+      "parentShort": "User",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generateMutable": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "Organization",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "parentOrganizationId",
+          "stringMap": false,
+          "type": {
+            "name": "Organization",
+            "short": "Organization"
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": true,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Organization",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "type": "asset-resource",
+      "name": "Role",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "parentRoleId",
+          "stringMap": false,
+          "type": {
+            "name": "Role",
+            "short": "Role"
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "short": "Role",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "type": "structure",
+      "name": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "StandardError",
+      "secondary": false,
+      "file": "local.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "parent": "auth",
+          "name": "auth-reslang",
+          "short": "reslang"
+        }
+      ],
+      "groups": []
+    }
+  ]
+}
