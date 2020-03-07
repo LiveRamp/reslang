@@ -1,0 +1,10 @@
+
+configuration-resource Person {
+    id: int
+    name: string mutable
+    address: string mutable optional
+    birthDate: datetime
+
+    /operations
+        POST PUT PATCH GET
+}

@@ -1,0 +1,188 @@
+{
+  "namespace": {
+    "comment": "This is a simple API for testing patching",
+    "title": "API for testing patching",
+    "version": "1.0.0"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "type": "configuration-resource",
+      "name": "Person",
+      "singleton": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": true,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "address",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": true,
+            "queryonly": false,
+            "query": false,
+            "optional": true,
+            "output": false
+          }
+        },
+        {
+          "name": "birthDate",
+          "stringMap": false,
+          "type": {
+            "name": "datetime",
+            "short": "datetime"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "short": "Person",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generatePuttable": true,
+      "generatePatchable": true,
+      "generateOutput": true
+    },
+    {
+      "type": "structure",
+      "name": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "name": "int",
+            "short": "int"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "name": "string",
+            "short": "string"
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "synthetic": false,
+            "mutable": false,
+            "queryonly": false,
+            "query": false,
+            "optional": false,
+            "output": false
+          }
+        }
+      ],
+      "short": "StandardError",
+      "secondary": false,
+      "file": "local.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "main",
+      "includeAll": "resources.reslang",
+      "groups": []
+    }
+  ]
+}

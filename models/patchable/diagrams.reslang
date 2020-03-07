@@ -1,0 +1,4 @@
+diagram main {
+    /includeAll
+        resources.reslang
+}
