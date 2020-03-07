@@ -14,6 +14,10 @@ describe("swagger generation tests", () => {
         compare("complex-resource")
     })
 
+    test("patchable", () => {
+        compare("patchable")
+    })
+
     test("direct2dist", () => {
         compare("direct2dist")
     })

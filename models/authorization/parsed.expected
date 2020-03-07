@@ -80,7 +80,7 @@
       "parentShort": "User",
       "secondary": false,
       "file": "auth.reslang",
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "type": "action",
@@ -98,7 +98,7 @@
       "parentShort": "User",
       "secondary": false,
       "file": "auth.reslang",
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "future": false,

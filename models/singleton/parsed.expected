@@ -104,7 +104,7 @@
       "parentShort": "Resource",
       "secondary": false,
       "file": "resources.reslang",
-      "generateMutable": true,
+      "generatePuttable": true,
       "generateOutput": true
     },
     {
@@ -145,7 +145,7 @@
       "short": "SingletonResource",
       "secondary": false,
       "file": "resources.reslang",
-      "generateMutable": true,
+      "generatePuttable": true,
       "generateOutput": true
     },
     {
@@ -188,7 +188,7 @@
       "parentShort": "SingletonResource",
       "secondary": false,
       "file": "resources.reslang",
-      "generateMutable": true,
+      "generatePuttable": true,
       "generateOutput": true
     },
     {

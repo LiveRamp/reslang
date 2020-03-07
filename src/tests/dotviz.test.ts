@@ -13,6 +13,10 @@ describe("dotviz generation tests", () => {
         compare("authorization")
     })
 
+    test("patchable", () => {
+        compare("patchable")
+    })
+
     test("complex-resource", () => {
         compare("complex-resource")
     })

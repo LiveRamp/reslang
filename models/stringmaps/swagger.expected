@@ -41,7 +41,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SMapMutable'
+              $ref: '#/components/schemas/SMapPuttable'
       responses:
         '200':
           description: SMap modified successfully
@@ -85,7 +85,7 @@ components:
         - test
         - key
         - test2
-    SMapMutable:
+    SMapPuttable:
       type: object
       properties:
         test:
@@ -94,6 +94,9 @@ components:
         key:
           description: ''
           $ref: '#/components/schemas/InputKey'
+      required:
+        - test
+        - key
     Struct2:
       type: object
       properties:

@@ -172,9 +172,13 @@ export abstract class BaseGen {
 
                 const get = this.extractOp(el, "GET")
                 const put = this.extractOp(el, "PUT")
+                const patch = this.extractOp(el, "PATCH")
 
                 if (put) {
-                    el.generateMutable = true
+                    el.generatePuttable = true
+                }
+                if (patch) {
+                    el.generatePatchable = true
                 }
                 if (get) {
                     el.generateOutput = true

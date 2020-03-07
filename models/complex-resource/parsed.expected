@@ -485,7 +485,7 @@
       "generateInput": true,
       "generateMulti": true,
       "generateOutput": true,
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "type": "enum",

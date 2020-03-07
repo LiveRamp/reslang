@@ -160,7 +160,7 @@
       "generateInput": true,
       "generateMulti": true,
       "generateOutput": true,
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "future": false,
@@ -276,7 +276,7 @@
       "generateInput": true,
       "generateMulti": true,
       "generateOutput": true,
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "type": "structure",
@@ -519,7 +519,7 @@
       "generateInput": true,
       "generateMulti": true,
       "generateOutput": true,
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "type": "structure",

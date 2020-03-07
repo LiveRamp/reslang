@@ -137,7 +137,7 @@
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
-      "generateMutable": true
+      "generatePuttable": true
     },
     {
       "type": "structure",

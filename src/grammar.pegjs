@@ -58,7 +58,7 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-ops = _ comment:description? _ op:("GET" / "PUT" / "POST" / "DELETE"/ "MULTIGET") _ {return {"operation": op, "comment": comment}}
+ops = _ comment:description? _ op:("GET" / "PUT" / "PATCH" / "POST" / "DELETE"/ "MULTIGET") _ {return {"operation": op, "comment": comment}}
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 

@@ -121,10 +121,11 @@ export default class SwagGen extends BaseGen {
                  */
                 const get = this.extractOp(el, "GET")
                 const put = this.extractOp(el, "PUT")
+                const patch = this.extractOp(el, "PATCH")
                 const del = this.extractOp(el, "DELETE")
 
                 path = {}
-                if (get || put || del) {
+                if (get || put || patch || del) {
                     if (singleton) {
                         if (parentName) {
                             paths[
@@ -150,6 +151,7 @@ export default class SwagGen extends BaseGen {
                     tagKeys,
                     get,
                     put,
+                    patch,
                     del
                 )
             }
@@ -409,6 +411,7 @@ export default class SwagGen extends BaseGen {
         tagKeys: { [key: string]: string },
         get?: IOperation | null,
         put?: IOperation | null,
+        patch?: IOperation | null,
         del?: IOperation | null
     ) {
         if (get) {
@@ -471,14 +474,14 @@ export default class SwagGen extends BaseGen {
                                 $ref:
                                     "#/components/schemas/" +
                                     el.name +
-                                    "Mutable"
+                                    "Puttable"
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Mutable")) {
+            if (this.empty.has(el.name + "Puttable")) {
                 delete path.put.requestBody
             }
             if (!singleton) {
@@ -492,6 +495,47 @@ export default class SwagGen extends BaseGen {
                 ]
             }
             this.addParentPathId(el, path.put)
+        }
+        if (patch) {
+            const short = el.short
+            const responses = {
+                200: {
+                    description: short + " patched successfully"
+                }
+            }
+            this.formErrors(patch, responses)
+            path.patch = {
+                tags: [tagKeys[el.name]],
+                operationId: "Patch a " + el.name,
+                description: this.translate(patch.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref:
+                                    "#/components/schemas/" +
+                                    el.name +
+                                    "Patchable"
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (this.empty.has(el.name + "Patchable")) {
+                delete path.patch.requestBody
+            }
+            if (!singleton) {
+                const idtype = this.extractId(el)
+                path.patch.parameters = [
+                    this.addType(idtype, {
+                        in: "path",
+                        name: "id",
+                        required: true
+                    })
+                ]
+            }
+            this.addParentPathId(el, path.patch)
         }
         if (del) {
             const short = el.short
@@ -753,6 +797,7 @@ export default class SwagGen extends BaseGen {
         def: IDefinition,
         out: boolean,
         mutable: boolean,
+        allOptional: boolean,
         suffix: string
     ) {
         const attrs = def.attributes || []
@@ -780,7 +825,7 @@ export default class SwagGen extends BaseGen {
                 continue
             }
 
-            if (!attr.modifiers.optional && !mutable) {
+            if (!attr.modifiers.optional && !allOptional) {
                 required.push(attr.name)
             }
             if (attr.inline) {
@@ -905,13 +950,44 @@ export default class SwagGen extends BaseGen {
                 !def.secondary
             ) {
                 if (def.generateInput) {
-                    this.addDefinition(definitions, def, false, false, "Input")
+                    this.addDefinition(
+                        definitions,
+                        def,
+                        false,
+                        false,
+                        false,
+                        "Input"
+                    )
                 }
                 if (def.generateOutput) {
-                    this.addDefinition(definitions, def, true, false, "Output")
+                    this.addDefinition(
+                        definitions,
+                        def,
+                        true,
+                        false,
+                        false,
+                        "Output"
+                    )
                 }
-                if (def.generateMutable) {
-                    this.addDefinition(definitions, def, false, true, "Mutable")
+                if (def.generatePuttable) {
+                    this.addDefinition(
+                        definitions,
+                        def,
+                        false,
+                        true,
+                        false,
+                        "Puttable"
+                    )
+                }
+                if (def.generatePatchable) {
+                    this.addDefinition(
+                        definitions,
+                        def,
+                        false,
+                        true,
+                        true,
+                        "Patchable"
+                    )
                 }
 
                 // handle multiget
@@ -935,7 +1011,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
             if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, true, false, "")
+                this.addDefinition(definitions, def, true, false, false, "")
             }
             if ("union" === def.type && def.generateInput) {
                 this.addUnionDefinition(definitions, def, true, "")

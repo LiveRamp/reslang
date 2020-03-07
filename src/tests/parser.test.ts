@@ -20,6 +20,10 @@ c d`)
         compare("authorization")
     })
 
+    test("patchable", () => {
+        compare("patchable")
+    })
+
     test("complex-resource", () => {
         compare("complex-resource")
     })

@@ -156,7 +156,7 @@
       "secondary": false,
       "file": "upversion.reslang",
       "generateInput": true,
-      "generateMutable": true,
+      "generatePuttable": true,
       "generateOutput": true
     },
     {

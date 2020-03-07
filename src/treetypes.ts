@@ -38,7 +38,8 @@ export interface IDefinition {
     secondary?: boolean
     generateOutput: boolean
     generateInput: boolean
-    generateMutable: boolean
+    generatePuttable: boolean
+    generatePatchable: boolean
     generateMulti: boolean
 }
 
