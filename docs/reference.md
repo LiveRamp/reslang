@@ -261,4 +261,17 @@ The following modifiers can be placed after the attribute type:
 
 A PUT requires a body with all mutable, non-optional fields. A PATCH makes all mutable fields optional. Prefer PUT because it accepts all the mandatory fields at the same time and hence, is idempotent. Use PATCH at your discretion to allow any field to be adjusted.
 
+Consider this example:
+
+    configuration-resource Person {
+        id: int
+        name: string mutable
+        address: string mutable optional
+        birthDate: datetime
+        /operations
+            POST PUT PATCH GET
+    }
+
+A PUT body must always include "name", but can optionally include "address". A PATCH body can include any combination of the 2 fields, or none at all.
+
 Never use PUT or PATCH to trigger an action, please only use it to adjust state.
