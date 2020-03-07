@@ -256,3 +256,9 @@ The following modifiers can be placed after the attribute type:
     -   This indicated that the attribute can be mutated using a PUT.
 -   synthetic
     -   This indicates that the attribute is derived, or synthetic. i.e. it is formed out of other state. By default is is output only.
+
+## Difference between PUT and PATCH
+
+A PUT requires a body with all mutable, non-optional fields. A PATCH makes all mutable fields optional. Prefer PUT because it accepts all the mandatory fields at the same time and hence, is idempotent. Use PATCH at your discretion to allow any field to be adjusted.
+
+Never use PUT or PATCH to trigger an action, please only use it to adjust state.
