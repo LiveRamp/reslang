@@ -21,12 +21,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -41,12 +43,14 @@
           "inline": false,
           "linked": true,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -60,12 +64,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -79,12 +85,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -101,12 +109,14 @@
           },
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -120,12 +130,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": true
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -139,12 +151,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": true,
             "optional": false,
-            "output": true
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true
           }
         },
         {
@@ -158,12 +172,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": true
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -177,12 +193,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": true,
-            "output": true
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -195,12 +213,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": true
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -214,12 +234,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": true,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
           }
         },
         {
@@ -233,12 +255,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": true,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
           }
         },
         {
@@ -252,12 +276,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": true,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
           }
         },
         {
@@ -271,12 +297,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": true,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
           }
         },
         {
@@ -290,12 +318,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": true,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
           }
         }
       ],
@@ -341,12 +371,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -380,12 +412,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -455,12 +489,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -473,12 +509,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -501,12 +539,14 @@
           "inline": true,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -529,12 +569,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -547,12 +589,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": true,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -574,12 +618,14 @@
           "inline": true,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -592,12 +638,14 @@
           "inline": true,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -620,12 +668,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -638,12 +688,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": true,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -665,12 +717,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -695,12 +749,14 @@
           },
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -714,12 +770,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -733,12 +791,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -761,12 +821,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -779,12 +841,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -809,12 +873,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -839,12 +905,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],
@@ -868,12 +936,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -887,12 +957,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         },
         {
@@ -906,12 +978,14 @@
           "inline": false,
           "linked": false,
           "modifiers": {
-            "synthetic": false,
             "mutable": false,
-            "queryonly": false,
-            "query": false,
             "optional": false,
-            "output": false
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
           }
         }
       ],

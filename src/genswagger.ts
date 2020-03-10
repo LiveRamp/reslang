@@ -9,6 +9,12 @@ import {
 import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
+enum Verbs {
+    POST,
+    PUT,
+    PATCH,
+    GET
+}
 
 /**
  * generate swagger from the parsed representation
@@ -380,9 +386,7 @@ export default class SwagGen extends BaseGen {
             }
         }
         const prop = {
-            description:
-                (attr.modifiers.synthetic ? "(synthetic) " : "") +
-                this.translate(attr.comment)
+            description: this.translate(attr.comment)
         }
         this.addType(attr, prop, false)
         return { name, prop }
@@ -795,9 +799,7 @@ export default class SwagGen extends BaseGen {
     private addDefinition(
         definitions: any,
         def: IDefinition,
-        out: boolean,
-        mutable: boolean,
-        allOptional: boolean,
+        verb: Verbs,
         suffix: string
     ) {
         const attrs = def.attributes || []
@@ -813,19 +815,31 @@ export default class SwagGen extends BaseGen {
             if (attr.modifiers.queryonly) {
                 continue
             }
-            // no id types unless they we are an output struct
+            // no id types for input ever
+            if (attr.name === "id" && verb !== Verbs.GET) {
+                continue
+            }
+            // if we have a mutation operation and the attribute is not marked as mutable, skip it
             if (
-                (attr.name === "id" && !out) ||
-                ((attr.modifiers.output || attr.modifiers.synthetic) && !out)
+                (verb === Verbs.PATCH || verb === Verbs.PUT) &&
+                !attr.modifiers.mutable
             ) {
                 continue
             }
-            // if we are mutable only take mutable attributes
-            if (mutable && !attr.modifiers.mutable) {
+            // if this is marked as output, suppress all other verbs
+            if (attr.modifiers.output && verb !== Verbs.GET) {
                 continue
             }
 
-            if (!attr.modifiers.optional && !allOptional) {
+            // if this optional?
+            let optional = attr.modifiers.optional || verb === Verbs.PATCH
+            optional =
+                optional ||
+                (verb === Verbs.POST && attr.modifiers.optionalPost) ||
+                (verb === Verbs.PUT && attr.modifiers.optionalPut) ||
+                (verb === Verbs.GET && attr.modifiers.optionalGet)
+
+            if (!optional) {
                 required.push(attr.name)
             }
             if (attr.inline) {
@@ -950,42 +964,19 @@ export default class SwagGen extends BaseGen {
                 !def.secondary
             ) {
                 if (def.generateInput) {
-                    this.addDefinition(
-                        definitions,
-                        def,
-                        false,
-                        false,
-                        false,
-                        "Input"
-                    )
+                    this.addDefinition(definitions, def, Verbs.POST, "Input")
                 }
                 if (def.generateOutput) {
-                    this.addDefinition(
-                        definitions,
-                        def,
-                        true,
-                        false,
-                        false,
-                        "Output"
-                    )
+                    this.addDefinition(definitions, def, Verbs.GET, "Output")
                 }
                 if (def.generatePuttable) {
-                    this.addDefinition(
-                        definitions,
-                        def,
-                        false,
-                        true,
-                        false,
-                        "Puttable"
-                    )
+                    this.addDefinition(definitions, def, Verbs.PUT, "Puttable")
                 }
                 if (def.generatePatchable) {
                     this.addDefinition(
                         definitions,
                         def,
-                        false,
-                        true,
-                        true,
+                        Verbs.PATCH,
                         "Patchable"
                     )
                 }
@@ -1011,7 +1002,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
             if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, true, false, false, "")
+                this.addDefinition(definitions, def, Verbs.POST, "")
             }
             if ("union" === def.type && def.generateInput) {
                 this.addUnionDefinition(definitions, def, true, "")

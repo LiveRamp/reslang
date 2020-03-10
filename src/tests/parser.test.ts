@@ -16,6 +16,10 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
+    test("optionality", () => {
+        compare("optionality")
+    })
+
     test("authorization", () => {
         compare("authorization")
     })

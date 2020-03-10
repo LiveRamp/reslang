@@ -81,11 +81,13 @@ array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
 array2 = "[]" {
     return {"type": 2} }
 
-modifiers = modifiers:( _ ("synthetic" / "mutable" / "queryonly" / "query" / "optional" / "output") _ )* {
+modifiers = modifiers:( _ ("mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "optional") _ )* {
     var flat = modifiers.flat()
-    return {synthetic: flat.includes("synthetic"), mutable: flat.includes("mutable"),
-            queryonly: flat.includes("queryonly"), query: flat.includes("query"),
-            optional: flat.includes("optional"), output: flat.includes("output")}
+    return {mutable: flat.includes("mutable"), optional: flat.includes("optional"),
+            optionalPost: flat.includes("optional-post"), optionalPut: flat.includes("optional-put"),
+            optionalGet: flat.includes("optional-get"), output: flat.includes("output"),
+            queryonly: flat.includes("queryonly"), query: flat.includes("query")}
+            
 }
 
 // enum

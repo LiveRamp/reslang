@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apis=(authorization complex-resource patchable direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
+apis=(optionality authorization complex-resource patchable direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
 
 for api in "${apis[@]}"
 do

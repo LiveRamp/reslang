@@ -2,7 +2,7 @@
 asset-resource SMap {
     id: int
     map: stringmap<int>
-    maps: stringmap<Struct2>[] synthetic
+    maps: stringmap<Struct2>[] output
     test: string mutable
     key: InputKey mutable
     test2: Struct3 inline

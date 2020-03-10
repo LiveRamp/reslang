@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: Optionality
+  description: Optionality test
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/optionality'
+tags:
+  - name: Car
+    description: (configuration) A Car Garage
+paths:
+  /v1/cars:
+    post:
+      tags:
+        - Car
+      operationId: Create Car
+      description: Create a car
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarInput'
+      responses:
+        '201':
+          description: Car created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
+  '/v1/cars/{id}':
+    get:
+      tags:
+        - Car
+      operationId: Get 1 Car
+      description: Get a single car
+      responses:
+        '200':
+          description: Car retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarOutput'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: string
+    put:
+      tags:
+        - Car
+      operationId: Modify a Car
+      description: Update a car
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarPuttable'
+      responses:
+        '200':
+          description: Car modified successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: string
+    patch:
+      tags:
+        - Car
+      operationId: Patch a Car
+      description: Patch a car
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarPatchable'
+      responses:
+        '200':
+          description: Car patched successfully
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    CarInput:
+      type: object
+      properties:
+        make:
+          description: ''
+          type: string
+        nitro:
+          description: ''
+          type: string
+        location:
+          description: ''
+          type: string
+      required:
+        - make
+        - location
+    CarOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        make:
+          description: ''
+          type: string
+        nitro:
+          description: ''
+          type: string
+        created:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        location:
+          description: ''
+          type: string
+      required:
+        - id
+        - make
+        - nitro
+        - created
+        - location
+    CarPuttable:
+      type: object
+      properties:
+        nitro:
+          description: ''
+          type: string
+        location:
+          description: ''
+          type: string
+      required:
+        - nitro
+    CarPatchable:
+      type: object
+      properties:
+        nitro:
+          description: ''
+          type: string
+        location:
+          description: ''
+          type: string
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: number
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

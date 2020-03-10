@@ -1,15 +1,16 @@
 {
   "namespace": {
-    "comment": "Multiplicity test",
-    "title": "MultiplicityAPI",
+    "comment": "Optionality test",
+    "title": "Optionality",
     "version": "0.0.1"
   },
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "MTest",
+      "type": "configuration-resource",
+      "name": "Car",
       "singleton": false,
+      "comment": "A Car Garage",
       "attributes": [
         {
           "name": "id",
@@ -32,18 +33,13 @@
           }
         },
         {
-          "name": "names",
+          "name": "make",
           "stringMap": false,
           "type": {
             "name": "string",
             "short": "string"
           },
           "inline": false,
-          "array": {
-            "type": 1,
-            "min": 1,
-            "max": 10
-          },
           "linked": false,
           "modifiers": {
             "mutable": false,
@@ -57,22 +53,18 @@
           }
         },
         {
-          "name": "ages",
+          "name": "nitro",
           "stringMap": false,
           "type": {
-            "name": "int",
-            "short": "int"
+            "name": "string",
+            "short": "string"
           },
           "inline": false,
-          "array": {
-            "type": 1,
-            "min": 13
-          },
           "linked": false,
           "modifiers": {
-            "mutable": false,
+            "mutable": true,
             "optional": false,
-            "optionalPost": false,
+            "optionalPost": true,
             "optionalPut": false,
             "optionalGet": false,
             "output": false,
@@ -81,17 +73,13 @@
           }
         },
         {
-          "name": "addresses",
+          "name": "created",
           "stringMap": false,
           "type": {
-            "name": "string",
-            "short": "string"
+            "name": "datetime",
+            "short": "datetime"
           },
           "inline": false,
-          "array": {
-            "type": 1,
-            "max": 3
-          },
           "linked": false,
           "modifiers": {
             "mutable": false,
@@ -99,28 +87,25 @@
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
-            "output": false,
+            "output": true,
             "queryonly": false,
             "query": false
           }
         },
         {
-          "name": "nicknames",
+          "name": "location",
           "stringMap": false,
           "type": {
             "name": "string",
             "short": "string"
           },
           "inline": false,
-          "array": {
-            "type": 2
-          },
           "linked": false,
           "modifiers": {
-            "mutable": false,
+            "mutable": true,
             "optional": false,
             "optionalPost": false,
-            "optionalPut": false,
+            "optionalPut": true,
             "optionalGet": false,
             "output": false,
             "queryonly": false,
@@ -130,14 +115,33 @@
       ],
       "operations": [
         {
+          "operation": "GET",
+          "comment": "Get a single car",
+          "errors": []
+        },
+        {
           "operation": "POST",
+          "comment": "Create a car",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "comment": "Update a car",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "comment": "Patch a car",
           "errors": []
         }
       ],
-      "short": "MTest",
+      "short": "Car",
       "secondary": false,
-      "file": "multi.reslang",
-      "generateInput": true
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generatePuttable": true,
+      "generatePatchable": true,
+      "generateOutput": true
     },
     {
       "type": "structure",
@@ -218,8 +222,8 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "multi",
-          "name": "multi-reslang",
+          "parent": "resources",
+          "name": "resources-reslang",
           "short": "reslang"
         }
       ],

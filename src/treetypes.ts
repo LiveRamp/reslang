@@ -89,10 +89,12 @@ export interface IArray {
 }
 
 export interface IModifiers {
-    synthetic: boolean
     mutable: boolean
-    optional: boolean
     output: boolean
+    optional: boolean
+    optionalPost: boolean
+    optionalPut: boolean
+    optionalGet: boolean
     query: boolean
     queryonly: boolean
 }
