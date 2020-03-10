@@ -58,26 +58,3 @@ export function pluralizeName(name: string) {
     }
     return name + "s"
 }
-
-export function makeShort(name: string) {
-    const pos = name.indexOf(".")
-    return pos === -1 ? name : name.substring(pos + 1)
-}
-
-export function makeLong(
-    namespace: string, // namespace being parsed
-    mainNamespace: string,
-    name: string
-) {
-    const main = namespace === mainNamespace
-    const pos = name.indexOf(".")
-
-    // if we don't have a namespace, see if we need to add one
-    if (pos === -1) {
-        return main ? name : namespace + "." + name
-    }
-
-    // otherwise, check to see if the current namespace is the same as the main one
-    const embedded = name.substring(0, pos)
-    return embedded === mainNamespace ? name.substring(pos + 1) : name
-}

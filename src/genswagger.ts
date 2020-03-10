@@ -76,8 +76,8 @@ export default class SwagGen extends BaseGen {
                 let parent = null
                 let parentName = null
                 let parentSubPath = null
-                if (el.parent) {
-                    parent = this.extractDefinition(el.parent)
+                if (el.parentName) {
+                    parent = this.extractDefinition(el.parentName)
                     parentName = sanitize(parent.name)
                     if (!parent.singleton) {
                         parentName = pluralizeName(parentName)
@@ -267,7 +267,11 @@ export default class SwagGen extends BaseGen {
                         ],
                         struct: {
                             name: "StandardError",
-                            short: "StandardError"
+                            short: "StandardError",
+                            parents: [],
+                            module: "",
+                            parentName: "",
+                            parentShort: ""
                         }
                     })
                 }
@@ -749,46 +753,27 @@ export default class SwagGen extends BaseGen {
                 continue
             }
             const name = el.name
-            const short = el.short
             const comment = this.translate(el.comment)
+            let prefix = null
             if ("configuration-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(configuration) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(configuration) "
             }
             if ("asset-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(asset) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(asset) "
             }
             if ("request-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(request) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(request) "
             }
             if ("subresource" === el.type) {
-                const tag = {
-                    name: `${el.parentShort} / ${short}`,
-                    description: `(subresource) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(subresource) "
             }
             if ("action" === el.type) {
+                prefix = "(" + (el.async ? "async" : "sync") + " action) "
+            }
+            if (prefix) {
                 const tag = {
-                    name: `${el.parent} / ${short}`,
-                    description: `(${
-                        el.async ? "async" : "sync"
-                    } action) ${comment}`
+                    name,
+                    description: `${prefix} ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[name] = tag.name

@@ -1,4 +1,4 @@
-reslang = namespacedefinition? import* (resource / structure / subresource / action / enum )* diagram* docs*
+reslang = namespacedefinition? import* (resource / subresource / action / structure / enum )* diagram* docs*
 
 // defining a namespace
 namespacedefinition = _ comment:description? _ "namespace" _ "{"
@@ -22,24 +22,31 @@ docEntry = _ name:resname _ "=" _ doc:description _ {
 }
 
 // defining a resource
-resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("request-resource" / "asset-resource" / "configuration-resource") _ name:resname _ "{" _
+resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "request-resource") _ respath:noparentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "comment": comment, "attributes": attributes, "operations": operations }
+    return {
+        comment: comment, future: !!future, singleton: !!singleton, type: type, 
+        attributes: attributes, operations: operations,
+        parents: [], short: respath.short}
 }
 
-subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource" / "action") _ parent:resname "::" name:resname _  "{" _
+subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"future": !!future, "type": type, "name": name, "singleton": !!singleton, "parent": parent,
-    "comment": comment, "attributes": attributes, "operations": operations }
+    return {
+        comment: comment, future: !!future, singleton: !!singleton, type: type, 
+        attributes: attributes, operations: operations,
+        parents: respath.parents, short: respath.short}
 }
 
-action = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ async:("sync" / "async") _ "action" _ parent:resname "::" name:resname _  "{" _
+action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ "action" _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
-    return {"type": "action", "async": async === "async", "name": name, "singleton": !!singleton, "parent": parent,
-    "comment": comment, "attributes": attributes, "operations": operations }
+    return {
+        comment: comment, future: !!future, singleton: false, type: "action", async: async == "async", 
+        attributes: attributes, operations: operations,
+        parents: respath.parents, short: respath.short}
 }
 
 operations = _ "/operations" _ ops:operation+ _ {
@@ -65,7 +72,7 @@ id "id" = _ name:name _ ","? _ {return name}
 structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ "{" _
     attrs:attribute+ _
 "}" _ ";"? _ {
-    return {"type": type, "name": name, "comment": comment, "attributes": attrs}
+    return {"type": type, parents: [], "short": name, "comment": comment, "attributes": attrs}
 }
 
 // attributes also handle stringmaps
@@ -94,19 +101,31 @@ modifiers = modifiers:( _ ("mutable" / "output" /"optional-post" / "optional-put
 enum = _ comment:description? _ "enum"  _ name:name _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
-    return {"type": "enum", "name": name, "comment": comment, "literals": literals}
+    return {"type": "enum", parents: [], "short": name, "comment": comment, "literals": literals}
 }
-
 literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
-
-// identifiers
-ref = parent:(filename ".")? _ toplevel:(resname "::")? _ name:resname {
-    return {"parent": parent ? parent[0] : null, "toplevel": toplevel ? toplevel[0]: null, "name": name}
-}
 literalname "literalname" = name:([a-zA-Z0-9_:\-]+) { return name.flat().join(""); }
-name "name" = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
-resname "resname" = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join("") }
-filename "filename" = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
+
+// naming resources
+ref = module:(filename ".")? _ respath:respath _ {
+    return {module: module ? module[0] : null, parents: respath.parents, short: respath.short}
+}
+respath = _ parents:parents? _ short:resname _ {
+    return {parents: parents ? parents : [], short: short}
+}
+noparentrespath = _ short:resname _ {
+    return {parents: [], short: short}
+}
+parentrespath = _ parents:parents _ short:resname _ {
+    return {parents: parents, short: short}
+}
+parents = _ names:(name "::")+ {
+    return names.map(function(value, index, arr) {
+        return value[0] })
+}
+resname = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
+name = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
+filename = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
 // descriptions
 description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("").replace(/\\n/g, "\n")}

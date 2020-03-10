@@ -13,18 +13,18 @@ export interface IImport {
 }
 
 export interface IReference {
-    name: string
     short: string
-    parent?: string
-    toplevel?: string
+    parents: string[]
+    module: string // not set for definitions
+
+    // generated from the above info
+    name: string
+    parentName: string
+    parentShort: string
 }
 
-export interface IDefinition {
+export interface IDefinition extends IReference {
     file: string
-    name: string
-    short: string
-    parent?: string
-    parentShort?: string
     type: DefinitionType
     comment: string
     attributes?: IAttribute[]
