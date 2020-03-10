@@ -26,6 +26,10 @@ Test it out by typing:
 
 This should bring up the options.
 
+## Running in Docker
+Individuals who do not want to build Reslang from scratch are free to use the `reslang-docker` script which provides convenient, but limited, functionality with a reslang container.
+This script outputs the generated swagger and requires an absolute path to function.
+
 ## Creating & viewing the swagger
 
 To create swagger, you first create a reslang file. Then you simply ask the reslang program to turn this into swagger.
