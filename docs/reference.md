@@ -246,6 +246,8 @@ async action DistributionRequest::Retry {
 
 ## Attribute Modifiers
 
+The underlying intuition is that you mark fields as "mutable" if you want to be able to change them with PUT or PATCH, and you can mark something as output only by using "output". You can then mark them as optional by using "optional" or "optional-post" etc for specific verbs. PATCH always has every field as optional.
+
 The following modifiers can be placed after the attribute type to indicate that it should be included for the given verbs:
 
 - no modifier
