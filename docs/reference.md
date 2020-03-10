@@ -246,16 +246,46 @@ async action DistributionRequest::Retry {
 
 ## Attribute Modifiers
 
-The following modifiers can be placed after the attribute type:
+The following modifiers can be placed after the attribute type to indicate that it should be included for a given verb
 
--   output
-    -   This indicates that the attribute does not need to be specified on a POST and is only present on an output representation from GET or MULTIGET. Id is always automatically output only.
--   optional
-    -   This indicates that the attribute is not always required. By default, non-optional attributes are marked as required in the generated Swagger.
--   mutable
-    -   This indicated that the attribute can be mutated using a PUT.
--   synthetic
-    -   This indicates that the attribute is derived, or synthetic. i.e. it is formed out of other state. By default is is output only.
+- no modifier
+    - The default is that the field is included for POST and GET
+- mutable
+    - The field is included also for PUT and PATCH
+- output
+    - The field is only included for GET
+
+Note that "id" is treated as "output" implicitly.
+
+The following modifiers can be placed after the attribute type to indicate optionality:
+
+- no modifier
+    - default is always required when included in a verb
+- optional
+    - always optional when included in a verb
+- optional-post, optional-put, optional-get
+    - optional when included in that specific verb, all others marked as required
+
+Note that attributes included in PATCH are *always* optional.
+
+Here is a simple example:
+
+    configuration-resource Car {
+        id: string
+        make: string
+        nitro: string mutable optional-post
+        created: datetime output
+        location: string mutable optional-put
+	/operations
+	    GET POST PUT PATCH
+    }
+
+This results in the following fields:
+- POST required=make and location, optional=nitro
+- PUT required=nitro, optional=location
+- PATCH optional=nitro and location
+- GET required=id, make, nitro, created, location
+
 
 ## Difference between PUT and PATCH
 
