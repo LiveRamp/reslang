@@ -246,7 +246,7 @@ async action DistributionRequest::Retry {
 
 ## Attribute Modifiers
 
-The following modifiers can be placed after the attribute type to indicate that it should be included for a given verb
+The following modifiers can be placed after the attribute type to indicate that it should be included for the given verbs:
 
 - no modifier
     - The default is that the field is included for POST and GET
@@ -260,11 +260,11 @@ Note that "id" is treated as "output" implicitly.
 The following modifiers can be placed after the attribute type to indicate optionality:
 
 - no modifier
-    - default is always required when included in a verb
+    - The default is that the attribute is always required when included in a verb
 - optional
-    - always optional when included in a verb
+    - Mark the attribute as always optional when included in a verb
 - optional-post, optional-put, optional-get
-    - optional when included in that specific verb, all others marked as required
+    - Mark the attribute as optional when included in that specific verb
 
 Note that attributes included in PATCH are *always* optional.
 
