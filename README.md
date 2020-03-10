@@ -28,7 +28,11 @@ This should bring up the options.
 
 ## Running in Docker
 Individuals who do not want to build Reslang from scratch are free to use the `reslang-docker` script which provides convenient, but limited, functionality with a reslang container.
-This script outputs the generated swagger and requires an absolute path to function.
+This script outputs the generated swagger to STDOUT and requires an absolute path to function.
+
+```
+    bash ./reslang-docker.sh <full-path-to-reslang-folder>
+```
 
 ## Creating & viewing the swagger
 
