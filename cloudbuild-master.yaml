@@ -5,11 +5,11 @@ steps:
     waitFor: ['-']
     id: 'reslang-build'
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/liveramp-eng/api-documentation-portal:$SHORT_SHA']
+    args: ['push', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA']
     waitFor: ['reslang-build']
     id: 'sha-push'
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/liveramp-eng/api-documentation-portal:master']
+    args: ['push', 'gcr.io/liveramp-eng/reslang:master']
     waitFor: ['reslang-build']
     id: 'master-push'
 
