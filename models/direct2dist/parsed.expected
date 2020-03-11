@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "request-resource",
-      "name": "DistributionRequest",
       "singleton": false,
+      "type": "request-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -36,9 +38,13 @@
           "comment": "Reference to a destination's endpoints to be used for distributing the data",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--Endpoint",
-            "short": "Endpoint"
+            "parents": [
+              "Destination"
+            ],
+            "short": "Endpoint",
+            "name": "Destination::Endpoint",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -58,8 +64,11 @@
           "comment": "A map of keys and values needed to use the selected destination endpoint",
           "stringMap": true,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -79,8 +88,11 @@
           "comment": "URL of the data to be distributed. Currently, we only support files in GCS",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "url",
             "name": "url",
-            "short": "url"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -100,8 +112,11 @@
           "comment": "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "DataMappingConfig",
             "name": "DataMappingConfig",
-            "short": "DataMappingConfig"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -124,8 +139,11 @@
           "comment": "Datetime in UTC, formatted as ISO-8601, when the request was created",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -145,8 +163,11 @@
           "comment": "Status of the given DistributionRequest",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "StatusEnum",
             "name": "StatusEnum",
-            "short": "StatusEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -166,8 +187,11 @@
           "comment": "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -187,8 +211,11 @@
           "comment": "Metadata about the batch output",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "BatchOutputMetadata",
             "name": "BatchOutputMetadata",
-            "short": "BatchOutputMetadata"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -207,8 +234,11 @@
           "name": "distributionType",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "DistributionTypeEnum",
             "name": "DistributionTypeEnum",
-            "short": "DistributionTypeEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -228,8 +258,11 @@
           "comment": "Sort key and order. See docs: DistMVP.sort",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "SortTypeEnum",
             "name": "SortTypeEnum",
-            "short": "SortTypeEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -249,8 +282,11 @@
           "comment": "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdAfter",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -270,8 +306,11 @@
           "comment": "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdBefore",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -291,8 +330,11 @@
           "comment": "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedAfter",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -312,8 +354,11 @@
           "comment": "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedBefore",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -346,7 +391,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "DistributionRequest",
+      "name": "DistributionRequest",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true,
@@ -354,19 +403,21 @@
       "generateOutput": true
     },
     {
+      "comment": "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel",
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": true,
-      "name": "DistributionRequest--Cancel",
-      "singleton": false,
-      "parent": "DistributionRequest",
-      "comment": "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -388,26 +439,33 @@
           "errors": []
         }
       ],
+      "parents": [
+        "DistributionRequest"
+      ],
       "short": "Cancel",
+      "name": "DistributionRequest::Cancel",
       "parentShort": "DistributionRequest",
+      "parentName": "DistributionRequest",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
+      "comment": "Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry",
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": true,
-      "name": "DistributionRequest--Retry",
-      "singleton": false,
-      "parent": "DistributionRequest",
-      "comment": "Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -429,40 +487,52 @@
           "errors": []
         }
       ],
+      "parents": [
+        "DistributionRequest"
+      ],
       "short": "Retry",
+      "name": "DistributionRequest::Retry",
       "parentShort": "DistributionRequest",
+      "parentName": "DistributionRequest",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "enum",
-      "name": "DistributionTypeEnum",
+      "parents": [],
+      "short": "DistributionTypeEnum",
       "literals": [
         "BATCH"
       ],
-      "short": "DistributionTypeEnum",
+      "name": "DistributionTypeEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "enum",
-      "name": "SortTypeEnum",
+      "parents": [],
+      "short": "SortTypeEnum",
       "literals": [
         "createdAt:asc",
         "createdAt:desc",
         "statusUpdatedAt:asc",
         "statusUpdatedAt:desc"
       ],
-      "short": "SortTypeEnum",
+      "name": "SortTypeEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "enum",
-      "name": "StatusEnum",
+      "parents": [],
+      "short": "StatusEnum",
       "literals": [
         "QUEUED",
         "IN_PROGRESS",
@@ -470,21 +540,27 @@
         "FAILED",
         "CANCELLED"
       ],
-      "short": "StatusEnum",
+      "name": "StatusEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "DataMappingConfig",
+      "parents": [],
+      "short": "DataMappingConfig",
       "attributes": [
         {
           "name": "input",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "InputFormat",
             "name": "InputFormat",
-            "short": "InputFormat"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -503,8 +579,11 @@
           "name": "output",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "OutputFormat",
             "name": "OutputFormat",
-            "short": "OutputFormat"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -520,21 +599,27 @@
           }
         }
       ],
-      "short": "DataMappingConfig",
+      "name": "DataMappingConfig",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "union",
-      "name": "InputFormat",
+      "parents": [],
+      "short": "InputFormat",
       "attributes": [
         {
           "name": "inputKeyValue",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "InputKeyValue",
             "name": "InputKeyValue",
-            "short": "InputKeyValue"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": true,
           "linked": false,
@@ -550,21 +635,27 @@
           }
         }
       ],
-      "short": "InputFormat",
+      "name": "InputFormat",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "InputKeyValue",
+      "parents": [],
+      "short": "InputKeyValue",
       "attributes": [
         {
           "name": "key",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -583,8 +674,11 @@
           "name": "value",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -600,20 +694,26 @@
           }
         }
       ],
-      "short": "InputKeyValue",
+      "name": "InputKeyValue",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
     {
       "type": "union",
-      "name": "OutputFormat",
+      "parents": [],
+      "short": "OutputFormat",
       "attributes": [
         {
           "name": "outputKeyValueLabel",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "OutputKeyValueLabel",
             "name": "OutputKeyValueLabel",
-            "short": "OutputKeyValueLabel"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": true,
           "linked": false,
@@ -632,8 +732,11 @@
           "name": "outputIdLabel",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "OutputIdLabel",
             "name": "OutputIdLabel",
-            "short": "OutputIdLabel"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": true,
           "linked": false,
@@ -649,21 +752,27 @@
           }
         }
       ],
-      "short": "OutputFormat",
+      "name": "OutputFormat",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "OutputKeyValueLabel",
+      "parents": [],
+      "short": "OutputKeyValueLabel",
       "attributes": [
         {
           "name": "keyLabel",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -682,8 +791,11 @@
           "name": "valueLabel",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -699,20 +811,26 @@
           }
         }
       ],
-      "short": "OutputKeyValueLabel",
+      "name": "OutputKeyValueLabel",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
     {
       "type": "structure",
-      "name": "OutputIdLabel",
+      "parents": [],
+      "short": "OutputIdLabel",
       "attributes": [
         {
           "name": "idLabel",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -728,20 +846,26 @@
           }
         }
       ],
-      "short": "OutputIdLabel",
+      "name": "OutputIdLabel",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
     {
       "type": "structure",
-      "name": "BatchOutputMetadata",
+      "parents": [],
+      "short": "BatchOutputMetadata",
       "attributes": [
         {
           "name": "fileDetails",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "FileDetails",
             "name": "FileDetails",
-            "short": "FileDetails"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -764,8 +888,11 @@
           "comment": "Total size of the distributed data in bytes",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -785,8 +912,11 @@
           "comment": "The number of distribution records in the file initially. See docs: DistMVP.TotalRecords",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -802,21 +932,27 @@
           }
         }
       ],
-      "short": "BatchOutputMetadata",
+      "name": "BatchOutputMetadata",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "FileDetails",
+      "parents": [],
+      "short": "FileDetails",
       "attributes": [
         {
           "name": "fileName",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -835,8 +971,11 @@
           "name": "lineCount",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -852,23 +991,27 @@
           }
         }
       ],
-      "short": "FileDetails",
+      "name": "FileDetails",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang",
       "generateInput": true
     },
     {
       "future": true,
-      "type": "configuration-resource",
-      "name": "Destination",
       "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -884,23 +1027,28 @@
           }
         }
       ],
+      "parents": [],
       "short": "Destination",
+      "name": "Destination",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
     {
       "future": true,
-      "type": "subresource",
-      "name": "Destination--Endpoint",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -916,22 +1064,31 @@
           }
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Endpoint",
+      "name": "Destination::Endpoint",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -951,8 +1108,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -972,8 +1132,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -989,7 +1152,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -1000,9 +1165,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "distribution-mvp",
-          "name": "distribution-mvp-reslang",
-          "short": "reslang"
+          "module": "distribution-mvp",
+          "parents": [],
+          "short": "reslang",
+          "name": "distribution-mvp.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

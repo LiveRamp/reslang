@@ -116,12 +116,12 @@ respath = _ parents:parents? _ short:resname _ {
 noparentrespath = _ short:resname _ {
     return {parents: [], short: short}
 }
-parentrespath = _ parents:parents _ short:resname _ {
+parentrespath = _ parents:parents _ short:name _ {
     return {parents: parents, short: short}
 }
-parents = _ names:(name "::")+ {
-    return names.map(function(value, index, arr) {
-        return value[0] })
+parents = _ first:resname "::" names:(name "::")* {
+    return [first].concat(names.map(function(value, index, arr) {
+        return value[0] }))
 }
 resname = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
 name = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }

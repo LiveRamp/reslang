@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "Resource",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -35,8 +37,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -62,7 +67,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Resource",
+      "name": "Resource",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -70,17 +79,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Resource--Metadata",
       "singleton": true,
-      "parent": "Resource",
+      "type": "subresource",
       "attributes": [
         {
           "name": "info",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -106,8 +116,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Resource"
+      ],
       "short": "Metadata",
+      "name": "Resource::Metadata",
       "parentShort": "Resource",
+      "parentName": "Resource",
       "secondary": false,
       "file": "resources.reslang",
       "generatePuttable": true,
@@ -115,16 +130,18 @@
     },
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "SingletonResource",
       "singleton": true,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -150,7 +167,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "SingletonResource",
+      "name": "SingletonResource",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generatePuttable": true,
@@ -158,17 +179,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "SingletonResource--Metadata",
       "singleton": true,
-      "parent": "SingletonResource",
+      "type": "subresource",
       "attributes": [
         {
           "name": "info",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -194,8 +216,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "SingletonResource"
+      ],
       "short": "Metadata",
+      "name": "SingletonResource::Metadata",
       "parentShort": "SingletonResource",
+      "parentName": "SingletonResource",
       "secondary": false,
       "file": "resources.reslang",
       "generatePuttable": true,
@@ -203,15 +230,19 @@
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -231,8 +262,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -252,8 +286,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -269,7 +306,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -280,9 +319,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "resources",
-          "name": "resources-reslang",
-          "short": "reslang"
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

@@ -5,6 +5,14 @@ import DotvizGen from "../gendotviz"
 /** dotviz generation tests
  */
 describe("dotviz generation tests", () => {
+    test("anydepth", () => {
+        compare("anydepth")
+    })
+
+    test("privacy", () => {
+        compare("privacy")
+    })
+
     test("simple-resource", () => {
         compare("simple-resource")
     })

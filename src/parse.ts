@@ -79,6 +79,13 @@ function addNamespace(
         for (const attr of def.attributes || []) {
             convert(attr.type, namespace, mainNamespace)
         }
+
+        // convert the error references
+        for (const op of def.operations || []) {
+            for (const err of op.errors) {
+                convert(err.struct, namespace, mainNamespace)
+            }
+        }
     }
 }
 

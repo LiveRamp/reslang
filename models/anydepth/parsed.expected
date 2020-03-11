@@ -1,14 +1,14 @@
 {
   "namespace": {
-    "comment": "This is the description of the API",
-    "title": "An API showing evolution",
-    "version": "0.1.2"
+    "comment": "Test for deep resource depth",
+    "title": "Deep resource depth",
+    "version": "0.0.1"
   },
   "definitions": [
     {
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
@@ -55,196 +55,6 @@
             "queryonly": false,
             "query": false
           }
-        },
-        {
-          "name": "bId",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "ResourceB",
-            "name": "ResourceB",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": true,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
-        },
-        {
-          "name": "newBId",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "v2/ResourceB",
-            "name": "v2/ResourceB",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": true,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
-        }
-      ],
-      "operations": [
-        {
-          "operation": "GET",
-          "errors": []
-        }
-      ],
-      "parents": [],
-      "short": "ResourceA",
-      "name": "ResourceA",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "upversion.reslang",
-      "generateOutput": true
-    },
-    {
-      "future": false,
-      "singleton": false,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
-        },
-        {
-          "name": "size",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
-        }
-      ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        },
-        {
-          "operation": "PUT",
-          "errors": []
-        }
-      ],
-      "parents": [],
-      "short": "ResourceB",
-      "name": "ResourceB",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "upversion.reslang",
-      "generateInput": true,
-      "generatePuttable": true,
-      "generateOutput": true
-    },
-    {
-      "future": false,
-      "singleton": false,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
-        },
-        {
-          "name": "totalSize",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          }
         }
       ],
       "operations": [
@@ -258,12 +68,12 @@
         }
       ],
       "parents": [],
-      "short": "v2/ResourceB",
-      "name": "v2/ResourceB",
+      "short": "A",
+      "name": "A",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "upversion.reslang",
+      "file": "resources.reslang",
       "generateInput": true,
       "generateOutput": true
     },
@@ -330,14 +140,243 @@
         }
       ],
       "parents": [
-        "v2/ResourceB"
+        "A"
       ],
-      "short": "Sub",
-      "name": "v2/ResourceB::Sub",
-      "parentShort": "v2/ResourceB",
-      "parentName": "v2/ResourceB",
+      "short": "B",
+      "name": "A::B",
+      "parentShort": "A",
+      "parentName": "A",
       "secondary": false,
-      "file": "upversion.reslang",
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "A",
+        "B"
+      ],
+      "short": "C",
+      "name": "A::B::C",
+      "parentShort": "A",
+      "parentName": "A::B",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "comment": "Start processing",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "A",
+        "B",
+        "C"
+      ],
+      "short": "start",
+      "name": "A::B::C::start",
+      "parentShort": "A",
+      "parentName": "A::B::C",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": true,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "A",
+        "B"
+      ],
+      "short": "stop",
+      "name": "A::B::stop",
+      "parentShort": "A",
+      "parentName": "A::B",
+      "secondary": false,
+      "file": "resources.reslang",
       "generateInput": true,
       "generateOutput": true
     },
@@ -432,10 +471,10 @@
       "diagram": "main",
       "include": [
         {
-          "module": "upversion",
+          "module": "resources",
           "parents": [],
           "short": "reslang",
-          "name": "upversion.reslang",
+          "name": "resources.reslang",
           "parentShort": "",
           "parentName": ""
         }

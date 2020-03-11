@@ -10,7 +10,7 @@ import open from "open"
 import ParseGen from "./genparse"
 import { exec } from "shelljs"
 
-export const VERSION = "v0.9.0"
+export const VERSION = "v0.9.9"
 
 // parse the cmd line
 const args = yargs

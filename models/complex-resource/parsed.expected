@@ -6,18 +6,20 @@
   },
   "definitions": [
     {
-      "future": false,
-      "type": "configuration-resource",
-      "name": "simple-resource-Garage",
-      "singleton": false,
       "comment": "This is a description of a garage",
+      "future": false,
+      "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -36,8 +38,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -56,8 +61,11 @@
           "name": "manufacturer",
           "stringMap": false,
           "type": {
-            "name": "simple-resource-Manufacturer",
-            "short": "Manufacturer"
+            "parents": [],
+            "short": "Manufacturer",
+            "name": "simple-resource.Manufacturer",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -97,20 +105,28 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Garage",
+      "name": "simple-resource.Garage",
+      "parentShort": "",
+      "parentName": "",
       "secondary": true,
       "file": "resources.reslang"
     },
     {
       "type": "structure",
-      "name": "simple-resource-Manufacturer",
+      "parents": [],
+      "short": "Manufacturer",
       "attributes": [
         {
           "name": "company",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -126,22 +142,28 @@
           }
         }
       ],
-      "short": "Manufacturer",
+      "name": "simple-resource.Manufacturer",
+      "parentShort": "",
+      "parentName": "",
       "secondary": true,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "simple-resource-StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -161,8 +183,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -182,8 +207,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -199,23 +227,27 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "simple-resource.StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": true,
       "file": "local.reslang"
     },
     {
-      "future": false,
-      "type": "asset-resource",
-      "name": "Car",
-      "singleton": false,
       "comment": "this is a Car resource",
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -234,8 +266,11 @@
           "name": "bought",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "date",
             "name": "date",
-            "short": "date"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -254,8 +289,11 @@
           "name": "brand",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "BrandEnum",
             "name": "BrandEnum",
-            "short": "BrandEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -274,8 +312,11 @@
           "name": "engine",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Specification",
             "name": "Specification",
-            "short": "Specification"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -294,8 +335,11 @@
           "name": "components",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Specification",
             "name": "Specification",
-            "short": "Specification"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -314,9 +358,12 @@
           "name": "homeGarageId",
           "stringMap": false,
           "type": {
-            "parent": "simple-resource",
-            "name": "simple-resource-Garage",
-            "short": "Garage"
+            "module": "simple-resource",
+            "parents": [],
+            "short": "Garage",
+            "name": "simple-resource.Garage",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -335,9 +382,12 @@
           "name": "manufacturer",
           "stringMap": false,
           "type": {
-            "parent": "simple-resource",
-            "name": "simple-resource-Manufacturer",
-            "short": "Manufacturer"
+            "module": "simple-resource",
+            "parents": [],
+            "short": "Manufacturer",
+            "name": "simple-resource.Manufacturer",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -356,9 +406,12 @@
           "name": "rentedGarageIds",
           "stringMap": false,
           "type": {
-            "parent": "simple-resource",
-            "name": "simple-resource-Garage",
-            "short": "Garage"
+            "module": "simple-resource",
+            "parents": [],
+            "short": "Garage",
+            "name": "simple-resource.Garage",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -391,7 +444,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Car",
+      "name": "Car",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -400,15 +457,19 @@
     },
     {
       "type": "structure",
-      "name": "Specification",
+      "parents": [],
+      "short": "Specification",
       "comment": "this is a specification!",
       "attributes": [
         {
           "name": "type",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -427,8 +488,11 @@
           "name": "documentation",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -444,25 +508,28 @@
           }
         }
       ],
-      "short": "Specification",
+      "name": "Specification",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
-      "future": false,
-      "type": "subresource",
-      "name": "Car--Wheel",
-      "singleton": false,
-      "parent": "Car",
       "comment": "A wheel is owned by a car",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -481,8 +548,11 @@
           "name": "radius",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "double",
             "name": "double",
-            "short": "double"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -516,8 +586,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Car"
+      ],
       "short": "Wheel",
+      "name": "Car::Wheel",
       "parentShort": "Car",
+      "parentName": "Car",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -527,27 +602,34 @@
     },
     {
       "type": "enum",
-      "name": "BrandEnum",
+      "parents": [],
+      "short": "BrandEnum",
       "literals": [
         "TOYOTA",
         "FORD"
       ],
-      "short": "BrandEnum",
+      "name": "BrandEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -567,8 +649,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -588,8 +673,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -605,7 +693,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -616,9 +706,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "simple-resource-resources",
-          "name": "simple-resource-resources-reslang",
-          "short": "reslang"
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

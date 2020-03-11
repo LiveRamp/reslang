@@ -6,6 +6,14 @@ import yaml from "js-yaml"
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
+    test("anydepth", () => {
+        compare("anydepth")
+    })
+
+    test("privacy", () => {
+        compare("privacy")
+    })
+
     test("optionality", () => {
         compare("optionality")
     })
@@ -65,7 +73,7 @@ function compare(module: string) {
     const swagger = swag.generate()
 
     const got = strip(yaml.dump(clean(swagger)))
-    const expected = strip(readFile(`models/${module}/swagger.expected`))
+    const expected = strip(readFile(`models/${module}/swagger.expected`), true)
 
     if (got !== expected) {
         console.log(got)

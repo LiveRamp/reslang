@@ -6,18 +6,20 @@
   },
   "definitions": [
     {
-      "future": false,
-      "type": "asset-resource",
-      "name": "Directory",
-      "singleton": false,
       "comment": "This models a directory we might create",
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -36,8 +38,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -67,7 +72,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Directory",
+      "name": "Directory",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true,
@@ -75,18 +84,20 @@
       "generateOutput": true
     },
     {
-      "future": false,
-      "type": "configuration-resource",
-      "name": "FileType",
-      "singleton": false,
       "comment": "This configures up a file type, e.g. .gif",
+      "future": false,
+      "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -105,8 +116,11 @@
           "name": "type",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -125,8 +139,11 @@
           "name": "format",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -145,8 +162,11 @@
           "name": "specId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Specification",
             "name": "Specification",
-            "short": "Specification"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -179,7 +199,11 @@
                 }
               ],
               "struct": {
-                "name": "StandardError"
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
               }
             },
             {
@@ -190,7 +214,11 @@
                 }
               ],
               "struct": {
-                "name": "SpecialError"
+                "parents": [],
+                "short": "SpecialError",
+                "name": "SpecialError",
+                "parentShort": "",
+                "parentName": ""
               }
             }
           ]
@@ -204,7 +232,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "FileType",
+      "name": "FileType",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true,
@@ -213,16 +245,18 @@
     },
     {
       "future": true,
-      "type": "configuration-resource",
-      "name": "Specification",
       "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -238,24 +272,29 @@
           }
         }
       ],
+      "parents": [],
       "short": "Specification",
+      "name": "Specification",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "file.reslang"
     },
     {
-      "future": false,
-      "type": "subresource",
-      "name": "Directory--File",
-      "singleton": false,
-      "parent": "Directory",
       "comment": "This models a file in a directory",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -274,8 +313,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -294,8 +336,11 @@
           "name": "url",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -314,8 +359,11 @@
           "name": "fileTypeId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "FileType",
             "name": "FileType",
-            "short": "FileType"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -334,8 +382,11 @@
           "name": "contents",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -365,8 +416,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Directory"
+      ],
       "short": "File",
+      "name": "Directory::File",
       "parentShort": "Directory",
+      "parentName": "Directory",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true,
@@ -374,18 +430,20 @@
       "generateOutput": true
     },
     {
-      "future": false,
-      "type": "request-resource",
-      "name": "DirectoryDeleteRequest",
-      "singleton": false,
       "comment": "This models a long running request",
+      "future": false,
+      "singleton": false,
+      "type": "request-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -404,8 +462,11 @@
           "name": "directoryId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Directory",
             "name": "Directory",
-            "short": "Directory"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -435,7 +496,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "DirectoryDeleteRequest",
+      "name": "DirectoryDeleteRequest",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true,
@@ -443,19 +508,21 @@
       "generateOutput": true
     },
     {
+      "comment": "This models an action on a request",
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": false,
-      "name": "DirectoryDeleteRequest--Cancel",
-      "singleton": false,
-      "parent": "DirectoryDeleteRequest",
-      "comment": "This models an action on a request",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -477,23 +544,32 @@
           "errors": []
         }
       ],
+      "parents": [
+        "DirectoryDeleteRequest"
+      ],
       "short": "Cancel",
+      "name": "DirectoryDeleteRequest::Cancel",
       "parentShort": "DirectoryDeleteRequest",
+      "parentName": "DirectoryDeleteRequest",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "SpecialError",
+      "parents": [],
+      "short": "SpecialError",
       "comment": "A non-standard error response",
       "attributes": [
         {
           "name": "message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -512,8 +588,11 @@
           "name": "time",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -529,22 +608,28 @@
           }
         }
       ],
-      "short": "SpecialError",
+      "name": "SpecialError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "file.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -564,8 +649,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -585,8 +673,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -602,7 +693,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -613,13 +706,19 @@
       "diagram": "main",
       "include": [
         {
+          "parents": [],
+          "short": "all",
           "name": "all",
-          "short": "all"
+          "parentShort": "",
+          "parentName": ""
         },
         {
-          "parent": "files",
-          "name": "files-reslang",
-          "short": "reslang"
+          "module": "files",
+          "parents": [],
+          "short": "reslang",
+          "name": "files.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

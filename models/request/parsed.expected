@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "request-resource",
-      "name": "UploadRequest",
       "singleton": false,
+      "type": "request-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -35,8 +37,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -55,8 +60,11 @@
           "name": "status",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "UploadRequestStatusEnum",
             "name": "UploadRequestStatusEnum",
-            "short": "UploadRequestStatusEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -75,8 +83,11 @@
           "name": "client",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -106,7 +117,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "UploadRequest",
+      "name": "UploadRequest",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -115,17 +130,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "UploadRequest--Status",
       "singleton": true,
-      "parent": "UploadRequest",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -144,8 +160,11 @@
           "name": "recordsProcessed",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -164,8 +183,11 @@
           "name": "completed",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "boolean",
             "name": "boolean",
-            "short": "boolean"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -187,25 +209,31 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "Status",
+      "name": "UploadRequest::Status",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateOutput": true
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "UploadRequest--RecordSet",
       "singleton": false,
-      "parent": "UploadRequest",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -224,8 +252,11 @@
           "name": "company",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -244,8 +275,11 @@
           "name": "records",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Record",
             "name": "Record",
-            "short": "Record"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -274,8 +308,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "RecordSet",
+      "name": "UploadRequest::RecordSet",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -283,14 +322,18 @@
     },
     {
       "type": "structure",
-      "name": "Record",
+      "parents": [],
+      "short": "Record",
       "attributes": [
         {
           "name": "details",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -309,8 +352,11 @@
           "name": "address",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -326,24 +372,28 @@
           }
         }
       ],
-      "short": "Record",
+      "name": "Record",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": true,
-      "name": "UploadRequest--StartProcessingAction",
-      "singleton": false,
-      "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -365,25 +415,32 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "StartProcessingAction",
+      "name": "UploadRequest::StartProcessingAction",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": false,
-      "name": "UploadRequest--StopProcessingAction",
-      "singleton": false,
-      "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -402,8 +459,11 @@
           "name": "when",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -429,8 +489,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "StopProcessingAction",
+      "name": "UploadRequest::StopProcessingAction",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -438,28 +503,35 @@
     },
     {
       "type": "enum",
-      "name": "UploadRequestStatusEnum",
+      "parents": [],
+      "short": "UploadRequestStatusEnum",
       "literals": [
         "STARTED",
         "STOPPED",
         "COMPLETED"
       ],
-      "short": "UploadRequestStatusEnum",
+      "name": "UploadRequestStatusEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -479,8 +551,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -500,8 +575,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -517,7 +595,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -528,9 +608,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "resources",
-          "name": "resources-reslang",
-          "short": "reslang"
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

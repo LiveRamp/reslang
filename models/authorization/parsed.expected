@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "User",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -35,8 +37,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -62,60 +67,124 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "User",
+      "name": "User",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "auth.reslang",
       "generateInput": true,
       "generateOutput": true
     },
     {
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": false,
-      "name": "User--Suspend",
-      "singleton": true,
-      "parent": "User",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
       "operations": [
         {
           "operation": "PUT",
           "errors": []
         }
+      ],
+      "parents": [
+        "User"
       ],
       "short": "Suspend",
+      "name": "User::Suspend",
       "parentShort": "User",
-      "secondary": false,
-      "file": "auth.reslang",
-      "generatePuttable": true
-    },
-    {
-      "type": "action",
-      "async": false,
-      "name": "User--Unsuspend",
-      "singleton": true,
-      "parent": "User",
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
-        }
-      ],
-      "short": "Unsuspend",
-      "parentShort": "User",
+      "parentName": "User",
       "secondary": false,
       "file": "auth.reslang",
       "generatePuttable": true
     },
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "Organization",
       "singleton": false,
+      "type": "action",
+      "async": false,
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "User"
+      ],
+      "short": "Unsuspend",
+      "name": "User::Unsuspend",
+      "parentShort": "User",
+      "parentName": "User",
+      "secondary": false,
+      "file": "auth.reslang",
+      "generatePuttable": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -134,8 +203,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -154,8 +226,11 @@
           "name": "parentOrganizationId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Organization",
             "name": "Organization",
-            "short": "Organization"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -185,7 +260,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Organization",
+      "name": "Organization",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "auth.reslang",
       "generateInput": true,
@@ -194,16 +273,18 @@
     },
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "Role",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -222,8 +303,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -242,8 +326,11 @@
           "name": "parentRoleId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Role",
             "name": "Role",
-            "short": "Role"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -273,7 +360,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Role",
+      "name": "Role",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "auth.reslang",
       "generateInput": true,
@@ -282,15 +373,19 @@
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -310,8 +405,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -331,8 +429,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -348,7 +449,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -359,9 +462,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "auth",
-          "name": "auth-reslang",
-          "short": "reslang"
+          "module": "auth",
+          "parents": [],
+          "short": "reslang",
+          "name": "auth.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

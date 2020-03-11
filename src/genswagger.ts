@@ -73,7 +73,7 @@ export default class SwagGen extends BaseGen {
                 ].includes(el.type)
             ) {
                 let parents = ""
-                const pathParams: any[] = []
+                let params: any[] = []
                 let pname = el.parentName
                 let major = getVersion(el.short)
                 while (pname) {
@@ -90,21 +90,22 @@ export default class SwagGen extends BaseGen {
                     if (!actual.singleton && actual.type !== "action") {
                         full = pluralizeName(singular)
                     }
-                    parents = `/${full}/\{${singular}-id\}`
+                    parents = `/${full}/\{${singular}-id\}` + parents
                     pname = actual.parentName
-                    this.addParentPathParam(
-                        pathParams,
-                        actual,
-                        singular + "-id"
-                    )
+                    this.addParentPathParam(params, actual, singular + "-id")
                 }
+                // reverse the order so it looks more natural
+                params = params.reverse()
 
                 const singleton = el.singleton
                 let path: any = {}
 
                 // name of resource
                 let name = sanitize(fixName(el.short))
-                if (!el.singleton && el.type !== "action") {
+                const action = el.type === "action"
+                const actionPath = action ? "actions/" : ""
+
+                if (!el.singleton && !action) {
                     name = pluralizeName(name)
                 }
 
@@ -121,11 +122,11 @@ export default class SwagGen extends BaseGen {
                 }
 
                 if (!singleton && (post || multiget)) {
-                    paths[`/${major}${parents}/${name}`] = path
+                    paths[`/${major}${parents}/${actionPath}${name}`] = path
                     this.formNonIdOperations(
                         el,
                         path,
-                        pathParams,
+                        params,
                         tagKeys,
                         post,
                         multiget
@@ -143,15 +144,17 @@ export default class SwagGen extends BaseGen {
                 path = {}
                 if (get || put || patch || del) {
                     if (singleton) {
-                        paths[`/${major}${parents}/${name}`] = path
+                        paths[`/${major}${parents}/${actionPath}${name}`] = path
                     } else {
-                        paths[`/${major}${parents}/${name}/{id}`] = path
+                        paths[
+                            `/${major}${parents}/${actionPath}${name}/{id}`
+                        ] = path
                     }
                 }
                 this.formIdOperations(
                     el,
                     path,
-                    pathParams,
+                    params,
                     !!singleton,
                     tagKeys,
                     get,
@@ -189,7 +192,7 @@ export default class SwagGen extends BaseGen {
     private formNonIdOperations(
         el: IDefinition,
         path: any,
-        pathParams: any[],
+        params: any[],
         tagKeys: { [key: string]: string },
         post: IOperation | null,
         multiget: IOperation | null
@@ -297,18 +300,16 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(sane + "Input")) {
                 delete path.post.requestBody
             }
-            path.post.parameters = pathParams
+            path.post.parameters = params
         }
         if (multiget) {
-            const params: any[] = []
-
             params.push({
                 in: "query",
                 name: "offset",
                 description:
                     "Offset of the record (starting from 0) to include in the response.",
                 schema: {
-                    type: "number",
+                    type: "integer",
                     default: 0
                 }
             })
@@ -318,7 +319,7 @@ export default class SwagGen extends BaseGen {
                 description: `Number of records to return. If unspecified, 10 records will be returned.\
  Maximum value for limit can be 100`,
                 schema: {
-                    type: "number",
+                    type: "integer",
                     default: 10,
                     maximum: 100
                 }
@@ -345,7 +346,7 @@ export default class SwagGen extends BaseGen {
                         "X-Total-Count": {
                             description:
                                 "Total number of records in the data set.",
-                            schema: { type: "number" }
+                            schema: { type: "integer" }
                         }
                     },
                     content: {
@@ -368,7 +369,7 @@ export default class SwagGen extends BaseGen {
                 parameters: params,
                 responses
             }
-            path.get.parameters = pathParams
+            path.get.parameters = params
         }
     }
 
@@ -409,7 +410,7 @@ export default class SwagGen extends BaseGen {
     private formIdOperations(
         el: IDefinition,
         path: any,
-        pathParams: any[],
+        params: any[],
         singleton: boolean,
         tagKeys: { [key: string]: string },
         get?: IOperation | null,
@@ -418,8 +419,18 @@ export default class SwagGen extends BaseGen {
         del?: IOperation | null
     ) {
         const sane = sanitize(el.name, false)
+        const short = el.short
+        const notFound = {
+            description: short + " not found",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/StandardError"
+                    }
+                }
+            }
+        }
         if (get) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " retrieved successfully",
@@ -435,7 +446,8 @@ export default class SwagGen extends BaseGen {
                                   }
                               }
                           }
-                }
+                },
+                404: notFound
             }
             if (this.empty.has(sane + "Output")) {
                 delete responses[200].content
@@ -449,15 +461,15 @@ export default class SwagGen extends BaseGen {
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.get.parameters = [
+                path.get.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ].concat(pathParams)
+                ])
             } else {
-                path.get.parameters = pathParams
+                path.get.parameters = params
             }
         }
         if (put) {
@@ -465,7 +477,8 @@ export default class SwagGen extends BaseGen {
             const responses = {
                 200: {
                     description: short + " modified successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(put, responses)
             path.put = {
@@ -489,15 +502,15 @@ export default class SwagGen extends BaseGen {
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.put.parameters = [
+                path.put.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ].concat(pathParams)
+                ])
             } else {
-                path.put.parameters = pathParams
+                path.put.parameters = params
             }
         }
         if (patch) {
@@ -505,7 +518,8 @@ export default class SwagGen extends BaseGen {
             const responses = {
                 200: {
                     description: short + " patched successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(patch, responses)
             path.patch = {
@@ -529,15 +543,15 @@ export default class SwagGen extends BaseGen {
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.patch.parameters = [
+                path.patch.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ].concat(pathParams)
+                ])
             } else {
-                path.patch.parameters = pathParams
+                path.patch.parameters = params
             }
         }
         if (del) {
@@ -545,7 +559,8 @@ export default class SwagGen extends BaseGen {
             const responses = {
                 200: {
                     description: short + " deleted successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(del, responses)
             path.delete = {
@@ -556,15 +571,15 @@ export default class SwagGen extends BaseGen {
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.delete.parameters = [
+                path.delete.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ].concat(pathParams)
+                ])
             } else {
-                path.delete.parameters = pathParams
+                path.delete.parameters = params
             }
         }
     }
@@ -603,7 +618,7 @@ export default class SwagGen extends BaseGen {
                 }
                 break
             case "int":
-                schema.type = "number"
+                schema.type = "integer"
                 break
             case "boolean":
                 schema.type = "boolean"
@@ -698,12 +713,12 @@ export default class SwagGen extends BaseGen {
                     )
                     if (attr.array) {
                         schema.example = `Link to ${attr.type.name} ${
-                            def.future ? "(to be defined in the future)" : ""
-                        } resource(s) via id(s)`
+                            def.future ? "(to be defined in the future) " : ""
+                        }resource(s) via id(s)`
                     } else {
                         schema.example = `Link to a ${attr.type.name} ${
-                            def.future ? "(to be defined in the future)" : ""
-                        } resource via its id`
+                            def.future ? "(to be defined in the future) " : ""
+                        }resource via its id`
                     }
                     break
                 case "enum":

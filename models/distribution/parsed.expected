@@ -6,18 +6,20 @@
   },
   "definitions": [
     {
-      "future": false,
-      "type": "configuration-resource",
-      "name": "Destination",
-      "singleton": false,
       "comment": "A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook",
+      "future": false,
+      "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -36,8 +38,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -70,7 +75,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Destination",
+      "name": "Destination",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "destination.reslang",
       "generateInput": true,
@@ -79,17 +88,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Destination--TaxonomyConfiguration",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -108,8 +118,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -128,8 +141,11 @@
           "name": "mappingsMacro",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -163,8 +179,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "TaxonomyConfiguration",
+      "name": "Destination::TaxonomyConfiguration",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "destination.reslang",
       "generateInput": true,
@@ -173,19 +194,20 @@
       "generatePuttable": true
     },
     {
-      "future": false,
-      "type": "subresource",
-      "name": "Destination--Integration",
-      "singleton": false,
-      "parent": "Destination",
       "comment": "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -204,8 +226,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -224,8 +249,11 @@
           "name": "mapping",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "IdentifierTypeMapping",
             "name": "IdentifierTypeMapping",
-            "short": "IdentifierTypeMapping"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -247,9 +275,13 @@
           "name": "taxonomyConfigurationId",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--TaxonomyConfiguration",
-            "short": "TaxonomyConfiguration"
+            "parents": [
+              "Destination"
+            ],
+            "short": "TaxonomyConfiguration",
+            "name": "Destination::TaxonomyConfiguration",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -287,8 +319,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Integration",
+      "name": "Destination::Integration",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "destination.reslang",
       "generateInput": true,
@@ -298,14 +335,18 @@
     },
     {
       "type": "structure",
-      "name": "IdentifierTypeMapping",
+      "parents": [],
+      "short": "IdentifierTypeMapping",
       "attributes": [
         {
           "name": "identifierPoolId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "IdentifierPool",
             "name": "IdentifierPool",
-            "short": "IdentifierPool"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -324,9 +365,13 @@
           "name": "endpointId",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--Endpoint",
-            "short": "Endpoint"
+            "parents": [
+              "Destination"
+            ],
+            "short": "Endpoint",
+            "name": "Destination::Endpoint",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -342,23 +387,27 @@
           }
         }
       ],
-      "short": "IdentifierTypeMapping",
+      "name": "IdentifierTypeMapping",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "destination.reslang",
       "generateInput": true
     },
     {
       "future": true,
-      "type": "configuration-resource",
-      "name": "IdentifierPool",
       "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -374,23 +423,28 @@
           }
         }
       ],
+      "parents": [],
       "short": "IdentifierPool",
+      "name": "IdentifierPool",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "destination.reslang"
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Destination--Endpoint",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -409,8 +463,11 @@
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -429,8 +486,11 @@
           "name": "url",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -449,9 +509,13 @@
           "name": "packagerId",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--Packager",
-            "short": "Packager"
+            "parents": [
+              "Destination"
+            ],
+            "short": "Packager",
+            "name": "Destination::Packager",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -470,9 +534,13 @@
           "name": "formatterId",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--Formatter",
-            "short": "Formatter"
+            "parents": [
+              "Destination"
+            ],
+            "short": "Formatter",
+            "name": "Destination::Formatter",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -491,9 +559,13 @@
           "name": "delivererId",
           "stringMap": false,
           "type": {
-            "toplevel": "Destination",
-            "name": "Destination--Deliverer",
-            "short": "Deliverer"
+            "parents": [
+              "Destination"
+            ],
+            "short": "Deliverer",
+            "name": "Destination::Deliverer",
+            "parentShort": "Destination",
+            "parentName": "Destination"
           },
           "inline": false,
           "linked": true,
@@ -512,8 +584,11 @@
           "name": "endpointProperties",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "EndpointProperty",
             "name": "EndpointProperty",
-            "short": "EndpointProperty"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -550,8 +625,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Endpoint",
+      "name": "Destination::Endpoint",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "endpoint.reslang",
       "generateInput": true,
@@ -561,14 +641,18 @@
     },
     {
       "type": "structure",
-      "name": "EndpointProperty",
+      "parents": [],
+      "short": "EndpointProperty",
       "attributes": [
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -587,8 +671,11 @@
           "name": "default",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -607,8 +694,11 @@
           "name": "externallyConfigurable",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "boolean",
             "name": "boolean",
-            "short": "boolean"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -624,24 +714,27 @@
           }
         }
       ],
-      "short": "EndpointProperty",
+      "name": "EndpointProperty",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "endpoint.reslang",
       "generateInput": true
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Destination--Packager",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -660,8 +753,11 @@
           "name": "macro",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -680,8 +776,11 @@
           "name": "compressionType",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "CompressionTypeEnum",
             "name": "CompressionTypeEnum",
-            "short": "CompressionTypeEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -711,8 +810,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Packager",
+      "name": "Destination::Packager",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "endpoint.reslang",
       "generateInput": true,
@@ -721,17 +825,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Destination--Formatter",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -750,8 +855,11 @@
           "name": "macro",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -781,8 +889,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Formatter",
+      "name": "Destination::Formatter",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "endpoint.reslang",
       "generateInput": true,
@@ -791,17 +904,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "Destination--Deliverer",
       "singleton": false,
-      "parent": "Destination",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -820,8 +934,11 @@
           "name": "protocol",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "ProtocolEnum",
             "name": "ProtocolEnum",
-            "short": "ProtocolEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -840,8 +957,11 @@
           "name": "macro",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -871,8 +991,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "Destination"
+      ],
       "short": "Deliverer",
+      "name": "Destination::Deliverer",
       "parentShort": "Destination",
+      "parentName": "Destination",
       "secondary": false,
       "file": "endpoint.reslang",
       "generateInput": true,
@@ -881,21 +1006,25 @@
     },
     {
       "type": "enum",
-      "name": "CompressionTypeEnum",
+      "parents": [],
+      "short": "CompressionTypeEnum",
       "literals": [
         "NONE",
         "BZ2",
         "GZIP",
         "LZO"
       ],
-      "short": "CompressionTypeEnum",
+      "name": "CompressionTypeEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "enums.reslang",
       "generateInput": true
     },
     {
       "type": "enum",
-      "name": "ProtocolEnum",
+      "parents": [],
+      "short": "ProtocolEnum",
       "literals": [
         "SFTP",
         "FTP",
@@ -920,22 +1049,28 @@
         "GOOGLE_STORE_TRANSACTIONS",
         "AZURE"
       ],
-      "short": "ProtocolEnum",
+      "name": "ProtocolEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "enums.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -955,8 +1090,11 @@
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -976,8 +1114,11 @@
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -993,7 +1134,9 @@
           }
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -1004,19 +1147,28 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "endpoint",
-          "name": "endpoint-reslang",
-          "short": "reslang"
+          "module": "endpoint",
+          "parents": [],
+          "short": "reslang",
+          "name": "endpoint.reslang",
+          "parentShort": "",
+          "parentName": ""
         },
         {
-          "parent": "destination",
-          "name": "destination-reslang",
-          "short": "reslang"
+          "module": "destination",
+          "parents": [],
+          "short": "reslang",
+          "name": "destination.reslang",
+          "parentShort": "",
+          "parentName": ""
         },
         {
-          "parent": "enums",
-          "name": "enums-reslang",
-          "short": "reslang"
+          "module": "enums",
+          "parents": [],
+          "short": "reslang",
+          "name": "enums.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []
