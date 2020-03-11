@@ -1,0 +1,17 @@
+# This build only runs after a push to master
+steps:
+
+  # build the docker master image for the API documentation portal
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:master', '.']
+    waitFor: ['-']
+    id: 'reslang-build'
+
+#  # push the image built during the previous step
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: ['push', 'gcr.io/liveramp-eng/api-documentation-portal:master']
+#    waitFor: ['api-doc-portal-build']
+#    id: 'api-doc-portal-push'
+
+timeout: 180s
+tags: ['reslang']
