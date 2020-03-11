@@ -316,8 +316,10 @@ Reslang supports a rule checker which generates errors if you violate certain ed
         "maxResourceDepth": 2,
         "maxActionDepth": 3,
         "actionsOnRequestsOnly": false,
-        "checkRules": ["ONLY_CONFIG_TO_CONFIG", "NO_ACTION_SUBRESOURCES"]
+        "onlyConfigToConfig": true,
+        "noSubresourcesOnActions": true
     }
+
     
 You can specify an alternative file using the switch --rulefile. You can ignore the rules using --ignorerules.
 
@@ -325,6 +327,6 @@ The rules are:
 - maxResourceDepth controls how deep a resource & subresource hierarchy can go. /v1/cars/2/wheels/3/bolts/4 is 3 levels deep. Default is to allow 2 levels
 - maxActionDepth controls how deeply nested an action can be. THe default setting is 3 layers deep, which means an action can currently go on a subresource. e.g. /v1/cars/2/wheels/3/actions/replace-wheel is allowed
 - actionsOnRequestsOnly, if set, restricts actions to only being on request-resources
-- ONLY_CONFIG_TO_CONFIG means that configuration-resources can only link to other configuration-resources. They cannot link to asset or request resources
-- NO_ACTION_SUBRESOURCES means that actions cannot have subresources
+- onlyConfigToConfig means that configuration-resources can only link to other configuration-resources. They cannot link to asset or request resources
+- noSubresourcesOnActions means that actions cannot have subresources
 
