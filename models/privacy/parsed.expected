@@ -1,0 +1,409 @@
+{
+  "namespace": {
+    "comment": "API for retrieving consent files",
+    "title": "Consent file API - BETA ",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "createdSince",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
+          }
+        },
+        {
+          "name": "identifierType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "IdentifierType",
+            "name": "IdentifierType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "requestType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RequestType",
+            "name": "RequestType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "dataController",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DataController",
+            "name": "DataController",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "fileUrl",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "timeStamp",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "ConsentFile",
+      "name": "ConsentFile",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateMulti": true,
+      "generateOutput": true
+    },
+    {
+      "type": "structure",
+      "parents": [],
+      "short": "DataController",
+      "attributes": [
+        {
+          "name": "controllerSpecifier",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "controllerIdentification",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "liveRampControlled",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "name": "DataController",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "RequestType",
+      "literals": [
+        "OPT_OUT",
+        "DELETE"
+      ],
+      "name": "RequestType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "IdentifierType",
+      "literals": [
+        "IDENTITY_LINK",
+        "COOKIE",
+        "IDFA",
+        "AAID",
+        "MUID",
+        "CUSTOM_ID"
+      ],
+      "name": "IdentifierType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "structure",
+      "parents": [],
+      "short": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "local.reslang",
+      "generateInput": true
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "module": "consent",
+          "parents": [],
+          "short": "reslang",
+          "name": "consent.reslang",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
+      "groups": []
+    }
+  ]
+}
