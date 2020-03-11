@@ -1,4 +1,4 @@
-# This build only runs after a push to master
+# This build only runs after a push to master.
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA', '-t', 'gcr.io/liveramp-eng/reslang:master', '.']
