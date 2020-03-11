@@ -1,0 +1,8 @@
+{
+    "maxResourceDepth": 2,
+    "maxActionDepth": 3,
+    "actionsOnRequestsOnly": false,
+    "links": "IDs",
+    "returnBodyOnUpdate": false,
+    "checkRules": ["NO_CONFIG_LINKS_TO_ASSETS"]
+}

@@ -6,11 +6,13 @@ import {
     IOperation,
     IDiagram,
     IDocumentation,
-    IDocEntry
+    IDocEntry,
+    ResourceType
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
+import { IRules } from "./rules"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 
@@ -22,8 +24,10 @@ export abstract class BaseGen {
     protected documentation: { [name: string]: IDocEntry[] } = {}
     private loaded = new Set<string>()
 
-    public constructor(private dirs: string[]) {
+    public constructor(private dirs: string[], private rules: IRules) {
+        this.rules = rules
         this.processDefinitions()
+        this.checkRules()
     }
 
     public processDefinitions() {
@@ -98,6 +102,44 @@ export abstract class BaseGen {
         // must have a namespace
         if (!this.namespace) {
             throw new Error(`No namespace present in ${dirname}`)
+        }
+    }
+
+    // check all the rules for this api
+    public checkRules() {
+        if (this.rules.ignoreRules) {
+            return
+        }
+
+        // check depth of each structure & other rules
+        const maxResource = this.rules.maxResourceDepth
+        const maxAction = this.rules.maxActionDepth
+
+        for (const def of this.defs) {
+            // is the resource too deep?
+            if (
+                ResourceType.includes(def.type) &&
+                def.parents.length >= maxResource
+            ) {
+                throw new Error(
+                    `RULE maxResourceDepth(${maxResource}) violated: ${def.name}`
+                )
+            }
+            // if the action too deep?
+            if (def.type === "action" && def.parents.length >= maxAction) {
+                throw new Error(
+                    `RULE maxActionDepth(${maxAction}) violated: ${def.name}`
+                )
+            }
+            // is the action only supposed to be on requests?
+            if (def.type === "action" && this.rules.actionsOnRequestsOnly) {
+                const parent = this.extractDefinition(def.parentName)
+                if (parent.type !== "request-resource") {
+                    throw new Error(
+                        `RULE actionsOnRequestsOnly violated: ${def.name}`
+                    )
+                }
+            }
         }
     }
 
