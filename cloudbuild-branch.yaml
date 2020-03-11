@@ -3,7 +3,7 @@ steps:
 
   # build the docker master image for the API documentation portal
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:master', '.']
+    args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA', '.']
     waitFor: ['-']
     id: 'reslang-build'
 
@@ -13,5 +13,5 @@ steps:
 #    waitFor: ['api-doc-portal-build']
 #    id: 'api-doc-portal-push'
 
-timeout: 180s
+timeout: 300s
 tags: ['reslang']
