@@ -2,7 +2,7 @@
 
 import clip from "clipboardy"
 import yaml from "js-yaml"
-// import DotvizGen from "./gendotviz"
+import DotvizGen from "./gendotviz"
 import SwagGen from "./genswagger"
 import { clean } from "./parse"
 import yargs from "yargs"
@@ -60,18 +60,18 @@ try {
         }
         clip.writeSync(json)
     } else if (args.diagram) {
-        // // generate .viz?
-        // const dot = new DotvizGen(files)
-        // const dotviz = dot.generate(args.diagram)
-        // if (args.stdout) {
-        //     console.log(dotviz)
-        // } else {
-        //     console.log("Success - dotviz copied to clipboard")
-        // }
-        // clip.writeSync(dotviz)
-        // if (args.open) {
-        //     open("https://dreampuf.github.io/GraphvizOnline")
-        // }
+        // generate .viz?
+        const dot = new DotvizGen(files)
+        const dotviz = dot.generate(args.diagram)
+        if (args.stdout) {
+            console.log(dotviz)
+        } else {
+            console.log("Success - dotviz copied to clipboard")
+        }
+        clip.writeSync(dotviz)
+        if (args.open) {
+            open("https://dreampuf.github.io/GraphvizOnline")
+        }
     } else {
         // generate swagger
         const swag = new SwagGen(files)

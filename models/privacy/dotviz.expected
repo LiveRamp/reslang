@@ -1,0 +1,20 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"ConsentFile" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>ConsentFile        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">createdSince: datetime</td></tr><tr><td align="left">identifierType: IdentifierType</td></tr><tr><td align="left">requestType: RequestType</td></tr><tr><td align="left">fileUrl: string</td></tr><tr><td align="left">timeStamp: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET id createdSince identifierType requestType dataController fileUrl timeStamp</font></td></tr>"}</table>>];
+"DataController" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>DataController        </b></td></tr>        <hr/><tr><td align="left">controllerSpecifier: string</td></tr><tr><td align="left">controllerIdentification: string</td></tr><tr><td align="left">liveRampControlled: boolean</td></tr></table> >];
+"RequestType" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>RequestType  </b></td></tr><hr/><tr><td align="left">OPT_OUT</td></tr><tr><td align="left">DELETE</td></tr></table>>];
+"IdentifierType" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>IdentifierType  </b></td></tr><hr/><tr><td align="left">IDENTITY_LINK</td></tr><tr><td align="left">COOKIE</td></tr><tr><td align="left">IDFA</td></tr><tr><td align="left">AAID</td></tr><tr><td align="left">MUID</td></tr><tr><td align="left">CUSTOM_ID</td></tr></table>>];
+"ConsentFile" -> "DataController" [dir="back" arrowtail="diamond" label=< <font point-size="8"> dataController</font> >];
+}

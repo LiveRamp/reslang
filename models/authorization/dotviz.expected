@@ -9,11 +9,11 @@ digraph G {
                     <tr><td><b>User        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
 "Suspend" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Suspend        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT</font></td></tr>"}</table>>];
+                    <tr><td><b>Suspend        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT</font></td></tr>"}</table>>];
 "User" -> "Suspend" [dir="none" label=< <font point-size="8">action</font> >];
 "Unsuspend" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Unsuspend        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT</font></td></tr>"}</table>>];
+                    <tr><td><b>Unsuspend        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT</font></td></tr>"}</table>>];
 "User" -> "Unsuspend" [dir="none" label=< <font point-size="8">action</font> >];
 "Organization" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>

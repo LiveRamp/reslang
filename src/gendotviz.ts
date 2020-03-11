@@ -100,7 +100,10 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to subresource
-                if ("subresource" === def.type && include.has(def.parent!)) {
+                if (
+                    "subresource" === def.type &&
+                    include.has(def.parentName!)
+                ) {
                     const label = this.makeLabelText("subresource")
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="back" arrowtail="ediamond" label=${label}];\n`
                 }

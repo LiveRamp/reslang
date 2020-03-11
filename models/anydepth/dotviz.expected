@@ -1,0 +1,26 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"A" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>A        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"B" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>B        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"A" -> "B" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"C" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>C        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"A" -> "C" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"start" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>start        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"A" -> "start" [dir="none" label=< <font point-size="8">action</font> >];
+"stop" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>stop        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"A" -> "stop" [dir="none" label=< <font point-size="8">action</font> >];
+}
