@@ -78,7 +78,7 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attribute+ _ { return attrs; }
 attribute = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ array:(array1 / array2)? _ modifiers:modifiers _ inline:"inline"? _";"? _ { 
+    smap:"stringmap<"? _ linked:"linked"? _ type:ref _ ">"? _ array:(array1 / array2)? _ modifiers:modifiers _ inline:"inline"? _ (__ / ";")? _ { 
     return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline, array: array, linked: !!linked, modifiers: modifiers}
 }
 
@@ -88,7 +88,7 @@ array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
 array2 = "[]" {
     return {"type": 2} }
 
-modifiers = modifiers:( _ ("mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "optional") _ )* {
+modifiers = modifiers:(_ ("mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "optional")(__ / ";"))* {
     var flat = modifiers.flat()
     return {mutable: flat.includes("mutable"), optional: flat.includes("optional"),
             optionalPost: flat.includes("optional-post"), optionalPut: flat.includes("optional-put"),
@@ -135,6 +135,8 @@ semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }
 
 // whitespace or comment
 _  = ([ \t\r\n]+ / comment)*
+// mandatory separation
+__ = ([ \t\r\n]+ / comment)+
 
 // comments
 comment = p:(single / multi) {return null}

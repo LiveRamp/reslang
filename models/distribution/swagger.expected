@@ -54,7 +54,9 @@ paths:
         - &ref_1
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Destinations (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -62,7 +64,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Destinations to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -86,7 +88,7 @@ paths:
           description: Destinations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Destinations in the data set.
               schema:
                 type: integer
           content:
@@ -155,7 +157,9 @@ paths:
         - &ref_6
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the TaxonomyConfigurations (starting from 0) to include in
+            the response.
           schema:
             type: integer
             default: 0
@@ -163,8 +167,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of TaxonomyConfigurations to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -187,7 +191,7 @@ paths:
           description: TaxonomyConfigurations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of TaxonomyConfigurations in the data set.
               schema:
                 type: integer
           content:
@@ -278,7 +282,9 @@ paths:
         - &ref_12
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Integrations (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -286,7 +292,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Integrations to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -310,7 +316,7 @@ paths:
           description: Integrations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Integrations in the data set.
               schema:
                 type: integer
           content:
@@ -400,7 +406,9 @@ paths:
         - &ref_18
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Endpoints (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -408,7 +416,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Endpoints to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -432,7 +440,7 @@ paths:
           description: Endpoints retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Endpoints in the data set.
               schema:
                 type: integer
           content:
@@ -522,7 +530,9 @@ paths:
         - &ref_24
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Packagers (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -530,7 +540,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Packagers to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -547,7 +557,7 @@ paths:
           description: Packagers retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Packagers in the data set.
               schema:
                 type: integer
           content:
@@ -616,7 +626,9 @@ paths:
         - &ref_28
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Formatters (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -624,7 +636,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Formatters to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -641,7 +653,7 @@ paths:
           description: Formatters retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Formatters in the data set.
               schema:
                 type: integer
           content:
@@ -710,7 +722,9 @@ paths:
         - &ref_32
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Deliverers (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -718,7 +732,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Deliverers to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -735,7 +749,7 @@ paths:
           description: Deliverers retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Deliverers in the data set.
               schema:
                 type: integer
           content:

@@ -198,6 +198,7 @@ export default class SwagGen extends BaseGen {
         multiget: IOperation | null
     ) {
         const sane = sanitize(el.name, false)
+        const plural = pluralizeName(el.short)
 
         if (post) {
             const short = el.short
@@ -306,8 +307,7 @@ export default class SwagGen extends BaseGen {
             params.push({
                 in: "query",
                 name: "offset",
-                description:
-                    "Offset of the record (starting from 0) to include in the response.",
+                description: `Offset of the ${plural} (starting from 0) to include in the response.`,
                 schema: {
                     type: "integer",
                     default: 0
@@ -316,7 +316,7 @@ export default class SwagGen extends BaseGen {
             params.push({
                 in: "query",
                 name: "limit",
-                description: `Number of records to return. If unspecified, 10 records will be returned.\
+                description: `Number of ${plural} to return. If unspecified, 10 max will be returned.\
  Maximum value for limit can be 100`,
                 schema: {
                     type: "integer",
@@ -340,12 +340,10 @@ export default class SwagGen extends BaseGen {
             const short = el.short
             const responses = {
                 200: {
-                    description:
-                        pluralizeName(short) + " retrieved successfully",
+                    description: plural + " retrieved successfully",
                     headers: {
                         "X-Total-Count": {
-                            description:
-                                "Total number of records in the data set.",
+                            description: `Total number of ${plural} in the data set.`,
                             schema: { type: "integer" }
                         }
                     },

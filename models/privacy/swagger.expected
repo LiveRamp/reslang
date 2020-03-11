@@ -19,14 +19,16 @@ paths:
       parameters:
         - in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the ConsentFiles (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
         - in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of ConsentFiles to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -44,7 +46,7 @@ paths:
           description: ConsentFiles retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of ConsentFiles in the data set.
               schema:
                 type: integer
           content:

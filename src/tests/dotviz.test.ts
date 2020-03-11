@@ -5,8 +5,8 @@ import DotvizGen from "../gendotviz"
 /** dotviz generation tests
  */
 describe("dotviz generation tests", () => {
-    test("anydepth", () => {
-        compare("anydepth")
+    test("checkrules", () => {
+        compare("checkrules")
     })
 
     test("privacy", () => {
@@ -56,7 +56,7 @@ describe("dotviz generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const dotviz = new DotvizGen([`models/${module}`])
+    const dotviz = new DotvizGen([`models/${module}`], { ignoreRules: true })
     const out = dotviz.generate("main")
 
     const got = strip(out)

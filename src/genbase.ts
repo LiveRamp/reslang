@@ -7,12 +7,13 @@ import {
     IDiagram,
     IDocumentation,
     IDocEntry,
-    ResourceType
+    ResourceType,
+    IReference
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
-import { IRules } from "./rules"
+import { IRules, RULES } from "./rules"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 
@@ -117,17 +118,27 @@ export abstract class BaseGen {
         for (const def of this.defs) {
             // is the resource too deep?
             if (
+                maxResource &&
                 ResourceType.includes(def.type) &&
                 def.parents.length >= maxResource
             ) {
                 throw new Error(
-                    `RULE maxResourceDepth(${maxResource}) violated: ${def.name}`
+                    `RULE maxResourceDepth(${maxResource}) violated: ${
+                        def.name
+                    }\n
+The maximum depth a resource can be nested is ${maxResource} levels. Your level is ${def
+                        .parents.length + 1}`
                 )
             }
             // if the action too deep?
-            if (def.type === "action" && def.parents.length >= maxAction) {
+            if (
+                maxAction &&
+                def.type === "action" &&
+                def.parents.length >= maxAction
+            ) {
                 throw new Error(
-                    `RULE maxActionDepth(${maxAction}) violated: ${def.name}`
+                    `RULE maxActionDepth(${maxAction}) violated: ${def.name}\n
+The maximum resource depth an action can be is ${maxAction} levels. Your level is ${def.parents.length}`
                 )
             }
             // is the action only supposed to be on requests?
@@ -135,10 +146,59 @@ export abstract class BaseGen {
                 const parent = this.extractDefinition(def.parentName)
                 if (parent.type !== "request-resource") {
                     throw new Error(
-                        `RULE actionsOnRequestsOnly violated: ${def.name}`
+                        `RULE actionsOnRequestsOnly violated: ${def.name}
+You can only add actions to request resources`
                     )
                 }
             }
+
+            // if a config resource, check outgoing links only to other configs or subresources of configs
+            if (
+                this.rules.checkRules &&
+                this.rules.checkRules.includes(RULES.ONLY_CONFIG_TO_CONFIG)
+            ) {
+                const myType = this.getTopLevelType(def)
+                if (myType.type === "configuration-resource") {
+                    for (const attr of def.attributes || []) {
+                        if (attr.linked) {
+                            const linkType = this.getTopLevelType(attr.type)
+                            if (linkType.type !== "configuration-resource") {
+                                throw new Error(
+                                    `RULE ONLY_CONFIG_TO_CONFIG violated: ${def.name}\n
+Configuration resources can only link to other configuration resources`
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // if parent is an action, we have an issue
+            if (
+                this.rules.checkRules &&
+                this.rules.checkRules.includes(RULES.NO_ACTION_SUBRESOURCES) &&
+                def.parentName
+            ) {
+                const parent = this.extractDefinition(def.parentName)
+                if (parent.type === "action") {
+                    throw new Error(
+                        `RULE NO_ACTION_SUBRESOURCE violated: ${def.name}
+Actions cannot have subresources`
+                    )
+                }
+            }
+        }
+    }
+
+    // find the top level type
+    protected getTopLevelType(ref: IReference) {
+        const def = this.extractDefinition(ref.name)
+        let current = def
+        while (true) {
+            if (!current.parentName) {
+                return current
+            }
+            current = this.extractDefinition(current.parentName)
         }
     }
 

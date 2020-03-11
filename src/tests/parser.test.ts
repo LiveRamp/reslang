@@ -16,8 +16,8 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
-    test("anydepth", () => {
-        compare("anydepth")
+    test("checkrules", () => {
+        compare("checkrules")
     })
 
     test("privacy", () => {
@@ -77,7 +77,7 @@ c d`)
 })
 
 function compare(module: string) {
-    const parser = new ParseGen([`models/${module}`])
+    const parser = new ParseGen([`models/${module}`], { ignoreRules: true })
     const got = parser.generate()
     const sgot = strip(got)
     const expected = strip(readFile(`models/${module}/parsed.expected`))

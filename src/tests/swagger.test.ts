@@ -6,8 +6,8 @@ import yaml from "js-yaml"
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
-    test("anydepth", () => {
-        compare("anydepth")
+    test("checkrules", () => {
+        compare("checkrules")
     })
 
     test("privacy", () => {
@@ -69,7 +69,7 @@ describe("swagger generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const swag = new SwagGen([`models/${module}`])
+    const swag = new SwagGen([`models/${module}`], { ignoreRules: true })
     const swagger = swag.generate()
 
     const got = strip(yaml.dump(clean(swagger)))

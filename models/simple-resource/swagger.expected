@@ -36,7 +36,7 @@ paths:
         - &ref_1
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: Offset of the Garages (starting from 0) to include in the response.
           schema:
             type: integer
             default: 0
@@ -44,7 +44,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Garages to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -75,7 +75,7 @@ paths:
           description: Garages retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Garages in the data set.
               schema:
                 type: integer
           content:

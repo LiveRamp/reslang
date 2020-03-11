@@ -48,7 +48,9 @@ paths:
         - &ref_1
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the DistributionRequests (starting from 0) to include in
+            the response.
           schema:
             type: integer
             default: 0
@@ -56,8 +58,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of DistributionRequests to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -182,7 +184,7 @@ paths:
           description: DistributionRequests retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of DistributionRequests in the data set.
               schema:
                 type: integer
           content:

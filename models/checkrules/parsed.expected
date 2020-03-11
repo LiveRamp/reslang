@@ -1,7 +1,7 @@
 {
   "namespace": {
-    "comment": "Test for deep resource depth",
-    "title": "Deep resource depth",
+    "comment": "Test for various rule checking",
+    "title": "Rule checking",
     "version": "0.0.1"
   },
   "definitions": [
@@ -35,6 +35,52 @@
         },
         {
           "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "asset",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Asset",
+            "name": "Asset",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "outputName",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -379,6 +425,84 @@
       "file": "resources.reslang",
       "generateInput": true,
       "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "parents": [
+        "A",
+        "B",
+        "stop"
+      ],
+      "short": "Deep",
+      "name": "A::B::stop::Deep",
+      "parentShort": "A",
+      "parentName": "A::B::stop",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "parents": [],
+      "short": "Asset",
+      "name": "Asset",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "resources.reslang"
     },
     {
       "type": "structure",

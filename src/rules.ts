@@ -1,18 +1,19 @@
 export enum LINK_OPTIONS {
     IDs,
-    URNs // not currently supported
+    URNs // not implemented yet
 }
 
 export enum RULES {
-    NO_CONFIG_LINKS_TO_ASSETS
+    ONLY_CONFIG_TO_CONFIG,
+    NO_ACTION_SUBRESOURCES
 }
 
 export interface IRules {
-    ignoreRules: boolean
-    maxResourceDepth: number
-    maxActionDepth: number
-    actionsOnRequestsOnly: boolean
-    links: LINK_OPTIONS
-    returnBodyOnUpdate: boolean
-    checkRules: RULES[]
+    ignoreRules?: boolean
+    maxResourceDepth?: number
+    maxActionDepth?: number
+    actionsOnRequestsOnly?: boolean
+    links?: LINK_OPTIONS
+    returnBodyOnUpdate?: boolean // not implemented yet
+    checkRules?: RULES[]
 }

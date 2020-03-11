@@ -44,7 +44,9 @@ paths:
         - &ref_1
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the Directories (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -52,7 +54,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of Directories to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -83,7 +85,7 @@ paths:
           description: Directories retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Directories in the data set.
               schema:
                 type: integer
           content:
@@ -146,7 +148,9 @@ paths:
         - &ref_6
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the FileTypes (starting from 0) to include in the
+            response.
           schema:
             type: integer
             default: 0
@@ -154,7 +158,7 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
+            Number of FileTypes to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -178,7 +182,7 @@ paths:
           description: FileTypes retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of FileTypes in the data set.
               schema:
                 type: integer
           content:
@@ -259,7 +263,7 @@ paths:
         - &ref_11
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: Offset of the Files (starting from 0) to include in the response.
           schema:
             type: integer
             default: 0
@@ -267,8 +271,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of Files to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -291,7 +295,7 @@ paths:
           description: Files retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Files in the data set.
               schema:
                 type: integer
           content:
@@ -354,7 +358,9 @@ paths:
         - &ref_15
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: >-
+            Offset of the DirectoryDeleteRequests (starting from 0) to include
+            in the response.
           schema:
             type: integer
             default: 0
@@ -362,8 +368,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of DirectoryDeleteRequests to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -386,7 +392,7 @@ paths:
           description: DirectoryDeleteRequests retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of DirectoryDeleteRequests in the data set.
               schema:
                 type: integer
           content:

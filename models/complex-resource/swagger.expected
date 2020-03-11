@@ -38,7 +38,7 @@ paths:
         - &ref_1
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: Offset of the Cars (starting from 0) to include in the response.
           schema:
             type: integer
             default: 0
@@ -46,8 +46,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of Cars to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -80,7 +80,7 @@ paths:
           description: Cars retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Cars in the data set.
               schema:
                 type: integer
           content:
@@ -150,7 +150,7 @@ paths:
         - &ref_7
           in: query
           name: offset
-          description: Offset of the record (starting from 0) to include in the response.
+          description: Offset of the Wheels (starting from 0) to include in the response.
           schema:
             type: integer
             default: 0
@@ -158,8 +158,8 @@ paths:
           in: query
           name: limit
           description: >-
-            Number of records to return. If unspecified, 10 records will be
-            returned. Maximum value for limit can be 100
+            Number of Wheels to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
           schema:
             type: integer
             default: 10
@@ -182,7 +182,7 @@ paths:
           description: Wheels retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of records in the data set.
+              description: Total number of Wheels in the data set.
               schema:
                 type: integer
           content:
