@@ -22,12 +22,12 @@ export function fixName(name: string) {
     return fix
 }
 
-export function sanitize(name: string) {
+export function sanitize(name: string, addDash: boolean = true) {
     let fix = ""
     for (const ch of name) {
         if (/[A-Za-z0-9]$/.test(ch)) {
             fix = fix.concat(ch)
-        } else {
+        } else if (addDash) {
             fix = fix.concat("-")
         }
     }

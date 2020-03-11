@@ -72,34 +72,41 @@ export default class SwagGen extends BaseGen {
                     "action"
                 ].includes(el.type)
             ) {
-                // locate the parent
-                let parent = null
-                let parentName = null
-                let parentSubPath = null
-                if (el.parentName) {
-                    parent = this.extractDefinition(el.parentName)
-                    parentName = sanitize(parent.name)
-                    if (!parent.singleton) {
-                        parentName = pluralizeName(parentName)
+                let parents = ""
+                const pathParams: any[] = []
+                let pname = el.parentName
+                let major = getVersion(el.short)
+                while (pname) {
+                    const actual = this.extractDefinition(pname)
+                    if (!actual.parentName) {
+                        major = getVersion(actual.short)
                     }
-                }
-                const sname = fixName(el.short)
-                const name = pluralizeName(sname)
-                const version = parentName
-                    ? getVersion(parentName!)
-                    : getVersion(el.name)
-                const singleton = el.singleton
-                // now we can remove the version
-                if (parentName) {
-                    parentName = fixName(parentName)
-                }
-                if (parent) {
-                    parentSubPath = parent.singleton
-                        ? `${parentName}`
-                        : `${parentName}/{parentId}`
+                    const maybe = getVersion(actual.short)
+                    if (maybe) {
+                        major = maybe
+                    }
+                    const singular = sanitize(fixName(actual.short))
+                    let full = singular
+                    if (!actual.singleton && actual.type !== "action") {
+                        full = pluralizeName(singular)
+                    }
+                    parents = `/${full}/\{${singular}-id\}`
+                    pname = actual.parentName
+                    this.addParentPathParam(
+                        pathParams,
+                        actual,
+                        singular + "-id"
+                    )
                 }
 
+                const singleton = el.singleton
                 let path: any = {}
+
+                // name of resource
+                let name = sanitize(fixName(el.short))
+                if (!el.singleton && el.type !== "action") {
+                    name = pluralizeName(name)
+                }
 
                 /**
                  * non-id definitions
@@ -109,17 +116,20 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && (post || multiget)) {
                     throw new Error(
-                        `${el.name} is a singleton - cannot have POST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST or MULTIGET`
                     )
                 }
 
                 if (!singleton && (post || multiget)) {
-                    if (parent) {
-                        paths[`/${version}/${parentSubPath}/${name}`] = path
-                    } else {
-                        paths[`/${version}/${name}`] = path
-                    }
-                    this.formNonIdOperations(el, path, tagKeys, post, multiget)
+                    paths[`/${major}${parents}/${name}`] = path
+                    this.formNonIdOperations(
+                        el,
+                        path,
+                        pathParams,
+                        tagKeys,
+                        post,
+                        multiget
+                    )
                 }
 
                 /**
@@ -133,26 +143,15 @@ export default class SwagGen extends BaseGen {
                 path = {}
                 if (get || put || patch || del) {
                     if (singleton) {
-                        if (parentName) {
-                            paths[
-                                `/${version}/${parentSubPath}/${sname}`
-                            ] = path
-                        } else {
-                            paths[`/${version}/${sname}`] = path
-                        }
+                        paths[`/${major}${parents}/${name}`] = path
                     } else {
-                        if (parentName) {
-                            paths[
-                                `/${version}/${parentSubPath}/${name}/{id}`
-                            ] = path
-                        } else {
-                            paths[`/${version}/${name}/{id}`] = path
-                        }
+                        paths[`/${major}${parents}/${name}/{id}`] = path
                     }
                 }
                 this.formIdOperations(
                     el,
                     path,
+                    pathParams,
                     !!singleton,
                     tagKeys,
                     get,
@@ -190,6 +189,7 @@ export default class SwagGen extends BaseGen {
     private formNonIdOperations(
         el: IDefinition,
         path: any,
+        pathParams: any[],
         tagKeys: { [key: string]: string },
         post: IOperation | null,
         multiget: IOperation | null
@@ -277,6 +277,8 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(post, responses)
+            const sane = sanitize(el.name, false)
+            console.log(sane)
             path.post = {
                 tags: [tagKeys[el.name]],
                 operationId: "Create " + short,
@@ -285,7 +287,7 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${el.name}Input`
+                                $ref: `#/components/schemas/${sane}Input`
                             }
                         }
                     }
@@ -295,7 +297,7 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(el.name + "Input")) {
                 delete path.post.requestBody
             }
-            this.addParentPathId(el, path.post)
+            path.post.parameters = pathParams
         }
         if (multiget) {
             const params: any[] = []
@@ -351,7 +353,7 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 $ref:
                                     "#/components/schemas/" +
-                                    el.name +
+                                    sanitize(el.name, false) +
                                     "MultiResponse"
                             }
                         }
@@ -366,7 +368,7 @@ export default class SwagGen extends BaseGen {
                 parameters: params,
                 responses
             }
-            this.addParentPathId(el, path.get)
+            path.get.parameters = pathParams
         }
     }
 
@@ -377,14 +379,6 @@ export default class SwagGen extends BaseGen {
         const def = this.extractDefinitionGently(attr.type.name)
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
-            if (
-                (attr.array && !name.endsWith("Ids")) ||
-                (!attr.array && !name.endsWith("Id"))
-            ) {
-                throw new Error(
-                    `Link to resource must end in Id or Ids - ${attr.name}`
-                )
-            }
             if (attr.array && !name.endsWith("s")) {
                 name = name + "s"
             }
@@ -396,25 +390,26 @@ export default class SwagGen extends BaseGen {
         return { name, prop }
     }
 
-    private addParentPathId(el: any, path: any) {
-        if (el.parent && !this.extractDefinition(el.parent).singleton) {
-            const param = this.addType(this.extractDefinitionId(el.parent), {
+    private addParentPathParam(
+        paths: any[],
+        parent: IDefinition,
+        name: string
+    ) {
+        if (!parent.singleton) {
+            const param = this.addType(this.extractDefinitionId(parent.name), {
                 in: "path",
-                name: "parentId",
-                description: "Id of parent " + el.parent,
+                name,
+                description: "Id of parent " + parent.short,
                 required: true
             })
-            if (path.parameters) {
-                path.parameters.push(param)
-            } else {
-                path.parameters = [param]
-            }
+            paths.push(param)
         }
     }
 
     private formIdOperations(
         el: IDefinition,
         path: any,
+        pathParams: any[],
         singleton: boolean,
         tagKeys: { [key: string]: string },
         get?: IOperation | null,
@@ -434,7 +429,7 @@ export default class SwagGen extends BaseGen {
                                   schema: {
                                       $ref:
                                           "#/components/schemas/" +
-                                          el.name +
+                                          sanitize(el.name, false) +
                                           "Output"
                                   }
                               }
@@ -459,9 +454,10 @@ export default class SwagGen extends BaseGen {
                         name: "id",
                         required: true
                     })
-                ]
+                ].concat(pathParams)
+            } else {
+                path.get.parameters = pathParams
             }
-            this.addParentPathId(el, path.get)
         }
         if (put) {
             const short = el.short
@@ -481,7 +477,7 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 $ref:
                                     "#/components/schemas/" +
-                                    el.name +
+                                    sanitize(el.name, false) +
                                     "Puttable"
                             }
                         }
@@ -500,9 +496,10 @@ export default class SwagGen extends BaseGen {
                         name: "id",
                         required: true
                     })
-                ]
+                ].concat(pathParams)
+            } else {
+                path.put.parameters = pathParams
             }
-            this.addParentPathId(el, path.put)
         }
         if (patch) {
             const short = el.short
@@ -522,7 +519,7 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 $ref:
                                     "#/components/schemas/" +
-                                    el.name +
+                                    sanitize(el.name, false) +
                                     "Patchable"
                             }
                         }
@@ -541,9 +538,10 @@ export default class SwagGen extends BaseGen {
                         name: "id",
                         required: true
                     })
-                ]
+                ].concat(pathParams)
+            } else {
+                path.patch.parameters = pathParams
             }
-            this.addParentPathId(el, path.patch)
         }
         if (del) {
             const short = el.short
@@ -567,9 +565,10 @@ export default class SwagGen extends BaseGen {
                         name: "id",
                         required: true
                     })
-                ]
+                ].concat(pathParams)
+            } else {
+                path.delete.parameters = pathParams
             }
-            this.addParentPathId(el, path.delete)
         }
     }
 
@@ -677,12 +676,13 @@ export default class SwagGen extends BaseGen {
         } else {
             // is this a structure, an enum or a linked resource
             const def = this.extractDefinition(name)
+            const sane = sanitize(name, false)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${name}`
+                    schema.$ref = `#/components/schemas/${sane}`
                     break
                 case "union":
-                    schema.$ref = `#/components/schemas/${name}`
+                    schema.$ref = `#/components/schemas/${sane}`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -853,9 +853,9 @@ export default class SwagGen extends BaseGen {
         }
 
         if (Object.keys(properties).length !== 0) {
-            definitions[def.name + suffix] = request
+            definitions[sanitize(def.name, false) + suffix] = request
         } else {
-            this.empty.add(def.name + suffix)
+            this.empty.add(sanitize(def.name, false) + suffix)
         }
     }
 
@@ -868,7 +868,7 @@ export default class SwagGen extends BaseGen {
         const attrs = def.attributes || []
         const mapping: { [key: string]: string } = {}
 
-        const name = def.name + suffix
+        const name = sanitize(def.name, false) + suffix
         for (const attr of attrs) {
             // cannot have a competing definition already
             const camel = capitalizeFirst(attr.name)
