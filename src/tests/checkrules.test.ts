@@ -1,7 +1,5 @@
-import { parseFile, readFile } from "../parse"
-import { strip } from "./utilities"
 import ParseGen from "../genparse"
-import { IRules, RULES } from "../rules"
+import { IRules } from "../rules"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
@@ -30,14 +28,14 @@ describe("rule checking tests", () => {
 
     test("no config links to non-config resources", () => {
         check(
-            { checkRules: [RULES.ONLY_CONFIG_TO_CONFIG] },
+            { onlyConfigToConfig: true },
             "RULE ONLY_CONFIG_TO_CONFIG violated: A"
         )
     })
 
     test("actions cannot have subresources", () => {
         check(
-            { checkRules: [RULES.NO_ACTION_SUBRESOURCES] },
+            { noSubresourcesOnActions: true },
             "RULE NO_ACTION_SUBRESOURCE violated: A::B::stop::Deep"
         )
     })

@@ -13,7 +13,7 @@ import {
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
-import { IRules, RULES } from "./rules"
+import { IRules } from "./rules"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 
@@ -153,10 +153,7 @@ You can only add actions to request resources`
             }
 
             // if a config resource, check outgoing links only to other configs or subresources of configs
-            if (
-                this.rules.checkRules &&
-                this.rules.checkRules.includes(RULES.ONLY_CONFIG_TO_CONFIG)
-            ) {
+            if (this.rules.onlyConfigToConfig) {
                 const myType = this.getTopLevelType(def)
                 if (myType.type === "configuration-resource") {
                     for (const attr of def.attributes || []) {
@@ -174,11 +171,7 @@ Configuration resources can only link to other configuration resources`
             }
 
             // if parent is an action, we have an issue
-            if (
-                this.rules.checkRules &&
-                this.rules.checkRules.includes(RULES.NO_ACTION_SUBRESOURCES) &&
-                def.parentName
-            ) {
+            if (this.rules.noSubresourcesOnActions && def.parentName) {
                 const parent = this.extractDefinition(def.parentName)
                 if (parent.type === "action") {
                     throw new Error(

@@ -2,7 +2,8 @@
     "maxResourceDepth": 2,
     "maxActionDepth": 3,
     "actionsOnRequestsOnly": false,
+    "onlyConfigToConfig": true,
+    "noSubresourcesOnActions": true,
     "links": "IDs",
-    "returnBodyOnUpdate": false,
-    "checkRules": ["ONLY_CONFIG_TO_CONFIG", "NO_ACTION_SUBRESOURCES"]
+    "returnBodyOnUpdate": false
 }
