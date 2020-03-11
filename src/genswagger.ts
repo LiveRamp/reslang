@@ -194,6 +194,8 @@ export default class SwagGen extends BaseGen {
         post: IOperation | null,
         multiget: IOperation | null
     ) {
+        const sane = sanitize(el.name, false)
+
         if (post) {
             const short = el.short
             const idtype = this.extractId(el)
@@ -277,8 +279,6 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(post, responses)
-            const sane = sanitize(el.name, false)
-            console.log(sane)
             path.post = {
                 tags: [tagKeys[el.name]],
                 operationId: "Create " + short,
@@ -294,7 +294,7 @@ export default class SwagGen extends BaseGen {
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Input")) {
+            if (this.empty.has(sane + "Input")) {
                 delete path.post.requestBody
             }
             path.post.parameters = pathParams
@@ -353,7 +353,7 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 $ref:
                                     "#/components/schemas/" +
-                                    sanitize(el.name, false) +
+                                    sane +
                                     "MultiResponse"
                             }
                         }
@@ -417,26 +417,27 @@ export default class SwagGen extends BaseGen {
         patch?: IOperation | null,
         del?: IOperation | null
     ) {
+        const sane = sanitize(el.name, false)
         if (get) {
             const short = el.short
             const responses = {
                 200: {
                     description: short + " retrieved successfully",
-                    content: this.empty.has(el.name + "Output")
+                    content: this.empty.has(sane + "Output")
                         ? {}
                         : {
                               "application/json": {
                                   schema: {
                                       $ref:
                                           "#/components/schemas/" +
-                                          sanitize(el.name, false) +
+                                          sane +
                                           "Output"
                                   }
                               }
                           }
                 }
             }
-            if (this.empty.has(el.name + "Output")) {
+            if (this.empty.has(sane + "Output")) {
                 delete responses[200].content
             }
             this.formErrors(get, responses)
@@ -476,16 +477,14 @@ export default class SwagGen extends BaseGen {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" +
-                                    sanitize(el.name, false) +
-                                    "Puttable"
+                                    "#/components/schemas/" + sane + "Puttable"
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Puttable")) {
+            if (this.empty.has(sane + "Puttable")) {
                 delete path.put.requestBody
             }
             if (!singleton) {
@@ -518,16 +517,14 @@ export default class SwagGen extends BaseGen {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" +
-                                    sanitize(el.name, false) +
-                                    "Patchable"
+                                    "#/components/schemas/" + sane + "Patchable"
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Patchable")) {
+            if (this.empty.has(sane + "Patchable")) {
                 delete path.patch.requestBody
             }
             if (!singleton) {
@@ -648,6 +645,8 @@ export default class SwagGen extends BaseGen {
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
+        const sane = sanitize(name, false)
+
         // allow description overrides by caller
         if (!obj.description && !suppressDescription) {
             obj.description = this.translate(attr.comment)
@@ -676,7 +675,6 @@ export default class SwagGen extends BaseGen {
         } else {
             // is this a structure, an enum or a linked resource
             const def = this.extractDefinition(name)
-            const sane = sanitize(name, false)
             switch (def.type) {
                 case "structure":
                     schema.$ref = `#/components/schemas/${sane}`
@@ -796,6 +794,8 @@ export default class SwagGen extends BaseGen {
             required: string[]
             allOf: {}
         }
+        const sane = sanitize(def.name, false)
+
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly) {
                 continue
@@ -853,9 +853,9 @@ export default class SwagGen extends BaseGen {
         }
 
         if (Object.keys(properties).length !== 0) {
-            definitions[sanitize(def.name, false) + suffix] = request
+            definitions[sane + suffix] = request
         } else {
-            this.empty.add(sanitize(def.name, false) + suffix)
+            this.empty.add(sane + suffix)
         }
     }
 
@@ -938,6 +938,7 @@ export default class SwagGen extends BaseGen {
 
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
+            const sane = sanitize(def.name, false)
             if (
                 [
                     "asset-resource",
@@ -973,7 +974,7 @@ export default class SwagGen extends BaseGen {
                             "Array of retrieved " + pluralizeName(def.name),
                         type: "array",
                         items: {
-                            $ref: "#/components/schemas/" + def.name + "Output"
+                            $ref: "#/components/schemas/" + sane + "Output"
                         }
                     }
                     const props: { [name: string]: any } = {}
@@ -983,7 +984,7 @@ export default class SwagGen extends BaseGen {
                     }
                     const plural = lowercaseFirst(pluralizeName(def.short))
                     props[plural] = elements
-                    definitions[def.name + "MultiResponse"] = full
+                    definitions[sane + "MultiResponse"] = full
                 }
             }
             if ("structure" === def.type && def.generateInput) {
