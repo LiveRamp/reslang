@@ -8,10 +8,10 @@ steps:
     id: 'reslang-build'
 
 #  # push the image built during the previous step
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA']
-    waitFor: ['reslang-build']
-    id: 'reslang-push'
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: ['push', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA']
+#    waitFor: ['reslang-build']
+#    id: 'reslang-push'
 
 timeout: 300s
 tags: ['reslang']
