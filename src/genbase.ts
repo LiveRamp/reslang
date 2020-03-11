@@ -25,7 +25,6 @@ export abstract class BaseGen {
     private loaded = new Set<string>()
 
     public constructor(private dirs: string[], private rules: IRules) {
-        this.rules = rules
         this.processDefinitions()
         this.checkRules()
     }
