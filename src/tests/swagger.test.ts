@@ -1,4 +1,4 @@
-import { parseFile, readFile, clean } from "../parse"
+import { readFile, clean } from "../parse"
 import { strip } from "./utilities"
 import SwagGen from "../genswagger"
 import yaml from "js-yaml"

@@ -5,7 +5,7 @@
 export function strip(line: string, removeFirstLine = false) {
     // remove first line (reslang version) and all whitespace
     if (removeFirstLine) {
-        line = line.replace(/^.*/, "")
+        line = line.replace(/^.*\n/, "")
     }
     return line
         .replace(/^[\ \t]+/g, "")
