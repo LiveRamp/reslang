@@ -1,0 +1,51 @@
+subresource Dataset::Field {
+  id: long query
+  name: string  // TODO: need to set maxlength
+  type: FieldTypeEnum 
+  enumerable: boolean
+  valueCollectionType: ValueCollectionTypeEnum
+  values: string[] mutable optional
+
+  // output attributes
+  enabled: boolean query output optional
+  createdAt: datetime output
+  updatedAt: datetime output
+
+  /operations
+    "Get a Field"
+    GET
+
+    "Create a new Field"
+    POST
+      "Field already exists" 303
+        Redirection
+
+    "Find existing Fields"
+    MULTIGET
+
+    "Disable a Field"
+    DELETE
+
+    "Add values to a Field"
+    PUT
+      "Field is not enumerable" 403
+        StandardError
+      "Values do not match Field type" 400
+        StandardError
+
+}
+
+enum FieldTypeEnum {
+  STRING 
+  NUMERIC
+}
+
+enum ValueCollectionTypeEnum {
+  SINGLETON
+  SET
+  MULTISET
+}
+
+structure Redirection {
+  existingFieldUrl: string
+}

@@ -5,6 +5,10 @@ import DotvizGen from "../gendotviz"
 /** dotviz generation tests
  */
 describe("dotviz generation tests", () => {
+    test("dataset", () => {
+        compare("dataset")
+    })
+
     test("checkrules", () => {
         compare("checkrules")
     })

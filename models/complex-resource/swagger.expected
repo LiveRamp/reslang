@@ -34,15 +34,22 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_0
-        - &ref_1
+                    format: int32
+    get:
+      tags:
+        - Car
+      operationId: List Cars
+      description: ''
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: Offset of the Cars (starting from 0) to include in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -50,31 +57,27 @@ paths:
             Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_3
+        - &ref_2
           in: query
           name: id
           description: ''
           required: false
           schema:
             type: integer
-        - &ref_4
+            format: int32
+        - &ref_3
           in: query
           name: brand
           description: ''
           required: false
           schema:
             type: string
-            enum: &ref_11
+            enum: &ref_10
               - TOYOTA
               - FORD
-    get:
-      tags:
-        - Car
-      operationId: List Cars
-      description: ''
-      parameters: *ref_0
       responses:
         '200':
           description: Cars retrieved successfully
@@ -83,6 +86,7 @@ paths:
               description: Total number of Cars in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -107,16 +111,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
-        - *ref_4
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/cars/{car-id}/wheels':
     post:
       tags:
@@ -139,22 +144,25 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_5
-        - &ref_6
+                    format: int32
+      parameters: &ref_4
+        - &ref_5
           in: path
           name: car-id
           description: Id of parent Car
           required: true
           schema:
             type: integer
-        - &ref_7
+            format: int32
+        - &ref_6
           in: query
           name: offset
           description: Offset of the Wheels (starting from 0) to include in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_8
+        - &ref_7
           in: query
           name: limit
           description: >-
@@ -162,21 +170,23 @@ paths:
             Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_9
+        - &ref_8
           in: query
           name: id
           description: ''
           required: false
           schema:
             type: integer
+            format: int32
     get:
       tags:
         - 'Car::Wheel'
       operationId: 'List Car::Wheels'
       description: ''
-      parameters: *ref_5
+      parameters: *ref_4
       responses:
         '200':
           description: Wheels retrieved successfully
@@ -185,6 +195,7 @@ paths:
               description: Total number of Wheels in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -202,23 +213,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarWheelOutput'
-        '404': &ref_10
+        '404': &ref_9
           description: Wheel not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_5
         - *ref_6
         - *ref_7
         - *ref_8
-        - *ref_9
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
     put:
       tags:
         - 'Car::Wheel'
@@ -227,18 +239,19 @@ paths:
       responses:
         '200':
           description: Wheel modified successfully
-        '404': *ref_10
+        '404': *ref_9
       parameters:
+        - *ref_5
         - *ref_6
         - *ref_7
         - *ref_8
-        - *ref_9
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -256,7 +269,7 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_11
+          enum: *ref_10
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -289,6 +302,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         bought:
           description: ''
           type: string
@@ -297,7 +311,7 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_11
+          enum: *ref_10
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -360,6 +374,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         radius:
           description: ''
           type: number
@@ -380,6 +395,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

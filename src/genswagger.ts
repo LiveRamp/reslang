@@ -301,7 +301,9 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(sane + "Input")) {
                 delete path.post.requestBody
             }
-            path.post.parameters = params
+            if (params.length) {
+                path.post.parameters = params
+            }
         }
         if (multiget) {
             params.push({
@@ -310,6 +312,7 @@ export default class SwagGen extends BaseGen {
                 description: `Offset of the ${plural} (starting from 0) to include in the response.`,
                 schema: {
                     type: "integer",
+                    format: "int32",
                     default: 0
                 }
             })
@@ -320,6 +323,7 @@ export default class SwagGen extends BaseGen {
  Maximum value for limit can be 100`,
                 schema: {
                     type: "integer",
+                    format: "int32",
                     default: 10,
                     maximum: 100
                 }
@@ -344,7 +348,7 @@ export default class SwagGen extends BaseGen {
                     headers: {
                         "X-Total-Count": {
                             description: `Total number of ${plural} in the data set.`,
-                            schema: { type: "integer" }
+                            schema: { type: "integer", format: "int32" }
                         }
                     },
                     content: {
@@ -367,7 +371,9 @@ export default class SwagGen extends BaseGen {
                 parameters: params,
                 responses
             }
-            path.get.parameters = params
+            if (params.length) {
+                path.get.parameters = params
+            }
         }
     }
 
@@ -467,7 +473,9 @@ export default class SwagGen extends BaseGen {
                     })
                 ])
             } else {
-                path.get.parameters = params
+                if (params.length) {
+                    path.get.parameters = params
+                }
             }
         }
         if (put) {
@@ -508,11 +516,12 @@ export default class SwagGen extends BaseGen {
                     })
                 ])
             } else {
-                path.put.parameters = params
+                if (params.length) {
+                    path.put.parameters = params
+                }
             }
         }
         if (patch) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " patched successfully"
@@ -549,7 +558,9 @@ export default class SwagGen extends BaseGen {
                     })
                 ])
             } else {
-                path.patch.parameters = params
+                if (params.length) {
+                    path.patch.parameters = params
+                }
             }
         }
         if (del) {
@@ -577,7 +588,9 @@ export default class SwagGen extends BaseGen {
                     })
                 ])
             } else {
-                path.delete.parameters = params
+                if (params.length) {
+                    path.delete.parameters = params
+                }
             }
         }
     }
@@ -617,6 +630,11 @@ export default class SwagGen extends BaseGen {
                 break
             case "int":
                 schema.type = "integer"
+                schema.format = "int32"
+                break
+            case "long":
+                schema.type = "integer"
+                schema.format = "int64"
                 break
             case "boolean":
                 schema.type = "boolean"

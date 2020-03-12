@@ -40,8 +40,14 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_0
-        - &ref_1
+                    format: int32
+    get:
+      tags:
+        - UploadRequest
+      operationId: List UploadRequests
+      description: ''
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: >-
@@ -49,8 +55,9 @@ paths:
             response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -58,21 +65,16 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_3
+        - &ref_2
           in: query
           name: name
           description: ''
           required: false
           schema:
             type: string
-    get:
-      tags:
-        - UploadRequest
-      operationId: List UploadRequests
-      description: ''
-      parameters: *ref_0
       responses:
         '200':
           description: UploadRequests retrieved successfully
@@ -81,6 +83,7 @@ paths:
               description: Total number of UploadRequests in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -105,15 +108,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/status':
     get:
       tags:
@@ -140,6 +144,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/record-sets':
     post:
       tags:
@@ -162,14 +167,16 @@ paths:
                   id:
                     description: ''
                     type: integer
+                    format: int32
       parameters:
-        - &ref_4
+        - &ref_3
           in: path
           name: upload-request-id
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/record-sets/{id}':
     get:
       tags:
@@ -190,13 +197,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
+        - *ref_3
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/actions/start-processing-action':
     post:
       tags:
@@ -235,6 +243,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/actions/stop-processing-action':
     post:
       tags:
@@ -257,14 +266,16 @@ paths:
                   id:
                     description: ''
                     type: integer
+                    format: int32
       parameters:
-        - &ref_5
+        - &ref_4
           in: path
           name: upload-request-id
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
+            format: int32
   '/v1/upload-requests/{upload-request-id}/actions/stop-processing-action/{id}':
     get:
       tags:
@@ -285,13 +296,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_5
+        - *ref_4
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -304,7 +316,7 @@ components:
         status:
           description: ''
           type: string
-          enum: &ref_6
+          enum: &ref_5
             - STARTED
             - STOPPED
             - COMPLETED
@@ -321,13 +333,14 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
         status:
           description: ''
           type: string
-          enum: *ref_6
+          enum: *ref_5
         client:
           description: ''
           type: string
@@ -350,9 +363,11 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         recordsProcessed:
           description: ''
           type: integer
+          format: int32
         completed:
           description: ''
           type: boolean
@@ -380,6 +395,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         company:
           description: ''
           type: string
@@ -420,6 +436,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         when:
           description: ''
           type: string
@@ -434,6 +451,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

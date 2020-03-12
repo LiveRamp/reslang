@@ -40,7 +40,7 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: []
+                    format: int32
   '/v1/users/{id}':
     get:
       tags:
@@ -67,6 +67,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/users/{user-id}/actions/suspend/{id}':
     put:
       tags:
@@ -89,12 +90,14 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/users/{user-id}/actions/unsuspend/{id}':
     put:
       tags:
@@ -117,12 +120,14 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   /v1/organizations:
     post:
       tags:
@@ -145,8 +150,14 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_0
-        - &ref_1
+                    format: int32
+    get:
+      tags:
+        - Organization
+      operationId: List Organizations
+      description: ''
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: >-
@@ -154,8 +165,9 @@ paths:
             response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -163,14 +175,9 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-    get:
-      tags:
-        - Organization
-      operationId: List Organizations
-      description: ''
-      parameters: *ref_0
       responses:
         '200':
           description: Organizations retrieved successfully
@@ -179,6 +186,7 @@ paths:
               description: Total number of Organizations in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -203,14 +211,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
-        - *ref_2
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   /v1/roles:
     post:
       tags:
@@ -233,15 +242,22 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_3
-        - &ref_4
+                    format: int32
+    get:
+      tags:
+        - Role
+      operationId: List Roles
+      description: ''
+      parameters:
+        - &ref_2
           in: query
           name: offset
           description: Offset of the Roles (starting from 0) to include in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_5
+        - &ref_3
           in: query
           name: limit
           description: >-
@@ -249,14 +265,9 @@ paths:
             Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-    get:
-      tags:
-        - Role
-      operationId: List Roles
-      description: ''
-      parameters: *ref_3
       responses:
         '200':
           description: Roles retrieved successfully
@@ -265,6 +276,7 @@ paths:
               description: Total number of Roles in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -289,14 +301,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_2
+        - *ref_3
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -314,6 +327,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
@@ -329,6 +343,7 @@ components:
         parentOrganizationId:
           description: ''
           type: integer
+          format: int32
           example: Link to a Organization resource via its id
       required:
         - name
@@ -338,12 +353,14 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
         parentOrganizationId:
           description: ''
           type: integer
+          format: int32
           example: Link to a Organization resource via its id
       required:
         - id
@@ -365,6 +382,7 @@ components:
         parentRoleId:
           description: ''
           type: integer
+          format: int32
           example: Link to a Role resource via its id
       required:
         - name
@@ -375,12 +393,14 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
         parentRoleId:
           description: ''
           type: integer
+          format: int32
           example: Link to a Role resource via its id
       required:
         - id
@@ -400,6 +420,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

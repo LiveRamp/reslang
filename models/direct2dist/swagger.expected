@@ -44,8 +44,18 @@ paths:
                   id:
                     description: ''
                     type: string
-      parameters: &ref_0
-        - &ref_1
+    get:
+      tags:
+        - DistributionRequest
+      operationId: List DistributionRequests
+      description: >-
+        Use this endpoint to find existing DistributionRequests. The result set
+        is paginated for performance and sorted by createdAt descending by
+        default. Response of this method includes a header “X-Total-Count” to
+        indicate the total number of records. Use this value along with query
+        parameters, offset and limit, to iterate through the entire result set
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: >-
@@ -53,8 +63,9 @@ paths:
             the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -62,22 +73,23 @@ paths:
             will be returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_3
+        - &ref_2
           in: query
           name: status
           description: Status of the given DistributionRequest
           required: false
           schema:
             type: string
-            enum: &ref_9
+            enum: &ref_8
               - QUEUED
               - IN_PROGRESS
               - COMPLETED
               - FAILED
               - CANCELLED
-        - &ref_4
+        - &ref_3
           in: query
           name: sort
           description: >-
@@ -101,7 +113,7 @@ paths:
               - 'createdAt:desc'
               - 'statusUpdatedAt:asc'
               - 'statusUpdatedAt:desc'
-        - &ref_5
+        - &ref_4
           in: query
           name: createdAfter
           description: >-
@@ -119,7 +131,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_6
+        - &ref_5
           in: query
           name: createdBefore
           description: >-
@@ -137,7 +149,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_7
+        - &ref_6
           in: query
           name: statusUpdatedAfter
           description: >-
@@ -152,7 +164,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_8
+        - &ref_7
           in: query
           name: statusUpdatedBefore
           description: >-
@@ -168,17 +180,6 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-    get:
-      tags:
-        - DistributionRequest
-      operationId: List DistributionRequests
-      description: >-
-        Use this endpoint to find existing DistributionRequests. The result set
-        is paginated for performance and sorted by createdAt descending by
-        default. Response of this method includes a header “X-Total-Count” to
-        indicate the total number of records. Use this value along with query
-        parameters, offset and limit, to iterate through the entire result set
-      parameters: *ref_0
       responses:
         '200':
           description: DistributionRequests retrieved successfully
@@ -187,6 +188,7 @@ paths:
               description: Total number of DistributionRequests in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -214,6 +216,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
@@ -221,7 +224,6 @@ paths:
         - *ref_5
         - *ref_6
         - *ref_7
-        - *ref_8
         - in: path
           name: id
           required: true
@@ -311,6 +313,7 @@ components:
             Reference to a destination's endpoints to be used for distributing
             the data
           type: integer
+          format: int32
           example: >-
             Link to a Destination::Endpoint (to be defined in the future)
             resource via its id
@@ -386,6 +389,7 @@ components:
             Reference to a destination's endpoints to be used for distributing
             the data
           type: integer
+          format: int32
           example: >-
             Link to a Destination::Endpoint (to be defined in the future)
             resource via its id
@@ -453,7 +457,7 @@ components:
         status:
           description: Status of the given DistributionRequest
           type: string
-          enum: *ref_9
+          enum: *ref_8
         statusUpdatedAt:
           description: >-
             Datetime in UTC, formatted as ISO-8601, when the status of the
@@ -519,9 +523,11 @@ components:
             key:
               description: ''
               type: integer
+              format: int32
             value:
               description: ''
               type: integer
+              format: int32
     OutputFormat:
       type: object
       properties:
@@ -566,12 +572,14 @@ components:
         totalOutputSize:
           description: Total size of the distributed data in bytes
           type: integer
+          format: int32
         totalDistributionRecords:
           description: >-
             The number of distribution records in the file initially passed to
             this endpoint's corresponding POST route. Each record corresponds to
             an end user targeted by the distribution request
           type: integer
+          format: int32
       required:
         - fileDetails
         - totalOutputSize
@@ -585,6 +593,7 @@ components:
         lineCount:
           description: ''
           type: integer
+          format: int32
       required:
         - fileName
         - lineCount
@@ -594,6 +603,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

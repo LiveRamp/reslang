@@ -32,7 +32,7 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: []
+                    format: int32
   '/v1/persons/{id}':
     get:
       tags:
@@ -59,6 +59,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
     put:
       tags:
         - Person
@@ -80,6 +81,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
     patch:
       tags:
         - Person
@@ -101,6 +103,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -127,6 +130,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
@@ -168,6 +172,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

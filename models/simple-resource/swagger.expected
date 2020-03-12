@@ -32,15 +32,21 @@ paths:
                   id:
                     description: ''
                     type: string
-      parameters: &ref_0
-        - &ref_1
+    get:
+      tags:
+        - Garage
+      operationId: List Garages
+      description: ''
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: Offset of the Garages (starting from 0) to include in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -48,28 +54,23 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_3
+        - &ref_2
           in: query
           name: id
           description: ''
           required: false
           schema:
             type: string
-        - &ref_4
+        - &ref_3
           in: query
           name: name
           description: ''
           required: false
           schema:
             type: string
-    get:
-      tags:
-        - Garage
-      operationId: List Garages
-      description: ''
-      parameters: *ref_0
       responses:
         '200':
           description: Garages retrieved successfully
@@ -78,6 +79,7 @@ paths:
               description: Total number of Garages in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -95,17 +97,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GarageOutput'
-        '404': &ref_5
+        '404': &ref_4
           description: Garage not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
-        - *ref_4
         - in: path
           name: id
           required: true
@@ -120,12 +122,12 @@ paths:
       responses:
         '200':
           description: Garage modified successfully
-        '404': *ref_5
+        '404': *ref_4
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
-        - *ref_4
         - in: path
           name: id
           required: true
@@ -140,12 +142,12 @@ paths:
       responses:
         '200':
           description: Garage deleted successfully
-        '404': *ref_5
+        '404': *ref_4
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
-        - *ref_4
         - in: path
           name: id
           required: true
@@ -205,6 +207,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

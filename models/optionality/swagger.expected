@@ -32,7 +32,6 @@ paths:
                   id:
                     description: ''
                     type: string
-      parameters: []
   '/v1/cars/{id}':
     get:
       tags:
@@ -171,6 +170,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

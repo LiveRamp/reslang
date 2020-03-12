@@ -24,6 +24,7 @@ paths:
             response.
           schema:
             type: integer
+            format: int32
             default: 0
         - in: query
           name: limit
@@ -32,6 +33,7 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
         - in: query
@@ -49,6 +51,7 @@ paths:
               description: Total number of ConsentFiles in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -126,6 +129,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

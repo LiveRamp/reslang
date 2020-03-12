@@ -1,0 +1,5 @@
+
+namespace {
+    title "Segment API - ALPHA"
+    version 0.0.1
+}

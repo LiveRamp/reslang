@@ -40,8 +40,13 @@ paths:
                   id:
                     description: ''
                     type: string
-      parameters: &ref_0
-        - &ref_1
+    get:
+      tags:
+        - Directory
+      operationId: List Directories
+      description: ''
+      parameters:
+        - &ref_0
           in: query
           name: offset
           description: >-
@@ -49,8 +54,9 @@ paths:
             response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_2
+        - &ref_1
           in: query
           name: limit
           description: >-
@@ -58,28 +64,23 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_3
+        - &ref_2
           in: query
           name: id
           description: ''
           required: false
           schema:
             type: string
-        - &ref_4
+        - &ref_3
           in: query
           name: name
           description: ''
           required: false
           schema:
             type: string
-    get:
-      tags:
-        - Directory
-      operationId: List Directories
-      description: ''
-      parameters: *ref_0
       responses:
         '200':
           description: Directories retrieved successfully
@@ -88,6 +89,7 @@ paths:
               description: Total number of Directories in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -112,10 +114,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_0
         - *ref_1
         - *ref_2
         - *ref_3
-        - *ref_4
         - in: path
           name: id
           required: true
@@ -144,8 +146,13 @@ paths:
                   id:
                     description: ''
                     type: string
-      parameters: &ref_5
-        - &ref_6
+    get:
+      tags:
+        - FileType
+      operationId: List FileTypes
+      description: ''
+      parameters:
+        - &ref_4
           in: query
           name: offset
           description: >-
@@ -153,8 +160,9 @@ paths:
             response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_7
+        - &ref_5
           in: query
           name: limit
           description: >-
@@ -162,21 +170,16 @@ paths:
             returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_8
+        - &ref_6
           in: query
           name: type
           description: ''
           required: false
           schema:
             type: string
-    get:
-      tags:
-        - FileType
-      operationId: List FileTypes
-      description: ''
-      parameters: *ref_5
       responses:
         '200':
           description: FileTypes retrieved successfully
@@ -185,6 +188,7 @@ paths:
               description: Total number of FileTypes in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -221,9 +225,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_4
+        - *ref_5
         - *ref_6
-        - *ref_7
-        - *ref_8
         - in: path
           name: id
           required: true
@@ -252,22 +256,24 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_9
-        - &ref_10
+                    format: int32
+      parameters: &ref_7
+        - &ref_8
           in: path
           name: directory-id
           description: Id of parent Directory
           required: true
           schema:
             type: string
-        - &ref_11
+        - &ref_9
           in: query
           name: offset
           description: Offset of the Files (starting from 0) to include in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_12
+        - &ref_10
           in: query
           name: limit
           description: >-
@@ -275,9 +281,10 @@ paths:
             Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_13
+        - &ref_11
           in: query
           name: contents
           description: ''
@@ -289,7 +296,7 @@ paths:
         - 'Directory::File'
       operationId: 'List Directory::Files'
       description: ''
-      parameters: *ref_9
+      parameters: *ref_7
       responses:
         '200':
           description: Files retrieved successfully
@@ -298,6 +305,7 @@ paths:
               description: Total number of Files in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -322,16 +330,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
+        - *ref_8
+        - *ref_9
         - *ref_10
         - *ref_11
-        - *ref_12
-        - *ref_13
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   /v1/directory-delete-requests:
     post:
       tags:
@@ -354,8 +363,14 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: &ref_14
-        - &ref_15
+                    format: int32
+    get:
+      tags:
+        - DirectoryDeleteRequest
+      operationId: List DirectoryDeleteRequests
+      description: ''
+      parameters:
+        - &ref_12
           in: query
           name: offset
           description: >-
@@ -363,8 +378,9 @@ paths:
             in the response.
           schema:
             type: integer
+            format: int32
             default: 0
-        - &ref_16
+        - &ref_13
           in: query
           name: limit
           description: >-
@@ -372,21 +388,17 @@ paths:
             will be returned. Maximum value for limit can be 100
           schema:
             type: integer
+            format: int32
             default: 10
             maximum: 100
-        - &ref_17
+        - &ref_14
           in: query
           name: id
           description: ''
           required: false
           schema:
             type: integer
-    get:
-      tags:
-        - DirectoryDeleteRequest
-      operationId: List DirectoryDeleteRequests
-      description: ''
-      parameters: *ref_14
+            format: int32
       responses:
         '200':
           description: DirectoryDeleteRequests retrieved successfully
@@ -395,6 +407,7 @@ paths:
               description: Total number of DirectoryDeleteRequests in the data set.
               schema:
                 type: integer
+                format: int32
           content:
             application/json:
               schema:
@@ -419,15 +432,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_15
-        - *ref_16
-        - *ref_17
+        - *ref_12
+        - *ref_13
+        - *ref_14
         - in: path
           name: id
           required: true
           description: ''
           schema:
             type: integer
+            format: int32
   '/v1/directory-delete-requests/{directory-delete-request-id}/actions/cancel':
     post:
       tags:
@@ -445,6 +459,7 @@ paths:
                   id:
                     description: ''
                     type: integer
+                    format: int32
       parameters:
         - in: path
           name: directory-delete-request-id
@@ -452,6 +467,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -556,6 +572,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
@@ -594,6 +611,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         directoryId:
           description: ''
           type: string
@@ -629,6 +647,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

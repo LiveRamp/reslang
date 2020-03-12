@@ -42,6 +42,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
   /v1/resource-bs:
     post:
       tags:
@@ -64,7 +65,7 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: []
+                    format: int32
   '/v1/resource-bs/{id}':
     get:
       tags:
@@ -91,6 +92,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
     put:
       tags:
         - ResourceB
@@ -107,6 +109,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
   /v2/resource-bs:
     post:
       tags:
@@ -129,7 +132,7 @@ paths:
                   id:
                     description: ''
                     type: integer
-      parameters: []
+                    format: int32
   '/v2/resource-bs/{id}':
     get:
       tags:
@@ -156,6 +159,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
   '/v2/resource-bs/{resource-b-id}/subs':
     post:
       tags:
@@ -178,6 +182,7 @@ paths:
                   id:
                     description: ''
                     type: integer
+                    format: int32
       parameters:
         - &ref_1
           in: path
@@ -186,6 +191,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int32
   '/v2/resource-bs/{resource-b-id}/subs/{id}':
     get:
       tags:
@@ -213,6 +219,7 @@ paths:
           description: ''
           schema:
             type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -222,16 +229,19 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
         bId:
           description: ''
           type: integer
+          format: int32
           example: Link to a ResourceB resource via its id
         newBId:
           description: ''
           type: integer
+          format: int32
           example: Link to a v2/ResourceB resource via its id
       required:
         - id
@@ -244,6 +254,7 @@ components:
         size:
           description: ''
           type: integer
+          format: int32
       required:
         - size
     ResourceBOutput:
@@ -252,9 +263,11 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         size:
           description: ''
           type: integer
+          format: int32
       required:
         - id
         - size
@@ -264,6 +277,7 @@ components:
         totalSize:
           description: ''
           type: integer
+          format: int32
       required:
         - totalSize
     v2ResourceBOutput:
@@ -272,9 +286,11 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         totalSize:
           description: ''
           type: integer
+          format: int32
       required:
         - id
         - totalSize
@@ -292,6 +308,7 @@ components:
         id:
           description: ''
           type: integer
+          format: int32
         name:
           description: ''
           type: string
@@ -304,6 +321,7 @@ components:
         httpStatus:
           description: HTTP error status code for this problem
           type: integer
+          format: int32
         errorCode:
           description: 'Service specific error code, more granular'
           type: string

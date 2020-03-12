@@ -1,0 +1,3 @@
+future asset-resource Dataset {
+  id: int
+}

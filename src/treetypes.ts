@@ -62,6 +62,7 @@ export let ResourceType = [
 
 export let PrimitiveType = [
     "int",
+    "long",
     "string",
     "boolean",
     "double",
