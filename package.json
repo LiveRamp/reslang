@@ -1,47 +1,69 @@
 {
   "name": "reslang",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.1.1-rc.2",
+  "main": "dist/index.js",
   "license": "MIT",
   "engines": {
     "node": ">=12.1.0"
   },
   "devDependencies": {
+    "@liftr/tscov": "^1.4.5",
     "@types/clipboardy": "^2.0.1",
     "@types/express": "^4.16.1",
-    "@types/jest": "^24.0.13",
+    "@types/figlet": "^1.2.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^25.1.4",
     "@types/js-yaml": "^3.12.1",
+    "@types/node": "^13.9.0",
     "@types/open": "^6.1.0",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.0",
     "@types/shelljs": "^0.8.5",
+    "@types/yargs": "^13.0.0",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.2.0",
+    "ts-node": "^8.6.2",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@types/fs-extra": "^8.1.0",
     "clipboardy": "^2.0.0",
     "express": "^4.17.1",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.1.0",
+    "inversify": "^5.0.1",
     "js-yaml": "^3.13.1",
+    "kleur": "^3.0.3",
     "open": "^6.3.0",
     "pegjs": "^0.10.0",
     "redoc-cli": "^0.9.2",
+    "reflect-metadata": "^0.1.13",
     "shelljs": "^0.8.3",
+    "tslib": "^1.11.1",
+    "webpack-node-externals": "^1.7.2",
     "yargs": "^13.2.4"
   },
   "scripts": {
-    "start": "npm run build:live",
     "build": "tsc -p .",
-    "build:live": "ts-node src/main.ts",
-    "test": "jest"
+    "build:clean": "yarn clean:some && yarn build",
+    "build:clean:all": "yarn clean:all && yarn build",
+    "build:live": "ts-node src/index.ts",
+    "clean:some": "rm -rf ./lib ./docs",
+    "clean:all": "rm -rf ./node_modules ./package-lock.json ./lib ./docs",
+    "docs": "typedoc --out docs ./src",
+    "package": "yarn build && cp ./src/grammar.pegjs ./dist/grammar.pegjs && mkdir ./dist/library && cp ./src/library/local.reslang ./dist/library/local.reslang && cp ./src/license.txt ./dist/license.txt",
+    "package:clean": "rm -rf dist && yarn package",
+    "start": "yarn build:live",
+    "test": "jest",
+    "tscov": "tscov --min-coverage 90",
+    "tscov:d": "tscov --details"
   },
   "prettier": {
     "semi": false,
     "tabWidth": 4
   },
   "bin": {
-    "reslang": "./src/main.ts"
+    "reslang": "./bin/reslang"
   }
 }
