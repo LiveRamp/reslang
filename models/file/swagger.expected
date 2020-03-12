@@ -45,42 +45,6 @@ paths:
         - Directory
       operationId: List Directories
       description: ''
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: >-
-            Offset of the Directories (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of Directories to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_2
-          in: query
-          name: id
-          description: ''
-          required: false
-          schema:
-            type: string
-        - &ref_3
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: Directories retrieved successfully
@@ -94,6 +58,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DirectoryMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Directories (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Directories to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/directories/{id}':
     get:
       tags:
@@ -114,10 +110,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true
@@ -151,35 +143,6 @@ paths:
         - FileType
       operationId: List FileTypes
       description: ''
-      parameters:
-        - &ref_4
-          in: query
-          name: offset
-          description: >-
-            Offset of the FileTypes (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_5
-          in: query
-          name: limit
-          description: >-
-            Number of FileTypes to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_6
-          in: query
-          name: type
-          description: ''
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: FileTypes retrieved successfully
@@ -193,6 +156,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileTypeMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the FileTypes (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of FileTypes to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: type
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/file-types/{id}':
     get:
       tags:
@@ -225,9 +214,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
-        - *ref_5
-        - *ref_6
         - in: path
           name: id
           required: true
@@ -257,38 +243,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_7
-        - &ref_8
+      parameters:
+        - &ref_0
           in: path
           name: directory-id
           description: Id of parent Directory
           required: true
-          schema:
-            type: string
-        - &ref_9
-          in: query
-          name: offset
-          description: Offset of the Files (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_10
-          in: query
-          name: limit
-          description: >-
-            Number of Files to return. If unspecified, 10 max will be returned.
-            Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_11
-          in: query
-          name: contents
-          description: ''
-          required: false
           schema:
             type: string
     get:
@@ -296,7 +256,6 @@ paths:
         - 'Directory::File'
       operationId: 'List Directory::Files'
       description: ''
-      parameters: *ref_7
       responses:
         '200':
           description: Files retrieved successfully
@@ -310,6 +269,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DirectoryFileMultiResponse'
+      parameters:
+        - *ref_0
+        - in: query
+          name: offset
+          description: Offset of the Files (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Files to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: contents
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/directories/{directory-id}/files/{id}':
     get:
       tags:
@@ -330,10 +314,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_8
-        - *ref_9
-        - *ref_10
-        - *ref_11
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -369,36 +350,6 @@ paths:
         - DirectoryDeleteRequest
       operationId: List DirectoryDeleteRequests
       description: ''
-      parameters:
-        - &ref_12
-          in: query
-          name: offset
-          description: >-
-            Offset of the DirectoryDeleteRequests (starting from 0) to include
-            in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_13
-          in: query
-          name: limit
-          description: >-
-            Number of DirectoryDeleteRequests to return. If unspecified, 10 max
-            will be returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_14
-          in: query
-          name: id
-          description: ''
-          required: false
-          schema:
-            type: integer
-            format: int32
       responses:
         '200':
           description: DirectoryDeleteRequests retrieved successfully
@@ -412,6 +363,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DirectoryDeleteRequestMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DirectoryDeleteRequests (starting from 0) to include
+            in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DirectoryDeleteRequests to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: integer
+            format: int32
   '/v1/directory-delete-requests/{id}':
     get:
       tags:
@@ -432,9 +410,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_12
-        - *ref_13
-        - *ref_14
         - in: path
           name: id
           required: true

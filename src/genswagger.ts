@@ -305,8 +305,9 @@ export default class SwagGen extends BaseGen {
                 path.post.parameters = params
             }
         }
+        const gparams = params.slice()
         if (multiget) {
-            params.push({
+            gparams.push({
                 in: "query",
                 name: "offset",
                 description: `Offset of the ${plural} (starting from 0) to include in the response.`,
@@ -316,7 +317,7 @@ export default class SwagGen extends BaseGen {
                     default: 0
                 }
             })
-            params.push({
+            gparams.push({
                 in: "query",
                 name: "limit",
                 description: `Number of ${plural} to return. If unspecified, 10 max will be returned.\
@@ -331,7 +332,7 @@ export default class SwagGen extends BaseGen {
 
             for (const attr of el.attributes as IAttribute[]) {
                 if (attr.modifiers.query || attr.modifiers.queryonly) {
-                    params.push(
+                    gparams.push(
                         this.addType(attr, {
                             in: "query",
                             name: attr.name,
@@ -341,7 +342,6 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-            const short = el.short
             const responses = {
                 200: {
                     description: plural + " retrieved successfully",
@@ -368,11 +368,10 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[el.name]],
                 operationId: "List " + pluralizeName(el.name),
                 description: this.translate(multiget.comment),
-                parameters: params,
                 responses
             }
-            if (params.length) {
-                path.get.parameters = params
+            if (gparams.length) {
+                path.get.parameters = gparams
             }
         }
     }
@@ -479,7 +478,6 @@ export default class SwagGen extends BaseGen {
             }
         }
         if (put) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " modified successfully"
@@ -564,7 +562,6 @@ export default class SwagGen extends BaseGen {
             }
         }
         if (del) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " deleted successfully"

@@ -46,35 +46,6 @@ paths:
         - UploadRequest
       operationId: List UploadRequests
       description: ''
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: >-
-            Offset of the UploadRequests (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of UploadRequests to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_2
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: UploadRequests retrieved successfully
@@ -88,6 +59,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UploadRequestMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the UploadRequests (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of UploadRequests to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/upload-requests/{id}':
     get:
       tags:
@@ -108,9 +105,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
         - in: path
           name: id
           required: true
@@ -169,7 +163,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_3
+        - &ref_0
           in: path
           name: upload-request-id
           description: Id of parent UploadRequest
@@ -197,7 +191,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_3
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -268,7 +262,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_4
+        - &ref_1
           in: path
           name: upload-request-id
           description: Id of parent UploadRequest
@@ -296,7 +290,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
+        - *ref_1
         - in: path
           name: id
           required: true
@@ -316,7 +310,7 @@ components:
         status:
           description: ''
           type: string
-          enum: &ref_5
+          enum: &ref_2
             - STARTED
             - STOPPED
             - COMPLETED
@@ -340,7 +334,7 @@ components:
         status:
           description: ''
           type: string
-          enum: *ref_5
+          enum: *ref_2
         client:
           description: ''
           type: string

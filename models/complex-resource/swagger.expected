@@ -40,44 +40,6 @@ paths:
         - Car
       operationId: List Cars
       description: ''
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: Offset of the Cars (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of Cars to return. If unspecified, 10 max will be returned.
-            Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_2
-          in: query
-          name: id
-          description: ''
-          required: false
-          schema:
-            type: integer
-            format: int32
-        - &ref_3
-          in: query
-          name: brand
-          description: ''
-          required: false
-          schema:
-            type: string
-            enum: &ref_10
-              - TOYOTA
-              - FORD
       responses:
         '200':
           description: Cars retrieved successfully
@@ -91,6 +53,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Cars (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Cars to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: brand
+          description: ''
+          required: false
+          schema:
+            type: string
+            enum: &ref_2
+              - TOYOTA
+              - FORD
   '/v1/cars/{id}':
     get:
       tags:
@@ -111,10 +107,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true
@@ -145,39 +137,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_4
-        - &ref_5
+      parameters:
+        - &ref_0
           in: path
           name: car-id
           description: Id of parent Car
           required: true
-          schema:
-            type: integer
-            format: int32
-        - &ref_6
-          in: query
-          name: offset
-          description: Offset of the Wheels (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_7
-          in: query
-          name: limit
-          description: >-
-            Number of Wheels to return. If unspecified, 10 max will be returned.
-            Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_8
-          in: query
-          name: id
-          description: ''
-          required: false
           schema:
             type: integer
             format: int32
@@ -186,7 +151,6 @@ paths:
         - 'Car::Wheel'
       operationId: 'List Car::Wheels'
       description: ''
-      parameters: *ref_4
       responses:
         '200':
           description: Wheels retrieved successfully
@@ -200,6 +164,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarWheelMultiResponse'
+      parameters:
+        - *ref_0
+        - in: query
+          name: offset
+          description: Offset of the Wheels (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Wheels to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: integer
+            format: int32
   '/v1/cars/{car-id}/wheels/{id}':
     get:
       tags:
@@ -213,17 +203,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarWheelOutput'
-        '404': &ref_9
+        '404': &ref_1
           description: Wheel not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_5
-        - *ref_6
-        - *ref_7
-        - *ref_8
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -239,12 +226,9 @@ paths:
       responses:
         '200':
           description: Wheel modified successfully
-        '404': *ref_9
+        '404': *ref_1
       parameters:
-        - *ref_5
-        - *ref_6
-        - *ref_7
-        - *ref_8
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -269,7 +253,7 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_10
+          enum: *ref_2
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -311,7 +295,7 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_10
+          enum: *ref_2
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'

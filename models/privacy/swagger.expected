@@ -16,6 +16,19 @@ paths:
         - ConsentFile
       operationId: List ConsentFiles
       description: ''
+      responses:
+        '200':
+          description: ConsentFiles retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of ConsentFiles in the data set.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsentFileMultiResponse'
       parameters:
         - in: query
           name: offset
@@ -43,19 +56,6 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-      responses:
-        '200':
-          description: ConsentFiles retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of ConsentFiles in the data set.
-              schema:
-                type: integer
-                format: int32
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConsentFileMultiResponse'
 components:
   parameters: {}
   schemas:

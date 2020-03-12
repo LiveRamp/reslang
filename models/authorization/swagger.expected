@@ -156,28 +156,6 @@ paths:
         - Organization
       operationId: List Organizations
       description: ''
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: >-
-            Offset of the Organizations (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of Organizations to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
       responses:
         '200':
           description: Organizations retrieved successfully
@@ -191,6 +169,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Organizations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Organizations to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
   '/v1/organizations/{id}':
     get:
       tags:
@@ -211,8 +209,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
         - in: path
           name: id
           required: true
@@ -248,26 +244,6 @@ paths:
         - Role
       operationId: List Roles
       description: ''
-      parameters:
-        - &ref_2
-          in: query
-          name: offset
-          description: Offset of the Roles (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_3
-          in: query
-          name: limit
-          description: >-
-            Number of Roles to return. If unspecified, 10 max will be returned.
-            Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
       responses:
         '200':
           description: Roles retrieved successfully
@@ -281,6 +257,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RoleMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Roles (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Roles to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
   '/v1/roles/{id}':
     get:
       tags:
@@ -301,8 +295,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true

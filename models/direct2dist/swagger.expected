@@ -54,9 +54,21 @@ paths:
         default. Response of this method includes a header “X-Total-Count” to
         indicate the total number of records. Use this value along with query
         parameters, offset and limit, to iterate through the entire result set
+      responses:
+        '200':
+          description: DistributionRequests retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DistributionRequests in the data set.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributionRequestMultiResponse'
       parameters:
-        - &ref_0
-          in: query
+        - in: query
           name: offset
           description: >-
             Offset of the DistributionRequests (starting from 0) to include in
@@ -65,8 +77,7 @@ paths:
             type: integer
             format: int32
             default: 0
-        - &ref_1
-          in: query
+        - in: query
           name: limit
           description: >-
             Number of DistributionRequests to return. If unspecified, 10 max
@@ -76,21 +87,19 @@ paths:
             format: int32
             default: 10
             maximum: 100
-        - &ref_2
-          in: query
+        - in: query
           name: status
           description: Status of the given DistributionRequest
           required: false
           schema:
             type: string
-            enum: &ref_8
+            enum: &ref_0
               - QUEUED
               - IN_PROGRESS
               - COMPLETED
               - FAILED
               - CANCELLED
-        - &ref_3
-          in: query
+        - in: query
           name: sort
           description: >-
             Default: createdAt:desc
@@ -113,8 +122,7 @@ paths:
               - 'createdAt:desc'
               - 'statusUpdatedAt:asc'
               - 'statusUpdatedAt:desc'
-        - &ref_4
-          in: query
+        - in: query
           name: createdAfter
           description: >-
             Default: timestamp 30 days (2592000 seconds) before current request.
@@ -131,8 +139,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_5
-          in: query
+        - in: query
           name: createdBefore
           description: >-
             Default: timestamp of current request
@@ -149,8 +156,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_6
-          in: query
+        - in: query
           name: statusUpdatedAfter
           description: >-
             Filter the list of DistributionRequests by when it's status was last
@@ -164,8 +170,7 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-        - &ref_7
-          in: query
+        - in: query
           name: statusUpdatedBefore
           description: >-
             Filter the list of DistributionRequests by when it's status was last
@@ -180,19 +185,6 @@ paths:
           schema:
             type: string
             format: ISO8601 UTC date-time
-      responses:
-        '200':
-          description: DistributionRequests retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of DistributionRequests in the data set.
-              schema:
-                type: integer
-                format: int32
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DistributionRequestMultiResponse'
   '/v1/distribution-requests/{id}':
     get:
       tags:
@@ -216,14 +208,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
-        - *ref_4
-        - *ref_5
-        - *ref_6
-        - *ref_7
         - in: path
           name: id
           required: true
@@ -457,7 +441,7 @@ components:
         status:
           description: Status of the given DistributionRequest
           type: string
-          enum: *ref_8
+          enum: *ref_0
         statusUpdatedAt:
           description: >-
             Datetime in UTC, formatted as ISO-8601, when the status of the

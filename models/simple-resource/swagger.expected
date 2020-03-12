@@ -37,40 +37,6 @@ paths:
         - Garage
       operationId: List Garages
       description: ''
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: Offset of the Garages (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of Garages to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_2
-          in: query
-          name: id
-          description: ''
-          required: false
-          schema:
-            type: string
-        - &ref_3
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: Garages retrieved successfully
@@ -84,6 +50,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GarageMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Garages (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Garages to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/garages/{id}':
     get:
       tags:
@@ -97,17 +93,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GarageOutput'
-        '404': &ref_4
+        '404': &ref_0
           description: Garage not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true
@@ -122,12 +114,8 @@ paths:
       responses:
         '200':
           description: Garage modified successfully
-        '404': *ref_4
+        '404': *ref_0
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true
@@ -142,12 +130,8 @@ paths:
       responses:
         '200':
           description: Garage deleted successfully
-        '404': *ref_4
+        '404': *ref_0
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
-        - *ref_3
         - in: path
           name: id
           required: true

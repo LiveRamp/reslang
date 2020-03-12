@@ -56,35 +56,6 @@ paths:
         - Destination
       operationId: List Destinations
       description: Get all destinations
-      parameters:
-        - &ref_0
-          in: query
-          name: offset
-          description: >-
-            Offset of the Destinations (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_1
-          in: query
-          name: limit
-          description: >-
-            Number of Destinations to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_2
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: Destinations retrieved successfully
@@ -98,6 +69,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Destinations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Destinations to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/destinations/{id}':
     get:
       tags:
@@ -118,9 +115,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
-        - *ref_1
-        - *ref_2
         - in: path
           name: id
           required: true
@@ -151,41 +145,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_3
-        - &ref_4
+      parameters:
+        - &ref_0
           in: path
           name: destination-id
           description: Id of parent Destination
           required: true
-          schema:
-            type: integer
-            format: int32
-        - &ref_5
-          in: query
-          name: offset
-          description: >-
-            Offset of the TaxonomyConfigurations (starting from 0) to include in
-            the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_6
-          in: query
-          name: limit
-          description: >-
-            Number of TaxonomyConfigurations to return. If unspecified, 10 max
-            will be returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_7
-          in: query
-          name: id
-          description: ''
-          required: false
           schema:
             type: integer
             format: int32
@@ -194,7 +159,6 @@ paths:
         - 'Destination::TaxonomyConfiguration'
       operationId: 'List Destination::TaxonomyConfigurations'
       description: ''
-      parameters: *ref_3
       responses:
         '200':
           description: TaxonomyConfigurations retrieved successfully
@@ -209,6 +173,34 @@ paths:
               schema:
                 $ref: >-
                   #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
+      parameters:
+        - *ref_0
+        - in: query
+          name: offset
+          description: >-
+            Offset of the TaxonomyConfigurations (starting from 0) to include in
+            the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of TaxonomyConfigurations to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: integer
+            format: int32
   '/v1/destinations/{destination-id}/taxonomy-configurations/{id}':
     get:
       tags:
@@ -222,17 +214,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationTaxonomyConfigurationOutput'
-        '404': &ref_8
+        '404': &ref_1
           description: TaxonomyConfiguration not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
-        - *ref_5
-        - *ref_6
-        - *ref_7
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -248,12 +237,9 @@ paths:
       responses:
         '200':
           description: TaxonomyConfiguration modified successfully
-        '404': *ref_8
+        '404': *ref_1
       parameters:
-        - *ref_4
-        - *ref_5
-        - *ref_6
-        - *ref_7
+        - *ref_0
         - in: path
           name: id
           required: true
@@ -284,8 +270,8 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_9
-        - &ref_10
+      parameters:
+        - &ref_2
           in: path
           name: destination-id
           description: Id of parent Destination
@@ -293,40 +279,11 @@ paths:
           schema:
             type: integer
             format: int32
-        - &ref_11
-          in: query
-          name: offset
-          description: >-
-            Offset of the Integrations (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_12
-          in: query
-          name: limit
-          description: >-
-            Number of Integrations to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_13
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
     get:
       tags:
         - 'Destination::Integration'
       operationId: 'List Destination::Integrations'
       description: Retrieve many integrations
-      parameters: *ref_9
       responses:
         '200':
           description: Integrations retrieved successfully
@@ -340,6 +297,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
+      parameters:
+        - *ref_2
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Integrations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Integrations to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/destinations/{destination-id}/integrations/{id}':
     get:
       tags:
@@ -353,17 +337,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationOutput'
-        '404': &ref_14
+        '404': &ref_3
           description: Integration not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_10
-        - *ref_11
-        - *ref_12
-        - *ref_13
+        - *ref_2
         - in: path
           name: id
           required: true
@@ -379,12 +360,9 @@ paths:
       responses:
         '200':
           description: Integration modified successfully
-        '404': *ref_14
+        '404': *ref_3
       parameters:
-        - *ref_10
-        - *ref_11
-        - *ref_12
-        - *ref_13
+        - *ref_2
         - in: path
           name: id
           required: true
@@ -415,8 +393,8 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_15
-        - &ref_16
+      parameters:
+        - &ref_4
           in: path
           name: destination-id
           description: Id of parent Destination
@@ -424,40 +402,11 @@ paths:
           schema:
             type: integer
             format: int32
-        - &ref_17
-          in: query
-          name: offset
-          description: >-
-            Offset of the Endpoints (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_18
-          in: query
-          name: limit
-          description: >-
-            Number of Endpoints to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
-        - &ref_19
-          in: query
-          name: name
-          description: ''
-          required: false
-          schema:
-            type: string
     get:
       tags:
         - 'Destination::Endpoint'
       operationId: 'List Destination::Endpoints'
       description: ''
-      parameters: *ref_15
       responses:
         '200':
           description: Endpoints retrieved successfully
@@ -471,6 +420,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointMultiResponse'
+      parameters:
+        - *ref_4
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Endpoints (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Endpoints to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/destinations/{destination-id}/endpoints/{id}':
     get:
       tags:
@@ -484,17 +460,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointOutput'
-        '404': &ref_20
+        '404': &ref_5
           description: Endpoint not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_16
-        - *ref_17
-        - *ref_18
-        - *ref_19
+        - *ref_4
         - in: path
           name: id
           required: true
@@ -510,12 +483,9 @@ paths:
       responses:
         '200':
           description: Endpoint modified successfully
-        '404': *ref_20
+        '404': *ref_5
       parameters:
-        - *ref_16
-        - *ref_17
-        - *ref_18
-        - *ref_19
+        - *ref_4
         - in: path
           name: id
           required: true
@@ -546,8 +516,8 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_21
-        - &ref_22
+      parameters:
+        - &ref_6
           in: path
           name: destination-id
           description: Id of parent Destination
@@ -555,33 +525,11 @@ paths:
           schema:
             type: integer
             format: int32
-        - &ref_23
-          in: query
-          name: offset
-          description: >-
-            Offset of the Packagers (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_24
-          in: query
-          name: limit
-          description: >-
-            Number of Packagers to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
     get:
       tags:
         - 'Destination::Packager'
       operationId: 'List Destination::Packagers'
       description: ''
-      parameters: *ref_21
       responses:
         '200':
           description: Packagers retrieved successfully
@@ -595,6 +543,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationPackagerMultiResponse'
+      parameters:
+        - *ref_6
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Packagers (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Packagers to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
   '/v1/destinations/{destination-id}/packagers/{id}':
     get:
       tags:
@@ -615,9 +584,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_22
-        - *ref_23
-        - *ref_24
+        - *ref_6
         - in: path
           name: id
           required: true
@@ -648,8 +615,8 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_25
-        - &ref_26
+      parameters:
+        - &ref_7
           in: path
           name: destination-id
           description: Id of parent Destination
@@ -657,33 +624,11 @@ paths:
           schema:
             type: integer
             format: int32
-        - &ref_27
-          in: query
-          name: offset
-          description: >-
-            Offset of the Formatters (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_28
-          in: query
-          name: limit
-          description: >-
-            Number of Formatters to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
     get:
       tags:
         - 'Destination::Formatter'
       operationId: 'List Destination::Formatters'
       description: ''
-      parameters: *ref_25
       responses:
         '200':
           description: Formatters retrieved successfully
@@ -697,6 +642,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationFormatterMultiResponse'
+      parameters:
+        - *ref_7
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Formatters (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Formatters to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
   '/v1/destinations/{destination-id}/formatters/{id}':
     get:
       tags:
@@ -717,9 +683,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_26
-        - *ref_27
-        - *ref_28
+        - *ref_7
         - in: path
           name: id
           required: true
@@ -750,8 +714,8 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-      parameters: &ref_29
-        - &ref_30
+      parameters:
+        - &ref_8
           in: path
           name: destination-id
           description: Id of parent Destination
@@ -759,33 +723,11 @@ paths:
           schema:
             type: integer
             format: int32
-        - &ref_31
-          in: query
-          name: offset
-          description: >-
-            Offset of the Deliverers (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - &ref_32
-          in: query
-          name: limit
-          description: >-
-            Number of Deliverers to return. If unspecified, 10 max will be
-            returned. Maximum value for limit can be 100
-          schema:
-            type: integer
-            format: int32
-            default: 10
-            maximum: 100
     get:
       tags:
         - 'Destination::Deliverer'
       operationId: 'List Destination::Deliverers'
       description: ''
-      parameters: *ref_29
       responses:
         '200':
           description: Deliverers retrieved successfully
@@ -799,6 +741,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationDelivererMultiResponse'
+      parameters:
+        - *ref_8
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Deliverers (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Deliverers to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
   '/v1/destinations/{destination-id}/deliverers/{id}':
     get:
       tags:
@@ -819,9 +782,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_30
-        - *ref_31
-        - *ref_32
+        - *ref_8
         - in: path
           name: id
           required: true
@@ -1078,7 +1039,7 @@ components:
         compressionType:
           description: ''
           type: string
-          enum: &ref_33
+          enum: &ref_9
             - NONE
             - BZ2
             - GZIP
@@ -1099,7 +1060,7 @@ components:
         compressionType:
           description: ''
           type: string
-          enum: *ref_33
+          enum: *ref_9
       required:
         - id
         - macro
@@ -1147,7 +1108,7 @@ components:
         protocol:
           description: ''
           type: string
-          enum: &ref_34
+          enum: &ref_10
             - SFTP
             - FTP
             - FTPS_EXPLICIT
@@ -1186,7 +1147,7 @@ components:
         protocol:
           description: ''
           type: string
-          enum: *ref_34
+          enum: *ref_10
         macro:
           description: ''
           type: string
