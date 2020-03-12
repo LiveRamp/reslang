@@ -41,6 +41,7 @@ The following primitive types are available. These are translated into appropria
 | Type     | Description                                                                   |
 | -------- | ----------------------------------------------------------------------------- |
 | int      | 32-bit integer                                                                |
+| long     | 64-bit integer                                                                |
 | string   | Standard string                                                               |
 | double   | Double floating point                                                         |
 | boolean  | True or false                                                                 |
