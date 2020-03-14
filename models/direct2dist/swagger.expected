@@ -93,7 +93,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: &ref_0
+            enum:
               - QUEUED
               - IN_PROGRESS
               - COMPLETED
@@ -441,7 +441,12 @@ components:
         status:
           description: Status of the given DistributionRequest
           type: string
-          enum: *ref_0
+          enum:
+            - QUEUED
+            - IN_PROGRESS
+            - COMPLETED
+            - FAILED
+            - CANCELLED
         statusUpdatedAt:
           description: >-
             Datetime in UTC, formatted as ISO-8601, when the status of the

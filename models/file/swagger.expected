@@ -244,8 +244,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: directoryId
           description: Id of parent Directory
           required: true
@@ -270,7 +269,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/DirectoryFileMultiResponse'
       parameters:
-        - *ref_0
+        - in: path
+          name: directoryId
+          description: Id of parent Directory
+          required: true
+          schema:
+            type: string
         - in: query
           name: offset
           description: Offset of the Files (starting from 0) to include in the response.
@@ -314,7 +318,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: directoryId
+          description: Id of parent Directory
+          required: true
+          schema:
+            type: string
         - in: path
           name: id
           required: true

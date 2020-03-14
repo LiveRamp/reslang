@@ -84,7 +84,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: &ref_2
+            enum:
               - TOYOTA
               - FORD
   '/v1/cars/{id}':
@@ -138,8 +138,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: carId
           description: Id of parent Car
           required: true
@@ -165,7 +164,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CarWheelMultiResponse'
       parameters:
-        - *ref_0
+        - in: path
+          name: carId
+          description: Id of parent Car
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: Offset of the Wheels (starting from 0) to include in the response.
@@ -203,14 +208,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarWheelOutput'
-        '404': &ref_1
+        '404':
           description: Wheel not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: carId
+          description: Id of parent Car
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -226,9 +237,20 @@ paths:
       responses:
         '200':
           description: Wheel modified successfully
-        '404': *ref_1
+        '404':
+          description: Wheel not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: carId
+          description: Id of parent Car
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -253,7 +275,9 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_2
+          enum:
+            - TOYOTA
+            - FORD
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -295,7 +319,9 @@ components:
         brand:
           description: ''
           type: string
-          enum: *ref_2
+          enum:
+            - TOYOTA
+            - FORD
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'

@@ -79,7 +79,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResourceBOutput'
-        '404': &ref_0
+        '404':
           description: ResourceB not found
           content:
             application/json:
@@ -101,7 +101,12 @@ paths:
       responses:
         '200':
           description: ResourceB modified successfully
-        '404': *ref_0
+        '404':
+          description: ResourceB not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id
@@ -184,8 +189,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_1
-          in: path
+        - in: path
           name: v2ResourceBId
           description: Id of parent v2/ResourceB
           required: true
@@ -212,7 +216,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_1
+        - in: path
+          name: v2ResourceBId
+          description: Id of parent v2/ResourceB
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true

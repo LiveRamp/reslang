@@ -96,8 +96,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: aId
           description: Id of parent A
           required: true
@@ -124,7 +123,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -156,16 +161,14 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_1
-          in: path
+        - in: path
           name: aId
           description: Id of parent A
           required: true
           schema:
             type: integer
             format: int32
-        - &ref_2
-          in: path
+        - in: path
           name: bId
           description: Id of parent B
           required: true
@@ -192,8 +195,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_1
-        - *ref_2
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -225,24 +240,21 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_3
-          in: path
+        - in: path
           name: aId
           description: Id of parent A
           required: true
           schema:
             type: integer
             format: int32
-        - &ref_4
-          in: path
+        - in: path
           name: bId
           description: Id of parent B
           required: true
           schema:
             type: integer
             format: int32
-        - &ref_5
-          in: path
+        - in: path
           name: cId
           description: Id of parent C
           required: true
@@ -269,9 +281,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_3
-        - *ref_4
-        - *ref_5
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: cId
+          description: Id of parent C
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -313,16 +343,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - &ref_6
-          in: path
+        - in: path
           name: aId
           description: Id of parent A
           required: true
           schema:
             type: integer
             format: int32
-        - &ref_7
-          in: path
+        - in: path
           name: bId
           description: Id of parent B
           required: true
@@ -349,8 +377,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_6
-        - *ref_7
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true

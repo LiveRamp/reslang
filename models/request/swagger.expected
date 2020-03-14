@@ -165,8 +165,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
@@ -193,7 +192,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -264,8 +269,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_1
-          in: path
+        - in: path
           name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
@@ -292,7 +296,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_1
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -363,7 +373,7 @@ components:
         status:
           description: ''
           type: string
-          enum: &ref_2
+          enum:
             - STARTED
             - STOPPED
             - COMPLETED
@@ -387,7 +397,10 @@ components:
         status:
           description: ''
           type: string
-          enum: *ref_2
+          enum:
+            - STARTED
+            - STOPPED
+            - COMPLETED
         client:
           description: ''
           type: string

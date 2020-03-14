@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarOutput'
-        '404': &ref_0
+        '404':
           description: Car not found
           content:
             application/json:
@@ -71,7 +71,12 @@ paths:
       responses:
         '200':
           description: Car modified successfully
-        '404': *ref_0
+        '404':
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id
@@ -92,7 +97,12 @@ paths:
       responses:
         '200':
           description: Car patched successfully
-        '404': *ref_0
+        '404':
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id

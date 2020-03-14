@@ -146,8 +146,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -174,7 +173,13 @@ paths:
                 $ref: >-
                   #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
       parameters:
-        - *ref_0
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -214,14 +219,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationTaxonomyConfigurationOutput'
-        '404': &ref_1
+        '404':
           description: TaxonomyConfiguration not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -237,9 +248,20 @@ paths:
       responses:
         '200':
           description: TaxonomyConfiguration modified successfully
-        '404': *ref_1
+        '404':
+          description: TaxonomyConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -271,8 +293,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_2
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -298,7 +319,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
       parameters:
-        - *ref_2
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -337,14 +364,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationOutput'
-        '404': &ref_3
+        '404':
           description: Integration not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_2
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -360,9 +393,20 @@ paths:
       responses:
         '200':
           description: Integration modified successfully
-        '404': *ref_3
+        '404':
+          description: Integration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_2
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -394,8 +438,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_4
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -421,7 +464,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointMultiResponse'
       parameters:
-        - *ref_4
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -460,14 +509,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointOutput'
-        '404': &ref_5
+        '404':
           description: Endpoint not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -483,9 +538,20 @@ paths:
       responses:
         '200':
           description: Endpoint modified successfully
-        '404': *ref_5
+        '404':
+          description: Endpoint not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_4
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -517,8 +583,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_6
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -544,7 +609,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationPackagerMultiResponse'
       parameters:
-        - *ref_6
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -584,7 +655,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_6
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -616,8 +693,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_7
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -643,7 +719,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationFormatterMultiResponse'
       parameters:
-        - *ref_7
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -683,7 +765,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_7
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -715,8 +803,7 @@ paths:
                     type: integer
                     format: int32
       parameters:
-        - &ref_8
-          in: path
+        - in: path
           name: destinationId
           description: Id of parent Destination
           required: true
@@ -742,7 +829,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationDelivererMultiResponse'
       parameters:
-        - *ref_8
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: >-
@@ -782,7 +875,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_8
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -1039,7 +1138,7 @@ components:
         compressionType:
           description: ''
           type: string
-          enum: &ref_9
+          enum:
             - NONE
             - BZ2
             - GZIP
@@ -1060,7 +1159,11 @@ components:
         compressionType:
           description: ''
           type: string
-          enum: *ref_9
+          enum:
+            - NONE
+            - BZ2
+            - GZIP
+            - LZO
       required:
         - id
         - macro
@@ -1108,7 +1211,7 @@ components:
         protocol:
           description: ''
           type: string
-          enum: &ref_10
+          enum:
             - SFTP
             - FTP
             - FTPS_EXPLICIT
@@ -1147,7 +1250,29 @@ components:
         protocol:
           description: ''
           type: string
-          enum: *ref_10
+          enum:
+            - SFTP
+            - FTP
+            - FTPS_EXPLICIT
+            - S3
+            - FS_COPY
+            - APP_NEXUS
+            - NO_OP
+            - FTPS_IMPLICIT
+            - IRON_BOX
+            - YAHOO
+            - ACXIOM_FULFILLMENT
+            - FACEBOOK
+            - LINKEDIN
+            - GOOGLE
+            - KBM
+            - PINTEREST
+            - GOOGLE_CUSTOMER_MATCH
+            - LR_FULFILLMENT
+            - SNAPCHAT
+            - BIGQUERY
+            - GOOGLE_STORE_TRANSACTIONS
+            - AZURE
         macro:
           description: ''
           type: string

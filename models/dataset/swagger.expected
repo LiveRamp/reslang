@@ -40,8 +40,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Redirection'
       parameters:
-        - &ref_0
-          in: path
+        - in: path
           name: datasetId
           description: Id of parent Dataset
           required: true
@@ -67,7 +66,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/DatasetFieldMultiResponse'
       parameters:
-        - *ref_0
+        - in: path
+          name: datasetId
+          description: Id of parent Dataset
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: query
           name: offset
           description: Offset of the Fields (starting from 0) to include in the response.
@@ -111,14 +116,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DatasetFieldOutput'
-        '404': &ref_1
+        '404':
           description: Field not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: datasetId
+          description: Id of parent Dataset
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -151,9 +162,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
-        '404': *ref_1
+        '404':
+          description: Field not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: datasetId
+          description: Id of parent Dataset
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -169,9 +191,20 @@ paths:
       responses:
         '200':
           description: Field deleted successfully
-        '404': *ref_1
+        '404':
+          description: Field not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
-        - *ref_0
+        - in: path
+          name: datasetId
+          description: Id of parent Dataset
+          required: true
+          schema:
+            type: integer
+            format: int32
         - in: path
           name: id
           required: true
@@ -191,7 +224,7 @@ components:
         type:
           description: ''
           type: string
-          enum: &ref_2
+          enum:
             - STRING
             - NUMERIC
         enumerable:
@@ -200,7 +233,7 @@ components:
         valueCollectionType:
           description: ''
           type: string
-          enum: &ref_3
+          enum:
             - SINGLETON
             - SET
             - MULTISET
@@ -227,14 +260,19 @@ components:
         type:
           description: ''
           type: string
-          enum: *ref_2
+          enum:
+            - STRING
+            - NUMERIC
         enumerable:
           description: ''
           type: boolean
         valueCollectionType:
           description: ''
           type: string
-          enum: *ref_3
+          enum:
+            - SINGLETON
+            - SET
+            - MULTISET
         values:
           description: ''
           items:

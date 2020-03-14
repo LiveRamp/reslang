@@ -93,7 +93,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GarageOutput'
-        '404': &ref_0
+        '404':
           description: Garage not found
           content:
             application/json:
@@ -114,7 +114,12 @@ paths:
       responses:
         '200':
           description: Garage modified successfully
-        '404': *ref_0
+        '404':
+          description: Garage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id
@@ -130,7 +135,12 @@ paths:
       responses:
         '200':
           description: Garage deleted successfully
-        '404': *ref_0
+        '404':
+          description: Garage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: id
