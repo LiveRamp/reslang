@@ -72,7 +72,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs':
+  '/v1/as/{aId}/bs':
     post:
       tags:
         - 'A::B'
@@ -98,13 +98,13 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: a-id
+          name: aId
           description: Id of parent A
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{id}':
+  '/v1/as/{aId}/bs/{id}':
     get:
       tags:
         - 'A::B'
@@ -132,7 +132,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/cs':
+  '/v1/as/{aId}/bs/{bId}/cs':
     post:
       tags:
         - 'A::B::C'
@@ -158,7 +158,7 @@ paths:
       parameters:
         - &ref_1
           in: path
-          name: a-id
+          name: aId
           description: Id of parent A
           required: true
           schema:
@@ -166,13 +166,13 @@ paths:
             format: int32
         - &ref_2
           in: path
-          name: b-id
+          name: bId
           description: Id of parent B
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/cs/{id}':
+  '/v1/as/{aId}/bs/{bId}/cs/{id}':
     get:
       tags:
         - 'A::B::C'
@@ -201,7 +201,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/cs/{c-id}/actions/start':
+  '/v1/as/{aId}/bs/{bId}/cs/{cId}/actions/start':
     post:
       tags:
         - 'A::B::C::start'
@@ -227,7 +227,7 @@ paths:
       parameters:
         - &ref_3
           in: path
-          name: a-id
+          name: aId
           description: Id of parent A
           required: true
           schema:
@@ -235,7 +235,7 @@ paths:
             format: int32
         - &ref_4
           in: path
-          name: b-id
+          name: bId
           description: Id of parent B
           required: true
           schema:
@@ -243,13 +243,13 @@ paths:
             format: int32
         - &ref_5
           in: path
-          name: c-id
+          name: cId
           description: Id of parent C
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/cs/{c-id}/actions/start/{id}':
+  '/v1/as/{aId}/bs/{bId}/cs/{cId}/actions/start/{id}':
     get:
       tags:
         - 'A::B::C::start'
@@ -279,7 +279,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/actions/stop':
+  '/v1/as/{aId}/bs/{bId}/actions/stop':
     post:
       tags:
         - 'A::B::stop'
@@ -315,7 +315,7 @@ paths:
       parameters:
         - &ref_6
           in: path
-          name: a-id
+          name: aId
           description: Id of parent A
           required: true
           schema:
@@ -323,13 +323,13 @@ paths:
             format: int32
         - &ref_7
           in: path
-          name: b-id
+          name: bId
           description: Id of parent B
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/as/{a-id}/bs/{b-id}/actions/stop/{id}':
+  '/v1/as/{aId}/bs/{bId}/actions/stop/{id}':
     get:
       tags:
         - 'A::B::stop'

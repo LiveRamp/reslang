@@ -68,7 +68,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/users/{user-id}/actions/suspend/{id}':
+  '/v1/users/{userId}/actions/suspend/{id}':
     put:
       tags:
         - 'User::Suspend'
@@ -85,7 +85,7 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: user-id
+          name: userId
           description: Id of parent User
           required: true
           schema:
@@ -98,7 +98,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/users/{user-id}/actions/unsuspend/{id}':
+  '/v1/users/{userId}/actions/unsuspend/{id}':
     put:
       tags:
         - 'User::Unsuspend'
@@ -115,7 +115,7 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: user-id
+          name: userId
           description: Id of parent User
           required: true
           schema:
@@ -161,7 +161,7 @@ paths:
           description: Organizations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Organizations in the data set.
+              description: Total number of Organizations returned by the query
               schema:
                 type: integer
                 format: int32
@@ -249,7 +249,7 @@ paths:
           description: Roles retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Roles in the data set.
+              description: Total number of Roles returned by the query
               schema:
                 type: integer
                 format: int32

@@ -1,15 +1,12 @@
 import { CodeGenerator } from "@babel/generator"
 
 /**
- * remove version & change to correct case
+ * remove version & change to correct snake case
  * @param name the name to fix
  */
-export function fixName(name: string) {
-    const match = name.match(/(?<version>v[0-9]+[\-\/])?(?<name>.*)/)
-    const real = match ? match.groups!.name : "unknown"
-
+export function snakeCase(name: string) {
     let fix = ""
-    for (const ch of real) {
+    for (const ch of removeVersion(name)) {
         if (/^[A-Z]$/.test(ch)) {
             if (fix) {
                 fix = fix.concat("-")
@@ -22,16 +19,19 @@ export function fixName(name: string) {
     return fix
 }
 
-export function sanitize(name: string, addDash: boolean = true) {
+export function camelCase(name: string) {
     let fix = ""
     for (const ch of name) {
         if (/[A-Za-z0-9]$/.test(ch)) {
             fix = fix.concat(ch)
-        } else if (addDash) {
-            fix = fix.concat("-")
         }
     }
     return fix
+}
+
+function removeVersion(name: string) {
+    const match = name.match(/(?<version>v[0-9]+[\-\/])?(?<name>.*)/)
+    return match ? match.groups!.name : "unknown"
 }
 
 export function getVersion(name: string) {

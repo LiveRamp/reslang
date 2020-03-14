@@ -21,7 +21,7 @@ paths:
           description: ConsentFiles retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of ConsentFiles in the data set.
+              description: Total number of ConsentFiles returned by the query
               schema:
                 type: integer
                 format: int32

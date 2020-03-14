@@ -66,7 +66,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/resources/{resource-id}/metadata':
+  '/v1/resources/{resourceId}/metadata':
     get:
       tags:
         - 'Resource::Metadata'
@@ -87,7 +87,7 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters: &ref_1
         - in: path
-          name: resource-id
+          name: resourceId
           description: Id of parent Resource
           required: true
           schema:
@@ -131,7 +131,7 @@ paths:
         '200':
           description: SingletonResource modified successfully
         '404': *ref_2
-  '/v1/singleton-resource/{singleton-resource-id}/metadata':
+  '/v1/singleton-resource/{singletonResourceId}/metadata':
     get:
       tags:
         - 'SingletonResource::Metadata'

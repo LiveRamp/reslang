@@ -61,7 +61,7 @@ paths:
           description: Destinations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Destinations in the data set.
+              description: Total number of Destinations returned by the query
               schema:
                 type: integer
                 format: int32
@@ -122,7 +122,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/taxonomy-configurations':
+  '/v1/destinations/{destinationId}/taxonomy-configurations':
     post:
       tags:
         - 'Destination::TaxonomyConfiguration'
@@ -148,7 +148,7 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -164,7 +164,7 @@ paths:
           description: TaxonomyConfigurations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of TaxonomyConfigurations in the data set.
+              description: Total number of TaxonomyConfigurations returned by the query
               schema:
                 type: integer
                 format: int32
@@ -201,7 +201,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/taxonomy-configurations/{id}':
+  '/v1/destinations/{destinationId}/taxonomy-configurations/{id}':
     get:
       tags:
         - 'Destination::TaxonomyConfiguration'
@@ -247,7 +247,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/integrations':
+  '/v1/destinations/{destinationId}/integrations':
     post:
       tags:
         - 'Destination::Integration'
@@ -273,7 +273,7 @@ paths:
       parameters:
         - &ref_2
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -289,7 +289,7 @@ paths:
           description: Integrations retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Integrations in the data set.
+              description: Total number of Integrations returned by the query
               schema:
                 type: integer
                 format: int32
@@ -324,7 +324,7 @@ paths:
           required: false
           schema:
             type: string
-  '/v1/destinations/{destination-id}/integrations/{id}':
+  '/v1/destinations/{destinationId}/integrations/{id}':
     get:
       tags:
         - 'Destination::Integration'
@@ -370,7 +370,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/endpoints':
+  '/v1/destinations/{destinationId}/endpoints':
     post:
       tags:
         - 'Destination::Endpoint'
@@ -396,7 +396,7 @@ paths:
       parameters:
         - &ref_4
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -412,7 +412,7 @@ paths:
           description: Endpoints retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Endpoints in the data set.
+              description: Total number of Endpoints returned by the query
               schema:
                 type: integer
                 format: int32
@@ -447,7 +447,7 @@ paths:
           required: false
           schema:
             type: string
-  '/v1/destinations/{destination-id}/endpoints/{id}':
+  '/v1/destinations/{destinationId}/endpoints/{id}':
     get:
       tags:
         - 'Destination::Endpoint'
@@ -493,7 +493,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/packagers':
+  '/v1/destinations/{destinationId}/packagers':
     post:
       tags:
         - 'Destination::Packager'
@@ -519,7 +519,7 @@ paths:
       parameters:
         - &ref_6
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -535,7 +535,7 @@ paths:
           description: Packagers retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Packagers in the data set.
+              description: Total number of Packagers returned by the query
               schema:
                 type: integer
                 format: int32
@@ -564,7 +564,7 @@ paths:
             format: int32
             default: 10
             maximum: 100
-  '/v1/destinations/{destination-id}/packagers/{id}':
+  '/v1/destinations/{destinationId}/packagers/{id}':
     get:
       tags:
         - 'Destination::Packager'
@@ -592,7 +592,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/formatters':
+  '/v1/destinations/{destinationId}/formatters':
     post:
       tags:
         - 'Destination::Formatter'
@@ -618,7 +618,7 @@ paths:
       parameters:
         - &ref_7
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -634,7 +634,7 @@ paths:
           description: Formatters retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Formatters in the data set.
+              description: Total number of Formatters returned by the query
               schema:
                 type: integer
                 format: int32
@@ -663,7 +663,7 @@ paths:
             format: int32
             default: 10
             maximum: 100
-  '/v1/destinations/{destination-id}/formatters/{id}':
+  '/v1/destinations/{destinationId}/formatters/{id}':
     get:
       tags:
         - 'Destination::Formatter'
@@ -691,7 +691,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/destinations/{destination-id}/deliverers':
+  '/v1/destinations/{destinationId}/deliverers':
     post:
       tags:
         - 'Destination::Deliverer'
@@ -717,7 +717,7 @@ paths:
       parameters:
         - &ref_8
           in: path
-          name: destination-id
+          name: destinationId
           description: Id of parent Destination
           required: true
           schema:
@@ -733,7 +733,7 @@ paths:
           description: Deliverers retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Deliverers in the data set.
+              description: Total number of Deliverers returned by the query
               schema:
                 type: integer
                 format: int32
@@ -762,7 +762,7 @@ paths:
             format: int32
             default: 10
             maximum: 100
-  '/v1/destinations/{destination-id}/deliverers/{id}':
+  '/v1/destinations/{destinationId}/deliverers/{id}':
     get:
       tags:
         - 'Destination::Deliverer'

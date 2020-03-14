@@ -1,17 +1,18 @@
 import {
     pluralizeName,
-    fixName,
+    snakeCase,
     getVersion,
     capitalizeFirst,
-    lowercaseFirst
+    lowercaseFirst,
+    camelCase
 } from "../names"
 
 describe("name tests", () => {
     test("name1", () => {
-        expect(fixName("One two")).toBe("onetwo")
+        expect(snakeCase("One two")).toBe("onetwo")
     })
     test("name2", () => {
-        expect(fixName("v2/One Two")).toBe("one-two")
+        expect(snakeCase("v2/One Two")).toBe("one-two")
     })
 
     test("pluralize1", () => {
@@ -41,5 +42,12 @@ describe("name tests", () => {
     })
     test("lowercaseFirst", () => {
         expect(lowercaseFirst("FooBar")).toBe("fooBar")
+    })
+
+    test("version gone1", () => {
+        expect(snakeCase("v2/fooBar")).toBe("foo-bar")
+    })
+    test("version gone2", () => {
+        expect(camelCase("v2/Foo-Bar")).toBe("fooBar")
     })
 })

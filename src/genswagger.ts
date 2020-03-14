@@ -1,8 +1,8 @@
 import {
-    fixName,
+    snakeCase,
     pluralizeName,
     getVersion,
-    sanitize,
+    camelCase,
     capitalizeFirst,
     lowercaseFirst
 } from "./names"
@@ -85,14 +85,14 @@ export default class SwagGen extends BaseGen {
                     if (maybe) {
                         major = maybe
                     }
-                    const singular = sanitize(fixName(actual.short))
-                    let full = singular
+                    const singular = lowercaseFirst(camelCase(actual.short))
+                    let full = snakeCase(actual.short)
                     if (!actual.singleton && actual.type !== "action") {
-                        full = pluralizeName(singular)
+                        full = pluralizeName(full)
                     }
-                    parents = `/${full}/\{${singular}-id\}` + parents
+                    parents = `/${full}/\{${singular}Id\}` + parents
                     pname = actual.parentName
-                    this.addParentPathParam(params, actual, singular + "-id")
+                    this.addParentPathParam(params, actual, singular + "Id")
                 }
                 // reverse the order so it looks more natural
                 params = params.reverse()
@@ -101,7 +101,7 @@ export default class SwagGen extends BaseGen {
                 let path: any = {}
 
                 // name of resource
-                let name = sanitize(fixName(el.short))
+                let name = snakeCase(el.short)
                 const action = el.type === "action"
                 const actionPath = action ? "actions/" : ""
 
@@ -197,7 +197,7 @@ export default class SwagGen extends BaseGen {
         post: IOperation | null,
         multiget: IOperation | null
     ) {
-        const sane = sanitize(el.name, false)
+        const sane = camelCase(el.name)
         const plural = pluralizeName(el.short)
 
         if (post) {
@@ -347,7 +347,7 @@ export default class SwagGen extends BaseGen {
                     description: plural + " retrieved successfully",
                     headers: {
                         "X-Total-Count": {
-                            description: `Total number of ${plural} in the data set.`,
+                            description: `Total number of ${plural} returned by the query`,
                             schema: { type: "integer", format: "int32" }
                         }
                     },
@@ -421,7 +421,7 @@ export default class SwagGen extends BaseGen {
         patch?: IOperation | null,
         del?: IOperation | null
     ) {
-        const sane = sanitize(el.name, false)
+        const sane = camelCase(el.name)
         const short = el.short
         const notFound = {
             description: short + " not found",
@@ -673,7 +673,7 @@ export default class SwagGen extends BaseGen {
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
-        const sane = sanitize(name, false)
+        const sane = camelCase(name)
 
         // allow description overrides by caller
         if (!obj.description && !suppressDescription) {
@@ -822,7 +822,7 @@ export default class SwagGen extends BaseGen {
             required: string[]
             allOf: {}
         }
-        const sane = sanitize(def.name, false)
+        const sane = camelCase(def.name)
 
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly) {
@@ -896,7 +896,7 @@ export default class SwagGen extends BaseGen {
         const attrs = def.attributes || []
         const mapping: { [key: string]: string } = {}
 
-        const name = sanitize(def.name, false) + suffix
+        const name = camelCase(def.name) + suffix
         for (const attr of attrs) {
             // cannot have a competing definition already
             const camel = capitalizeFirst(attr.name)
@@ -966,7 +966,7 @@ export default class SwagGen extends BaseGen {
 
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
-            const sane = sanitize(def.name, false)
+            const sane = camelCase(def.name)
             if (
                 [
                     "asset-resource",

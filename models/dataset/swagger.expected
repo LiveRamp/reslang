@@ -10,7 +10,7 @@ tags:
   - name: 'Dataset::Field'
     description: '(subresource)  '
 paths:
-  '/v1/datasets/{dataset-id}/fields':
+  '/v1/datasets/{datasetId}/fields':
     post:
       tags:
         - 'Dataset::Field'
@@ -42,7 +42,7 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: dataset-id
+          name: datasetId
           description: Id of parent Dataset
           required: true
           schema:
@@ -58,7 +58,7 @@ paths:
           description: Fields retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Fields in the data set.
+              description: Total number of Fields returned by the query
               schema:
                 type: integer
                 format: int32
@@ -98,7 +98,7 @@ paths:
           required: false
           schema:
             type: boolean
-  '/v1/datasets/{dataset-id}/fields/{id}':
+  '/v1/datasets/{datasetId}/fields/{id}':
     get:
       tags:
         - 'Dataset::Field'

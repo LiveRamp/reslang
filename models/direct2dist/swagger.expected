@@ -59,7 +59,7 @@ paths:
           description: DistributionRequests retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of DistributionRequests in the data set.
+              description: Total number of DistributionRequests returned by the query
               schema:
                 type: integer
                 format: int32
@@ -214,7 +214,7 @@ paths:
           description: ''
           schema:
             type: string
-  '/v1/distribution-requests/{distribution-request-id}/actions/cancel':
+  '/v1/distribution-requests/{distributionRequestId}/actions/cancel':
     post:
       tags:
         - 'DistributionRequest::Cancel'
@@ -245,12 +245,12 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: distribution-request-id
+          name: distributionRequestId
           description: Id of parent DistributionRequest
           required: true
           schema:
             type: string
-  '/v1/distribution-requests/{distribution-request-id}/actions/retry':
+  '/v1/distribution-requests/{distributionRequestId}/actions/retry':
     post:
       tags:
         - 'DistributionRequest::Retry'
@@ -281,7 +281,7 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: distribution-request-id
+          name: distributionRequestId
           description: Id of parent DistributionRequest
           required: true
           schema:

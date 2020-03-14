@@ -51,7 +51,7 @@ paths:
           description: UploadRequests retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of UploadRequests in the data set.
+              description: Total number of UploadRequests returned by the query
               schema:
                 type: integer
                 format: int32
@@ -112,7 +112,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/status':
+  '/v1/upload-requests/{uploadRequestId}/status':
     get:
       tags:
         - 'UploadRequest::Status'
@@ -133,13 +133,13 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: upload-request-id
+          name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/record-sets':
+  '/v1/upload-requests/{uploadRequestId}/record-sets':
     post:
       tags:
         - 'UploadRequest::RecordSet'
@@ -165,13 +165,13 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: upload-request-id
+          name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/record-sets/{id}':
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{id}':
     get:
       tags:
         - 'UploadRequest::RecordSet'
@@ -199,7 +199,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/actions/start-processing-action':
+  '/v1/upload-requests/{uploadRequestId}/actions/start-processing-action':
     post:
       tags:
         - 'UploadRequest::StartProcessingAction'
@@ -232,13 +232,13 @@ paths:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: upload-request-id
+          name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/actions/stop-processing-action':
+  '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action':
     post:
       tags:
         - 'UploadRequest::StopProcessingAction'
@@ -264,13 +264,13 @@ paths:
       parameters:
         - &ref_1
           in: path
-          name: upload-request-id
+          name: uploadRequestId
           description: Id of parent UploadRequest
           required: true
           schema:
             type: integer
             format: int32
-  '/v1/upload-requests/{upload-request-id}/actions/stop-processing-action/{id}':
+  '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action/{id}':
     get:
       tags:
         - 'UploadRequest::StopProcessingAction'

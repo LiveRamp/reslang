@@ -50,7 +50,7 @@ paths:
           description: Directories retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Directories in the data set.
+              description: Total number of Directories returned by the query
               schema:
                 type: integer
                 format: int32
@@ -148,7 +148,7 @@ paths:
           description: FileTypes retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of FileTypes in the data set.
+              description: Total number of FileTypes returned by the query
               schema:
                 type: integer
                 format: int32
@@ -220,7 +220,7 @@ paths:
           description: ''
           schema:
             type: string
-  '/v1/directories/{directory-id}/files':
+  '/v1/directories/{directoryId}/files':
     post:
       tags:
         - 'Directory::File'
@@ -246,7 +246,7 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: directory-id
+          name: directoryId
           description: Id of parent Directory
           required: true
           schema:
@@ -261,7 +261,7 @@ paths:
           description: Files retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Files in the data set.
+              description: Total number of Files returned by the query
               schema:
                 type: integer
                 format: int32
@@ -294,7 +294,7 @@ paths:
           required: false
           schema:
             type: string
-  '/v1/directories/{directory-id}/files/{id}':
+  '/v1/directories/{directoryId}/files/{id}':
     get:
       tags:
         - 'Directory::File'
@@ -355,7 +355,7 @@ paths:
           description: DirectoryDeleteRequests retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of DirectoryDeleteRequests in the data set.
+              description: Total number of DirectoryDeleteRequests returned by the query
               schema:
                 type: integer
                 format: int32
@@ -417,7 +417,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/directory-delete-requests/{directory-delete-request-id}/actions/cancel':
+  '/v1/directory-delete-requests/{directoryDeleteRequestId}/actions/cancel':
     post:
       tags:
         - 'DirectoryDeleteRequest::Cancel'
@@ -437,7 +437,7 @@ paths:
                     format: int32
       parameters:
         - in: path
-          name: directory-delete-request-id
+          name: directoryDeleteRequestId
           description: Id of parent DirectoryDeleteRequest
           required: true
           schema:

@@ -45,7 +45,7 @@ paths:
           description: Cars retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Cars in the data set.
+              description: Total number of Cars returned by the query
               schema:
                 type: integer
                 format: int32
@@ -114,7 +114,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/cars/{car-id}/wheels':
+  '/v1/cars/{carId}/wheels':
     post:
       tags:
         - 'Car::Wheel'
@@ -140,7 +140,7 @@ paths:
       parameters:
         - &ref_0
           in: path
-          name: car-id
+          name: carId
           description: Id of parent Car
           required: true
           schema:
@@ -156,7 +156,7 @@ paths:
           description: Wheels retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of Wheels in the data set.
+              description: Total number of Wheels returned by the query
               schema:
                 type: integer
                 format: int32
@@ -190,7 +190,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v1/cars/{car-id}/wheels/{id}':
+  '/v1/cars/{carId}/wheels/{id}':
     get:
       tags:
         - 'Car::Wheel'
