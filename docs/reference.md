@@ -30,9 +30,9 @@ Relang is designed to make you think in terms of resources. There are 3 differen
 
 Each resource specifies the attributes it holds, followed by the possible operations / verbs. The reason for the three different types is that they will eventually have different audit and ownership structures - e.g. we might have full history available for configuration resources.
 
-Each resource type can have 1 level of subresources. Further, a request-resource can also have actions, representing either synchronous or asynchronous operations.
+Each resource type can have 1 level of subresources. Further, resources can also have actions, representing either synchronous or asynchronous operations.
 
-You can use the "singleton" keyword before a resource definition to indicate there is only 1 instance of this resource.
+You can use the "singleton" keyword before a toplevel resource definition to indicate there is only 1 instance of this resource.
 
 ### Primitive Types
 
@@ -230,9 +230,9 @@ union MappingOutputUnion {
 
 You can see above that we used the optional inline keyword. This expands all the structure attributes into the union directly.
 
-## Request actions
+## Actions
 
-We model synchronous or asynchronous actions as subresources of a request-resource. You specify either "sync" or "async" in front of the specification. For instance, the Direct2Dist API models an asynchronous retry action as follows:
+We model synchronous or asynchronous actions as subresources of a resource. You specify either "sync" or "async" in front of the specification. For instance, the Direct2Dist API models an asynchronous retry action as follows:
 
 ```
 
@@ -243,6 +243,19 @@ async action DistributionRequest::Retry {
 }
 
 ```
+
+You can also specify that the action applies to the entire resource using the resource-level keyword:
+
+```
+
+async resource-level action DistributionRequest::DeleteAllRequests {
+  id: string
+  /operations
+    POST
+}
+
+```
+
 
 ## Attribute Modifiers
 
