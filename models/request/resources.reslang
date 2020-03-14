@@ -48,6 +48,15 @@ sync action UploadRequest::StopProcessingAction {
         POST GET
 }
 
+// resource level action
+sync resource-level action UploadRequest::DeleteAllRequestsAction {
+    id: int
+    when: datetime
+
+    /operations
+        POST GET
+}
+
 enum UploadRequestStatusEnum {
     STARTED
     STOPPED

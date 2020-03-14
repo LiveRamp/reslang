@@ -26,6 +26,10 @@ digraph G {
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>StopProcessingAction        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
 "UploadRequest" -> "StopProcessingAction" [dir="none" label=< <font point-size="8">action</font> >];
+"DeleteAllRequestsAction" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>DeleteAllRequestsAction        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+"UploadRequest" -> "DeleteAllRequestsAction" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "UploadRequestStatusEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>UploadRequestStatusEnum  </b></td></tr><hr/><tr><td align="left">STARTED</td></tr><tr><td align="left">STOPPED</td></tr><tr><td align="left">COMPLETED</td></tr></table>>];

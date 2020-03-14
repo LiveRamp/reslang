@@ -33,6 +33,7 @@ export interface IDefinition extends IReference {
     singleton?: boolean
     future?: boolean
     async?: boolean
+    resourceLevel?: boolean // only for actions, indicates it's on the entire resource, not a single resource
 
     // used to see if we generate definitions or not
     secondary?: boolean

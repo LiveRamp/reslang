@@ -72,6 +72,7 @@ export default class SwagGen extends BaseGen {
                     "action"
                 ].includes(el.type)
             ) {
+                const action = el.type === "action"
                 let parents = ""
                 let params: any[] = []
                 let pname = el.parentName
@@ -90,9 +91,17 @@ export default class SwagGen extends BaseGen {
                     if (!actual.singleton && actual.type !== "action") {
                         full = pluralizeName(full)
                     }
-                    parents = `/${full}/\{${singular}Id\}` + parents
                     pname = actual.parentName
-                    this.addParentPathParam(params, actual, singular + "Id")
+                    if (action && el.resourceLevel) {
+                        parents = `/${full}` + parents
+                    } else {
+                        parents = `/${full}/\{${singular}Id\}` + parents
+                    }
+                    if (action && el.resourceLevel && !params.length) {
+                        // skip first parent parameter for resource level actions
+                    } else {
+                        this.addParentPathParam(params, actual, singular + "Id")
+                    }
                 }
                 // reverse the order so it looks more natural
                 params = params.reverse()
@@ -102,7 +111,6 @@ export default class SwagGen extends BaseGen {
 
                 // name of resource
                 let name = snakeCase(el.short)
-                const action = el.type === "action"
                 const actionPath = action ? "actions/" : ""
 
                 if (!el.singleton && !action) {
@@ -794,7 +802,11 @@ export default class SwagGen extends BaseGen {
                 prefix = "(subresource) "
             }
             if ("action" === el.type) {
-                prefix = "(" + (el.async ? "async" : "sync") + " action) "
+                prefix =
+                    "(" +
+                    (el.resourceLevel ? "resource level " : "") +
+                    (el.async ? "async " : "sync ") +
+                    "action) "
             }
             if (prefix) {
                 const tag = {

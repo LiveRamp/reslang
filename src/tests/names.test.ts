@@ -47,7 +47,7 @@ describe("name tests", () => {
     test("version gone1", () => {
         expect(snakeCase("v2/fooBar")).toBe("foo-bar")
     })
-    test("version gone2", () => {
-        expect(camelCase("v2/Foo-Bar")).toBe("fooBar")
+    test("version not gone", () => {
+        expect(camelCase("v2/Foo-Bar")).toBe("v2FooBar")
     })
 })

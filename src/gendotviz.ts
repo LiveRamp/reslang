@@ -110,7 +110,9 @@ export default class DotvizGen extends BaseGen {
 
                 // from parent to action
                 if ("action" === def.type) {
-                    const label = this.makeLabelText("action")
+                    const label = this.makeLabelText(
+                        def.resourceLevel ? "resource level action" : "action"
+                    )
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
                 }
             } else if ("enum" === def.type) {

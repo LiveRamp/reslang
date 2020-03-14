@@ -502,6 +502,82 @@
       "generateOutput": true
     },
     {
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        },
+        {
+          "name": "when",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          }
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "UploadRequest"
+      ],
+      "short": "DeleteAllRequestsAction",
+      "resourceLevel": "resource-level",
+      "name": "UploadRequest::DeleteAllRequestsAction",
+      "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
       "type": "enum",
       "parents": [],
       "short": "UploadRequestStatusEnum",

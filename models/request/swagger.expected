@@ -17,6 +17,8 @@ tags:
     description: '(async action)  '
   - name: 'UploadRequest::StopProcessingAction'
     description: '(sync action)  '
+  - name: 'UploadRequest::DeleteAllRequestsAction'
+    description: '(resource level sync action)  '
 paths:
   /v1/upload-requests:
     post:
@@ -298,6 +300,57 @@ paths:
           schema:
             type: integer
             format: int32
+  /v1/upload-requests/actions/delete-all-requests-action:
+    post:
+      tags:
+        - 'UploadRequest::DeleteAllRequestsAction'
+      operationId: Create DeleteAllRequestsAction
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestDeleteAllRequestsActionInput'
+      responses:
+        '201':
+          description: DeleteAllRequestsAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: integer
+                    format: int32
+  '/v1/upload-requests/actions/delete-all-requests-action/{id}':
+    get:
+      tags:
+        - 'UploadRequest::DeleteAllRequestsAction'
+      operationId: 'Get 1 UploadRequest::DeleteAllRequestsAction'
+      description: ''
+      responses:
+        '200':
+          description: DeleteAllRequestsAction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/UploadRequestDeleteAllRequestsActionOutput
+        '404':
+          description: DeleteAllRequestsAction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -425,6 +478,31 @@ components:
       required:
         - when
     UploadRequestStopProcessingActionOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    UploadRequestDeleteAllRequestsActionInput:
+      type: object
+      properties:
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    UploadRequestDeleteAllRequestsActionOutput:
       type: object
       properties:
         id:
