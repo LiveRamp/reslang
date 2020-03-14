@@ -213,6 +213,16 @@ paths:
       operationId: Create StartProcessingAction
       description: ''
       responses:
+        '200':
+          description: StartProcessingAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
         '202':
           description: >-
             StartProcessingAction action has been accepted, but is not yet
@@ -257,7 +267,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequestStopProcessingActionInput'
       responses:
-        '201':
+        '200':
           description: StopProcessingAction action completed
           content:
             application/json:
@@ -322,7 +332,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadRequestDeleteAllRequestsActionInput'
       responses:
-        '201':
+        '200':
           description: DeleteAllRequestsAction action completed
           content:
             application/json:

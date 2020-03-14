@@ -228,7 +228,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ABCstartInput'
       responses:
-        '201':
+        '200':
           description: start action completed
           content:
             application/json:
@@ -321,6 +321,17 @@ paths:
             schema:
               $ref: '#/components/schemas/ABstopInput'
       responses:
+        '200':
+          description: stop action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: integer
+                    format: int32
         '202':
           description: 'stop action has been accepted, but is not yet complete'
           content:

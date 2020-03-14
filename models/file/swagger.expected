@@ -433,7 +433,7 @@ paths:
       operationId: Create Cancel
       description: ''
       responses:
-        '201':
+        '200':
           description: Cancel action completed
           content:
             application/json:

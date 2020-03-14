@@ -221,6 +221,16 @@ paths:
       operationId: Create Cancel
       description: ''
       responses:
+        '200':
+          description: Cancel action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
         '202':
           description: 'Cancel action has been accepted, but is not yet complete'
           content:
@@ -257,6 +267,16 @@ paths:
       operationId: Create Retry
       description: ''
       responses:
+        '200':
+          description: Retry action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
         '202':
           description: 'Retry action has been accepted, but is not yet complete'
           content:

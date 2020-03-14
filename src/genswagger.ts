@@ -230,7 +230,7 @@ export default class SwagGen extends BaseGen {
             if (el.type === "action" && post) {
                 if (!el.async) {
                     responses = {
-                        201: {
+                        200: {
                             description: short + " action completed",
                             content: {
                                 "application/json": {
@@ -246,6 +246,19 @@ export default class SwagGen extends BaseGen {
                     }
                 } else {
                     responses = {
+                        200: {
+                            description: short + " action completed",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "object",
+                                        properties: {
+                                            id: this.addType(idtype, {}, false)
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         202: {
                             description:
                                 short +
