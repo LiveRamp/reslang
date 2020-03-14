@@ -160,7 +160,7 @@ paths:
           schema:
             type: integer
             format: int32
-  '/v2/resource-bs/{resource-b-id}/subs':
+  '/v2/resource-bs/{v2ResourceBId}/subs':
     post:
       tags:
         - 'v2/ResourceB::Sub'
@@ -186,13 +186,13 @@ paths:
       parameters:
         - &ref_1
           in: path
-          name: resource-b-id
+          name: v2ResourceBId
           description: Id of parent v2/ResourceB
           required: true
           schema:
             type: integer
             format: int32
-  '/v2/resource-bs/{resource-b-id}/subs/{id}':
+  '/v2/resource-bs/{v2ResourceBId}/subs/{id}':
     get:
       tags:
         - 'v2/ResourceB::Sub'
