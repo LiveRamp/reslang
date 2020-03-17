@@ -757,9 +757,8 @@ export default class SwagGen extends BaseGen {
             const def = this.extractDefinition(name)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${sane}`
-                    break
                 case "union":
+                case "enum":
                     schema.$ref = `#/components/schemas/${sane}`
                     break
                 case "request-resource":
@@ -786,11 +785,6 @@ export default class SwagGen extends BaseGen {
                             def.future ? "(to be defined in the future) " : ""
                         }resource via its id`
                     }
-                    break
-                case "enum":
-                    schema.type = "string"
-                    // collect any inherited literals
-                    schema.enum = def.literals
                     break
                 default:
                     throw Error(
@@ -955,6 +949,20 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    private addEnumDefinition(
+        definitions: any,
+        def: IDefinition,
+        suffix: string
+    ) {
+        const name = camelCase(def.name) + suffix
+        const en = {
+            type: "string",
+            description: def.comment,
+            enum: def.literals
+        }
+        definitions[name] = en
+    }
+
     private addUnionDefinition(
         definitions: any,
         def: IDefinition,
@@ -1087,6 +1095,9 @@ export default class SwagGen extends BaseGen {
             }
             if ("union" === def.type && def.generateInput) {
                 this.addUnionDefinition(definitions, def, "")
+            }
+            if ("enum" === def.type && def.generateInput) {
+                this.addEnumDefinition(definitions, def, "")
             }
         }
     }

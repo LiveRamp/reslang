@@ -67,20 +67,10 @@ components:
           type: string
         identifierType:
           description: ''
-          type: string
-          enum:
-            - IDENTITY_LINK
-            - COOKIE
-            - IDFA
-            - AAID
-            - MUID
-            - CUSTOM_ID
+          $ref: '#/components/schemas/IdentifierType'
         requestType:
           description: ''
-          type: string
-          enum:
-            - OPT_OUT
-            - DELETE
+          $ref: '#/components/schemas/RequestType'
         dataController:
           description: ''
           $ref: '#/components/schemas/DataController'
@@ -123,6 +113,20 @@ components:
         - controllerSpecifier
         - controllerIdentification
         - liveRampControlled
+    RequestType:
+      type: string
+      enum:
+        - OPT_OUT
+        - DELETE
+    IdentifierType:
+      type: string
+      enum:
+        - IDENTITY_LINK
+        - COOKIE
+        - IDFA
+        - AAID
+        - MUID
+        - CUSTOM_ID
     StandardError:
       type: object
       properties:

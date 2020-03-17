@@ -30,6 +30,7 @@ subresource Car::Wheel {
 		GET PUT POST MULTIGET
 }
 
+"Different brands"
 enum BrandEnum {
 	TOYOTA
 	FORD

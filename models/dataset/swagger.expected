@@ -223,20 +223,13 @@ components:
           type: string
         type:
           description: ''
-          type: string
-          enum:
-            - STRING
-            - NUMERIC
+          $ref: '#/components/schemas/FieldTypeEnum'
         enumerable:
           description: ''
           type: boolean
         valueCollectionType:
           description: ''
-          type: string
-          enum:
-            - SINGLETON
-            - SET
-            - MULTISET
+          $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
           description: ''
           items:
@@ -259,20 +252,13 @@ components:
           type: string
         type:
           description: ''
-          type: string
-          enum:
-            - STRING
-            - NUMERIC
+          $ref: '#/components/schemas/FieldTypeEnum'
         enumerable:
           description: ''
           type: boolean
         valueCollectionType:
           description: ''
-          type: string
-          enum:
-            - SINGLETON
-            - SET
-            - MULTISET
+          $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
           description: ''
           items:
@@ -315,6 +301,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatasetFieldOutput'
+    FieldTypeEnum:
+      type: string
+      enum:
+        - STRING
+        - NUMERIC
+    ValueCollectionTypeEnum:
+      type: string
+      enum:
+        - SINGLETON
+        - SET
+        - MULTISET
     Redirection:
       type: object
       properties:

@@ -386,11 +386,7 @@ components:
           type: string
         status:
           description: ''
-          type: string
-          enum:
-            - STARTED
-            - STOPPED
-            - COMPLETED
+          $ref: '#/components/schemas/UploadRequestStatusEnum'
         client:
           description: ''
           type: string
@@ -410,11 +406,7 @@ components:
           type: string
         status:
           description: ''
-          type: string
-          enum:
-            - STARTED
-            - STOPPED
-            - COMPLETED
+          $ref: '#/components/schemas/UploadRequestStatusEnum'
         client:
           description: ''
           type: string
@@ -554,6 +546,12 @@ components:
       required:
         - id
         - when
+    UploadRequestStatusEnum:
+      type: string
+      enum:
+        - STARTED
+        - STOPPED
+        - COMPLETED
     StandardError:
       type: object
       properties:

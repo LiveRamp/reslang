@@ -1153,12 +1153,7 @@ components:
           type: string
         compressionType:
           description: ''
-          type: string
-          enum:
-            - NONE
-            - BZ2
-            - GZIP
-            - LZO
+          $ref: '#/components/schemas/CompressionTypeEnum'
       required:
         - macro
         - compressionType
@@ -1174,12 +1169,7 @@ components:
           type: string
         compressionType:
           description: ''
-          type: string
-          enum:
-            - NONE
-            - BZ2
-            - GZIP
-            - LZO
+          $ref: '#/components/schemas/CompressionTypeEnum'
       required:
         - id
         - macro
@@ -1226,30 +1216,7 @@ components:
       properties:
         protocol:
           description: ''
-          type: string
-          enum:
-            - SFTP
-            - FTP
-            - FTPS_EXPLICIT
-            - S3
-            - FS_COPY
-            - APP_NEXUS
-            - NO_OP
-            - FTPS_IMPLICIT
-            - IRON_BOX
-            - YAHOO
-            - ACXIOM_FULFILLMENT
-            - FACEBOOK
-            - LINKEDIN
-            - GOOGLE
-            - KBM
-            - PINTEREST
-            - GOOGLE_CUSTOMER_MATCH
-            - LR_FULFILLMENT
-            - SNAPCHAT
-            - BIGQUERY
-            - GOOGLE_STORE_TRANSACTIONS
-            - AZURE
+          $ref: '#/components/schemas/ProtocolEnum'
         macro:
           description: ''
           type: string
@@ -1265,30 +1232,7 @@ components:
           format: int32
         protocol:
           description: ''
-          type: string
-          enum:
-            - SFTP
-            - FTP
-            - FTPS_EXPLICIT
-            - S3
-            - FS_COPY
-            - APP_NEXUS
-            - NO_OP
-            - FTPS_IMPLICIT
-            - IRON_BOX
-            - YAHOO
-            - ACXIOM_FULFILLMENT
-            - FACEBOOK
-            - LINKEDIN
-            - GOOGLE
-            - KBM
-            - PINTEREST
-            - GOOGLE_CUSTOMER_MATCH
-            - LR_FULFILLMENT
-            - SNAPCHAT
-            - BIGQUERY
-            - GOOGLE_STORE_TRANSACTIONS
-            - AZURE
+          $ref: '#/components/schemas/ProtocolEnum'
         macro:
           description: ''
           type: string
@@ -1304,6 +1248,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DestinationDelivererOutput'
+    CompressionTypeEnum:
+      type: string
+      enum:
+        - NONE
+        - BZ2
+        - GZIP
+        - LZO
+    ProtocolEnum:
+      type: string
+      enum:
+        - SFTP
+        - FTP
+        - FTPS_EXPLICIT
+        - S3
+        - FS_COPY
+        - APP_NEXUS
+        - NO_OP
+        - FTPS_IMPLICIT
+        - IRON_BOX
+        - YAHOO
+        - ACXIOM_FULFILLMENT
+        - FACEBOOK
+        - LINKEDIN
+        - GOOGLE
+        - KBM
+        - PINTEREST
+        - GOOGLE_CUSTOMER_MATCH
+        - LR_FULFILLMENT
+        - SNAPCHAT
+        - BIGQUERY
+        - GOOGLE_STORE_TRANSACTIONS
+        - AZURE
     StandardError:
       type: object
       properties:

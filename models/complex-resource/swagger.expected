@@ -83,10 +83,7 @@ paths:
           description: ''
           required: false
           schema:
-            type: string
-            enum:
-              - TOYOTA
-              - FORD
+            $ref: '#/components/schemas/BrandEnum'
   '/v1/cars/{id}':
     get:
       tags:
@@ -275,10 +272,7 @@ components:
       properties:
         brand:
           description: ''
-          type: string
-          enum:
-            - TOYOTA
-            - FORD
+          $ref: '#/components/schemas/BrandEnum'
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -320,10 +314,7 @@ components:
           example: '2019-04-13'
         brand:
           description: ''
-          type: string
-          enum:
-            - TOYOTA
-            - FORD
+          $ref: '#/components/schemas/BrandEnum'
         engine:
           description: ''
           $ref: '#/components/schemas/Specification'
@@ -405,6 +396,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CarWheelOutput'
+    BrandEnum:
+      type: string
+      description: Different brands
+      enum:
+        - TOYOTA
+        - FORD
     StandardError:
       type: object
       properties:

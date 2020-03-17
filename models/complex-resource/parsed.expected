@@ -628,6 +628,7 @@
       "type": "enum",
       "parents": [],
       "short": "BrandEnum",
+      "comment": "Different brands",
       "literals": [
         "TOYOTA",
         "FORD"
