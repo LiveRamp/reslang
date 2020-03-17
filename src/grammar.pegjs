@@ -95,7 +95,6 @@ modifiers = modifiers:(_ ("mutable" / "output" /"optional-post" / "optional-put"
             optionalPost: flat.includes("optional-post"), optionalPut: flat.includes("optional-put"),
             optionalGet: flat.includes("optional-get"), output: flat.includes("output"),
             queryonly: flat.includes("queryonly"), query: flat.includes("query")}
-            
 }
 
 constraints = constraints:(_ (maxLength / minLength) (__ / ";"))* {

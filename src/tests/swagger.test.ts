@@ -76,7 +76,7 @@ function compare(module: string) {
     const swag = new SwagGen([`models/${module}`], { ignoreRules: true })
     const swagger = swag.generate()
 
-    const got = strip(yaml.dump(clean(swagger)))
+    const got = strip(yaml.dump(clean(swagger), { noRefs: true }))
     const expected = strip(readFile(`models/${module}/swagger.expected`), true)
 
     if (got !== expected) {
