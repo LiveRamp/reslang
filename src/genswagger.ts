@@ -878,10 +878,16 @@ export default class SwagGen extends BaseGen {
         const attrs = def.attributes || []
         const properties: any = {}
         const required: string[] = []
-        const request = { type: "object", properties, required } as {
+        const request = {
+            type: "object",
+            properties,
+            required,
+            description: def.comment
+        } as {
             type: string
             properties: any
             required: string[]
+            description: string
             allOf: {}
         }
         const sane = camelCase(this.formTagName(def))

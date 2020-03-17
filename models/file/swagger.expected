@@ -463,6 +463,7 @@ components:
           type: string
       required:
         - name
+      description: This models a directory we might create
     DirectoryOutput:
       type: object
       properties:
@@ -475,6 +476,7 @@ components:
       required:
         - id
         - name
+      description: This models a directory we might create
     DirectoryMultiResponse:
       type: object
       properties:
@@ -502,6 +504,7 @@ components:
         - type
         - format
         - specId
+      description: 'This configures up a file type, e.g. .gif'
     FileTypeOutput:
       type: object
       properties:
@@ -525,6 +528,7 @@ components:
         - type
         - format
         - specId
+      description: 'This configures up a file type, e.g. .gif'
     FileTypeMultiResponse:
       type: object
       properties:
@@ -550,6 +554,7 @@ components:
         - name
         - url
         - fileTypeId
+      description: This models a file in a directory
     DirectoryFileOutput:
       type: object
       properties:
@@ -572,6 +577,7 @@ components:
         - name
         - url
         - fileTypeId
+      description: This models a file in a directory
     DirectoryFileMultiResponse:
       type: object
       properties:
@@ -589,6 +595,7 @@ components:
           example: Link to a Directory resource via its id
       required:
         - directoryId
+      description: This models a long running request
     DirectoryDeleteRequestOutput:
       type: object
       properties:
@@ -603,6 +610,7 @@ components:
       required:
         - id
         - directoryId
+      description: This models a long running request
     DirectoryDeleteRequestMultiResponse:
       type: object
       properties:
@@ -625,6 +633,7 @@ components:
       required:
         - message
         - time
+      description: A non-standard error response
     StandardError:
       type: object
       properties:

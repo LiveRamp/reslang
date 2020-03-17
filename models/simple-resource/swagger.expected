@@ -173,6 +173,7 @@ components:
       required:
         - name
         - manufacturer
+      description: This is a description of a garage
     GarageOutput:
       type: object
       properties:
@@ -191,6 +192,7 @@ components:
         - id
         - name
         - manufacturer
+      description: This is a description of a garage
     GarageMultiResponse:
       type: object
       properties:
@@ -203,10 +205,11 @@ components:
       type: object
       properties:
         company:
-          description: ''
+          description: this is a company
           type: string
       required:
         - company
+      description: This is a manufacturer
     StandardError:
       type: object
       properties:

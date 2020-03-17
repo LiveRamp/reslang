@@ -128,6 +128,7 @@ components:
       required:
         - make
         - location
+      description: A Car Garage
     CarOutput:
       type: object
       properties:
@@ -154,6 +155,7 @@ components:
         - nitro
         - created
         - location
+      description: A Car Garage
     CarPuttable:
       type: object
       properties:
@@ -165,6 +167,7 @@ components:
           type: string
       required:
         - nitro
+      description: A Car Garage
     CarPatchable:
       type: object
       properties:
@@ -174,6 +177,7 @@ components:
         location:
           description: ''
           type: string
+      description: A Car Garage
     StandardError:
       type: object
       properties:

@@ -123,9 +123,11 @@
       "type": "structure",
       "parents": [],
       "short": "Manufacturer",
+      "comment": "This is a manufacturer",
       "attributes": [
         {
           "name": "company",
+          "comment": "this is a company",
           "stringMap": false,
           "type": {
             "parents": [],

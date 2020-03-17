@@ -497,6 +497,7 @@ components:
           type: string
       required:
         - name
+      description: Start processing
     ABCstartOutput:
       type: object
       properties:
@@ -510,6 +511,7 @@ components:
       required:
         - id
         - name
+      description: Start processing
     ABstopInput:
       type: object
       properties:

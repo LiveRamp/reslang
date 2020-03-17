@@ -265,10 +265,11 @@ components:
       type: object
       properties:
         company:
-          description: ''
+          description: this is a company
           type: string
       required:
         - company
+      description: This is a manufacturer
     CarInput:
       type: object
       properties:
@@ -304,6 +305,7 @@ components:
         - homeGarageId
         - manufacturer
         - rentedGarageIds
+      description: this is a Car resource
     CarOutput:
       type: object
       properties:
@@ -350,6 +352,7 @@ components:
         - homeGarageId
         - manufacturer
         - rentedGarageIds
+      description: this is a Car resource
     CarMultiResponse:
       type: object
       properties:
@@ -370,6 +373,7 @@ components:
       required:
         - type
         - documentation
+      description: this is a specification!
     CarWheelInput:
       type: object
       properties:
@@ -378,6 +382,7 @@ components:
           type: number
       required:
         - radius
+      description: A wheel is owned by a car
     CarWheelOutput:
       type: object
       properties:
@@ -391,6 +396,7 @@ components:
       required:
         - id
         - radius
+      description: A wheel is owned by a car
     CarWheelMultiResponse:
       type: object
       properties:

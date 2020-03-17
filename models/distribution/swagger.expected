@@ -900,6 +900,9 @@ components:
           type: string
       required:
         - name
+      description: >-
+        A Destination (aka DestinationCustomer) is some company that LiveRamp
+        distributes data to. An example is Facebook
     DestinationOutput:
       type: object
       properties:
@@ -913,6 +916,9 @@ components:
       required:
         - id
         - name
+      description: >-
+        A Destination (aka DestinationCustomer) is some company that LiveRamp
+        distributes data to. An example is Facebook
     DestinationMultiResponse:
       type: object
       properties:
@@ -978,6 +984,11 @@ components:
         - name
         - mapping
         - taxonomyConfigurationId
+      description: >-
+        An Integration (aka IntegrationGroup) is a particular configuration for
+        sending data to a destination. It specifies the indentifier types, the
+        endpoint that it is going to, and the taxonomy. An example is Facebook
+        UK data store
     DestinationIntegrationOutput:
       type: object
       properties:
@@ -1003,6 +1014,11 @@ components:
         - name
         - mapping
         - taxonomyConfigurationId
+      description: >-
+        An Integration (aka IntegrationGroup) is a particular configuration for
+        sending data to a destination. It specifies the indentifier types, the
+        endpoint that it is going to, and the taxonomy. An example is Facebook
+        UK data store
     DestinationIntegrationMultiResponse:
       type: object
       properties:

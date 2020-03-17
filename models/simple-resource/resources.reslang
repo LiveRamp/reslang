@@ -17,6 +17,8 @@ configuration-resource Garage {
 		POST GET DELETE MULTIGET
 }
 
+"This is a manufacturer"
 structure Manufacturer {
+	"this is a company"
 	company: string
 }
