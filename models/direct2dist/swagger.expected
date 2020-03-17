@@ -218,7 +218,7 @@ paths:
     post:
       tags:
         - 'DistributionRequest::Cancel'
-      operationId: Create Cancel
+      operationId: 'Create DistributionRequest::Cancel'
       description: ''
       responses:
         '200':
@@ -264,7 +264,7 @@ paths:
     post:
       tags:
         - 'DistributionRequest::Retry'
-      operationId: Create Retry
+      operationId: 'Create DistributionRequest::Retry'
       description: ''
       responses:
         '200':

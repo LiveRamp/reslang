@@ -31,7 +31,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
@@ -54,7 +55,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "address",
@@ -77,7 +79,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "birthDate",
@@ -100,7 +103,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -160,7 +164,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -184,7 +189,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -208,7 +214,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

@@ -224,7 +224,7 @@ paths:
     post:
       tags:
         - 'Directory::File'
-      operationId: Create File
+      operationId: 'Create Directory::File'
       description: ''
       requestBody:
         content:
@@ -430,7 +430,7 @@ paths:
     post:
       tags:
         - 'DirectoryDeleteRequest::Cancel'
-      operationId: Create Cancel
+      operationId: 'Create DirectoryDeleteRequest::Cancel'
       description: ''
       responses:
         '200':

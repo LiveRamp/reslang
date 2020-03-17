@@ -32,7 +32,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
@@ -55,7 +56,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -110,7 +112,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "type",
@@ -133,7 +136,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "format",
@@ -156,7 +160,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "specId",
@@ -179,7 +184,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -269,7 +275,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "parents": [],
@@ -307,7 +314,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
@@ -330,7 +338,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "url",
@@ -353,7 +362,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "fileTypeId",
@@ -376,7 +386,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "contents",
@@ -399,7 +410,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -456,7 +468,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "directoryId",
@@ -479,7 +492,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -535,7 +549,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -582,7 +597,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "time",
@@ -605,7 +621,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "SpecialError",
@@ -642,7 +659,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -666,7 +684,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -690,7 +709,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

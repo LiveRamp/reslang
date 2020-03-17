@@ -31,7 +31,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "createdSince",
@@ -54,7 +55,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "identifierType",
@@ -77,7 +79,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "requestType",
@@ -100,7 +103,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "dataController",
@@ -123,7 +127,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "fileUrl",
@@ -146,7 +151,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "timeStamp",
@@ -169,7 +175,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -214,7 +221,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "controllerIdentification",
@@ -237,7 +245,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "liveRampControlled",
@@ -260,7 +269,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "DataController",
@@ -331,7 +341,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -355,7 +366,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -379,7 +391,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

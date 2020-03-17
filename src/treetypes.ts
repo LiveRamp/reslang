@@ -82,6 +82,7 @@ export interface IAttribute {
     linked: boolean
     comment: string
     modifiers: IModifiers
+    constraints: IConstraints
 }
 
 export interface IArray {
@@ -99,6 +100,11 @@ export interface IModifiers {
     optionalGet: boolean
     query: boolean
     queryonly: boolean
+}
+
+export interface IConstraints {
+    minLength: number
+    maxLength: number
 }
 
 export interface IDiagram {

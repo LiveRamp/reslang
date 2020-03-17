@@ -14,7 +14,7 @@ paths:
     post:
       tags:
         - 'Dataset::Field'
-      operationId: Create Field
+      operationId: 'Create Dataset::Field'
       description: Create a new Field
       requestBody:
         content:

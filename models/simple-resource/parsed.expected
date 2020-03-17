@@ -32,6 +32,10 @@
             "output": false,
             "queryonly": false,
             "query": true
+          },
+          "constraints": {
+            "minLength": 10,
+            "maxLength": 300
           }
         },
         {
@@ -55,7 +59,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "manufacturer",
@@ -78,7 +83,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -143,7 +149,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "Manufacturer",
@@ -180,7 +187,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -204,7 +212,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -228,7 +237,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

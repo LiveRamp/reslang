@@ -205,7 +205,7 @@ export default class SwagGen extends BaseGen {
         post: IOperation | null,
         multiget: IOperation | null
     ) {
-        const sane = camelCase(el.name)
+        const sane = camelCase(this.formTagName(el))
         const plural = pluralizeName(el.short)
 
         if (post) {
@@ -304,9 +304,10 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(post, responses)
+            const rname = this.formTagName(el)
             path.post = {
-                tags: [tagKeys[el.name]],
-                operationId: "Create " + short,
+                tags: [tagKeys[rname]],
+                operationId: "Create " + rname,
                 description: this.translate(post.comment),
                 requestBody: {
                     content: {
@@ -385,9 +386,10 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(multiget, responses)
+            const rname = this.formTagName(el)
             path.get = {
-                tags: [tagKeys[el.name]],
-                operationId: "List " + pluralizeName(el.name),
+                tags: [tagKeys[rname]],
+                operationId: "List " + pluralizeName(rname),
                 description: this.translate(multiget.comment),
                 responses
             }
@@ -442,7 +444,7 @@ export default class SwagGen extends BaseGen {
         patch?: IOperation | null,
         del?: IOperation | null
     ) {
-        const sane = camelCase(el.name)
+        const sane = camelCase(this.formTagName(el))
         const short = el.short
         const notFound = {
             description: short + " not found",
@@ -477,9 +479,10 @@ export default class SwagGen extends BaseGen {
                 delete responses[200].content
             }
             this.formErrors(get, responses)
+            const rname = this.formTagName(el)
             path.get = {
-                tags: [tagKeys[el.name]],
-                operationId: "Get 1 " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Get 1 " + rname,
                 description: this.translate(get.comment),
                 responses
             }
@@ -506,9 +509,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(put, responses)
+            const rname = this.formTagName(el)
             path.put = {
-                tags: [tagKeys[el.name]],
-                operationId: "Modify a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Modify a " + rname,
                 description: this.translate(put.comment),
                 requestBody: {
                     content: {
@@ -548,9 +552,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(patch, responses)
+            const rname = this.formTagName(el)
             path.patch = {
-                tags: [tagKeys[el.name]],
-                operationId: "Patch a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Patch a " + rname,
                 description: this.translate(patch.comment),
                 requestBody: {
                     content: {
@@ -590,9 +595,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(del, responses)
+            const rname = this.formTagName(el)
             path.delete = {
-                tags: [tagKeys[el.name]],
-                operationId: "Delete a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Delete a " + rname,
                 description: this.translate(del.comment),
                 responses
             }
@@ -631,13 +637,37 @@ export default class SwagGen extends BaseGen {
     }
 
     private translatePrimitive(
+        attr: IAttribute | null,
         prim: string,
         schema: any,
         example: boolean = true
     ) {
+        // check constraints
+        if (attr && attr.constraints) {
+            if (
+                prim !== "string" &&
+                (attr.constraints.maxLength || attr.constraints.minLength)
+            ) {
+                throw new Error(
+                    `Cannot apply constraints ${JSON.stringify(
+                        attr.constraints
+                    )} to primitive type '${prim}'`
+                )
+            }
+        }
+
         switch (prim) {
             case "string":
                 schema.type = "string"
+                if (attr && attr.constraints) {
+                    const con = attr.constraints
+                    if (con.minLength) {
+                        schema.minLength = con.minLength
+                    }
+                    if (con.maxLength) {
+                        schema.maxLength = con.maxLength
+                    }
+                }
                 break
             case "url":
                 schema.type = "string"
@@ -717,6 +747,7 @@ export default class SwagGen extends BaseGen {
             )
         } else if (prim) {
             this.translatePrimitive(
+                attr,
                 type.name,
                 schema,
                 !attr.modifiers.queryonly
@@ -742,6 +773,7 @@ export default class SwagGen extends BaseGen {
                         )
                     }
                     this.translatePrimitive(
+                        null,
                         this.extractId(def).type.name,
                         schema
                     )
@@ -789,6 +821,11 @@ export default class SwagGen extends BaseGen {
         return obj
     }
 
+    // add resource level suffix if needed
+    private formTagName(def: IDefinition) {
+        return def.name + (def.resourceLevel ? "_R" : "")
+    }
+
     private formTags(
         defs: IDefinition[],
         tags: any[],
@@ -799,7 +836,7 @@ export default class SwagGen extends BaseGen {
             if (el.secondary || el.future) {
                 continue
             }
-            const name = el.name
+            const name = this.formTagName(el)
             const comment = this.translate(el.comment)
             let prefix = null
             if ("configuration-resource" === el.type) {
@@ -847,7 +884,7 @@ export default class SwagGen extends BaseGen {
             required: string[]
             allOf: {}
         }
-        const sane = camelCase(def.name)
+        const sane = camelCase(this.formTagName(def))
 
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly) {
@@ -915,7 +952,6 @@ export default class SwagGen extends BaseGen {
     private addUnionDefinition(
         definitions: any,
         def: IDefinition,
-        out: boolean,
         suffix: string
     ) {
         const attrs = def.attributes || []
@@ -1044,7 +1080,7 @@ export default class SwagGen extends BaseGen {
                 this.addDefinition(definitions, def, Verbs.POST, "")
             }
             if ("union" === def.type && def.generateInput) {
-                this.addUnionDefinition(definitions, def, true, "")
+                this.addUnionDefinition(definitions, def, "")
             }
         }
     }

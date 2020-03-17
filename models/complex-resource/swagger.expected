@@ -118,7 +118,7 @@ paths:
     post:
       tags:
         - 'Car::Wheel'
-      operationId: Create Wheel
+      operationId: 'Create Car::Wheel'
       description: ''
       requestBody:
         content:

@@ -32,6 +32,8 @@ paths:
                   id:
                     description: ''
                     type: string
+                    minLength: 10
+                    maxLength: 300
     get:
       tags:
         - Garage
@@ -74,6 +76,8 @@ paths:
           required: false
           schema:
             type: string
+            minLength: 10
+            maxLength: 300
         - in: query
           name: name
           description: ''
@@ -106,6 +110,8 @@ paths:
           description: ''
           schema:
             type: string
+            minLength: 10
+            maxLength: 300
     put:
       tags:
         - Garage
@@ -127,6 +133,8 @@ paths:
           description: ''
           schema:
             type: string
+            minLength: 10
+            maxLength: 300
     delete:
       tags:
         - Garage
@@ -148,6 +156,8 @@ paths:
           description: ''
           schema:
             type: string
+            minLength: 10
+            maxLength: 300
 components:
   parameters: {}
   schemas:
@@ -169,6 +179,8 @@ components:
         id:
           description: ''
           type: string
+          minLength: 10
+          maxLength: 300
         name:
           description: ''
           type: string

@@ -31,7 +31,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "map",
@@ -54,7 +55,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "maps",
@@ -80,7 +82,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "test",
@@ -103,7 +106,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "key",
@@ -126,7 +130,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "test2",
@@ -149,7 +154,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -198,7 +204,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "Struct1",
@@ -233,7 +240,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "text",
@@ -256,7 +264,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "Struct2",
@@ -292,7 +301,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "mystruct",
@@ -315,7 +325,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "mystruct2",
@@ -338,7 +349,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "InputKey",
@@ -374,7 +386,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "b",
@@ -397,7 +410,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "c",
@@ -420,7 +434,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "Struct3",
@@ -456,7 +471,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -480,7 +496,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -504,7 +521,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

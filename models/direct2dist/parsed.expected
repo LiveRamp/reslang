@@ -31,7 +31,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "destinationEndpointId",
@@ -57,7 +58,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "destinationEndpointProperties",
@@ -81,7 +83,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "inputDataURL",
@@ -105,7 +108,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "dataMappingConfigs",
@@ -132,7 +136,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "createdAt",
@@ -156,7 +161,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "status",
@@ -180,7 +186,8 @@
             "output": true,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "statusUpdatedAt",
@@ -204,7 +211,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "outputMetaData",
@@ -228,7 +236,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "distributionType",
@@ -251,7 +260,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "sort",
@@ -275,7 +285,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "createdAfter",
@@ -299,7 +310,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "createdBefore",
@@ -323,7 +335,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "statusUpdatedAfter",
@@ -347,7 +360,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "statusUpdatedBefore",
@@ -371,7 +385,8 @@
             "output": false,
             "queryonly": true,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -430,7 +445,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -478,7 +494,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -573,7 +590,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "output",
@@ -596,7 +614,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "DataMappingConfig",
@@ -632,7 +651,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "InputFormat",
@@ -668,7 +688,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "value",
@@ -691,7 +712,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "InputKeyValue",
@@ -726,7 +748,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "outputIdLabel",
@@ -749,7 +772,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "OutputFormat",
@@ -785,7 +809,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "valueLabel",
@@ -808,7 +833,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "OutputKeyValueLabel",
@@ -843,7 +869,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "OutputIdLabel",
@@ -881,7 +908,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "totalOutputSize",
@@ -905,7 +933,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "totalDistributionRecords",
@@ -929,7 +958,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "BatchOutputMetadata",
@@ -965,7 +995,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "lineCount",
@@ -988,7 +1019,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "FileDetails",
@@ -1024,7 +1056,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "parents": [],
@@ -1061,7 +1094,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "parents": [
@@ -1101,7 +1135,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -1125,7 +1160,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -1149,7 +1185,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

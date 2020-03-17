@@ -32,6 +32,10 @@
             "output": false,
             "queryonly": false,
             "query": true
+          },
+          "constraints": {
+            "minLength": 10,
+            "maxLength": 300
           }
         },
         {
@@ -55,7 +59,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "manufacturer",
@@ -78,7 +83,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -139,7 +145,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "simple-resource.Manufacturer",
@@ -176,7 +183,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -200,7 +208,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -224,7 +233,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "simple-resource.StandardError",
@@ -260,7 +270,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "bought",
@@ -283,7 +294,8 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "brand",
@@ -306,7 +318,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "engine",
@@ -329,7 +342,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "components",
@@ -352,7 +366,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "homeGarageId",
@@ -376,7 +391,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "manufacturer",
@@ -400,7 +416,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "rentedGarageIds",
@@ -427,7 +444,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -482,7 +500,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "documentation",
@@ -505,7 +524,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "Specification",
@@ -542,7 +562,8 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "radius",
@@ -565,7 +586,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -642,7 +664,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
@@ -666,7 +689,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
@@ -690,7 +714,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "name": "StandardError",

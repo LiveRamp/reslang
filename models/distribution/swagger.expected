@@ -126,7 +126,7 @@ paths:
     post:
       tags:
         - 'Destination::TaxonomyConfiguration'
-      operationId: Create TaxonomyConfiguration
+      operationId: 'Create Destination::TaxonomyConfiguration'
       description: ''
       requestBody:
         content:
@@ -273,7 +273,7 @@ paths:
     post:
       tags:
         - 'Destination::Integration'
-      operationId: Create Integration
+      operationId: 'Create Destination::Integration'
       description: Create an integration
       requestBody:
         content:
@@ -418,7 +418,7 @@ paths:
     post:
       tags:
         - 'Destination::Endpoint'
-      operationId: Create Endpoint
+      operationId: 'Create Destination::Endpoint'
       description: ''
       requestBody:
         content:
@@ -563,7 +563,7 @@ paths:
     post:
       tags:
         - 'Destination::Packager'
-      operationId: Create Packager
+      operationId: 'Create Destination::Packager'
       description: ''
       requestBody:
         content:
@@ -673,7 +673,7 @@ paths:
     post:
       tags:
         - 'Destination::Formatter'
-      operationId: Create Formatter
+      operationId: 'Create Destination::Formatter'
       description: ''
       requestBody:
         content:
@@ -783,7 +783,7 @@ paths:
     post:
       tags:
         - 'Destination::Deliverer'
-      operationId: Create Deliverer
+      operationId: 'Create Destination::Deliverer'
       description: ''
       requestBody:
         content:

@@ -17,7 +17,7 @@ tags:
     description: '(async action)  '
   - name: 'UploadRequest::StopProcessingAction'
     description: '(sync action)  '
-  - name: 'UploadRequest::DeleteAllRequestsAction'
+  - name: 'UploadRequest::StartProcessingAction_R'
     description: '(resource level sync action)  '
 paths:
   /v1/upload-requests:
@@ -145,7 +145,7 @@ paths:
     post:
       tags:
         - 'UploadRequest::RecordSet'
-      operationId: Create RecordSet
+      operationId: 'Create UploadRequest::RecordSet'
       description: ''
       requestBody:
         content:
@@ -210,8 +210,13 @@ paths:
     post:
       tags:
         - 'UploadRequest::StartProcessingAction'
-      operationId: Create StartProcessingAction
+      operationId: 'Create UploadRequest::StartProcessingAction'
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestStartProcessingActionInput'
       responses:
         '200':
           description: StartProcessingAction action completed
@@ -259,7 +264,7 @@ paths:
     post:
       tags:
         - 'UploadRequest::StopProcessingAction'
-      operationId: Create StopProcessingAction
+      operationId: 'Create UploadRequest::StopProcessingAction'
       description: ''
       requestBody:
         content:
@@ -320,20 +325,20 @@ paths:
           schema:
             type: integer
             format: int32
-  /v1/upload-requests/actions/delete-all-requests-action:
+  /v1/upload-requests/actions/start-processing-action:
     post:
       tags:
-        - 'UploadRequest::DeleteAllRequestsAction'
-      operationId: Create DeleteAllRequestsAction
+        - 'UploadRequest::StartProcessingAction_R'
+      operationId: 'Create UploadRequest::StartProcessingAction_R'
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestDeleteAllRequestsActionInput'
+              $ref: '#/components/schemas/UploadRequestStartProcessingActionRInput'
       responses:
         '200':
-          description: DeleteAllRequestsAction action completed
+          description: StartProcessingAction action completed
           content:
             application/json:
               schema:
@@ -343,22 +348,21 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-  '/v1/upload-requests/actions/delete-all-requests-action/{id}':
+  '/v1/upload-requests/actions/start-processing-action/{id}':
     get:
       tags:
-        - 'UploadRequest::DeleteAllRequestsAction'
-      operationId: 'Get 1 UploadRequest::DeleteAllRequestsAction'
+        - 'UploadRequest::StartProcessingAction_R'
+      operationId: 'Get 1 UploadRequest::StartProcessingAction_R'
       description: ''
       responses:
         '200':
-          description: DeleteAllRequestsAction retrieved successfully
+          description: StartProcessingAction retrieved successfully
           content:
             application/json:
               schema:
-                $ref: >-
-                  #/components/schemas/UploadRequestDeleteAllRequestsActionOutput
+                $ref: '#/components/schemas/UploadRequestStartProcessingActionROutput'
         '404':
-          description: DeleteAllRequestsAction not found
+          description: StartProcessingAction not found
           content:
             application/json:
               schema:
@@ -490,6 +494,16 @@ components:
       required:
         - details
         - address
+    UploadRequestStartProcessingActionInput:
+      type: object
+      properties:
+        created:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - created
     UploadRequestStopProcessingActionInput:
       type: object
       properties:
@@ -515,7 +529,7 @@ components:
       required:
         - id
         - when
-    UploadRequestDeleteAllRequestsActionInput:
+    UploadRequestStartProcessingActionRInput:
       type: object
       properties:
         when:
@@ -525,7 +539,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - when
-    UploadRequestDeleteAllRequestsActionOutput:
+    UploadRequestStartProcessingActionROutput:
       type: object
       properties:
         id:

@@ -76,7 +76,7 @@ paths:
     post:
       tags:
         - 'A::B'
-      operationId: Create B
+      operationId: 'Create A::B'
       description: ''
       requestBody:
         content:
@@ -141,7 +141,7 @@ paths:
     post:
       tags:
         - 'A::B::C'
-      operationId: Create C
+      operationId: 'Create A::B::C'
       description: ''
       requestBody:
         content:
@@ -220,7 +220,7 @@ paths:
     post:
       tags:
         - 'A::B::C::start'
-      operationId: Create start
+      operationId: 'Create A::B::C::start'
       description: ''
       requestBody:
         content:
@@ -313,7 +313,7 @@ paths:
     post:
       tags:
         - 'A::B::stop'
-      operationId: Create stop
+      operationId: 'Create A::B::stop'
       description: ''
       requestBody:
         content:

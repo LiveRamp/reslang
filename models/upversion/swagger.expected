@@ -169,7 +169,7 @@ paths:
     post:
       tags:
         - 'v2/ResourceB::Sub'
-      operationId: Create Sub
+      operationId: 'Create v2/ResourceB::Sub'
       description: ''
       requestBody:
         content:
