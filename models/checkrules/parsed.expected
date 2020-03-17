@@ -1,12 +1,11 @@
 {
   "namespace": {
-    "comment": "This is the description of the API",
-    "title": "Complex resource API",
+    "comment": "Test for various rule checking",
+    "title": "Rule checking",
     "version": "0.0.1"
   },
   "definitions": [
     {
-      "comment": "This is a description of a garage",
       "future": false,
       "singleton": false,
       "type": "configuration-resource",
@@ -16,8 +15,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "string",
-            "name": "string",
+            "short": "int",
+            "name": "int",
             "parentShort": "",
             "parentName": ""
           },
@@ -31,12 +30,9 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": false
           },
-          "constraints": {
-            "minLength": 10,
-            "maxLength": 300
-          }
+          "constraints": {}
         },
         {
           "name": "name",
@@ -58,235 +54,22 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
-          },
-          "constraints": {}
-        },
-        {
-          "name": "manufacturer",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "Manufacturer",
-            "name": "simple-resource.Manufacturer",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "comment": "Actual PUT comment",
-          "errors": []
-        },
-        {
-          "operation": "POST",
-          "comment": "Actual POST comment",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        },
-        {
-          "operation": "DELETE",
-          "errors": []
-        },
-        {
-          "operation": "MULTIGET",
-          "errors": []
-        }
-      ],
-      "parents": [],
-      "short": "Garage",
-      "name": "simple-resource.Garage",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": true,
-      "file": "resources.reslang"
-    },
-    {
-      "type": "structure",
-      "parents": [],
-      "short": "Manufacturer",
-      "comment": "This is a manufacturer",
-      "attributes": [
-        {
-          "name": "company",
-          "comment": "this is a company",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "name": "simple-resource.Manufacturer",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": true,
-      "file": "resources.reslang",
-      "generateInput": true
-    },
-    {
-      "type": "structure",
-      "parents": [],
-      "short": "StandardError",
-      "attributes": [
-        {
-          "name": "httpStatus",
-          "comment": "HTTP error status code for this problem",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
             "query": false
           },
           "constraints": {}
         },
         {
-          "name": "errorCode",
-          "comment": "Service specific error code, more granular",
+          "name": "asset",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "string",
-            "name": "string",
+            "short": "Asset",
+            "name": "Asset",
             "parentShort": "",
             "parentName": ""
           },
           "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "message",
-          "comment": "General, human readable error message",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "name": "simple-resource.StandardError",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": true,
-      "file": "local.reslang"
-    },
-    {
-      "comment": "this is a Car resource",
-      "future": false,
-      "singleton": false,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": true
-          },
-          "constraints": {}
-        },
-        {
-          "name": "bought",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "date",
-            "name": "date",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
+          "linked": true,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -300,143 +83,17 @@
           "constraints": {}
         },
         {
-          "name": "brand",
+          "name": "outputName",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "BrandEnum",
-            "name": "BrandEnum",
+            "short": "string",
+            "name": "string",
             "parentShort": "",
             "parentName": ""
           },
           "inline": false,
           "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": true
-          },
-          "constraints": {}
-        },
-        {
-          "name": "engine",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "Specification",
-            "name": "Specification",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "components",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "Specification",
-            "name": "Specification",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "homeGarageId",
-          "stringMap": false,
-          "type": {
-            "module": "simple-resource",
-            "parents": [],
-            "short": "Garage",
-            "name": "simple-resource.Garage",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": true,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "manufacturer",
-          "stringMap": false,
-          "type": {
-            "module": "simple-resource",
-            "parents": [],
-            "short": "Manufacturer",
-            "name": "simple-resource.Manufacturer",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "rentedGarageIds",
-          "stringMap": false,
-          "type": {
-            "module": "simple-resource",
-            "parents": [],
-            "short": "Garage",
-            "name": "simple-resource.Garage",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "array": {
-            "type": 2
-          },
-          "linked": true,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -458,87 +115,19 @@
         {
           "operation": "GET",
           "errors": []
-        },
-        {
-          "operation": "MULTIGET",
-          "errors": []
         }
       ],
       "parents": [],
-      "short": "Car",
-      "name": "Car",
+      "short": "A",
+      "name": "A",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
-      "generateMulti": true,
       "generateOutput": true
     },
     {
-      "type": "structure",
-      "parents": [],
-      "short": "Specification",
-      "comment": "this is a specification!",
-      "attributes": [
-        {
-          "name": "type",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "documentation",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "name": "Specification",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
-    },
-    {
-      "comment": "A wheel is owned by a car",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -563,17 +152,17 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": false
           },
           "constraints": {}
         },
         {
-          "name": "radius",
+          "name": "name",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "double",
-            "name": "double",
+            "short": "string",
+            "name": "string",
             "parentShort": "",
             "parentName": ""
           },
@@ -594,51 +183,340 @@
       ],
       "operations": [
         {
-          "operation": "GET",
+          "operation": "POST",
           "errors": []
         },
         {
-          "operation": "PUT",
+          "operation": "GET",
           "errors": []
+        }
+      ],
+      "parents": [
+        "A"
+      ],
+      "short": "B",
+      "name": "A::B",
+      "parentShort": "A",
+      "parentName": "A",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
         },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
         {
           "operation": "POST",
           "errors": []
         },
         {
-          "operation": "MULTIGET",
+          "operation": "GET",
           "errors": []
         }
       ],
       "parents": [
-        "Car"
+        "A",
+        "B"
       ],
-      "short": "Wheel",
-      "name": "Car::Wheel",
-      "parentShort": "Car",
-      "parentName": "Car",
+      "short": "C",
+      "name": "A::B::C",
+      "parentShort": "A",
+      "parentName": "A::B",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "generateOutput": true
     },
     {
-      "type": "enum",
-      "parents": [],
-      "short": "BrandEnum",
-      "comment": "Different brands",
-      "literals": [
-        "TOYOTA",
-        "FORD"
+      "comment": "Start processing",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
       ],
-      "name": "BrandEnum",
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "A",
+        "B",
+        "C"
+      ],
+      "short": "start",
+      "name": "A::B::C::start",
+      "parentShort": "A",
+      "parentName": "A::B::C",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": true,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "A",
+        "B"
+      ],
+      "short": "stop",
+      "name": "A::B::stop",
+      "parentShort": "A",
+      "parentName": "A::B",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [
+        "A",
+        "B",
+        "stop"
+      ],
+      "short": "Deep",
+      "name": "A::B::stop::Deep",
+      "parentShort": "A",
+      "parentName": "A::B::stop",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "asset-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [],
+      "short": "Asset",
+      "name": "Asset",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "type": "structure",

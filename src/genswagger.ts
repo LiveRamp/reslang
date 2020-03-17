@@ -1,8 +1,8 @@
 import {
-    fixName,
+    snakeCase,
     pluralizeName,
     getVersion,
-    sanitize,
+    camelCase,
     capitalizeFirst,
     lowercaseFirst
 } from "./names"
@@ -72,34 +72,50 @@ export default class SwagGen extends BaseGen {
                     "action"
                 ].includes(el.type)
             ) {
-                // locate the parent
-                let parent = null
-                let parentName = null
-                let parentSubPath = null
-                if (el.parent) {
-                    parent = this.extractDefinition(el.parent)
-                    parentName = sanitize(parent.name)
-                    if (!parent.singleton) {
-                        parentName = pluralizeName(parentName)
+                const action = el.type === "action"
+                let parents = ""
+                let params: any[] = []
+                let pname = el.parentName
+                let major = getVersion(el.short)
+                while (pname) {
+                    const actual = this.extractDefinition(pname)
+                    if (!actual.parentName) {
+                        major = getVersion(actual.short)
+                    }
+                    const maybe = getVersion(actual.short)
+                    if (maybe) {
+                        major = maybe
+                    }
+                    const singular = lowercaseFirst(camelCase(actual.short))
+                    let full = snakeCase(actual.short)
+                    if (!actual.singleton && actual.type !== "action") {
+                        full = pluralizeName(full)
+                    }
+                    pname = actual.parentName
+                    if (action && el.resourceLevel) {
+                        parents = `/${full}` + parents
+                    } else {
+                        parents = `/${full}/\{${singular}Id\}` + parents
+                    }
+                    if (action && el.resourceLevel && !params.length) {
+                        // skip first parent parameter for resource level actions
+                    } else {
+                        this.addParentPathParam(params, actual, singular + "Id")
                     }
                 }
-                const sname = fixName(el.short)
-                const name = pluralizeName(sname)
-                const version = parentName
-                    ? getVersion(parentName!)
-                    : getVersion(el.name)
-                const singleton = el.singleton
-                // now we can remove the version
-                if (parentName) {
-                    parentName = fixName(parentName)
-                }
-                if (parent) {
-                    parentSubPath = parent.singleton
-                        ? `${parentName}`
-                        : `${parentName}/{parentId}`
-                }
+                // reverse the order so it looks more natural
+                params = params.reverse()
 
+                const singleton = el.singleton
                 let path: any = {}
+
+                // name of resource
+                let name = snakeCase(el.short)
+                const actionPath = action ? "actions/" : ""
+
+                if (!el.singleton && !action) {
+                    name = pluralizeName(name)
+                }
 
                 /**
                  * non-id definitions
@@ -109,17 +125,20 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && (post || multiget)) {
                     throw new Error(
-                        `${el.name} is a singleton - cannot have POST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST or MULTIGET`
                     )
                 }
 
                 if (!singleton && (post || multiget)) {
-                    if (parent) {
-                        paths[`/${version}/${parentSubPath}/${name}`] = path
-                    } else {
-                        paths[`/${version}/${name}`] = path
-                    }
-                    this.formNonIdOperations(el, path, tagKeys, post, multiget)
+                    paths[`/${major}${parents}/${actionPath}${name}`] = path
+                    this.formNonIdOperations(
+                        el,
+                        path,
+                        params,
+                        tagKeys,
+                        post,
+                        multiget
+                    )
                 }
 
                 /**
@@ -133,26 +152,17 @@ export default class SwagGen extends BaseGen {
                 path = {}
                 if (get || put || patch || del) {
                     if (singleton) {
-                        if (parentName) {
-                            paths[
-                                `/${version}/${parentSubPath}/${sname}`
-                            ] = path
-                        } else {
-                            paths[`/${version}/${sname}`] = path
-                        }
+                        paths[`/${major}${parents}/${actionPath}${name}`] = path
                     } else {
-                        if (parentName) {
-                            paths[
-                                `/${version}/${parentSubPath}/${name}/{id}`
-                            ] = path
-                        } else {
-                            paths[`/${version}/${name}/{id}`] = path
-                        }
+                        paths[
+                            `/${major}${parents}/${actionPath}${name}/{id}`
+                        ] = path
                     }
                 }
                 this.formIdOperations(
                     el,
                     path,
+                    params,
                     !!singleton,
                     tagKeys,
                     get,
@@ -190,10 +200,14 @@ export default class SwagGen extends BaseGen {
     private formNonIdOperations(
         el: IDefinition,
         path: any,
+        params: any[],
         tagKeys: { [key: string]: string },
         post: IOperation | null,
         multiget: IOperation | null
     ) {
+        const sane = camelCase(this.formTagName(el))
+        const plural = pluralizeName(el.short)
+
         if (post) {
             const short = el.short
             const idtype = this.extractId(el)
@@ -216,7 +230,7 @@ export default class SwagGen extends BaseGen {
             if (el.type === "action" && post) {
                 if (!el.async) {
                     responses = {
-                        201: {
+                        200: {
                             description: short + " action completed",
                             content: {
                                 "application/json": {
@@ -232,6 +246,19 @@ export default class SwagGen extends BaseGen {
                     }
                 } else {
                     responses = {
+                        200: {
+                            description: short + " action completed",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "object",
+                                        properties: {
+                                            id: this.addType(idtype, {}, false)
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         202: {
                             description:
                                 short +
@@ -267,52 +294,59 @@ export default class SwagGen extends BaseGen {
                         ],
                         struct: {
                             name: "StandardError",
-                            short: "StandardError"
+                            short: "StandardError",
+                            parents: [],
+                            module: "",
+                            parentName: "",
+                            parentShort: ""
                         }
                     })
                 }
             }
             this.formErrors(post, responses)
+            const rname = this.formTagName(el)
             path.post = {
-                tags: [tagKeys[el.name]],
-                operationId: "Create " + short,
+                tags: [tagKeys[rname]],
+                operationId: "Create " + rname,
                 description: this.translate(post.comment),
                 requestBody: {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${el.name}Input`
+                                $ref: `#/components/schemas/${sane}Input`
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Input")) {
+            if (this.empty.has(sane + "Input")) {
                 delete path.post.requestBody
             }
-            this.addParentPathId(el, path.post)
+            if (params.length) {
+                path.post.parameters = params
+            }
         }
+        const gparams = params.slice()
         if (multiget) {
-            const params: any[] = []
-
-            params.push({
+            gparams.push({
                 in: "query",
                 name: "offset",
-                description:
-                    "Offset of the record (starting from 0) to include in the response.",
+                description: `Offset of the ${plural} (starting from 0) to include in the response.`,
                 schema: {
-                    type: "number",
+                    type: "integer",
+                    format: "int32",
                     default: 0
                 }
             })
-            params.push({
+            gparams.push({
                 in: "query",
                 name: "limit",
-                description: `Number of records to return. If unspecified, 10 records will be returned.\
+                description: `Number of ${plural} to return. If unspecified, 10 max will be returned.\
  Maximum value for limit can be 100`,
                 schema: {
-                    type: "number",
+                    type: "integer",
+                    format: "int32",
                     default: 10,
                     maximum: 100
                 }
@@ -320,7 +354,7 @@ export default class SwagGen extends BaseGen {
 
             for (const attr of el.attributes as IAttribute[]) {
                 if (attr.modifiers.query || attr.modifiers.queryonly) {
-                    params.push(
+                    gparams.push(
                         this.addType(attr, {
                             in: "query",
                             name: attr.name,
@@ -330,16 +364,13 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-            const short = el.short
             const responses = {
                 200: {
-                    description:
-                        pluralizeName(short) + " retrieved successfully",
+                    description: plural + " retrieved successfully",
                     headers: {
                         "X-Total-Count": {
-                            description:
-                                "Total number of records in the data set.",
-                            schema: { type: "number" }
+                            description: `Total number of ${plural} returned by the query`,
+                            schema: { type: "integer", format: "int32" }
                         }
                     },
                     content: {
@@ -347,7 +378,7 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 $ref:
                                     "#/components/schemas/" +
-                                    el.name +
+                                    sane +
                                     "MultiResponse"
                             }
                         }
@@ -355,14 +386,16 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(multiget, responses)
+            const rname = this.formTagName(el)
             path.get = {
-                tags: [tagKeys[el.name]],
-                operationId: "List " + pluralizeName(el.name),
+                tags: [tagKeys[rname]],
+                operationId: "List " + pluralizeName(rname),
                 description: this.translate(multiget.comment),
-                parameters: params,
                 responses
             }
-            this.addParentPathId(el, path.get)
+            if (gparams.length) {
+                path.get.parameters = gparams
+            }
         }
     }
 
@@ -373,14 +406,6 @@ export default class SwagGen extends BaseGen {
         const def = this.extractDefinitionGently(attr.type.name)
         let name = attr.name
         if (def && ResourceType.includes(def.type)) {
-            if (
-                (attr.array && !name.endsWith("Ids")) ||
-                (!attr.array && !name.endsWith("Id"))
-            ) {
-                throw new Error(
-                    `Link to resource must end in Id or Ids - ${attr.name}`
-                )
-            }
             if (attr.array && !name.endsWith("s")) {
                 name = name + "s"
             }
@@ -392,25 +417,26 @@ export default class SwagGen extends BaseGen {
         return { name, prop }
     }
 
-    private addParentPathId(el: any, path: any) {
-        if (el.parent && !this.extractDefinition(el.parent).singleton) {
-            const param = this.addType(this.extractDefinitionId(el.parent), {
+    private addParentPathParam(
+        paths: any[],
+        parent: IDefinition,
+        name: string
+    ) {
+        if (!parent.singleton) {
+            const param = this.addType(this.extractDefinitionId(parent.name), {
                 in: "path",
-                name: "parentId",
-                description: "Id of parent " + el.parent,
+                name,
+                description: "Id of parent " + parent.short,
                 required: true
             })
-            if (path.parameters) {
-                path.parameters.push(param)
-            } else {
-                path.parameters = [param]
-            }
+            paths.push(param)
         }
     }
 
     private formIdOperations(
         el: IDefinition,
         path: any,
+        params: any[],
         singleton: boolean,
         tagKeys: { [key: string]: string },
         get?: IOperation | null,
@@ -418,154 +444,178 @@ export default class SwagGen extends BaseGen {
         patch?: IOperation | null,
         del?: IOperation | null
     ) {
+        const sane = camelCase(this.formTagName(el))
+        const short = el.short
+        const notFound = {
+            description: short + " not found",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/StandardError"
+                    }
+                }
+            }
+        }
         if (get) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " retrieved successfully",
-                    content: this.empty.has(el.name + "Output")
+                    content: this.empty.has(sane + "Output")
                         ? {}
                         : {
                               "application/json": {
                                   schema: {
                                       $ref:
                                           "#/components/schemas/" +
-                                          el.name +
+                                          sane +
                                           "Output"
                                   }
                               }
                           }
-                }
+                },
+                404: notFound
             }
-            if (this.empty.has(el.name + "Output")) {
+            if (this.empty.has(sane + "Output")) {
                 delete responses[200].content
             }
             this.formErrors(get, responses)
+            const rname = this.formTagName(el)
             path.get = {
-                tags: [tagKeys[el.name]],
-                operationId: "Get 1 " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Get 1 " + rname,
                 description: this.translate(get.comment),
                 responses
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.get.parameters = [
+                path.get.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ]
+                ])
+            } else {
+                if (params.length) {
+                    path.get.parameters = params
+                }
             }
-            this.addParentPathId(el, path.get)
         }
         if (put) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " modified successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(put, responses)
+            const rname = this.formTagName(el)
             path.put = {
-                tags: [tagKeys[el.name]],
-                operationId: "Modify a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Modify a " + rname,
                 description: this.translate(put.comment),
                 requestBody: {
                     content: {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" +
-                                    el.name +
-                                    "Puttable"
+                                    "#/components/schemas/" + sane + "Puttable"
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Puttable")) {
+            if (this.empty.has(sane + "Puttable")) {
                 delete path.put.requestBody
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.put.parameters = [
+                path.put.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ]
+                ])
+            } else {
+                if (params.length) {
+                    path.put.parameters = params
+                }
             }
-            this.addParentPathId(el, path.put)
         }
         if (patch) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " patched successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(patch, responses)
+            const rname = this.formTagName(el)
             path.patch = {
-                tags: [tagKeys[el.name]],
-                operationId: "Patch a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Patch a " + rname,
                 description: this.translate(patch.comment),
                 requestBody: {
                     content: {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" +
-                                    el.name +
-                                    "Patchable"
+                                    "#/components/schemas/" + sane + "Patchable"
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(el.name + "Patchable")) {
+            if (this.empty.has(sane + "Patchable")) {
                 delete path.patch.requestBody
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.patch.parameters = [
+                path.patch.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ]
+                ])
+            } else {
+                if (params.length) {
+                    path.patch.parameters = params
+                }
             }
-            this.addParentPathId(el, path.patch)
         }
         if (del) {
-            const short = el.short
             const responses = {
                 200: {
                     description: short + " deleted successfully"
-                }
+                },
+                404: notFound
             }
             this.formErrors(del, responses)
+            const rname = this.formTagName(el)
             path.delete = {
-                tags: [tagKeys[el.name]],
-                operationId: "Delete a " + el.name,
+                tags: [tagKeys[rname]],
+                operationId: "Delete a " + rname,
                 description: this.translate(del.comment),
                 responses
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
-                path.delete.parameters = [
+                path.delete.parameters = params.concat([
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
                         required: true
                     })
-                ]
+                ])
+            } else {
+                if (params.length) {
+                    path.delete.parameters = params
+                }
             }
-            this.addParentPathId(el, path.delete)
         }
     }
 
@@ -587,13 +637,37 @@ export default class SwagGen extends BaseGen {
     }
 
     private translatePrimitive(
+        attr: IAttribute | null,
         prim: string,
         schema: any,
         example: boolean = true
     ) {
+        // check constraints
+        if (attr && attr.constraints) {
+            if (
+                prim !== "string" &&
+                (attr.constraints.maxLength || attr.constraints.minLength)
+            ) {
+                throw new Error(
+                    `Cannot apply constraints ${JSON.stringify(
+                        attr.constraints
+                    )} to primitive type '${prim}'`
+                )
+            }
+        }
+
         switch (prim) {
             case "string":
                 schema.type = "string"
+                if (attr && attr.constraints) {
+                    const con = attr.constraints
+                    if (con.minLength) {
+                        schema.minLength = con.minLength
+                    }
+                    if (con.maxLength) {
+                        schema.maxLength = con.maxLength
+                    }
+                }
                 break
             case "url":
                 schema.type = "string"
@@ -603,7 +677,12 @@ export default class SwagGen extends BaseGen {
                 }
                 break
             case "int":
-                schema.type = "number"
+                schema.type = "integer"
+                schema.format = "int32"
+                break
+            case "long":
+                schema.type = "integer"
+                schema.format = "int64"
                 break
             case "boolean":
                 schema.type = "boolean"
@@ -645,6 +724,8 @@ export default class SwagGen extends BaseGen {
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
+        const sane = camelCase(name)
+
         // allow description overrides by caller
         if (!obj.description && !suppressDescription) {
             obj.description = this.translate(attr.comment)
@@ -666,6 +747,7 @@ export default class SwagGen extends BaseGen {
             )
         } else if (prim) {
             this.translatePrimitive(
+                attr,
                 type.name,
                 schema,
                 !attr.modifiers.queryonly
@@ -675,10 +757,9 @@ export default class SwagGen extends BaseGen {
             const def = this.extractDefinition(name)
             switch (def.type) {
                 case "structure":
-                    schema.$ref = `#/components/schemas/${name}`
-                    break
                 case "union":
-                    schema.$ref = `#/components/schemas/${name}`
+                case "enum":
+                    schema.$ref = `#/components/schemas/${sane}`
                     break
                 case "request-resource":
                 case "asset-resource":
@@ -691,23 +772,19 @@ export default class SwagGen extends BaseGen {
                         )
                     }
                     this.translatePrimitive(
+                        null,
                         this.extractId(def).type.name,
                         schema
                     )
                     if (attr.array) {
                         schema.example = `Link to ${attr.type.name} ${
-                            def.future ? "(to be defined in the future)" : ""
-                        } resource(s) via id(s)`
+                            def.future ? "(to be defined in the future) " : ""
+                        }resource(s) via id(s)`
                     } else {
                         schema.example = `Link to a ${attr.type.name} ${
-                            def.future ? "(to be defined in the future)" : ""
-                        } resource via its id`
+                            def.future ? "(to be defined in the future) " : ""
+                        }resource via its id`
                     }
-                    break
-                case "enum":
-                    schema.type = "string"
-                    // collect any inherited literals
-                    schema.enum = def.literals
                     break
                 default:
                     throw Error(
@@ -738,6 +815,11 @@ export default class SwagGen extends BaseGen {
         return obj
     }
 
+    // add resource level suffix if needed
+    private formTagName(def: IDefinition) {
+        return def.name + (def.resourceLevel ? "_R" : "")
+    }
+
     private formTags(
         defs: IDefinition[],
         tags: any[],
@@ -748,47 +830,32 @@ export default class SwagGen extends BaseGen {
             if (el.secondary || el.future) {
                 continue
             }
-            const name = el.name
-            const short = el.short
+            const name = this.formTagName(el)
             const comment = this.translate(el.comment)
+            let prefix = null
             if ("configuration-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(configuration) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(configuration) "
             }
             if ("asset-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(asset) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(asset) "
             }
             if ("request-resource" === el.type) {
-                const tag = {
-                    name: short,
-                    description: `(request) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(request) "
             }
             if ("subresource" === el.type) {
-                const tag = {
-                    name: `${el.parentShort} / ${short}`,
-                    description: `(subresource) ${comment}`
-                }
-                tags.push(tag)
-                tagKeys[name] = tag.name
+                prefix = "(subresource) "
             }
             if ("action" === el.type) {
+                prefix =
+                    "(" +
+                    (el.resourceLevel ? "resource level " : "") +
+                    (el.async ? "async " : "sync ") +
+                    "action) "
+            }
+            if (prefix) {
                 const tag = {
-                    name: `${el.parent} / ${short}`,
-                    description: `(${
-                        el.async ? "async" : "sync"
-                    } action) ${comment}`
+                    name,
+                    description: `${prefix} ${comment}`
                 }
                 tags.push(tag)
                 tagKeys[name] = tag.name
@@ -805,12 +872,20 @@ export default class SwagGen extends BaseGen {
         const attrs = def.attributes || []
         const properties: any = {}
         const required: string[] = []
-        const request = { type: "object", properties, required } as {
+        const request = {
+            type: "object",
+            properties,
+            required,
+            description: def.comment
+        } as {
             type: string
             properties: any
             required: string[]
+            description: string
             allOf: {}
         }
+        const sane = camelCase(this.formTagName(def))
+
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly) {
                 continue
@@ -868,22 +943,35 @@ export default class SwagGen extends BaseGen {
         }
 
         if (Object.keys(properties).length !== 0) {
-            definitions[def.name + suffix] = request
+            definitions[sane + suffix] = request
         } else {
-            this.empty.add(def.name + suffix)
+            this.empty.add(sane + suffix)
         }
+    }
+
+    private addEnumDefinition(
+        definitions: any,
+        def: IDefinition,
+        suffix: string
+    ) {
+        const name = camelCase(def.name) + suffix
+        const en = {
+            type: "string",
+            description: def.comment,
+            enum: def.literals
+        }
+        definitions[name] = en
     }
 
     private addUnionDefinition(
         definitions: any,
         def: IDefinition,
-        out: boolean,
         suffix: string
     ) {
         const attrs = def.attributes || []
         const mapping: { [key: string]: string } = {}
 
-        const name = def.name + suffix
+        const name = camelCase(def.name) + suffix
         for (const attr of attrs) {
             // cannot have a competing definition already
             const camel = capitalizeFirst(attr.name)
@@ -953,6 +1041,7 @@ export default class SwagGen extends BaseGen {
 
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
+            const sane = camelCase(def.name)
             if (
                 [
                     "asset-resource",
@@ -988,7 +1077,7 @@ export default class SwagGen extends BaseGen {
                             "Array of retrieved " + pluralizeName(def.name),
                         type: "array",
                         items: {
-                            $ref: "#/components/schemas/" + def.name + "Output"
+                            $ref: "#/components/schemas/" + sane + "Output"
                         }
                     }
                     const props: { [name: string]: any } = {}
@@ -998,14 +1087,17 @@ export default class SwagGen extends BaseGen {
                     }
                     const plural = lowercaseFirst(pluralizeName(def.short))
                     props[plural] = elements
-                    definitions[def.name + "MultiResponse"] = full
+                    definitions[sane + "MultiResponse"] = full
                 }
             }
             if ("structure" === def.type && def.generateInput) {
                 this.addDefinition(definitions, def, Verbs.POST, "")
             }
             if ("union" === def.type && def.generateInput) {
-                this.addUnionDefinition(definitions, def, true, "")
+                this.addUnionDefinition(definitions, def, "")
+            }
+            if ("enum" === def.type && def.generateInput) {
+                this.addEnumDefinition(definitions, def, "")
             }
         }
     }

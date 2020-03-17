@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "request-resource",
-      "name": "UploadRequest",
       "singleton": false,
+      "type": "request-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -29,14 +31,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -49,14 +55,18 @@
             "output": false,
             "queryonly": false,
             "query": true
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "status",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "UploadRequestStatusEnum",
             "name": "UploadRequestStatusEnum",
-            "short": "UploadRequestStatusEnum"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -69,14 +79,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "client",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -89,7 +103,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -106,7 +121,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "UploadRequest",
+      "name": "UploadRequest",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -115,17 +134,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "UploadRequest--Status",
       "singleton": true,
-      "parent": "UploadRequest",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -138,14 +158,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "recordsProcessed",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -158,14 +182,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "completed",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "boolean",
             "name": "boolean",
-            "short": "boolean"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -178,7 +206,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -187,25 +216,31 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "Status",
+      "name": "UploadRequest::Status",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateOutput": true
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "UploadRequest--RecordSet",
       "singleton": false,
-      "parent": "UploadRequest",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -218,14 +253,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "company",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -238,14 +277,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "records",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Record",
             "name": "Record",
-            "short": "Record"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -261,7 +304,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -274,8 +318,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "RecordSet",
+      "name": "UploadRequest::RecordSet",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -283,14 +332,18 @@
     },
     {
       "type": "structure",
-      "name": "Record",
+      "parents": [],
+      "short": "Record",
       "attributes": [
         {
           "name": "details",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -303,14 +356,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "address",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -323,27 +380,32 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "Record",
+      "name": "Record",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": true,
-      "name": "UploadRequest--StartProcessingAction",
-      "singleton": false,
-      "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -356,7 +418,32 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
+        },
+        {
+          "name": "created",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -365,25 +452,32 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "StartProcessingAction",
+      "name": "UploadRequest::StartProcessingAction",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
+      "future": false,
+      "singleton": false,
       "type": "action",
       "async": false,
-      "name": "UploadRequest--StopProcessingAction",
-      "singleton": false,
-      "parent": "UploadRequest",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -396,14 +490,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "when",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -416,7 +514,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -429,8 +528,91 @@
           "errors": []
         }
       ],
+      "parents": [
+        "UploadRequest"
+      ],
       "short": "StopProcessingAction",
+      "name": "UploadRequest::StopProcessingAction",
       "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true,
+      "generateOutput": true
+    },
+    {
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "when",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "UploadRequest"
+      ],
+      "short": "StartProcessingAction",
+      "resourceLevel": "resource-level",
+      "name": "UploadRequest::StartProcessingAction",
+      "parentShort": "UploadRequest",
+      "parentName": "UploadRequest",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -438,28 +620,35 @@
     },
     {
       "type": "enum",
-      "name": "UploadRequestStatusEnum",
+      "parents": [],
+      "short": "UploadRequestStatusEnum",
       "literals": [
         "STARTED",
         "STOPPED",
         "COMPLETED"
       ],
-      "short": "UploadRequestStatusEnum",
+      "name": "UploadRequestStatusEnum",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -472,15 +661,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -493,15 +686,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -514,10 +711,13 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -528,9 +728,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "resources",
-          "name": "resources-reslang",
-          "short": "reslang"
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

@@ -35,12 +35,22 @@ structure Record {
 
 async action UploadRequest::StartProcessingAction  {
     id: string
+    created: datetime
     
     /operations
         POST
 }
 
 sync action UploadRequest::StopProcessingAction {
+    id: int
+    when: datetime
+
+    /operations
+        POST GET
+}
+
+// resource level action
+sync resource-level action UploadRequest::StartProcessingAction {
     id: int
     when: datetime
 

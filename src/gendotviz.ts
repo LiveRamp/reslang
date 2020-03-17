@@ -100,14 +100,19 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to subresource
-                if ("subresource" === def.type && include.has(def.parent!)) {
+                if (
+                    "subresource" === def.type &&
+                    include.has(def.parentName!)
+                ) {
                     const label = this.makeLabelText("subresource")
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="back" arrowtail="ediamond" label=${label}];\n`
                 }
 
                 // from parent to action
                 if ("action" === def.type) {
-                    const label = this.makeLabelText("action")
+                    const label = this.makeLabelText(
+                        def.resourceLevel ? "resource level action" : "action"
+                    )
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
                 }
             } else if ("enum" === def.type) {

@@ -30,9 +30,9 @@ Relang is designed to make you think in terms of resources. There are 3 differen
 
 Each resource specifies the attributes it holds, followed by the possible operations / verbs. The reason for the three different types is that they will eventually have different audit and ownership structures - e.g. we might have full history available for configuration resources.
 
-Each resource type can have 1 level of subresources. Further, a request-resource can also have actions, representing either synchronous or asynchronous operations.
+Each resource type can have 1 level of subresources. Further, resources can also have actions, representing either synchronous or asynchronous operations.
 
-You can use the "singleton" keyword before a resource definition to indicate there is only 1 instance of this resource.
+You can use the "singleton" keyword before a toplevel resource definition to indicate there is only 1 instance of this resource.
 
 ### Primitive Types
 
@@ -231,9 +231,9 @@ union MappingOutputUnion {
 
 You can see above that we used the optional inline keyword. This expands all the structure attributes into the union directly.
 
-## Request actions
+## Actions
 
-We model synchronous or asynchronous actions as subresources of a request-resource. You specify either "sync" or "async" in front of the specification. For instance, the Direct2Dist API models an asynchronous retry action as follows:
+We model synchronous or asynchronous actions as subresources of a resource. You specify either "sync" or "async" in front of the specification. For instance, the Direct2Dist API models an asynchronous retry action as follows:
 
 ```
 
@@ -244,6 +244,19 @@ async action DistributionRequest::Retry {
 }
 
 ```
+
+You can also specify that the action applies to the entire resource using the resource-level keyword:
+
+```
+
+async resource-level action DistributionRequest::DeleteAllRequests {
+  id: string
+  /operations
+    POST
+}
+
+```
+
 
 ## Attribute Modifiers
 
@@ -308,3 +321,26 @@ Consider this example:
 A PUT body must always include "name", but can optionally include "address". A PATCH body can include any combination of the 2 fields, or none at all.
 
 Never use PUT or PATCH to trigger an action, please only use it to adjust state.
+
+## Configurable Rule Checker
+
+Reslang supports a rule checker which generates errors if you violate certain edicts. These are described in the libary/rules.json configuration file:
+
+    {
+        "maxResourceDepth": 2,
+        "maxActionDepth": 3,
+        "actionsOnRequestsOnly": false,
+        "onlyConfigToConfig": true,
+        "noSubresourcesOnActions": true
+    }
+
+    
+You can specify an alternative file using the switch --rulefile. You can ignore the rules using --ignorerules.
+
+The rules are:
+- maxResourceDepth controls how deep a resource & subresource hierarchy can go. /v1/cars/2/wheels/3/bolts/4 is 3 levels deep. Default is to allow 2 levels
+- maxActionDepth controls how deeply nested an action can be. THe default setting is 3 layers deep, which means an action can currently go on a subresource. e.g. /v1/cars/2/wheels/3/actions/replace-wheel is allowed
+- actionsOnRequestsOnly, if set, restricts actions to only being on request-resources
+- onlyConfigToConfig means that configuration-resources can only link to other configuration-resources. They cannot link to asset or request resources
+- noSubresourcesOnActions means that actions cannot have subresources
+

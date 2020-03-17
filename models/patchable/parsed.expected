@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "configuration-resource",
-      "name": "Person",
       "singleton": false,
+      "type": "configuration-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -29,14 +31,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -49,14 +55,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "address",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -69,14 +79,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "birthDate",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "datetime",
             "name": "datetime",
-            "short": "datetime"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -89,7 +103,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -110,7 +125,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "Person",
+      "name": "Person",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -120,15 +139,19 @@
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -141,15 +164,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -162,15 +189,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -183,10 +214,13 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true

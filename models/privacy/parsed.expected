@@ -1,8 +1,8 @@
 {
   "namespace": {
-    "comment": "This is the description of the API",
-    "title": "An API with a singleton asset resource",
-    "version": "0.1.2"
+    "comment": "API for retrieving consent files",
+    "title": "Consent file API - BETA ",
+    "version": "0.0.1"
   },
   "definitions": [
     {
@@ -15,8 +15,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "int",
-            "name": "int",
+            "short": "string",
+            "name": "string",
             "parentShort": "",
             "parentName": ""
           },
@@ -35,7 +35,103 @@
           "constraints": {}
         },
         {
-          "name": "name",
+          "name": "createdSince",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "identifierType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "IdentifierType",
+            "name": "IdentifierType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "requestType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RequestType",
+            "name": "RequestType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "dataController",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DataController",
+            "name": "DataController",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "fileUrl",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -57,137 +153,55 @@
             "query": false
           },
           "constraints": {}
+        },
+        {
+          "name": "timeStamp",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
         }
       ],
       "operations": [
         {
-          "operation": "POST",
-          "errors": []
-        },
-        {
-          "operation": "GET",
+          "operation": "MULTIGET",
           "errors": []
         }
       ],
       "parents": [],
-      "short": "Resource",
-      "name": "Resource",
+      "short": "ConsentFile",
+      "name": "ConsentFile",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
+      "file": "consent.reslang",
+      "generateMulti": true,
       "generateOutput": true
     },
     {
-      "future": false,
-      "singleton": true,
-      "type": "subresource",
-      "attributes": [
-        {
-          "name": "info",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        }
-      ],
-      "parents": [
-        "Resource"
-      ],
-      "short": "Metadata",
-      "name": "Resource::Metadata",
-      "parentShort": "Resource",
-      "parentName": "Resource",
-      "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
-    },
-    {
-      "future": false,
-      "singleton": true,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "name",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        }
-      ],
+      "type": "structure",
       "parents": [],
-      "short": "SingletonResource",
-      "name": "SingletonResource",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
-    },
-    {
-      "future": false,
-      "singleton": true,
-      "type": "subresource",
+      "short": "DataController",
       "attributes": [
         {
-          "name": "info",
+          "name": "controllerSpecifier",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -209,29 +223,96 @@
             "query": false
           },
           "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
         },
         {
-          "operation": "GET",
-          "errors": []
+          "name": "controllerIdentification",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "liveRampControlled",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
         }
       ],
-      "parents": [
-        "SingletonResource"
-      ],
-      "short": "Metadata",
-      "name": "SingletonResource::Metadata",
-      "parentShort": "SingletonResource",
-      "parentName": "SingletonResource",
+      "name": "DataController",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
+      "file": "consent.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "RequestType",
+      "literals": [
+        "OPT_OUT",
+        "DELETE"
+      ],
+      "name": "RequestType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "IdentifierType",
+      "literals": [
+        "IDENTITY_LINK",
+        "COOKIE",
+        "IDFA",
+        "AAID",
+        "MUID",
+        "CUSTOM_ID"
+      ],
+      "name": "IdentifierType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "consent.reslang",
+      "generateInput": true
     },
     {
       "type": "structure",
@@ -327,10 +408,10 @@
       "diagram": "main",
       "include": [
         {
-          "module": "resources",
+          "module": "consent",
           "parents": [],
           "short": "reslang",
-          "name": "resources.reslang",
+          "name": "consent.reslang",
           "parentShort": "",
           "parentName": ""
         }

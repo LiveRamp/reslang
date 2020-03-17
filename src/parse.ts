@@ -2,7 +2,6 @@ import fs from "fs"
 import peg from "pegjs"
 import { IDefinition, PrimitiveType, IDiagram, IReference } from "./treetypes"
 import * as path from "path"
-import { makeShort, makeLong, sanitize } from "./names"
 
 export function readFile(name: string) {
     return fs.readFileSync(name, { encoding: "utf8" })
@@ -15,7 +14,8 @@ export function loadParser() {
         return peg.generate(grammar)
     } catch (error) {
         throw new Error(
-            `Problem reading grammar: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
+            `Problem reading grammar: ${error.message}, location: ${error.location.start.line},
+            ${error.location.start.column}`
         )
     }
 }
@@ -29,9 +29,11 @@ export function parseFile(
 
     let tree: any[]
     try {
-        tree = clean(loadParser().parse(contents, {
-            output: "parser"
-        }) as object)
+        tree = clean(
+            loadParser().parse(contents, {
+                output: "parser"
+            }) as object
+        )
     } catch (error) {
         console.log(error)
         throw new Error(
@@ -43,36 +45,45 @@ export function parseFile(
     return tree
 }
 
+// create name, parentName and parentShort from the module, parents and short fields
+// name and parentName are fully qualified for the entire set of definitions
+function convert(ref: IReference, namespace: string, mainNamespace: string) {
+    if (isPrimitiveType(ref.short)) {
+        ref.name = ref.short
+        ref.parentShort = ""
+        ref.parentName = ""
+        return
+    }
+    const module = ref.module
+        ? ref.module + "."
+        : namespace === mainNamespace
+        ? ""
+        : namespace + "."
+    const parent = ref.parents.length !== 0 ? ref.parents.join("::") : ""
+    ref.name = module + (parent ? parent + "::" : "") + ref.short
+    ref.parentShort = ref.parents.length !== 0 ? ref.parents[0] : ""
+    ref.parentName = parent
+}
+
 function addNamespace(
     defs: IDefinition[],
     namespace: string,
     mainNamespace: string
 ) {
-    const fixLong = (name: string) =>
-        sanitize(makeLong(namespace, mainNamespace, name))
-
     // normalize all the names: name is unique to doc, short is acceptable display form
     // refs are always in terms of name
     for (const def of defs || []) {
-        def.short = def.name
-        def.name = fixLong((def.parent ? def.parent + "::" : "") + def.name)
-        if (def.parent) {
-            def.parentShort = makeShort(def.parent)
-            def.parent = fixLong(def.parent)
-        }
+        convert(def, namespace, mainNamespace)
 
         // add to all references
         for (const attr of def.attributes || []) {
-            const type = attr.type
-            if (!isPrimitiveType(type.name)) {
-                type.short = makeShort(type.name)
-                const full =
-                    (type.parent ? type.parent + "." : "") +
-                    (type.toplevel ? type.toplevel + "::" : "") +
-                    type.name
-                type.name = fixLong(full)
-            } else {
-                type.short = type.name
+            convert(attr.type, namespace, mainNamespace)
+        }
+
+        // convert the error references
+        for (const op of def.operations || []) {
+            for (const err of op.errors) {
+                convert(err.struct, namespace, mainNamespace)
             }
         }
     }
@@ -83,37 +94,23 @@ function addDiagramNamespace(
     namespace: string,
     mainNamespace: string
 ) {
-    const fixLong = (name: string) =>
-        sanitize(makeLong(namespace, mainNamespace, name))
-    const fixRef = (ref: IReference) => {
-        if (ref.parent) {
-            ref.parent = fixLong(ref.parent)
-        }
-        const full =
-            (ref.parent ? ref.parent + "." : "") +
-            (ref.toplevel ? ref.toplevel + "::" : "") +
-            ref.name
-        ref.short = makeShort(ref.name)
-        ref.name = fixLong(full)
-    }
-
     // normalize all the references
     for (const diag of diagrams) {
         for (const incl of diag.include || []) {
-            fixRef(incl)
+            convert(incl, namespace, mainNamespace)
         }
         for (const incl of diag.import || []) {
-            fixRef(incl)
+            convert(incl, namespace, mainNamespace)
         }
         for (const incl of diag.exclude || []) {
-            fixRef(incl)
+            convert(incl, namespace, mainNamespace)
         }
         for (const fold of diag.fold || []) {
-            fixRef(fold.of)
+            convert(fold.of, namespace, mainNamespace)
         }
         for (const group of diag.groups || []) {
             for (const incl of group.include) {
-                fixRef(incl)
+                convert(incl, namespace, mainNamespace)
             }
         }
     }

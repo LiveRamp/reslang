@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "SMap",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -29,14 +31,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "map",
           "stringMap": true,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -49,14 +55,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "maps",
           "stringMap": true,
           "type": {
+            "parents": [],
+            "short": "Struct2",
             "name": "Struct2",
-            "short": "Struct2"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -72,14 +82,18 @@
             "output": true,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "test",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -92,14 +106,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "key",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "InputKey",
             "name": "InputKey",
-            "short": "InputKey"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -112,14 +130,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "test2",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Struct3",
             "name": "Struct3",
-            "short": "Struct3"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": true,
           "linked": false,
@@ -132,7 +154,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -145,7 +168,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "SMap",
+      "name": "SMap",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true,
@@ -153,14 +180,18 @@
     },
     {
       "type": "structure",
-      "name": "Struct1",
+      "parents": [],
+      "short": "Struct1",
       "attributes": [
         {
           "name": "text",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -173,23 +204,30 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "Struct1",
+      "name": "Struct1",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang"
     },
     {
       "type": "structure",
-      "name": "Struct2",
+      "parents": [],
+      "short": "Struct2",
       "attributes": [
         {
           "name": "notes",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -202,14 +240,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "text",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -222,24 +264,31 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "Struct2",
+      "name": "Struct2",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "union",
-      "name": "InputKey",
+      "parents": [],
+      "short": "InputKey",
       "attributes": [
         {
           "name": "num",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -252,14 +301,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "mystruct",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Struct2",
             "name": "Struct2",
-            "short": "Struct2"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -272,14 +325,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "mystruct2",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "Struct2",
             "name": "Struct2",
-            "short": "Struct2"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": true,
           "linked": false,
@@ -292,24 +349,31 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "InputKey",
+      "name": "InputKey",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "Struct3",
+      "parents": [],
+      "short": "Struct3",
       "attributes": [
         {
           "name": "a",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -322,14 +386,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "b",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -342,14 +410,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "c",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "date",
             "name": "date",
-            "short": "date"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -362,24 +434,31 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "Struct3",
+      "name": "Struct3",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang"
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -392,15 +471,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -413,15 +496,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -434,10 +521,13 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -448,9 +538,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "resources",
-          "name": "resources-reslang",
-          "short": "reslang"
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

@@ -1,12 +1,11 @@
 {
   "namespace": {
-    "comment": "This is the authorization API for LiveRamp's Platform",
-    "title": "Authorization API",
+    "title": "Segment API - ALPHA",
     "version": "0.0.1"
   },
   "definitions": [
     {
-      "future": false,
+      "future": true,
       "singleton": false,
       "type": "asset-resource",
       "attributes": [
@@ -33,65 +32,28 @@
             "query": false
           },
           "constraints": {}
-        },
-        {
-          "name": "name",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
         }
       ],
       "parents": [],
-      "short": "User",
-      "name": "User",
+      "short": "Dataset",
+      "name": "Dataset",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "dataset.reslang"
     },
     {
       "future": false,
       "singleton": false,
-      "type": "action",
-      "async": false,
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "int",
-            "name": "int",
+            "short": "long",
+            "name": "long",
             "parentShort": "",
             "parentName": ""
           },
@@ -105,102 +67,7 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
-        }
-      ],
-      "parents": [
-        "User"
-      ],
-      "short": "Suspend",
-      "name": "User::Suspend",
-      "parentShort": "User",
-      "parentName": "User",
-      "secondary": false,
-      "file": "auth.reslang",
-      "generatePuttable": true
-    },
-    {
-      "future": false,
-      "singleton": false,
-      "type": "action",
-      "async": false,
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "PUT",
-          "errors": []
-        }
-      ],
-      "parents": [
-        "User"
-      ],
-      "short": "Unsuspend",
-      "name": "User::Unsuspend",
-      "parentShort": "User",
-      "parentName": "User",
-      "secondary": false,
-      "file": "auth.reslang",
-      "generatePuttable": true
-    },
-    {
-      "future": false,
-      "singleton": false,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
+            "query": true
           },
           "constraints": {}
         },
@@ -229,19 +96,94 @@
           "constraints": {}
         },
         {
-          "name": "parentOrganizationId",
+          "name": "type",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "Organization",
-            "name": "Organization",
+            "short": "FieldTypeEnum",
+            "name": "FieldTypeEnum",
             "parentShort": "",
             "parentName": ""
           },
           "inline": false,
-          "linked": true,
+          "linked": false,
           "modifiers": {
             "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "enumerable",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "valueCollectionType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "ValueCollectionTypeEnum",
+            "name": "ValueCollectionTypeEnum",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "values",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "modifiers": {
+            "mutable": true,
             "optional": true,
             "optionalPost": false,
             "optionalPut": false,
@@ -251,45 +193,38 @@
             "query": false
           },
           "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
         },
         {
-          "operation": "GET",
-          "errors": []
-        },
-        {
-          "operation": "MULTIGET",
-          "errors": []
-        }
-      ],
-      "parents": [],
-      "short": "Organization",
-      "name": "Organization",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
-    },
-    {
-      "future": false,
-      "singleton": false,
-      "type": "asset-resource",
-      "attributes": [
-        {
-          "name": "id",
+          "name": "enabled",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "int",
-            "name": "int",
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
             "parentShort": "",
             "parentName": ""
           },
@@ -301,14 +236,163 @@
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
-            "output": false,
+            "output": true,
             "queryonly": false,
             "query": false
           },
           "constraints": {}
         },
         {
-          "name": "name",
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "comment": "Get a Field",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "comment": "Create a new Field",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "303",
+                  "comment": "Field already exists"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "Redirection",
+                "name": "Redirection",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        },
+        {
+          "operation": "MULTIGET",
+          "comment": "Find existing Fields",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "comment": "Disable a Field",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "comment": "Add values to a Field",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "403",
+                  "comment": "Field is not enumerable"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            },
+            {
+              "codes": [
+                {
+                  "code": "400",
+                  "comment": "Values do not match Field type"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        }
+      ],
+      "parents": [
+        "Dataset"
+      ],
+      "short": "Field",
+      "name": "Dataset::Field",
+      "parentShort": "Dataset",
+      "parentName": "Dataset",
+      "secondary": false,
+      "file": "field.reslang",
+      "generateInput": true,
+      "generateMulti": true,
+      "generateOutput": true,
+      "generatePuttable": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "FieldTypeEnum",
+      "literals": [
+        "STRING",
+        "NUMERIC"
+      ],
+      "name": "FieldTypeEnum",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "field.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "enum",
+      "parents": [],
+      "short": "ValueCollectionTypeEnum",
+      "literals": [
+        "SINGLETON",
+        "SET",
+        "MULTISET"
+      ],
+      "name": "ValueCollectionTypeEnum",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "field.reslang",
+      "generateInput": true
+    },
+    {
+      "type": "structure",
+      "parents": [],
+      "short": "Redirection",
+      "attributes": [
+        {
+          "name": "existingFieldUrl",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -330,56 +414,14 @@
             "query": false
           },
           "constraints": {}
-        },
-        {
-          "name": "parentRoleId",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "Role",
-            "name": "Role",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": true,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false
-          },
-          "constraints": {}
         }
       ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
-        },
-        {
-          "operation": "GET",
-          "errors": []
-        },
-        {
-          "operation": "MULTIGET",
-          "errors": []
-        }
-      ],
-      "parents": [],
-      "short": "Role",
-      "name": "Role",
+      "name": "Redirection",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "field.reslang",
+      "generateInput": true
     },
     {
       "type": "structure",
@@ -475,10 +517,18 @@
       "diagram": "main",
       "include": [
         {
-          "module": "auth",
+          "module": "dataset",
           "parents": [],
           "short": "reslang",
-          "name": "auth.reslang",
+          "name": "dataset.reslang",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "module": "field",
+          "parents": [],
+          "short": "reslang",
+          "name": "field.reslang",
           "parentShort": "",
           "parentName": ""
         }

@@ -7,12 +7,14 @@ asset-resource User {
         POST GET
 }
 
-singleton sync action User::Suspend {
+sync action User::Suspend {
+    id: int
     /operations
         PUT
 }
 
-singleton sync action User::Unsuspend {
+sync action User::Unsuspend {
+    id: int
     /operations
         PUT
 }

@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "ResourceA",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -29,14 +31,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -49,14 +55,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "bId",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "ResourceB",
             "name": "ResourceB",
-            "short": "ResourceB"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -69,14 +79,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "newBId",
           "stringMap": false,
           "type": {
-            "name": "v2-ResourceB",
-            "short": "v2/ResourceB"
+            "parents": [],
+            "short": "v2/ResourceB",
+            "name": "v2/ResourceB",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": true,
@@ -89,7 +103,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -98,23 +113,29 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "ResourceA",
+      "name": "ResourceA",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "upversion.reslang",
       "generateOutput": true
     },
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "ResourceB",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -127,14 +148,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "size",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -147,7 +172,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -164,7 +190,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "ResourceB",
+      "name": "ResourceB",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "upversion.reslang",
       "generateInput": true,
@@ -173,16 +203,18 @@
     },
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "v2-ResourceB",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -195,14 +227,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "totalSize",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -215,7 +251,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -228,7 +265,11 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "v2/ResourceB",
+      "name": "v2/ResourceB",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "upversion.reslang",
       "generateInput": true,
@@ -236,17 +277,18 @@
     },
     {
       "future": false,
-      "type": "subresource",
-      "name": "v2-ResourceB--Sub",
       "singleton": false,
-      "parent": "v2-ResourceB",
+      "type": "subresource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -259,14 +301,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "name",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -279,7 +325,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -292,8 +339,13 @@
           "errors": []
         }
       ],
+      "parents": [
+        "v2/ResourceB"
+      ],
       "short": "Sub",
+      "name": "v2/ResourceB::Sub",
       "parentShort": "v2/ResourceB",
+      "parentName": "v2/ResourceB",
       "secondary": false,
       "file": "upversion.reslang",
       "generateInput": true,
@@ -301,15 +353,19 @@
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -322,15 +378,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -343,15 +403,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -364,10 +428,13 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -378,9 +445,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "upversion",
-          "name": "reslang",
-          "short": "reslang"
+          "module": "upversion",
+          "parents": [],
+          "short": "reslang",
+          "name": "upversion.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []

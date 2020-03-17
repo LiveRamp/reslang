@@ -1,0 +1,23 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Dataset" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Dataset        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
+"Field" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Field        </b></td></tr><hr/><tr><td align="left">id: long</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">type: FieldTypeEnum</td></tr><tr><td align="left">enumerable: boolean</td></tr><tr><td align="left">valueCollectionType: ValueCollectionTypeEnum</td></tr><tr><td align="left">values: string[]</td></tr><tr><td align="left">enabled: boolean (out)</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name type enumerable valueCollectionType values enabled createdAt updatedAt DELETE PUT</font></td></tr>"}</table>>];
+"Dataset" -> "Field" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"FieldTypeEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>FieldTypeEnum  </b></td></tr><hr/><tr><td align="left">STRING</td></tr><tr><td align="left">NUMERIC</td></tr></table>>];
+"ValueCollectionTypeEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>ValueCollectionTypeEnum  </b></td></tr><hr/><tr><td align="left">SINGLETON</td></tr><tr><td align="left">SET</td></tr><tr><td align="left">MULTISET</td></tr></table>>];
+"Redirection" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Redirection        </b></td></tr>        <hr/><tr><td align="left">existingFieldUrl: string</td></tr></table> >];
+}

@@ -1,4 +1,4 @@
-import { parseFile, readFile, clean } from "../parse"
+import { readFile, clean } from "../parse"
 import { strip } from "./utilities"
 import SwagGen from "../genswagger"
 import yaml from "js-yaml"
@@ -6,6 +6,18 @@ import yaml from "js-yaml"
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
+    test("dataset", () => {
+        compare("dataset")
+    })
+
+    test("checkrules", () => {
+        compare("checkrules")
+    })
+
+    test("privacy", () => {
+        compare("privacy")
+    })
+
     test("optionality", () => {
         compare("optionality")
     })
@@ -61,11 +73,11 @@ describe("swagger generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const swag = new SwagGen([`models/${module}`])
+    const swag = new SwagGen([`models/${module}`], { ignoreRules: true })
     const swagger = swag.generate()
 
     const got = strip(yaml.dump(clean(swagger)))
-    const expected = strip(readFile(`models/${module}/swagger.expected`))
+    const expected = strip(readFile(`models/${module}/swagger.expected`), true)
 
     if (got !== expected) {
         console.log(got)

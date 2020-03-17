@@ -13,18 +13,18 @@ export interface IImport {
 }
 
 export interface IReference {
-    name: string
     short: string
-    parent?: string
-    toplevel?: string
+    parents: string[]
+    module: string // not set for definitions
+
+    // generated from the above info
+    name: string
+    parentName: string
+    parentShort: string
 }
 
-export interface IDefinition {
+export interface IDefinition extends IReference {
     file: string
-    name: string
-    short: string
-    parent?: string
-    parentShort?: string
     type: DefinitionType
     comment: string
     attributes?: IAttribute[]
@@ -33,6 +33,7 @@ export interface IDefinition {
     singleton?: boolean
     future?: boolean
     async?: boolean
+    resourceLevel?: boolean // only for actions, indicates it's on the entire resource, not a single resource
 
     // used to see if we generate definitions or not
     secondary?: boolean
@@ -62,6 +63,7 @@ export let ResourceType = [
 
 export let PrimitiveType = [
     "int",
+    "long",
     "string",
     "boolean",
     "double",
@@ -80,6 +82,7 @@ export interface IAttribute {
     linked: boolean
     comment: string
     modifiers: IModifiers
+    constraints: IConstraints
 }
 
 export interface IArray {
@@ -97,6 +100,11 @@ export interface IModifiers {
     optionalGet: boolean
     query: boolean
     queryonly: boolean
+}
+
+export interface IConstraints {
+    minLength: number
+    maxLength: number
 }
 
 export interface IDiagram {

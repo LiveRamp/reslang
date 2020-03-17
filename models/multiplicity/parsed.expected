@@ -7,16 +7,18 @@
   "definitions": [
     {
       "future": false,
-      "type": "asset-resource",
-      "name": "MTest",
       "singleton": false,
+      "type": "asset-resource",
       "attributes": [
         {
           "name": "id",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -29,14 +31,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "names",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -54,14 +60,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "ages",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -78,14 +88,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "addresses",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -102,14 +116,18 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "nicknames",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "array": {
@@ -125,7 +143,8 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
       "operations": [
@@ -134,22 +153,30 @@
           "errors": []
         }
       ],
+      "parents": [],
       "short": "MTest",
+      "name": "MTest",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "multi.reslang",
       "generateInput": true
     },
     {
       "type": "structure",
-      "name": "StandardError",
+      "parents": [],
+      "short": "StandardError",
       "attributes": [
         {
           "name": "httpStatus",
           "comment": "HTTP error status code for this problem",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "int",
             "name": "int",
-            "short": "int"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -162,15 +189,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "errorCode",
           "comment": "Service specific error code, more granular",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -183,15 +214,19 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         },
         {
           "name": "message",
           "comment": "General, human readable error message",
           "stringMap": false,
           "type": {
+            "parents": [],
+            "short": "string",
             "name": "string",
-            "short": "string"
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
           "linked": false,
@@ -204,10 +239,13 @@
             "output": false,
             "queryonly": false,
             "query": false
-          }
+          },
+          "constraints": {}
         }
       ],
-      "short": "StandardError",
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "local.reslang",
       "generateInput": true
@@ -218,9 +256,12 @@
       "diagram": "main",
       "include": [
         {
-          "parent": "multi",
-          "name": "multi-reslang",
-          "short": "reslang"
+          "module": "multi",
+          "parents": [],
+          "short": "reslang",
+          "name": "multi.reslang",
+          "parentShort": "",
+          "parentName": ""
         }
       ],
       "groups": []
