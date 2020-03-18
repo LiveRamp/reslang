@@ -1,3 +1,7 @@
+## v1.1.0 3/18/2020
+
+Bug fix for resource-level action paths not including parentIds
+
 ## v1.0.0 3/17/2020
 
 First official release. The following defects have been addressed:
