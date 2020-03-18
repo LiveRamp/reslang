@@ -60,7 +60,7 @@ Also note that it is perfectly possible to support multiple major versions of a 
 An example of evolution is contained in the models/upversion directory:
 
 ```upversioning example
-asset-resource v2/ResourceB {
+resource v2/ResourceB {
   id: int
   totalSize: int
 
@@ -91,7 +91,7 @@ asset-resource Test {
   ... }
 ```
 
-Note that the full syntax to refer to subresources / actions is: `namespace.toplevelresource::subresource`
+Note that the full syntax to refer to subresources / actions is: `namespace.toplevelresource::subresource::subresource` etc
 You can omit namespace if the subresource is in the current namespace.
 
 ### Id
