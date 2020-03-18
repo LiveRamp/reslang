@@ -65,6 +65,7 @@ export default class SwagGen extends BaseGen {
             }
             if (
                 [
+                    "resource",
                     "asset-resource",
                     "configuration-resource",
                     "subresource",
@@ -762,6 +763,7 @@ export default class SwagGen extends BaseGen {
                     schema.$ref = `#/components/schemas/${sane}`
                     break
                 case "request-resource":
+                case "resource":
                 case "asset-resource":
                 case "configuration-resource":
                 case "subresource":
@@ -836,8 +838,8 @@ export default class SwagGen extends BaseGen {
             if ("configuration-resource" === el.type) {
                 prefix = "(configuration) "
             }
-            if ("asset-resource" === el.type) {
-                prefix = "(asset) "
+            if ("asset-resource" === el.type || "resource" === el.type) {
+                prefix = "(resource) "
             }
             if ("request-resource" === el.type) {
                 prefix = "(request) "
@@ -1045,6 +1047,7 @@ export default class SwagGen extends BaseGen {
             if (
                 [
                     "asset-resource",
+                    "resource",
                     "configuration-resource",
                     "subresource",
                     "request-resource",

@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/privacy'
 tags:
   - name: ConsentFile
-    description: '(asset)  '
+    description: '(resource)  '
 paths:
   /v1/consent-files:
     get:

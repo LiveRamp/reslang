@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/multiplicity'
 tags:
   - name: MTest
-    description: '(asset)  '
+    description: '(resource)  '
 paths:
   /v1/m-tests:
     post:

@@ -245,6 +245,7 @@ Actions cannot have subresources`
             if (
                 [
                     "asset-resource",
+                    "resource",
                     "configuration-resource",
                     "subresource",
                     "request-resource",

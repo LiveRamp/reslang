@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/complex-resource'
 tags:
   - name: Car
-    description: (asset)  this is a Car resource
+    description: (resource)  this is a Car resource
   - name: 'Car::Wheel'
     description: (subresource)  A wheel is owned by a car
 paths:

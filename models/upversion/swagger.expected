@@ -8,11 +8,11 @@ servers:
   - url: 'https://api.liveramp.com/upversion'
 tags:
   - name: ResourceA
-    description: '(asset)  '
+    description: '(resource)  '
   - name: ResourceB
-    description: '(asset)  '
+    description: '(resource)  '
   - name: v2/ResourceB
-    description: '(asset)  '
+    description: '(resource)  '
   - name: 'v2/ResourceB::Sub'
     description: '(subresource)  '
 paths:

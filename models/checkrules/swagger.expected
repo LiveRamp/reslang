@@ -20,7 +20,7 @@ tags:
   - name: 'A::B::stop::Deep'
     description: '(subresource)  '
   - name: Asset
-    description: '(asset)  '
+    description: '(resource)  '
 paths:
   /v1/as:
     post:

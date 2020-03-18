@@ -47,6 +47,7 @@ export interface IDefinition extends IReference {
 export type DefinitionType =
     | "request-resource"
     | "asset-resource"
+    | "resource"
     | "configuration-resource"
     | "subresource"
     | "enum"
@@ -57,6 +58,7 @@ export type DefinitionType =
 export let ResourceType = [
     "request-resource",
     "asset-resource",
+    "resource",
     "configuration-resource",
     "subresource"
 ]

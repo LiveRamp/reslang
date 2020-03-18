@@ -2,7 +2,7 @@
 // hello
 // opdaslads
 "This is a description of a garage"
-configuration-resource Garage {
+resource Garage {
 	// simple id 
 	id: string query min-length:10 max-length: 300
 	name: string query

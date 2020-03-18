@@ -22,7 +22,7 @@ docEntry = _ name:resname _ "=" _ doc:description _ {
 }
 
 // defining a resource
-resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "request-resource") _ respath:noparentrespath _ "{" _
+resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {

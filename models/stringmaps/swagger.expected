@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/stringmaps'
 tags:
   - name: SMap
-    description: '(asset)  '
+    description: '(resource)  '
 paths:
   /v1/s-maps:
     post:

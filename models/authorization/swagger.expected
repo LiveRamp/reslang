@@ -8,15 +8,15 @@ servers:
   - url: 'https://api.liveramp.com/authorization'
 tags:
   - name: User
-    description: '(asset)  '
+    description: '(resource)  '
   - name: 'User::Suspend'
     description: '(sync action)  '
   - name: 'User::Unsuspend'
     description: '(sync action)  '
   - name: Organization
-    description: '(asset)  '
+    description: '(resource)  '
   - name: Role
-    description: '(asset)  '
+    description: '(resource)  '
 paths:
   /v1/users:
     post:

@@ -50,6 +50,7 @@ export default class DotvizGen extends BaseGen {
             const bgcolor = [
                 "request-resource",
                 "asset-resource",
+                "resource",
                 "configuration-resource"
             ].includes(def.type)
                 ? "bgcolor='#ffffcc'"
@@ -59,6 +60,7 @@ export default class DotvizGen extends BaseGen {
                 [
                     "request-resource",
                     "asset-resource",
+                    "resource",
                     "configuration-resource",
                     "subresource",
                     "structure",
@@ -69,6 +71,7 @@ export default class DotvizGen extends BaseGen {
                 const width = [
                     "request-resource",
                     "asset-resource",
+                    "resource",
                     "configuration-resource"
                 ].includes(def.type)
                     ? 3
@@ -76,6 +79,7 @@ export default class DotvizGen extends BaseGen {
                 const rounded = [
                     "request-resource",
                     "asset-resource",
+                    "resource",
                     "configuration-resource",
                     "action",
                     "subresource"

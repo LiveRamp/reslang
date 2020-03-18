@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/simple-resource'
 tags:
   - name: Garage
-    description: (configuration)  This is a description of a garage
+    description: (resource)  This is a description of a garage
 paths:
   /v1/garages:
     post:

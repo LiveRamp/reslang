@@ -8,11 +8,11 @@ servers:
   - url: 'https://api.liveramp.com/singleton'
 tags:
   - name: Resource
-    description: '(asset)  '
+    description: '(resource)  '
   - name: 'Resource::Metadata'
     description: '(subresource)  '
   - name: SingletonResource
-    description: '(asset)  '
+    description: '(resource)  '
   - name: 'SingletonResource::Metadata'
     description: '(subresource)  '
 paths:

@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.liveramp.com/file'
 tags:
   - name: Directory
-    description: (asset)  This models a directory we might create
+    description: (resource)  This models a directory we might create
   - name: FileType
     description: '(configuration)  This configures up a file type, e.g. .gif'
   - name: 'Directory::File'
