@@ -22,17 +22,16 @@ namespace {
 
 ### Resource types
 
-Relang is designed to make you think in terms of resources. There are 3 different resource types in Reslang:
+Relang is designed to make you think in terms of resources. There are 2 different resource types in Reslang:
 
--   a **configuration-resource** describes configuration in the system.
--   an **asset-resource** is a resource that is typically created by processing data through our system.
+-   a **resource** describes a noun in the system.
 -   a **request-resource** is an asynchronous, long running process modeled as a resource.
 
-Each resource specifies the attributes it holds, followed by the possible operations / verbs. The reason for the three different types is that they will eventually have different audit and ownership structures - e.g. we might have full history available for configuration resources.
+Each resource specifies the attributes it holds, followed by the possible operations / verbs.
 
-Each resource type can have 1 level of subresources. Further, resources can also have actions, representing either synchronous or asynchronous operations.
+Each resource type can have any level of subresources. The depth is limited by a configuration parameter, and is currently limited to a single level. Resources can also have actions, representing either synchronous or asynchronous operations.
 
-You can use the "singleton" keyword before a toplevel resource definition to indicate there is only 1 instance of this resource.
+You can use the "singleton" keyword before a resource or subresource definition to indicate there is only 1 instance of this resource.
 
 ### Primitive Types
 
@@ -99,14 +98,14 @@ You can omit namespace if the subresource is in the current namespace.
 
 Every resource or subresource that can be retrieved by a GET needs to define an id field. This is the primary identifier for that resource, and it can be of any type.
 
-You do not require and have a PUT or DELETE operation.
+You do not require id if you do not have a PUT, PATCH or DELETE operation.
 
 ### Error Codes and Responses
 
 You can specify a set of error codes and bodies after each operation. The following example shows a response for 404, 405 and 403 error codes.
 
 ```Error code example
-configuration-resource FileType {
+resource FileType {
 	id: string
 	type: string query
 	format: string
@@ -114,7 +113,6 @@ configuration-resource FileType {
 	/operations
 		"Get a FileType"
 		GET
-			"Cannot find file type" 404
 			"Not Allowed" 405
 				StandardError
 			"Forbidden" 403
@@ -124,14 +122,16 @@ configuration-resource FileType {
 }
 ```
 
-Note that StandardError is an internally defined structure that should be used for most errors. SpecialError above shows that you can also define your own error bodies as structures.
+Note that the standard set of response codes specified in RFC API-3 are automatically generated for you. E.g. a 201 on a POST, a 404 on a GET/PUT/PATCH/DELETE.
+
+StandardError is an internally defined structure that should be used for most errors. SpecialError above shows that you can also define your own error bodies as structures.
 
 ### Future Resources
 
 It's common, when defining an API, to want to refer to resources that haven't yet been created. The "future" keyword allows you to define a theoretical resource, which will generate no Swagger. The purpose of this is so you can do a "linked" reference to it, in the expectation that you will add the full resource in the future.
 
 ```Future resource
-future configuration-resource Specification {
+future resource Specification {
 	id: string
 }
 ```
@@ -204,6 +204,70 @@ A multi-GET is a GET on the plural resource, returning a collection of resources
 
 ```
 
+## Attribute Modifiers
+
+The underlying intuition is that you mark fields as "mutable" if you want to be able to change them with PUT or PATCH, and you can mark something as output only by using "output". You can then mark them as optional by using "optional" or "optional-post" etc for specific verbs. PATCH always has every field as optional.
+
+The following modifiers can be placed after the attribute type to indicate that it should be included for the given verbs:
+
+-   no modifier
+    -   The default is that the field is included for POST and GET
+-   mutable
+    -   The field is included also for PUT and PATCH
+-   output
+    -   The field is only included for GET
+
+Note that "id" is treated as "output" implicitly.
+
+The following modifiers can be placed after the attribute type to indicate optionality:
+
+-   no modifier
+    -   The default is that the attribute is always required when included in a verb
+-   optional
+    -   Mark the attribute as always optional when included in a verb
+-   optional-post, optional-put, optional-get
+    -   Mark the attribute as optional when included in that specific verb
+
+Note that attributes included in PATCH are _always_ optional.
+
+Here is a simple example:
+
+    resource Car {
+        id: string
+        make: string
+        nitro: string mutable optional-post
+        created: datetime output
+        location: string mutable optional-put
+    /operations
+        GET POST PUT PATCH
+    }
+
+This results in the following fields:
+
+-   POST required=make and location, optional=nitro
+-   PUT required=nitro, optional=location
+-   PATCH optional=nitro and location
+-   GET required=id, make, nitro, created, location
+
+## Difference between PUT and PATCH
+
+A PUT requires a body with all mutable, non-optional fields. A PATCH makes all mutable fields optional. Prefer PUT because it accepts all the mandatory fields at the same time and hence, is idempotent. Use PATCH at your discretion to allow any field to be adjusted.
+
+Consider this example:
+
+    resource Person {
+        id: int
+        name: string mutable
+        address: string mutable optional
+        birthDate: datetime
+        /operations
+            POST PUT PATCH GET
+    }
+
+A PUT body must always include "name", but can optionally include "address". A PATCH body can include any combination of the 2 fields, or none at all.
+
+Never use PUT or PATCH to trigger an action, please only use it to adjust state.
+
 ## Stringmaps
 
 Reslang supports dictionary structures where the keys are always strings. To specify this, use the stringmap<> syntax:
@@ -245,6 +309,8 @@ async action DistributionRequest::Retry {
 
 ```
 
+This will translate to a POST URL of /v1/distribution-request/{id}/actions/retry
+
 You can also specify that the action applies to the entire resource using the resource-level keyword:
 
 ```
@@ -257,72 +323,9 @@ async resource-level action DistributionRequest::DeleteAllRequests {
 
 ```
 
+This translates to a POST URL of /v1/distribution-request//actions/delete-all-requests. Note that {id} is no longer present.
 
-## Attribute Modifiers
-
-The underlying intuition is that you mark fields as "mutable" if you want to be able to change them with PUT or PATCH, and you can mark something as output only by using "output". You can then mark them as optional by using "optional" or "optional-post" etc for specific verbs. PATCH always has every field as optional.
-
-The following modifiers can be placed after the attribute type to indicate that it should be included for the given verbs:
-
-- no modifier
-    - The default is that the field is included for POST and GET
-- mutable
-    - The field is included also for PUT and PATCH
-- output
-    - The field is only included for GET
-
-Note that "id" is treated as "output" implicitly.
-
-The following modifiers can be placed after the attribute type to indicate optionality:
-
-- no modifier
-    - The default is that the attribute is always required when included in a verb
-- optional
-    - Mark the attribute as always optional when included in a verb
-- optional-post, optional-put, optional-get
-    - Mark the attribute as optional when included in that specific verb
-
-Note that attributes included in PATCH are *always* optional.
-
-Here is a simple example:
-
-    configuration-resource Car {
-        id: string
-        make: string
-        nitro: string mutable optional-post
-        created: datetime output
-        location: string mutable optional-put
-	/operations
-	    GET POST PUT PATCH
-    }
-
-This results in the following fields:
-- POST required=make and location, optional=nitro
-- PUT required=nitro, optional=location
-- PATCH optional=nitro and location
-- GET required=id, make, nitro, created, location
-
-
-## Difference between PUT and PATCH
-
-A PUT requires a body with all mutable, non-optional fields. A PATCH makes all mutable fields optional. Prefer PUT because it accepts all the mandatory fields at the same time and hence, is idempotent. Use PATCH at your discretion to allow any field to be adjusted.
-
-Consider this example:
-
-    configuration-resource Person {
-        id: int
-        name: string mutable
-        address: string mutable optional
-        birthDate: datetime
-        /operations
-            POST PUT PATCH GET
-    }
-
-A PUT body must always include "name", but can optionally include "address". A PATCH body can include any combination of the 2 fields, or none at all.
-
-Never use PUT or PATCH to trigger an action, please only use it to adjust state.
-
-## Configurable Rule Checker
+## Advanced: Configurable Rule Checker
 
 Reslang supports a rule checker which generates errors if you violate certain edicts. These are described in the libary/rules.json configuration file:
 
@@ -334,13 +337,12 @@ Reslang supports a rule checker which generates errors if you violate certain ed
         "noSubresourcesOnActions": true
     }
 
-    
 You can specify an alternative file using the switch --rulefile. You can ignore the rules using --ignorerules.
 
 The rules are:
-- maxResourceDepth controls how deep a resource & subresource hierarchy can go. /v1/cars/2/wheels/3/bolts/4 is 3 levels deep. Default is to allow 2 levels
-- maxActionDepth controls how deeply nested an action can be. THe default setting is 3 layers deep, which means an action can currently go on a subresource. e.g. /v1/cars/2/wheels/3/actions/replace-wheel is allowed
-- actionsOnRequestsOnly, if set, restricts actions to only being on request-resources
-- onlyConfigToConfig means that configuration-resources can only link to other configuration-resources. They cannot link to asset or request resources
-- noSubresourcesOnActions means that actions cannot have subresources
 
+-   maxResourceDepth controls how deep a resource & subresource hierarchy can go. /v1/cars/2/wheels/3/bolts/4 is 3 levels deep. Default is to allow 2 levels
+-   maxActionDepth controls how deeply nested an action can be. THe default setting is 3 layers deep, which means an action can currently go on a subresource. e.g. /v1/cars/2/wheels/3/actions/replace-wheel is allowed
+-   actionsOnRequestsOnly, if set, restricts actions to only being on request-resources
+-   onlyConfigToConfig means that configuration-resources can only link to other configuration-resources. They cannot link to asset or request resources
+-   noSubresourcesOnActions means that actions cannot have subresources

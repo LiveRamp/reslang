@@ -8,7 +8,7 @@ asset-resource Directory {
 }
 
 "This configures up a file type, e.g. .gif"
-configuration-resource FileType {
+resource FileType {
 	id: string
 	type: string query
 	format: string
@@ -16,7 +16,7 @@ configuration-resource FileType {
 	/operations
 		"Get a FileType"
 		GET 
-			"Cannot find file type" 404
+			// NOTE: 404 is added automatically
 			"Not Allowed" 405
 				StandardError
 			"Forbidden" 403
@@ -25,7 +25,7 @@ configuration-resource FileType {
 		MULTIGET
 }
 
-future configuration-resource Specification {
+future resource Specification {
 	id: string
 }
 

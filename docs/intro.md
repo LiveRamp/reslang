@@ -4,27 +4,26 @@ Here is an example of a simple API for creating and manipulating files and direc
 
 (NOTE: we've used a lot of features below to illustrate them, but it tends to make the example a bit more complex than it would otherwise be...)
 
-First, the paradigm. There are 3 different resource types in Reslang, and they each live in a namespace. e.g. /file
+First, the paradigm. There are 2 different resource types in Reslang, and they each live in a namespace (aka directory). e.g. /file
 
--   a **configuration-resource** describes configuration in the system.
--   an **asset-resource** is a resource that is typically created by processing data through our system.
+-   a normal **resource** describes a noun in your system
 -   a **request-resource** is an asynchronous, long running process modeled as a resource.
 
-Each resource specifies the attributes it holds, followed by the possible operations / verbs. The reason for the three different types is that they will eventually have different audit and ownership structures - e.g. we might have full history available for configuration resources.
+Each resource specifies the attributes it holds, followed by the possible operations / verbs.
 
 ## The API
 
 Without further ado, here is the [API in reslang](../models/file):
 
 ```
-"This is a simple API for manipulating files"
+"This is a simple API for manipulating files. Note all comments in quotes end up in the Swagger as descriptions. Put them anywhere"
 namespace {
 	title "API for modeling directories and files"
 	version 1.0.0
 }
 
 "This models a directory we might create"
-asset-resource Directory {
+resource Directory {
 	id: string query
 	name: string query
 	/operations
@@ -32,15 +31,15 @@ asset-resource Directory {
 }
 
 "This configures up a file type, e.g. .gif"
-configuration-resource FileType {
+resource FileType {
 	id: string
-	type: string query
+	type: string query // a query param appears both in the body and also as a query param on MULTIGET
 	format: string
 	specId: linked Specification
+	createdAt: datetime output // an output field only appears in a GET or MULTIGET
 	/operations
 		"Get a FileType"
-		GET
-			"Cannot find file type" 404
+		GET // Note that 404 is added automatically
 			"Not Allowed" 405
 				StandardError
 			"Forbidden" 403
@@ -49,18 +48,19 @@ configuration-resource FileType {
 		MULTIGET
 }
 
-future configuration-resource Specification {
+"A future resource is something we can refer to, but we don't define yet"
+future resource Specification {
 	id: string
 }
 
 "This models a file in a directory"
 subresource Directory::File {
-	id: int
-	name: string
+	id: long
+	name: string min-length:1 max-length:100
 	url: string
-	fileTypeId: linked FileType
+	fileTypeId: linked FileType // this is how you link to another resource
 
-	contents: string queryonly
+	contents: string queryonly // a query only param only appears on a MULTIGET
 
     /operations
         GET POST MULTIGET
@@ -75,7 +75,7 @@ request-resource DirectoryDeleteRequest {
         GET POST MULTIGET
 }
 
-"This models an action on a request"
+"This models an action on a request. It can be sync or async"
 sync action DirectoryDeleteRequest::Cancel {
 	id: int
 
@@ -100,9 +100,9 @@ Finally, we have a request for deleting a directory, assuming this is a long run
 
 To create the Swagger, type the following, assuming that the file(s) live in a directory called "./file" and have the extension of .reslang:
 
-​ `reslang ./file --open`
+​ `reslang ./file --open --redoc`
 
-This copies the swagger to the clipboard (& opens the Swagger editor in the browser, allowing you to paste the clipboard into it).
+This opens the ReDoc viewer on your specification.
 
 To generate a diagram we must specify a diagram specification:
 
