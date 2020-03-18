@@ -31,7 +31,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {
             "minLength": 10,
@@ -58,7 +59,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {}
         },
@@ -82,7 +84,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -150,7 +153,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -188,7 +192,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -213,7 +218,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -238,7 +244,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }

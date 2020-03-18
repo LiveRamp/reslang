@@ -89,12 +89,12 @@ array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
 array2 = "[]" {
     return {"type": 2} }
 
-modifiers = modifiers:(_ ("mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "optional")(__ / ";"))* {
+modifiers = modifiers:(_ ("mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "representation" / "optional")(__ / ";"))* {
     var flat = modifiers.flat()
     return {mutable: flat.includes("mutable"), optional: flat.includes("optional"),
             optionalPost: flat.includes("optional-post"), optionalPut: flat.includes("optional-put"),
             optionalGet: flat.includes("optional-get"), output: flat.includes("output"),
-            queryonly: flat.includes("queryonly"), query: flat.includes("query")}
+            queryonly: flat.includes("queryonly"), query: flat.includes("query"), representation: flat.includes("representation")}
 }
 
 constraints = constraints:(_ (maxLength / minLength) (__ / ";"))* {

@@ -354,7 +354,11 @@ export default class SwagGen extends BaseGen {
             })
 
             for (const attr of el.attributes as IAttribute[]) {
-                if (attr.modifiers.query || attr.modifiers.queryonly) {
+                if (
+                    attr.modifiers.query ||
+                    attr.modifiers.queryonly ||
+                    attr.modifiers.representation
+                ) {
                     gparams.push(
                         this.addType(attr, {
                             in: "query",
@@ -499,6 +503,18 @@ export default class SwagGen extends BaseGen {
             } else {
                 if (params.length) {
                     path.get.parameters = params
+                }
+            }
+            for (const attr of el.attributes as IAttribute[]) {
+                if (attr.modifiers.representation) {
+                    path.get.parameters = path.get.parameters.concat([
+                        this.addType(attr, {
+                            in: "query",
+                            name: attr.name,
+                            description: this.translate(attr.comment),
+                            required: false
+                        })
+                    ])
                 }
             }
         }
@@ -889,7 +905,7 @@ export default class SwagGen extends BaseGen {
         const sane = camelCase(this.formTagName(def))
 
         for (const attr of attrs as IAttribute[]) {
-            if (attr.modifiers.queryonly) {
+            if (attr.modifiers.queryonly || attr.modifiers.representation) {
                 continue
             }
             // no id types for input ever

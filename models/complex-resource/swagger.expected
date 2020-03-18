@@ -84,6 +84,12 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/BrandEnum'
+        - in: query
+          name: view
+          description: ''
+          required: false
+          schema:
+            $ref: '#/components/schemas/ViewEnum'
   '/v1/cars/{id}':
     get:
       tags:
@@ -111,6 +117,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - in: query
+          name: view
+          description: ''
+          required: false
+          schema:
+            $ref: '#/components/schemas/ViewEnum'
   '/v1/cars/{carId}/wheels':
     post:
       tags:
@@ -352,6 +364,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CarOutput'
+    ViewEnum:
+      type: string
+      enum:
+        - FULL
+        - BRIEF
     Specification:
       type: object
       properties:

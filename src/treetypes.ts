@@ -102,6 +102,7 @@ export interface IModifiers {
     optionalGet: boolean
     query: boolean
     queryonly: boolean
+    representation: boolean
 }
 
 export interface IConstraints {

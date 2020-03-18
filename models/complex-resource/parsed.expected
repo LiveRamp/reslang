@@ -31,7 +31,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {
             "minLength": 10,
@@ -58,7 +59,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {}
         },
@@ -82,7 +84,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -146,7 +149,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -184,7 +188,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -209,7 +214,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -234,7 +240,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -271,7 +278,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {}
         },
@@ -295,7 +303,8 @@
             "optionalGet": false,
             "output": true,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -319,7 +328,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {}
         },
@@ -343,7 +353,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -367,7 +378,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -392,7 +404,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -417,7 +430,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -445,7 +459,33 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "view",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "ViewEnum",
+            "name": "ViewEnum",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": true
           },
           "constraints": {}
         }
@@ -476,6 +516,21 @@
       "generateOutput": true
     },
     {
+      "type": "enum",
+      "parents": [],
+      "short": "ViewEnum",
+      "literals": [
+        "FULL",
+        "BRIEF"
+      ],
+      "name": "ViewEnum",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "resources.reslang",
+      "generateInput": true
+    },
+    {
       "type": "structure",
       "parents": [],
       "short": "Specification",
@@ -501,7 +556,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -525,7 +581,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -563,7 +620,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": true
+            "query": true,
+            "representation": false
           },
           "constraints": {}
         },
@@ -587,7 +645,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }
@@ -666,7 +725,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -691,7 +751,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         },
@@ -716,7 +777,8 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false
+            "query": false,
+            "representation": false
           },
           "constraints": {}
         }

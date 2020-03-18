@@ -1,6 +1,5 @@
+
 // A garage is a place to store cars
-// hello
-// opdaslads
 "This is a description of a garage"
 resource Garage {
 	// simple id 

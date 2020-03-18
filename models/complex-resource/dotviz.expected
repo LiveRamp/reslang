@@ -12,7 +12,10 @@ digraph G {
                     <tr><td><b>Manufacturer        </b></td></tr>        <hr/><tr><td align="left">company: string</td></tr></table> >];
 "Car" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Car        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">bought: date (out)</td></tr><tr><td align="left">brand: BrandEnum</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id bought brand engine components homeGarageId manufacturer rentedGarageIds</font></td></tr>"}</table>>];
+                    <tr><td><b>Car        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">bought: date (out)</td></tr><tr><td align="left">brand: BrandEnum</td></tr><tr><td align="left">view: ViewEnum</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id bought brand engine components homeGarageId manufacturer rentedGarageIds view</font></td></tr>"}</table>>];
+"ViewEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>ViewEnum  </b></td></tr><hr/><tr><td align="left">FULL</td></tr><tr><td align="left">BRIEF</td></tr></table>>];
 "Specification" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Specification        </b></td></tr>        <hr/><tr><td align="left">type: string</td></tr><tr><td align="left">documentation: string</td></tr></table> >];
