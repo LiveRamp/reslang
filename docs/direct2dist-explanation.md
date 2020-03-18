@@ -44,7 +44,7 @@ The id field is always mandatory on any element which can be retrieved via id. I
 Note that the destinationEndpointId is a link to a Destination::Endpoint subresource. This resource has not been fully defined yet, so we declare it as a future resource. This means we won't generate Swagger for it, but can still refer to it.
 
 ```
-future configuration-resource Destination {
+future resource Destination {
     id: int
 }
 

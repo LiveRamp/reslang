@@ -91,7 +91,7 @@
       "comment": "This configures up a file type, e.g. .gif",
       "future": false,
       "singleton": false,
-      "type": "configuration-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -202,10 +202,6 @@
             {
               "codes": [
                 {
-                  "code": "404",
-                  "comment": "Cannot find file type"
-                },
-                {
                   "code": "405",
                   "comment": "Not Allowed"
                 }
@@ -258,7 +254,7 @@
     {
       "future": true,
       "singleton": false,
-      "type": "configuration-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",

@@ -78,6 +78,7 @@ export default class SwagGen extends BaseGen {
                 let params: any[] = []
                 let pname = el.parentName
                 let major = getVersion(el.short)
+                let first = true
                 while (pname) {
                     const actual = this.extractDefinition(pname)
                     if (!actual.parentName) {
@@ -93,16 +94,13 @@ export default class SwagGen extends BaseGen {
                         full = pluralizeName(full)
                     }
                     pname = actual.parentName
-                    if (action && el.resourceLevel) {
+                    if (action && el.resourceLevel && first) {
                         parents = `/${full}` + parents
                     } else {
                         parents = `/${full}/\{${singular}Id\}` + parents
-                    }
-                    if (action && el.resourceLevel && !params.length) {
-                        // skip first parent parameter for resource level actions
-                    } else {
                         this.addParentPathParam(params, actual, singular + "Id")
                     }
+                    first = false
                 }
                 // reverse the order so it looks more natural
                 params = params.reverse()
