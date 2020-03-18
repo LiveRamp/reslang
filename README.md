@@ -27,6 +27,7 @@ Test it out by typing:
 This should bring up the options.
 
 ## Running in Docker
+
 Individuals who do not want to build Reslang from scratch are free to use the `reslang-docker` script which provides convenient, but limited, functionality with a reslang container.
 This script outputs the generated swagger to STDOUT and requires an absolute path to function.
 
@@ -40,25 +41,21 @@ To create swagger, you first create a reslang file. Then you simply ask the resl
 
 Note that the models directory has a set of example definitions.
 
-    ./reslang models/simple-resource.reslang
+The following copies the swagger to the clipboard and opens the Swagger editor for you. You will then have to paste into the editor.
 
-This will copy the swagger into the clipboard. If you want it to stdout also, use --stdout.
+    ./reslang models/simple-resource --open
 
-If you want it to open the swagger editor for you, use --open. You will then have to paste the clipboard into the editor.
+If you want just want to print to stdout use:
 
-    ./reslang models/simple-resource.reslang --open
+    ./reslang models/simple-resource --stdout
 
 ## Viewing in ReDoc
 
-ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use this, first install the redoc-cli command:
+ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use this, type:
 
-`npm -g install redoc-cli`
+    ./reslang models/simple-resource --open --redoc
 
-Then copy the swagger into a file, say swagger.yaml, and serve it up using:
-
-`redoc-cli serve --watch swagger.yaml`
-
-Finally, point your browser at localhost:8080
+You're welcome.
 
 ## Creating a graphical view
 
@@ -66,10 +63,6 @@ Reslang can generate dotviz output, which provides a nice graphical view of the 
 
 The following command will copy the dotviz output to the clipboard.
 
-    ./reslang models/simple-resource.reslang --diagram name
+    ./reslang models/simple-resource.reslang --open --diagram main
 
-Note that you will need to make a diagram definition first. See [here](./docs/diagrams.md) for how it is done.
-
-If you use the --open switch, it will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
-
-    ./reslang models/simple-resource.reslang --diagram name --open
+This will open your browser at a nice graphviz online editor. Paste the clipboard into the editor and you will get your graphical view.
