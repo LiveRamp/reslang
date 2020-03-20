@@ -3,11 +3,18 @@ import peg from "pegjs"
 import { IDefinition, PrimitiveType, IDiagram, IReference } from "./treetypes"
 import * as path from "path"
 
-export function readFile(name: string) {
-    return fs.readFileSync(name, { encoding: "utf8" })
+export function readFile(...parts: string[]) {
+    return fs.readFileSync(path.join(...parts), { encoding: "utf8" })
 }
 
-const grammar = readFile(path.join(__dirname, "grammar.pegjs"))
+// grammar is split into 3 separate parts
+const grammar =
+    readFile(__dirname, "grammar", "main.pegjs") +
+    readFile(__dirname, "grammar", "rest.pegjs") +
+    readFile(__dirname, "grammar", "events.pegjs") +
+    readFile(__dirname, "grammar", "diagrams.pegjs") +
+    readFile(__dirname, "grammar", "attributes.pegjs") +
+    readFile(__dirname, "grammar", "base.pegjs")
 
 export function loadParser() {
     try {

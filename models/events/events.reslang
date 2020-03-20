@@ -1,0 +1,21 @@
+
+event StartSignal {
+    /header
+        header: Header inline
+    /payload
+        name: string
+        address: string[1..10]
+}
+
+event StopSignal {
+    /header
+        header: Header inline
+    /payload
+        stopped: datetime
+}
+
+structure Header {
+    id: int
+    type: string
+}
+
