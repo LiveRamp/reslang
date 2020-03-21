@@ -6,7 +6,22 @@ import {
     capitalizeFirst,
     lowercaseFirst
 } from "./names"
-import { IDefinition, IAttribute, IOperation, ResourceType } from "./treetypes"
+import {
+    IDefinition,
+    IAttribute,
+    IOperation,
+    ResourceLike,
+    isResourceLike,
+    IResourceLike,
+    AnyKind,
+    IEnum,
+    IUnion,
+    isStructure,
+    isUnion,
+    isEnum,
+    IStructure,
+    isAction
+} from "./treetypes"
 import { BaseGen } from "./genbase"
 import { isPrimitiveType } from "./parse"
 enum Verbs {
@@ -55,32 +70,28 @@ export default class SwagGen extends BaseGen {
 
         // tags
         const tagKeys = {}
-        this.formTags(this.defs, tags, tagKeys)
+        this.formTags(tags, tagKeys)
 
         // form the paths
         for (const el of this.defs) {
             // don't generate for any imported def
-            if (el.secondary || el.future) {
+            if (el.secondary) {
                 continue
             }
-            if (
-                [
-                    "resource",
-                    "asset-resource",
-                    "configuration-resource",
-                    "subresource",
-                    "request-resource",
-                    "action"
-                ].includes(el.type)
-            ) {
-                const action = el.type === "action"
+            if (isResourceLike(el)) {
+                if (el.future) {
+                    continue
+                }
+                const action = isAction(el)
                 let parents = ""
                 let params: any[] = []
                 let pname = el.parentName
                 let major = getVersion(el.short)
                 let first = true
                 while (pname) {
-                    const actual = this.extractDefinition(pname)
+                    const actual = this.extractDefinition(
+                        pname
+                    ) as IResourceLike
                     if (!actual.parentName) {
                         major = getVersion(actual.short)
                     }
@@ -90,7 +101,11 @@ export default class SwagGen extends BaseGen {
                     }
                     const singular = lowercaseFirst(camelCase(actual.short))
                     let full = snakeCase(actual.short)
-                    if (!actual.singleton && actual.type !== "action") {
+                    if (
+                        isResourceLike(actual) &&
+                        !actual.singleton &&
+                        actual.type !== "action"
+                    ) {
                         full = pluralizeName(full)
                     }
                     pname = actual.parentName
@@ -197,7 +212,7 @@ export default class SwagGen extends BaseGen {
     }
 
     private formNonIdOperations(
-        el: IDefinition,
+        el: IResourceLike,
         path: any,
         params: any[],
         tagKeys: { [key: string]: string },
@@ -408,7 +423,7 @@ export default class SwagGen extends BaseGen {
     private makeProperty(attr: IAttribute): { name: string; prop: any } {
         const def = this.extractDefinitionGently(attr.type.name)
         let name = attr.name
-        if (def && ResourceType.includes(def.type)) {
+        if (def && ResourceLike.includes(def.type)) {
             if (attr.array && !name.endsWith("s")) {
                 name = name + "s"
             }
@@ -422,7 +437,7 @@ export default class SwagGen extends BaseGen {
 
     private addParentPathParam(
         paths: any[],
-        parent: IDefinition,
+        parent: IResourceLike,
         name: string
     ) {
         if (!parent.singleton) {
@@ -437,7 +452,7 @@ export default class SwagGen extends BaseGen {
     }
 
     private formIdOperations(
-        el: IDefinition,
+        el: IResourceLike,
         path: any,
         params: any[],
         singleton: boolean,
@@ -769,18 +784,14 @@ export default class SwagGen extends BaseGen {
             )
         } else {
             // is this a structure, an enum or a linked resource
-            const def = this.extractDefinition(name)
-            switch (def.type) {
+            const def = this.extractDefinition(name) as AnyKind
+            switch (def.kind) {
                 case "structure":
                 case "union":
                 case "enum":
                     schema.$ref = `#/components/schemas/${sane}`
                     break
-                case "request-resource":
-                case "resource":
-                case "asset-resource":
-                case "configuration-resource":
-                case "subresource":
+                case "resource-like":
                     // must have a linked annotation
                     if (!attr.linked) {
                         throw new Error(
@@ -832,18 +843,14 @@ export default class SwagGen extends BaseGen {
     }
 
     // add resource level suffix if needed
-    private formTagName(def: IDefinition) {
+    private formTagName(def: IResourceLike) {
         return def.name + (def.resourceLevel ? "_R" : "")
     }
 
-    private formTags(
-        defs: IDefinition[],
-        tags: any[],
-        tagKeys: { [key: string]: string }
-    ) {
-        for (const el of defs) {
+    private formTags(tags: any[], tagKeys: { [key: string]: string }) {
+        for (const el of this.defs) {
             // don't generate for any imported def
-            if (el.secondary || el.future) {
+            if (el.secondary || !isResourceLike(el) || el.future) {
                 continue
             }
             const name = this.formTagName(el)
@@ -881,7 +888,7 @@ export default class SwagGen extends BaseGen {
 
     private addDefinition(
         definitions: any,
-        def: IDefinition,
+        def: IResourceLike,
         verb: Verbs,
         suffix: string
     ) {
@@ -930,26 +937,74 @@ export default class SwagGen extends BaseGen {
                 (verb === Verbs.PUT && attr.modifiers.optionalPut) ||
                 (verb === Verbs.GET && attr.modifiers.optionalGet)
 
-            if (!optional) {
-                required.push(attr.name)
-            }
             if (attr.inline) {
-                const indef = this.extractDefinition(attr.type.name)
-                if (indef.type !== "structure") {
-                    throw new Error(
-                        "Inline attribute " +
-                            attr.name +
-                            " of " +
-                            def.short +
-                            " has to be a structure"
-                    )
-                }
-                for (const att of indef.attributes || []) {
-                    const prop = this.makeProperty(att)
-                    properties[prop.name] = prop.prop
-                }
+                this.unpackInlineAttributes(attr, def, properties, required)
             } else {
                 const prop = this.makeProperty(attr)
+                properties[prop.name] = prop.prop
+                if (!optional) {
+                    required.push(attr.name)
+                }
+            }
+        }
+
+        if (request.required.length === 0) {
+            delete request.required
+        }
+
+        if (Object.keys(properties).length !== 0) {
+            definitions[sane + suffix] = request
+        } else {
+            this.empty.add(sane + suffix)
+        }
+    }
+
+    private addEnumDefinition(definitions: any, def: IEnum, suffix: string) {
+        const name = camelCase(def.name) + suffix
+        const en = {
+            type: "string",
+            description: def.comment,
+            enum: def.literals
+        }
+        definitions[name] = en
+    }
+
+    private addStructureDefinition(
+        definitions: any,
+        def: IStructure,
+        suffix: string
+    ) {
+        const attrs = def.attributes || []
+        const properties: any = {}
+        const required: string[] = []
+        const request = {
+            type: "object",
+            properties,
+            required,
+            description: def.comment
+        } as {
+            type: string
+            properties: any
+            required: string[]
+            description: string
+            allOf: {}
+        }
+        const sane = camelCase(def.name) + suffix
+
+        for (const attr of attrs as IAttribute[]) {
+            if (attr.modifiers.queryonly || attr.modifiers.representation) {
+                continue
+            }
+            // if this optional?
+            const optional = attr.modifiers.optional
+
+            if (attr.inline) {
+                this.unpackInlineAttributes(attr, def, properties, required)
+            } else {
+                const prop = this.makeProperty(attr)
+                if (!optional) {
+                    required.push(attr.name)
+                }
                 properties[prop.name] = prop.prop
             }
         }
@@ -965,23 +1020,9 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private addEnumDefinition(
-        definitions: any,
-        def: IDefinition,
-        suffix: string
-    ) {
-        const name = camelCase(def.name) + suffix
-        const en = {
-            type: "string",
-            description: def.comment,
-            enum: def.literals
-        }
-        definitions[name] = en
-    }
-
     private addUnionDefinition(
         definitions: any,
-        def: IDefinition,
+        def: IUnion | IStructure,
         suffix: string
     ) {
         const attrs = def.attributes || []
@@ -1017,23 +1058,7 @@ export default class SwagGen extends BaseGen {
         for (const attr of attrs) {
             const properties: any = {}
             if (attr.inline) {
-                const indef = this.extractDefinition(attr.type.name)
-                if (indef.type !== "structure") {
-                    throw new Error(
-                        "Inline attribute " +
-                            attr.name +
-                            " of " +
-                            def.short +
-                            " has to be a structure"
-                    )
-                }
-                for (const att of indef.attributes || []) {
-                    const prop = this.makeProperty(att)
-                    properties[prop.name] = prop.prop
-                    if (!att.modifiers.optional) {
-                        required.push(att.name)
-                    }
-                }
+                this.unpackInlineAttributes(attr, def, properties, required)
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
                 if (!attr.modifiers.optional) {
@@ -1055,20 +1080,35 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    private unpackInlineAttributes(
+        attr: IAttribute,
+        def: IDefinition,
+        properties: any,
+        required: string[]
+    ) {
+        const indef = this.extractDefinition(attr.type.name)
+        if (!isStructure(indef)) {
+            throw new Error(
+                "Inline attribute " +
+                    attr.name +
+                    " of " +
+                    def.short +
+                    " has to be a structure"
+            )
+        }
+        for (const att of indef.attributes || []) {
+            const prop = this.makeProperty(att)
+            properties[prop.name] = prop.prop
+            if (!att.modifiers.optional) {
+                required.push(att.name)
+            }
+        }
+    }
+
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
             const sane = camelCase(def.name)
-            if (
-                [
-                    "asset-resource",
-                    "resource",
-                    "configuration-resource",
-                    "subresource",
-                    "request-resource",
-                    "action"
-                ].includes(def.type) &&
-                !def.secondary
-            ) {
+            if (isResourceLike(def) && !def.secondary) {
                 if (def.generateInput) {
                     this.addDefinition(definitions, def, Verbs.POST, "Input")
                 }
@@ -1107,13 +1147,13 @@ export default class SwagGen extends BaseGen {
                     definitions[sane + "MultiResponse"] = full
                 }
             }
-            if ("structure" === def.type && def.generateInput) {
-                this.addDefinition(definitions, def, Verbs.POST, "")
+            if (isStructure(def) && def.generateInput) {
+                this.addStructureDefinition(definitions, def, "")
             }
-            if ("union" === def.type && def.generateInput) {
+            if (isUnion(def) && def.generateInput) {
                 this.addUnionDefinition(definitions, def, "")
             }
-            if ("enum" === def.type && def.generateInput) {
+            if (isEnum(def) && def.generateInput) {
                 this.addEnumDefinition(definitions, def, "")
             }
         }

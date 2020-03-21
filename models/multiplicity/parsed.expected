@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -168,6 +169,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

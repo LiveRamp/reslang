@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -82,6 +83,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": true,
       "type": "subresource",
@@ -135,6 +137,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": true,
       "type": "asset-resource",
@@ -186,6 +189,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": true,
       "type": "subresource",
@@ -239,6 +243,7 @@
       "generateOutput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

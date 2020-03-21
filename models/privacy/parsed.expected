@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -203,6 +204,7 @@
       "generateOutput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "DataController",
@@ -291,6 +293,7 @@
       "generateInput": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "RequestType",
@@ -306,6 +309,7 @@
       "generateInput": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "IdentifierType",
@@ -325,6 +329,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

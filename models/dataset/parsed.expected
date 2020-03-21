@@ -5,6 +5,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": true,
       "singleton": false,
       "type": "asset-resource",
@@ -44,6 +45,7 @@
       "file": "dataset.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -366,6 +368,7 @@
       "generatePuttable": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "FieldTypeEnum",
@@ -381,6 +384,7 @@
       "generateInput": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "ValueCollectionTypeEnum",
@@ -397,6 +401,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Redirection",
@@ -435,6 +440,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

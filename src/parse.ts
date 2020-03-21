@@ -1,6 +1,14 @@
 import fs from "fs"
 import peg from "pegjs"
-import { IDefinition, PrimitiveType, IDiagram, IReference } from "./treetypes"
+import {
+    IDefinition,
+    PrimitiveType,
+    IDiagram,
+    IReference,
+    getAllAttributes,
+    isResourceLike,
+    AnyKind
+} from "./treetypes"
 import * as path from "path"
 
 export function readFile(...parts: string[]) {
@@ -47,7 +55,7 @@ export function parseFile(
             `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
         )
     }
-    addNamespace(tree[2] as IDefinition[], parsingNamespace, mainNamespace)
+    addNamespace(tree[2] as AnyKind[], parsingNamespace, mainNamespace)
     addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
     return tree
 }
@@ -73,7 +81,7 @@ function convert(ref: IReference, namespace: string, mainNamespace: string) {
 }
 
 function addNamespace(
-    defs: IDefinition[],
+    defs: AnyKind[],
     namespace: string,
     mainNamespace: string
 ) {
@@ -83,14 +91,16 @@ function addNamespace(
         convert(def, namespace, mainNamespace)
 
         // add to all references
-        for (const attr of def.attributes || []) {
+        for (const attr of getAllAttributes(def)) {
             convert(attr.type, namespace, mainNamespace)
         }
 
         // convert the error references
-        for (const op of def.operations || []) {
-            for (const err of op.errors) {
-                convert(err.struct, namespace, mainNamespace)
+        if (isResourceLike(def)) {
+            for (const op of def.operations || []) {
+                for (const err of op.errors) {
+                    convert(err.struct, namespace, mainNamespace)
+                }
             }
         }
     }

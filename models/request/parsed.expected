@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "request-resource",
@@ -137,6 +138,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": true,
       "type": "subresource",
@@ -235,6 +237,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -341,6 +344,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -448,6 +452,7 @@
       "generateOutput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Record",
@@ -511,6 +516,7 @@
       "generateInput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -585,6 +591,7 @@
       "generateInput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -664,6 +671,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -744,6 +752,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -825,6 +834,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -907,6 +917,7 @@
       "generateOutput": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "UploadRequestStatusEnum",
@@ -923,6 +934,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

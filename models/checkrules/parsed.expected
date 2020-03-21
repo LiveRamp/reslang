@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "configuration-resource",
@@ -132,6 +133,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -210,6 +212,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -289,6 +292,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "comment": "Start processing",
       "future": false,
       "singleton": false,
@@ -371,6 +375,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -451,6 +456,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -494,6 +500,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -533,6 +540,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

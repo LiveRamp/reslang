@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "A Car Garage",
       "future": false,
       "singleton": false,
@@ -172,6 +173,7 @@
       "generateOutput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

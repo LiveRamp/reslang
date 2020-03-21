@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "This models a directory we might create",
       "future": false,
       "singleton": false,
@@ -88,6 +89,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "comment": "This configures up a file type, e.g. .gif",
       "future": false,
       "singleton": false,
@@ -252,6 +254,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "future": true,
       "singleton": false,
       "type": "resource",
@@ -291,6 +294,7 @@
       "file": "file.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "This models a file in a directory",
       "future": false,
       "singleton": false,
@@ -450,6 +454,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "comment": "This models a long running request",
       "future": false,
       "singleton": false,
@@ -532,6 +537,7 @@
       "generateOutput": true
     },
     {
+      "kind": "resource-like",
       "comment": "This models an action on a request",
       "future": false,
       "singleton": false,
@@ -582,6 +588,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "SpecialError",
@@ -646,6 +653,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

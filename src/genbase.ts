@@ -7,8 +7,12 @@ import {
     IDiagram,
     IDocumentation,
     IDocEntry,
-    ResourceType,
-    IReference
+    ResourceLike,
+    IReference,
+    isResourceLike,
+    IResourceLike,
+    AnyKind,
+    getAllAttributes
 } from "./treetypes"
 import { parseFile } from "./parse"
 import { readdirSync } from "fs"
@@ -20,7 +24,7 @@ const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 export abstract class BaseGen {
     protected namespace!: INamespace
     protected mainNamespace?: string
-    protected defs: IDefinition[] = []
+    protected defs: AnyKind[] = []
     protected diagrams: IDiagram[] = []
     protected documentation: { [name: string]: IDocEntry[] } = {}
     private loaded = new Set<string>()
@@ -83,7 +87,7 @@ export abstract class BaseGen {
                     this.processDefinition(path + imp.import, false)
                 }
                 // copy over all the defs
-                for (const def of local[2] as IDefinition[]) {
+                for (const def of local[2] as AnyKind[]) {
                     def.secondary = !reallyMain
                     def.file = lst.file
                     this.defs.push(def)
@@ -119,7 +123,7 @@ export abstract class BaseGen {
             // is the resource too deep?
             if (
                 maxResource &&
-                ResourceType.includes(def.type) &&
+                ResourceLike.includes(def.type) &&
                 def.parents.length >= maxResource
             ) {
                 throw new Error(
@@ -153,9 +157,12 @@ You can only add actions to request resources`
             }
 
             // if a config resource, check outgoing links only to other configs or subresources of configs
-            if (this.rules.onlyConfigToConfig) {
+            if (this.rules.onlyConfigToConfig && isResourceLike(def)) {
                 const myType = this.getTopLevelType(def)
-                if (myType.type === "configuration-resource") {
+                if (
+                    isResourceLike(myType) &&
+                    myType.type === "configuration-resource"
+                ) {
                     for (const attr of def.attributes || []) {
                         if (attr.linked) {
                             const linkType = this.getTopLevelType(attr.type)
@@ -195,7 +202,7 @@ Actions cannot have subresources`
         }
     }
 
-    protected extractDefinition(definitionName: string) {
+    protected extractDefinition(definitionName: string): AnyKind {
         const def = this.extractDefinitionGently(definitionName)
         if (def) {
             return def
@@ -214,14 +221,14 @@ Actions cannot have subresources`
 
     protected extractDefinitionId(definitionName: string) {
         for (const def of this.defs) {
-            if (def.name === definitionName) {
+            if (isResourceLike(def) && def.name === definitionName) {
                 return this.extractId(def)
             }
         }
         throw new Error("Cannot find definition for " + definitionName)
     }
 
-    protected extractId(node: IDefinition): IAttribute {
+    protected extractId(node: IResourceLike): IAttribute {
         if (node.attributes) {
             for (const attr of node.attributes) {
                 if (attr.name === "id") {
@@ -238,20 +245,14 @@ Actions cannot have subresources`
         // handle each primary structure and work out if we should generate structures for it
         for (const el of this.defs) {
             // don't generate for any imported def
-            if (el.secondary || el.future) {
+            if (el.secondary) {
                 continue
             }
 
-            if (
-                [
-                    "asset-resource",
-                    "resource",
-                    "configuration-resource",
-                    "subresource",
-                    "request-resource",
-                    "action"
-                ].includes(el.type)
-            ) {
+            if (isResourceLike(el)) {
+                if (el.future) {
+                    continue
+                }
                 const post = this.extractOp(el, "POST")
                 const multiget = this.extractOp(el, "MULTIGET")
 
@@ -278,25 +279,25 @@ Actions cannot have subresources`
                 if (get) {
                     el.generateOutput = true
                 }
-            }
 
-            // now work out if attributes reference any structures or other resources
-            for (const attr of el.attributes || []) {
-                const def = this.extractDefinitionGently(attr.type.name)
-                if (def && !attr.inline && !attr.linked) {
-                    def.generateInput = true
+                // now process errors
+                if (includeErrors) {
+                    for (const op of el.operations || []) {
+                        for (const err of op.errors || []) {
+                            // locate the error type and mark it for generation
+                            this.extractDefinition(
+                                err.struct.name
+                            ).generateInput = true
+                        }
+                    }
                 }
             }
 
-            // now process errors
-            if (includeErrors) {
-                for (const op of el.operations || []) {
-                    for (const err of op.errors || []) {
-                        // locate the error type and mark it for generation
-                        this.extractDefinition(
-                            err.struct.name
-                        ).generateInput = true
-                    }
+            // now work out if attributes reference any structures or other resources
+            for (const attr of getAllAttributes(el) || []) {
+                const def = this.extractDefinitionGently(attr.type.name)
+                if (def && !attr.inline && !attr.linked) {
+                    def.generateInput = true
                 }
             }
         }

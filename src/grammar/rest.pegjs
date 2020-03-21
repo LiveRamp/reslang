@@ -5,6 +5,7 @@ resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ 
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
+        kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type, 
         attributes: attributes, operations: operations,
         parents: [], short: respath.short}
@@ -14,6 +15,7 @@ subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"?
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
+        kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type, 
         attributes: attributes, operations: operations,
         parents: respath.parents, short: respath.short}
@@ -23,6 +25,7 @@ action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ re
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
+        kind: "resource-like",
         comment: comment, future: !!future, singleton: false, type: "action", async: async == "async", 
         attributes: attributes, operations: operations,
         parents: respath.parents, short: respath.short,

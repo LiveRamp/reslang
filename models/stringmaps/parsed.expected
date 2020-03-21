@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -185,6 +186,7 @@
       "generatePuttable": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Struct1",
@@ -222,6 +224,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Struct2",
@@ -285,6 +288,7 @@
       "generateInput": true
     },
     {
+      "kind": "union",
       "type": "union",
       "parents": [],
       "short": "InputKey",
@@ -373,6 +377,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Struct3",
@@ -460,6 +465,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

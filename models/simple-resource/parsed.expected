@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "This is a description of a garage",
       "future": false,
       "singleton": false,
@@ -127,6 +128,7 @@
       "generatePuttable": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Manufacturer",
@@ -167,6 +169,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

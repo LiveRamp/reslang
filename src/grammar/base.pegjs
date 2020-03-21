@@ -2,7 +2,7 @@
 enum = _ comment:description? _ "enum"  _ name:name _ "{" _
     literals:literal+ _
 "}" _ ";"? _ {
-    return {"type": "enum", parents: [], "short": name, "comment": comment, "literals": literals}
+    return {"kind": "enum", "type": "enum", parents: [], "short": name, "comment": comment, "literals": literals}
 }
 literal = _ comment:description? _ name:literalname _ ";"? _ { return name }
 literalname "literalname" = name:([a-zA-Z0-9_:\-]+) { return name.flat().join(""); }

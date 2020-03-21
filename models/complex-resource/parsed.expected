@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "This is a description of a garage",
       "future": false,
       "singleton": false,
@@ -123,6 +124,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Manufacturer",
@@ -163,6 +165,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -253,6 +256,7 @@
       "file": "local.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "this is a Car resource",
       "future": false,
       "singleton": false,
@@ -516,6 +520,7 @@
       "generateOutput": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "ViewEnum",
@@ -531,6 +536,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Specification",
@@ -595,6 +601,7 @@
       "generateInput": true
     },
     {
+      "kind": "resource-like",
       "comment": "A wheel is owned by a car",
       "future": false,
       "singleton": false,
@@ -684,6 +691,7 @@
       "generatePuttable": true
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "BrandEnum",
@@ -700,6 +708,7 @@
       "generateInput": true
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",

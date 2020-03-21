@@ -13,6 +13,7 @@ event = _ comment:description? _ "event" _ name:resname _ "{" _
     header:header? _ payload:payload? _
 "}" _ ";"? _ {
     return {
+        kind: "event",
         type: "event",
         comment: comment, 
         name: name,
