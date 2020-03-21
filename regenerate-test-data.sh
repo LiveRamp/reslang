@@ -4,17 +4,17 @@ apis=(dataset checkrules privacy optionality authorization complex-resource patc
 
 echo "Regenerating swagger files"
 echo "---"
-    ./reslang --ignorerules ${apis[@]} --testdir ./models --testwrite swagger.expected
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite swagger.expected
 echo
 echo "---"
 echo "Regenerating parse tree files"
 echo "---"
-    ./reslang --ignorerules ${apis[@]} --testdir ./models --testwrite parsed.expected --parsed
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite parsed.expected --parsed
 echo
 echo "---"
 echo "Regenerating Dotviz files"
 echo "---"
-    ./reslang --ignorerules ${apis[@]} --testdir ./models --testwrite dotviz.expected --diagram main 
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite dotviz.expected --diagram main 
 echo
 echo "---"
 
