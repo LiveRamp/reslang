@@ -12,19 +12,21 @@
 event = _ comment:description? _ "event" _ name:resname _ "{" _
     header:header? _ payload:payload? _
 "}" _ ";"? _ {
+
     return {
         kind: "event",
         type: "event",
         comment: comment, 
-        name: name,
+        parents: [],
+        short: name,
         header: header,
         payload: payload}
 }
 
 header = _ "/header" _ attrs:attributes+ _ {
-    return attrs;
+    return attrs[0];
 }
 
 payload = _ "/payload" _ attrs:attributes+ _ {
-    return attrs;
+    return attrs[0];
 }

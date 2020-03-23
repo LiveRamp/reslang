@@ -1,4 +1,13 @@
 
+
+resource System {
+    name: string
+    number: int optional
+
+    /operations
+        EVENTS
+}
+
 event StartSignal {
     /header
         header: Header inline

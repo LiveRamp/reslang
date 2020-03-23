@@ -205,6 +205,8 @@ export function getAllAttributes(el: AnyKind) {
             return el.attributes || []
         case "union":
             return el.attributes || []
+        case "event":
+            return el.payload || []
         default:
             return []
     }

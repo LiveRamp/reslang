@@ -1,5 +1,4 @@
 import {
-    IDefinition,
     IDiagram,
     isEnum,
     isAction,
@@ -25,9 +24,6 @@ interface ILink {
 
 export default class DotvizGen extends BaseGen {
     public generate(diagramName: string) {
-        // don't include errors
-        this.markGenerate(false)
-
         const diagram = (this.diagrams || []).find(
             diag => diag.diagram === diagramName
         )
