@@ -22,8 +22,5 @@ function compare(module: string) {
         readFile(`models/${module}/testdata/swagger.expected`)
     )
 
-    if (got !== expected) {
-        console.log(got)
-    }
     expect(got).toBe(expected)
 }
