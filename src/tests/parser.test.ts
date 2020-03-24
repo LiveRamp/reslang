@@ -1,6 +1,7 @@
 import { parseFile, readFile } from "../parse"
 import { strip } from "./utilities"
 import ParseGen from "../genparse"
+import { allModels } from "./allmodels"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
@@ -16,67 +17,8 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
-    test("dataset", () => {
-        compare("dataset")
-    })
-
-    test("checkrules", () => {
-        compare("checkrules")
-    })
-
-    test("privacy", () => {
-        compare("privacy")
-    })
-    test("optionality", () => {
-        compare("optionality")
-    })
-
-    test("authorization", () => {
-        compare("authorization")
-    })
-
-    test("patchable", () => {
-        compare("patchable")
-    })
-
-    test("complex-resource", () => {
-        compare("complex-resource")
-    })
-
-    test("direct2dist", () => {
-        compare("direct2dist")
-    })
-
-    test("distribution", () => {
-        compare("distribution")
-    })
-
-    test("file", () => {
-        compare("file")
-    })
-
-    test("request", () => {
-        compare("request")
-    })
-
-    test("simple-resource", () => {
-        compare("simple-resource")
-    })
-
-    test("singleton", () => {
-        compare("singleton")
-    })
-
-    test("stringmaps", () => {
-        compare("stringmaps")
-    })
-
-    test("upversion", () => {
-        compare("upversion")
-    })
-
-    test("multiplicity", () => {
-        compare("multiplicity")
+    test.each(allModels)("parser(%s)", a => {
+        compare(a)
     })
 })
 

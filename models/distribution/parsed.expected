@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook",
       "future": false,
       "singleton": false,
@@ -85,12 +86,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "destination.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -197,13 +196,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "destination.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store",
       "future": false,
       "singleton": false,
@@ -345,13 +341,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "destination.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "IdentifierTypeMapping",
@@ -413,10 +406,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true
+      "file": "destination.reslang"
     },
     {
+      "kind": "resource-like",
       "future": true,
       "singleton": false,
       "type": "configuration-resource",
@@ -456,6 +449,7 @@
       "file": "destination.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -671,13 +665,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "endpoint.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "EndpointProperty",
@@ -762,10 +753,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true
+      "file": "endpoint.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -868,12 +859,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -951,12 +940,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -1059,12 +1046,10 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "CompressionTypeEnum",
@@ -1078,10 +1063,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "enums.reslang",
-      "generateInput": true
+      "file": "enums.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "ProtocolEnum",
@@ -1113,10 +1098,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "enums.reslang",
-      "generateInput": true
+      "file": "enums.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -1204,8 +1189,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

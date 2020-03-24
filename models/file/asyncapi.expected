@@ -1,0 +1,170 @@
+asyncapi: 2.0.0
+info:
+  title: API for modeling directories and files
+  description: This is a simple API for manipulating files
+  version: 1.0.0
+servers:
+  production:
+    url: 'pubsub.liveramp.com:{port}'
+    protocol: Google Cloud Pub/Sub
+    description: LiveRamp Production pubsub instance
+    variables:
+      port:
+        description: Secure connection (TLS) is available through port 8883
+        default: '1883'
+        enum:
+          - '1883'
+defaultContentType: application/json
+channels:
+  rest-file-v1-directory-file:
+    description: This models a file in a directory
+    publish:
+      summary: 'REST: This models a file in a directory'
+      operationId: 'Directory::File'
+      message:
+        $ref: '#/components/messages/DirectoryFile'
+  rest-file-v1-directory-delete-request:
+    description: This models a long running request
+    publish:
+      summary: 'REST: This models a long running request'
+      operationId: DirectoryDeleteRequest
+      message:
+        $ref: '#/components/messages/DirectoryDeleteRequest'
+  adhoc-file-v1-directory-delete-incomplete:
+    publish:
+      operationId: DirectoryDeleteIncomplete
+      message:
+        $ref: '#/components/messages/DirectoryDeleteIncomplete'
+components:
+  messages:
+    DirectoryFile:
+      name: DirectoryFile
+      title: DirectoryFile
+      summary: This models a file in a directory
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RestHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryFile'
+    DirectoryDeleteRequest:
+      name: DirectoryDeleteRequest
+      title: DirectoryDeleteRequest
+      summary: This models a long running request
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RestHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryDeleteRequest'
+    DirectoryDeleteIncomplete:
+      name: DirectoryDeleteIncomplete
+      title: DirectoryDeleteIncomplete
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/DirectoryDeleteIncompleteHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryDeleteIncomplete'
+  schemas:
+    DirectoryFile:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        name:
+          description: ''
+          type: string
+        url:
+          description: ''
+          type: string
+        fileTypeId:
+          description: ''
+          type: string
+          example: Link to a FileType resource via its id
+      required:
+        - id
+        - name
+        - url
+        - fileTypeId
+      description: This models a file in a directory
+    DirectoryDeleteRequest:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        directoryId:
+          description: ''
+          type: string
+          example: Link to a Directory resource via its id
+      required:
+        - id
+        - directoryId
+      description: This models a long running request
+    DirectoryDeleteIncompleteHeader:
+      type: object
+      properties:
+        timeOfFailure:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - timeOfFailure
+    DirectoryDeleteIncomplete:
+      type: object
+      properties:
+        directory:
+          description: ''
+          type: string
+          example: Link to a Directory resource via its id
+        corrupted:
+          description: ''
+          type: boolean
+      required:
+        - directory
+        - corrupted
+    VerbEnum:
+      type: string
+      enum:
+        - POST
+        - PUT
+        - PATCH
+        - GET
+        - MULTIGET
+        - DELETE
+  messageTraits:
+    RestHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            $ref: '#/components/schemas/VerbEnum'
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    DirectoryDeleteIncompleteHeader:
+      headers:
+        type: object
+        properties:
+          timeOfFailure:
+            description: ''
+            type: string
+            format: ISO8601 UTC date-time
+            example: '2019-04-13T03:35:34Z'
+        required:
+          - timeOfFailure
+

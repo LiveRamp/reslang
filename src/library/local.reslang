@@ -8,3 +8,4 @@ structure StandardError {
         "General, human readable error message"
         message: string
 }
+

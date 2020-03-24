@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "This is a description of a garage",
       "future": false,
       "singleton": false,
@@ -123,6 +124,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Manufacturer",
@@ -159,10 +161,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": true,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -253,6 +255,7 @@
       "file": "local.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "this is a Car resource",
       "future": false,
       "singleton": false,
@@ -510,12 +513,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "ViewEnum",
@@ -527,10 +528,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Specification",
@@ -591,10 +592,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "A wheel is owned by a car",
       "future": false,
       "singleton": false,
@@ -677,13 +678,10 @@
       "parentShort": "Car",
       "parentName": "Car",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "BrandEnum",
@@ -696,10 +694,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -787,8 +785,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

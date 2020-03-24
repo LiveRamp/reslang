@@ -1,5 +1,5 @@
 
-asset-resource User {
+resource User {
     id: int
     name: string
 
@@ -10,16 +10,16 @@ asset-resource User {
 sync action User::Suspend {
     id: int
     /operations
-        PUT
+        POST
 }
 
 sync action User::Unsuspend {
     id: int
     /operations
-        PUT
+        POST
 }
 
-asset-resource Organization {
+resource Organization {
     id: int
     name: string
     parentOrganizationId: linked Organization optional
@@ -28,7 +28,7 @@ asset-resource Organization {
         POST GET MULTIGET
 }
 
-asset-resource Role {
+resource Role {
     id: int
     name: string
     parentRoleId: linked Role

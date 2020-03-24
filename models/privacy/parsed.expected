@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -198,11 +199,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "consent.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "DataController",
@@ -287,10 +287,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "RequestType",
@@ -302,10 +302,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "IdentifierType",
@@ -321,10 +321,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -412,8 +412,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

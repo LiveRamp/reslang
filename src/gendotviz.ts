@@ -1,4 +1,12 @@
-import { IDefinition, IDiagram } from "./treetypes"
+import {
+    IDiagram,
+    isEnum,
+    isAction,
+    AnyKind,
+    IResourceLike,
+    isResourceLike,
+    getAllAttributes
+} from "./treetypes"
 import { BaseGen } from "./genbase"
 
 /**
@@ -16,9 +24,6 @@ interface ILink {
 
 export default class DotvizGen extends BaseGen {
     public generate(diagramName: string) {
-        // don't include errors
-        this.markGenerate(false)
-
         const diagram = (this.diagrams || []).find(
             diag => diag.diagram === diagramName
         )
@@ -45,7 +50,7 @@ export default class DotvizGen extends BaseGen {
 
             const imported = imports.has(def.name)
             const attrs = this.formAttributes(def, links, include, folds)
-            const ops = this.formOperations(def)
+            const ops = isResourceLike(def) ? this.formOperations(def) : ""
             const color = def.secondary ? "color='gray'" : ""
             const bgcolor = [
                 "request-resource",
@@ -56,18 +61,16 @@ export default class DotvizGen extends BaseGen {
                 ? "bgcolor='#ffffcc'"
                 : ""
 
-            if (
-                [
-                    "request-resource",
-                    "asset-resource",
-                    "resource",
-                    "configuration-resource",
-                    "subresource",
-                    "structure",
-                    "request",
-                    "action"
-                ].includes(def.type)
-            ) {
+            if (isEnum(def)) {
+                const box = `
+                    <table border="1" cellborder="0" cellspacing="1" ${color}>
+                    <tr><td align="left"><b>${def.short}  </b></td></tr>`
+                let literals = ""
+                for (const lit of def.literals!) {
+                    literals += `<tr><td align="left">${lit}</td></tr>`
+                }
+                viz += `"${def.short}" [label=<${box}<hr/>${literals}</table>>];\n`
+            } else {
                 const width = [
                     "request-resource",
                     "asset-resource",
@@ -113,21 +116,12 @@ export default class DotvizGen extends BaseGen {
                 }
 
                 // from parent to action
-                if ("action" === def.type) {
+                if (isAction(def)) {
                     const label = this.makeLabelText(
-                        def.resourceLevel ? "resource level action" : "action"
+                        def.bulk ? "resource level action" : "action"
                     )
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
                 }
-            } else if ("enum" === def.type) {
-                const box = `
-                    <table border="1" cellborder="0" cellspacing="1" ${color}>
-                    <tr><td align="left"><b>${def.short}  </b></td></tr>`
-                let literals = ""
-                for (const lit of def.literals!) {
-                    literals += `<tr><td align="left">${lit}</td></tr>`
-                }
-                viz += `"${def.short}" [label=<${box}<hr/>${literals}</table>>];\n`
             }
         }
         // process additional links
@@ -199,7 +193,7 @@ export default class DotvizGen extends BaseGen {
     }
 
     private formAttributes(
-        def: IDefinition,
+        def: AnyKind,
         links: ILink[],
         include: Set<string>,
         folded: Set<string>
@@ -208,8 +202,9 @@ export default class DotvizGen extends BaseGen {
         if (!include.has(def.name)) {
             return
         }
-        if (def.attributes) {
-            for (const attr of def.attributes) {
+        const attributes = getAllAttributes(def)
+        if (attributes) {
+            for (const attr of attributes) {
                 const fold = attr.name + "/" + def.name
                 const foldThis =
                     folded.has(fold) || !include.has(attr.type.name)
@@ -262,7 +257,7 @@ export default class DotvizGen extends BaseGen {
         return attrs
     }
 
-    private formOperations(def: IDefinition) {
+    private formOperations(def: IResourceLike) {
         let ops = `<tr><td align="right"><font color="#0000ff" point-size="8">`
         if (def.singleton) {
             ops += "singleton "

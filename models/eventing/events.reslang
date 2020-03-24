@@ -1,0 +1,46 @@
+
+
+resource SimpleResource {
+    id: string
+    name: string
+
+    /operations
+        POST GET EVENTS
+}
+
+resource v2/TestResource {
+    id: int
+    name: string
+    number: int optional
+
+    /operations
+        POST GET EVENTS
+}
+
+subresource v2/TestResource::Foo {
+    id: int
+    
+    /operations
+        EVENTS
+}
+
+event StartSignal {
+    /header
+        name: string min-length: 10 max-length: 100
+        time: datetime
+    /payload
+        name: string
+        address: string[1..10]
+}
+
+event v3/StopSignal {
+    /header
+        header: Header inline
+    /payload
+        stopped: datetime
+}
+
+structure Header {
+    a: int
+    b: long
+}

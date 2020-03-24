@@ -1,6 +1,6 @@
 
 "This models a directory we might create"
-asset-resource Directory {
+resource Directory {
 	id: string query
 	name: string query
 	/operations
@@ -39,7 +39,7 @@ subresource Directory::File {
 	contents: string queryonly
 
     /operations
-        GET POST MULTIGET
+        GET POST MULTIGET EVENTS
 }
 
 "This models a long running request"
@@ -48,7 +48,16 @@ request-resource DirectoryDeleteRequest {
 	directoryId: linked Directory
 
     /operations
-        GET POST MULTIGET
+        GET POST MULTIGET EVENTS
+}
+
+"If a deletion is corrupted, we generate this event"
+event DirectoryDeleteIncomplete {
+	/header
+		timeOfFailure: datetime
+	/payload
+		directory: linked Directory
+		corrupted: boolean
 }
 
 "This models an action on a request"

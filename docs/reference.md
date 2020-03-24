@@ -136,6 +136,41 @@ future resource Specification {
 }
 ```
 
+### Events
+
+Reslang can also describe events. These fall into 2 categories - events related to a REST resource's lifecycle, and adhoc events.
+
+To generate the first, use the EVENTS operation type:
+
+    "This models a file in a directory"
+    subresource Directory::File {
+        id: int
+        name: string
+        url: string
+        fileTypeId: linked FileType
+
+        contents: string queryonly
+
+        /operations
+            GET POST MULTIGET *EVENTS*
+    }
+
+To specify an adhoc event, use the "event" construct:
+
+    event DirectoryDeleteIncomplete {
+        /header
+    	    timeOfFailure: datetime
+        /payload
+    	    directory: linked Directory
+    	    corrupted: boolean
+    }
+
+To generate AsyncAPI use something like:
+
+    ./reslang ./models/file --open --events
+
+This will copy the AsyncAPI spec to the clipboard and open up the browser on the AsyncAPI playground. Paste the spec into the left hand text editor to see your events.
+
 ### Links
 
 To refer to one resource from another, used the "linked" keyword in front of the attribute type. The attribute must end in "Id" or "Ids"

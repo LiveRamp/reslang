@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "request-resource",
@@ -131,12 +132,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": true,
       "type": "subresource",
@@ -231,10 +230,10 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -336,11 +335,10 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -443,11 +441,10 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "Record",
@@ -507,10 +504,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -581,10 +578,10 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -659,11 +656,10 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -734,16 +730,15 @@
         "UploadRequest"
       ],
       "short": "StartProcessingAction",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::StartProcessingAction",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -815,16 +810,15 @@
         "RecordSet"
       ],
       "short": "Clear",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::RecordSet::Clear",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -897,16 +891,15 @@
         "Deep"
       ],
       "short": "Jump",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::RecordSet::Deep::Jump",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet::Deep",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "enum",
       "type": "enum",
       "parents": [],
       "short": "UploadRequestStatusEnum",
@@ -919,10 +912,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -1010,8 +1003,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

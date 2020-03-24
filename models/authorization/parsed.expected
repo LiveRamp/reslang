@@ -6,9 +6,10 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -77,11 +78,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "auth.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -115,7 +115,7 @@
       ],
       "operations": [
         {
-          "operation": "PUT",
+          "operation": "POST",
           "errors": []
         }
       ],
@@ -127,10 +127,10 @@
       "parentShort": "User",
       "parentName": "User",
       "secondary": false,
-      "file": "auth.reslang",
-      "generatePuttable": true
+      "file": "auth.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -164,7 +164,7 @@
       ],
       "operations": [
         {
-          "operation": "PUT",
+          "operation": "POST",
           "errors": []
         }
       ],
@@ -176,13 +176,13 @@
       "parentShort": "User",
       "parentName": "User",
       "secondary": false,
-      "file": "auth.reslang",
-      "generatePuttable": true
+      "file": "auth.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -280,15 +280,13 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "auth.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -386,12 +384,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "auth.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "auth.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -479,8 +475,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

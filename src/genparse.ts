@@ -6,7 +6,6 @@ import { BaseGen } from "./genbase"
 
 export default class ParseGen extends BaseGen {
     public generate() {
-        this.markGenerate(true)
         return JSON.stringify(
             {
                 namespace: this.namespace,

@@ -6,10 +6,11 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "comment": "This models a directory we might create",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -82,12 +83,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "This configures up a file type, e.g. .gif",
       "future": false,
       "singleton": false,
@@ -246,12 +245,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "resource-like",
       "future": true,
       "singleton": false,
       "type": "resource",
@@ -291,6 +288,7 @@
       "file": "file.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "This models a file in a directory",
       "future": false,
       "singleton": false,
@@ -434,6 +432,10 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        },
+        {
+          "operation": "EVENTS",
+          "errors": []
         }
       ],
       "parents": [
@@ -444,12 +446,10 @@
       "parentShort": "Directory",
       "parentName": "Directory",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "This models a long running request",
       "future": false,
       "singleton": false,
@@ -518,6 +518,10 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        },
+        {
+          "operation": "EVENTS",
+          "errors": []
         }
       ],
       "parents": [],
@@ -526,12 +530,100 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "event",
+      "type": "event",
+      "parents": [],
+      "short": "DirectoryDeleteIncomplete",
+      "header": [
+        {
+          "name": "timeOfFailure",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "payload": [
+        {
+          "name": "directory",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Directory",
+            "name": "Directory",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "corrupted",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DirectoryDeleteIncomplete",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
       "comment": "This models an action on a request",
       "future": false,
       "singleton": false,
@@ -578,10 +670,10 @@
       "parentShort": "DirectoryDeleteRequest",
       "parentName": "DirectoryDeleteRequest",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "SpecialError",
@@ -642,10 +734,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true
+      "file": "file.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -733,8 +825,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

@@ -27,9 +27,15 @@ digraph G {
 "DataMappingConfig" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>DataMappingConfig        </b></td></tr>        <hr/><tr><td align="left">input: InputFormat</td></tr><tr><td align="left">output: OutputFormat</td></tr></table> >];
+"InputFormat" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>InputFormat        </b></td></tr><hr/>"}</table>>];
 "InputKeyValue" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>InputKeyValue        </b></td></tr>        <hr/><tr><td align="left">key: int</td></tr><tr><td align="left">value: int</td></tr></table> >];
+"OutputFormat" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>OutputFormat        </b></td></tr><hr/>"}</table>>];
 "OutputKeyValueLabel" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>OutputKeyValueLabel        </b></td></tr>        <hr/><tr><td align="left">keyLabel: string</td></tr><tr><td align="left">valueLabel: string</td></tr></table> >];

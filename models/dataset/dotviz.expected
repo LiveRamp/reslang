@@ -4,20 +4,28 @@ digraph G {
         edge [fontname = "helvetica"];
         node [shape=none];
         
-"Dataset" [label=<
+"Audience" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Dataset        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
+                    <tr><td><b>Audience        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
 "Field" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Field        </b></td></tr><hr/><tr><td align="left">id: long</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">type: FieldTypeEnum</td></tr><tr><td align="left">enumerable: boolean</td></tr><tr><td align="left">valueCollectionType: ValueCollectionTypeEnum</td></tr><tr><td align="left">values: string[]</td></tr><tr><td align="left">enabled: boolean (out)</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name type enumerable valueCollectionType values enabled createdAt updatedAt DELETE PUT</font></td></tr>"}</table>>];
-"Dataset" -> "Field" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+                    <tr><td><b>Field        </b></td></tr><hr/><tr><td align="left">id: long</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">type: FieldTypeEnum</td></tr><tr><td align="left">enumerated: boolean</td></tr><tr><td align="left">valueCollectionType: ValueCollectionTypeEnum</td></tr><tr><td align="left">values: string[1..]</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name type enumerated valueCollectionType values createdAt updatedAt PUT</font></td></tr>"}</table>>];
+"Audience" -> "Field" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"Audience" -> "Disable" [dir="none" label=< <font point-size="8">action</font> >];
+"Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">fieldIDs: long[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"Audience" -> "Disable" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "FieldTypeEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>FieldTypeEnum  </b></td></tr><hr/><tr><td align="left">STRING</td></tr><tr><td align="left">NUMERIC</td></tr></table>>];
 "ValueCollectionTypeEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>ValueCollectionTypeEnum  </b></td></tr><hr/><tr><td align="left">SINGLETON</td></tr><tr><td align="left">SET</td></tr><tr><td align="left">MULTISET</td></tr></table>>];
-"Redirection" [label=<
+"FieldRedirection" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>Redirection        </b></td></tr>        <hr/><tr><td align="left">existingFieldUrl: string</td></tr></table> >];
+                    <tr><td><b>FieldRedirection        </b></td></tr>        <hr/><tr><td align="left">existingFieldURL: string</td></tr></table> >];
 }

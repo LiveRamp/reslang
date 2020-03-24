@@ -6,6 +6,7 @@
   },
   "definitions": [
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "configuration-resource",
@@ -127,11 +128,10 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -205,11 +205,10 @@
       "parentShort": "A",
       "parentName": "A",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -284,11 +283,10 @@
       "parentShort": "A",
       "parentName": "A::B",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "comment": "Start processing",
       "future": false,
       "singleton": false,
@@ -366,11 +364,10 @@
       "parentShort": "A",
       "parentName": "A::B::C",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "action",
@@ -446,11 +443,10 @@
       "parentShort": "A",
       "parentName": "A::B",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -494,6 +490,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
       "future": false,
       "singleton": false,
       "type": "asset-resource",
@@ -533,6 +530,7 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "structure",
       "type": "structure",
       "parents": [],
       "short": "StandardError",
@@ -620,8 +618,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

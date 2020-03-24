@@ -1,60 +1,13 @@
 import { parseFile, readFile, clean } from "../parse"
 import { strip } from "./utilities"
 import DotvizGen from "../gendotviz"
+import { allModels } from "./allmodels"
 
 /** dotviz generation tests
  */
 describe("dotviz generation tests", () => {
-    test("dataset", () => {
-        compare("dataset")
-    })
-
-    test("checkrules", () => {
-        compare("checkrules")
-    })
-
-    test("privacy", () => {
-        compare("privacy")
-    })
-
-    test("simple-resource", () => {
-        compare("simple-resource")
-    })
-
-    test("optionality", () => {
-        compare("optionality")
-    })
-
-    test("authorization", () => {
-        compare("authorization")
-    })
-
-    test("patchable", () => {
-        compare("patchable")
-    })
-
-    test("complex-resource", () => {
-        compare("complex-resource")
-    })
-
-    test("singleton", () => {
-        compare("singleton")
-    })
-
-    test("upversion", () => {
-        compare("upversion")
-    })
-
-    test("request", () => {
-        compare("request")
-    })
-
-    test("file", () => {
-        compare("file")
-    })
-
-    test("multiplicity", () => {
-        compare("multiplicity")
+    test.each(allModels)("dotviz(%s)", a => {
+        compare(a)
     })
 })
 
