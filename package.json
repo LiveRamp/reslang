@@ -37,7 +37,7 @@
     "kleur": "^3.0.3",
     "open": "^6.3.0",
     "pegjs": "^0.10.0",
-    "redoc-cli": "^0.9.2",
+    "redoc-cli": "^0.9.7",
     "reflect-metadata": "^0.1.13",
     "shelljs": "^0.8.3",
     "tslib": "^1.11.1",
