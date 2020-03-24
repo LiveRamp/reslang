@@ -4,7 +4,7 @@ apis=(eventing dataset checkrules privacy optionality authorization complex-reso
 
 echo "Regenerating event files"
 echo "---"
-    ./reslang --noversion --events --ignorerules eventing --testdir ./models --testwrite asyncapi.expected
+    ./reslang --noversion --events --ignorerules  ${apis[@]} --testdir ./models --testwrite asyncapi.expected
 echo
 echo "---"
 echo "Regenerating swagger files"

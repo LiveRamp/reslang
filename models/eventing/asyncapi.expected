@@ -5,7 +5,7 @@ info:
   version: 0.0.1
 servers:
   production:
-    url: 'test.port:{port}'
+    url: 'pubsub.liveramp.com:{port}'
     protocol: Google Cloud Pub/Sub
     description: LiveRamp Production pubsub instance
     variables:
@@ -87,15 +87,6 @@ components:
       payload:
         $ref: '#/components/schemas/v3StopSignal'
   schemas:
-    VerbEnum:
-      type: string
-      enum:
-        - POST
-        - PUT
-        - PATCH
-        - GET
-        - MULTIGET
-        - DELETE
     SimpleResource:
       type: object
       properties:
@@ -190,8 +181,37 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - stopped
+    VerbEnum:
+      type: string
+      enum:
+        - POST
+        - PUT
+        - PATCH
+        - GET
+        - MULTIGET
+        - DELETE
   messageTraits:
-    RestHeader: {}
+    RestHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            $ref: '#/components/schemas/VerbEnum'
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
     StartSignalHeader:
       headers:
         type: object

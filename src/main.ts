@@ -16,7 +16,7 @@ import EventsGen from "./genevents"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.1.1"
+export const VERSION = "v1.2.0"
 
 // parse the cmd line
 const args = yargs

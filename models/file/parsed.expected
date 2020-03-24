@@ -10,7 +10,7 @@
       "comment": "This models a directory we might create",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -432,6 +432,10 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        },
+        {
+          "operation": "EVENTS",
+          "errors": []
         }
       ],
       "parents": [
@@ -514,11 +518,105 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        },
+        {
+          "operation": "EVENTS",
+          "errors": []
         }
       ],
       "parents": [],
       "short": "DirectoryDeleteRequest",
       "name": "DirectoryDeleteRequest",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "event",
+      "type": "event",
+      "parents": [],
+      "short": "DirectoryDeleteIncomplete",
+      "header": [
+        {
+          "name": "timeOfFailure",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "payload": [
+        {
+          "name": "directory",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Directory",
+            "name": "Directory",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "corrupted",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DirectoryDeleteIncomplete",
       "parentShort": "",
       "parentName": "",
       "secondary": false,

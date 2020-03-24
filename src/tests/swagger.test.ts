@@ -2,76 +2,13 @@ import { readFile, clean } from "../parse"
 import { strip } from "./utilities"
 import SwagGen from "../genswagger"
 import yaml from "js-yaml"
+import { allModels } from "./allmodels"
 
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
-    test("eventing", () => {
-        compare("eventing")
-    })
-
-    test("dataset", () => {
-        compare("dataset")
-    })
-
-    test("checkrules", () => {
-        compare("checkrules")
-    })
-
-    test("privacy", () => {
-        compare("privacy")
-    })
-
-    test("optionality", () => {
-        compare("optionality")
-    })
-
-    test("authorization", () => {
-        compare("authorization")
-    })
-
-    test("complex-resource", () => {
-        compare("complex-resource")
-    })
-
-    test("patchable", () => {
-        compare("patchable")
-    })
-
-    test("direct2dist", () => {
-        compare("direct2dist")
-    })
-
-    test("distribution", () => {
-        compare("distribution")
-    })
-
-    test("file", () => {
-        compare("file")
-    })
-
-    test("request", () => {
-        compare("request")
-    })
-
-    test("simple-resource", () => {
-        compare("simple-resource")
-    })
-
-    test("singleton", () => {
-        compare("singleton")
-    })
-
-    test("stringmaps", () => {
-        compare("stringmaps")
-    })
-
-    test("upversion", () => {
-        compare("upversion")
-    })
-
-    test("multiplicity", () => {
-        compare("multiplicity")
+    test.each(allModels)("swagger(%s)", a => {
+        compare(a)
     })
 })
 

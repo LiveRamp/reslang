@@ -27,7 +27,7 @@ export default class EventsGen extends BaseGen {
             },
             servers: {
                 production: {
-                    url: "test.port:{port}",
+                    url: "pubsub.liveramp.com:{port}",
                     protocol: "Google Cloud Pub/Sub",
                     description: "LiveRamp Production pubsub instance",
                     variables: {
@@ -49,9 +49,6 @@ export default class EventsGen extends BaseGen {
             }
         }
 
-        // add standard definitions - tbd move this to a file
-        this.addStandardDefinitions(headers, schemas)
-
         // form channels
         this.formChannels(channels)
 
@@ -61,8 +58,10 @@ export default class EventsGen extends BaseGen {
         // model definitions
         const headerNames = this.formDefinitions(schemas)
 
+        // add standard header definitions - tbd move this to a file
+        this.addStandardHeaderDefinitions(headers, schemas)
+
         // lift the headers
-        this.liftToHeader("RestHeader", schemas, headers)
         for (const name of headerNames) {
             this.liftToHeader(name, schemas, headers)
         }
@@ -124,7 +123,7 @@ export default class EventsGen extends BaseGen {
         }
     }
 
-    private addStandardDefinitions(headers: any, schemas: any) {
+    private addStandardHeaderDefinitions(headers: any, schemas: any) {
         headers.RestHeader = {
             headers: {
                 type: "object",
