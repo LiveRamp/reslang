@@ -4,7 +4,7 @@ Relang is a simple language for describing resource-oriented APIs & turning them
 
 It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec.
 
-[Release notes, v1.1.0](./docs/releases.md)
+[Release notes, v1.2.0 3/24/2020](./docs/releases.md)
 
 ## Docs
 
