@@ -1,3 +1,7 @@
+## v1.2.0 3/24/2020
+
+Added event / AsyncAPI specifications and made "operation Ids" a lot more readable.
+
 ## v1.1.0 3/18/2020
 
 Bug fix for resource-level action paths not including parentIds

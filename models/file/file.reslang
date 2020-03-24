@@ -51,6 +51,7 @@ request-resource DirectoryDeleteRequest {
         GET POST MULTIGET EVENTS
 }
 
+"If a deletion is corrupted, we generate this event"
 event DirectoryDeleteIncomplete {
 	/header
 		timeOfFailure: datetime
