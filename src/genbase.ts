@@ -22,14 +22,21 @@ import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
 import { IRules } from "./rules"
-import { camelCase, capitalizeFirst, pluralizeName } from "./names"
+import {
+    camelCase,
+    capitalizeFirst,
+    pluralizeName,
+    lowercaseFirst
+} from "./names"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 export enum Verbs {
     POST,
     PUT,
     PATCH,
-    GET
+    GET,
+    MULTIGET,
+    DELETE
 }
 
 export abstract class BaseGen {
@@ -275,8 +282,6 @@ Actions cannot have subresources`
             description: string
             allOf: {}
         }
-        const sane = camelCase(this.formTagName(def, false))
-
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly || attr.modifiers.representation) {
                 continue
@@ -320,16 +325,66 @@ Actions cannot have subresources`
             delete request.required
         }
 
+        const unique = camelCase(this.formSingleUniqueName(def))
         if (Object.keys(properties).length !== 0) {
-            definitions[sane + suffix] = request
+            definitions[unique + suffix] = request
         } else {
-            this.empty.add(sane + suffix)
+            this.empty.add(unique + suffix)
         }
     }
 
-    // add resource level suffix if needed
-    protected formTagName(def: IResourceLike) {
-        return plural ? pluralizeName(def.name) : def.name
+    protected formOperationId(def: IResourceLike, verb: Verbs) {
+        const bulk = def.bulk ? "Bulk " : ""
+
+        // handle action creation separately - make it sound like an action e.g. retry DeliveryRequest
+        if (def.type === "action" && verb === Verbs.POST) {
+            return (
+                bulk +
+                def.short +
+                " " +
+                this.removeLast(def.name) +
+                (def.async ? " asynchronously" : "")
+            )
+        }
+
+        switch (verb) {
+            case Verbs.POST:
+                return "Create " + bulk + def.name
+            case Verbs.PUT:
+                return "Modify " + bulk + def.name
+            case Verbs.PATCH:
+                return "Patch " + bulk + def.name
+            case Verbs.GET:
+                return "Get " + bulk + def.name
+            case Verbs.MULTIGET:
+                return "Get " + bulk + pluralizeName(def.name)
+            case Verbs.DELETE:
+                return "Delete " + bulk + def.name
+        }
+    }
+
+    // add bulk modifier if needed
+    protected formSingleUniqueName(def: IResourceLike) {
+        if (def.type === "action") {
+            if (def.bulk) {
+                return (
+                    (def.bulk ? "Bulk " : "") +
+                    def.short +
+                    " " +
+                    this.removeLast(def.name)
+                )
+            }
+            return capitalizeFirst(def.short) + " " + this.removeLast(def.name)
+        }
+        return def.name
+    }
+
+    protected removeLast(name: string) {
+        const pos = name.lastIndexOf("::")
+        if (pos === -1) {
+            return name
+        }
+        return name.slice(0, pos)
     }
 
     protected addEnumDefinition(definitions: any, def: IEnum, suffix: string) {

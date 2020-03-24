@@ -132,10 +132,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -233,8 +230,7 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -339,9 +335,7 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -447,9 +441,7 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -512,8 +504,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -587,8 +578,7 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -666,9 +656,7 @@
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -742,14 +730,12 @@
         "UploadRequest"
       ],
       "short": "StartProcessingAction",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::StartProcessingAction",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -824,14 +810,12 @@
         "RecordSet"
       ],
       "short": "Clear",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::RecordSet::Clear",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -907,14 +891,12 @@
         "Deep"
       ],
       "short": "Jump",
-      "resourceLevel": "resource-level",
+      "bulk": "resource-level",
       "name": "UploadRequest::RecordSet::Deep::Jump",
       "parentShort": "UploadRequest",
       "parentName": "UploadRequest::RecordSet::Deep",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "enum",
@@ -930,8 +912,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -1022,8 +1003,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

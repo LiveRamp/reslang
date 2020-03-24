@@ -13,7 +13,7 @@ paths:
     get:
       tags:
         - ConsentFile
-      operationId: List ConsentFiles
+      operationId: Get ConsentFiles
       description: ''
       responses:
         '200':

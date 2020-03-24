@@ -35,7 +35,7 @@ paths:
     get:
       tags:
         - Car
-      operationId: Get 1 Car
+      operationId: Get Car
       description: Get a single car
       responses:
         '200':
@@ -60,7 +60,7 @@ paths:
     put:
       tags:
         - Car
-      operationId: Modify a Car
+      operationId: Modify Car
       description: Update a car
       requestBody:
         content:
@@ -86,7 +86,7 @@ paths:
     patch:
       tags:
         - Car
-      operationId: Patch a Car
+      operationId: Patch Car
       description: Patch a car
       requestBody:
         content:

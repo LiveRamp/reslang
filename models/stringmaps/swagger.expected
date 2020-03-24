@@ -36,7 +36,7 @@ paths:
     put:
       tags:
         - SMap
-      operationId: Modify a SMap
+      operationId: Modify SMap
       description: ''
       requestBody:
         content:

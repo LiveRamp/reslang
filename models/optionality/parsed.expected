@@ -166,11 +166,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generatePuttable": true,
-      "generatePatchable": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -261,8 +257,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

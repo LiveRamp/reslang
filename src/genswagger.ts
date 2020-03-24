@@ -93,7 +93,7 @@ export default class SwagGen extends BaseGen {
                         full = pluralizeName(full)
                     }
                     pname = actual.parentName
-                    if (action && el.resourceLevel && first) {
+                    if (action && el.bulk && first) {
                         parents = `/${full}` + parents
                     } else {
                         parents = `/${full}/\{${singular}Id\}` + parents
@@ -182,8 +182,9 @@ export default class SwagGen extends BaseGen {
         post: IOperation | null,
         multiget: IOperation | null
     ) {
-        const sane = camelCase(this.formTagName(el))
         const plural = pluralizeName(el.short)
+        const unique = this.formSingleUniqueName(el)
+        const camel = camelCase(unique)
 
         if (post) {
             const short = el.short
@@ -281,23 +282,22 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(post, responses)
-            const rname = this.formTagName(el)
             path.post = {
-                tags: [tagKeys[rname]],
-                operationId: "Create " + rname,
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.POST),
                 description: this.translateDoc(post.comment),
                 requestBody: {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${sane}Input`
+                                $ref: `#/components/schemas/${camel}Input`
                             }
                         }
                     }
                 },
                 responses
             }
-            if (this.empty.has(sane + "Input")) {
+            if (this.empty.has(camel + "Input")) {
                 delete path.post.requestBody
             }
             if (params.length) {
@@ -357,20 +357,17 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref:
-                                    "#/components/schemas/" +
-                                    sane +
-                                    "MultiResponse"
+                                $ref: `#/components/schemas/${camel}MultiResponse`
                             }
                         }
                     }
                 }
             }
             this.formErrors(multiget, responses)
-            const rname = this.formTagName(el)
+            const rname = this.formSingleUniqueName(el)
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: "List " + pluralizeName(rname),
+                operationId: this.formOperationId(el, Verbs.MULTIGET),
                 description: this.translateDoc(multiget.comment),
                 responses
             }
@@ -407,7 +404,6 @@ export default class SwagGen extends BaseGen {
         patch?: IOperation | null,
         del?: IOperation | null
     ) {
-        const sane = camelCase(this.formTagName(el))
         const short = el.short
         const notFound = {
             description: short + " not found",
@@ -419,6 +415,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
         }
+        const sane = camelCase(this.formSingleUniqueName(el))
         if (get) {
             const responses = {
                 200: {
@@ -442,10 +439,10 @@ export default class SwagGen extends BaseGen {
                 delete responses[200].content
             }
             this.formErrors(get, responses)
-            const rname = this.formTagName(el)
+            const rname = this.formSingleUniqueName(el)
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: "Get 1 " + rname,
+                operationId: this.formOperationId(el, Verbs.GET),
                 description: this.translateDoc(get.comment),
                 responses
             }
@@ -484,10 +481,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(put, responses)
-            const rname = this.formTagName(el)
+            const rname = this.formSingleUniqueName(el)
             path.put = {
                 tags: [tagKeys[rname]],
-                operationId: "Modify a " + rname,
+                operationId: this.formOperationId(el, Verbs.PUT),
                 description: this.translateDoc(put.comment),
                 requestBody: {
                     content: {
@@ -527,10 +524,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(patch, responses)
-            const rname = this.formTagName(el)
+            const rname = this.formSingleUniqueName(el)
             path.patch = {
                 tags: [tagKeys[rname]],
-                operationId: "Patch a " + rname,
+                operationId: this.formOperationId(el, Verbs.PATCH),
                 description: this.translateDoc(patch.comment),
                 requestBody: {
                     content: {
@@ -570,10 +567,10 @@ export default class SwagGen extends BaseGen {
                 404: notFound
             }
             this.formErrors(del, responses)
-            const rname = this.formTagName(el)
+            const rname = this.formSingleUniqueName(el)
             path.delete = {
                 tags: [tagKeys[rname]],
-                operationId: "Delete a " + rname,
+                operationId: this.formOperationId(el, Verbs.DELETE),
                 description: this.translateDoc(del.comment),
                 responses
             }
@@ -617,7 +614,6 @@ export default class SwagGen extends BaseGen {
             if (el.secondary || !isResourceLike(el) || el.future) {
                 continue
             }
-            const name = this.formTagName(el)
             const comment = this.translateDoc(el.comment)
             let prefix = null
             if ("configuration-resource" === el.type) {
@@ -635,11 +631,12 @@ export default class SwagGen extends BaseGen {
             if ("action" === el.type) {
                 prefix =
                     "(" +
-                    (el.resourceLevel ? "resource level " : "") +
+                    (el.bulk ? "bulk " : "") +
                     (el.async ? "async " : "sync ") +
                     "action) "
             }
             if (prefix) {
+                const name = this.formSingleUniqueName(el)
                 const tag = {
                     name,
                     description: `${prefix} ${comment}`

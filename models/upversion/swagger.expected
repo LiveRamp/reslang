@@ -19,7 +19,7 @@ paths:
     get:
       tags:
         - ResourceA
-      operationId: Get 1 ResourceA
+      operationId: Get ResourceA
       description: ''
       responses:
         '200':
@@ -69,7 +69,7 @@ paths:
     get:
       tags:
         - ResourceB
-      operationId: Get 1 ResourceB
+      operationId: Get ResourceB
       description: ''
       responses:
         '200':
@@ -95,7 +95,7 @@ paths:
     put:
       tags:
         - ResourceB
-      operationId: Modify a ResourceB
+      operationId: Modify ResourceB
       description: ''
       responses:
         '200':
@@ -141,7 +141,7 @@ paths:
     get:
       tags:
         - v2/ResourceB
-      operationId: Get 1 v2/ResourceB
+      operationId: Get v2/ResourceB
       description: ''
       responses:
         '200':
@@ -199,7 +199,7 @@ paths:
     get:
       tags:
         - 'v2/ResourceB::Sub'
-      operationId: 'Get 1 v2/ResourceB::Sub'
+      operationId: 'Get v2/ResourceB::Sub'
       description: ''
       responses:
         '200':

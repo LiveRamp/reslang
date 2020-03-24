@@ -83,10 +83,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
       "kind": "resource-like",
@@ -248,10 +245,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
       "kind": "resource-like",
@@ -448,10 +442,7 @@
       "parentShort": "Directory",
       "parentName": "Directory",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
       "kind": "resource-like",
@@ -531,10 +522,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "file.reslang"
     },
     {
       "kind": "resource-like",
@@ -584,8 +572,7 @@
       "parentShort": "DirectoryDeleteRequest",
       "parentName": "DirectoryDeleteRequest",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true
+      "file": "file.reslang"
     },
     {
       "kind": "structure",
@@ -649,8 +636,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "file.reslang",
-      "generateInput": true
+      "file": "file.reslang"
     },
     {
       "kind": "structure",
@@ -741,8 +727,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

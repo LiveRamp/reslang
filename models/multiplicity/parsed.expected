@@ -165,8 +165,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "multi.reslang",
-      "generateInput": true
+      "file": "multi.reslang"
     },
     {
       "kind": "structure",
@@ -257,8 +256,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

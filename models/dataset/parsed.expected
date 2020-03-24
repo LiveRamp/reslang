@@ -8,75 +8,10 @@
       "kind": "resource-like",
       "future": true,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "int",
-            "name": "int",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        }
-      ],
-      "parents": [],
-      "short": "Dataset",
-      "name": "Dataset",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "dataset.reslang"
-    },
-    {
-      "kind": "resource-like",
-      "future": false,
-      "singleton": false,
-      "type": "subresource",
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "long",
-            "name": "long",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": true,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "name",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -99,9 +34,79 @@
             "representation": false
           },
           "constraints": {}
+        }
+      ],
+      "parents": [],
+      "short": "Audience",
+      "name": "Audience",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "dataset.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "comment": "The id of the Field.",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "comment": "The name of the Field.",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {
+            "maxLength": 255
+          }
         },
         {
           "name": "type",
+          "comment": "The type of data that will be imported into this field.\n   NUMERIC: only numeric data/values can be added to this Field.\n   STRING: any string data or values can be added to this Field.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -126,7 +131,8 @@
           "constraints": {}
         },
         {
-          "name": "enumerable",
+          "name": "enumerated",
+          "comment": "Whether or not the Field's values are enumerated.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -152,6 +158,7 @@
         },
         {
           "name": "valueCollectionType",
+          "comment": "Determines how the set of values for this Field should be maintained\n   for each audience key that this Field is associated with.\n   SINGLETON: only store the value most recently imported for this audience key.\n   SET: store all values at most once that were imported for this audience key.\n   MULTISET: store all values imported for this audience key potentially duplicate times.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -177,6 +184,7 @@
         },
         {
           "name": "values",
+          "comment": "The list of enum values for the Field.\n   This is only allowed if enumerated==true for the Field.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -187,7 +195,8 @@
           },
           "inline": false,
           "array": {
-            "type": 2
+            "type": 1,
+            "min": 1
           },
           "linked": false,
           "modifiers": {
@@ -204,32 +213,8 @@
           "constraints": {}
         },
         {
-          "name": "enabled",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "boolean",
-            "name": "boolean",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "modifiers": {
-            "mutable": false,
-            "optional": true,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": true,
-            "queryonly": false,
-            "query": true,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
           "name": "createdAt",
+          "comment": "Timestamp of when the Field was first created.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -255,6 +240,7 @@
         },
         {
           "name": "updatedAt",
+          "comment": "Timestamp of the last time the Field's metadata was updated.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -282,24 +268,19 @@
       "operations": [
         {
           "operation": "GET",
-          "comment": "Get a Field",
-          "errors": []
-        },
-        {
-          "operation": "POST",
-          "comment": "Create a new Field",
+          "comment": "Find a single existing Field in the provided parent Audience.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     All fields of other types will not be included in the response.",
           "errors": [
             {
               "codes": [
                 {
-                  "code": "303",
-                  "comment": "Field already exists"
+                  "code": "404",
+                  "comment": "Cannot find resource"
                 }
               ],
               "struct": {
                 "parents": [],
-                "short": "Redirection",
-                "name": "Redirection",
+                "short": "StandardError",
+                "name": "StandardError",
                 "parentShort": "",
                 "parentName": ""
               }
@@ -307,24 +288,29 @@
           ]
         },
         {
-          "operation": "MULTIGET",
-          "comment": "Find existing Fields",
-          "errors": []
-        },
-        {
-          "operation": "DELETE",
-          "comment": "Disable a Field",
-          "errors": []
-        },
-        {
-          "operation": "PUT",
-          "comment": "Add values to a Field",
+          "operation": "POST",
+          "comment": "Create a new Field in the provided parent Audience.",
           "errors": [
             {
               "codes": [
                 {
-                  "code": "403",
-                  "comment": "Field is not enumerable"
+                  "code": "303",
+                  "comment": "A Field with the same type, enumerability, and name already exists in this Audience"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "FieldRedirection",
+                "name": "FieldRedirection",
+                "parentShort": "",
+                "parentName": ""
+              }
+            },
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find Audience"
                 }
               ],
               "struct": {
@@ -338,8 +324,65 @@
             {
               "codes": [
                 {
-                  "code": "400",
-                  "comment": "Values do not match Field type"
+                  "code": "422",
+                  "comment": "Input has invalid semantics"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        },
+        {
+          "operation": "MULTIGET",
+          "comment": "Find existing Fields in the provided parent Audience.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     All fields of other types will not be included in the response.",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find Audience"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        },
+        {
+          "operation": "PUT",
+          "comment": "Modify the attributes of a Field in the provided parent Audience.\n     Currently the only supported operation is adding values to enumerated Fields.\n     The list of values passed in will be added to the Field's existing set of values.",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "422",
+                  "comment": "Input has invalid semantics"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            },
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find resource"
                 }
               ],
               "struct": {
@@ -354,18 +397,178 @@
         }
       ],
       "parents": [
-        "Dataset"
+        "Audience"
       ],
       "short": "Field",
-      "name": "Dataset::Field",
-      "parentShort": "Dataset",
-      "parentName": "Dataset",
+      "name": "Audience::Field",
+      "parentShort": "Audience",
+      "parentName": "Audience",
       "secondary": false,
-      "file": "field.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "field.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "comment": "Marks a Field as 'disabled', which means that it will no longer\n     be processed in the audience, will no longer be deliverable,\n     and will no longer have stats calculated for it.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     Attempting to disable any other type of field will trigger a 404 Not Found response.",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find resource"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        }
+      ],
+      "parents": [
+        "Audience",
+        "Field"
+      ],
+      "short": "Disable",
+      "name": "Audience::Field::Disable",
+      "parentShort": "Audience",
+      "parentName": "Audience::Field",
+      "secondary": false,
+      "file": "field.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "fieldIDs",
+          "comment": "IDs of Fields to disable.",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "comment": "Marks the set of input Fields 'disabled', which means that they will no longer\n     be processed in the audience, will no longer be deliverable,\n     and will no longer have stats calculated for them.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     Attempting to disable any other type of field will trigger a 404 Not Found response.",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Cannot find resource"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        }
+      ],
+      "parents": [
+        "Audience",
+        "Field"
+      ],
+      "short": "Disable",
+      "bulk": "resource-level",
+      "name": "Audience::Field::Disable",
+      "parentShort": "Audience",
+      "parentName": "Audience::Field",
+      "secondary": false,
+      "file": "field.reslang"
     },
     {
       "kind": "enum",
@@ -380,8 +583,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "field.reslang",
-      "generateInput": true
+      "file": "field.reslang"
     },
     {
       "kind": "enum",
@@ -397,17 +599,16 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "field.reslang",
-      "generateInput": true
+      "file": "field.reslang"
     },
     {
       "kind": "structure",
       "type": "structure",
       "parents": [],
-      "short": "Redirection",
+      "short": "FieldRedirection",
       "attributes": [
         {
-          "name": "existingFieldUrl",
+          "name": "existingFieldURL",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -432,12 +633,11 @@
           "constraints": {}
         }
       ],
-      "name": "Redirection",
+      "name": "FieldRedirection",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "field.reslang",
-      "generateInput": true
+      "file": "field.reslang"
     },
     {
       "kind": "structure",
@@ -528,8 +728,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

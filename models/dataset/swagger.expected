@@ -6,20 +6,24 @@ info:
 servers:
   - url: 'https://api.liveramp.com/dataset'
 tags:
-  - name: 'Dataset::Field'
+  - name: 'Audience::Field'
     description: '(subresource)  '
+  - name: 'Disable Audience::Field'
+    description: '(sync action)  '
+  - name: 'Bulk Disable Audience::Field'
+    description: '(bulk sync action)  '
 paths:
-  '/v1/datasets/{datasetId}/fields':
+  '/v1/audiences/{audienceId}/fields':
     post:
       tags:
-        - 'Dataset::Field'
-      operationId: 'Create Dataset::Field'
-      description: Create a new Field
+        - 'Audience::Field'
+      operationId: 'Create Audience::Field'
+      description: Create a new Field in the provided parent Audience.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatasetFieldInput'
+              $ref: '#/components/schemas/AudienceFieldInput'
       responses:
         '201':
           description: Field created successfully
@@ -29,28 +33,44 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
+                    description: The id of the Field.
                     type: integer
                     format: int64
         '303':
-          description: Field already exists
+          description: >-
+            A Field with the same type, enumerability, and name already exists
+            in this Audience
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Redirection'
+                $ref: '#/components/schemas/FieldRedirection'
+        '404':
+          description: Cannot find Audience
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Input has invalid semantics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: datasetId
-          description: Id of parent Dataset
+          name: audienceId
+          description: Id of parent Audience
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
     get:
       tags:
-        - 'Dataset::Field'
-      operationId: 'List Dataset::Fields'
-      description: Find existing Fields
+        - 'Audience::Field'
+      operationId: 'Get Audience::Fields'
+      description: |-
+        Find existing Fields in the provided parent Audience.
+             Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+             All fields of other types will not be included in the response.
       responses:
         '200':
           description: Fields retrieved successfully
@@ -63,15 +83,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasetFieldMultiResponse'
+                $ref: '#/components/schemas/AudienceFieldMultiResponse'
+        '404':
+          description: Cannot find Audience
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: datasetId
-          description: Id of parent Dataset
+          name: audienceId
+          description: Id of parent Audience
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - in: query
           name: offset
           description: Offset of the Fields (starting from 0) to include in the response.
@@ -89,190 +114,252 @@ paths:
             format: int32
             default: 10
             maximum: 100
-        - in: query
-          name: id
-          description: ''
-          required: false
-          schema:
-            type: integer
-            format: int64
-        - in: query
-          name: enabled
-          description: ''
-          required: false
-          schema:
-            type: boolean
-  '/v1/datasets/{datasetId}/fields/{id}':
+  '/v1/audiences/{audienceId}/fields/{id}':
     get:
       tags:
-        - 'Dataset::Field'
-      operationId: 'Get 1 Dataset::Field'
-      description: Get a Field
+        - 'Audience::Field'
+      operationId: 'Get Audience::Field'
+      description: |-
+        Find a single existing Field in the provided parent Audience.
+             Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+             All fields of other types will not be included in the response.
       responses:
         '200':
           description: Field retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasetFieldOutput'
+                $ref: '#/components/schemas/AudienceFieldOutput'
         '404':
-          description: Field not found
+          description: Cannot find resource
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: datasetId
-          description: Id of parent Dataset
+          name: audienceId
+          description: Id of parent Audience
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - in: path
           name: id
           required: true
-          description: ''
+          description: The id of the Field.
           schema:
             type: integer
             format: int64
     put:
       tags:
-        - 'Dataset::Field'
-      operationId: 'Modify a Dataset::Field'
-      description: Add values to a Field
+        - 'Audience::Field'
+      operationId: 'Modify Audience::Field'
+      description: |-
+        Modify the attributes of a Field in the provided parent Audience.
+             Currently the only supported operation is adding values to enumerated Fields.
+             The list of values passed in will be added to the Field's existing set of values.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatasetFieldPuttable'
+              $ref: '#/components/schemas/AudienceFieldPuttable'
       responses:
         '200':
           description: Field modified successfully
-        '400':
-          description: Values do not match Field type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardError'
-        '403':
-          description: Field is not enumerable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardError'
         '404':
-          description: Field not found
+          description: Cannot find resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Input has invalid semantics
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: datasetId
-          description: Id of parent Dataset
+          name: audienceId
+          description: Id of parent Audience
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - in: path
           name: id
           required: true
-          description: ''
+          description: The id of the Field.
           schema:
             type: integer
             format: int64
-    delete:
+  '/v1/audiences/{audienceId}/fields/{fieldId}/actions/disable':
+    post:
       tags:
-        - 'Dataset::Field'
-      operationId: 'Delete a Dataset::Field'
-      description: Disable a Field
+        - 'Disable Audience::Field'
+      operationId: 'Disable Audience::Field'
+      description: |-
+        Marks a Field as 'disabled', which means that it will no longer
+             be processed in the audience, will no longer be deliverable,
+             and will no longer have stats calculated for it.
+             Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+             Attempting to disable any other type of field will trigger a 404 Not Found response.
       responses:
         '200':
-          description: Field deleted successfully
+          description: Disable action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: integer
+                    format: int32
         '404':
-          description: Field not found
+          description: Cannot find resource
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
-          name: datasetId
-          description: Id of parent Dataset
+          name: audienceId
+          description: Id of parent Audience
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - in: path
-          name: id
+          name: fieldId
+          description: Id of parent Field
           required: true
-          description: ''
           schema:
             type: integer
             format: int64
+  '/v1/audiences/{audienceId}/fields/actions/disable':
+    post:
+      tags:
+        - 'Bulk Disable Audience::Field'
+      operationId: 'Bulk Disable Audience::Field'
+      description: >-
+        Marks the set of input Fields 'disabled', which means that they will no
+        longer
+             be processed in the audience, will no longer be deliverable,
+             and will no longer have stats calculated for them.
+             Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+             Attempting to disable any other type of field will trigger a 404 Not Found response.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkDisableAudienceFieldInput'
+      responses:
+        '200':
+          description: Disable action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: integer
+                    format: int32
+        '404':
+          description: Cannot find resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: audienceId
+          description: Id of parent Audience
+          required: true
+          schema:
+            type: string
 components:
   parameters: {}
   schemas:
-    DatasetFieldInput:
+    AudienceFieldInput:
       type: object
       properties:
         name:
-          description: ''
+          description: The name of the Field.
           type: string
+          maxLength: 255
         type:
-          description: ''
+          description: |-
+            The type of data that will be imported into this field.
+               NUMERIC: only numeric data/values can be added to this Field.
+               STRING: any string data or values can be added to this Field.
           $ref: '#/components/schemas/FieldTypeEnum'
-        enumerable:
-          description: ''
+        enumerated:
+          description: Whether or not the Field's values are enumerated.
           type: boolean
         valueCollectionType:
-          description: ''
+          description: |-
+            Determines how the set of values for this Field should be maintained
+               for each audience key that this Field is associated with.
+               SINGLETON: only store the value most recently imported for this audience key.
+               SET: store all values at most once that were imported for this audience key.
+               MULTISET: store all values imported for this audience key potentially duplicate times.
           $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
-          description: ''
+          description: |-
+            The list of enum values for the Field.
+               This is only allowed if enumerated==true for the Field.
           items:
             type: string
+          minItems: 1
           type: array
       required:
         - name
         - type
-        - enumerable
+        - enumerated
         - valueCollectionType
-    DatasetFieldOutput:
+    AudienceFieldOutput:
       type: object
       properties:
         id:
-          description: ''
+          description: The id of the Field.
           type: integer
           format: int64
         name:
-          description: ''
+          description: The name of the Field.
           type: string
+          maxLength: 255
         type:
-          description: ''
+          description: |-
+            The type of data that will be imported into this field.
+               NUMERIC: only numeric data/values can be added to this Field.
+               STRING: any string data or values can be added to this Field.
           $ref: '#/components/schemas/FieldTypeEnum'
-        enumerable:
-          description: ''
+        enumerated:
+          description: Whether or not the Field's values are enumerated.
           type: boolean
         valueCollectionType:
-          description: ''
+          description: |-
+            Determines how the set of values for this Field should be maintained
+               for each audience key that this Field is associated with.
+               SINGLETON: only store the value most recently imported for this audience key.
+               SET: store all values at most once that were imported for this audience key.
+               MULTISET: store all values imported for this audience key potentially duplicate times.
           $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
-          description: ''
+          description: |-
+            The list of enum values for the Field.
+               This is only allowed if enumerated==true for the Field.
           items:
             type: string
+          minItems: 1
           type: array
-        enabled:
-          description: ''
-          type: boolean
         createdAt:
-          description: ''
+          description: Timestamp of when the Field was first created.
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
         updatedAt:
-          description: ''
+          description: Timestamp of the last time the Field's metadata was updated.
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -280,26 +367,40 @@ components:
         - id
         - name
         - type
-        - enumerable
+        - enumerated
         - valueCollectionType
         - createdAt
         - updatedAt
-    DatasetFieldPuttable:
+    AudienceFieldPuttable:
       type: object
       properties:
         values:
-          description: ''
+          description: |-
+            The list of enum values for the Field.
+               This is only allowed if enumerated==true for the Field.
           items:
             type: string
+          minItems: 1
           type: array
-    DatasetFieldMultiResponse:
+    AudienceFieldMultiResponse:
       type: object
       properties:
         fields:
-          description: 'Array of retrieved Dataset::Fields'
+          description: 'Array of retrieved Audience::Fields'
           type: array
           items:
-            $ref: '#/components/schemas/DatasetFieldOutput'
+            $ref: '#/components/schemas/AudienceFieldOutput'
+    BulkDisableAudienceFieldInput:
+      type: object
+      properties:
+        fieldIDs:
+          description: IDs of Fields to disable.
+          format: int64
+          items:
+            type: integer
+          type: array
+      required:
+        - fieldIDs
     FieldTypeEnum:
       type: string
       enum:
@@ -311,14 +412,14 @@ components:
         - SINGLETON
         - SET
         - MULTISET
-    Redirection:
+    FieldRedirection:
       type: object
       properties:
-        existingFieldUrl:
+        existingFieldURL:
           description: ''
           type: string
       required:
-        - existingFieldUrl
+        - existingFieldURL
     StandardError:
       type: object
       properties:

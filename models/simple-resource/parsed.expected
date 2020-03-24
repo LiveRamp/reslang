@@ -121,11 +121,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -165,8 +161,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -257,8 +252,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

@@ -36,7 +36,7 @@ paths:
     get:
       tags:
         - Person
-      operationId: Get 1 Person
+      operationId: Get Person
       description: ''
       responses:
         '200':
@@ -62,7 +62,7 @@ paths:
     put:
       tags:
         - Person
-      operationId: Modify a Person
+      operationId: Modify Person
       description: ''
       requestBody:
         content:
@@ -89,7 +89,7 @@ paths:
     patch:
       tags:
         - Person
-      operationId: Patch a Person
+      operationId: Patch Person
       description: ''
       requestBody:
         content:

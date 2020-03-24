@@ -42,7 +42,7 @@ paths:
     get:
       tags:
         - Resource
-      operationId: Get 1 Resource
+      operationId: Get Resource
       description: ''
       responses:
         '200':
@@ -69,7 +69,7 @@ paths:
     get:
       tags:
         - 'Resource::Metadata'
-      operationId: 'Get 1 Resource::Metadata'
+      operationId: 'Get Resource::Metadata'
       description: ''
       responses:
         '200':
@@ -95,7 +95,7 @@ paths:
     put:
       tags:
         - 'Resource::Metadata'
-      operationId: 'Modify a Resource::Metadata'
+      operationId: 'Modify Resource::Metadata'
       description: ''
       responses:
         '200':
@@ -118,7 +118,7 @@ paths:
     get:
       tags:
         - SingletonResource
-      operationId: Get 1 SingletonResource
+      operationId: Get SingletonResource
       description: ''
       responses:
         '200':
@@ -136,7 +136,7 @@ paths:
     put:
       tags:
         - SingletonResource
-      operationId: Modify a SingletonResource
+      operationId: Modify SingletonResource
       description: ''
       responses:
         '200':
@@ -151,7 +151,7 @@ paths:
     get:
       tags:
         - 'SingletonResource::Metadata'
-      operationId: 'Get 1 SingletonResource::Metadata'
+      operationId: 'Get SingletonResource::Metadata'
       description: ''
       responses:
         '200':
@@ -169,7 +169,7 @@ paths:
     put:
       tags:
         - 'SingletonResource::Metadata'
-      operationId: 'Modify a SingletonResource::Metadata'
+      operationId: 'Modify SingletonResource::Metadata'
       description: ''
       responses:
         '200':

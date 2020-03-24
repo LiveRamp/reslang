@@ -8,7 +8,7 @@ servers:
 tags:
   - name: DistributionRequest
     description: '(request)  '
-  - name: 'DistributionRequest::Cancel'
+  - name: Cancel DistributionRequest
     description: >-
       (async action)  Use this action to cancel a given DistributionRequest.
       This will prevent the request from moving to the next stage, but may not
@@ -16,7 +16,7 @@ tags:
       this is that we may deliver data to a destination, even if it was
       cancelled. The cancelled DistributionRequest will still be kept in the
       system for bookkeeping
-  - name: 'DistributionRequest::Retry'
+  - name: Retry DistributionRequest
     description: >-
       (async action)  Use this action to retry a failed DistributionRequest.
       This will try to resume a failed request from the last successful step
@@ -46,7 +46,7 @@ paths:
     get:
       tags:
         - DistributionRequest
-      operationId: List DistributionRequests
+      operationId: Get DistributionRequests
       description: >-
         Use this endpoint to find existing DistributionRequests. The result set
         is paginated for performance and sorted by createdAt descending by
@@ -177,7 +177,7 @@ paths:
     get:
       tags:
         - DistributionRequest
-      operationId: Get 1 DistributionRequest
+      operationId: Get DistributionRequest
       description: >-
         Use this endpoint to fetch the overview of a given DistributionRequest,
         including current status, input
@@ -205,8 +205,8 @@ paths:
   '/v1/distribution-requests/{distributionRequestId}/actions/cancel':
     post:
       tags:
-        - 'DistributionRequest::Cancel'
-      operationId: 'Create DistributionRequest::Cancel'
+        - Cancel DistributionRequest
+      operationId: Cancel DistributionRequest asynchronously
       description: ''
       responses:
         '200':
@@ -251,8 +251,8 @@ paths:
   '/v1/distribution-requests/{distributionRequestId}/actions/retry':
     post:
       tags:
-        - 'DistributionRequest::Retry'
-      operationId: 'Create DistributionRequest::Retry'
+        - Retry DistributionRequest
+      operationId: Retry DistributionRequest asynchronously
       description: ''
       responses:
         '200':

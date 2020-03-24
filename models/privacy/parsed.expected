@@ -199,9 +199,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "consent.reslang"
     },
     {
       "kind": "structure",
@@ -289,8 +287,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
       "kind": "enum",
@@ -305,8 +302,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
       "kind": "enum",
@@ -325,8 +321,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "consent.reslang",
-      "generateInput": true
+      "file": "consent.reslang"
     },
     {
       "kind": "structure",
@@ -417,8 +412,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

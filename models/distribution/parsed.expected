@@ -86,10 +86,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "destination.reslang"
     },
     {
       "kind": "resource-like",
@@ -199,11 +196,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "destination.reslang"
     },
     {
       "kind": "resource-like",
@@ -348,11 +341,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "destination.reslang"
     },
     {
       "kind": "structure",
@@ -417,8 +406,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "destination.reslang",
-      "generateInput": true
+      "file": "destination.reslang"
     },
     {
       "kind": "resource-like",
@@ -677,11 +665,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true,
-      "generatePuttable": true
+      "file": "endpoint.reslang"
     },
     {
       "kind": "structure",
@@ -769,8 +753,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true
+      "file": "endpoint.reslang"
     },
     {
       "kind": "resource-like",
@@ -876,10 +859,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
       "kind": "resource-like",
@@ -960,10 +940,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
       "kind": "resource-like",
@@ -1069,10 +1046,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "endpoint.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "endpoint.reslang"
     },
     {
       "kind": "enum",
@@ -1089,8 +1063,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "enums.reslang",
-      "generateInput": true
+      "file": "enums.reslang"
     },
     {
       "kind": "enum",
@@ -1125,8 +1098,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "enums.reslang",
-      "generateInput": true
+      "file": "enums.reslang"
     },
     {
       "kind": "structure",
@@ -1217,8 +1189,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

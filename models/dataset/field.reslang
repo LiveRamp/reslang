@@ -1,42 +1,103 @@
-subresource Dataset::Field {
-  id: long query
-  name: string  // TODO: need to set maxlength
-  type: FieldTypeEnum 
-  enumerable: boolean
+subresource Audience::Field {
+  "The id of the Field."
+  id: long
+
+  "The name of the Field."
+  name: string max-length:255
+  
+  "The type of data that will be imported into this field.
+   NUMERIC: only numeric data/values can be added to this Field.
+   STRING: any string data or values can be added to this Field."
+  type: FieldTypeEnum
+
+  "Whether or not the Field's values are enumerated."
+  enumerated: boolean
+
+  "Determines how the set of values for this Field should be maintained
+   for each audience key that this Field is associated with.
+   SINGLETON: only store the value most recently imported for this audience key.
+   SET: store all values at most once that were imported for this audience key.
+   MULTISET: store all values imported for this audience key potentially duplicate times."
   valueCollectionType: ValueCollectionTypeEnum
-  values: string[] mutable optional
+
+  "The list of enum values for the Field.
+   This is only allowed if enumerated==true for the Field."
+  values: string[1..] mutable optional
 
   // output attributes
-  enabled: boolean query output optional
+  "Timestamp of when the Field was first created."
   createdAt: datetime output
+
+  "Timestamp of the last time the Field's metadata was updated."
   updatedAt: datetime output
 
   /operations
-    "Get a Field"
+    "Find a single existing Field in the provided parent Audience.
+     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+     All fields of other types will not be included in the response."
     GET
+      "Cannot find resource" 404
+        StandardError
 
-    "Create a new Field"
+    "Create a new Field in the provided parent Audience."
     POST
-      "Field already exists" 303
-        Redirection
+      "A Field with the same type, enumerability, and name already exists in this Audience" 303
+        FieldRedirection
+      "Cannot find Audience" 404
+        StandardError
+      "Input has invalid semantics" 422
+        StandardError
 
-    "Find existing Fields"
+    "Find existing Fields in the provided parent Audience.
+     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+     All fields of other types will not be included in the response."
     MULTIGET
+      "Cannot find Audience" 404
+        StandardError
 
-    "Disable a Field"
-    DELETE
-
-    "Add values to a Field"
+    "Modify the attributes of a Field in the provided parent Audience.
+     Currently the only supported operation is adding values to enumerated Fields.
+     The list of values passed in will be added to the Field's existing set of values."
     PUT
-      "Field is not enumerable" 403
+      "Input has invalid semantics" 422
         StandardError
-      "Values do not match Field type" 400
+      "Cannot find resource" 404
         StandardError
+}
 
+sync action Audience::Field::Disable {
+  id: int
+
+  /operations
+    "Marks a Field as 'disabled', which means that it will no longer
+     be processed in the audience, will no longer be deliverable,
+     and will no longer have stats calculated for it.
+     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+     Attempting to disable any other type of field will trigger a 404 Not Found response."
+    POST
+      "Cannot find resource" 404
+        StandardError
+}
+
+sync resource-level action Audience::Field::Disable {
+  id: int
+
+  "IDs of Fields to disable."
+  fieldIDs: long[]
+
+  /operations
+    "Marks the set of input Fields 'disabled', which means that they will no longer
+     be processed in the audience, will no longer be deliverable,
+     and will no longer have stats calculated for them.
+     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).
+     Attempting to disable any other type of field will trigger a 404 Not Found response."
+    POST
+      "Cannot find resource" 404
+        StandardError
 }
 
 enum FieldTypeEnum {
-  STRING 
+  STRING
   NUMERIC
 }
 
@@ -46,6 +107,6 @@ enum ValueCollectionTypeEnum {
   MULTISET
 }
 
-structure Redirection {
-  existingFieldUrl: string
+structure FieldRedirection {
+  existingFieldURL: string
 }

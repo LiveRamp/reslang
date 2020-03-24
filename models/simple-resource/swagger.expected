@@ -36,7 +36,7 @@ paths:
     get:
       tags:
         - Garage
-      operationId: List Garages
+      operationId: Get Garages
       description: ''
       responses:
         '200':
@@ -87,7 +87,7 @@ paths:
     get:
       tags:
         - Garage
-      operationId: Get 1 Garage
+      operationId: Get Garage
       description: ''
       responses:
         '200':
@@ -114,7 +114,7 @@ paths:
     put:
       tags:
         - Garage
-      operationId: Modify a Garage
+      operationId: Modify Garage
       description: Actual PUT comment
       responses:
         '200':
@@ -137,7 +137,7 @@ paths:
     delete:
       tags:
         - Garage
-      operationId: Delete a Garage
+      operationId: Delete Garage
       description: ''
       responses:
         '200':

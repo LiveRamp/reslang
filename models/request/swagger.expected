@@ -14,16 +14,16 @@ tags:
     description: '(subresource)  '
   - name: 'UploadRequest::RecordSet::Deep'
     description: '(subresource)  '
-  - name: 'UploadRequest::StartProcessingAction'
+  - name: StartProcessingAction UploadRequest
     description: '(async action)  '
-  - name: 'UploadRequest::StopProcessingAction'
+  - name: StopProcessingAction UploadRequest
     description: '(sync action)  '
-  - name: 'UploadRequest::StartProcessingAction_R'
-    description: '(resource level sync action)  '
-  - name: 'UploadRequest::RecordSet::Clear_R'
-    description: '(resource level sync action)  '
-  - name: 'UploadRequest::RecordSet::Deep::Jump_R'
-    description: '(resource level sync action)  '
+  - name: Bulk StartProcessingAction UploadRequest
+    description: '(bulk sync action)  '
+  - name: 'Bulk Clear UploadRequest::RecordSet'
+    description: '(bulk sync action)  '
+  - name: 'Bulk Jump UploadRequest::RecordSet::Deep'
+    description: '(bulk sync action)  '
 paths:
   /v1/upload-requests:
     post:
@@ -51,7 +51,7 @@ paths:
     get:
       tags:
         - UploadRequest
-      operationId: List UploadRequests
+      operationId: Get UploadRequests
       description: ''
       responses:
         '200':
@@ -96,7 +96,7 @@ paths:
     get:
       tags:
         - UploadRequest
-      operationId: Get 1 UploadRequest
+      operationId: Get UploadRequest
       description: ''
       responses:
         '200':
@@ -123,7 +123,7 @@ paths:
     get:
       tags:
         - 'UploadRequest::Status'
-      operationId: 'Get 1 UploadRequest::Status'
+      operationId: 'Get UploadRequest::Status'
       description: ''
       responses:
         '200':
@@ -181,7 +181,7 @@ paths:
     get:
       tags:
         - 'UploadRequest::RecordSet'
-      operationId: 'Get 1 UploadRequest::RecordSet'
+      operationId: 'Get UploadRequest::RecordSet'
       description: ''
       responses:
         '200':
@@ -253,7 +253,7 @@ paths:
     get:
       tags:
         - 'UploadRequest::RecordSet::Deep'
-      operationId: 'Get 1 UploadRequest::RecordSet::Deep'
+      operationId: 'Get UploadRequest::RecordSet::Deep'
       description: ''
       responses:
         '200':
@@ -293,14 +293,14 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/actions/start-processing-action':
     post:
       tags:
-        - 'UploadRequest::StartProcessingAction'
-      operationId: 'Create UploadRequest::StartProcessingAction'
+        - StartProcessingAction UploadRequest
+      operationId: StartProcessingAction UploadRequest asynchronously
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestStartProcessingActionInput'
+              $ref: '#/components/schemas/StartProcessingActionUploadRequestInput'
       responses:
         '200':
           description: StartProcessingAction action completed
@@ -347,14 +347,14 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action':
     post:
       tags:
-        - 'UploadRequest::StopProcessingAction'
-      operationId: 'Create UploadRequest::StopProcessingAction'
+        - StopProcessingAction UploadRequest
+      operationId: StopProcessingAction UploadRequest
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestStopProcessingActionInput'
+              $ref: '#/components/schemas/StopProcessingActionUploadRequestInput'
       responses:
         '200':
           description: StopProcessingAction action completed
@@ -378,8 +378,8 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action/{id}':
     get:
       tags:
-        - 'UploadRequest::StopProcessingAction'
-      operationId: 'Get 1 UploadRequest::StopProcessingAction'
+        - StopProcessingAction UploadRequest
+      operationId: 'Get UploadRequest::StopProcessingAction'
       description: ''
       responses:
         '200':
@@ -387,7 +387,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRequestStopProcessingActionOutput'
+                $ref: '#/components/schemas/StopProcessingActionUploadRequestOutput'
         '404':
           description: StopProcessingAction not found
           content:
@@ -412,14 +412,14 @@ paths:
   /v1/upload-requests/actions/start-processing-action:
     post:
       tags:
-        - 'UploadRequest::StartProcessingAction_R'
-      operationId: 'Create UploadRequest::StartProcessingAction_R'
+        - Bulk StartProcessingAction UploadRequest
+      operationId: Bulk StartProcessingAction UploadRequest
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestStartProcessingActionRInput'
+              $ref: '#/components/schemas/BulkStartProcessingActionUploadRequestInput'
       responses:
         '200':
           description: StartProcessingAction action completed
@@ -435,8 +435,8 @@ paths:
   '/v1/upload-requests/actions/start-processing-action/{id}':
     get:
       tags:
-        - 'UploadRequest::StartProcessingAction_R'
-      operationId: 'Get 1 UploadRequest::StartProcessingAction_R'
+        - Bulk StartProcessingAction UploadRequest
+      operationId: 'Get Bulk UploadRequest::StartProcessingAction'
       description: ''
       responses:
         '200':
@@ -444,7 +444,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRequestStartProcessingActionROutput'
+                $ref: >-
+                  #/components/schemas/BulkStartProcessingActionUploadRequestOutput
         '404':
           description: StartProcessingAction not found
           content:
@@ -462,14 +463,14 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/record-sets/actions/clear':
     post:
       tags:
-        - 'UploadRequest::RecordSet::Clear_R'
-      operationId: 'Create UploadRequest::RecordSet::Clear_R'
+        - 'Bulk Clear UploadRequest::RecordSet'
+      operationId: 'Bulk Clear UploadRequest::RecordSet'
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestRecordSetClearRInput'
+              $ref: '#/components/schemas/BulkClearUploadRequestRecordSetInput'
       responses:
         '200':
           description: Clear action completed
@@ -493,8 +494,8 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/record-sets/actions/clear/{id}':
     get:
       tags:
-        - 'UploadRequest::RecordSet::Clear_R'
-      operationId: 'Get 1 UploadRequest::RecordSet::Clear_R'
+        - 'Bulk Clear UploadRequest::RecordSet'
+      operationId: 'Get Bulk UploadRequest::RecordSet::Clear'
       description: ''
       responses:
         '200':
@@ -502,7 +503,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRequestRecordSetClearROutput'
+                $ref: '#/components/schemas/BulkClearUploadRequestRecordSetOutput'
         '404':
           description: Clear not found
           content:
@@ -527,14 +528,14 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps/actions/jump':
     post:
       tags:
-        - 'UploadRequest::RecordSet::Deep::Jump_R'
-      operationId: 'Create UploadRequest::RecordSet::Deep::Jump_R'
+        - 'Bulk Jump UploadRequest::RecordSet::Deep'
+      operationId: 'Bulk Jump UploadRequest::RecordSet::Deep'
       description: ''
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UploadRequestRecordSetDeepJumpRInput'
+              $ref: '#/components/schemas/BulkJumpUploadRequestRecordSetDeepInput'
       responses:
         '200':
           description: Jump action completed
@@ -565,8 +566,8 @@ paths:
   '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps/actions/jump/{id}':
     get:
       tags:
-        - 'UploadRequest::RecordSet::Deep::Jump_R'
-      operationId: 'Get 1 UploadRequest::RecordSet::Deep::Jump_R'
+        - 'Bulk Jump UploadRequest::RecordSet::Deep'
+      operationId: 'Get Bulk UploadRequest::RecordSet::Deep::Jump'
       description: ''
       responses:
         '200':
@@ -574,7 +575,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadRequestRecordSetDeepJumpROutput'
+                $ref: '#/components/schemas/BulkJumpUploadRequestRecordSetDeepOutput'
         '404':
           description: Jump not found
           content:
@@ -747,7 +748,7 @@ components:
       required:
         - details
         - address
-    UploadRequestStartProcessingActionInput:
+    StartProcessingActionUploadRequestInput:
       type: object
       properties:
         created:
@@ -757,7 +758,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - created
-    UploadRequestStopProcessingActionInput:
+    StopProcessingActionUploadRequestInput:
       type: object
       properties:
         when:
@@ -767,32 +768,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - when
-    UploadRequestStopProcessingActionOutput:
-      type: object
-      properties:
-        id:
-          description: ''
-          type: integer
-          format: int32
-        when:
-          description: ''
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
-      required:
-        - id
-        - when
-    UploadRequestStartProcessingActionRInput:
-      type: object
-      properties:
-        when:
-          description: ''
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
-      required:
-        - when
-    UploadRequestStartProcessingActionROutput:
+    StopProcessingActionUploadRequestOutput:
       type: object
       properties:
         id:
@@ -807,7 +783,7 @@ components:
       required:
         - id
         - when
-    UploadRequestRecordSetClearRInput:
+    BulkStartProcessingActionUploadRequestInput:
       type: object
       properties:
         when:
@@ -817,7 +793,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - when
-    UploadRequestRecordSetClearROutput:
+    BulkStartProcessingActionUploadRequestOutput:
       type: object
       properties:
         id:
@@ -832,7 +808,7 @@ components:
       required:
         - id
         - when
-    UploadRequestRecordSetDeepJumpRInput:
+    BulkClearUploadRequestRecordSetInput:
       type: object
       properties:
         when:
@@ -842,7 +818,32 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - when
-    UploadRequestRecordSetDeepJumpROutput:
+    BulkClearUploadRequestRecordSetOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    BulkJumpUploadRequestRecordSetDeepInput:
+      type: object
+      properties:
+        when:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    BulkJumpUploadRequestRecordSetDeepOutput:
       type: object
       properties:
         id:

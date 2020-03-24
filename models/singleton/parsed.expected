@@ -78,9 +78,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -132,9 +130,7 @@
       "parentShort": "Resource",
       "parentName": "Resource",
       "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -184,9 +180,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -238,9 +232,7 @@
       "parentShort": "SingletonResource",
       "parentName": "SingletonResource",
       "secondary": false,
-      "file": "resources.reslang",
-      "generatePuttable": true,
-      "generateOutput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -331,8 +323,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

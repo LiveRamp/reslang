@@ -1,3 +1,4 @@
-future asset-resource Dataset {
-  id: int
+
+future resource Audience {
+  id: string
 }

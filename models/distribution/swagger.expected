@@ -53,7 +53,7 @@ paths:
     get:
       tags:
         - Destination
-      operationId: List Destinations
+      operationId: Get Destinations
       description: Get all destinations
       responses:
         '200':
@@ -98,7 +98,7 @@ paths:
     get:
       tags:
         - Destination
-      operationId: Get 1 Destination
+      operationId: Get Destination
       description: Retrieve a current destination
       responses:
         '200':
@@ -155,7 +155,7 @@ paths:
     get:
       tags:
         - 'Destination::TaxonomyConfiguration'
-      operationId: 'List Destination::TaxonomyConfigurations'
+      operationId: 'Get Destination::TaxonomyConfigurations'
       description: ''
       responses:
         '200':
@@ -209,7 +209,7 @@ paths:
     get:
       tags:
         - 'Destination::TaxonomyConfiguration'
-      operationId: 'Get 1 Destination::TaxonomyConfiguration'
+      operationId: 'Get Destination::TaxonomyConfiguration'
       description: ''
       responses:
         '200':
@@ -242,7 +242,7 @@ paths:
     put:
       tags:
         - 'Destination::TaxonomyConfiguration'
-      operationId: 'Modify a Destination::TaxonomyConfiguration'
+      operationId: 'Modify Destination::TaxonomyConfiguration'
       description: ''
       responses:
         '200':
@@ -302,7 +302,7 @@ paths:
     get:
       tags:
         - 'Destination::Integration'
-      operationId: 'List Destination::Integrations'
+      operationId: 'Get Destination::Integrations'
       description: Retrieve many integrations
       responses:
         '200':
@@ -354,7 +354,7 @@ paths:
     get:
       tags:
         - 'Destination::Integration'
-      operationId: 'Get 1 Destination::Integration'
+      operationId: 'Get Destination::Integration'
       description: Retrieve an integration
       responses:
         '200':
@@ -387,7 +387,7 @@ paths:
     put:
       tags:
         - 'Destination::Integration'
-      operationId: 'Modify a Destination::Integration'
+      operationId: 'Modify Destination::Integration'
       description: Alter an integration
       responses:
         '200':
@@ -447,7 +447,7 @@ paths:
     get:
       tags:
         - 'Destination::Endpoint'
-      operationId: 'List Destination::Endpoints'
+      operationId: 'Get Destination::Endpoints'
       description: ''
       responses:
         '200':
@@ -499,7 +499,7 @@ paths:
     get:
       tags:
         - 'Destination::Endpoint'
-      operationId: 'Get 1 Destination::Endpoint'
+      operationId: 'Get Destination::Endpoint'
       description: ''
       responses:
         '200':
@@ -532,7 +532,7 @@ paths:
     put:
       tags:
         - 'Destination::Endpoint'
-      operationId: 'Modify a Destination::Endpoint'
+      operationId: 'Modify Destination::Endpoint'
       description: ''
       responses:
         '200':
@@ -592,7 +592,7 @@ paths:
     get:
       tags:
         - 'Destination::Packager'
-      operationId: 'List Destination::Packagers'
+      operationId: 'Get Destination::Packagers'
       description: ''
       responses:
         '200':
@@ -638,7 +638,7 @@ paths:
     get:
       tags:
         - 'Destination::Packager'
-      operationId: 'Get 1 Destination::Packager'
+      operationId: 'Get Destination::Packager'
       description: ''
       responses:
         '200':
@@ -702,7 +702,7 @@ paths:
     get:
       tags:
         - 'Destination::Formatter'
-      operationId: 'List Destination::Formatters'
+      operationId: 'Get Destination::Formatters'
       description: ''
       responses:
         '200':
@@ -748,7 +748,7 @@ paths:
     get:
       tags:
         - 'Destination::Formatter'
-      operationId: 'Get 1 Destination::Formatter'
+      operationId: 'Get Destination::Formatter'
       description: ''
       responses:
         '200':
@@ -812,7 +812,7 @@ paths:
     get:
       tags:
         - 'Destination::Deliverer'
-      operationId: 'List Destination::Deliverers'
+      operationId: 'Get Destination::Deliverers'
       description: ''
       responses:
         '200':
@@ -858,7 +858,7 @@ paths:
     get:
       tags:
         - 'Destination::Deliverer'
-      operationId: 'Get 1 Destination::Deliverer'
+      operationId: 'Get Destination::Deliverer'
       description: ''
       responses:
         '200':

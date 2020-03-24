@@ -124,8 +124,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "upversion.reslang",
-      "generateOutput": true
+      "file": "upversion.reslang"
     },
     {
       "kind": "resource-like",
@@ -204,10 +203,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "upversion.reslang",
-      "generateInput": true,
-      "generatePuttable": true,
-      "generateOutput": true
+      "file": "upversion.reslang"
     },
     {
       "kind": "resource-like",
@@ -282,9 +278,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "upversion.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "upversion.reslang"
     },
     {
       "kind": "resource-like",
@@ -361,9 +355,7 @@
       "parentShort": "v2/ResourceB",
       "parentName": "v2/ResourceB",
       "secondary": false,
-      "file": "upversion.reslang",
-      "generateInput": true,
-      "generateOutput": true
+      "file": "upversion.reslang"
     },
     {
       "kind": "structure",
@@ -454,8 +446,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

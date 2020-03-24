@@ -21,7 +21,7 @@ subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"?
         parents: respath.parents, short: respath.short}
 }
 
-action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ reslevel:"resource-level"? _ "action" _ respath:parentrespath _ "{" _
+action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bulk:("bulk" / "resource-level")? _ "action" _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
@@ -29,7 +29,7 @@ action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ re
         comment: comment, future: !!future, singleton: false, type: "action", async: async == "async", 
         attributes: attributes, operations: operations,
         parents: respath.parents, short: respath.short,
-        resourceLevel: reslevel}
+        bulk: bulk}
 }
 
 operations = _ "/operations" _ ops:operation+ _ {

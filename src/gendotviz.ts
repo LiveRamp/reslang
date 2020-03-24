@@ -118,7 +118,7 @@ export default class DotvizGen extends BaseGen {
                 // from parent to action
                 if (isAction(def)) {
                     const label = this.makeLabelText(
-                        def.resourceLevel ? "resource level action" : "action"
+                        def.bulk ? "resource level action" : "action"
                     )
                     viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
                 }

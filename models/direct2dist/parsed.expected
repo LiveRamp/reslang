@@ -428,10 +428,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true,
-      "generateMulti": true,
-      "generateOutput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "resource-like",
@@ -481,8 +478,7 @@
       "parentShort": "DistributionRequest",
       "parentName": "DistributionRequest",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "resource-like",
@@ -532,8 +528,7 @@
       "parentShort": "DistributionRequest",
       "parentName": "DistributionRequest",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "enum",
@@ -547,8 +542,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "enum",
@@ -565,8 +559,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "enum",
@@ -584,8 +577,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "structure",
@@ -648,8 +640,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "union",
@@ -687,8 +678,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "structure",
@@ -814,8 +804,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "structure",
@@ -1009,8 +998,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "structure",
@@ -1073,8 +1061,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang",
-      "generateInput": true
+      "file": "distribution-mvp.reslang"
     },
     {
       "kind": "resource-like",
@@ -1247,8 +1234,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [

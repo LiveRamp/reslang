@@ -181,9 +181,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true,
-      "generatePuttable": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -284,8 +282,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "union",
@@ -373,8 +370,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "resources.reslang",
-      "generateInput": true
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -553,8 +549,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "local.reslang",
-      "generateInput": true
+      "file": "local.reslang"
     }
   ],
   "diagrams": [
