@@ -14,7 +14,8 @@ import {
     isUnion,
     isEnum,
     isAction,
-    getAllAttributes
+    getAllAttributes,
+    getKeyAttributes
 } from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
 
@@ -705,7 +706,12 @@ export default class SwagGen extends BaseGen {
                 }
             }
             if (isStructure(def) && def.generateInput) {
-                this.addStructureDefinition(definitions, def, "")
+                this.addStructureDefinition(
+                    definitions,
+                    def,
+                    "",
+                    getKeyAttributes(def)
+                )
             }
             if (isUnion(def) && def.generateInput) {
                 this.addUnionDefinition(definitions, def, "")

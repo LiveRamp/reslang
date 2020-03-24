@@ -1,0 +1,227 @@
+asyncapi: 2.0.0
+info:
+  title: Simple events
+  description: API for simple events
+  version: 0.0.1
+servers:
+  production:
+    url: 'test.port:{port}'
+    protocol: Google Cloud Pub/Sub
+    description: LiveRamp Production pubsub instance
+    variables:
+      port:
+        description: Secure connection (TLS) is available through port 8883
+        default: '1883'
+        enum:
+          - '1883'
+defaultContentType: application/json
+channels:
+  rest-eventing-v1-simple-resource:
+    publish:
+      summary: 'REST: undefined'
+      operationId: SimpleResource
+      message:
+        $ref: '#/components/messages/SimpleResource'
+  rest-eventing-v2-test-resource:
+    publish:
+      summary: 'REST: undefined'
+      operationId: v2/TestResource
+      message:
+        $ref: '#/components/messages/v2TestResource'
+  rest-eventing-v2-test-resource-foo:
+    publish:
+      summary: 'REST: undefined'
+      operationId: 'v2/TestResource::Foo'
+      message:
+        $ref: '#/components/messages/v2TestResourceFoo'
+  adhoc-eventing-v1-start-signal:
+    publish:
+      operationId: StartSignal
+      message:
+        $ref: '#/components/messages/StartSignal'
+  adhoc-eventing-v3-stop-signal:
+    publish:
+      operationId: v3/StopSignal
+      message:
+        $ref: '#/components/messages/v3StopSignal'
+components:
+  messages:
+    SimpleResource:
+      name: SimpleResource
+      title: SimpleResource
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RestHeader'
+      payload:
+        $ref: '#/components/schemas/SimpleResource'
+    v2TestResource:
+      name: v2TestResource
+      title: v2TestResource
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RestHeader'
+      payload:
+        $ref: '#/components/schemas/v2TestResource'
+    v2TestResourceFoo:
+      name: v2TestResourceFoo
+      title: v2TestResourceFoo
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/RestHeader'
+      payload:
+        $ref: '#/components/schemas/v2TestResourceFoo'
+    StartSignal:
+      name: StartSignal
+      title: StartSignal
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/StartSignalHeader'
+      payload:
+        $ref: '#/components/schemas/StartSignal'
+    v3StopSignal:
+      name: v3StopSignal
+      title: v3StopSignal
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/v3StopSignalHeader'
+      payload:
+        $ref: '#/components/schemas/v3StopSignal'
+  schemas:
+    VerbEnum:
+      type: string
+      enum:
+        - POST
+        - PUT
+        - PATCH
+        - GET
+        - MULTIGET
+        - DELETE
+    SimpleResource:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        name:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+    v2TestResource:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        name:
+          description: ''
+          type: string
+        number:
+          description: ''
+          type: integer
+          format: int32
+      required:
+        - id
+        - name
+    v2TestResourceFoo:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+      required:
+        - id
+    StartSignalHeader:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+          minLength: 10
+          maxLength: 100
+        time:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - name
+        - time
+    StartSignal:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        address:
+          description: ''
+          items:
+            type: string
+          minItems: 1
+          maxItems: 10
+          type: array
+      required:
+        - name
+        - address
+    v3StopSignalHeader:
+      type: object
+      properties:
+        a:
+          description: ''
+          type: integer
+          format: int32
+        b:
+          description: ''
+          type: integer
+          format: int64
+      required:
+        - a
+        - b
+    v3StopSignal:
+      type: object
+      properties:
+        stopped:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - stopped
+  messageTraits:
+    RestHeader: {}
+    StartSignalHeader:
+      headers:
+        type: object
+        properties:
+          name:
+            description: ''
+            type: string
+            minLength: 10
+            maxLength: 100
+          time:
+            description: ''
+            type: string
+            format: ISO8601 UTC date-time
+            example: '2019-04-13T03:35:34Z'
+        required:
+          - name
+          - time
+    v3StopSignalHeader:
+      headers:
+        type: object
+        properties:
+          a:
+            description: ''
+            type: integer
+            format: int32
+          b:
+            description: ''
+            type: integer
+            format: int64
+        required:
+          - a
+          - b
+

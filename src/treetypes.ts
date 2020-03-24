@@ -206,6 +206,21 @@ export function getAllAttributes(el: AnyKind) {
         case "union":
             return el.attributes || []
         case "event":
+            return (el.payload || []).concat(el.header || [])
+        default:
+            return []
+    }
+}
+
+export function getKeyAttributes(el: AnyKind) {
+    switch (el.kind) {
+        case "resource-like":
+            return el.attributes || []
+        case "structure":
+            return el.attributes || []
+        case "union":
+            return el.attributes || []
+        case "event":
             return el.payload || []
         default:
             return []

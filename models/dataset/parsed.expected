@@ -563,7 +563,7 @@
         "Field"
       ],
       "short": "Disable",
-      "bulk": "resource-level",
+      "bulk": "bulk",
       "name": "Audience::Field::Disable",
       "parentShort": "Audience",
       "parentName": "Audience::Field",

@@ -79,7 +79,7 @@ sync action Audience::Field::Disable {
         StandardError
 }
 
-sync resource-level action Audience::Field::Disable {
+sync bulk action Audience::Field::Disable {
   id: int
 
   "IDs of Fields to disable."

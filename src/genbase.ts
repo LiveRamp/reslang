@@ -16,7 +16,9 @@ import {
     IEnum,
     IStructure,
     IUnion,
-    isStructure
+    isStructure,
+    IEvent,
+    isEvent
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
@@ -364,8 +366,8 @@ Actions cannot have subresources`
     }
 
     // add bulk modifier if needed
-    protected formSingleUniqueName(def: IResourceLike) {
-        if (def.type === "action") {
+    protected formSingleUniqueName(def: AnyKind) {
+        if (isResourceLike(def) && def.type === "action") {
             if (def.bulk) {
                 return (
                     (def.bulk ? "Bulk " : "") +
@@ -400,9 +402,9 @@ Actions cannot have subresources`
     protected addStructureDefinition(
         definitions: any,
         def: AnyKind,
-        suffix: string
+        suffix: string,
+        attrs: IAttribute[]
     ) {
-        const attrs = getAllAttributes(def)
         const properties: any = {}
         const required: string[] = []
         const request = {
@@ -442,10 +444,11 @@ Actions cannot have subresources`
         }
 
         if (Object.keys(properties).length !== 0) {
-            definitions[sane + suffix] = request
+            definitions[sane] = request
         } else {
-            this.empty.add(sane + suffix)
+            this.empty.add(sane)
         }
+        return sane // return what we called this
     }
 
     protected addUnionDefinition(

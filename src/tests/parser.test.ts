@@ -16,6 +16,10 @@ describe("reslang parsing tests", () => {
 c d`)
     })
 
+    test("eventing", () => {
+        compare("eventing")
+    })
+
     test("dataset", () => {
         compare("dataset")
     })

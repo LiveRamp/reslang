@@ -1,5 +1,11 @@
-import { isResourceLike, getAllAttributes, isEvent } from "./treetypes"
+import {
+    isResourceLike,
+    getAllAttributes,
+    isEvent,
+    getKeyAttributes
+} from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
+import { camelCase, snakeCase, getVersion } from "./names"
 
 /**
  * generate swagger from the parsed representation
@@ -11,6 +17,7 @@ export default class EventsGen extends BaseGen {
         const messages: any = {}
         const schemas: any = {}
         const channels: any = {}
+        const headers: any = {}
         const asyncapi: object = {
             asyncapi: "2.0.0",
             info: {
@@ -37,42 +44,171 @@ export default class EventsGen extends BaseGen {
             channels,
             components: {
                 messages,
-                schemas
+                schemas,
+                messageTraits: headers
             }
-        }
-        channels["com/test"] = {
-            description:
-                "The topic on which measured values may be produced and consumed.",
-            publish: {
-                summary:
-                    "Receive information about environmental lighting conditions of a particular streetlight.",
-                operationId: "receiveLightMeasurement",
-                message: {
-                    $ref: "#/components/messages/StartSignal"
-                }
-            }
-        }
-        messages.StartSignal = {
-            name: "StartSignal",
-            title: "StartSignal",
-            contentType: "application/json",
-            payload: { $ref: "#components/schemas/StartSignal" }
         }
 
+        // add standard definitions - tbd move this to a file
+        this.addStandardDefinitions(headers, schemas)
+
+        // form channels
+        this.formChannels(channels)
+
+        // form messages
+        this.formMessages(messages)
+
         // model definitions
-        this.formDefinitions(schemas)
+        const headerNames = this.formDefinitions(schemas)
+
+        // lift the headers
+        this.liftToHeader("RestHeader", schemas, headers)
+        for (const name of headerNames) {
+            this.liftToHeader(name, schemas, headers)
+        }
 
         return asyncapi
     }
 
-    private formDefinitions(definitions: any) {
+    private formChannels(channels: any) {
+        // handle each primary structure and work out if we should generate structures for it
+        for (const el of this.defs) {
+            // don't generate for any imported def
+            if (el.secondary) {
+                continue
+            }
+
+            const unique = camelCase(this.formSingleUniqueName(el))
+            if (
+                isResourceLike(el) &&
+                !el.future &&
+                this.extractOp(el, "EVENTS")
+            ) {
+                channels[
+                    "rest-" +
+                        this.mainNamespace +
+                        "-" +
+                        getVersion(el.name) +
+                        "-" +
+                        snakeCase(el.name)
+                ] = {
+                    description: el.comment,
+                    publish: {
+                        summary: "REST: " + el.comment,
+                        operationId: el.name,
+                        message: {
+                            $ref: `#/components/messages/${unique}`
+                        }
+                    }
+                }
+            }
+            if (isEvent(el)) {
+                channels[
+                    "adhoc-" +
+                        this.mainNamespace +
+                        "-" +
+                        getVersion(el.name) +
+                        "-" +
+                        snakeCase(el.name)
+                ] = {
+                    description: el.comment,
+                    publish: {
+                        summary: el.comment,
+                        operationId: el.name,
+                        message: {
+                            $ref: `#/components/messages/${unique}`
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private addStandardDefinitions(headers: any, schemas: any) {
+        headers.RestHeader = {
+            headers: {
+                type: "object",
+                properties: {
+                    verb: {
+                        description: "",
+                        $ref: "#/components/schemas/VerbEnum"
+                    },
+                    location: {
+                        description: "",
+                        type: "string",
+                        format: "url",
+                        example: "https://www.domain.com (url)"
+                    },
+                    ids: {
+                        description: "",
+                        items: {
+                            type: "string"
+                        },
+                        type: "array"
+                    }
+                },
+                required: ["verb", "location", "ids"]
+            }
+        }
+        schemas.VerbEnum = {
+            type: "string",
+            enum: ["POST", "PUT", "PATCH", "GET", "MULTIGET", "DELETE"]
+        }
+    }
+
+    private liftToHeader(name: string, schemas: any, headers: any) {
+        const hdr = schemas[name]
+        headers[name] = { headers: hdr }
+    }
+
+    private formMessages(messages: any) {
+        // handle each primary structure and work out if we should generate structures for it
+        for (const el of this.defs) {
+            // don't generate for any imported def
+            if (el.secondary) {
+                continue
+            }
+
+            if (
+                isResourceLike(el) &&
+                !el.future &&
+                this.extractOp(el, "EVENTS")
+            ) {
+                const unique = camelCase(this.formSingleUniqueName(el))
+                messages[unique] = {
+                    name: unique,
+                    title: unique,
+                    summary: el.comment,
+                    contentType: "application/json",
+                    traits: [{ $ref: `#/components/messageTraits/RestHeader` }],
+                    payload: { $ref: `#/components/schemas/${unique}` }
+                }
+            }
+            if (isEvent(el)) {
+                const unique = camelCase(this.formSingleUniqueName(el))
+                messages[unique] = {
+                    name: unique,
+                    title: unique,
+                    summary: el.comment,
+                    contentType: "application/json",
+                    traits: [
+                        { $ref: `#/components/messageTraits/${unique}Header` }
+                    ],
+                    payload: { $ref: `#/components/schemas/${unique}` }
+                }
+            }
+        }
+    }
+
+    private formDefinitions(schemas: any) {
+        const headers: string[] = []
         for (const def of this.defs) {
             if (def.generateInput) {
                 switch (def.kind) {
                     case "resource-like":
                         if (!def.secondary) {
                             this.addResourceDefinition(
-                                definitions,
+                                schemas,
                                 def,
                                 Verbs.GET,
                                 ""
@@ -80,18 +216,39 @@ export default class EventsGen extends BaseGen {
                         }
                         break
                     case "event":
+                        // add the header and the payload
+                        const called = this.addStructureDefinition(
+                            schemas,
+                            def,
+                            "Header",
+                            def.header || []
+                        )
+                        headers.push(called)
+                        this.addStructureDefinition(
+                            schemas,
+                            def,
+                            "",
+                            getKeyAttributes(def)
+                        )
+                        break
                     case "structure":
-                        this.addStructureDefinition(definitions, def, "")
+                        this.addStructureDefinition(
+                            schemas,
+                            def,
+                            "",
+                            getKeyAttributes(def)
+                        )
                         break
                     case "union":
-                        this.addUnionDefinition(definitions, def, "")
+                        this.addUnionDefinition(schemas, def, "")
                         break
                     case "enum":
-                        this.addEnumDefinition(definitions, def, "")
+                        this.addEnumDefinition(schemas, def, "")
                         break
                 }
             }
         }
+        return headers // to lift up
     }
 
     /** determine if we should generate definitions for each entity */
