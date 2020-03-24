@@ -4,22 +4,22 @@ apis=(eventing dataset checkrules privacy optionality authorization complex-reso
 
 echo "Regenerating event files"
 echo "---"
-    ./reslang --noversion --events --ignorerules  ${apis[@]} --testdir ./models --testwrite asyncapi.expected
+    ./reslang --noversion --events --ignorerules  ${apis[@]} --testdir ./models --testwrite ./testdata/asyncapi.expected
 echo
 echo "---"
 echo "Regenerating swagger files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite swagger.expected
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/aswagger.expected
 echo
 echo "---"
 echo "Regenerating parse tree files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite parsed.expected --parsed
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/aparsed.expected --parsed
 echo
 echo "---"
 echo "Regenerating Dotviz files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite dotviz.expected --diagram main 
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/adotviz.expected --diagram main 
 echo
 echo "---"
 

@@ -18,7 +18,9 @@ function compare(module: string) {
     const api = asyncapi.generate()
 
     const got = strip(yaml.dump(clean(api), { noRefs: true }))
-    const expected = strip(readFile(`models/${module}/asyncapi.expected`))
+    const expected = strip(
+        readFile(`models/${module}/testdata/asyncapi.expected`)
+    )
 
     if (got !== expected) {
         console.log(got)

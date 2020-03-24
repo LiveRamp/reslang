@@ -17,7 +17,9 @@ function compare(module: string) {
     const out = dotviz.generate("main")
 
     const got = strip(out)
-    const expected = strip(readFile(`models/${module}/dotviz.expected`))
+    const expected = strip(
+        readFile(`models/${module}/testdata/dotviz.expected`)
+    )
 
     if (got !== expected) {
         console.log(got)

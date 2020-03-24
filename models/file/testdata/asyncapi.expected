@@ -31,7 +31,9 @@ channels:
       message:
         $ref: '#/components/messages/DirectoryDeleteRequest'
   adhoc-file-v1-directory-delete-incomplete:
+    description: 'If a deletion is corrupted, we generate this event'
     publish:
+      summary: 'If a deletion is corrupted, we generate this event'
       operationId: DirectoryDeleteIncomplete
       message:
         $ref: '#/components/messages/DirectoryDeleteIncomplete'
@@ -58,6 +60,7 @@ components:
     DirectoryDeleteIncomplete:
       name: DirectoryDeleteIncomplete
       title: DirectoryDeleteIncomplete
+      summary: 'If a deletion is corrupted, we generate this event'
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/DirectoryDeleteIncompleteHeader'
@@ -112,6 +115,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - timeOfFailure
+      description: 'If a deletion is corrupted, we generate this event'
     DirectoryDeleteIncomplete:
       type: object
       properties:
@@ -125,6 +129,7 @@ components:
       required:
         - directory
         - corrupted
+      description: 'If a deletion is corrupted, we generate this event'
     VerbEnum:
       type: string
       enum:
@@ -167,4 +172,5 @@ components:
             example: '2019-04-13T03:35:34Z'
         required:
           - timeOfFailure
+        description: 'If a deletion is corrupted, we generate this event'
 

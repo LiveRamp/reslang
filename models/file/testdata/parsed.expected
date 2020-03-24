@@ -535,6 +535,7 @@
     {
       "kind": "event",
       "type": "event",
+      "comment": "If a deletion is corrupted, we generate this event",
       "parents": [],
       "short": "DirectoryDeleteIncomplete",
       "header": [
