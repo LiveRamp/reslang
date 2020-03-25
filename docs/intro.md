@@ -17,7 +17,7 @@ Without further ado, here is the [API in reslang](../models/file):
 
 ```
 "This is a simple API for manipulating files. Note all comments in quotes end up in the Swagger as descriptions. Put them anywhere"
-namespace {
+namespace simple/files {
 	title "API for modeling directories and files"
 	version 1.0.0
 }
@@ -92,7 +92,7 @@ structure SpecialError {
 
 ## Explanation
 
-The namespace declaration at the top defines the API for the entire namespace and versions it. Note that the namespace name is the folder name that the file is contained in - in this case /file
+The namespace declaration at the top defines the API for the entire namespace and versions it. Note that the namespace name is "simple/files". If we don't specify this, the folder name that the file is contained in will be used - in this case /file
 
 We model a Directory as an asset-resource. We can create any number of directories via POST. Files are contained within these directories, represented by the Directory subresource named File. Each File refers to a configuration-resource of FileType (e.g. png) via the "linked" keyword.
 
