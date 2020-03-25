@@ -12,23 +12,21 @@ servers:
       port:
         description: Secure connection (TLS) is available through port 8883
         default: '1883'
-        enum:
-          - '1883'
 defaultContentType: application/json
 channels:
-  rest-eventing-v1-simple-resource:
+  rest-andrew-simple-example.v1-simple-resource:
     publish:
       summary: 'REST: undefined'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
-  rest-eventing-v2-test-resource:
+  rest-andrew-simple-example.v2-test-resource:
     publish:
       summary: 'REST: undefined'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
-  rest-eventing-v2-test-resource-foo:
+  rest-andrew-simple-example.v2-test-resource-foo:
     publish:
       summary: 'REST: undefined'
       operationId: 'v2/TestResource::Foo'

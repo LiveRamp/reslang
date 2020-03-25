@@ -6,14 +6,24 @@ import { CodeGenerator } from "@babel/generator"
  */
 export function snakeCase(name: string) {
     let fix = ""
+    let dash = false
     for (const ch of removeVersion(name)) {
         if (/^[A-Z]$/.test(ch)) {
             if (fix) {
-                fix = fix.concat("-")
+                if (!dash) {
+                    fix = fix.concat("-")
+                    dash = true
+                }
             }
             fix = fix.concat(ch.toLowerCase())
-        } else if (/^[a-z0-9_\$]$/.test(ch)) {
+        } else if (/^[a-z0-9_\-\$]$/.test(ch)) {
             fix = fix.concat(ch)
+            dash = false
+        } else {
+            if (!dash) {
+                fix = fix.concat("-")
+                dash = true
+            }
         }
     }
     return fix

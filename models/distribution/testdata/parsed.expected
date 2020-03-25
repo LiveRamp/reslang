@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "New Onboarding API",
+    "space": "",
     "title": "Distribution API",
     "version": "0.0.1"
   },

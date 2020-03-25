@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "This is the authorization API for LiveRamp's Platform",
+    "space": "",
     "title": "Authorization API",
     "version": "0.0.1"
   },

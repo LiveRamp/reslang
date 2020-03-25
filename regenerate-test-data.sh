@@ -9,17 +9,17 @@ echo
 echo "---"
 echo "Regenerating swagger files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/aswagger.expected
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/swagger.expected
 echo
 echo "---"
 echo "Regenerating parse tree files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/aparsed.expected --parsed
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/parsed.expected --parsed
 echo
 echo "---"
 echo "Regenerating Dotviz files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/adotviz.expected --diagram main 
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/dotviz.expected --diagram main 
 echo
 echo "---"
 

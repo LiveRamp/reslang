@@ -9,10 +9,15 @@ import {
 
 describe("name tests", () => {
     test("name1", () => {
-        expect(snakeCase("One two")).toBe("onetwo")
+        expect(snakeCase("One two")).toBe("one-two")
     })
+
     test("name2", () => {
         expect(snakeCase("v2/One Two")).toBe("one-two")
+    })
+
+    test("name3", () => {
+        expect(snakeCase("andrew/test-two")).toBe("andrew-test-two")
     })
 
     test("pluralize1", () => {

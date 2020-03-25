@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "Optionality test",
+    "space": "",
     "title": "Optionality",
     "version": "0.0.1"
   },

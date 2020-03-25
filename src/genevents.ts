@@ -34,8 +34,7 @@ export default class EventsGen extends BaseGen {
                         port: {
                             description:
                                 "Secure connection (TLS) is available through port 8883",
-                            default: "1883",
-                            enum: ["1883"]
+                            default: "1883"
                         }
                     }
                 }
@@ -85,8 +84,8 @@ export default class EventsGen extends BaseGen {
             ) {
                 channels[
                     "rest-" +
-                        this.mainNamespace +
-                        "-" +
+                        snakeCase(this.getSpace()) +
+                        "." +
                         getVersion(el.name) +
                         "-" +
                         snakeCase(el.name)

@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "Test for various rule checking",
+    "space": "",
     "title": "Rule checking",
     "version": "0.0.1"
   },

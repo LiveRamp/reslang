@@ -12,8 +12,6 @@ servers:
       port:
         description: Secure connection (TLS) is available through port 8883
         default: '1883'
-        enum:
-          - '1883'
 defaultContentType: application/json
 channels: {}
 components:

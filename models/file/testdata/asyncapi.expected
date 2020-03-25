@@ -12,18 +12,16 @@ servers:
       port:
         description: Secure connection (TLS) is available through port 8883
         default: '1883'
-        enum:
-          - '1883'
 defaultContentType: application/json
 channels:
-  rest-file-v1-directory-file:
+  rest-file.v1-directory-file:
     description: This models a file in a directory
     publish:
       summary: 'REST: This models a file in a directory'
       operationId: 'Directory::File'
       message:
         $ref: '#/components/messages/DirectoryFile'
-  rest-file-v1-directory-delete-request:
+  rest-file.v1-directory-delete-request:
     description: This models a long running request
     publish:
       summary: 'REST: This models a long running request'

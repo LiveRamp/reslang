@@ -4,7 +4,7 @@ info:
   description: API for simple events
   version: 0.0.1
 servers:
-  - url: 'https://api.liveramp.com/eventing'
+  - url: 'https://api.liveramp.com/andrew/simple-example'
 tags:
   - name: SimpleResource
     description: '(resource)  '

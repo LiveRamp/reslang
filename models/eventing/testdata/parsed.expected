@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "API for simple events",
+    "space": "andrew/simple-example",
     "title": "Simple events",
     "version": "0.0.1"
   },

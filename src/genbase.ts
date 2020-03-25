@@ -12,24 +12,16 @@ import {
     isResourceLike,
     IResourceLike,
     AnyKind,
-    getAllAttributes,
     IEnum,
     IStructure,
     IUnion,
-    isStructure,
-    IEvent,
-    isEvent
+    isStructure
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
 import { IRules } from "./rules"
-import {
-    camelCase,
-    capitalizeFirst,
-    pluralizeName,
-    lowercaseFirst
-} from "./names"
+import { camelCase, capitalizeFirst, pluralizeName } from "./names"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 export enum Verbs {
@@ -46,6 +38,8 @@ export abstract class BaseGen {
 
     protected namespace!: INamespace
     protected mainNamespace?: string
+    // the user defined space, if there is one, in the namespace definition
+    protected space?: string
     protected defs: AnyKind[] = []
     protected diagrams: IDiagram[] = []
     protected documentation: { [name: string]: IDocEntry[] } = {}
@@ -211,6 +205,10 @@ Actions cannot have subresources`
                 }
             }
         }
+    }
+
+    protected getSpace() {
+        return (this.namespace.space || this.mainNamespace || "").toLowerCase()
     }
 
     // find the top level type

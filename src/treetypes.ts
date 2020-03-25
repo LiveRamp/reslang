@@ -4,6 +4,7 @@
 
 export interface INamespace {
     comment: string
+    space?: string
     title: string
     version: string
 }

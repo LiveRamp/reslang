@@ -1,6 +1,7 @@
 {
   "namespace": {
     "comment": "This is the description of the API",
+    "space": "",
     "title": "An API with a singleton asset resource",
     "version": "0.1.2"
   },
