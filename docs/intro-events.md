@@ -34,4 +34,4 @@ To generate AsyncAPI from this, we use:
 
     ./reslang ./models/file --open --events
 
-This will copy the AsyncAPI spec to the clipboard and open up the browser on the AsyncAPI playground. Paste the spec into the left hand text editor to see your events.
+This will open the browser on your specification, allowing you to view the events.

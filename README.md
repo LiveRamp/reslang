@@ -46,7 +46,7 @@ To create swagger, you first create a reslang file. Then you simply ask the resl
 
 Note that the models directory has a set of example definitions.
 
-The following copies the swagger to the clipboard and opens the Swagger editor for you. You will then have to paste into the editor.
+The following copies the swagger to the clipboard and opens the ReDoc browser for you. You will then have to paste into the editor.
 
     ./reslang models/simple-resource --open
 
@@ -54,13 +54,13 @@ If you want just want to print to stdout use:
 
     ./reslang models/simple-resource --stdout
 
-## Viewing Swagger / OpenAPI in ReDoc
+## Viewing Swagger / OpenAPI in Swagger editor
 
-ReDoc has an advanced Swagger viewer which is far nicer than Swagger UI. To use this, type:
+If you want to use the Swagger editor, add --web to the cmd line:
 
-    ./reslang models/simple-resource --open --redoc
+    ./reslang models/simple-resource --open --web
 
-You're welcome.
+Then paste the clipboard into the left window pane of the editor.
 
 ## Creating a graphical view
 
@@ -76,6 +76,8 @@ This will open your browser at a nice graphviz online editor. Paste the clipboar
 
 Reslang can generate AsyncAPI, describing the events a REST API can generate. It also provides an "event" keyword which you can use to describe adhoc events.
 
-The following command will copy the OpenAPI output to the clipboard & open up the AsyncAPI playgroud. Paste the clipboard into the editor to get a view of your events.
-
     ./reslang models/eventing --open --events
+
+If instead you wish to view the events in the AsyncAPI Playgrounder for editing, please add the --web option.
+
+    ./reslang models/eventing --open --web

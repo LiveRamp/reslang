@@ -100,7 +100,7 @@ Finally, we have a request for deleting a directory, assuming this is a long run
 
 To create the Swagger, type the following, assuming that the file(s) live in a directory called "./file" and have the extension of .reslang:
 
-​ `reslang ./file --open --redoc`
+​ `reslang ./file --open`
 
 This opens the ReDoc viewer on your specification.
 
