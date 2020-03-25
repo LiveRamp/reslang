@@ -14,7 +14,7 @@ Reslang can also specify which events a system generates. For REST APIs, the set
         contents: string queryonly
 
         /operations
-            GET POST MULTIGET **EVENTS**
+            GET POST MULTIGET EVENTS
     }
 
 Now, in some cases, the resource lifecycle cannot capture the full set of events. In this case, use the "event" keyword to capture what should be published:
