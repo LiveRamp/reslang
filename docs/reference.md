@@ -14,11 +14,13 @@ You must have one namespace declaration per directory. Use the "namespace" keywo
 
 ```
 "API for accessing LiveRamp's Direct to Distribution Service"
-namespace {
+namespace distribution/direct2dist {
   title "Direct to Distribution API - BETA "
   version 0.0.1
 }
 ```
+
+If you don't specify a namespace name (e.g. distribution/direct2dist), then Reslang will use the folder name.
 
 ### Resource types
 
