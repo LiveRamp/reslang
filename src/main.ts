@@ -13,6 +13,7 @@ import { exec } from "shelljs"
 import lpath from "path"
 import { IRules } from "./rules"
 import EventsGen from "./genevents"
+import os from "os"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
@@ -37,9 +38,10 @@ const args = yargs
         type: "boolean",
         describe: "Open browser to the appropriate website for output"
     })
-    .option("redoc", {
+    .option("web", {
         type: "boolean",
-        describe: "Open the redoc viewer rather than the swagger one"
+        describe:
+            "Open both the Swagger and AsyncAPI viewers on the web, rather than using local viewers"
     })
     .option("events", {
         type: "boolean",
@@ -148,7 +150,15 @@ function handle(allFiles: string[], silent: boolean) {
             }
             clip.writeSync(yml)
             if (args.open) {
-                open("https://playground.asyncapi.io/")
+                if (args.web) {
+                    console.log(
+                        "Paste the contents of the clipboard into the left pane in the browser"
+                    )
+                    open("https://playground.asyncapi.io/")
+                } else {
+                    // show asyncapi
+                    exec("./show-asyncapi")
+                }
             }
             return yml
         } else {
@@ -168,11 +178,14 @@ function handle(allFiles: string[], silent: boolean) {
             }
             clip.writeSync(yml)
             if (args.open) {
-                if (args.redoc) {
+                if (args.web) {
+                    console.log(
+                        "Paste the contents of the clipboard into the left pane in the browser"
+                    )
+                    open("https://editor.swagger.io")
+                } else {
                     // show redoc
                     exec("./show-redoc")
-                } else {
-                    open("https://editor.swagger.io")
                 }
             }
             return yml

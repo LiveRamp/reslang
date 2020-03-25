@@ -15,30 +15,37 @@ servers:
 defaultContentType: application/json
 channels:
   rest-andrew-simple-example.v1-simple-resource:
+    description: A simple REST resource
     publish:
-      summary: 'REST: undefined'
+      summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
   rest-andrew-simple-example.v2-test-resource:
+    description: A test REST resource
     publish:
-      summary: 'REST: undefined'
+      summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
   rest-andrew-simple-example.v2-test-resource-foo:
+    description: A REST subresource
     publish:
-      summary: 'REST: undefined'
+      summary: 'REST: v2/TestResource::Foo'
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
   adhoc-eventing-v1-start-signal:
+    description: Event to start
     publish:
+      summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
   adhoc-eventing-v3-stop-signal:
+    description: Event to stop
     publish:
+      summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:
         $ref: '#/components/messages/v3StopSignal'
@@ -47,6 +54,7 @@ components:
     SimpleResource:
       name: SimpleResource
       title: SimpleResource
+      summary: A simple REST resource
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
@@ -55,6 +63,7 @@ components:
     v2TestResource:
       name: v2TestResource
       title: v2TestResource
+      summary: A test REST resource
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
@@ -63,6 +72,7 @@ components:
     v2TestResourceFoo:
       name: v2TestResourceFoo
       title: v2TestResourceFoo
+      summary: A REST subresource
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
@@ -71,6 +81,7 @@ components:
     StartSignal:
       name: StartSignal
       title: StartSignal
+      summary: Event to start
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/StartSignalHeader'
@@ -79,6 +90,7 @@ components:
     v3StopSignal:
       name: v3StopSignal
       title: v3StopSignal
+      summary: Event to stop
       contentType: application/json
       traits:
         - $ref: '#/components/messageTraits/v3StopSignalHeader'
@@ -97,6 +109,7 @@ components:
       required:
         - id
         - name
+      description: A simple REST resource
     v2TestResource:
       type: object
       properties:
@@ -114,6 +127,7 @@ components:
       required:
         - id
         - name
+      description: A test REST resource
     v2TestResourceFoo:
       type: object
       properties:
@@ -123,6 +137,7 @@ components:
           format: int32
       required:
         - id
+      description: A REST subresource
     StartSignalHeader:
       type: object
       properties:
@@ -139,6 +154,7 @@ components:
       required:
         - name
         - time
+      description: Event to start
     StartSignal:
       type: object
       properties:
@@ -155,6 +171,7 @@ components:
       required:
         - name
         - address
+      description: Event to start
     v3StopSignalHeader:
       type: object
       properties:
@@ -169,6 +186,7 @@ components:
       required:
         - a
         - b
+      description: Event to stop
     v3StopSignal:
       type: object
       properties:
@@ -179,6 +197,7 @@ components:
           example: '2019-04-13T03:35:34Z'
       required:
         - stopped
+      description: Event to stop
     VerbEnum:
       type: string
       enum:
@@ -227,6 +246,7 @@ components:
         required:
           - name
           - time
+        description: Event to start
     v3StopSignalHeader:
       headers:
         type: object
@@ -242,4 +262,5 @@ components:
         required:
           - a
           - b
+        description: Event to stop
 

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+rm -rf /tmp/asyncapi
+mkdir /tmp/asyncapi
+open_site(){
+  sleep 2
+  open /tmp/asyncapi/index.html
+}
+
+pbpaste > /tmp/asyncapi-spec.yaml
+
+open_site &
+./node_modules/.bin/ag /tmp/asyncapi-spec.yaml html --output /tmp/asyncapi

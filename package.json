@@ -13,8 +13,8 @@
     "@types/js-yaml": "^3.12.1",
     "@types/open": "^6.1.0",
     "@types/pegjs": "^0.10.1",
-    "@types/yargs": "^13.0.0",
     "@types/shelljs": "^0.8.5",
+    "@types/yargs": "^13.0.0",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
@@ -22,6 +22,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "@asyncapi/generator": "^0.34.3",
     "clipboardy": "^2.0.0",
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",

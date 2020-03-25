@@ -8,6 +8,7 @@
   "definitions": [
     {
       "kind": "resource-like",
+      "comment": "A simple REST resource",
       "future": false,
       "singleton": false,
       "type": "resource",
@@ -87,6 +88,7 @@
     },
     {
       "kind": "resource-like",
+      "comment": "A test REST resource",
       "future": false,
       "singleton": false,
       "type": "resource",
@@ -191,6 +193,7 @@
     },
     {
       "kind": "resource-like",
+      "comment": "A REST subresource",
       "future": false,
       "singleton": false,
       "type": "subresource",
@@ -240,6 +243,7 @@
     {
       "kind": "event",
       "type": "event",
+      "comment": "Event to start",
       "parents": [],
       "short": "StartSignal",
       "header": [
@@ -363,6 +367,7 @@
     {
       "kind": "event",
       "type": "event",
+      "comment": "Event to stop",
       "parents": [],
       "short": "v3/StopSignal",
       "header": [

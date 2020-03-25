@@ -90,9 +90,9 @@ export default class EventsGen extends BaseGen {
                         "-" +
                         snakeCase(el.name)
                 ] = {
-                    description: el.comment,
+                    description: el.comment || "no documentation",
                     publish: {
-                        summary: "REST: " + el.comment,
+                        summary: "REST: " + el.name,
                         operationId: el.name,
                         message: {
                             $ref: `#/components/messages/${unique}`
@@ -109,9 +109,9 @@ export default class EventsGen extends BaseGen {
                         "-" +
                         snakeCase(el.name)
                 ] = {
-                    description: el.comment,
+                    description: el.comment || "no documentation",
                     publish: {
-                        summary: el.comment,
+                        summary: "Adhoc: " + el.name,
                         operationId: el.name,
                         message: {
                             $ref: `#/components/messages/${unique}`

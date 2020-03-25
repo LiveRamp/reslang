@@ -7,11 +7,11 @@ servers:
   - url: 'https://api.liveramp.com/andrew/simple-example'
 tags:
   - name: SimpleResource
-    description: '(resource)  '
+    description: (resource)  A simple REST resource
   - name: v2/TestResource
-    description: '(resource)  '
+    description: (resource)  A test REST resource
   - name: 'v2/TestResource::Foo'
-    description: '(subresource)  '
+    description: (subresource)  A REST subresource
 paths:
   /v1/simple-resources:
     post:
@@ -122,6 +122,7 @@ components:
           type: string
       required:
         - name
+      description: A simple REST resource
     SimpleResourceOutput:
       type: object
       properties:
@@ -134,6 +135,7 @@ components:
       required:
         - id
         - name
+      description: A simple REST resource
     v2TestResourceInput:
       type: object
       properties:
@@ -146,6 +148,7 @@ components:
           format: int32
       required:
         - name
+      description: A test REST resource
     v2TestResourceOutput:
       type: object
       properties:
@@ -163,6 +166,7 @@ components:
       required:
         - id
         - name
+      description: A test REST resource
     StandardError:
       type: object
       properties:

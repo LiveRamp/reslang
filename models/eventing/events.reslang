@@ -1,5 +1,6 @@
 
 
+"A simple REST resource"
 resource SimpleResource {
     id: string
     name: string
@@ -8,6 +9,7 @@ resource SimpleResource {
         POST GET EVENTS
 }
 
+"A test REST resource"
 resource v2/TestResource {
     id: int
     name: string
@@ -17,6 +19,7 @@ resource v2/TestResource {
         POST GET EVENTS
 }
 
+"A REST subresource"
 subresource v2/TestResource::Foo {
     id: int
     
@@ -24,6 +27,7 @@ subresource v2/TestResource::Foo {
         EVENTS
 }
 
+"Event to start"
 event StartSignal {
     /header
         name: string min-length: 10 max-length: 100
@@ -33,6 +37,7 @@ event StartSignal {
         address: string[1..10]
 }
 
+"Event to stop"
 event v3/StopSignal {
     /header
         header: Header inline
