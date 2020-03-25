@@ -16,35 +16,35 @@ defaultContentType: application/json
 channels:
   rest-andrew-simple-example.v1-simple-resource:
     description: A simple REST resource
-    publish:
+    subscribe:
       summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
   rest-andrew-simple-example.v2-test-resource:
     description: A test REST resource
-    publish:
+    subscribe:
       summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
   rest-andrew-simple-example.v2-test-resource-foo:
     description: A REST subresource
-    publish:
+    subscribe:
       summary: 'REST: v2/TestResource::Foo'
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
   adhoc-eventing-v1-start-signal:
     description: Event to start
-    publish:
+    subscribe:
       summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
   adhoc-eventing-v3-stop-signal:
     description: Event to stop
-    publish:
+    subscribe:
       summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:

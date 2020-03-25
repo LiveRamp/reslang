@@ -91,7 +91,7 @@ export default class EventsGen extends BaseGen {
                         snakeCase(el.name)
                 ] = {
                     description: el.comment || "no documentation",
-                    publish: {
+                    subscribe: {
                         summary: "REST: " + el.name,
                         operationId: el.name,
                         message: {
@@ -110,7 +110,7 @@ export default class EventsGen extends BaseGen {
                         snakeCase(el.name)
                 ] = {
                     description: el.comment || "no documentation",
-                    publish: {
+                    subscribe: {
                         summary: "Adhoc: " + el.name,
                         operationId: el.name,
                         message: {

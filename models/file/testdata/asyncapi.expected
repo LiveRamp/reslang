@@ -16,21 +16,21 @@ defaultContentType: application/json
 channels:
   rest-file.v1-directory-file:
     description: This models a file in a directory
-    publish:
+    subscribe:
       summary: 'REST: Directory::File'
       operationId: 'Directory::File'
       message:
         $ref: '#/components/messages/DirectoryFile'
   rest-file.v1-directory-delete-request:
     description: This models a long running request
-    publish:
+    subscribe:
       summary: 'REST: DirectoryDeleteRequest'
       operationId: DirectoryDeleteRequest
       message:
         $ref: '#/components/messages/DirectoryDeleteRequest'
   adhoc-file-v1-directory-delete-incomplete:
     description: 'If a deletion is corrupted, we generate this event'
-    publish:
+    subscribe:
       summary: 'Adhoc: DirectoryDeleteIncomplete'
       operationId: DirectoryDeleteIncomplete
       message:

@@ -3,7 +3,7 @@
 rm -rf /tmp/asyncapi
 mkdir /tmp/asyncapi
 open_site(){
-  sleep 2
+  sleep 3
   open /tmp/asyncapi/index.html
 }
 
