@@ -157,14 +157,21 @@ To generate the first, use the EVENTS operation type:
             GET POST MULTIGET *EVENTS*
     }
 
-To specify an adhoc event, use the "event" construct:
+To specify an adhoc event, use the "event" construct and let Reslang know if it's generated or consumed by your API:
 
-    event DirectoryDeleteIncomplete {
+    produces event DirectoryDeleteIncomplete {
         /header
     	    timeOfFailure: datetime
         /payload
     	    directory: linked Directory
     	    corrupted: boolean
+    }
+
+    consumes event DirectoryNotification {
+        /header
+    	    when: datetime
+        /payload
+    	    directory: linked Directory
     }
 
 To generate AsyncAPI use something like:

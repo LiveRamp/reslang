@@ -244,6 +244,7 @@
       "kind": "event",
       "type": "event",
       "comment": "Event to start",
+      "produces": true,
       "parents": [],
       "short": "StartSignal",
       "header": [
@@ -368,6 +369,7 @@
       "kind": "event",
       "type": "event",
       "comment": "Event to stop",
+      "produces": false,
       "parents": [],
       "short": "v3/StopSignal",
       "header": [

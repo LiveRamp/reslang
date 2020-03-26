@@ -44,7 +44,7 @@ channels:
         $ref: '#/components/messages/StartSignal'
   adhoc-eventing-v3-stop-signal:
     description: Event to stop
-    subscribe:
+    publish:
       summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:

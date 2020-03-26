@@ -52,7 +52,7 @@ request-resource DirectoryDeleteRequest {
 }
 
 "If a deletion is corrupted, we generate this event"
-event DirectoryDeleteIncomplete {
+produces event DirectoryDeleteIncomplete {
 	/header
 		timeOfFailure: datetime
 	/payload

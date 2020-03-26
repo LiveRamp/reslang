@@ -103,16 +103,9 @@ export default class EventsGen extends BaseGen {
                 }
             }
             if (isEvent(el)) {
-                channels[
-                    "adhoc-" +
-                        this.mainNamespace +
-                        "-" +
-                        getVersion(el.name) +
-                        "-" +
-                        snakeCase(el.name)
-                ] = {
+                const details: any = {
                     description: el.comment || "no documentation",
-                    subscribe: {
+                    publish: {
                         summary: "Adhoc: " + el.name,
                         operationId: el.name,
                         message: {
@@ -120,6 +113,18 @@ export default class EventsGen extends BaseGen {
                         }
                     }
                 }
+                if (el.produces) {
+                    details.subscribe = details.publish
+                    delete details.publish
+                }
+                channels[
+                    "adhoc-" +
+                        this.mainNamespace +
+                        "-" +
+                        getVersion(el.name) +
+                        "-" +
+                        snakeCase(el.name)
+                ] = details
             }
         }
     }

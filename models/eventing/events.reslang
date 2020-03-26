@@ -28,7 +28,7 @@ subresource v2/TestResource::Foo {
 }
 
 "Event to start"
-event StartSignal {
+produces event StartSignal {
     /header
         name: string min-length: 10 max-length: 100
         time: datetime
@@ -38,7 +38,7 @@ event StartSignal {
 }
 
 "Event to stop"
-event v3/StopSignal {
+consumes event v3/StopSignal {
     /header
         header: Header inline
     /payload

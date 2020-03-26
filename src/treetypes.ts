@@ -122,6 +122,8 @@ export interface IUnion extends IDefinition {
 
 export interface IEvent extends IDefinition {
     kind: "event"
+    // produces or consumes
+    produces: boolean
     header?: IAttribute[]
     payload?: IAttribute[]
 }

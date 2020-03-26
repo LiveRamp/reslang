@@ -17,15 +17,25 @@ Reslang can also specify which events a system generates. For REST APIs, the set
             GET POST MULTIGET EVENTS
     }
 
-Now, in some cases, the resource lifecycle cannot capture the full set of events. In this case, use the "event" keyword to capture what should be published:
+Now, in some cases, the resource lifecycle cannot capture the full set of events. In this case, use the "event" keyword to capture what events are produced by the service:
 
     "If a deletion is corrupted, we generate this event"
-    event DirectoryDeleteIncomplete {
+    produces event DirectoryDeleteIncomplete {
         /header
     	    timeOfFailure: datetime
         /payload
     	    directory: linked Directory
     	    corrupted: boolean
+    }
+
+You can also indicate that your service consumes various events:
+
+    "An event of this type let's us know a directory has been changed"
+    consumes event DirectoryNotification {
+        /header
+            when: datetime
+        /payload
+    	    directory: linked Directory
     }
 
 Note that the payload is the body of the event. Header fields are transmitted as "attributes" in Google pubsub - they allow you to read information about the event without having to parse the body. REST resources have a predefined set of header fields related to the resource in question.

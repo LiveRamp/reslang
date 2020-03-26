@@ -1,25 +1,25 @@
+import { BaseGen, Verbs } from "./genbase"
 import {
-    snakeCase,
-    pluralizeName,
-    getVersion,
     camelCase,
-    lowercaseFirst
+    getVersion,
+    lowercaseFirst,
+    pluralizeName,
+    snakeCase
 } from "./names"
+import { isPrimitiveType } from "./parse"
 import {
-    IResourceLike,
-    IAttribute,
-    IOperation,
-    isResourceLike,
-    isStructure,
-    isUnion,
-    isEnum,
-    isAction,
+    AnyKind,
     getAllAttributes,
     getKeyAttributes,
-    AnyKind
+    IAttribute,
+    IOperation,
+    IResourceLike,
+    isAction,
+    isEnum,
+    isResourceLike,
+    isStructure,
+    isUnion
 } from "./treetypes"
-import { BaseGen, Verbs } from "./genbase"
-import { isPrimitiveType } from "./parse"
 
 /**
  * generate swagger from the parsed representation

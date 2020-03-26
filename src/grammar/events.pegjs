@@ -9,14 +9,15 @@
 
 
 // defining an event
-event = _ comment:description? _ "event" _ name:resname _ "{" _
+event = _ comment:description? _ produces:("produces" / "consumes") _ "event" _ name:resname _ "{" _
     header:header? _ payload:payload? _
 "}" _ ";"? _ {
 
     return {
         kind: "event",
         type: "event",
-        comment: comment, 
+        comment: comment,
+        produces: produces == "produces",
         parents: [],
         short: name,
         header: header,
