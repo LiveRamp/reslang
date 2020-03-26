@@ -1,0 +1,510 @@
+{
+  "namespace": {
+    "comment": "Data buyer API",
+    "space": "",
+    "title": "Data buyer API",
+    "version": "0.0.1"
+  },
+  "definitions": [
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "request-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "segmentsToDeliver",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Segment",
+            "name": "Segment",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "whereToDeliver",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Destination",
+            "name": "Destination",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "segmentStatuses",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeliveryStatus",
+            "name": "DeliveryStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "complete",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "EVENTS",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "DeliverPurchasedSegments",
+      "name": "DeliverPurchasedSegments",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": true,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "segmentStatuses",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeliveryStatus",
+            "name": "DeliveryStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "AllDeliveredSegments",
+      "name": "AllDeliveredSegments",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "DeliveryStatus",
+      "attributes": [
+        {
+          "name": "updated",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "segment",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Segment",
+            "name": "Segment",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "status",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeliveryStatusEnum",
+            "name": "DeliveryStatusEnum",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DeliveryStatus",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "DeliveryStatusEnum",
+      "literals": [
+        "PENDING",
+        "DELIVERED",
+        "ERROR"
+      ],
+      "name": "DeliveryStatusEnum",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": true,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [],
+      "short": "Segment",
+      "name": "Segment",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": true,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [],
+      "short": "Destination",
+      "name": "Destination",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "local.reslang"
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "module": "delivery",
+          "parents": [],
+          "short": "reslang",
+          "name": "delivery.reslang",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
+      "groups": []
+    }
+  ]
+}

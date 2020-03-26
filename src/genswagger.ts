@@ -15,9 +15,11 @@ import {
     isEnum,
     isAction,
     getAllAttributes,
-    getKeyAttributes
+    getKeyAttributes,
+    AnyKind
 } from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
+import { isPrimitiveType } from "./parse"
 
 /**
  * generate swagger from the parsed representation
@@ -725,65 +727,82 @@ export default class SwagGen extends BaseGen {
     /** determine if we should generate input or output definitions for each entity */
     private markGenerate(includeErrors: boolean) {
         // handle each primary structure and work out if we should generate structures for it
+        const visited = new Set<string>()
         for (const el of this.defs) {
-            // don't generate for any imported def
-            if (el.secondary) {
-                continue
-            }
-
             if (isResourceLike(el)) {
-                if (el.future) {
-                    continue
-                }
-                const post = this.extractOp(el, "POST")
-                const multiget = this.extractOp(el, "MULTIGET")
-
-                if (!el.singleton && (post || multiget)) {
-                    if (post) {
-                        el.generateInput = true
-                    }
-                    if (multiget) {
-                        el.generateMulti = true
-                        el.generateOutput = true
-                    }
-                }
-
-                const get = this.extractOp(el, "GET")
-                const put = this.extractOp(el, "PUT")
-                const patch = this.extractOp(el, "PATCH")
-
-                if (put) {
-                    el.generatePuttable = true
-                }
-                if (patch) {
-                    el.generatePatchable = true
-                }
-                if (get) {
-                    el.generateOutput = true
-                }
-
-                // now process errors
-                if (includeErrors) {
-                    for (const op of el.operations || []) {
-                        for (const err of op.errors || []) {
-                            // locate the error type and mark it for generation
-                            this.extractDefinition(
-                                err.struct.name
-                            ).generateInput = true
-                        }
-                    }
-                }
-            }
-
-            // now work out if attributes reference any structures or other resources
-            for (const attr of getAllAttributes(el) || []) {
-                const def = this.extractDefinitionGently(attr.type.name)
-                if (def && !attr.inline && !attr.linked) {
-                    def.generateInput = true
-                }
+                this.follow(el, visited, includeErrors)
             }
         }
         // mark the standarderror as included - it is referenced implicitly by some operations
         this.extractDefinition("StandardError").generateInput = true
+    }
+
+    private follow(el: AnyKind, visited: Set<string>, includeErrors: boolean) {
+        // have we seen this before?
+        const unique = this.formSingleUniqueName(el)
+        if (visited.has(unique)) {
+            return
+        }
+        visited.add(unique)
+
+        if (isResourceLike(el)) {
+            // don't generate for any imported def
+            if (el.secondary || el.future) {
+                return
+            }
+            const post = this.extractOp(el, "POST")
+            const multiget = this.extractOp(el, "MULTIGET")
+
+            if (!el.singleton && (post || multiget)) {
+                if (post) {
+                    el.generateInput = true
+                }
+                if (multiget) {
+                    el.generateMulti = true
+                    el.generateOutput = true
+                }
+            }
+
+            const get = this.extractOp(el, "GET")
+            const put = this.extractOp(el, "PUT")
+            const patch = this.extractOp(el, "PATCH")
+
+            if (put) {
+                el.generatePuttable = true
+            }
+            if (patch) {
+                el.generatePatchable = true
+            }
+            if (get) {
+                el.generateOutput = true
+            }
+
+            // now process errors
+            if (includeErrors) {
+                for (const op of el.operations || []) {
+                    for (const err of op.errors || []) {
+                        // locate the error type and mark it for generation
+                        this.follow(
+                            this.extractDefinition(err.struct.name),
+                            visited,
+                            includeErrors
+                        )
+                    }
+                }
+            }
+        } else {
+            // cover structures, unions etc
+            el.generateInput = true
+        }
+
+        // now work out if attributes reference any structures or other resources
+        for (const attr of getAllAttributes(el)) {
+            if (!isPrimitiveType(attr.type.name)) {
+                const def = this.extractDefinition(attr.type.name)
+                if (def && !attr.inline && !attr.linked) {
+                    this.follow(def, visited, includeErrors)
+                }
+            }
+        }
     }
 }

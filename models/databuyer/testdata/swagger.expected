@@ -1,0 +1,194 @@
+openapi: 3.0.1
+info:
+  title: Data buyer API
+  description: Data buyer API
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/databuyer'
+tags:
+  - name: DeliverPurchasedSegments
+    description: '(request)  '
+  - name: AllDeliveredSegments
+    description: '(resource)  '
+paths:
+  /v1/deliver-purchased-segments:
+    post:
+      tags:
+        - DeliverPurchasedSegments
+      operationId: Create DeliverPurchasedSegments
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverPurchasedSegmentsInput'
+      responses:
+        '201':
+          description: DeliverPurchasedSegments created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: string
+  '/v1/deliver-purchased-segments/{id}':
+    get:
+      tags:
+        - DeliverPurchasedSegments
+      operationId: Get DeliverPurchasedSegments
+      description: ''
+      responses:
+        '200':
+          description: DeliverPurchasedSegments retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverPurchasedSegmentsOutput'
+        '404':
+          description: DeliverPurchasedSegments not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: string
+  /v1/all-delivered-segments:
+    get:
+      tags:
+        - AllDeliveredSegments
+      operationId: Get AllDeliveredSegments
+      description: ''
+      responses:
+        '200':
+          description: AllDeliveredSegments retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllDeliveredSegmentsOutput'
+        '404':
+          description: AllDeliveredSegments not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+components:
+  parameters: {}
+  schemas:
+    DeliverPurchasedSegmentsInput:
+      type: object
+      properties:
+        segmentsToDelivers:
+          description: ''
+          items:
+            type: string
+            example: >-
+              Link to Segment (to be defined in the future) resource(s) via
+              id(s)
+          type: array
+        whereToDeliver:
+          description: ''
+          type: string
+          example: >-
+            Link to a Destination (to be defined in the future) resource via its
+            id
+        complete:
+          description: ''
+          type: boolean
+      required:
+        - segmentsToDeliver
+        - whereToDeliver
+        - complete
+    DeliverPurchasedSegmentsOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        segmentsToDelivers:
+          description: ''
+          items:
+            type: string
+            example: >-
+              Link to Segment (to be defined in the future) resource(s) via
+              id(s)
+          type: array
+        whereToDeliver:
+          description: ''
+          type: string
+          example: >-
+            Link to a Destination (to be defined in the future) resource via its
+            id
+        segmentStatuses:
+          description: ''
+          items:
+            $ref: '#/components/schemas/DeliveryStatus'
+          type: array
+        complete:
+          description: ''
+          type: boolean
+      required:
+        - id
+        - segmentsToDeliver
+        - whereToDeliver
+        - segmentStatuses
+        - complete
+    AllDeliveredSegmentsOutput:
+      type: object
+      properties:
+        segmentStatuses:
+          description: ''
+          items:
+            $ref: '#/components/schemas/DeliveryStatus'
+          type: array
+      required:
+        - segmentStatuses
+    DeliveryStatus:
+      type: object
+      properties:
+        updated:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        segment:
+          description: ''
+          type: string
+          example: Link to a Segment (to be defined in the future) resource via its id
+        status:
+          description: ''
+          $ref: '#/components/schemas/DeliveryStatusEnum'
+      required:
+        - updated
+        - segment
+        - status
+    DeliveryStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - DELIVERED
+        - ERROR
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

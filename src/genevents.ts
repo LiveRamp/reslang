@@ -2,10 +2,12 @@ import {
     isResourceLike,
     getAllAttributes,
     isEvent,
-    getKeyAttributes
+    getKeyAttributes,
+    AnyKind
 } from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
 import { camelCase, snakeCase, getVersion } from "./names"
+import { isPrimitiveType } from "./parse"
 
 /**
  * generate swagger from the parsed representation
@@ -252,36 +254,40 @@ export default class EventsGen extends BaseGen {
     /** determine if we should generate definitions for each entity */
     private markGenerate() {
         // handle each primary structure and work out if we should generate structures for it
+        const visited = new Set<string>()
         for (const el of this.defs) {
-            // don't generate for any imported def
-            if (el.secondary) {
-                continue
+            if (isResourceLike(el) || isEvent(el)) {
+                this.follow(el, visited)
             }
+        }
+    }
 
-            let follow = false
-            if (isResourceLike(el)) {
-                if (el.future) {
-                    continue
-                }
-                const events = this.extractOp(el, "EVENTS")
-                if (events) {
-                    el.generateInput = true
-                    follow = true
-                }
+    private follow(el: AnyKind, visited: Set<string>) {
+        // have we seen this before?
+        const unique = this.formSingleUniqueName(el)
+        if (visited.has(unique)) {
+            return
+        }
+        visited.add(unique)
+
+        if (isResourceLike(el)) {
+            if (el.future || el.secondary) {
+                return
             }
-
-            if (isEvent(el)) {
-                el.generateInput = true
-                follow = true
+            const events = this.extractOp(el, "EVENTS")
+            if (!events) {
+                return
             }
+        }
 
-            // now work out if attributes reference any structures or other resources
-            if (follow) {
-                for (const attr of getAllAttributes(el) || []) {
-                    const def = this.extractDefinitionGently(attr.type.name)
-                    if (def && !attr.inline && !attr.linked) {
-                        def.generateInput = true
-                    }
+        el.generateInput = true
+
+        // now work out if attributes reference any structures or other resources
+        for (const attr of getAllAttributes(el) || []) {
+            if (!isPrimitiveType(attr.type.name)) {
+                const def = this.extractDefinition(attr.type.name)
+                if (def && !attr.inline && !attr.linked) {
+                    this.follow(def, visited)
                 }
             }
         }

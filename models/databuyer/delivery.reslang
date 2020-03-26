@@ -1,0 +1,38 @@
+
+
+request-resource DeliverPurchasedSegments {
+    id: string
+
+    segmentsToDeliver: linked Segment[]
+    whereToDeliver: linked Destination
+    segmentStatuses: DeliveryStatus[] output
+    complete: boolean
+
+    /operations
+        POST GET EVENTS
+}
+
+singleton resource AllDeliveredSegments {
+    segmentStatuses: DeliveryStatus[]
+
+    /operations
+        GET
+}
+
+structure DeliveryStatus {
+    updated: datetime
+    segment: linked Segment
+    status: DeliveryStatusEnum
+}
+
+enum DeliveryStatusEnum {
+    PENDING DELIVERED ERROR
+}
+
+future resource Segment {
+    id: string
+}
+
+future resource Destination {
+    id: string
+}

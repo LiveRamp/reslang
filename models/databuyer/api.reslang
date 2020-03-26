@@ -1,0 +1,6 @@
+
+"Data buyer API"
+namespace {
+    title "Data buyer API"
+    version 0.0.1
+}
