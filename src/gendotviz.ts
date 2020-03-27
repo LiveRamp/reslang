@@ -75,7 +75,8 @@ export default class DotvizGen extends BaseGen {
                     "request-resource",
                     "asset-resource",
                     "resource",
-                    "configuration-resource"
+                    "configuration-resource",
+                    "event"
                 ].includes(def.type)
                     ? 3
                     : 1
@@ -88,6 +89,8 @@ export default class DotvizGen extends BaseGen {
                     "subresource"
                 ].includes(def.type)
                     ? "style='rounded'"
+                    : def.type === "event"
+                    ? "style='dashed'"
                     : ""
                 const padding = "        "
                 const box = `
