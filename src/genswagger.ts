@@ -745,7 +745,7 @@ export default class SwagGen extends BaseGen {
     ) {
         // have we seen this before?
         const unique = this.formSingleUniqueName(el)
-        if (visited.has(unique)) {
+        if (visited.has(unique) && level !== 0) {
             return
         }
         visited.add(unique)
