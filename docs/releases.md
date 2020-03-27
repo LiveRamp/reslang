@@ -1,3 +1,7 @@
+## 1.3.0 3/26/2020
+
+Added "value-of" for embedding a full representation of a resource in another structure, as opposed to "link"
+
 ## v1.2.0 3/24/2020
 
 Added event / AsyncAPI specifications and made "operation Ids" a lot more readable.

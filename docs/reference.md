@@ -180,7 +180,7 @@ To generate AsyncAPI use something like:
 
 This will copy the AsyncAPI spec to the clipboard and open up the browser on the AsyncAPI playground. Paste the spec into the left hand text editor to see your events.
 
-### Links
+### Links & Values
 
 To refer to one resource from another, used the "linked" keyword in front of the attribute type. The attribute must end in "Id" or "Ids"
 
@@ -189,6 +189,12 @@ To refer to one resource from another, used the "linked" keyword in front of the
 ```
 
 Note that to link to a subresource, you use the parent::child syntax.
+
+If, rather than a link you'd prefer the full value of the resource, then use "value-of" instead:
+
+```
+    destinationEndpoint: value-of Destination::Endpoint
+```
 
 ### Structures
 
