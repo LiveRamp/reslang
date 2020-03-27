@@ -679,24 +679,31 @@ Actions cannot have subresources`
                     break
                 case "resource-like":
                     // must have a linked annotation
-                    if (!attr.linked) {
-                        throw new Error(
-                            `Attribute ${attr.name} references resource ${attr.type} but doesn't use linked`
+                    if (attr.linked) {
+                        this.translatePrimitive(
+                            null,
+                            this.extractId(def).type.name,
+                            schema
                         )
-                    }
-                    this.translatePrimitive(
-                        null,
-                        this.extractId(def).type.name,
-                        schema
-                    )
-                    if (attr.array) {
-                        schema.example = `Link to ${attr.type.name} ${
-                            def.future ? "(to be defined in the future) " : ""
-                        }resource(s) via id(s)`
+                        if (attr.array) {
+                            schema.example = `Link to ${attr.type.name} ${
+                                def.future
+                                    ? "(to be defined in the future) "
+                                    : ""
+                            }resource(s) via id(s)`
+                        } else {
+                            schema.example = `Link to a ${attr.type.name} ${
+                                def.future
+                                    ? "(to be defined in the future) "
+                                    : ""
+                            }resource via its id`
+                        }
+                    } else if (attr.full) {
+                        schema.$ref = `#/components/schemas/${sane}Output`
                     } else {
-                        schema.example = `Link to a ${attr.type.name} ${
-                            def.future ? "(to be defined in the future) " : ""
-                        }resource via its id`
+                        throw new Error(
+                            `Attribute ${attr.name} references resource ${attr.type} but doesn't use "linked" or "full"`
+                        )
                     }
                     break
                 default:

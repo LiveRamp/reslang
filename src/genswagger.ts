@@ -730,14 +730,19 @@ export default class SwagGen extends BaseGen {
         const visited = new Set<string>()
         for (const el of this.defs) {
             if (isResourceLike(el)) {
-                this.follow(el, visited, includeErrors)
+                this.follow(el, visited, includeErrors, 0)
             }
         }
         // mark the standarderror as included - it is referenced implicitly by some operations
         this.extractDefinition("StandardError").generateInput = true
     }
 
-    private follow(el: AnyKind, visited: Set<string>, includeErrors: boolean) {
+    private follow(
+        el: AnyKind,
+        visited: Set<string>,
+        includeErrors: boolean,
+        level: number
+    ) {
         // have we seen this before?
         const unique = this.formSingleUniqueName(el)
         if (visited.has(unique)) {
@@ -746,47 +751,58 @@ export default class SwagGen extends BaseGen {
         visited.add(unique)
 
         if (isResourceLike(el)) {
-            // don't generate for any imported def
-            if (el.secondary || el.future) {
+            if (el.future) {
                 return
             }
-            const post = this.extractOp(el, "POST")
-            const multiget = this.extractOp(el, "MULTIGET")
+            // don't generate for any imported def
+            if (el.secondary && level === 0) {
+                // remove it from visited so we can come back again if it's referenced via an attribute
+                visited.delete(unique)
+                return
+            }
+            if (level !== 0) {
+                // "full" attribute
+                el.generateOutput = true
+            } else {
+                const post = this.extractOp(el, "POST")
+                const multiget = this.extractOp(el, "MULTIGET")
 
-            if (!el.singleton && (post || multiget)) {
-                if (post) {
-                    el.generateInput = true
+                if (!el.singleton && (post || multiget)) {
+                    if (post) {
+                        el.generateInput = true
+                    }
+                    if (multiget) {
+                        el.generateMulti = true
+                        el.generateOutput = true
+                    }
                 }
-                if (multiget) {
-                    el.generateMulti = true
+
+                const get = this.extractOp(el, "GET")
+                const put = this.extractOp(el, "PUT")
+                const patch = this.extractOp(el, "PATCH")
+
+                if (put) {
+                    el.generatePuttable = true
+                }
+                if (patch) {
+                    el.generatePatchable = true
+                }
+                if (get) {
                     el.generateOutput = true
                 }
-            }
 
-            const get = this.extractOp(el, "GET")
-            const put = this.extractOp(el, "PUT")
-            const patch = this.extractOp(el, "PATCH")
-
-            if (put) {
-                el.generatePuttable = true
-            }
-            if (patch) {
-                el.generatePatchable = true
-            }
-            if (get) {
-                el.generateOutput = true
-            }
-
-            // now process errors
-            if (includeErrors) {
-                for (const op of el.operations || []) {
-                    for (const err of op.errors || []) {
-                        // locate the error type and mark it for generation
-                        this.follow(
-                            this.extractDefinition(err.struct.name),
-                            visited,
-                            includeErrors
-                        )
+                // now process errors
+                if (includeErrors) {
+                    for (const op of el.operations || []) {
+                        for (const err of op.errors || []) {
+                            // locate the error type and mark it for generation
+                            this.follow(
+                                this.extractDefinition(err.struct.name),
+                                visited,
+                                includeErrors,
+                                level + 1
+                            )
+                        }
                     }
                 }
             }
@@ -800,7 +816,7 @@ export default class SwagGen extends BaseGen {
             if (!isPrimitiveType(attr.type.name)) {
                 const def = this.extractDefinition(attr.type.name)
                 if (def && !attr.inline && !attr.linked) {
-                    this.follow(def, visited, includeErrors)
+                    this.follow(def, visited, includeErrors, level + 1)
                 }
             }
         }

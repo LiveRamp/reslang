@@ -30,9 +30,9 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/DeliverPurchasedSegments'
+        $ref: '#/components/schemas/DeliverPurchasedSegmentsOutput'
   schemas:
-    DeliverPurchasedSegments:
+    DeliverPurchasedSegmentsOutput:
       type: object
       properties:
         id:

@@ -135,6 +135,7 @@ export interface IAttribute {
     array: IArray
     stringMap: boolean
     linked: boolean
+    full: boolean
     comment: string
     modifiers: IModifiers
     constraints: IConstraints

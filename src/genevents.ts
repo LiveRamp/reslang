@@ -186,7 +186,7 @@ export default class EventsGen extends BaseGen {
                     summary: el.comment,
                     contentType: "application/json",
                     traits: [{ $ref: `#/components/messageTraits/RestHeader` }],
-                    payload: { $ref: `#/components/schemas/${unique}` }
+                    payload: { $ref: `#/components/schemas/${unique}Output` }
                 }
             }
             if (isEvent(el)) {
@@ -216,7 +216,7 @@ export default class EventsGen extends BaseGen {
                                 schemas,
                                 def,
                                 Verbs.GET,
-                                ""
+                                "Output"
                             )
                         }
                         break
@@ -262,12 +262,12 @@ export default class EventsGen extends BaseGen {
         const visited = new Set<string>()
         for (const el of this.defs) {
             if (isResourceLike(el) || isEvent(el)) {
-                this.follow(el, visited)
+                this.follow(el, visited, 0)
             }
         }
     }
 
-    private follow(el: AnyKind, visited: Set<string>) {
+    private follow(el: AnyKind, visited: Set<string>, level: number) {
         // have we seen this before?
         const unique = this.formSingleUniqueName(el)
         if (visited.has(unique)) {
@@ -276,11 +276,14 @@ export default class EventsGen extends BaseGen {
         visited.add(unique)
 
         if (isResourceLike(el)) {
-            if (el.future || el.secondary) {
+            if (el.future) {
                 return
             }
-            const events = this.extractOp(el, "EVENTS")
-            if (!events) {
+            if (el.secondary && level === 0) {
+                visited.delete(unique)
+                return
+            }
+            if (!this.extractOp(el, "EVENTS") && level === 0) {
                 return
             }
         }
@@ -292,7 +295,7 @@ export default class EventsGen extends BaseGen {
             if (!isPrimitiveType(attr.type.name)) {
                 const def = this.extractDefinition(attr.type.name)
                 if (def && !attr.inline && !attr.linked) {
-                    this.follow(def, visited)
+                    this.follow(def, visited, level + 1)
                 }
             }
         }

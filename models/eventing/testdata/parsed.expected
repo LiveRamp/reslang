@@ -25,6 +25,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -50,6 +51,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -105,6 +107,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -130,6 +133,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -155,6 +159,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": true,
@@ -210,6 +215,36 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "address",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -260,6 +295,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -288,6 +324,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -315,6 +352,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -345,6 +383,35 @@
             "max": 10
           },
           "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "foo",
+          "stringMap": false,
+          "type": {
+            "parents": [
+              "v2/TestResource"
+            ],
+            "short": "Foo",
+            "name": "v2/TestResource::Foo",
+            "parentShort": "v2/TestResource",
+            "parentName": "v2/TestResource"
+          },
+          "inline": false,
+          "linked": false,
+          "full": true,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -385,6 +452,7 @@
           },
           "inline": true,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -412,6 +480,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -450,6 +519,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -475,6 +545,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -514,6 +585,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -540,6 +612,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -566,6 +639,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,

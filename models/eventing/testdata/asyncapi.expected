@@ -59,7 +59,7 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/SimpleResource'
+        $ref: '#/components/schemas/SimpleResourceOutput'
     v2TestResource:
       name: v2TestResource
       title: v2TestResource
@@ -68,7 +68,7 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/v2TestResource'
+        $ref: '#/components/schemas/v2TestResourceOutput'
     v2TestResourceFoo:
       name: v2TestResourceFoo
       title: v2TestResourceFoo
@@ -77,7 +77,7 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/v2TestResourceFoo'
+        $ref: '#/components/schemas/v2TestResourceFooOutput'
     StartSignal:
       name: StartSignal
       title: StartSignal
@@ -97,7 +97,7 @@ components:
       payload:
         $ref: '#/components/schemas/v3StopSignal'
   schemas:
-    SimpleResource:
+    SimpleResourceOutput:
       type: object
       properties:
         id:
@@ -110,7 +110,7 @@ components:
         - id
         - name
       description: A simple REST resource
-    v2TestResource:
+    v2TestResourceOutput:
       type: object
       properties:
         id:
@@ -128,15 +128,21 @@ components:
         - id
         - name
       description: A test REST resource
-    v2TestResourceFoo:
+    v2TestResourceFooOutput:
       type: object
       properties:
         id:
           description: ''
           type: integer
           format: int32
+        address:
+          description: ''
+          items:
+            type: string
+          type: array
       required:
         - id
+        - address
       description: A REST subresource
     StartSignalHeader:
       type: object
@@ -168,9 +174,13 @@ components:
           minItems: 1
           maxItems: 10
           type: array
+        foo:
+          description: ''
+          $ref: '#/components/schemas/v2TestResourceFooOutput'
       required:
         - name
         - address
+        - foo
       description: Event to start
     v3StopSignalHeader:
       type: object

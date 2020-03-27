@@ -25,6 +25,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -53,6 +54,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -78,6 +80,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -144,6 +147,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -183,6 +187,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -209,6 +214,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -235,6 +241,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -274,6 +281,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -299,6 +307,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -324,6 +333,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -349,6 +359,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -374,6 +385,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -400,6 +412,7 @@
           },
           "inline": false,
           "linked": true,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -426,6 +439,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -455,6 +469,7 @@
             "type": 2
           },
           "linked": true,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -480,6 +495,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -550,6 +566,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -575,6 +592,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -614,6 +632,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -639,6 +658,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -716,6 +736,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -742,6 +763,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,
@@ -768,6 +790,7 @@
           },
           "inline": false,
           "linked": false,
+          "full": false,
           "modifiers": {
             "mutable": false,
             "optional": false,

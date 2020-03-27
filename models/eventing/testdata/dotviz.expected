@@ -12,11 +12,11 @@ digraph G {
                     <tr><td><b>v2/TestResource        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">number: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET EVENTS</font></td></tr>"}</table>>];
 "Foo" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> EVENTS</font></td></tr>"}</table>>];
+                    <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">address: string[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> EVENTS</font></td></tr>"}</table>>];
 "v2/TestResource" -> "Foo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "StartSignal" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>StartSignal        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="left">address: string[1..10]</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">time: datetime</td></tr>"}</table>>];
+                    <tr><td><b>StartSignal        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="left">address: string[1..10]</td></tr><tr><td align="left">foo: Foo</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">time: datetime</td></tr>"}</table>>];
 "v3/StopSignal" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>v3/StopSignal        </b></td></tr><hr/><tr><td align="left">stopped: datetime</td></tr>"}</table>>];

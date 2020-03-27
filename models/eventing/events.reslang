@@ -22,6 +22,7 @@ resource v2/TestResource {
 "A REST subresource"
 subresource v2/TestResource::Foo {
     id: int
+    address: string[]
     
     /operations
         EVENTS
@@ -35,6 +36,7 @@ produces event StartSignal {
     /payload
         name: string
         address: string[1..10]
+        foo: value-of v2/TestResource::Foo
 }
 
 "Event to stop"

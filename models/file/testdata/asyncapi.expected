@@ -45,7 +45,7 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/DirectoryFile'
+        $ref: '#/components/schemas/DirectoryFileOutput'
     DirectoryDeleteRequest:
       name: DirectoryDeleteRequest
       title: DirectoryDeleteRequest
@@ -54,7 +54,7 @@ components:
       traits:
         - $ref: '#/components/messageTraits/RestHeader'
       payload:
-        $ref: '#/components/schemas/DirectoryDeleteRequest'
+        $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
     DirectoryDeleteIncomplete:
       name: DirectoryDeleteIncomplete
       title: DirectoryDeleteIncomplete
@@ -65,7 +65,7 @@ components:
       payload:
         $ref: '#/components/schemas/DirectoryDeleteIncomplete'
   schemas:
-    DirectoryFile:
+    DirectoryFileOutput:
       type: object
       properties:
         id:
@@ -88,7 +88,7 @@ components:
         - url
         - fileTypeId
       description: This models a file in a directory
-    DirectoryDeleteRequest:
+    DirectoryDeleteRequestOutput:
       type: object
       properties:
         id:

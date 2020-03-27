@@ -154,7 +154,7 @@ To generate the first, use the EVENTS operation type:
         contents: string queryonly
 
         /operations
-            GET POST MULTIGET *EVENTS*
+            GET POST MULTIGET EVENTS
     }
 
 To specify an adhoc event, use the "event" construct and let Reslang know if it's generated or consumed by your API:
