@@ -144,6 +144,21 @@ components:
         - id
         - address
       description: A REST subresource
+    v2TestResourceFoo2Output:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        address:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - id
+        - address
     StartSignalHeader:
       type: object
       properties:
@@ -176,7 +191,7 @@ components:
           type: array
         foo:
           description: ''
-          $ref: '#/components/schemas/v2TestResourceFooOutput'
+          $ref: '#/components/schemas/v2TestResourceFoo2Output'
       required:
         - name
         - address

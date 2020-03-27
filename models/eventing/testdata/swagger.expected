@@ -12,6 +12,8 @@ tags:
     description: (resource)  A test REST resource
   - name: 'v2/TestResource::Foo'
     description: (subresource)  A REST subresource
+  - name: 'v2/TestResource::Foo2'
+    description: '(subresource)  '
 paths:
   /v1/simple-resources:
     post:
@@ -111,6 +113,71 @@ paths:
           schema:
             type: integer
             format: int32
+  '/v2/test-resources/{v2TestResourceId}/foo2s':
+    post:
+      tags:
+        - 'v2/TestResource::Foo2'
+      operationId: 'Create v2/TestResource::Foo2'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TestResourceFoo2Input'
+      responses:
+        '201':
+          description: Foo2 created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: ''
+                    type: integer
+                    format: int32
+      parameters:
+        - in: path
+          name: v2TestResourceId
+          description: Id of parent v2/TestResource
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v2/test-resources/{v2TestResourceId}/foo2s/{id}':
+    get:
+      tags:
+        - 'v2/TestResource::Foo2'
+      operationId: 'Get v2/TestResource::Foo2'
+      description: ''
+      responses:
+        '200':
+          description: Foo2 retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TestResourceFoo2Output'
+        '404':
+          description: Foo2 not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: v2TestResourceId
+          description: Id of parent v2/TestResource
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          description: ''
+          schema:
+            type: integer
+            format: int32
 components:
   parameters: {}
   schemas:
@@ -167,6 +234,31 @@ components:
         - id
         - name
       description: A test REST resource
+    v2TestResourceFoo2Input:
+      type: object
+      properties:
+        address:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - address
+    v2TestResourceFoo2Output:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        address:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - id
+        - address
     StandardError:
       type: object
       properties:

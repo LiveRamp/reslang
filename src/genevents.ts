@@ -284,6 +284,7 @@ export default class EventsGen extends BaseGen {
                 return
             }
             if (!this.extractOp(el, "EVENTS") && level === 0) {
+                visited.delete(unique)
                 return
             }
         }

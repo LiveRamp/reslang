@@ -28,6 +28,14 @@ subresource v2/TestResource::Foo {
         EVENTS
 }
 
+subresource v2/TestResource::Foo2 {
+    id: int
+    address: string[]
+    
+    /operations
+        POST GET
+}
+
 "Event to start"
 produces event StartSignal {
     /header
@@ -36,7 +44,7 @@ produces event StartSignal {
     /payload
         name: string
         address: string[1..10]
-        foo: value-of v2/TestResource::Foo
+        foo: value-of v2/TestResource::Foo2
 }
 
 "Event to stop"
