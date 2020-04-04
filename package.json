@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "@asyncapi/generator": "^0.34.3",
+    "@types/colors": "^1.2.1",
     "clipboardy": "^2.0.0",
+    "colors": "^1.4.0",
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",
     "open": "^6.3.0",

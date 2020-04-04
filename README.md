@@ -81,3 +81,11 @@ Reslang can generate AsyncAPI, describing the events a REST API can generate. It
 If instead you wish to view the events in the AsyncAPI Playgrounder for editing, please add the --web option.
 
     ./reslang models/eventing --open --web
+
+## Stripping out the comments for review
+
+Reslang can produce a nice pretty-printed, stripped down version of the Reslang. It is often easier to review this form, as it removes the comments and error structures.
+
+    ./reslang models/resources --stripped
+
+Will produce the fancy output to stdout.

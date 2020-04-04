@@ -13,10 +13,11 @@ import ParseGen from "./genparse"
 import SwagGen from "./genswagger"
 import { clean, readFile } from "./parse"
 import { IRules } from "./rules"
+import StripGen from "./genstripped"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.3.2"
+export const VERSION = "v1.3.3"
 
 // parse the cmd line
 const args = yargs
@@ -45,6 +46,11 @@ const args = yargs
     .option("events", {
         type: "boolean",
         describe: "Generate an AsyncAPI spec for events"
+    })
+    .option("stripped", {
+        type: "boolean",
+        describe:
+            "Pretty print a stripped version of the reslang to stdout, for easy review"
     })
     .option("stacktrace", {
         type: "boolean",
@@ -116,6 +122,9 @@ function handle(allFiles: string[], silent: boolean) {
             }
             clip.writeSync(json)
             return json
+        } else if (args.stripped) {
+            // pretty print the reslang in stripped down form
+            new StripGen(allFiles, rules).generate()
         } else if (args.diagram) {
             // generate .viz?
             const dot = new DotvizGen(allFiles, rules)
