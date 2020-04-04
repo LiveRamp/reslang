@@ -84,8 +84,8 @@ If instead you wish to view the events in the AsyncAPI Playgrounder for editing,
 
 ## Stripping out the comments for review
 
-Reslang can produce a nice pretty-printed, stripped down version of the Reslang. It is often easier to review this form, as it removes the comments and error structures.
+Reslang can produce a nice pretty-printed, stripped down version of the Reslang in html. It is often easier to review this form, as it removes the comments and error structures.
 
-    ./reslang models/resources --stripped
+    ./reslang models/resources --stripped --open
 
-Will produce the fancy output to stdout.
+Will open a browser on the stripped down file. If you just want plain text, add --plain

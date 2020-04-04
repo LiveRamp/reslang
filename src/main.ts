@@ -3,6 +3,7 @@
 import clip from "clipboardy"
 import fs from "fs"
 import yaml from "js-yaml"
+import tmp from "tmp"
 import open from "open"
 import lpath from "path"
 import { exec } from "shelljs"
@@ -10,10 +11,10 @@ import yargs from "yargs"
 import DotvizGen from "./gendotviz"
 import EventsGen from "./genevents"
 import ParseGen from "./genparse"
-import SwagGen from "./genswagger"
-import { clean, readFile } from "./parse"
-import { IRules } from "./rules"
 import StripGen from "./genstripped"
+import SwagGen from "./genswagger"
+import { clean, readFile, writeFile } from "./parse"
+import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
@@ -24,60 +25,64 @@ const args = yargs
     .usage("Usage: reslang namespace_directory [focus.reslang]*")
     .option("diagram", {
         type: "string",
-        describe: "Create dotviz graphical output of the declared diagram"
+        describe: "Create dotviz graphical output of the declared diagram",
     })
     .option("parsed", {
         type: "boolean",
-        describe: "Write the parsed output as a tree"
+        describe: "Write the parsed output as a tree",
     })
     .option("stdout", {
         type: "boolean",
-        describe: "Write output to stdout as well as clipboard"
+        describe: "Write output to stdout as well as clipboard",
     })
     .option("open", {
         type: "boolean",
-        describe: "Open browser to the appropriate website for output"
+        describe: "Open browser to the appropriate website for output",
     })
     .option("web", {
         type: "boolean",
         describe:
-            "Open both the Swagger and AsyncAPI viewers on the web, rather than using local viewers"
+            "Open both the Swagger and AsyncAPI viewers on the web, rather than using local viewers",
     })
     .option("events", {
         type: "boolean",
-        describe: "Generate an AsyncAPI spec for events"
+        describe: "Generate an AsyncAPI spec for events",
     })
     .option("stripped", {
         type: "boolean",
         describe:
-            "Pretty print a stripped version of the reslang to stdout, for easy review"
+            "Pretty print a pretty stripped version of the reslang to stdout, for easy review",
+    })
+    .option("plain", {
+        type: "boolean",
+        describe: "Make the stripped version completely plain text",
     })
     .option("stacktrace", {
         type: "boolean",
-        describe: "Show full stacktrace of any errors"
+        describe: "Show full stacktrace of any errors",
     })
     .option("rulefile", {
         type: "string",
-        describe: "Use the specified rule file rather than the standard one"
+        describe: "Use the specified rule file rather than the standard one",
     })
     .option("ignorerules", {
         type: "boolean",
-        describe: "Don't check the rules"
+        describe: "Don't check the rules",
     })
     .option("testwrite", {
         type: "string",
         describe:
-            "Used to regenerated test data - the data will be written to this filename"
+            "Used to regenerated test data - the data will be written to this filename",
     })
     .option("testdir", {
         type: "string",
-        describe: "Where the test data is generated to"
+        describe: "Where the test data is generated to",
     })
     .option("noversion", {
         type: "boolean",
-        describe: "Don't write the Reslang version to the Swagger etc"
+        describe: "Don't write the Reslang version to the Swagger etc",
     })
-    .check(arg => {
+    .check((arg) => {
         if (arg._.length < 1) {
             throw new Error("Needs a module at least to process")
         }
@@ -97,12 +102,11 @@ if (testwrite) {
     if (!args.testdir) {
         throw new Error("Must specify testdir and testwrite options together")
     }
-    files.forEach(file => {
+    files.forEach((file) => {
         const fname = lpath.join(args.testdir || "", file)
         const out = handle([fname], true)
-        const ftestname = lpath.join(fname, testwrite)
         process.stdout.write(file + " ")
-        fs.writeFileSync(ftestname, out + "\n", { encoding: "utf8" })
+        writeFile(out + "\n", fname, testwrite)
     })
 } else {
     handle(files, false)
@@ -124,7 +128,14 @@ function handle(allFiles: string[], silent: boolean) {
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
-            new StripGen(allFiles, rules).generate()
+            const file = tmp.fileSync({ postfix: ".html" })
+            const html = new StripGen(allFiles, rules).generate(!args.plain)
+            clip.writeSync(html)
+            console.log("Success -- html copied to clipboard")
+            if (args.open) {
+                writeFile(html, file.name)
+                open(file.name)
+            }
         } else if (args.diagram) {
             // generate .viz?
             const dot = new DotvizGen(allFiles, rules)

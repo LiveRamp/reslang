@@ -7,12 +7,16 @@ import {
     IReference,
     getAllAttributes,
     isResourceLike,
-    AnyKind
+    AnyKind,
 } from "./treetypes"
 import * as path from "path"
 
 export function readFile(...parts: string[]) {
     return fs.readFileSync(path.join(...parts), { encoding: "utf8" })
+}
+
+export function writeFile(data: string, ...parts: string[]) {
+    return fs.writeFileSync(path.join(...parts), data, { encoding: "utf8" })
 }
 
 // grammar is split into 3 separate parts
@@ -46,7 +50,7 @@ export function parseFile(
     try {
         tree = clean(
             loadParser().parse(contents, {
-                output: "parser"
+                output: "parser",
             }) as object
         )
     } catch (error) {
