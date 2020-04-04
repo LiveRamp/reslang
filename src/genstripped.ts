@@ -26,6 +26,12 @@ function keyword(a: string) {
 function name(a: string) {
     return colors.bold(a)
 }
+function attrName(a: string) {
+    return a
+}
+function type(a: string) {
+    return colors.bold(a)
+}
 
 // prints up a stripped down version of the reslang for easy review without the comments and noise such as errors
 export default class StripGen extends BaseGen {
@@ -91,12 +97,12 @@ export default class StripGen extends BaseGen {
             l(tab)
         }
         l(
-            name(attr.name) +
+            attrName(attr.name) +
                 ": " +
                 (attr.stringMap ? "stringmap<" : "") +
                 (attr.linked ? keyword("linked") + " " : "") +
                 (attr.full ? keyword("value-of") + " " : "") +
-                attr.type.name +
+                type(attr.type.name) +
                 (attr.stringMap ? ">" : "")
         )
         this.printArray(attr)
