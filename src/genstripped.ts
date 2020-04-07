@@ -86,6 +86,9 @@ export default class StripGen extends BaseGen {
          */
 
         function printResource(def: IResourceLike) {
+            if (def.future) {
+                l(keyword("future "))
+            }
             if (def.parents.length === 0) {
                 l(keyword(def.type) + " ")
             } else {
