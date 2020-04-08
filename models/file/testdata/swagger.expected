@@ -412,11 +412,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
         '404':
-          description: DirectoryDeleteRequest not found
+          description: Can't find anything
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardError'
+                $ref: '#/components/schemas/SpecialError'
       parameters:
         - in: path
           name: id

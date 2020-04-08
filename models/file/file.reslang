@@ -48,7 +48,8 @@ request-resource DirectoryDeleteRequest {
 	directoryId: linked Directory
 
     /operations
-        GET POST MULTIGET EVENTS
+        GET "Can't find anything" 404 SpecialError
+		POST MULTIGET EVENTS
 }
 
 "If a deletion is corrupted, we generate this event"
@@ -72,4 +73,5 @@ sync action DirectoryDeleteRequest::Cancel {
 structure SpecialError {
 	message: string
 	time: datetime
+	errors: StandardError[]
 }

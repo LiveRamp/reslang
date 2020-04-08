@@ -524,7 +524,23 @@
       "operations": [
         {
           "operation": "GET",
-          "errors": []
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Can't find anything"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "SpecialError",
+                "name": "SpecialError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
         },
         {
           "operation": "POST",
