@@ -522,17 +522,19 @@
           "comment": "IDs of Fields to disable.",
           "stringMap": false,
           "type": {
-            "parents": [],
-            "short": "long",
-            "name": "long",
-            "parentShort": "",
-            "parentName": ""
+            "parents": [
+              "Audience"
+            ],
+            "short": "Field",
+            "name": "Audience::Field",
+            "parentShort": "Audience",
+            "parentName": "Audience"
           },
           "inline": false,
           "array": {
             "type": 2
           },
-          "linked": false,
+          "linked": true,
           "full": false,
           "modifiers": {
             "mutable": false,

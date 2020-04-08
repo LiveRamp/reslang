@@ -17,7 +17,7 @@ digraph G {
 "Audience" -> "Disable" [dir="none" label=< <font point-size="8">action</font> >];
 "Disable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">fieldIDs: long[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "Audience" -> "Disable" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "FieldTypeEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
@@ -28,4 +28,5 @@ digraph G {
 "FieldRedirection" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>FieldRedirection        </b></td></tr>        <hr/><tr><td align="left">existingFieldURL: string</td></tr></table> >];
+"Disable" -> "Field" [label=< <font point-size="8"> fieldIDs[]</font> > arrowhead="vee"];
 }

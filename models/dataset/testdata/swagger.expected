@@ -395,9 +395,10 @@ components:
       properties:
         fieldIDs:
           description: IDs of Fields to disable.
-          format: int64
           items:
             type: integer
+            format: int64
+            example: 'Link to Audience::Field resource(s) via id(s)'
           type: array
       required:
         - fieldIDs

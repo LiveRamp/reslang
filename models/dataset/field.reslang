@@ -83,7 +83,7 @@ sync bulk action Audience::Field::Disable {
   id: int
 
   "IDs of Fields to disable."
-  fieldIDs: long[]
+  fieldIDs: linked Audience::Field[]
 
   /operations
     "Marks the set of input Fields 'disabled', which means that they will no longer

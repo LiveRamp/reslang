@@ -15,7 +15,7 @@ import {
     IEnum,
     IStructure,
     IUnion,
-    isStructure
+    isStructure,
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
@@ -30,7 +30,7 @@ export enum Verbs {
     PATCH,
     GET,
     MULTIGET,
-    DELETE
+    DELETE,
 }
 
 export abstract class BaseGen {
@@ -79,7 +79,7 @@ export abstract class BaseGen {
         }
 
         // process all files in this directory
-        const files = readdirSync(dirname).map(fname => {
+        const files = readdirSync(dirname).map((fname) => {
             return { file: fname, full: path + nspace + "/" + fname }
         })
         files.push({ file: LOCAL, full: LOCAL_INCLUDE })
@@ -147,8 +147,9 @@ export abstract class BaseGen {
                     `RULE maxResourceDepth(${maxResource}) violated: ${
                         def.name
                     }\n
-The maximum depth a resource can be nested is ${maxResource} levels. Your level is ${def
-                        .parents.length + 1}`
+The maximum depth a resource can be nested is ${maxResource} levels. Your level is ${
+                        def.parents.length + 1
+                    }`
                 )
             }
             // if the action too deep?
@@ -274,7 +275,7 @@ Actions cannot have subresources`
             type: "object",
             properties,
             required,
-            description: def.comment
+            description: def.comment,
         } as {
             type: string
             properties: any
@@ -392,7 +393,7 @@ Actions cannot have subresources`
         const en = {
             type: "string",
             description: def.comment,
-            enum: def.literals
+            enum: def.literals,
         }
         definitions[name] = en
     }
@@ -409,7 +410,7 @@ Actions cannot have subresources`
             type: "object",
             properties,
             required,
-            description: def.comment
+            description: def.comment,
         } as {
             type: string
             properties: any
@@ -477,9 +478,9 @@ Actions cannot have subresources`
             properties: { type: { type: "string" } },
             discriminator: {
                 propertyName: "type",
-                mapping
+                mapping,
             },
-            required
+            required,
         }
         definitions[name] = request
 
@@ -499,9 +500,9 @@ Actions cannot have subresources`
                     { $ref: `#/components/schemas/${name}` },
                     {
                         type: "object",
-                        properties
-                    }
-                ]
+                        properties,
+                    },
+                ],
             }
         }
         if (request.required.length === 0) {
@@ -546,7 +547,7 @@ Actions cannot have subresources`
             }
         }
         const prop = {
-            description: this.translateDoc(attr.comment)
+            description: this.translateDoc(attr.comment),
         }
         this.addType(attr, prop, false)
         return { name, prop }
@@ -717,8 +718,9 @@ Actions cannot have subresources`
         if (attr.array) {
             schema.items = {
                 type: obj.type,
+                format: obj.format,
                 example: obj.example,
-                $ref: obj.$ref
+                $ref: obj.$ref,
             }
             if (attr.array.min) {
                 schema.minItems = attr.array.min
@@ -727,6 +729,7 @@ Actions cannot have subresources`
                 schema.maxItems = attr.array.max
             }
             delete schema.type
+            delete schema.format
             delete schema.example
             delete schema.$ref
             schema.type = "array"

@@ -46,9 +46,9 @@ components:
           type: array
         ages:
           description: ''
-          format: int32
           items:
             type: integer
+            format: int32
           minItems: 13
           type: array
         addresses:
