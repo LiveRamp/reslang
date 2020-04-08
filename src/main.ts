@@ -1,7 +1,6 @@
 #!/usr/bin/env ts-node
 
 import clip from "clipboardy"
-import fs from "fs"
 import yaml from "js-yaml"
 import tmp from "tmp"
 import open from "open"
@@ -18,7 +17,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.3.5"
+export const VERSION = "v1.3.6"
 
 // parse the cmd line
 const args = yargs

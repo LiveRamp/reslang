@@ -6,7 +6,7 @@ digraph G {
         
 "Directory" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Directory        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name</font></td></tr>"}</table>>];
+                    <tr><td><b>Directory        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name</font></td></tr>"}</table>>];
 "FileType" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>FileType        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id type format specId</font></td></tr>"}</table>>];

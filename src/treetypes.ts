@@ -22,7 +22,8 @@ export let PrimitiveType = [
     "date",
     "time",
     "datetime",
-    "url"
+    "url",
+    "uuid",
 ]
 
 export type DefinitionType =
@@ -42,7 +43,7 @@ export let ResourceLike = [
     "asset-resource",
     "resource",
     "configuration-resource",
-    "subresource"
+    "subresource",
 ]
 
 export type Kind = "resource-like" | "enum" | "structure" | "union" | "event"

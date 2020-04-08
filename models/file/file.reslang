@@ -1,7 +1,7 @@
 
 "This models a directory we might create"
 resource Directory {
-	id: string query
+	id: uuid query
 	name: string query
 	/operations
         GET POST MULTIGET

@@ -586,6 +586,13 @@ Actions cannot have subresources`
                     }
                 }
                 break
+            case "uuid":
+                schema.type = "string"
+                schema.format = "uuid"
+                if (example) {
+                    schema.example = "123e4567-e89b-12d3-a456-426655440000"
+                }
+                break
             case "url":
                 schema.type = "string"
                 schema.format = "url"

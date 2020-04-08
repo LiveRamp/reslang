@@ -18,8 +18,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "string",
-            "name": "string",
+            "short": "uuid",
+            "name": "uuid",
             "parentShort": "",
             "parentName": ""
           },
@@ -753,6 +753,35 @@
             "parentName": ""
           },
           "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errors",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "StandardError",
+            "name": "StandardError",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
           "linked": false,
           "full": false,
           "modifiers": {

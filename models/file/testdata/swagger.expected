@@ -39,6 +39,8 @@ paths:
                   id:
                     description: ''
                     type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426655440000
     get:
       tags:
         - Directory
@@ -83,6 +85,8 @@ paths:
           required: false
           schema:
             type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
         - in: query
           name: name
           description: ''
@@ -115,6 +119,8 @@ paths:
           description: ''
           schema:
             type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
   /v1/file-types:
     post:
       tags:
@@ -249,6 +255,8 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
     get:
       tags:
         - 'Directory::File'
@@ -274,6 +282,8 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
         - in: query
           name: offset
           description: Offset of the Files (starting from 0) to include in the response.
@@ -323,6 +333,8 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
         - in: path
           name: id
           required: true
@@ -469,6 +481,8 @@ components:
         id:
           description: ''
           type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
         name:
           description: ''
           type: string
@@ -591,6 +605,7 @@ components:
         directoryId:
           description: ''
           type: string
+          format: uuid
           example: Link to a Directory resource via its id
       required:
         - directoryId
@@ -605,6 +620,7 @@ components:
         directoryId:
           description: ''
           type: string
+          format: uuid
           example: Link to a Directory resource via its id
       required:
         - id
@@ -629,9 +645,15 @@ components:
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
+        errors:
+          description: ''
+          items:
+            $ref: '#/components/schemas/StandardError'
+          type: array
       required:
         - message
         - time
+        - errors
       description: A non-standard error response
     StandardError:
       type: object

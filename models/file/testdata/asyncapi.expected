@@ -98,6 +98,7 @@ components:
         directoryId:
           description: ''
           type: string
+          format: uuid
           example: Link to a Directory resource via its id
       required:
         - id
@@ -120,6 +121,7 @@ components:
         directory:
           description: ''
           type: string
+          format: uuid
           example: Link to a Directory resource via its id
         corrupted:
           description: ''
