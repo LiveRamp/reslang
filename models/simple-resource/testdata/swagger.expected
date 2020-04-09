@@ -8,6 +8,10 @@ servers:
 tags:
   - name: Garage
     description: (resource)  This is a description of a garage
+  - name: Foo
+    description: (resource)  A resource with no ID
+  - name: Bar
+    description: '(resource)  '
 paths:
   /v1/garages:
     post:
@@ -116,6 +120,11 @@ paths:
         - Garage
       operationId: Modify Garage
       description: Actual PUT comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GaragePuttable'
       responses:
         '200':
           description: Garage modified successfully
@@ -157,6 +166,87 @@ paths:
             type: string
             minLength: 10
             maxLength: 300
+  /v1/foo:
+    get:
+      tags:
+        - Foo
+      operationId: Get Foo
+      description: ''
+      responses:
+        '200':
+          description: Foo retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooOutput'
+        '404':
+          description: Foo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+    put:
+      tags:
+        - Foo
+      operationId: Modify Foo
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooPuttable'
+      responses:
+        '200':
+          description: Foo modified successfully
+        '404':
+          description: Foo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+  /v1/bars:
+    get:
+      tags:
+        - Bar
+      operationId: Get Bars
+      description: ''
+      responses:
+        '200':
+          description: Bars retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Bars returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Bars (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Bars to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
 components:
   parameters: {}
   schemas:
@@ -192,6 +282,15 @@ components:
         - name
         - manufacturer
       description: This is a description of a garage
+    GaragePuttable:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
+      description: This is a description of a garage
     GarageMultiResponse:
       type: object
       properties:
@@ -209,6 +308,46 @@ components:
       required:
         - company
       description: This is a manufacturer
+    FooOutput:
+      type: object
+      properties:
+        a:
+          description: ''
+          type: integer
+          format: int32
+        b:
+          description: ''
+          type: string
+      required:
+        - a
+        - b
+      description: A resource with no ID
+    FooPuttable:
+      type: object
+      properties:
+        a:
+          description: ''
+          type: integer
+          format: int32
+      required:
+        - a
+      description: A resource with no ID
+    BarOutput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
+    BarMultiResponse:
+      type: object
+      properties:
+        bars:
+          description: Array of retrieved Bars
+          type: array
+          items:
+            $ref: '#/components/schemas/BarOutput'
     StandardError:
       type: object
       properties:

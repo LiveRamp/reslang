@@ -4,7 +4,7 @@
 resource Garage {
 	// simple id 
 	id: string query min-length:10 max-length: 300
-	name: string query
+	name: string query mutable
 	manufacturer: Manufacturer
 
 	/operations
@@ -20,4 +20,17 @@ resource Garage {
 structure Manufacturer {
 	"this is a company"
 	company: string
+}
+
+"A resource with no ID"
+singleton resource Foo {
+	a: int mutable
+	b: string
+	/operations PUT GET
+}
+
+// another resource with no id
+resource Bar {
+	name: string query
+	/operations MULTIGET
 }

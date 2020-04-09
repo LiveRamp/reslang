@@ -4,7 +4,7 @@ import {
     getVersion,
     lowercaseFirst,
     pluralizeName,
-    snakeCase
+    snakeCase,
 } from "./names"
 import { isPrimitiveType } from "./parse"
 import {
@@ -18,7 +18,7 @@ import {
     isEnum,
     isResourceLike,
     isStructure,
-    isUnion
+    isUnion,
 } from "./treetypes"
 
 /**
@@ -37,19 +37,19 @@ export default class SwagGen extends BaseGen {
             info: {
                 title: this.namespace.title,
                 description: this.translateDoc(this.namespace.comment),
-                version: this.namespace.version
+                version: this.namespace.version,
             },
             servers: [
                 {
-                    url: `https://api.liveramp.com/${this.getSpace()}`
-                }
+                    url: `https://api.liveramp.com/${this.getSpace()}`,
+                },
             ],
             tags,
             paths,
             components: {
                 parameters,
-                schemas
-            }
+                schemas,
+            },
         }
 
         // model definitions
@@ -200,12 +200,12 @@ export default class SwagGen extends BaseGen {
                             schema: {
                                 type: "object",
                                 properties: {
-                                    id: this.addType(idtype, {}, false)
-                                }
-                            }
-                        }
-                    }
-                }
+                                    id: this.addType(idtype, {}, false),
+                                },
+                            },
+                        },
+                    },
+                },
             }
 
             if (el.type === "action" && post) {
@@ -218,12 +218,12 @@ export default class SwagGen extends BaseGen {
                                     schema: {
                                         type: "object",
                                         properties: {
-                                            id: this.addType(idtype, {}, false)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                            id: this.addType(idtype, {}, false),
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     }
                 } else {
                     responses = {
@@ -234,11 +234,11 @@ export default class SwagGen extends BaseGen {
                                     schema: {
                                         type: "object",
                                         properties: {
-                                            id: this.addType(idtype, {}, false)
-                                        }
-                                    }
-                                }
-                            }
+                                            id: this.addType(idtype, {}, false),
+                                        },
+                                    },
+                                },
+                            },
                         },
                         202: {
                             description:
@@ -249,17 +249,17 @@ export default class SwagGen extends BaseGen {
                                     schema: {
                                         type: "object",
                                         properties: {
-                                            id: this.addType(idtype, {}, false)
-                                        }
-                                    }
-                                }
-                            }
+                                            id: this.addType(idtype, {}, false),
+                                        },
+                                    },
+                                },
+                            },
                         },
                         204: {
                             description:
                                 short +
-                                " action has already been submitted and we are currently doing it"
-                        }
+                                " action has already been submitted and we are currently doing it",
+                        },
                     }
                     if (!post.errors) {
                         post.errors = []
@@ -270,8 +270,8 @@ export default class SwagGen extends BaseGen {
                                 code: "409",
                                 comment:
                                     short +
-                                    " action has been accepted but cannot be processed due to current state"
-                            }
+                                    " action has been accepted but cannot be processed due to current state",
+                            },
                         ],
                         struct: {
                             name: "StandardError",
@@ -279,8 +279,8 @@ export default class SwagGen extends BaseGen {
                             parents: [],
                             module: "",
                             parentName: "",
-                            parentShort: ""
-                        }
+                            parentShort: "",
+                        },
                     })
                 }
             }
@@ -293,12 +293,12 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${camel}Input`
-                            }
-                        }
-                    }
+                                $ref: `#/components/schemas/${camel}Input`,
+                            },
+                        },
+                    },
                 },
-                responses
+                responses,
             }
             if (this.empty.has(camel + "Input")) {
                 delete path.post.requestBody
@@ -316,8 +316,8 @@ export default class SwagGen extends BaseGen {
                 schema: {
                     type: "integer",
                     format: "int32",
-                    default: 0
-                }
+                    default: 0,
+                },
             })
             gparams.push({
                 in: "query",
@@ -328,8 +328,8 @@ export default class SwagGen extends BaseGen {
                     type: "integer",
                     format: "int32",
                     default: 10,
-                    maximum: 100
-                }
+                    maximum: 100,
+                },
             })
 
             for (const attr of el.attributes as IAttribute[]) {
@@ -343,7 +343,7 @@ export default class SwagGen extends BaseGen {
                             in: "query",
                             name: attr.name,
                             description: this.translateDoc(attr.comment),
-                            required: false
+                            required: false,
                         })
                     )
                 }
@@ -354,17 +354,17 @@ export default class SwagGen extends BaseGen {
                     headers: {
                         "X-Total-Count": {
                             description: `Total number of ${plural} returned by the query`,
-                            schema: { type: "integer", format: "int32" }
-                        }
+                            schema: { type: "integer", format: "int32" },
+                        },
                     },
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${camel}MultiResponse`
-                            }
-                        }
-                    }
-                }
+                                $ref: `#/components/schemas/${camel}MultiResponse`,
+                            },
+                        },
+                    },
+                },
             }
             this.formErrors(multiget, responses)
             const rname = this.formSingleUniqueName(el)
@@ -372,7 +372,7 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.MULTIGET),
                 description: this.translateDoc(multiget.comment),
-                responses
+                responses,
             }
             if (gparams.length) {
                 path.get.parameters = gparams
@@ -390,7 +390,7 @@ export default class SwagGen extends BaseGen {
                 in: "path",
                 name,
                 description: "Id of parent " + parent.short,
-                required: true
+                required: true,
             })
             paths.push(param)
         }
@@ -413,10 +413,10 @@ export default class SwagGen extends BaseGen {
             content: {
                 "application/json": {
                     schema: {
-                        $ref: "#/components/schemas/StandardError"
-                    }
-                }
-            }
+                        $ref: "#/components/schemas/StandardError",
+                    },
+                },
+            },
         }
         const sane = camelCase(this.formSingleUniqueName(el))
         if (get) {
@@ -431,12 +431,12 @@ export default class SwagGen extends BaseGen {
                                       $ref:
                                           "#/components/schemas/" +
                                           sane +
-                                          "Output"
-                                  }
-                              }
-                          }
+                                          "Output",
+                                  },
+                              },
+                          },
                 },
-                404: notFound
+                404: notFound,
             }
             if (this.empty.has(sane + "Output")) {
                 delete responses[200].content
@@ -447,7 +447,7 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.GET),
                 description: this.translateDoc(get.comment),
-                responses
+                responses,
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
@@ -455,8 +455,8 @@ export default class SwagGen extends BaseGen {
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
-                        required: true
-                    })
+                        required: true,
+                    }),
                 ])
             } else {
                 if (params.length) {
@@ -470,8 +470,8 @@ export default class SwagGen extends BaseGen {
                             in: "query",
                             name: attr.name,
                             description: this.translateDoc(attr.comment),
-                            required: false
-                        })
+                            required: false,
+                        }),
                     ])
                 }
             }
@@ -479,9 +479,9 @@ export default class SwagGen extends BaseGen {
         if (put) {
             const responses = {
                 200: {
-                    description: short + " modified successfully"
+                    description: short + " modified successfully",
                 },
-                404: notFound
+                404: notFound,
             }
             this.formErrors(put, responses)
             const rname = this.formSingleUniqueName(el)
@@ -494,12 +494,12 @@ export default class SwagGen extends BaseGen {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" + sane + "Puttable"
-                            }
-                        }
-                    }
+                                    "#/components/schemas/" + sane + "Puttable",
+                            },
+                        },
+                    },
                 },
-                responses
+                responses,
             }
             if (this.empty.has(sane + "Puttable")) {
                 delete path.put.requestBody
@@ -510,8 +510,8 @@ export default class SwagGen extends BaseGen {
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
-                        required: true
-                    })
+                        required: true,
+                    }),
                 ])
             } else {
                 if (params.length) {
@@ -522,9 +522,9 @@ export default class SwagGen extends BaseGen {
         if (patch) {
             const responses = {
                 200: {
-                    description: short + " patched successfully"
+                    description: short + " patched successfully",
                 },
-                404: notFound
+                404: notFound,
             }
             this.formErrors(patch, responses)
             const rname = this.formSingleUniqueName(el)
@@ -537,12 +537,14 @@ export default class SwagGen extends BaseGen {
                         "application/json": {
                             schema: {
                                 $ref:
-                                    "#/components/schemas/" + sane + "Patchable"
-                            }
-                        }
-                    }
+                                    "#/components/schemas/" +
+                                    sane +
+                                    "Patchable",
+                            },
+                        },
+                    },
                 },
-                responses
+                responses,
             }
             if (this.empty.has(sane + "Patchable")) {
                 delete path.patch.requestBody
@@ -553,8 +555,8 @@ export default class SwagGen extends BaseGen {
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
-                        required: true
-                    })
+                        required: true,
+                    }),
                 ])
             } else {
                 if (params.length) {
@@ -565,9 +567,9 @@ export default class SwagGen extends BaseGen {
         if (del) {
             const responses = {
                 200: {
-                    description: short + " deleted successfully"
+                    description: short + " deleted successfully",
                 },
-                404: notFound
+                404: notFound,
             }
             this.formErrors(del, responses)
             const rname = this.formSingleUniqueName(el)
@@ -575,7 +577,7 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.DELETE),
                 description: this.translateDoc(del.comment),
-                responses
+                responses,
             }
             if (!singleton) {
                 const idtype = this.extractId(el)
@@ -583,8 +585,8 @@ export default class SwagGen extends BaseGen {
                     this.addType(idtype, {
                         in: "path",
                         name: "id",
-                        required: true
-                    })
+                        required: true,
+                    }),
                 ])
             } else {
                 if (params.length) {
@@ -602,10 +604,10 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${err.struct.name}`
-                            }
-                        }
-                    }
+                                $ref: `#/components/schemas/${err.struct.name}`,
+                            },
+                        },
+                    },
                 }
             }
         }
@@ -642,7 +644,7 @@ export default class SwagGen extends BaseGen {
                 const name = this.formSingleUniqueName(el)
                 const tag = {
                     name,
-                    description: `${prefix} ${comment}`
+                    description: `${prefix} ${comment}`,
                 }
                 tags.push(tag)
                 tagKeys[name] = tag.name
@@ -694,13 +696,13 @@ export default class SwagGen extends BaseGen {
                             "Array of retrieved " + pluralizeName(def.name),
                         type: "array",
                         items: {
-                            $ref: "#/components/schemas/" + sane + "Output"
-                        }
+                            $ref: "#/components/schemas/" + sane + "Output",
+                        },
                     }
                     const props: { [name: string]: any } = {}
                     const full = {
                         type: "object",
-                        properties: props
+                        properties: props,
                     }
                     const plural = lowercaseFirst(pluralizeName(def.short))
                     props[plural] = elements

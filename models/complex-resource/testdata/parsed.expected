@@ -56,7 +56,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
-            "mutable": false,
+            "mutable": true,
             "optional": false,
             "optionalPost": false,
             "optionalPut": false,
@@ -163,6 +163,131 @@
         }
       ],
       "name": "simple-resource.Manufacturer",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "comment": "A resource with no ID",
+      "future": false,
+      "singleton": true,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "a",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "b",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "Foo",
+      "name": "simple-resource.Foo",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "Bar",
+      "name": "simple-resource.Bar",
       "parentShort": "",
       "parentName": "",
       "secondary": true,
