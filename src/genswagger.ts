@@ -99,8 +99,16 @@ export default class SwagGen extends BaseGen {
                     if (action && el.bulk && first) {
                         parents = `/${full}` + parents
                     } else {
-                        parents = `/${full}/\{${singular}Id\}` + parents
-                        this.addParentPathParam(params, actual, singular + "Id")
+                        if (!actual.singleton) {
+                            parents = `/${full}/\{${singular}Id\}` + parents
+                            this.addParentPathParam(
+                                params,
+                                actual,
+                                singular + "Id"
+                            )
+                        } else {
+                            parents = `/${full}` + parents
+                        }
                     }
                     first = false
                 }
@@ -188,9 +196,25 @@ export default class SwagGen extends BaseGen {
         const plural = pluralizeName(el.short)
         const unique = this.formSingleUniqueName(el)
         const camel = camelCase(unique)
+        const notFound =
+            el.parents.length === 0 || (el.parents.length === 1 && el.bulk)
+                ? null
+                : {
+                      description: "Parent resource(s) not found",
+                      content: {
+                          "application/json": {
+                              schema: {
+                                  $ref: "#/components/schemas/StandardError",
+                              },
+                          },
+                      },
+                  }
 
         if (post) {
             const short = el.short
+
+            // special case - if no id and only POST, then adjust accordingly
+            // xxx
             const idtype = this.extractId(el)
             let responses: { [code: number]: any } = {
                 201: {
@@ -208,7 +232,7 @@ export default class SwagGen extends BaseGen {
                 },
             }
 
-            if (el.type === "action" && post) {
+            if (el.type === "action") {
                 if (!el.async) {
                     responses = {
                         200: {
@@ -261,6 +285,7 @@ export default class SwagGen extends BaseGen {
                                 " action has already been submitted and we are currently doing it",
                         },
                     }
+
                     if (!post.errors) {
                         post.errors = []
                     }
@@ -306,6 +331,10 @@ export default class SwagGen extends BaseGen {
             if (params.length) {
                 path.post.parameters = params
             }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
         }
         const gparams = params.slice()
         if (multiget) {
@@ -348,7 +377,7 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-            const responses = {
+            const responses: any = {
                 200: {
                     description: plural + " retrieved successfully",
                     headers: {
@@ -366,6 +395,10 @@ export default class SwagGen extends BaseGen {
                     },
                 },
             }
+            if (notFound) {
+                responses[404] = notFound
+            }
+
             this.formErrors(multiget, responses)
             const rname = this.formSingleUniqueName(el)
             path.get = {
@@ -385,15 +418,13 @@ export default class SwagGen extends BaseGen {
         parent: IResourceLike,
         name: string
     ) {
-        if (!parent.singleton) {
-            const param = this.addType(this.extractDefinitionId(parent.name), {
-                in: "path",
-                name,
-                description: "Id of parent " + parent.short,
-                required: true,
-            })
-            paths.push(param)
-        }
+        const param = this.addType(this.extractDefinitionId(parent.name), {
+            in: "path",
+            name,
+            description: "Id of parent " + parent.short,
+            required: true,
+        })
+        paths.push(param)
     }
 
     private formIdOperations(
@@ -409,7 +440,11 @@ export default class SwagGen extends BaseGen {
     ) {
         const short = el.short
         const notFound = {
-            description: short + " not found",
+            description:
+                short +
+                (el.parents.length === 0 || (el.parents.length === 1 && el.bulk)
+                    ? " not found"
+                    : " or parent resource(s) not found"),
             content: {
                 "application/json": {
                     schema: {

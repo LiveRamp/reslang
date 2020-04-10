@@ -45,7 +45,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FieldRedirection'
         '404':
-          description: Cannot find Audience
+          description: Parent resource(s) not found
           content:
             application/json:
               schema:
@@ -216,7 +216,7 @@ paths:
                     type: integer
                     format: int32
         '404':
-          description: Cannot find resource
+          description: Parent resource(s) not found
           content:
             application/json:
               schema:
@@ -265,7 +265,7 @@ paths:
                     type: integer
                     format: int32
         '404':
-          description: Cannot find resource
+          description: Parent resource(s) not found
           content:
             application/json:
               schema:

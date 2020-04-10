@@ -79,7 +79,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResourceMetadataOutput'
         '404':
-          description: Metadata not found
+          description: Metadata or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -101,7 +101,7 @@ paths:
         '200':
           description: Metadata modified successfully
         '404':
-          description: Metadata not found
+          description: Metadata or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -147,7 +147,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
-  '/v1/singleton-resource/{singletonResourceId}/metadata':
+  /v1/singleton-resource/metadata:
     get:
       tags:
         - 'SingletonResource::Metadata'
@@ -161,7 +161,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SingletonResourceMetadataOutput'
         '404':
-          description: Metadata not found
+          description: Metadata or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -175,7 +175,7 @@ paths:
         '200':
           description: Metadata modified successfully
         '404':
-          description: Metadata not found
+          description: Metadata or parent resource(s) not found
           content:
             application/json:
               schema:

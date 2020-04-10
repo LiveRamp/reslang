@@ -94,6 +94,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: aId
@@ -116,7 +122,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ABOutput'
         '404':
-          description: B not found
+          description: B or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -159,6 +165,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: aId
@@ -188,7 +200,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ABCOutput'
         '404':
-          description: C not found
+          description: C or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -238,6 +250,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: aId
@@ -274,7 +292,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StartABCOutput'
         '404':
-          description: start not found
+          description: start or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -344,6 +362,12 @@ paths:
                     format: int32
         '204':
           description: stop action has already been submitted and we are currently doing it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
         '409':
           description: >-
             stop action has been accepted but cannot be processed due to current
@@ -381,7 +405,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StopABOutput'
         '404':
-          description: stop not found
+          description: stop or parent resource(s) not found
           content:
             application/json:
               schema:

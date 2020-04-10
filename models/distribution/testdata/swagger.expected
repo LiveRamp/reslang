@@ -144,6 +144,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -171,6 +177,12 @@ paths:
               schema:
                 $ref: >-
                   #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -219,7 +231,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationTaxonomyConfigurationOutput'
         '404':
-          description: TaxonomyConfiguration not found
+          description: TaxonomyConfiguration or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -248,7 +260,7 @@ paths:
         '200':
           description: TaxonomyConfiguration modified successfully
         '404':
-          description: TaxonomyConfiguration not found
+          description: TaxonomyConfiguration or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -291,6 +303,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -317,6 +335,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -364,7 +388,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationIntegrationOutput'
         '404':
-          description: Integration not found
+          description: Integration or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -393,7 +417,7 @@ paths:
         '200':
           description: Integration modified successfully
         '404':
-          description: Integration not found
+          description: Integration or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -436,6 +460,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -462,6 +492,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -509,7 +545,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationEndpointOutput'
         '404':
-          description: Endpoint not found
+          description: Endpoint or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -538,7 +574,7 @@ paths:
         '200':
           description: Endpoint modified successfully
         '404':
-          description: Endpoint not found
+          description: Endpoint or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -581,6 +617,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -607,6 +649,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationPackagerMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -648,7 +696,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationPackagerOutput'
         '404':
-          description: Packager not found
+          description: Packager or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -691,6 +739,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -717,6 +771,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationFormatterMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -758,7 +818,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationFormatterOutput'
         '404':
-          description: Formatter not found
+          description: Formatter or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -801,6 +861,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -827,6 +893,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationDelivererMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: destinationId
@@ -868,7 +940,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DestinationDelivererOutput'
         '404':
-          description: Deliverer not found
+          description: Deliverer or parent resource(s) not found
           content:
             application/json:
               schema:

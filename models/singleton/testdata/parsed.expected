@@ -10,7 +10,7 @@
       "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -140,7 +140,7 @@
       "kind": "resource-like",
       "future": false,
       "singleton": true,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "name",

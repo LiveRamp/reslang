@@ -233,6 +233,12 @@ paths:
           description: >-
             Cancel action has already been submitted and we are currently doing
             it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
         '409':
           description: >-
             Cancel action has been accepted but cannot be processed due to
@@ -279,6 +285,12 @@ paths:
           description: >-
             Retry action has already been submitted and we are currently doing
             it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
         '409':
           description: >-
             Retry action has been accepted but cannot be processed due to

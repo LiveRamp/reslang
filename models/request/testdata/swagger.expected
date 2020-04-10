@@ -133,7 +133,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UploadRequestStatusOutput'
         '404':
-          description: Status not found
+          description: Status or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -169,6 +169,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: uploadRequestId
@@ -191,7 +197,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UploadRequestRecordSetOutput'
         '404':
-          description: RecordSet not found
+          description: RecordSet or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -234,6 +240,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: uploadRequestId
@@ -263,7 +275,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UploadRequestRecordSetDeepOutput'
         '404':
-          description: Deep not found
+          description: Deep or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -328,6 +340,12 @@ paths:
           description: >-
             StartProcessingAction action has already been submitted and we are
             currently doing it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
         '409':
           description: >-
             StartProcessingAction action has been accepted but cannot be
@@ -367,6 +385,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: uploadRequestId
@@ -389,7 +413,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StopProcessingActionUploadRequestOutput'
         '404':
-          description: StopProcessingAction not found
+          description: StopProcessingAction or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -483,6 +507,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: uploadRequestId
@@ -505,7 +535,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BulkClearUploadRequestRecordSetOutput'
         '404':
-          description: Clear not found
+          description: Clear or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -548,6 +578,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: uploadRequestId
@@ -577,7 +613,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BulkJumpUploadRequestRecordSetDeepOutput'
         '404':
-          description: Jump not found
+          description: Jump or parent resource(s) not found
           content:
             application/json:
               schema:

@@ -34,3 +34,4 @@ resource Bar {
 	name: string query
 	/operations MULTIGET
 }
+

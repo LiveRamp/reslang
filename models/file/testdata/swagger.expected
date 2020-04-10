@@ -248,6 +248,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: directoryId
@@ -275,6 +281,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DirectoryFileMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: directoryId
@@ -321,7 +333,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DirectoryFileOutput'
         '404':
-          description: File not found
+          description: File or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -455,6 +467,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: directoryDeleteRequestId

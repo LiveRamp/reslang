@@ -1,6 +1,6 @@
 
 
-asset-resource Resource {
+resource Resource {
     id: int
     name: string
 
@@ -15,7 +15,7 @@ singleton subresource Resource::Metadata {
         PUT GET
 }
 
-singleton asset-resource SingletonResource {
+singleton resource SingletonResource {
     name: string
 
     /operations

@@ -187,6 +187,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: v2ResourceBId
@@ -209,7 +215,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/v2ResourceBSubOutput'
         '404':
-          description: Sub not found
+          description: Sub or parent resource(s) not found
           content:
             application/json:
               schema:

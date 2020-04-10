@@ -136,6 +136,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: v2TestResourceId
@@ -158,7 +164,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/v2TestResourceFoo2Output'
         '404':
-          description: Foo2 not found
+          description: Foo2 or parent resource(s) not found
           content:
             application/json:
               schema:

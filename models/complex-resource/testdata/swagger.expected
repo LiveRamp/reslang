@@ -145,6 +145,12 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: carId
@@ -171,6 +177,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarWheelMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
       parameters:
         - in: path
           name: carId
@@ -217,7 +229,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CarWheelOutput'
         '404':
-          description: Wheel not found
+          description: Wheel or parent resource(s) not found
           content:
             application/json:
               schema:
@@ -246,7 +258,7 @@ paths:
         '200':
           description: Wheel modified successfully
         '404':
-          description: Wheel not found
+          description: Wheel or parent resource(s) not found
           content:
             application/json:
               schema:
