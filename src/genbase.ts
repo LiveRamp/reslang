@@ -250,7 +250,15 @@ Actions cannot have subresources`
         throw new Error("Cannot find definition for " + definitionName)
     }
 
-    protected extractId(node: IResourceLike): IAttribute {
+    protected extractId(node: IResourceLike) {
+        const attr = this.extractIdGently(node)
+        if (!attr) {
+            throw new Error("Cannot find id attribute for " + node.name)
+        }
+        return attr
+    }
+
+    protected extractIdGently(node: IResourceLike) {
         if (node.attributes) {
             for (const attr of node.attributes) {
                 if (attr.name === "id") {
@@ -258,8 +266,7 @@ Actions cannot have subresources`
                 }
             }
         }
-
-        throw new Error("Cannot find id attribute for " + node.name)
+        return null
     }
 
     protected addResourceDefinition(

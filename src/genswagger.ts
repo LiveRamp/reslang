@@ -213,22 +213,34 @@ export default class SwagGen extends BaseGen {
         if (post) {
             const short = el.short
 
-            // special case - if no id and only POST, then adjust accordingly
-            // xxx
-            const idtype = this.extractId(el)
+            const idType = this.extractIdGently(el)
+            // special case - if no id and only POST, then adjust accordingly to return nothing
+            const special =
+                !el.async &&
+                el.operations &&
+                el.operations.length === 1 &&
+                !idType
+
+            const content = special
+                ? null
+                : {
+                      "application/json": {
+                          schema: {
+                              type: "object",
+                              properties: {
+                                  id: this.addType(
+                                      this.extractId(el),
+                                      {},
+                                      false
+                                  ),
+                              },
+                          },
+                      },
+                  }
             let responses: { [code: number]: any } = {
                 201: {
                     description: short + " created successfully",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    id: this.addType(idtype, {}, false),
-                                },
-                            },
-                        },
-                    },
+                    content,
                 },
             }
 
@@ -237,47 +249,20 @@ export default class SwagGen extends BaseGen {
                     responses = {
                         200: {
                             description: short + " action completed",
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            id: this.addType(idtype, {}, false),
-                                        },
-                                    },
-                                },
-                            },
+                            content,
                         },
                     }
                 } else {
                     responses = {
                         200: {
                             description: short + " action completed",
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            id: this.addType(idtype, {}, false),
-                                        },
-                                    },
-                                },
-                            },
+                            content,
                         },
                         202: {
                             description:
                                 short +
                                 " action has been accepted, but is not yet complete",
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            id: this.addType(idtype, {}, false),
-                                        },
-                                    },
-                                },
-                            },
+                            content,
                         },
                         204: {
                             description:

@@ -16,5 +16,8 @@ digraph G {
 "Bar" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
+"Test" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Test        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "Garage" -> "Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
 }

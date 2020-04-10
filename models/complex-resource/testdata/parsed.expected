@@ -294,6 +294,53 @@
       "file": "resources.reslang"
     },
     {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "Test",
+      "name": "simple-resource.Test",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "resources.reslang"
+    },
+    {
       "kind": "structure",
       "type": "structure",
       "parents": [],

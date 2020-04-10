@@ -17,7 +17,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.3.8"
+export const VERSION = "v1.3.9"
 
 // parse the cmd line
 const args = yargs

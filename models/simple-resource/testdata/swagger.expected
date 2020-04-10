@@ -12,6 +12,8 @@ tags:
     description: (resource)  A resource with no ID
   - name: Bar
     description: '(resource)  '
+  - name: Test
+    description: '(resource)  '
 paths:
   /v1/garages:
     post:
@@ -247,6 +249,20 @@ paths:
           required: false
           schema:
             type: string
+  /v1/tests:
+    post:
+      tags:
+        - Test
+      operationId: Create Test
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestInput'
+      responses:
+        '201':
+          description: Test created successfully
 components:
   parameters: {}
   schemas:
@@ -348,6 +364,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BarOutput'
+    TestInput:
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+      required:
+        - name
     StandardError:
       type: object
       properties:

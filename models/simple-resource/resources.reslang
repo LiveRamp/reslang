@@ -35,3 +35,7 @@ resource Bar {
 	/operations MULTIGET
 }
 
+resource Test {
+	name: string
+	/operations POST
+}

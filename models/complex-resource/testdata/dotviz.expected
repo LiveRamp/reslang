@@ -16,6 +16,9 @@ digraph G {
 "Bar" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
+"Test" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
+                    <tr><td><b>Test        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "Car" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Car        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">bought: date (out)</td></tr><tr><td align="left">brand: BrandEnum</td></tr><tr><td align="left">view: ViewEnum</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id bought brand engine components homeGarageId manufacturer rentedGarageIds view</font></td></tr>"}</table>>];
