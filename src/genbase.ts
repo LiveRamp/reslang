@@ -402,6 +402,13 @@ Actions cannot have subresources`
             description: def.comment,
             enum: def.literals,
         }
+
+        // check to see if we have duplicate literals
+        const literals = new Set<string>(def.literals)
+        if (def.literals && literals.size !== def.literals.length) {
+            throw new Error(`Duplicate literals in ${def.name} enum`)
+        }
+
         definitions[name] = en
     }
 

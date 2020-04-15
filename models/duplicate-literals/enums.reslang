@@ -1,0 +1,18 @@
+
+
+resource Foo {
+    id: string
+    a: NonDuplicate
+    b: Duplicate
+
+    /operations
+        GET POST
+}
+
+enum NonDuplicate {
+    A B
+}
+
+enum Duplicate {
+    AAA BBB AAA
+}

@@ -1,5 +1,6 @@
 import ParseGen from "../genparse"
 import { IRules } from "../rules"
+import SwagGen from "../genswagger"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
@@ -39,16 +40,48 @@ describe("rule checking tests", () => {
             "RULE NO_ACTION_SUBRESOURCE violated: A::B::stop::Deep"
         )
     })
+
+    test("Enum literal duplicated", () => {
+        checkFullSwagger(
+            {},
+            "Duplicate literals in Duplicate enum",
+            "models/duplicate-literals"
+        )
+    })
 })
 
-function check(rules: IRules, expected: string) {
+function check(
+    rules: IRules,
+    expected: string,
+    model: string = "models/checkrules"
+) {
     try {
-        const _ = new ParseGen([`models/checkrules`], rules)
+        const _ = new ParseGen([model], rules)
     } catch (error) {
         const got = error.message
         const correct = got.includes(expected)
         if (!correct) {
-            console.log(got)
+            console.log("Error: got this: " + got)
+        }
+        expect(correct).toBe(true)
+        return
+    }
+    console.error("No rule exception triggered")
+    expect(false).toBe(true)
+}
+
+function checkFullSwagger(
+    rules: IRules,
+    expected: string,
+    model: string = "models/checkrules"
+) {
+    try {
+        const _ = new SwagGen([model], rules).generate()
+    } catch (error) {
+        const got = error.message
+        const correct = got.includes(expected)
+        if (!correct) {
+            console.log("$$ got this: " + got)
         }
         expect(correct).toBe(true)
         return

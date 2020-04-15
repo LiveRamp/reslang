@@ -1,0 +1,5 @@
+"Test for duplicate enum literals - doesn't feature in full generation tests"
+namespace {
+    title "Duplicate Enum Literals"
+    version 0.0.1
+}
