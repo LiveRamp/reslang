@@ -9,7 +9,7 @@ digraph G {
                     <tr><td><b>Garage        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST GET DELETE MULTIGET id name manufacturer</font></td></tr>"}</table>>];
 "Manufacturer" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>Manufacturer        </b></td></tr>        <hr/><tr><td align="left">company: string</td></tr></table> >];
+                    <tr><td><b>Manufacturer        </b></td></tr>        <hr/><tr><td align="left">company: string</td></tr><tr><td align="left">home: url</td></tr><tr><td align="left">homeArray: url[]</td></tr><tr><td align="left">other: url</td></tr></table> >];
 "Foo" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr>"}</table>>];

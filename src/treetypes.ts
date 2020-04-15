@@ -140,6 +140,7 @@ export interface IAttribute {
     comment: string
     modifiers: IModifiers
     constraints: IConstraints
+    example?: string
 }
 
 export interface IArray {

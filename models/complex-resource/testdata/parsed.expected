@@ -159,6 +159,90 @@
             "query": false,
             "representation": false
           },
+          "constraints": {},
+          "example": "This is a company name"
+        },
+        {
+          "name": "home",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "url",
+            "name": "url",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {},
+          "example": "This is the company website http://{id}}.liveramp.com"
+        },
+        {
+          "name": "homeArray",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "url",
+            "name": "url",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {},
+          "example": "Array of urls"
+        },
+        {
+          "name": "other",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "url",
+            "name": "url",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
           "constraints": {}
         }
       ],

@@ -8,9 +8,13 @@ structure = _ comment:description? _ type:("structure" / "union")  _ name:name  
 // attributes also handle stringmaps
 attributes = _ attrs:attribute+ _ { return attrs; }
 attribute = _ comment:description? _ name:name _ ":" _
-    smap:"stringmap<"? _ rep:("linked" / "value-of")? _ type:ref _ ">"? _ array:(array1 / array2)? _ modifiers:modifiers _ constraints:constraints _ inline:"inline"? _ (__ / ";")? _ { 
+    smap:"stringmap<"? _ rep:("linked" / "value-of")? _ type:ref _ ">"? _ array:(array1 / array2)? _ modifiers:modifiers _ constraints:constraints _ inline:"inline"? example:example? _ (__ / ";")? _ { 
     return {name: name, comment: comment, stringMap: !!smap, type: type, inline: !!inline,
-      array: array, linked: rep == "linked", full: rep == "value-of", modifiers: modifiers, constraints: constraints}
+      array: array, linked: rep == "linked", full: rep == "value-of", modifiers: modifiers, constraints: constraints, example: example}
+}
+
+example = _ "example:" _ format: description _ {
+    return format
 }
 
 array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {

@@ -287,8 +287,29 @@ components:
         company:
           description: this is a company
           type: string
+          example: This is a company name
+        home:
+          description: ''
+          type: string
+          format: url
+          example: 'This is the company website http://{id}}.liveramp.com'
+        homeArray:
+          description: ''
+          items:
+            type: string
+            format: url
+            example: Array of urls
+          type: array
+        other:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
       required:
         - company
+        - home
+        - homeArray
+        - other
       description: This is a manufacturer
     CarInput:
       type: object

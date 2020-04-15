@@ -19,7 +19,10 @@ resource Garage {
 "This is a manufacturer"
 structure Manufacturer {
 	"this is a company"
-	company: string
+	company: string example: "This is a company name"
+	home: url example: "This is the company website http://{id}}.liveramp.com"
+	homeArray: url[] example: "Array of urls"
+	other: url
 }
 
 "A resource with no ID"

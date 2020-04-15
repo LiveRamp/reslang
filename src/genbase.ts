@@ -659,6 +659,8 @@ Actions cannot have subresources`
         suppressStringmap = false,
         suppressDescription = false
     ) {
+        const example = attr.example
+
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
@@ -740,7 +742,7 @@ Actions cannot have subresources`
             schema.items = {
                 type: obj.type,
                 format: obj.format,
-                example: obj.example,
+                example: example || obj.example,
                 $ref: obj.$ref,
             }
             if (attr.array.min) {
@@ -754,6 +756,11 @@ Actions cannot have subresources`
             delete schema.example
             delete schema.$ref
             schema.type = "array"
+        } else {
+            // override the example
+            if (example) {
+                schema.example = example
+            }
         }
 
         return obj
