@@ -99,13 +99,13 @@ export interface IResourceLike extends IDefinition {
     future?: boolean
     async?: boolean
     bulk?: boolean // only for actions, indicates it's on the entire resource, not a single resource
-
     // used to see if we generate definitions or not
     generateOutput: boolean
     generatePuttable: boolean
     generatePatchable: boolean
     generateMulti: boolean
 }
+
 export interface IEnum extends IDefinition {
     kind: "enum"
     literals?: string[]
@@ -113,7 +113,13 @@ export interface IEnum extends IDefinition {
 
 export interface IStructure extends IDefinition {
     kind: "structure"
+    constraints?: IStructureConstraints
     attributes?: IAttribute[]
+}
+
+export interface IStructureConstraints {
+    minProperties?: number
+    maxProperties?: number
 }
 
 export interface IUnion extends IDefinition {

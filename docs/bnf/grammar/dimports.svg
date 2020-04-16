@@ -1,0 +1,89 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="railroad-diagram" width="437" height="71" viewBox="0 0 437 71">
+<defs><style type="text/css"><![CDATA[ svg.railroad-diagram {
+  background-color: hsl(30,20%,95%);
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: black;
+  fill: none;
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  cursor: pointer;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+  stroke: black;
+  fill: hsl(120,100%,90%);
+}
+ ]]></style></defs>
+<g transform="translate(.5 .5)">
+<path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 31h0"></path>
+<path d="M396 31h0"></path>
+<path d="M40 31h10"></path>
+<g>
+<path d="M50 31h0"></path>
+<path d="M78 31h0"></path>
+<rect x="50" y="20" width="28" height="22"></rect>
+<text x="64" y="35">&#95;</text>
+</g>
+<path d="M78 31h10"></path>
+<path d="M88 31h10"></path>
+<g>
+<path d="M98 31h0"></path>
+<path d="M174 31h0"></path>
+<rect x="98" y="20" width="76" height="22" rx="10" ry="10"></rect>
+<text x="136" y="35">/import</text>
+</g>
+<path d="M174 31h10"></path>
+<path d="M184 31h10"></path>
+<g>
+<path d="M194 31h0"></path>
+<path d="M222 31h0"></path>
+<rect x="194" y="20" width="28" height="22"></rect>
+<text x="208" y="35">&#95;</text>
+</g>
+<path d="M222 31h10"></path>
+<path d="M232 31h10"></path>
+<g>
+<path d="M242 31h0"></path>
+<path d="M338 31h0"></path>
+<path d="M242 31h10"></path>
+<g>
+<path d="M252 31h0"></path>
+<path d="M328 31h0"></path>
+<rect x="252" y="20" width="76" height="22"></rect>
+<text x="290" y="35">dimport</text>
+</g>
+<path d="M328 31h10"></path>
+<path d="M252 31a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M252 51h76"></path>
+</g>
+<path d="M328 51a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+</g>
+<path d="M338 31h10"></path>
+<path d="M348 31h10"></path>
+<g>
+<path d="M358 31h0"></path>
+<path d="M386 31h0"></path>
+<rect x="358" y="20" width="28" height="22"></rect>
+<text x="372" y="35">&#95;</text>
+</g>
+<path d="M386 31h10"></path>
+</g>
+<path d="M 396 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>

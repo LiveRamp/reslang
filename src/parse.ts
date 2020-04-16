@@ -54,11 +54,11 @@ export function parseFile(
             }) as object
         )
     } catch (error) {
-        console.log(error)
         throw new Error(
             `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
         )
     }
+    console.log(JSON.stringify(tree))
     addNamespace(tree[2] as AnyKind[], parsingNamespace, mainNamespace)
     addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
     return tree

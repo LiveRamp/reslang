@@ -15,6 +15,7 @@
     "@types/pegjs": "^0.10.1",
     "@types/shelljs": "^0.8.5",
     "@types/yargs": "^13.0.0",
+    "grammkit": "^0.7.1",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
@@ -35,9 +36,11 @@
     "yargs": "^13.2.4"
   },
   "scripts": {
-    "start": "npm run build:live",
-    "build": "tsc -p .",
-    "build:live": "ts-node src/main.ts",
+    "build": "rm -rf dist || true && tsc && cp -R src/grammar dist/grammar && cp -R src/library dist/library",
+    "start": "yarn build && node dist/main.js",
+    "repl": "",
+    "reslang": "node dist/main.js",
+    "doc:railroad:gen": "rm docs/bnf/grammar.pegjs && cat src/grammar/*.pegjs > docs/bnf/grammar.pegjs && yarn grammkit -t md docs/bnf/grammar.pegjs && mv grammar.md docs/bnf/grammar.md && mv grammar docs/bnf/",
     "test": "jest"
   },
   "prettier": {

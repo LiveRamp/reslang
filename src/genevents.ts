@@ -3,7 +3,7 @@ import {
     getAllAttributes,
     isEvent,
     getKeyAttributes,
-    AnyKind
+    AnyKind,
 } from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
 import { camelCase, snakeCase, getVersion } from "./names"
@@ -25,7 +25,7 @@ export default class EventsGen extends BaseGen {
             info: {
                 title: this.namespace.title,
                 description: this.translateDoc(this.namespace.comment),
-                version: this.namespace.version
+                version: this.namespace.version,
             },
             servers: {
                 production: {
@@ -36,18 +36,18 @@ export default class EventsGen extends BaseGen {
                         port: {
                             description:
                                 "Secure connection (TLS) is available through port 8883",
-                            default: "1883"
-                        }
-                    }
-                }
+                            default: "1883",
+                        },
+                    },
+                },
             },
             defaultContentType: "application/json",
             channels,
             components: {
                 messages,
                 schemas,
-                messageTraits: headers
-            }
+                messageTraits: headers,
+            },
         }
 
         // form channels
@@ -97,9 +97,9 @@ export default class EventsGen extends BaseGen {
                         summary: "REST: " + el.name,
                         operationId: el.name,
                         message: {
-                            $ref: `#/components/messages/${unique}`
-                        }
-                    }
+                            $ref: `#/components/messages/${unique}`,
+                        },
+                    },
                 }
             }
             if (isEvent(el)) {
@@ -109,9 +109,9 @@ export default class EventsGen extends BaseGen {
                         summary: "Adhoc: " + el.name,
                         operationId: el.name,
                         message: {
-                            $ref: `#/components/messages/${unique}`
-                        }
-                    }
+                            $ref: `#/components/messages/${unique}`,
+                        },
+                    },
                 }
                 if (el.produces) {
                     details.subscribe = details.publish
@@ -136,28 +136,28 @@ export default class EventsGen extends BaseGen {
                 properties: {
                     verb: {
                         description: "",
-                        $ref: "#/components/schemas/VerbEnum"
+                        $ref: "#/components/schemas/VerbEnum",
                     },
                     location: {
                         description: "",
                         type: "string",
                         format: "url",
-                        example: "https://www.domain.com (url)"
+                        example: "https://www.domain.com (url)",
                     },
                     ids: {
                         description: "",
                         items: {
-                            type: "string"
+                            type: "string",
                         },
-                        type: "array"
-                    }
+                        type: "array",
+                    },
                 },
-                required: ["verb", "location", "ids"]
-            }
+                required: ["verb", "location", "ids"],
+            },
         }
         schemas.VerbEnum = {
             type: "string",
-            enum: ["POST", "PUT", "PATCH", "GET", "MULTIGET", "DELETE"]
+            enum: ["POST", "PUT", "PATCH", "GET", "MULTIGET", "DELETE"],
         }
     }
 
@@ -186,7 +186,7 @@ export default class EventsGen extends BaseGen {
                     summary: el.comment,
                     contentType: "application/json",
                     traits: [{ $ref: `#/components/messageTraits/RestHeader` }],
-                    payload: { $ref: `#/components/schemas/${unique}Output` }
+                    payload: { $ref: `#/components/schemas/${unique}Output` },
                 }
             }
             if (isEvent(el)) {
@@ -197,9 +197,9 @@ export default class EventsGen extends BaseGen {
                     summary: el.comment,
                     contentType: "application/json",
                     traits: [
-                        { $ref: `#/components/messageTraits/${unique}Header` }
+                        { $ref: `#/components/messageTraits/${unique}Header` },
                     ],
-                    payload: { $ref: `#/components/schemas/${unique}` }
+                    payload: { $ref: `#/components/schemas/${unique}` },
                 }
             }
         }

@@ -420,16 +420,27 @@ Actions cannot have subresources`
     ) {
         const properties: any = {}
         const required: string[] = []
-        const request = {
+        let output: any = {
             type: "object",
             properties,
             required,
-            description: def.comment,
-        } as {
+        }
+
+        if (def.kind == "structure" && def.constraints) {
+            if (def.constraints.minProperties) {
+                output.minProperties = def.constraints.minProperties
+            }
+            if (def.constraints.maxProperties) {
+                output.minProperties = def.constraints.maxProperties
+            }
+        }
+        const request = output as {
             type: string
             properties: any
             required: string[]
             description: string
+            minProperties?: number
+            maxProperties?: number
             allOf: {}
         }
         const sane = camelCase(def.name) + suffix
@@ -663,7 +674,6 @@ Actions cannot have subresources`
         const type = attr.type
         const name = type.name
         const sane = camelCase(name)
-
         // allow description overrides by caller
         if (!obj.description && !suppressDescription) {
             obj.description = this.translateDoc(attr.comment)

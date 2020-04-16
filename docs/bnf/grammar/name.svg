@@ -1,0 +1,85 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="railroad-diagram" width="373" height="81" viewBox="0 0 373 81">
+<defs><style type="text/css"><![CDATA[ svg.railroad-diagram {
+  background-color: hsl(30,20%,95%);
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: black;
+  fill: none;
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  cursor: pointer;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+  stroke: black;
+  fill: hsl(120,100%,90%);
+}
+ ]]></style></defs>
+<g transform="translate(.5 .5)">
+<path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 41h0"></path>
+<path d="M332 41h0"></path>
+<path d="M40 41h10"></path>
+<g>
+<path d="M50 41h0"></path>
+<path d="M154 41h0"></path>
+<path d="M50 41h10"></path>
+<g>
+<path d="M60 41h0"></path>
+<path d="M144 41h0"></path>
+<rect x="60" y="30" width="84" height="22" rx="10" ry="10"></rect>
+<text x="102" y="45">&#91;a-zA-Z&#93;</text>
+</g>
+<path d="M144 41h10"></path>
+<path d="M60 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M60 61h84"></path>
+</g>
+<path d="M144 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+</g>
+<path d="M154 41h10"></path>
+<g>
+<path d="M164 41h0"></path>
+<path d="M332 41h0"></path>
+<path d="M164 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M184 21h128"></path>
+</g>
+<path d="M312 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M164 41h20"></path>
+<g>
+<path d="M184 41h0"></path>
+<path d="M312 41h0"></path>
+<path d="M184 41h10"></path>
+<g>
+<path d="M194 41h0"></path>
+<path d="M302 41h0"></path>
+<rect x="194" y="30" width="108" height="22" rx="10" ry="10"></rect>
+<text x="248" y="45">&#91;a-zA-Z0-9&#93;</text>
+</g>
+<path d="M302 41h10"></path>
+<path d="M194 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M194 61h108"></path>
+</g>
+<path d="M302 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+</g>
+<path d="M312 41h20"></path>
+</g>
+</g>
+<path d="M 332 41 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>

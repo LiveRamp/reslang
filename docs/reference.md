@@ -1,6 +1,6 @@
 # Reference Manual
 
-The reslang grammar is fully described by these [railroad diagrams](./bnf/railroad-for-reslang.pdf).
+The reslang grammar is fully described by these [railroad diagrams](./bnf/grammar.md).
 
 Note that we will draw heavily on the example specified [here](../models/direct2dist). This demo namespace models the complete Direct2Dist specification, which allows ids to be sent directly to a destination. This is explained in more detail [here](./direct2dist-explanation.md).
 

@@ -1,0 +1,296 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="railroad-diagram" width="1761" height="81" viewBox="0 0 1761 81">
+<defs><style type="text/css"><![CDATA[ svg.railroad-diagram {
+  background-color: hsl(30,20%,95%);
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: black;
+  fill: none;
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  cursor: pointer;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+  stroke: black;
+  fill: hsl(120,100%,90%);
+}
+ ]]></style></defs>
+<g transform="translate(.5 .5)">
+<path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 41h0"></path>
+<path d="M1720 41h0"></path>
+<path d="M40 41h10"></path>
+<g>
+<path d="M50 41h0"></path>
+<path d="M78 41h0"></path>
+<rect x="50" y="30" width="28" height="22"></rect>
+<text x="64" y="45">&#95;</text>
+</g>
+<path d="M78 41h10"></path>
+<path d="M88 41h10"></path>
+<g>
+<path d="M98 41h0"></path>
+<path d="M174 41h0"></path>
+<rect x="98" y="30" width="76" height="22" rx="10" ry="10"></rect>
+<text x="136" y="45">diagram</text>
+</g>
+<path d="M174 41h10"></path>
+<path d="M184 41h10"></path>
+<g>
+<path d="M194 41h0"></path>
+<path d="M222 41h0"></path>
+<rect x="194" y="30" width="28" height="22"></rect>
+<text x="208" y="45">&#95;</text>
+</g>
+<path d="M222 41h10"></path>
+<path d="M232 41h10"></path>
+<g>
+<path d="M242 41h0"></path>
+<path d="M294 41h0"></path>
+<rect x="242" y="30" width="52" height="22"></rect>
+<text x="268" y="45">name</text>
+</g>
+<path d="M294 41h10"></path>
+<path d="M304 41h10"></path>
+<g>
+<path d="M314 41h0"></path>
+<path d="M342 41h0"></path>
+<rect x="314" y="30" width="28" height="22"></rect>
+<text x="328" y="45">&#95;</text>
+</g>
+<path d="M342 41h10"></path>
+<path d="M352 41h10"></path>
+<g>
+<path d="M362 41h0"></path>
+<path d="M390 41h0"></path>
+<rect x="362" y="30" width="28" height="22" rx="10" ry="10"></rect>
+<text x="376" y="45">{</text>
+</g>
+<path d="M390 41h10"></path>
+<path d="M400 41h10"></path>
+<g>
+<path d="M410 41h0"></path>
+<path d="M438 41h0"></path>
+<rect x="410" y="30" width="28" height="22"></rect>
+<text x="424" y="45">&#95;</text>
+</g>
+<path d="M438 41h10"></path>
+<g>
+<path d="M448 41h0"></path>
+<path d="M556 41h0"></path>
+<path d="M448 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M468 21h68"></path>
+</g>
+<path d="M536 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M448 41h20"></path>
+<g>
+<path d="M468 41h0"></path>
+<path d="M536 41h0"></path>
+<rect x="468" y="30" width="68" height="22"></rect>
+<text x="502" y="45">layout</text>
+</g>
+<path d="M536 41h20"></path>
+</g>
+<path d="M556 41h10"></path>
+<g>
+<path d="M566 41h0"></path>
+<path d="M594 41h0"></path>
+<rect x="566" y="30" width="28" height="22"></rect>
+<text x="580" y="45">&#95;</text>
+</g>
+<path d="M594 41h10"></path>
+<g>
+<path d="M604 41h0"></path>
+<path d="M744 41h0"></path>
+<path d="M604 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M624 21h100"></path>
+</g>
+<path d="M724 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M604 41h20"></path>
+<g>
+<path d="M624 41h0"></path>
+<path d="M724 41h0"></path>
+<rect x="624" y="30" width="100" height="22"></rect>
+<text x="674" y="45">includeAll</text>
+</g>
+<path d="M724 41h20"></path>
+</g>
+<path d="M744 41h10"></path>
+<g>
+<path d="M754 41h0"></path>
+<path d="M782 41h0"></path>
+<rect x="754" y="30" width="28" height="22"></rect>
+<text x="768" y="45">&#95;</text>
+</g>
+<path d="M782 41h10"></path>
+<g>
+<path d="M792 41h0"></path>
+<path d="M916 41h0"></path>
+<path d="M792 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M812 21h84"></path>
+</g>
+<path d="M896 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M792 41h20"></path>
+<g>
+<path d="M812 41h0"></path>
+<path d="M896 41h0"></path>
+<rect x="812" y="30" width="84" height="22"></rect>
+<text x="854" y="45">includes</text>
+</g>
+<path d="M896 41h20"></path>
+</g>
+<path d="M916 41h10"></path>
+<g>
+<path d="M926 41h0"></path>
+<path d="M954 41h0"></path>
+<rect x="926" y="30" width="28" height="22"></rect>
+<text x="940" y="45">&#95;</text>
+</g>
+<path d="M954 41h10"></path>
+<g>
+<path d="M964 41h0"></path>
+<path d="M1088 41h0"></path>
+<path d="M964 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M984 21h84"></path>
+</g>
+<path d="M1068 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M964 41h20"></path>
+<g>
+<path d="M984 41h0"></path>
+<path d="M1068 41h0"></path>
+<rect x="984" y="30" width="84" height="22"></rect>
+<text x="1026" y="45">dimports</text>
+</g>
+<path d="M1068 41h20"></path>
+</g>
+<path d="M1088 41h10"></path>
+<g>
+<path d="M1098 41h0"></path>
+<path d="M1126 41h0"></path>
+<rect x="1098" y="30" width="28" height="22"></rect>
+<text x="1112" y="45">&#95;</text>
+</g>
+<path d="M1126 41h10"></path>
+<g>
+<path d="M1136 41h0"></path>
+<path d="M1260 41h0"></path>
+<path d="M1136 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M1156 21h84"></path>
+</g>
+<path d="M1240 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M1136 41h20"></path>
+<g>
+<path d="M1156 41h0"></path>
+<path d="M1240 41h0"></path>
+<rect x="1156" y="30" width="84" height="22"></rect>
+<text x="1198" y="45">excludes</text>
+</g>
+<path d="M1240 41h20"></path>
+</g>
+<path d="M1260 41h10"></path>
+<g>
+<path d="M1270 41h0"></path>
+<path d="M1298 41h0"></path>
+<rect x="1270" y="30" width="28" height="22"></rect>
+<text x="1284" y="45">&#95;</text>
+</g>
+<path d="M1298 41h10"></path>
+<g>
+<path d="M1308 41h0"></path>
+<path d="M1408 41h0"></path>
+<path d="M1308 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M1328 21h60"></path>
+</g>
+<path d="M1388 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M1308 41h20"></path>
+<g>
+<path d="M1328 41h0"></path>
+<path d="M1388 41h0"></path>
+<rect x="1328" y="30" width="60" height="22"></rect>
+<text x="1358" y="45">folds</text>
+</g>
+<path d="M1388 41h20"></path>
+</g>
+<path d="M1408 41h10"></path>
+<g>
+<path d="M1418 41h0"></path>
+<path d="M1446 41h0"></path>
+<rect x="1418" y="30" width="28" height="22"></rect>
+<text x="1432" y="45">&#95;</text>
+</g>
+<path d="M1446 41h10"></path>
+<g>
+<path d="M1456 41h0"></path>
+<path d="M1576 41h0"></path>
+<path d="M1456 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M1476 21h80"></path>
+</g>
+<path d="M1556 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M1456 41h20"></path>
+<g>
+<path d="M1476 41h0"></path>
+<path d="M1556 41h0"></path>
+<path d="M1476 41h10"></path>
+<g>
+<path d="M1486 41h0"></path>
+<path d="M1546 41h0"></path>
+<rect x="1486" y="30" width="60" height="22"></rect>
+<text x="1516" y="45">group</text>
+</g>
+<path d="M1546 41h10"></path>
+<path d="M1486 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M1486 61h60"></path>
+</g>
+<path d="M1546 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10"></path>
+</g>
+<path d="M1556 41h20"></path>
+</g>
+<path d="M1576 41h10"></path>
+<g>
+<path d="M1586 41h0"></path>
+<path d="M1614 41h0"></path>
+<rect x="1586" y="30" width="28" height="22"></rect>
+<text x="1600" y="45">&#95;</text>
+</g>
+<path d="M1614 41h10"></path>
+<path d="M1624 41h10"></path>
+<g>
+<path d="M1634 41h0"></path>
+<path d="M1662 41h0"></path>
+<rect x="1634" y="30" width="28" height="22" rx="10" ry="10"></rect>
+<text x="1648" y="45">}</text>
+</g>
+<path d="M1662 41h10"></path>
+<path d="M1672 41h10"></path>
+<g>
+<path d="M1682 41h0"></path>
+<path d="M1710 41h0"></path>
+<rect x="1682" y="30" width="28" height="22"></rect>
+<text x="1696" y="45">&#95;</text>
+</g>
+<path d="M1710 41h10"></path>
+</g>
+<path d="M 1720 41 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>
