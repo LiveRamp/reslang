@@ -1,0 +1,27 @@
+
+resource Foo {
+    id: string
+
+    /operations
+        GET
+}
+
+subresource Foo::Bar {
+    id: string
+
+    /operations
+        GET
+}
+
+resource Linking {
+    id: int
+    address: url
+    name: url[] example:"List of urls"
+    foo: linked Foo
+    foos: linked Foo[]
+    bar: linked Foo::Bar
+    bars: linked Foo::Bar[]
+
+    /operations
+        GET
+}

@@ -461,7 +461,7 @@ components:
           description: ''
           type: integer
           format: int32
-          example: Link to a Asset resource via its id
+          example: Link to Asset resource via its id
         outputName:
           description: ''
           type: string

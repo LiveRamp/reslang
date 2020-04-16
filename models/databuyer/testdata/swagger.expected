@@ -88,16 +88,12 @@ components:
           description: ''
           items:
             type: string
-            example: >-
-              Link to Segment (to be defined in the future) resource(s) via
-              id(s)
+            example: Link to Segment resource via its id
           type: array
         whereToDeliver:
           description: ''
           type: string
-          example: >-
-            Link to a Destination (to be defined in the future) resource via its
-            id
+          example: Link to Destination resource via its id
         complete:
           description: ''
           type: boolean
@@ -115,16 +111,12 @@ components:
           description: ''
           items:
             type: string
-            example: >-
-              Link to Segment (to be defined in the future) resource(s) via
-              id(s)
+            example: Link to Segment resource via its id
           type: array
         whereToDeliver:
           description: ''
           type: string
-          example: >-
-            Link to a Destination (to be defined in the future) resource via its
-            id
+          example: Link to Destination resource via its id
         segmentStatuses:
           description: ''
           items:
@@ -160,7 +152,7 @@ components:
         segment:
           description: ''
           type: string
-          example: Link to a Segment (to be defined in the future) resource via its id
+          example: Link to Segment resource via its id
         status:
           description: ''
           $ref: '#/components/schemas/DeliveryStatusEnum'

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apis=(databuyer eventing dataset checkrules privacy optionality authorization complex-resource patchable direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
+apis=(linked databuyer eventing dataset checkrules privacy optionality authorization complex-resource patchable direct2dist distribution file request simple-resource singleton stringmaps upversion multiplicity)
 
 echo "Regenerating event files"
 echo "---"

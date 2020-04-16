@@ -1048,9 +1048,15 @@ components:
           type: array
         taxonomyConfigurationId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::TaxonomyConfiguration resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::TaxonomyConfiguration resource via
+            [destinationId, taxonomyConfigurationId]
       required:
         - name
         - mapping
@@ -1077,9 +1083,15 @@ components:
           type: array
         taxonomyConfigurationId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::TaxonomyConfiguration resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::TaxonomyConfiguration resource via
+            [destinationId, taxonomyConfigurationId]
       required:
         - id
         - name
@@ -1104,14 +1116,18 @@ components:
         identifierPoolId:
           description: ''
           type: string
-          example: >-
-            Link to a IdentifierPool (to be defined in the future) resource via
-            its id
+          example: Link to IdentifierPool resource via its id
         endpointId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Endpoint resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Endpoint resource via [destinationId,
+            endpointId]
       required:
         - identifierPoolId
         - endpointId
@@ -1126,19 +1142,37 @@ components:
           type: string
         packagerId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Packager resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Packager resource via [destinationId,
+            packagerId]
         formatterId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Formatter resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Formatter resource via [destinationId,
+            formatterId]
         delivererId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Deliverer resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Deliverer resource via [destinationId,
+            delivererId]
         endpointProperties:
           description: ''
           items:
@@ -1166,19 +1200,37 @@ components:
           type: string
         packagerId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Packager resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Packager resource via [destinationId,
+            packagerId]
         formatterId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Formatter resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Formatter resource via [destinationId,
+            formatterId]
         delivererId:
           description: ''
-          type: integer
-          format: int32
-          example: 'Link to a Destination::Deliverer resource via its id'
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          example: >-
+            Link to Destination::Deliverer resource via [destinationId,
+            delivererId]
         endpointProperties:
           description: ''
           items:

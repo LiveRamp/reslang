@@ -34,8 +34,7 @@ paths:
                 properties:
                   id:
                     description: The id of the Field.
-                    type: integer
-                    format: int64
+                    type: string
         '303':
           description: >-
             A Field with the same type, enumerability, and name already exists
@@ -148,8 +147,7 @@ paths:
           required: true
           description: The id of the Field.
           schema:
-            type: integer
-            format: int64
+            type: string
     put:
       tags:
         - 'Audience::Field'
@@ -190,8 +188,7 @@ paths:
           required: true
           description: The id of the Field.
           schema:
-            type: integer
-            format: int64
+            type: string
   '/v1/audiences/{audienceId}/fields/{fieldId}/actions/disable':
     post:
       tags:
@@ -233,8 +230,7 @@ paths:
           description: Id of parent Field
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
   '/v1/audiences/{audienceId}/fields/actions/disable':
     post:
       tags:
@@ -322,8 +318,7 @@ components:
       properties:
         id:
           description: The id of the Field.
-          type: integer
-          format: int64
+          type: string
         name:
           description: The name of the Field.
           type: string
@@ -396,9 +391,12 @@ components:
         fieldIDs:
           description: IDs of Fields to disable.
           items:
-            type: integer
-            format: int64
-            example: 'Link to Audience::Field resource(s) via id(s)'
+            items:
+              type: string
+            type: array
+            example: 'Link to Audience::Field resource via [audienceId, fieldId]'
+            minItems: 2
+            maxItems: 2
           type: array
       required:
         - fieldIDs

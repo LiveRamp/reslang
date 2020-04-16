@@ -1,6 +1,6 @@
 subresource Audience::Field {
   "The id of the Field."
-  id: long
+  id: string
 
   "The name of the Field."
   name: string max-length:255

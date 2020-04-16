@@ -339,7 +339,7 @@ components:
           description: ''
           type: integer
           format: int32
-          example: Link to a Organization resource via its id
+          example: Link to Organization resource via its id
       required:
         - name
     OrganizationOutput:
@@ -356,7 +356,7 @@ components:
           description: ''
           type: integer
           format: int32
-          example: Link to a Organization resource via its id
+          example: Link to Organization resource via its id
       required:
         - id
         - name
@@ -378,7 +378,7 @@ components:
           description: ''
           type: integer
           format: int32
-          example: Link to a Role resource via its id
+          example: Link to Role resource via its id
       required:
         - name
         - parentRoleId
@@ -396,7 +396,7 @@ components:
           description: ''
           type: integer
           format: int32
-          example: Link to a Role resource via its id
+          example: Link to Role resource via its id
       required:
         - id
         - name

@@ -1,0 +1,21 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Foo" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr>"}</table>>];
+"Bar" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr>"}</table>>];
+"Foo" -> "Bar" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Linking" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Linking        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">address: url</td></tr><tr><td align="left">name: url[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr>"}</table>>];
+"Linking" -> "Foo" [label=< <font point-size="8"> foo</font> > arrowhead="vee"];
+"Linking" -> "Foo" [label=< <font point-size="8"> foos[]</font> > arrowhead="vee"];
+"Linking" -> "Bar" [label=< <font point-size="8"> bar</font> > arrowhead="vee"];
+"Linking" -> "Bar" [label=< <font point-size="8"> bars[]</font> > arrowhead="vee"];
+}

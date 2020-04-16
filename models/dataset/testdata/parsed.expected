@@ -58,8 +58,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "long",
-            "name": "long",
+            "short": "string",
+            "name": "string",
             "parentShort": "",
             "parentName": ""
           },

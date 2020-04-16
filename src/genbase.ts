@@ -21,7 +21,12 @@ import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
 import lpath from "path"
 import { IRules } from "./rules"
-import { camelCase, capitalizeFirst, pluralizeName } from "./names"
+import {
+    camelCase,
+    capitalizeFirst,
+    pluralizeName,
+    lowercaseFirst,
+} from "./names"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 export enum Verbs {
@@ -704,24 +709,7 @@ Actions cannot have subresources`
                 case "resource-like":
                     // must have a linked annotation
                     if (attr.linked) {
-                        this.translatePrimitive(
-                            null,
-                            this.extractId(def).type.name,
-                            schema
-                        )
-                        if (attr.array) {
-                            schema.example = `Link to ${attr.type.name} ${
-                                def.future
-                                    ? "(to be defined in the future) "
-                                    : ""
-                            }resource(s) via id(s)`
-                        } else {
-                            schema.example = `Link to a ${attr.type.name} ${
-                                def.future
-                                    ? "(to be defined in the future) "
-                                    : ""
-                            }resource via its id`
-                        }
+                        this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
                         schema.$ref = `#/components/schemas/${sane}Output`
                     } else {
@@ -737,33 +725,77 @@ Actions cannot have subresources`
             }
         }
 
+        // override the example
+        if (example) {
+            schema.example = example
+        }
+
         // if multi, then push down to an array
         if (attr.array) {
-            schema.items = {
-                type: obj.type,
-                format: obj.format,
-                example: example || obj.example,
-                $ref: obj.$ref,
-            }
-            if (attr.array.min) {
-                schema.minItems = attr.array.min
-            }
-            if (attr.array.max) {
-                schema.maxItems = attr.array.max
-            }
-            delete schema.type
-            delete schema.format
-            delete schema.example
-            delete schema.$ref
-            schema.type = "array"
-        } else {
-            // override the example
-            if (example) {
-                schema.example = example
-            }
+            this.pushArrayDown(schema, attr.array.min, attr.array.max)
         }
 
         return obj
+    }
+
+    protected addLinkedType(def: IResourceLike, schema: any, attr: IAttribute) {
+        const idTypeName = this.extractId(def).type.name
+
+        // check all parents have the same id type
+        let count = 0
+        let ids = ""
+        for (const parent of def.parents) {
+            const parDef = this.extractDefinition(parent) as IResourceLike
+            if (!parDef.singleton) {
+                const typeName = this.extractId(parDef).type.name
+                ids += lowercaseFirst(parDef.short) + "Id, " + ids
+                if (typeName !== idTypeName) {
+                    throw new Error(
+                        "All parents of " + def.name + " must have same id type"
+                    )
+                }
+                count++
+            }
+        }
+
+        // add in the info now
+        this.translatePrimitive(null, idTypeName, schema)
+
+        // if this has parents, it needs to be an array
+        if (count) {
+            this.pushArrayDown(schema, count + 1, count + 1)
+        }
+
+        schema.example =
+            `Link to ${attr.type.name} resource via ` +
+            (count ? "[" + ids + lowercaseFirst(def.short) + "Id]" : "its id")
+    }
+
+    protected pushArrayDown(schema: any, min: number = 0, max: number = 0) {
+        schema.items = {
+            items: schema.items,
+            type: schema.type,
+            format: schema.format,
+            example: schema.example,
+            $ref: schema.$ref,
+            minItems: schema.minItems,
+            maxItems: schema.maxItems,
+        }
+        if (min) {
+            schema.minItems = min
+        } else {
+            delete schema.minItems
+        }
+        if (max) {
+            schema.maxItems = max
+        } else {
+            delete schema.maxItems
+        }
+        delete schema.type
+        delete schema.format
+        delete schema.example
+        delete schema.$ref
+        schema.type = "array"
     }
 
     protected translateDoc(comment?: string) {

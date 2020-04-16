@@ -1,5 +1,6 @@
 // these are all the models we want to generate specs for, and to check
 export const allModels = [
+    "linked",
     "databuyer",
     "eventing",
     "dataset",
@@ -17,5 +18,5 @@ export const allModels = [
     "singleton",
     "stringmaps",
     "upversion",
-    "multiplicity"
+    "multiplicity",
 ]

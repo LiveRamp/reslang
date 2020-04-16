@@ -528,9 +528,7 @@ components:
         specId:
           description: ''
           type: string
-          example: >-
-            Link to a Specification (to be defined in the future) resource via
-            its id
+          example: Link to Specification resource via its id
       required:
         - type
         - format
@@ -551,9 +549,7 @@ components:
         specId:
           description: ''
           type: string
-          example: >-
-            Link to a Specification (to be defined in the future) resource via
-            its id
+          example: Link to Specification resource via its id
       required:
         - id
         - type
@@ -580,7 +576,7 @@ components:
         fileTypeId:
           description: ''
           type: string
-          example: Link to a FileType resource via its id
+          example: Link to FileType resource via its id
       required:
         - name
         - url
@@ -602,7 +598,7 @@ components:
         fileTypeId:
           description: ''
           type: string
-          example: Link to a FileType resource via its id
+          example: Link to FileType resource via its id
       required:
         - id
         - name
@@ -624,7 +620,7 @@ components:
           description: ''
           type: string
           format: uuid
-          example: Link to a Directory resource via its id
+          example: Link to Directory resource via its id
       required:
         - directoryId
       description: This models a long running request
@@ -639,7 +635,7 @@ components:
           description: ''
           type: string
           format: uuid
-          example: Link to a Directory resource via its id
+          example: Link to Directory resource via its id
       required:
         - id
         - directoryId

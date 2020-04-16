@@ -326,7 +326,7 @@ components:
         homeGarageId:
           description: ''
           type: string
-          example: Link to a simple-resource.Garage resource via its id
+          example: Link to simple-resource.Garage resource via its id
         manufacturer:
           description: ''
           $ref: '#/components/schemas/simpleresourceManufacturer'
@@ -334,7 +334,7 @@ components:
           description: ''
           items:
             type: string
-            example: Link to simple-resource.Garage resource(s) via id(s)
+            example: Link to simple-resource.Garage resource via its id
           type: array
       required:
         - brand
@@ -368,7 +368,7 @@ components:
         homeGarageId:
           description: ''
           type: string
-          example: Link to a simple-resource.Garage resource via its id
+          example: Link to simple-resource.Garage resource via its id
         manufacturer:
           description: ''
           $ref: '#/components/schemas/simpleresourceManufacturer'
@@ -376,7 +376,7 @@ components:
           description: ''
           items:
             type: string
-            example: Link to simple-resource.Garage resource(s) via id(s)
+            example: Link to simple-resource.Garage resource via its id
           type: array
       required:
         - id
