@@ -191,6 +191,8 @@ To refer to one resource from another, used the "linked" keyword in front of the
 
 Note that to link to a subresource, you use the parent::child syntax.
 
+A link to a toplevel resource is just an "id". A link to a subresource is an array of [parentIds..., resourceId]. Note that to link to a subresource requires that all parent resources share the same id type. If one has an "int" and another parent has a "string" id type, then linking will fail with an error
+
 If, rather than a link you'd prefer the full value of the resource, then use "value-of" instead:
 
 ```
@@ -299,6 +301,12 @@ This results in the following fields:
 -   PUT required=nitro, optional=location
 -   PATCH optional=nitro and location
 -   GET required=id, make, nitro, created, location
+
+## Attribute examples
+
+You can specify (or override) the example / format string of any type. For instance, the following will override the usual url format:
+
+    location: url "https://gcs.google.com <- put files here!"
 
 ## Difference between PUT and PATCH
 
