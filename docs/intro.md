@@ -34,7 +34,7 @@ resource Directory {
 resource FileType {
 	id: string
 	type: string query // a query param appears both in the body and also as a query param on MULTIGET
-	format: string
+	format: string example: "Format is XX:XX"
 	specId: linked Specification
 	createdAt: datetime output // an output field only appears in a GET or MULTIGET
 	/operations
