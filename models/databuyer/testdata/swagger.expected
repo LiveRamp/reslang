@@ -67,14 +67,14 @@ paths:
     get:
       tags:
         - Bulk search DeliverPurchasedSegments
-      operationId: 'Get Bulk DeliverPurchasedSegments::searchs'
+      operationId: 'Get Bulk DeliverPurchasedSegments::searches'
       description: ''
       responses:
         '200':
-          description: searchs retrieved successfully
+          description: searches retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of searchs returned by the query
+              description: Total number of searches returned by the query
               schema:
                 type: integer
                 format: int32
@@ -86,7 +86,7 @@ paths:
       parameters:
         - in: query
           name: offset
-          description: Offset of the searchs (starting from 0) to include in the response.
+          description: Offset of the searches (starting from 0) to include in the response.
           schema:
             type: integer
             format: int32
@@ -94,7 +94,7 @@ paths:
         - in: query
           name: limit
           description: >-
-            Number of searchs to return. If unspecified, 10 max will be
+            Number of searches to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -111,14 +111,14 @@ paths:
     get:
       tags:
         - Bulk search Segment
-      operationId: 'Get Bulk Segment::searchs'
+      operationId: 'Get Bulk Segment::searches'
       description: ''
       responses:
         '200':
-          description: searchs retrieved successfully
+          description: searches retrieved successfully
           headers:
             X-Total-Count:
-              description: Total number of searchs returned by the query
+              description: Total number of searches returned by the query
               schema:
                 type: integer
                 format: int32
@@ -129,7 +129,7 @@ paths:
       parameters:
         - in: query
           name: offset
-          description: Offset of the searchs (starting from 0) to include in the response.
+          description: Offset of the searches (starting from 0) to include in the response.
           schema:
             type: integer
             format: int32
@@ -137,7 +137,7 @@ paths:
         - in: query
           name: limit
           description: >-
-            Number of searchs to return. If unspecified, 10 max will be
+            Number of searches to return. If unspecified, 10 max will be
             returned. Maximum value for limit can be 100
           schema:
             type: integer
@@ -237,8 +237,8 @@ components:
     BulksearchDeliverPurchasedSegmentsMultiResponse:
       type: object
       properties:
-        searchs:
-          description: 'Array of retrieved DeliverPurchasedSegments::searchs'
+        searches:
+          description: 'Array of retrieved DeliverPurchasedSegments::searches'
           type: array
           items:
             $ref: '#/components/schemas/BulksearchDeliverPurchasedSegmentsOutput'
@@ -257,8 +257,8 @@ components:
     BulksearchSegmentMultiResponse:
       type: object
       properties:
-        searchs:
-          description: 'Array of retrieved Segment::searchs'
+        searches:
+          description: 'Array of retrieved Segment::searches'
           type: array
           items:
             $ref: '#/components/schemas/BulksearchSegmentOutput'

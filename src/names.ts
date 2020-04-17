@@ -1,4 +1,5 @@
 import { CodeGenerator } from "@babel/generator"
+import { tmpNameSync } from "tmp"
 
 /**
  * remove version & change to correct snake case
@@ -66,7 +67,15 @@ export function pluralizeName(name: string) {
     if (name.endsWith("y")) {
         return name.substring(0, name.length - 1) + "ies"
     }
-    if (name.endsWith("ch") || name.endsWith("ss")) {
+    // ‑s, -ss, -sh, -ch, -x, or -z
+    if (
+        name.endsWith("s") ||
+        name.endsWith("ss") ||
+        name.endsWith("sh") ||
+        name.endsWith("ch") ||
+        name.endsWith("x") ||
+        name.endsWith("z")
+    ) {
         return name + "es"
     }
     return name + "s"
