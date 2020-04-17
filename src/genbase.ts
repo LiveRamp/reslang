@@ -377,17 +377,20 @@ Actions cannot have subresources`
     }
 
     // add bulk modifier if needed
-    protected formSingleUniqueName(def: AnyKind) {
+    protected formSingleUniqueName(def: AnyKind, addSpaces = true) {
         if (isResourceLike(def) && def.type === "action") {
+            const space = addSpaces ? " " : ""
             if (def.bulk) {
                 return (
-                    (def.bulk ? "Bulk " : "") +
+                    (def.bulk ? "Bulk" + space : "") +
                     def.short +
-                    " " +
+                    space +
                     this.removeLast(def.name)
                 )
             }
-            return capitalizeFirst(def.short) + " " + this.removeLast(def.name)
+            return (
+                capitalizeFirst(def.short) + space + this.removeLast(def.name)
+            )
         }
         return def.name
     }

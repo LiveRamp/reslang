@@ -12,6 +12,22 @@ request-resource DeliverPurchasedSegments {
         POST GET EVENTS
 }
 
+
+sync bulk action DeliverPurchasedSegments::search {
+    id: string
+    name: string query
+    /operations
+        MULTIGET
+}
+
+sync bulk action Segment::search {
+    id: string
+    name: string query
+
+    /operations
+        MULTIGET
+}
+
 singleton resource AllDeliveredSegments {
     segmentStatuses: DeliveryStatus[]
 

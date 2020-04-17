@@ -8,6 +8,10 @@ servers:
 tags:
   - name: DeliverPurchasedSegments
     description: '(request)  '
+  - name: Bulk search DeliverPurchasedSegments
+    description: '(bulk sync action)  '
+  - name: Bulk search Segment
+    description: '(bulk sync action)  '
   - name: AllDeliveredSegments
     description: '(resource)  '
 paths:
@@ -57,6 +61,93 @@ paths:
           name: id
           required: true
           description: ''
+          schema:
+            type: string
+  /v1/deliver-purchased-segments/actions/search:
+    get:
+      tags:
+        - Bulk search DeliverPurchasedSegments
+      operationId: 'Get Bulk DeliverPurchasedSegments::searchs'
+      description: ''
+      responses:
+        '200':
+          description: searchs retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of searchs returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/BulksearchDeliverPurchasedSegmentsMultiResponse
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the searchs (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of searchs to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+  /v1/segments/actions/search:
+    get:
+      tags:
+        - Bulk search Segment
+      operationId: 'Get Bulk Segment::searchs'
+      description: ''
+      responses:
+        '200':
+          description: searchs retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of searchs returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulksearchSegmentMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the searchs (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of searchs to return. If unspecified, 10 max will be
+            returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
           schema:
             type: string
   /v1/all-delivered-segments:
@@ -131,6 +222,46 @@ components:
         - whereToDeliver
         - segmentStatuses
         - complete
+    BulksearchDeliverPurchasedSegmentsOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        name:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+    BulksearchDeliverPurchasedSegmentsMultiResponse:
+      type: object
+      properties:
+        searchs:
+          description: 'Array of retrieved DeliverPurchasedSegments::searchs'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulksearchDeliverPurchasedSegmentsOutput'
+    BulksearchSegmentOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        name:
+          description: ''
+          type: string
+      required:
+        - id
+        - name
+    BulksearchSegmentMultiResponse:
+      type: object
+      properties:
+        searchs:
+          description: 'Array of retrieved Segment::searchs'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulksearchSegmentOutput'
     AllDeliveredSegmentsOutput:
       type: object
       properties:

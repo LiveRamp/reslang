@@ -674,7 +674,7 @@ export default class SwagGen extends BaseGen {
 
     private formDefinitions(definitions: any) {
         for (const def of this.defs) {
-            const sane = camelCase(def.name)
+            const sane = camelCase(this.formSingleUniqueName(def, false))
             if (isResourceLike(def) && !def.secondary) {
                 if (def.generateInput) {
                     this.addResourceDefinition(
@@ -789,7 +789,7 @@ export default class SwagGen extends BaseGen {
                 const post = this.extractOp(el, "POST")
                 const multiget = this.extractOp(el, "MULTIGET")
 
-                if (!el.singleton && (post || multiget)) {
+                if (!el.singleton) {
                     if (post) {
                         el.generateInput = true
                     }
