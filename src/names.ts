@@ -66,5 +66,8 @@ export function pluralizeName(name: string) {
     if (name.endsWith("y")) {
         return name.substring(0, name.length - 1) + "ies"
     }
+    if (name.endsWith("ch") || name.endsWith("ss")) {
+        return name + "es"
+    }
     return name + "s"
 }
