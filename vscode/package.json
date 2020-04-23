@@ -1,0 +1,38 @@
+{
+    "name": "reslang-syntax-highlighting",
+    "displayName": "reslang-syntax-highlighting",
+    "description": "Highlight reslang keywords to make dev easier! ",
+    "publisher": "00000000000010",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.44.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "reslang",
+                "aliases": [
+                    "Reslang",
+                    "reslang"
+                ],
+                "extensions": [
+                    ".reslang"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "reslang",
+                "scopeName": "source.reslang",
+                "path": "./syntaxes/reslang.tmLanguage.json"
+            }
+        ]
+    },
+    "dependencies": {
+        "vsce": "^1.75.0"
+    }
+}
