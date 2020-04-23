@@ -8,14 +8,14 @@ It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), des
 
 ## Docs
 
-|                                                      |                                                                            |
-| ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Why reslang?](./docs/why.md)                        | Why do we need this tool and what does it offer?                           |
-| [Intro tutorial](./docs/intro.md)                    | Describes making a toy API for manipulating files and directories.         |
-| [Event intro tutorial](./docs/intro-events.md)       | Describes a simple example of how to generate AsyncAPI to describe events  |
-| [Direct2Dist API](./docs/direct2dist-explanation.md) | This is a more complex example which recreates the entire Direct2Dist API. |
-| [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.                      |
-| [VSCode Syntax highlighting](./vscode/readme.md)     | Explains how to install VSCode syntax highlighting. Hint search extensions |
+|                                                      |                                                                                         |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [Why reslang?](./docs/why.md)                        | Why do we need this tool and what does it offer?                                        |
+| [Intro tutorial](./docs/intro.md)                    | Describes making a toy API for manipulating files and directories.                      |
+| [Event intro tutorial](./docs/intro-events.md)       | Describes a simple example of how to generate AsyncAPI to describe events               |
+| [Direct2Dist API](./docs/direct2dist-explanation.md) | This is a more complex example which recreates the entire Direct2Dist API.              |
+| [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.                                   |
+| [VSCode Syntax highlighting](./vscode/README.md)     | Explains how to install VSCode syntax highlighting. Hint search extensions for Reslang! |
 
 ## Installation
 
