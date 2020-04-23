@@ -2,8 +2,9 @@
     "name": "reslang-syntax-highlighting",
     "displayName": "reslang-syntax-highlighting",
     "description": "Highlight reslang keywords to make dev easier! ",
-    "publisher": "00000000000010",
-    "version": "0.0.1",
+    "publisher": "amcveighvscodeextensions",
+    "author": "Matt Connors",
+    "version": "0.0.3",
     "repository": "https://github.com/LiveRamp/reslang",
     "engines": {
         "vscode": "^1.44.0"
@@ -36,5 +37,9 @@
     "dependencies": {},
     "devDependencies": {
         "vsce": "^1.75.0"
+    },
+    "scripts": {
+        "package": "./node_modules/.bin/vsce package",
+        "publish-extension": "./node_modules/.bin/vsce publish"
     }
 }
