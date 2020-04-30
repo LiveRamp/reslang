@@ -40,6 +40,56 @@ paths:
                     description: ''
                     type: integer
                     format: int32
+    get:
+      tags:
+        - User
+      operationId: Get Users
+      description: ''
+      responses:
+        '200':
+          description: Users retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Users returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Users (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of Users to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            maximum: 100
+        - in: query
+          name: name
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: parent
+          description: ''
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: Link to Organization resource via its id
   '/v1/users/{id}':
     get:
       tags:
@@ -314,8 +364,24 @@ components:
         name:
           description: ''
           type: string
+        parent:
+          description: ''
+          type: integer
+          format: int32
+          example: Link to Organization resource via its id
+        roles:
+          description: ''
+          items:
+            type: integer
+            format: int32
+            example: Link to Role resource via its id
+          minItems: 1
+          maxItems: 10
+          type: array
       required:
         - name
+        - parent
+        - roles
     UserOutput:
       type: object
       properties:
@@ -326,9 +392,33 @@ components:
         name:
           description: ''
           type: string
+        parent:
+          description: ''
+          type: integer
+          format: int32
+          example: Link to Organization resource via its id
+        roles:
+          description: ''
+          items:
+            type: integer
+            format: int32
+            example: Link to Role resource via its id
+          minItems: 1
+          maxItems: 10
+          type: array
       required:
         - id
         - name
+        - parent
+        - roles
+    UserMultiResponse:
+      type: object
+      properties:
+        users:
+          description: Array of retrieved Users
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOutput'
     OrganizationInput:
       type: object
       properties:

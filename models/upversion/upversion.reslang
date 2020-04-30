@@ -1,5 +1,5 @@
 
-asset-resource ResourceA {
+resource ResourceA {
     id: int
     name: string
     bId: linked ResourceB
@@ -9,7 +9,7 @@ asset-resource ResourceA {
         GET
 }
 
-asset-resource ResourceB {
+resource ResourceB {
     id: int
     size: int
 
@@ -17,7 +17,7 @@ asset-resource ResourceB {
         POST GET PUT
 }
 
-asset-resource v2/ResourceB {
+resource v2/ResourceB {
     id: int
     totalSize: int
 

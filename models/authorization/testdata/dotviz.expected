@@ -6,7 +6,7 @@ digraph G {
         
 "User" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>User        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
+                    <tr><td><b>User        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id name parent roles</font></td></tr>"}</table>>];
 "Suspend" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Suspend        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
@@ -21,6 +21,8 @@ digraph G {
 "Role" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Role        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id name parentRoleId</font></td></tr>"}</table>>];
+"User" -> "Organization" [label=< <font point-size="8"> parent</font> > arrowhead="vee"];
+"User" -> "Role" [label=< <font point-size="8"> roles[1..10]</font> > arrowhead="vee"];
 "Organization" -> "Organization" [label=< <font point-size="8"> parentOrganizationId</font> > arrowhead="vee"];
 "Role" -> "Role" [label=< <font point-size="8"> parentRoleId</font> > arrowhead="vee"];
 }

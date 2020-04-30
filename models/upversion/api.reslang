@@ -2,5 +2,5 @@
 "This is the description of the API"
 namespace {
     title "An API showing evolution"
-    version 0.1.2
+    version 1.1.2
 }

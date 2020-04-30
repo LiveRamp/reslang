@@ -3,14 +3,14 @@
     "comment": "This is the description of the API",
     "space": "",
     "title": "An API showing evolution",
-    "version": "0.1.2"
+    "version": "1.1.2"
   },
   "definitions": [
     {
       "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -135,7 +135,7 @@
       "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -216,7 +216,7 @@
       "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "asset-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",

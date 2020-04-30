@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: An API showing evolution
   description: This is the description of the API
-  version: 0.1.2
+  version: 1.1.2
 servers:
   - url: 'https://api.liveramp.com/upversion'
 tags:

@@ -59,6 +59,63 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "parent",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Organization",
+            "name": "Organization",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "roles",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Role",
+            "name": "Role",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1,
+            "min": 1,
+            "max": 10
+          },
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
             "query": false,
             "representation": false
           },
@@ -72,6 +129,10 @@
         },
         {
           "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
           "errors": []
         }
       ],

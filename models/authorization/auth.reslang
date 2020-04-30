@@ -1,10 +1,12 @@
 
 resource User {
     id: int
-    name: string
+    name: string query
+    parent: linked Organization query
+    roles: linked Role[1..10]
 
     /operations
-        POST GET
+        POST GET MULTIGET
 }
 
 sync action User::Suspend {

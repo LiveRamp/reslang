@@ -2,7 +2,7 @@ asyncapi: 2.0.0
 info:
   title: An API showing evolution
   description: This is the description of the API
-  version: 0.1.2
+  version: 1.1.2
 servers:
   production:
     url: 'pubsub.liveramp.com:{port}'
