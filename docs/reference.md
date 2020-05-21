@@ -257,6 +257,24 @@ A multi-GET is a GET on the plural resource, returning a collection of resources
 
 ```
 
+### Representation parameters
+
+A representation parameter is used to adjust how much detail is returned on a GET or MULTIGET.
+
+E.g.
+
+resource Car {
+    id: uuid
+    view: DetailEnum representation
+    standardInfo: StandardDetails
+    detailedInfo: FullDetails output optional
+/operations
+    GET POST MULTIGET
+}
+enum DetailEnum { STANDARD DETAILS }
+
+View will turn into a query parameter on both GET and MULTIGET.
+
 ## Attribute Modifiers
 
 The underlying intuition is that you mark fields as "mutable" if you want to be able to change them with PUT or PATCH, and you can mark something as output only by using "output". You can then mark them as optional by using "optional" or "optional-post" etc for specific verbs. PATCH always has every field as optional.
