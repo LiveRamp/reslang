@@ -263,15 +263,16 @@ A representation parameter is used to adjust how much detail is returned on a GE
 
 E.g.
 
-resource Car {
-    id: uuid
-    view: DetailEnum representation
-    standardInfo: StandardDetails
-    detailedInfo: FullDetails output optional
-/operations
-    GET POST MULTIGET
-}
-enum DetailEnum { STANDARD DETAILS }
+    resource Car {
+        id: uuid
+        view: DetailEnum representation
+        standardInfo: StandardDetails
+        detailedInfo: FullDetails output optional
+        /operations
+            GET POST MULTIGET
+    }
+    
+    enum DetailEnum { STANDARD DETAILS }
 
 View will turn into a query parameter on both GET and MULTIGET.
 
