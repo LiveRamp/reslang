@@ -60,6 +60,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -69,6 +70,7 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: id
@@ -198,6 +200,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -207,6 +210,7 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: id
