@@ -331,6 +331,7 @@ export default class SwagGen extends BaseGen {
                     type: "integer",
                     format: "int32",
                     default: 0,
+                    minimum: 0,
                 },
             })
             gparams.push({
@@ -342,6 +343,7 @@ export default class SwagGen extends BaseGen {
                     type: "integer",
                     format: "int32",
                     default: 10,
+                    minimum: 1,
                     maximum: 100,
                 },
             })
