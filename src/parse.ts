@@ -54,7 +54,6 @@ export function parseFile(
             }) as object
         )
     } catch (error) {
-        console.log(error)
         throw new Error(
             `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
         )
