@@ -17,7 +17,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.2"
+export const VERSION = "v1.4.3"
 
 // parse the cmd line
 const args = yargs
@@ -99,7 +99,7 @@ rules.ignoreRules = args.ignorerules ? true : false
 const testwrite = args.testwrite
 if (testwrite) {
     if (!args.testdir) {
-        throw new Error("Must specify testdir and testwrite options together")
+        errorAndExit("Must specify testdir and testwrite options together")
     }
     files.forEach((file) => {
         const fname = lpath.join(args.testdir || "", file)
@@ -209,6 +209,11 @@ function handle(allFiles: string[], silent: boolean) {
             return yml
         }
     } catch (error) {
-        console.error(args.stacktrace ? error : error.message)
+        errorAndExit(args.stacktrace ? error : error.message)
     }
+}
+
+function errorAndExit(msg: any) {
+    console.error("Reslang error: ", msg)
+    process.exit(-1)
 }
