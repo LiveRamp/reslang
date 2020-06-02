@@ -29,7 +29,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
 components:
   parameters: {}
@@ -38,27 +37,23 @@ components:
       type: object
       properties:
         names:
-          description: ''
           items:
             type: string
           minItems: 1
           maxItems: 10
           type: array
         ages:
-          description: ''
           items:
             type: integer
             format: int32
           minItems: 13
           type: array
         addresses:
-          description: ''
           items:
             type: string
           maxItems: 3
           type: array
         nicknames:
-          description: ''
           items:
             type: string
           type: array

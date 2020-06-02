@@ -37,7 +37,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -80,13 +79,11 @@ paths:
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
         - in: query
           name: parent
-          description: ''
           required: false
           schema:
             type: integer
@@ -115,7 +112,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -134,7 +130,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -166,7 +161,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -203,7 +197,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -269,7 +262,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -293,7 +285,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -357,7 +348,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -368,15 +358,12 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         parent:
-          description: ''
           type: integer
           format: int32
           example: Link to Organization resource via its id
         roles:
-          description: ''
           items:
             type: integer
             format: int32
@@ -392,19 +379,15 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         parent:
-          description: ''
           type: integer
           format: int32
           example: Link to Organization resource via its id
         roles:
-          description: ''
           items:
             type: integer
             format: int32
@@ -429,10 +412,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         parentOrganizationId:
-          description: ''
           type: integer
           format: int32
           example: Link to Organization resource via its id
@@ -442,14 +423,11 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         parentOrganizationId:
-          description: ''
           type: integer
           format: int32
           example: Link to Organization resource via its id
@@ -468,10 +446,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         parentRoleId:
-          description: ''
           type: integer
           format: int32
           example: Link to Role resource via its id
@@ -482,14 +458,11 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         parentRoleId:
-          description: ''
           type: integer
           format: int32
           example: Link to Role resource via its id

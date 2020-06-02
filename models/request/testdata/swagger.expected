@@ -45,7 +45,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -90,7 +89,6 @@ paths:
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -117,7 +115,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -168,7 +165,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -215,7 +211,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -239,7 +234,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -300,7 +294,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -324,7 +317,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '202':
           description: >-
@@ -336,7 +328,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '204':
           description: >-
@@ -384,7 +375,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -431,7 +421,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -455,7 +444,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
   '/v1/upload-requests/actions/start-processing-action/{id}':
@@ -482,7 +470,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -506,7 +493,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -553,7 +539,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -577,7 +562,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -638,7 +622,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -649,13 +632,11 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         status:
-          description: ''
-          $ref: '#/components/schemas/UploadRequestStatusEnum'
+          allOf:
+            - $ref: '#/components/schemas/UploadRequestStatusEnum'
         client:
-          description: ''
           type: string
       required:
         - name
@@ -665,17 +646,14 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         status:
-          description: ''
-          $ref: '#/components/schemas/UploadRequestStatusEnum'
+          allOf:
+            - $ref: '#/components/schemas/UploadRequestStatusEnum'
         client:
-          description: ''
           type: string
       required:
         - id
@@ -694,15 +672,12 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         recordsProcessed:
-          description: ''
           type: integer
           format: int32
         completed:
-          description: ''
           type: boolean
       required:
         - id
@@ -712,12 +687,11 @@ components:
       type: object
       properties:
         company:
-          description: ''
           type: string
         records:
-          description: ''
           items:
-            $ref: '#/components/schemas/Record'
+            allOf:
+              - $ref: '#/components/schemas/Record'
           type: array
       required:
         - company
@@ -726,16 +700,14 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         company:
-          description: ''
           type: string
         records:
-          description: ''
           items:
-            $ref: '#/components/schemas/Record'
+            allOf:
+              - $ref: '#/components/schemas/Record'
           type: array
       required:
         - id
@@ -745,12 +717,11 @@ components:
       type: object
       properties:
         company:
-          description: ''
           type: string
         records:
-          description: ''
           items:
-            $ref: '#/components/schemas/Record'
+            allOf:
+              - $ref: '#/components/schemas/Record'
           type: array
       required:
         - company
@@ -759,16 +730,14 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         company:
-          description: ''
           type: string
         records:
-          description: ''
           items:
-            $ref: '#/components/schemas/Record'
+            allOf:
+              - $ref: '#/components/schemas/Record'
           type: array
       required:
         - id
@@ -778,10 +747,8 @@ components:
       type: object
       properties:
         details:
-          description: ''
           type: string
         address:
-          description: ''
           type: string
       required:
         - details
@@ -790,7 +757,6 @@ components:
       type: object
       properties:
         created:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -800,7 +766,6 @@ components:
       type: object
       properties:
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -810,11 +775,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -825,7 +788,6 @@ components:
       type: object
       properties:
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -835,11 +797,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -850,7 +810,6 @@ components:
       type: object
       properties:
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -860,11 +819,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -875,7 +832,6 @@ components:
       type: object
       properties:
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -885,11 +841,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         when:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'

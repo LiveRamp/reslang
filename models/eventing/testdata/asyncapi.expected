@@ -101,10 +101,8 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         name:
-          description: ''
           type: string
       required:
         - id
@@ -114,14 +112,11 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         number:
-          description: ''
           type: integer
           format: int32
       required:
@@ -132,11 +127,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         address:
-          description: ''
           items:
             type: string
           type: array
@@ -148,11 +141,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         address:
-          description: ''
           items:
             type: string
           type: array
@@ -163,12 +154,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
           minLength: 10
           maxLength: 100
         time:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -180,18 +169,16 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         address:
-          description: ''
           items:
             type: string
           minItems: 1
           maxItems: 10
           type: array
         foo:
-          description: ''
-          $ref: '#/components/schemas/v2TestResourceFoo2Output'
+          allOf:
+            - $ref: '#/components/schemas/v2TestResourceFoo2Output'
       required:
         - name
         - address
@@ -201,11 +188,9 @@ components:
       type: object
       properties:
         a:
-          description: ''
           type: integer
           format: int32
         b:
-          description: ''
           type: integer
           format: int64
       required:
@@ -216,7 +201,6 @@ components:
       type: object
       properties:
         stopped:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -259,12 +243,10 @@ components:
         type: object
         properties:
           name:
-            description: ''
             type: string
             minLength: 10
             maxLength: 100
           time:
-            description: ''
             type: string
             format: ISO8601 UTC date-time
             example: '2019-04-13T03:35:34Z'
@@ -277,11 +259,9 @@ components:
         type: object
         properties:
           a:
-            description: ''
             type: integer
             format: int32
           b:
-            description: ''
             type: integer
             format: int64
         required:
