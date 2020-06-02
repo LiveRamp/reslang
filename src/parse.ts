@@ -55,7 +55,8 @@ export function parseFile(
         )
     } catch (error) {
         throw new Error(
-            `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ${error.location.start.column}`
+            `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ` +
+                `${error.location.start.column}`
         )
     }
     addNamespace(tree[2] as AnyKind[], parsingNamespace, mainNamespace)
