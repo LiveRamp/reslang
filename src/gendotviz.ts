@@ -5,7 +5,7 @@ import {
     AnyKind,
     IResourceLike,
     isResourceLike,
-    getAllAttributes
+    getAllAttributes,
 } from "./treetypes"
 import { BaseGen } from "./genbase"
 
@@ -25,7 +25,7 @@ interface ILink {
 export default class DotvizGen extends BaseGen {
     public generate(diagramName: string) {
         const diagram = (this.diagrams || []).find(
-            diag => diag.diagram === diagramName
+            (diag) => diag.diagram === diagramName
         )
         if (!diagram) {
             throw new Error("Cannot find diagram definition for " + diagramName)
@@ -56,7 +56,7 @@ export default class DotvizGen extends BaseGen {
                 "request-resource",
                 "asset-resource",
                 "resource",
-                "configuration-resource"
+                "configuration-resource",
             ].includes(def.type)
                 ? "bgcolor='#ffffcc'"
                 : ""
@@ -76,7 +76,7 @@ export default class DotvizGen extends BaseGen {
                     "asset-resource",
                     "resource",
                     "configuration-resource",
-                    "event"
+                    "event",
                 ].includes(def.type)
                     ? 3
                     : 1
@@ -86,7 +86,7 @@ export default class DotvizGen extends BaseGen {
                     "resource",
                     "configuration-resource",
                     "action",
-                    "subresource"
+                    "subresource",
                 ].includes(def.type)
                     ? "style='rounded'"
                     : def.type === "event"
@@ -160,16 +160,16 @@ export default class DotvizGen extends BaseGen {
 
     private formFolds(diagram: IDiagram) {
         return new Set<string>(
-            (diagram.fold || []).map(fold => fold.attr + "/" + fold.of.name)
+            (diagram.fold || []).map((fold) => fold.attr + "/" + fold.of.name)
         )
     }
 
     private formExclusions(diagram: IDiagram) {
-        return new Set<string>((diagram.exclude || []).map(ref => ref.name))
+        return new Set<string>((diagram.exclude || []).map((ref) => ref.name))
     }
 
     private formImports(diagram: IDiagram) {
-        return new Set<string>((diagram.import || []).map(ref => ref.name))
+        return new Set<string>((diagram.import || []).map((ref) => ref.name))
     }
 
     private formInclusions(
@@ -180,18 +180,18 @@ export default class DotvizGen extends BaseGen {
         const include = new Set<string>(
             (this.defs || [])
                 .filter(
-                    def =>
+                    (def) =>
                         !diagram.includeAll || diagram.includeAll === def.file
                 )
-                .map(def => def.name)
+                .map((def) => def.name)
         )
         if (diagram.include) {
-            diagram.include.forEach(incl => include.add(incl.name))
+            diagram.include.forEach((incl) => include.add(incl.name))
         }
         if (diagram.import) {
-            diagram.import.forEach(incl => include.add(incl.name))
+            diagram.import.forEach((incl) => include.add(incl.name))
         }
-        exclude.forEach(excl => include.delete(excl))
+        exclude.forEach((excl) => include.delete(excl))
         return include
     }
 
@@ -233,7 +233,7 @@ export default class DotvizGen extends BaseGen {
                             fromName: def.name,
                             to: attr.type.short,
                             toName: attr.type.name,
-                            label: ` ${attr.name}${multi}${output}`
+                            label: ` ${attr.name}${multi}${output}`,
                         })
                         continue
                     }
@@ -245,7 +245,7 @@ export default class DotvizGen extends BaseGen {
                                 fromName: def.name,
                                 to: attr.type.short,
                                 toName: attr.type.name,
-                                label: ` ${attr.name}${multi}${output}`
+                                label: ` ${attr.name}${multi}${output}`,
                             })
                         }
                         continue
@@ -276,7 +276,9 @@ export default class DotvizGen extends BaseGen {
                 ops += op.operation
                 if (op.operation === "MULTIGET") {
                     for (const attr of def.attributes || []) {
-                        ops += " " + attr.name
+                        if (attr.modifiers.query || attr.modifiers.queryonly) {
+                            ops += " " + attr.name
+                        }
                     }
                 }
             }

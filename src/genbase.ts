@@ -370,7 +370,13 @@ Actions cannot have subresources`
             case Verbs.GET:
                 return "Get " + bulk + def.name
             case Verbs.MULTIGET:
-                return "Get " + bulk + pluralizeName(def.name)
+                const plural = pluralizeName(def.name)
+                return (
+                    "Get " +
+                    (plural === def.name ? "multiple " : "") +
+                    bulk +
+                    plural
+                )
             case Verbs.DELETE:
                 return "Delete " + bulk + def.name
         }

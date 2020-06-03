@@ -33,7 +33,7 @@
             "optionalGet": false,
             "output": false,
             "queryonly": false,
-            "query": false,
+            "query": true,
             "representation": false
           },
           "constraints": {}
@@ -160,6 +160,10 @@
         },
         {
           "operation": "EVENTS",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
           "errors": []
         }
       ],

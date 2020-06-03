@@ -37,6 +37,52 @@ paths:
                   id:
                     description: ''
                     type: string
+    get:
+      tags:
+        - DeliverPurchasedSegments
+      operationId: Get multiple DeliverPurchasedSegments
+      description: ''
+      responses:
+        '200':
+          description: DeliverPurchasedSegments retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DeliverPurchasedSegments returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverPurchasedSegmentsMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DeliverPurchasedSegments (starting from 0) to include
+            in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DeliverPurchasedSegments to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: id
+          description: ''
+          required: false
+          schema:
+            type: string
   '/v1/deliver-purchased-segments/{id}':
     get:
       tags:
@@ -226,6 +272,14 @@ components:
         - whereToDeliver
         - segmentStatuses
         - complete
+    DeliverPurchasedSegmentsMultiResponse:
+      type: object
+      properties:
+        deliverPurchasedSegments:
+          description: Array of retrieved DeliverPurchasedSegments
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverPurchasedSegmentsOutput'
     BulksearchDeliverPurchasedSegmentsOutput:
       type: object
       properties:
