@@ -9,7 +9,7 @@ tags:
   - name: Person
     description: '(configuration)  '
 paths:
-  /v1/persons:
+  /v1/people:
     post:
       tags:
         - Person
@@ -32,7 +32,7 @@ paths:
                     description: ''
                     type: integer
                     format: int32
-  '/v1/persons/{id}':
+  '/v1/people/{id}':
     get:
       tags:
         - Person
