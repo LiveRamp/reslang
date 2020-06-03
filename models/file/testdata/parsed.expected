@@ -691,12 +691,55 @@
             "representation": false
           },
           "constraints": {}
+        },
+        {
+          "name": "time",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
         }
       ],
       "operations": [
         {
           "operation": "POST",
-          "errors": []
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "200"
+                }
+              ],
+              "struct": {
+                "parents": [
+                  "DirectoryDeleteRequest"
+                ],
+                "short": "Cancel",
+                "name": "DirectoryDeleteRequest::Cancel",
+                "parentShort": "DirectoryDeleteRequest",
+                "parentName": "DirectoryDeleteRequest"
+              }
+            }
+          ]
         }
       ],
       "parents": [

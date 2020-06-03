@@ -463,18 +463,18 @@ paths:
         - Cancel DirectoryDeleteRequest
       operationId: Cancel DirectoryDeleteRequest
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelDirectoryDeleteRequestInput'
       responses:
         '200':
-          description: Cancel action completed
+          description: ''
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    description: ''
-                    type: integer
-                    format: int32
+                $ref: '#/components/schemas/CancelDirectoryDeleteRequestOutput'
         '404':
           description: Parent resource(s) not found
           content:
@@ -656,6 +656,33 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
+    CancelDirectoryDeleteRequestInput:
+      type: object
+      properties:
+        time:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - time
+      description: This models an action on a request
+    CancelDirectoryDeleteRequestOutput:
+      type: object
+      properties:
+        id:
+          description: ''
+          type: integer
+          format: int32
+        time:
+          description: ''
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - time
+      description: This models an action on a request
     SpecialError:
       type: object
       properties:

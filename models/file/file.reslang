@@ -64,9 +64,10 @@ produces event DirectoryDeleteIncomplete {
 "This models an action on a request"
 sync action DirectoryDeleteRequest::Cancel {
 	id: int
+	time: datetime
 	
     /operations
-		POST
+		POST 200 DirectoryDeleteRequest::Cancel 
 }
 
 "A non-standard error response"

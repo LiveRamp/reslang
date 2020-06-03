@@ -25,7 +25,7 @@ digraph G {
                     <tr><td><b>DirectoryDeleteIncomplete        </b></td></tr><hr/><tr><td align="left">corrupted: boolean</td></tr><tr><td align="left">timeOfFailure: datetime</td></tr>"}</table>>];
 "Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">time: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "DirectoryDeleteRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
 "SpecialError" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
