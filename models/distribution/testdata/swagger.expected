@@ -47,7 +47,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -92,7 +91,6 @@ paths:
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -119,7 +117,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -143,7 +140,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -216,7 +212,6 @@ paths:
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: integer
@@ -251,7 +246,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -280,7 +274,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -304,7 +297,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -376,7 +368,6 @@ paths:
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -410,7 +401,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -439,7 +429,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -463,7 +452,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -535,7 +523,6 @@ paths:
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -569,7 +556,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -598,7 +584,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -622,7 +607,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -722,7 +706,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -746,7 +729,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -846,7 +828,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -870,7 +851,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -970,7 +950,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -981,7 +960,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -992,11 +970,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
       required:
         - id
@@ -1016,10 +992,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         mappingsMacro:
-          description: ''
           type: string
       required:
         - name
@@ -1028,14 +1002,11 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         mappingsMacro:
-          description: ''
           type: string
       required:
         - id
@@ -1053,15 +1024,13 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         mapping:
-          description: ''
           items:
-            $ref: '#/components/schemas/IdentifierTypeMapping'
+            allOf:
+              - $ref: '#/components/schemas/IdentifierTypeMapping'
           type: array
         taxonomyConfigurationId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1084,19 +1053,16 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         mapping:
-          description: ''
           items:
-            $ref: '#/components/schemas/IdentifierTypeMapping'
+            allOf:
+              - $ref: '#/components/schemas/IdentifierTypeMapping'
           type: array
         taxonomyConfigurationId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1128,11 +1094,9 @@ components:
       type: object
       properties:
         identifierPoolId:
-          description: ''
           type: string
           example: Link to IdentifierPool resource via its id
         endpointId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1149,13 +1113,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         url:
-          description: ''
           type: string
         packagerId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1166,7 +1127,6 @@ components:
             Link to Destination::Packager resource via [destinationId,
             packagerId]
         formatterId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1177,7 +1137,6 @@ components:
             Link to Destination::Formatter resource via [destinationId,
             formatterId]
         delivererId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1188,9 +1147,9 @@ components:
             Link to Destination::Deliverer resource via [destinationId,
             delivererId]
         endpointProperties:
-          description: ''
           items:
-            $ref: '#/components/schemas/EndpointProperty'
+            allOf:
+              - $ref: '#/components/schemas/EndpointProperty'
           type: array
       required:
         - name
@@ -1203,17 +1162,13 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         url:
-          description: ''
           type: string
         packagerId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1224,7 +1179,6 @@ components:
             Link to Destination::Packager resource via [destinationId,
             packagerId]
         formatterId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1235,7 +1189,6 @@ components:
             Link to Destination::Formatter resource via [destinationId,
             formatterId]
         delivererId:
-          description: ''
           items:
             type: integer
             format: int32
@@ -1246,9 +1199,9 @@ components:
             Link to Destination::Deliverer resource via [destinationId,
             delivererId]
         endpointProperties:
-          description: ''
           items:
-            $ref: '#/components/schemas/EndpointProperty'
+            allOf:
+              - $ref: '#/components/schemas/EndpointProperty'
           type: array
       required:
         - id
@@ -1270,13 +1223,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         default:
-          description: ''
           type: string
         externallyConfigurable:
-          description: ''
           type: boolean
       required:
         - name
@@ -1286,11 +1236,10 @@ components:
       type: object
       properties:
         macro:
-          description: ''
           type: string
         compressionType:
-          description: ''
-          $ref: '#/components/schemas/CompressionTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/CompressionTypeEnum'
       required:
         - macro
         - compressionType
@@ -1298,15 +1247,13 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         macro:
-          description: ''
           type: string
         compressionType:
-          description: ''
-          $ref: '#/components/schemas/CompressionTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/CompressionTypeEnum'
       required:
         - id
         - macro
@@ -1323,7 +1270,6 @@ components:
       type: object
       properties:
         macro:
-          description: ''
           type: string
       required:
         - macro
@@ -1331,11 +1277,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         macro:
-          description: ''
           type: string
       required:
         - id
@@ -1352,10 +1296,9 @@ components:
       type: object
       properties:
         protocol:
-          description: ''
-          $ref: '#/components/schemas/ProtocolEnum'
+          allOf:
+            - $ref: '#/components/schemas/ProtocolEnum'
         macro:
-          description: ''
           type: string
       required:
         - protocol
@@ -1364,14 +1307,12 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         protocol:
-          description: ''
-          $ref: '#/components/schemas/ProtocolEnum'
+          allOf:
+            - $ref: '#/components/schemas/ProtocolEnum'
         macro:
-          description: ''
           type: string
       required:
         - id

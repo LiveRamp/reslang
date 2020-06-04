@@ -52,7 +52,6 @@ paths:
             maximum: 100
         - in: query
           name: createdSince
-          description: ''
           required: false
           schema:
             type: string
@@ -64,22 +63,19 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         identifierType:
-          description: ''
-          $ref: '#/components/schemas/IdentifierType'
+          allOf:
+            - $ref: '#/components/schemas/IdentifierType'
         requestType:
-          description: ''
-          $ref: '#/components/schemas/RequestType'
+          allOf:
+            - $ref: '#/components/schemas/RequestType'
         dataController:
-          description: ''
-          $ref: '#/components/schemas/DataController'
+          allOf:
+            - $ref: '#/components/schemas/DataController'
         fileUrl:
-          description: ''
           type: string
         timeStamp:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -102,13 +98,10 @@ components:
       type: object
       properties:
         controllerSpecifier:
-          description: ''
           type: string
         controllerIdentification:
-          description: ''
           type: string
         liveRampControlled:
-          description: ''
           type: boolean
       required:
         - controllerSpecifier

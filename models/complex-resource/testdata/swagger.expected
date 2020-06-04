@@ -31,7 +31,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -74,23 +73,22 @@ paths:
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: integer
             format: int32
         - in: query
           name: brand
-          description: ''
           required: false
           schema:
-            $ref: '#/components/schemas/BrandEnum'
+            allOf:
+              - $ref: '#/components/schemas/BrandEnum'
         - in: query
           name: view
-          description: ''
           required: false
           schema:
-            $ref: '#/components/schemas/ViewEnum'
+            allOf:
+              - $ref: '#/components/schemas/ViewEnum'
   '/v1/cars/{id}':
     get:
       tags:
@@ -114,16 +112,15 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
         - in: query
           name: view
-          description: ''
           required: false
           schema:
-            $ref: '#/components/schemas/ViewEnum'
+            allOf:
+              - $ref: '#/components/schemas/ViewEnum'
   '/v1/cars/{carId}/wheels':
     post:
       tags:
@@ -144,7 +141,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -214,7 +210,6 @@ paths:
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: integer
@@ -249,7 +244,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -278,7 +272,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -293,19 +286,16 @@ components:
           type: string
           example: This is a company name
         home:
-          description: ''
           type: string
           format: url
           example: 'This is the company website http://{id}}.liveramp.com'
         homeArray:
-          description: ''
           items:
             type: string
             format: url
             example: Array of urls
           type: array
         other:
-          description: ''
           type: string
           format: url
           example: 'https://www.domain.com (url)'
@@ -319,23 +309,21 @@ components:
       type: object
       properties:
         brand:
-          description: ''
-          $ref: '#/components/schemas/BrandEnum'
+          allOf:
+            - $ref: '#/components/schemas/BrandEnum'
         engine:
-          description: ''
-          $ref: '#/components/schemas/Specification'
+          allOf:
+            - $ref: '#/components/schemas/Specification'
         components:
-          description: ''
-          $ref: '#/components/schemas/Specification'
+          allOf:
+            - $ref: '#/components/schemas/Specification'
         homeGarageId:
-          description: ''
           type: string
           example: Link to simple-resource.Garage resource via its id
         manufacturer:
-          description: ''
-          $ref: '#/components/schemas/simpleresourceManufacturer'
+          allOf:
+            - $ref: '#/components/schemas/simpleresourceManufacturer'
         rentedGarageIds:
-          description: ''
           items:
             type: string
             example: Link to simple-resource.Garage resource via its id
@@ -352,32 +340,28 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         bought:
-          description: ''
           type: string
           format: ISO8601 UTC date
           example: '2019-04-13'
         brand:
-          description: ''
-          $ref: '#/components/schemas/BrandEnum'
+          allOf:
+            - $ref: '#/components/schemas/BrandEnum'
         engine:
-          description: ''
-          $ref: '#/components/schemas/Specification'
+          allOf:
+            - $ref: '#/components/schemas/Specification'
         components:
-          description: ''
-          $ref: '#/components/schemas/Specification'
+          allOf:
+            - $ref: '#/components/schemas/Specification'
         homeGarageId:
-          description: ''
           type: string
           example: Link to simple-resource.Garage resource via its id
         manufacturer:
-          description: ''
-          $ref: '#/components/schemas/simpleresourceManufacturer'
+          allOf:
+            - $ref: '#/components/schemas/simpleresourceManufacturer'
         rentedGarageIds:
-          description: ''
           items:
             type: string
             example: Link to simple-resource.Garage resource via its id
@@ -409,10 +393,8 @@ components:
       type: object
       properties:
         type:
-          description: ''
           type: string
         documentation:
-          description: ''
           type: string
       required:
         - type
@@ -422,7 +404,6 @@ components:
       type: object
       properties:
         radius:
-          description: ''
           type: number
       required:
         - radius
@@ -431,11 +412,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         radius:
-          description: ''
           type: number
       required:
         - id

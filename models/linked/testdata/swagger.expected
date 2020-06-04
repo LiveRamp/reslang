@@ -36,7 +36,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   '/v1/foos/{fooId}/bars/{id}':
@@ -68,7 +67,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   '/v1/linkings/{id}':
@@ -94,7 +92,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -105,7 +102,6 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
       required:
         - id
@@ -113,7 +109,6 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
       required:
         - id
@@ -121,33 +116,27 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         address:
-          description: ''
           type: string
           format: url
           example: 'https://www.domain.com (url)'
         name:
-          description: ''
           items:
             type: string
             format: url
             example: List of urls
           type: array
         foo:
-          description: ''
           type: string
           example: Link to Foo resource via its id
         foos:
-          description: ''
           items:
             type: string
             example: Link to Foo resource via its id
           type: array
         bar:
-          description: ''
           items:
             type: string
           minItems: 2
@@ -155,7 +144,6 @@ components:
           type: array
           example: 'Link to Foo::Bar resource via [fooId, barId]'
         bars:
-          description: ''
           items:
             items:
               type: string
