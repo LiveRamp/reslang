@@ -2,7 +2,7 @@
 structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ constraints: structconstraints _ "{" _
     attrs:attribute+ _
 "}" _ ";"? _ {
-    return { kind: type, "type": type, parents: [], "short": name, "comment": comment, "attributes": attrs}
+    return { kind: type, "type": type, parents: [], "short": name, "comment": comment, "attributes": attrs, constraints: constraints}
 }
 
 structconstraints = constraints:(_ (maxProperties / minProperties) (__ / ";"))* {

@@ -450,7 +450,7 @@ Actions cannot have subresources`
         }
         const sane = camelCase(def.name) + suffix
 
-        if (def.kind == "structure" && def.constraints) {
+        if (def.kind === "structure" && def.constraints) {
             if (def.constraints.minProperties) {
                 request.minProperties = def.constraints.minProperties
             }
