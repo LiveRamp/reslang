@@ -1,10 +1,21 @@
 
-structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ "{" _
+structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ constraints: structconstraints _ "{" _
     attrs:attribute+ _
 "}" _ ";"? _ {
     return { kind: type, "type": type, parents: [], "short": name, "comment": comment, "attributes": attrs}
 }
 
+structconstraints = constraints:(_ (maxProperties / minProperties) (__ / ";"))* {
+    return constraints.reduce(function(acc, val) {
+        return {...acc, ...val[1]}}, {})
+}
+
+minProperties = "min-properties:" _ min:number {
+    return {minProperties: min}
+}
+maxProperties = "max-properties:" _ max:number {
+    return {maxProperties: max}
+}	
 // attributes also handle stringmaps
 attributes = _ attrs:attribute+ _ { return attrs; }
 attribute = _ comment:description? _ name:name _ ":" _

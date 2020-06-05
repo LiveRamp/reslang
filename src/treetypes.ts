@@ -114,6 +114,7 @@ export interface IEnum extends IDefinition {
 export interface IStructure extends IDefinition {
     kind: "structure"
     attributes?: IAttribute[]
+    constraints?: IStructureConstraints
 }
 
 export interface IUnion extends IDefinition {
@@ -143,6 +144,7 @@ export interface IAttribute {
     example?: string
 }
 
+
 export interface IArray {
     type: number
     min: number
@@ -164,6 +166,11 @@ export interface IModifiers {
 export interface IConstraints {
     minLength: number
     maxLength: number
+}
+
+export interface IStructureConstraints {
+    minProperties?: number
+    maxProperties?: number
 }
 
 export interface IDiagram {

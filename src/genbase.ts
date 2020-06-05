@@ -99,7 +99,7 @@ export abstract class BaseGen {
                     } else {
                         throw new Error(
                             "Cannot specify more than one namespace in a directory: " +
-                                local[0]
+                            local[0]
                         )
                     }
                 }
@@ -150,10 +150,10 @@ export abstract class BaseGen {
             ) {
                 throw new Error(
                     `RULE maxResourceDepth(${maxResource}) violated: ${
-                        def.name
+                    def.name
                     }\n
 The maximum depth a resource can be nested is ${maxResource} levels. Your level is ${
-                        def.parents.length + 1
+                    def.parents.length + 1
                     }`
                 )
             }
@@ -444,10 +444,20 @@ Actions cannot have subresources`
             properties: any
             required: string[]
             description: string
-            allOf: {}
+            allOf: {},
+            minProperties?: number
+            maxProperties?: number
         }
         const sane = camelCase(def.name) + suffix
 
+        if (def.kind == "structure" && def.constraints) {
+            if (def.constraints.minProperties) {
+                request.minProperties = def.constraints.minProperties
+            }
+            if (def.constraints.maxProperties) {
+                request.maxProperties = def.constraints.maxProperties
+            }
+        }
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly || attr.modifiers.representation) {
                 continue
@@ -494,8 +504,8 @@ Actions cannot have subresources`
             if (already && already.generateInput /* struct */) {
                 throw new Error(
                     "Cannot have union attribute called " +
-                        camel +
-                        " as definition already exists"
+                    camel +
+                    " as definition already exists"
                 )
             }
             mapping[attr.name] = "#/components/schemas/" + camel
@@ -548,10 +558,10 @@ Actions cannot have subresources`
         if (!isStructure(indef)) {
             throw new Error(
                 "Inline attribute " +
-                    attr.name +
-                    " of " +
-                    def.short +
-                    " has to be a structure"
+                attr.name +
+                " of " +
+                def.short +
+                " has to be a structure"
             )
         }
         for (const att of indef.attributes || []) {
