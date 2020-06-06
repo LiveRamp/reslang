@@ -41,7 +41,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
     get:
       tags:
@@ -76,6 +75,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -85,13 +85,15 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: status
           description: Status of the given DistributionRequest
           required: false
           schema:
-            $ref: '#/components/schemas/StatusEnum'
+            allOf:
+              - $ref: '#/components/schemas/StatusEnum'
         - in: query
           name: sort
           description: >-
@@ -109,7 +111,8 @@ paths:
             * sort=statusUpdatedAt:desc,createdAt:asc
           required: false
           schema:
-            $ref: '#/components/schemas/SortTypeEnum'
+            allOf:
+              - $ref: '#/components/schemas/SortTypeEnum'
         - in: query
           name: createdAfter
           description: >-
@@ -199,7 +202,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   '/v1/distribution-requests/{distributionRequestId}/actions/cancel':
@@ -217,7 +219,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '202':
           description: 'Cancel action has been accepted, but is not yet complete'
@@ -227,7 +228,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '204':
           description: >-
@@ -269,7 +269,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '202':
           description: 'Retry action has been accepted, but is not yet complete'
@@ -279,7 +278,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
         '204':
           description: >-
@@ -379,7 +377,8 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfig'
+            allOf:
+              - $ref: '#/components/schemas/DataMappingConfig'
           type: array
       required:
         - destinationEndpointId
@@ -390,7 +389,6 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         destinationEndpointId:
           description: >-
@@ -459,7 +457,8 @@ components:
             more than 500 entries, an error with status code 422 will be
             returned
           items:
-            $ref: '#/components/schemas/DataMappingConfig'
+            allOf:
+              - $ref: '#/components/schemas/DataMappingConfig'
           type: array
         createdAt:
           description: 'Datetime in UTC, formatted as ISO-8601, when the request was created'
@@ -468,7 +467,8 @@ components:
           example: '2019-04-13T03:35:34Z'
         status:
           description: Status of the given DistributionRequest
-          $ref: '#/components/schemas/StatusEnum'
+          allOf:
+            - $ref: '#/components/schemas/StatusEnum'
         statusUpdatedAt:
           description: >-
             Datetime in UTC, formatted as ISO-8601, when the status of the
@@ -478,10 +478,11 @@ components:
           example: '2019-04-13T03:35:34Z'
         outputMetaData:
           description: Metadata about the batch output
-          $ref: '#/components/schemas/BatchOutputMetadata'
+          allOf:
+            - $ref: '#/components/schemas/BatchOutputMetadata'
         distributionType:
-          description: ''
-          $ref: '#/components/schemas/DistributionTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/DistributionTypeEnum'
       required:
         - id
         - destinationEndpointId
@@ -523,11 +524,11 @@ components:
       type: object
       properties:
         input:
-          description: ''
-          $ref: '#/components/schemas/InputFormat'
+          allOf:
+            - $ref: '#/components/schemas/InputFormat'
         output:
-          description: ''
-          $ref: '#/components/schemas/OutputFormat'
+          allOf:
+            - $ref: '#/components/schemas/OutputFormat'
       required:
         - input
         - output
@@ -549,11 +550,9 @@ components:
         - type: object
           properties:
             key:
-              description: ''
               type: integer
               format: int32
             value:
-              description: ''
               type: integer
               format: int32
     OutputFormat:
@@ -576,10 +575,8 @@ components:
         - type: object
           properties:
             keyLabel:
-              description: ''
               type: string
             valueLabel:
-              description: ''
               type: string
     OutputIdLabel:
       allOf:
@@ -587,15 +584,14 @@ components:
         - type: object
           properties:
             idLabel:
-              description: ''
               type: string
     BatchOutputMetadata:
       type: object
       properties:
         fileDetails:
-          description: ''
           items:
-            $ref: '#/components/schemas/FileDetails'
+            allOf:
+              - $ref: '#/components/schemas/FileDetails'
           type: array
         totalOutputSize:
           description: Total size of the distributed data in bytes
@@ -616,10 +612,8 @@ components:
       type: object
       properties:
         fileName:
-          description: ''
           type: string
         lineCount:
-          description: ''
           type: integer
           format: int32
       required:

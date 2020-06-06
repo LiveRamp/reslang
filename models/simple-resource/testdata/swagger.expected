@@ -35,7 +35,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
                     minLength: 10
                     maxLength: 300
@@ -65,6 +64,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -74,10 +74,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: string
@@ -85,7 +85,6 @@ paths:
             maxLength: 300
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -112,7 +111,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
             minLength: 10
@@ -140,7 +138,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
             minLength: 10
@@ -163,7 +160,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
             minLength: 10
@@ -233,6 +229,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -242,10 +239,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -270,11 +267,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         manufacturer:
-          description: ''
-          $ref: '#/components/schemas/Manufacturer'
+          allOf:
+            - $ref: '#/components/schemas/Manufacturer'
       required:
         - name
         - manufacturer
@@ -283,16 +279,14 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
           minLength: 10
           maxLength: 300
         name:
-          description: ''
           type: string
         manufacturer:
-          description: ''
-          $ref: '#/components/schemas/Manufacturer'
+          allOf:
+            - $ref: '#/components/schemas/Manufacturer'
       required:
         - id
         - name
@@ -302,7 +296,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -323,19 +316,16 @@ components:
           type: string
           example: This is a company name
         home:
-          description: ''
           type: string
           format: url
           example: 'This is the company website http://{id}}.liveramp.com'
         homeArray:
-          description: ''
           items:
             type: string
             format: url
             example: Array of urls
           type: array
         other:
-          description: ''
           type: string
           format: url
           example: 'https://www.domain.com (url)'
@@ -349,11 +339,9 @@ components:
       type: object
       properties:
         a:
-          description: ''
           type: integer
           format: int32
         b:
-          description: ''
           type: string
       required:
         - a
@@ -363,7 +351,6 @@ components:
       type: object
       properties:
         a:
-          description: ''
           type: integer
           format: int32
       required:
@@ -373,7 +360,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -389,7 +375,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name

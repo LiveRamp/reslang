@@ -1,7 +1,7 @@
 
 
 request-resource DeliverPurchasedSegments {
-    id: string
+    id: string query
 
     segmentsToDeliver: linked Segment[]
     whereToDeliver: linked Destination
@@ -9,7 +9,7 @@ request-resource DeliverPurchasedSegments {
     complete: boolean
 
     /operations
-        POST GET EVENTS
+        POST GET EVENTS MULTIGET
 }
 
 

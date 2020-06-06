@@ -38,7 +38,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -62,7 +61,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
   '/v1/resource-bs/{id}':
@@ -88,7 +86,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -110,7 +107,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -134,7 +130,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
   '/v2/resource-bs/{id}':
@@ -160,7 +155,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -184,7 +178,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -231,7 +224,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -242,19 +234,15 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         bId:
-          description: ''
           type: integer
           format: int32
           example: Link to ResourceB resource via its id
         newBId:
-          description: ''
           type: integer
           format: int32
           example: Link to v2/ResourceB resource via its id
@@ -267,7 +255,6 @@ components:
       type: object
       properties:
         size:
-          description: ''
           type: integer
           format: int32
       required:
@@ -276,11 +263,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         size:
-          description: ''
           type: integer
           format: int32
       required:
@@ -290,7 +275,6 @@ components:
       type: object
       properties:
         totalSize:
-          description: ''
           type: integer
           format: int32
       required:
@@ -299,11 +283,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         totalSize:
-          description: ''
           type: integer
           format: int32
       required:
@@ -313,7 +295,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -321,11 +302,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
       required:
         - id

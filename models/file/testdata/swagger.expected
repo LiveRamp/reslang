@@ -37,7 +37,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
                     format: uuid
                     example: 123e4567-e89b-12d3-a456-426655440000
@@ -69,6 +68,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -78,10 +78,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: string
@@ -89,7 +89,6 @@ paths:
             example: 123e4567-e89b-12d3-a456-426655440000
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -116,7 +115,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
             format: uuid
@@ -141,7 +139,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
     get:
       tags:
@@ -171,6 +168,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -180,10 +178,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: type
-          description: ''
           required: false
           schema:
             type: string
@@ -222,7 +220,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   '/v1/directories/{directoryId}/files':
@@ -245,7 +242,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -303,6 +299,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -312,10 +309,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: contents
-          description: ''
           required: false
           schema:
             type: string
@@ -350,7 +347,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -374,7 +370,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
     get:
@@ -405,6 +400,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -414,10 +410,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: id
-          description: ''
           required: false
           schema:
             type: integer
@@ -445,7 +441,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -455,18 +450,18 @@ paths:
         - Cancel DirectoryDeleteRequest
       operationId: Cancel DirectoryDeleteRequest
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelDirectoryDeleteRequestInput'
       responses:
         '200':
-          description: Cancel action completed
+          description: ''
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    description: ''
-                    type: integer
-                    format: int32
+                $ref: '#/components/schemas/CancelDirectoryDeleteRequestOutput'
         '404':
           description: Parent resource(s) not found
           content:
@@ -488,7 +483,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -497,12 +491,10 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426655440000
         name:
-          description: ''
           type: string
       required:
         - id
@@ -520,13 +512,10 @@ components:
       type: object
       properties:
         type:
-          description: ''
           type: string
         format:
-          description: ''
           type: string
         specId:
-          description: ''
           type: string
           example: Link to Specification resource via its id
       required:
@@ -538,16 +527,12 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         type:
-          description: ''
           type: string
         format:
-          description: ''
           type: string
         specId:
-          description: ''
           type: string
           example: Link to Specification resource via its id
       required:
@@ -568,13 +553,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         url:
-          description: ''
           type: string
         fileTypeId:
-          description: ''
           type: string
           example: Link to FileType resource via its id
       required:
@@ -586,17 +568,13 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         url:
-          description: ''
           type: string
         fileTypeId:
-          description: ''
           type: string
           example: Link to FileType resource via its id
       required:
@@ -617,7 +595,6 @@ components:
       type: object
       properties:
         directoryId:
-          description: ''
           type: string
           format: uuid
           example: Link to Directory resource via its id
@@ -628,11 +605,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         directoryId:
-          description: ''
           type: string
           format: uuid
           example: Link to Directory resource via its id
@@ -648,21 +623,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
+    CancelDirectoryDeleteRequestInput:
+      type: object
+      properties:
+        time:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - time
+      description: This models an action on a request
+    CancelDirectoryDeleteRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        time:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - time
+      description: This models an action on a request
     SpecialError:
       type: object
       properties:
         message:
-          description: ''
           type: string
         time:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
         errors:
-          description: ''
           items:
-            $ref: '#/components/schemas/StandardError'
+            allOf:
+              - $ref: '#/components/schemas/StandardError'
           type: array
       required:
         - message

@@ -370,7 +370,13 @@ Actions cannot have subresources`
             case Verbs.GET:
                 return "Get " + bulk + def.name
             case Verbs.MULTIGET:
-                return "Get " + bulk + pluralizeName(def.name)
+                const plural = pluralizeName(def.name)
+                return (
+                    "Get " +
+                    (plural === def.name ? "multiple " : "") +
+                    bulk +
+                    plural
+                )
             case Verbs.DELETE:
                 return "Delete " + bulk + def.name
         }
@@ -675,8 +681,12 @@ Actions cannot have subresources`
         const sane = camelCase(name)
 
         // allow description overrides by caller
-        if (!obj.description && !suppressDescription) {
-            obj.description = this.translateDoc(attr.comment)
+        if (!obj.description) {
+            delete obj.description
+        }
+        if (!obj.description && !suppressDescription && attr.comment) {
+            const desc = this.translateDoc(attr.comment)
+            obj.description = desc
         }
         if (schemaLevel) {
             obj.schema = {}
@@ -707,14 +717,16 @@ Actions cannot have subresources`
                 case "structure":
                 case "union":
                 case "enum":
-                    schema.$ref = `#/components/schemas/${sane}`
+                    schema.allOf = [{ $ref: `#/components/schemas/${sane}` }]
                     break
                 case "resource-like":
                     // must have a linked annotation
                     if (attr.linked) {
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
-                        schema.$ref = `#/components/schemas/${sane}Output`
+                        schema.allOf = [
+                            { $ref: `#/components/schemas/${sane}Output` },
+                        ]
                     } else {
                         throw new Error(
                             `Attribute ${attr.name} references resource ${attr.type} but doesn't use "linked" or "full"`
@@ -776,6 +788,7 @@ Actions cannot have subresources`
 
     protected pushArrayDown(schema: any, min: number = 0, max: number = 0) {
         schema.items = {
+            allOf: schema.allOf,
             items: schema.items,
             type: schema.type,
             format: schema.format,
@@ -798,6 +811,7 @@ Actions cannot have subresources`
         delete schema.format
         delete schema.example
         delete schema.$ref
+        delete schema.allOf
         schema.type = "array"
     }
 

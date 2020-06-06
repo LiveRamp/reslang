@@ -9,7 +9,7 @@ tags:
   - name: Person
     description: '(configuration)  '
 paths:
-  /v1/persons:
+  /v1/people:
     post:
       tags:
         - Person
@@ -29,10 +29,9 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
-  '/v1/persons/{id}':
+  '/v1/people/{id}':
     get:
       tags:
         - Person
@@ -55,7 +54,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -82,7 +80,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -109,7 +106,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -120,13 +116,10 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         address:
-          description: ''
           type: string
         birthDate:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -137,17 +130,13 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         address:
-          description: ''
           type: string
         birthDate:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
@@ -159,10 +148,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         address:
-          description: ''
           type: string
       required:
         - name
@@ -170,10 +157,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         address:
-          description: ''
           type: string
     StandardError:
       type: object

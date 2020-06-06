@@ -9,23 +9,23 @@ digraph G {
                     <tr><td><b>Directory        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name</font></td></tr>"}</table>>];
 "FileType" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>FileType        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id type format specId</font></td></tr>"}</table>>];
+                    <tr><td><b>FileType        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET type</font></td></tr>"}</table>>];
 "Specification" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Specification        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
 "File" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>File        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="left">contents: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name url fileTypeId contents EVENTS</font></td></tr>"}</table>>];
+                    <tr><td><b>File        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="left">contents: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET contents EVENTS</font></td></tr>"}</table>>];
 "Directory" -> "File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "DirectoryDeleteRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>DirectoryDeleteRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id directoryId EVENTS</font></td></tr>"}</table>>];
+                    <tr><td><b>DirectoryDeleteRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id EVENTS</font></td></tr>"}</table>>];
 "DirectoryDeleteIncomplete" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='dashed'  >
                     <tr><td><b>DirectoryDeleteIncomplete        </b></td></tr><hr/><tr><td align="left">corrupted: boolean</td></tr><tr><td align="left">timeOfFailure: datetime</td></tr>"}</table>>];
 "Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">time: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "DirectoryDeleteRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
 "SpecialError" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >

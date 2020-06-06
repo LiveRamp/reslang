@@ -35,7 +35,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
   '/v1/simple-resources/{id}':
     get:
@@ -60,7 +59,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   /v2/test-resources:
@@ -83,7 +81,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
   '/v2/test-resources/{id}':
@@ -109,7 +106,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -133,7 +129,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -180,7 +175,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: integer
             format: int32
@@ -191,7 +185,6 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
       required:
         - name
@@ -200,10 +193,8 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         name:
-          description: ''
           type: string
       required:
         - id
@@ -213,10 +204,8 @@ components:
       type: object
       properties:
         name:
-          description: ''
           type: string
         number:
-          description: ''
           type: integer
           format: int32
       required:
@@ -226,14 +215,11 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         name:
-          description: ''
           type: string
         number:
-          description: ''
           type: integer
           format: int32
       required:
@@ -244,7 +230,6 @@ components:
       type: object
       properties:
         address:
-          description: ''
           items:
             type: string
           type: array
@@ -254,11 +239,9 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: integer
           format: int32
         address:
-          description: ''
           items:
             type: string
           type: array

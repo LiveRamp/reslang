@@ -103,6 +103,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -112,6 +113,7 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
   '/v1/audiences/{audienceId}/fields/{id}':
     get:
@@ -209,7 +211,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -257,7 +258,6 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: integer
                     format: int32
         '404':
@@ -288,7 +288,8 @@ components:
             The type of data that will be imported into this field.
                NUMERIC: only numeric data/values can be added to this Field.
                STRING: any string data or values can be added to this Field.
-          $ref: '#/components/schemas/FieldTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/FieldTypeEnum'
         enumerated:
           description: Whether or not the Field's values are enumerated.
           type: boolean
@@ -299,7 +300,8 @@ components:
                SINGLETON: only store the value most recently imported for this audience key.
                SET: store all values at most once that were imported for this audience key.
                MULTISET: store all values imported for this audience key potentially duplicate times.
-          $ref: '#/components/schemas/ValueCollectionTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
           description: |-
             The list of enum values for the Field.
@@ -328,7 +330,8 @@ components:
             The type of data that will be imported into this field.
                NUMERIC: only numeric data/values can be added to this Field.
                STRING: any string data or values can be added to this Field.
-          $ref: '#/components/schemas/FieldTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/FieldTypeEnum'
         enumerated:
           description: Whether or not the Field's values are enumerated.
           type: boolean
@@ -339,7 +342,8 @@ components:
                SINGLETON: only store the value most recently imported for this audience key.
                SET: store all values at most once that were imported for this audience key.
                MULTISET: store all values imported for this audience key potentially duplicate times.
-          $ref: '#/components/schemas/ValueCollectionTypeEnum'
+          allOf:
+            - $ref: '#/components/schemas/ValueCollectionTypeEnum'
         values:
           description: |-
             The list of enum values for the Field.
@@ -415,7 +419,6 @@ components:
       type: object
       properties:
         existingFieldURL:
-          description: ''
           type: string
       required:
         - existingFieldURL

@@ -35,8 +35,52 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: ''
                     type: string
+    get:
+      tags:
+        - DeliverPurchasedSegments
+      operationId: Get multiple DeliverPurchasedSegments
+      description: ''
+      responses:
+        '200':
+          description: DeliverPurchasedSegments retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DeliverPurchasedSegments returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverPurchasedSegmentsMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DeliverPurchasedSegments (starting from 0) to include
+            in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DeliverPurchasedSegments to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
   '/v1/deliver-purchased-segments/{id}':
     get:
       tags:
@@ -60,7 +104,6 @@ paths:
         - in: path
           name: id
           required: true
-          description: ''
           schema:
             type: string
   /v1/deliver-purchased-segments/actions/search:
@@ -91,6 +134,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -100,10 +144,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -134,6 +178,7 @@ paths:
             type: integer
             format: int32
             default: 0
+            minimum: 0
         - in: query
           name: limit
           description: >-
@@ -143,10 +188,10 @@ paths:
             type: integer
             format: int32
             default: 10
+            minimum: 1
             maximum: 100
         - in: query
           name: name
-          description: ''
           required: false
           schema:
             type: string
@@ -176,17 +221,14 @@ components:
       type: object
       properties:
         segmentsToDelivers:
-          description: ''
           items:
             type: string
             example: Link to Segment resource via its id
           type: array
         whereToDeliver:
-          description: ''
           type: string
           example: Link to Destination resource via its id
         complete:
-          description: ''
           type: boolean
       required:
         - segmentsToDeliver
@@ -196,25 +238,21 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         segmentsToDelivers:
-          description: ''
           items:
             type: string
             example: Link to Segment resource via its id
           type: array
         whereToDeliver:
-          description: ''
           type: string
           example: Link to Destination resource via its id
         segmentStatuses:
-          description: ''
           items:
-            $ref: '#/components/schemas/DeliveryStatus'
+            allOf:
+              - $ref: '#/components/schemas/DeliveryStatus'
           type: array
         complete:
-          description: ''
           type: boolean
       required:
         - id
@@ -222,14 +260,20 @@ components:
         - whereToDeliver
         - segmentStatuses
         - complete
+    DeliverPurchasedSegmentsMultiResponse:
+      type: object
+      properties:
+        deliverPurchasedSegments:
+          description: Array of retrieved DeliverPurchasedSegments
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverPurchasedSegmentsOutput'
     BulksearchDeliverPurchasedSegmentsOutput:
       type: object
       properties:
         id:
-          description: ''
           type: string
         name:
-          description: ''
           type: string
       required:
         - id
@@ -246,10 +290,8 @@ components:
       type: object
       properties:
         id:
-          description: ''
           type: string
         name:
-          description: ''
           type: string
       required:
         - id
@@ -266,9 +308,9 @@ components:
       type: object
       properties:
         segmentStatuses:
-          description: ''
           items:
-            $ref: '#/components/schemas/DeliveryStatus'
+            allOf:
+              - $ref: '#/components/schemas/DeliveryStatus'
           type: array
       required:
         - segmentStatuses
@@ -276,17 +318,15 @@ components:
       type: object
       properties:
         updated:
-          description: ''
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
         segment:
-          description: ''
           type: string
           example: Link to Segment resource via its id
         status:
-          description: ''
-          $ref: '#/components/schemas/DeliveryStatusEnum'
+          allOf:
+            - $ref: '#/components/schemas/DeliveryStatusEnum'
       required:
         - updated
         - segment

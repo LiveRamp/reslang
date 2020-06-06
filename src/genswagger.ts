@@ -19,6 +19,7 @@ import {
     isResourceLike,
     isStructure,
     isUnion,
+    IDefinition,
 } from "./treetypes"
 
 /**
@@ -331,6 +332,7 @@ export default class SwagGen extends BaseGen {
                     type: "integer",
                     format: "int32",
                     default: 0,
+                    minimum: 0,
                 },
             })
             gparams.push({
@@ -342,6 +344,7 @@ export default class SwagGen extends BaseGen {
                     type: "integer",
                     format: "int32",
                     default: 10,
+                    minimum: 1,
                     maximum: 100,
                 },
             })
@@ -619,12 +622,18 @@ export default class SwagGen extends BaseGen {
     private formErrors(op: IOperation, responses: any) {
         for (const err of op.errors || []) {
             for (const code of err.codes) {
+                const def = this.extractDefinition(err.struct.name)
+                const sane = camelCase(
+                    this.formSingleUniqueName(def, false) +
+                        (isResourceLike(def) ? "Output" : "")
+                )
+
                 responses[code.code] = {
                     description: this.translateDoc(code.comment),
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${err.struct.name}`,
+                                $ref: `#/components/schemas/${sane}`,
                             },
                         },
                     },
@@ -818,12 +827,11 @@ export default class SwagGen extends BaseGen {
                     for (const op of el.operations || []) {
                         for (const err of op.errors || []) {
                             // locate the error type and mark it for generation
-                            this.follow(
-                                this.extractDefinition(err.struct.name),
-                                visited,
-                                includeErrors,
-                                level + 1
-                            )
+                            const def = this.extractDefinition(err.struct.name)
+                            if (isResourceLike(def)) {
+                                def.generateOutput = true
+                            }
+                            this.follow(def, visited, includeErrors, level + 1)
                         }
                     }
                 }

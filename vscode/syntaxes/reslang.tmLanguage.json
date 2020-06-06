@@ -1,77 +1,81 @@
 {
-  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Reslang",
-  "patterns": [
-    {
-      "include": "#keywords"
-    },
-    {
-      "include": "#strings"
-    },
-    {
-      "include": "#comment"
-    },
-    {
-      "include": "#field"
-    },
-    {
-      "include": "#operations"
-    },
-    {
-      "include": "#optional"
-    }
-  ],
-  "repository": {
-    "keywords": {
-      "patterns": [{
-        "name": "entity.name.type",
-        "match": "\b*(enum|resource|structure|namespace|asset-resource|\/operations)\b*"
-      }]
-    },
-    "strings": {
-      "name": "string.quoted.double.reslang",
-      "begin": "\"",
-      "end": "\"",
-      "patterns": [
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Reslang",
+    "patterns": [
         {
-          "name": "constant.character.escape.reslang",
-          "match": "\\\\."
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#field"
+        },
+        {
+            "include": "#operations"
+        },
+        {
+            "include": "#optional"
         }
-      ]
-    },
-    "operations": {
-        "name": "operations.reslang",
-        "patterns": [{
-          "name": "constant.language.reslang",
-          "match": "\b*(GET|MULTIGET|POST|PUT|DELETE)\b*"
-        }]
-    },
-    "comment": {
-        "name": "comment.reslang",
-        "patterns": [{
-          "name": "comment.block.documentation.reslang",
-          "begin": "/\\*",
-          "end": "\\*/"
-          },
-          {
-            "name": "comment.line.reslang",
-            "match": "//.*"
-          }
-        ]
-    },
-    "field": {
-        "name": "field.reslang",
-        "match": "([A-Za-z\\-]+):\\s+([A-Za-z\\-]+)",
-        "captures": {
-          "1":{ "name": "entity.name.section.reslang"},
-          "2":{ "name": "entity.other.attribute-name.reslang"}
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "entity.name.type",
+                    "match": "\b*(bulk|enum|future|produces|consumes|event|sync|async|action|subresource|request-resource|asset-resource|configuration-resource|resource|structure|union|namespace|/operations|/header|/payload)\b*"
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.reslang",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.reslang",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "operations": {
+            "name": "operations.reslang",
+            "patterns": [
+                {
+                    "name": "constant.language.reslang",
+                    "match": "\b*(GET|MULTIGET|POST|PUT|DELETE|EVENTS)\b*"
+                }
+            ]
+        },
+        "comment": {
+            "name": "comment.reslang",
+            "patterns": [
+                {
+                    "name": "comment.block.documentation.reslang",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                },
+                {
+                    "name": "comment.line.reslang",
+                    "match": "//.*"
+                }
+            ]
+        },
+        "field": {
+            "name": "field.reslang",
+            "match": "([A-Za-z\\-]+):\\s+([A-Za-z\\-]+)",
+            "captures": {
+                "1": { "name": "entity.name.section.reslang" },
+                "2": { "name": "entity.other.attribute-name.reslang" }
+            }
+        },
+        "optional": {
+            "name": "entity.name.tag",
+            "match": "\b*(optional-post|optional-put|optional-get|optional|max-length|min-length|linked|queryonly|query|mutable|outpu)\b*"
         }
     },
-    "optional": {
-      "name": "entity.name.tag",
-      "match": "optional|max-length|min-length"
-    }
-
-  },
-  "scopeName": "source.reslang"
+    "scopeName": "source.reslang"
 }
