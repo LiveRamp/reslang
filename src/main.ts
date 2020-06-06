@@ -1,5 +1,3 @@
-#!/usr/bin/env ts-node
-
 import clip from "clipboardy"
 import yaml from "js-yaml"
 import tmp from "tmp"

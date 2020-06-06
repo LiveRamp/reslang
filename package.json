@@ -15,7 +15,9 @@
     "@types/pegjs": "^0.10.1",
     "@types/shelljs": "^0.8.5",
     "@types/yargs": "^13.0.0",
+    "@wessberg/rollup-plugin-ts": "^1.2.24",
     "jest": "^24.8.0",
+    "rollup": "^2.13.1",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
     "tslint": "^5.16.0",
@@ -39,6 +41,7 @@
   "scripts": {
     "start": "npm run build:live",
     "build": "tsc -p .",
+    "build:dist": "rollup -c && cp -r src/grammar dist && cp -r src/library dist && cp dist_run.js dist",
     "build:live": "ts-node src/main.ts",
     "test": "jest"
   },
@@ -47,11 +50,11 @@
     "tabWidth": 4
   },
   "bin": {
-    "reslang": "./src/main.ts"
+    "reslang": "./dist/run.js"
   },
   "publishConfig": {
-     "registry": "https://npm.pkg.github.com/"
-    },
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:LiveRamp/reslang.git"
