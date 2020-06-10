@@ -13,12 +13,6 @@ import { isPrimitiveType } from "./parse"
  * generate swagger from the parsed representation
  */
 
-// type Channel = { description: string } & PubOrSub
-// type PubOrSub =
-//     | { publish: PublishOrSubscribe }
-//     | { subscribe: PublishOrSubscribe }
-// type PubOrSubKey = "publish" | "subscribe"
-
 interface Channel {
     description: string
     publish?: PublishOrSubscribe
@@ -106,9 +100,9 @@ export default class EventsGen extends BaseGen {
                 this.extractOp(el, "EVENTS")
             ) {
                 channels[
-                    "rest-" +
+                    "topics/rest-" +
                         snakeCase(this.getSpace()) +
-                        "." +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
                         snakeCase(el.name)
@@ -137,7 +131,7 @@ export default class EventsGen extends BaseGen {
                 }
 
                 channels[
-                    "adhoc-" +
+                    "topics/adhoc-" +
                         this.mainNamespace +
                         "-" +
                         getVersion(el.name) +
