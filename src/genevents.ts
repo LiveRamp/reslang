@@ -13,6 +13,8 @@ import { isPrimitiveType } from "./parse"
  * generate swagger from the parsed representation
  */
 
+// The more correct "publish OR subscribe" type was being fiddly,
+// so I didn't bother for now.
 interface Channel {
     description: string
     publish?: PublishOrSubscribe
