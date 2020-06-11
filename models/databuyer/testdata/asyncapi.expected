@@ -14,7 +14,7 @@ servers:
         default: '1883'
 defaultContentType: application/json
 channels:
-  topics/rest-databuyer_v1-deliver-purchased-segments:
+  topics/databuyer_v1-deliver-purchased-segments:
     description: no documentation
     subscribe:
       summary: 'REST: DeliverPurchasedSegments'

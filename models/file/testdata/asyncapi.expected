@@ -14,21 +14,21 @@ servers:
         default: '1883'
 defaultContentType: application/json
 channels:
-  topics/rest-file_v1-directory-file:
+  topics/file_v1-directory-file:
     description: This models a file in a directory
     subscribe:
       summary: 'REST: Directory::File'
       operationId: 'Directory::File'
       message:
         $ref: '#/components/messages/DirectoryFile'
-  topics/rest-file_v1-directory-delete-request:
+  topics/file_v1-directory-delete-request:
     description: This models a long running request
     subscribe:
       summary: 'REST: DirectoryDeleteRequest'
       operationId: DirectoryDeleteRequest
       message:
         $ref: '#/components/messages/DirectoryDeleteRequest'
-  topics/adhoc-file-v1-directory-delete-incomplete:
+  topics/file_v1-directory-delete-incomplete:
     description: 'If a deletion is corrupted, we generate this event'
     subscribe:
       summary: 'Adhoc: DirectoryDeleteIncomplete'

@@ -102,7 +102,7 @@ export default class EventsGen extends BaseGen {
                 this.extractOp(el, "EVENTS")
             ) {
                 channels[
-                    "topics/rest-" +
+                    "topics/" +
                         snakeCase(this.getSpace()) +
                         "_" +
                         getVersion(el.name) +
@@ -133,9 +133,9 @@ export default class EventsGen extends BaseGen {
                 }
 
                 channels[
-                    "topics/adhoc-" +
+                    "topics/" +
                         this.mainNamespace +
-                        "-" +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
                         snakeCase(el.name)

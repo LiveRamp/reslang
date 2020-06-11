@@ -14,35 +14,35 @@ servers:
         default: '1883'
 defaultContentType: application/json
 channels:
-  topics/rest-andrew-simple-example_v1-simple-resource:
+  topics/andrew-simple-example_v1-simple-resource:
     description: A simple REST resource
     subscribe:
       summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
-  topics/rest-andrew-simple-example_v2-test-resource:
+  topics/andrew-simple-example_v2-test-resource:
     description: A test REST resource
     subscribe:
       summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
-  topics/rest-andrew-simple-example_v2-test-resource-foo:
+  topics/andrew-simple-example_v2-test-resource-foo:
     description: A REST subresource
     subscribe:
       summary: 'REST: v2/TestResource::Foo'
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
-  topics/adhoc-eventing-v1-start-signal:
+  topics/eventing_v1-start-signal:
     description: Event to start
     subscribe:
       summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
-  topics/adhoc-eventing-v3-stop-signal:
+  topics/eventing_v3-stop-signal:
     description: Event to stop
     publish:
       summary: 'Adhoc: v3/StopSignal'
