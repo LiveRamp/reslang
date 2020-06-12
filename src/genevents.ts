@@ -13,12 +13,29 @@ import { isPrimitiveType } from "./parse"
  * generate swagger from the parsed representation
  */
 
+// The more correct "publish OR subscribe" type was being fiddly,
+// so I didn't bother for now.
+interface Channel {
+    description: string
+    publish?: PublishOrSubscribe
+    subscribe?: PublishOrSubscribe
+}
+
+interface PublishOrSubscribe {
+    summary: string
+    operationId: string
+    message: {
+        $ref: string
+    }
+}
+type ChannelMap = { [name: string]: Channel }
+
 export default class EventsGen extends BaseGen {
     public generate() {
         this.markGenerate()
         const messages: any = {}
         const schemas: any = {}
-        const channels: any = {}
+        const channels: ChannelMap = {}
         const headers: any = {}
         const asyncapi: object = {
             asyncapi: "2.0.0",
@@ -70,7 +87,7 @@ export default class EventsGen extends BaseGen {
         return asyncapi
     }
 
-    private formChannels(channels: any) {
+    private formChannels(channels: ChannelMap) {
         // handle each primary structure and work out if we should generate structures for it
         for (const el of this.defs) {
             // don't generate for any imported def
@@ -85,9 +102,9 @@ export default class EventsGen extends BaseGen {
                 this.extractOp(el, "EVENTS")
             ) {
                 channels[
-                    "rest-" +
+                    "topics/" +
                         snakeCase(this.getSpace()) +
-                        "." +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
                         snakeCase(el.name)
@@ -103,9 +120,10 @@ export default class EventsGen extends BaseGen {
                 }
             }
             if (isEvent(el)) {
-                const details: any = {
+                let psKey = el.produces ? "subscribe" : "publish"
+                const details = {
                     description: el.comment || "no documentation",
-                    publish: {
+                    [psKey]: {
                         summary: "Adhoc: " + el.name,
                         operationId: el.name,
                         message: {
@@ -113,14 +131,11 @@ export default class EventsGen extends BaseGen {
                         }
                     }
                 }
-                if (el.produces) {
-                    details.subscribe = details.publish
-                    delete details.publish
-                }
+
                 channels[
-                    "adhoc-" +
+                    "topics/" +
                         this.mainNamespace +
-                        "-" +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
                         snakeCase(el.name)
