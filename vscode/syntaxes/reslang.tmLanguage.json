@@ -74,7 +74,7 @@
         },
         "optional": {
             "name": "entity.name.tag",
-            "match": "\b*(optional-post|optional-put|optional-get|optional|max-length|min-length|linked|queryonly|query|mutable|outpu)\b*"
+            "match": "\b*(optional-post|optional-put|optional-get|optional|max-length|min-length|linked|queryonly|query|mutable|output)\b*"
         }
     },
     "scopeName": "source.reslang"
