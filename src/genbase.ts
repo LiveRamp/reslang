@@ -347,7 +347,7 @@ Actions cannot have subresources`
     }
 
     protected formOperationId(def: IResourceLike, verb: Verbs) {
-        const bulk = def.bulk ? "Bulk " : ""
+        const bulk = def.type == "action" && def.bulk ? "Bulk " : ""
 
         // handle action creation separately - make it sound like an action e.g. retry DeliveryRequest
         if (def.type === "action" && verb === Verbs.POST) {
@@ -370,13 +370,9 @@ Actions cannot have subresources`
             case Verbs.GET:
                 return "Get " + bulk + def.name
             case Verbs.MULTIGET:
-                const plural = pluralizeName(def.name)
-                return (
-                    "Get " +
-                    (plural === def.name ? "multiple " : "") +
-                    bulk +
-                    plural
-                )
+                const plural = def.singleton ? def.name : pluralizeName(def.name)
+                const multiple = (plural === def.name && !def.singleton) ? "multiple " : ""
+                return "Get " + multiple + bulk + plural
             case Verbs.DELETE:
                 return "Delete " + bulk + def.name
         }

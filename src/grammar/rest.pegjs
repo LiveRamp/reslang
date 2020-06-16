@@ -11,14 +11,15 @@ resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ 
         parents: [], short: respath.short}
 }
 
-subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _
+subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ bulk:("bulk" / "resource-level")? _ type:("subresource") _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
         kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type, 
         attributes: attributes, operations: operations,
-        parents: respath.parents, short: respath.short}
+        parents: respath.parents, short: respath.short,
+        bulk: bulk}
 }
 
 action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bulk:("bulk" / "resource-level")? _ "action" _ respath:parentrespath _ "{" _

@@ -97,7 +97,7 @@ export default class SwagGen extends BaseGen {
                         full = pluralizeName(full)
                     }
                     pname = actual.parentName
-                    if (action && el.bulk && first) {
+                    if (el.bulk && first) {
                         parents = `/${full}` + parents
                     } else {
                         if (!actual.singleton) {
@@ -133,13 +133,13 @@ export default class SwagGen extends BaseGen {
                 const post = this.extractOp(el, "POST")
                 const multiget = this.extractOp(el, "MULTIGET")
 
-                if (singleton && (post || multiget)) {
+                if (singleton && post) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST`
                     )
                 }
 
-                if (!singleton && (post || multiget)) {
+                if (post || multiget) {
                     paths[`/${major}${parents}/${actionPath}${name}`] = path
                     this.formNonIdOperations(
                         el,
@@ -194,7 +194,7 @@ export default class SwagGen extends BaseGen {
         post: IOperation | null,
         multiget: IOperation | null
     ) {
-        const plural = pluralizeName(el.short)
+        const plural = el.singleton ? el.short : pluralizeName(el.short)
         const unique = this.formSingleUniqueName(el)
         const camel = camelCase(unique)
         const notFound =
@@ -377,7 +377,7 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${camel}MultiResponse`,
+                                $ref: `#/components/schemas/${camel}${el.singleton ? "Output" : "MultiResponse"}`,
                             },
                         },
                     },
@@ -802,10 +802,10 @@ export default class SwagGen extends BaseGen {
                     if (post) {
                         el.generateInput = true
                     }
-                    if (multiget) {
-                        el.generateMulti = true
-                        el.generateOutput = true
-                    }
+                }
+                if (multiget) {
+                    if (!el.singleton) el.generateMulti = true
+                    el.generateOutput = true
                 }
 
                 const get = this.extractOp(el, "GET")
