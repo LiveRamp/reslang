@@ -1,6 +1,6 @@
 # Reslang: API definitions made easy
 
-Relang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.
+Reslang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.
 
 It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec.
 
