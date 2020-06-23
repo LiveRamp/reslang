@@ -101,7 +101,7 @@ You can omit namespace if the subresource is in the current namespace.
 
 Every resource or subresource that can be retrieved by a GET needs to define an id field. This is the primary identifier for that resource, and it can be of any type.
 
-You do not require id if you do not have a PUT, PATCH or DELETE operation.
+You do not require id if you do not have a GET, PUT, PATCH or DELETE operation, or if the resource is a singleton.
 
 ### Error Codes and Responses
 
