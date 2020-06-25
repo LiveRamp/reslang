@@ -180,6 +180,10 @@
         {
           "operation": "POST",
           "errors": []
+        },
+        {
+          "operation": "GET",
+          "errors": []
         }
       ],
       "parents": [],
@@ -436,7 +440,7 @@
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
-            "output": false,
+            "output": true,
             "queryonly": false,
             "query": false,
             "representation": false
@@ -468,9 +472,74 @@
             "representation": false
           },
           "constraints": {}
+        },
+        {
+          "name": "e",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Struct4",
+            "name": "Struct4",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": true,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
         }
       ],
       "name": "Struct3",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "Struct4",
+      "attributes": [
+        {
+          "name": "d",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "Struct4",
       "parentShort": "",
       "parentName": "",
       "secondary": false,

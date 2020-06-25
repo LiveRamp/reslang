@@ -32,6 +32,31 @@ paths:
                     type: integer
                     format: int32
   '/v1/s-maps/{id}':
+    get:
+      tags:
+        - SMap
+      operationId: Get SMap
+      description: ''
+      responses:
+        '200':
+          description: SMap retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMapOutput'
+        '404':
+          description: SMap not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
     put:
       tags:
         - SMap
@@ -77,19 +102,67 @@ components:
         a:
           type: integer
           format: int32
+        c:
+          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+        d:
+          type: integer
+          format: int32
+      required:
+        - map
+        - test
+        - key
+        - a
+        - c
+        - d
+    SMapOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        map:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        maps:
+          additionalProperties:
+            items:
+              allOf:
+                - $ref: '#/components/schemas/Struct2'
+            type: array
+          items:
+            type: object
+          type: array
+        test:
+          type: string
+        key:
+          allOf:
+            - $ref: '#/components/schemas/InputKey'
+        a:
+          type: integer
+          format: int32
         b:
           type: string
         c:
           type: string
           format: ISO8601 UTC date
           example: '2019-04-13'
+        d:
+          type: integer
+          format: int32
       required:
+        - id
         - map
+        - maps
         - test
         - key
         - a
         - b
         - c
+        - d
     SMapPuttable:
       type: object
       properties:
@@ -98,9 +171,13 @@ components:
         key:
           allOf:
             - $ref: '#/components/schemas/InputKey'
+        d:
+          type: integer
+          format: int32
       required:
         - test
         - key
+        - d
     Struct2:
       type: object
       properties:

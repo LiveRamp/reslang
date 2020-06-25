@@ -268,3 +268,4 @@ components:
           - a
           - b
         description: Event to stop
+

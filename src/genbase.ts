@@ -16,6 +16,8 @@ import {
     IStructure,
     IUnion,
     isStructure,
+    isUnion,
+    isEvent
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync } from "fs"
@@ -25,7 +27,7 @@ import {
     camelCase,
     capitalizeFirst,
     pluralizeName,
-    lowercaseFirst,
+    lowercaseFirst
 } from "./names"
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
@@ -35,7 +37,7 @@ export enum Verbs {
     PATCH,
     GET,
     MULTIGET,
-    DELETE,
+    DELETE
 }
 
 export abstract class BaseGen {
@@ -51,9 +53,16 @@ export abstract class BaseGen {
     protected empty = new Set<string>()
     protected loaded = new Set<string>()
 
-    public constructor(private dirs: string[], private rules: IRules) {
+    public constructor(
+        private dirs: string[],
+        private rules: IRules,
+        expandInlines = false
+    ) {
         this.processDefinitions()
         this.checkRules()
+        if (expandInlines) {
+            this.expandInlines()
+        }
     }
 
     public processDefinitions() {
@@ -62,6 +71,51 @@ export abstract class BaseGen {
             this.processDefinition(dirname, main)
             main = false
         }
+    }
+
+    public expandInlines() {
+        // bring up all the inlines
+        for (const def of this.defs) {
+            if (isStructure(def) || isResourceLike(def)) {
+                def.attributes = this.expandAttributes(def.attributes || [])
+            }
+            if (isEvent(def)) {
+                def.header = this.expandAttributes(def.header || [])
+                def.payload = this.expandAttributes(def.payload || [])
+            }
+        }
+    }
+
+    // expand out the attributes, taking into account how inlining works
+    public expandAttributes(
+        attrs: IAttribute[],
+        visited = new Set<string>()
+    ): IAttribute[] {
+        // only have to dive into structures from this point on
+        const all = new Array<IAttribute>()
+        for (const attr of attrs) {
+            if (!attr.inline) {
+                all.push(attr)
+            } else {
+                // check we haven't been here before
+                if (visited.has(attr.type.name)) {
+                    throw new Error("Circular inlines: " + attr.type.name)
+                }
+                const def = this.extractDefinition(attr.type.name)
+                if (!isStructure(def)) {
+                    throw new Error(
+                        "Can only inline a structure: " + attr.type.name
+                    )
+                }
+                for (const other of this.expandAttributes(
+                    def.attributes || [],
+                    visited
+                ) || []) {
+                    all.push(other)
+                }
+            }
+        }
+        return all
     }
 
     public processDefinition(dirname: string, main: boolean) {
@@ -287,7 +341,7 @@ Actions cannot have subresources`
             type: "object",
             properties,
             required,
-            description: def.comment,
+            description: def.comment
         } as {
             type: string
             properties: any
@@ -414,7 +468,7 @@ Actions cannot have subresources`
         const en = {
             type: "string",
             description: def.comment,
-            enum: def.literals,
+            enum: def.literals
         }
 
         // check to see if we have duplicate literals
@@ -438,7 +492,7 @@ Actions cannot have subresources`
             type: "object",
             properties,
             required,
-            description: def.comment,
+            description: def.comment
         } as {
             type: string
             properties: any
@@ -506,9 +560,9 @@ Actions cannot have subresources`
             properties: { type: { type: "string" } },
             discriminator: {
                 propertyName: "type",
-                mapping,
+                mapping
             },
-            required,
+            required
         }
         definitions[name] = request
 
@@ -528,9 +582,9 @@ Actions cannot have subresources`
                     { $ref: `#/components/schemas/${name}` },
                     {
                         type: "object",
-                        properties,
-                    },
-                ],
+                        properties
+                    }
+                ]
             }
         }
         if (request.required.length === 0) {
@@ -575,7 +629,7 @@ Actions cannot have subresources`
             }
         }
         const prop = {
-            description: this.translateDoc(attr.comment),
+            description: this.translateDoc(attr.comment)
         }
         this.addType(attr, prop, false)
         return { name, prop }
@@ -725,7 +779,7 @@ Actions cannot have subresources`
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
                         schema.allOf = [
-                            { $ref: `#/components/schemas/${sane}Output` },
+                            { $ref: `#/components/schemas/${sane}Output` }
                         ]
                     } else {
                         throw new Error(
@@ -795,7 +849,7 @@ Actions cannot have subresources`
             example: schema.example,
             $ref: schema.$ref,
             minItems: schema.minItems,
-            maxItems: schema.maxItems,
+            maxItems: schema.maxItems
         }
         if (min) {
             schema.minItems = min

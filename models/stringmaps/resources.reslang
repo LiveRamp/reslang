@@ -1,4 +1,3 @@
-
 asset-resource SMap {
     id: int
     map: stringmap<int>
@@ -8,7 +7,7 @@ asset-resource SMap {
     test2: Struct3 inline
 
     /operations
-        PUT POST
+        PUT POST GET
 }
 
 structure Struct1 {
@@ -28,6 +27,12 @@ union InputKey {
 
 structure Struct3 {
     a: int
-    b: string
+    b: string output
     c: date
+    e: Struct4 inline
 }
+
+structure Struct4 {
+    d: int mutable
+}
+

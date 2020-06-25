@@ -163,3 +163,4 @@ components:
         required:
           - timeOfFailure
         description: 'If a deletion is corrupted, we generate this event'
+
