@@ -220,6 +220,36 @@
           "example": "Array of urls"
         },
         {
+          "name": "timeToManufacture",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "duration",
+            "name": "duration",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "P4D"
+          }
+        },
+        {
           "name": "other",
           "stringMap": false,
           "type": {

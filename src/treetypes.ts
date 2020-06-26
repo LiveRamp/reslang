@@ -2,6 +2,8 @@
  * types for the parse tree
  */
 
+import { Type } from "js-yaml"
+
 export interface INamespace {
     comment: string
     space?: string
@@ -22,8 +24,9 @@ export let PrimitiveType = [
     "date",
     "time",
     "datetime",
+    "duration",
     "url",
-    "uuid",
+    "uuid"
 ]
 
 export type DefinitionType =
@@ -43,7 +46,7 @@ export let ResourceLike = [
     "asset-resource",
     "resource",
     "configuration-resource",
-    "subresource",
+    "subresource"
 ]
 
 export type Kind = "resource-like" | "enum" | "structure" | "union" | "event"
@@ -141,6 +144,12 @@ export interface IAttribute {
     modifiers: IModifiers
     constraints: IConstraints
     example?: string
+    default?: IDefaultValue
+}
+
+export interface IDefaultValue {
+    type: string
+    value: string
 }
 
 export interface IArray {

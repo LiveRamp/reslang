@@ -7,14 +7,14 @@ import { allModels } from "./allmodels"
 /** swagger generation tests
  */
 describe("swagger generation tests", () => {
-    test.each(allModels)("swagger(%s)", a => {
+    test.each(allModels)("swagger(%s)", (a) => {
         compare(a)
     })
 })
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const swag = new SwagGen([`models/${module}`], { ignoreRules: true })
+    const swag = new SwagGen([`models/${module}`], { ignoreRules: true }, true)
     const swagger = swag.generate()
 
     const got = strip(yaml.dump(clean(swagger), { noRefs: true }))

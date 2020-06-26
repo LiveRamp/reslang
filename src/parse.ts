@@ -1,13 +1,12 @@
 import fs from "fs"
 import peg from "pegjs"
 import {
-    IDefinition,
     PrimitiveType,
     IDiagram,
     IReference,
     getAllAttributes,
     isResourceLike,
-    AnyKind,
+    AnyKind
 } from "./treetypes"
 import * as path from "path"
 
@@ -50,7 +49,7 @@ export function parseFile(
     try {
         tree = clean(
             loadParser().parse(contents, {
-                output: "parser",
+                output: "parser"
             }) as object
         )
     } catch (error) {

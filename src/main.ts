@@ -15,7 +15,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.7"
+export const VERSION = "v1.4.8"
 
 // parse the cmd line
 const args = yargs
@@ -173,7 +173,7 @@ function handle(allFiles: string[], silent: boolean) {
                     open("https://playground.asyncapi.io/")
                 } else {
                     // show asyncapi
-                    exec("./show-asyncapi")
+                    myexec("show-asyncapi")
                 }
             }
             return yml
@@ -201,7 +201,7 @@ function handle(allFiles: string[], silent: boolean) {
                     open("https://editor.swagger.io")
                 } else {
                     // show redoc
-                    exec("./show-redoc")
+                    myexec("show-redoc")
                 }
             }
             return yml
@@ -214,4 +214,8 @@ function handle(allFiles: string[], silent: boolean) {
 function errorAndExit(msg: any) {
     console.error("Reslang error: ", msg)
     process.exit(-1)
+}
+
+function myexec(script: string) {
+    exec(lpath.join(__dirname, "..", script))
 }

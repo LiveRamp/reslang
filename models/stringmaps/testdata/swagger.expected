@@ -31,6 +31,50 @@ paths:
                   id:
                     type: integer
                     format: int32
+    get:
+      tags:
+        - SMap
+      operationId: Get SMaps
+      description: ''
+      responses:
+        '200':
+          description: SMaps retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of SMaps returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMapMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the SMaps (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of SMaps to return. If unspecified, 10 max will be returned.
+            Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            default: hello
+            type: string
   '/v1/s-maps/{id}':
     get:
       tags:
@@ -89,6 +133,9 @@ components:
     SMapInput:
       type: object
       properties:
+        name:
+          default: hello
+          type: string
         map:
           type: object
           additionalProperties:
@@ -100,28 +147,37 @@ components:
           allOf:
             - $ref: '#/components/schemas/InputKey'
         a:
-          type: integer
-          format: int32
+          default: 123.9
+          type: number
         c:
+          default: 12/20/1990
           type: string
           format: ISO8601 UTC date
           example: '2019-04-13'
         d:
           type: integer
           format: int32
+        f:
+          default: true
+          type: boolean
       required:
+        - name
         - map
         - test
         - key
         - a
         - c
         - d
+        - f
     SMapOutput:
       type: object
       properties:
         id:
           type: integer
           format: int32
+        name:
+          default: hello
+          type: string
         map:
           type: object
           additionalProperties:
@@ -142,19 +198,26 @@ components:
           allOf:
             - $ref: '#/components/schemas/InputKey'
         a:
+          default: 123.9
+          type: number
+        b:
+          default: 20
           type: integer
           format: int32
-        b:
-          type: string
         c:
+          default: 12/20/1990
           type: string
           format: ISO8601 UTC date
           example: '2019-04-13'
         d:
           type: integer
           format: int32
+        f:
+          default: true
+          type: boolean
       required:
         - id
+        - name
         - map
         - maps
         - test
@@ -163,6 +226,7 @@ components:
         - b
         - c
         - d
+        - f
     SMapPuttable:
       type: object
       properties:
@@ -178,6 +242,14 @@ components:
         - test
         - key
         - d
+    SMapMultiResponse:
+      type: object
+      properties:
+        sMaps:
+          description: Array of retrieved SMaps
+          type: array
+          items:
+            $ref: '#/components/schemas/SMapOutput'
     Struct2:
       type: object
       properties:

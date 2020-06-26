@@ -1,5 +1,6 @@
 asset-resource SMap {
     id: int
+    name: string query default="hello"
     map: stringmap<int>
     maps: stringmap<Struct2>[] output
     test: string mutable
@@ -7,7 +8,7 @@ asset-resource SMap {
     test2: Struct3 inline
 
     /operations
-        PUT POST GET
+        PUT POST GET MULTIGET
 }
 
 structure Struct1 {
@@ -26,10 +27,15 @@ union InputKey {
 }
 
 structure Struct3 {
-    a: int
-    b: string output
+    a: double
+        default = 123.9
+    b: int output
+        default = 20
     c: date
+        default = "12/20/1990"
     e: Struct4 inline
+    f: boolean
+        default = true
 }
 
 structure Struct4 {

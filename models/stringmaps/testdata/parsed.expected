@@ -39,6 +39,36 @@
           "constraints": {}
         },
         {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "hello"
+          }
+        },
+        {
           "name": "map",
           "stringMap": true,
           "type": {
@@ -183,6 +213,10 @@
         },
         {
           "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
           "errors": []
         }
       ],
@@ -400,8 +434,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "int",
-            "name": "int",
+            "short": "double",
+            "name": "double",
             "parentShort": "",
             "parentName": ""
           },
@@ -419,15 +453,19 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "numerical",
+            "value": "123.9"
+          }
         },
         {
           "name": "b",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "string",
-            "name": "string",
+            "short": "int",
+            "name": "int",
             "parentShort": "",
             "parentName": ""
           },
@@ -445,7 +483,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "numerical",
+            "value": "20"
+          }
         },
         {
           "name": "c",
@@ -471,7 +513,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "12/20/1990"
+          }
         },
         {
           "name": "e",
@@ -498,6 +544,36 @@
             "representation": false
           },
           "constraints": {}
+        },
+        {
+          "name": "f",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {},
+          "default": {
+            "type": "boolean",
+            "value": "true"
+          }
         }
       ],
       "name": "Struct3",

@@ -22,6 +22,7 @@ structure Manufacturer {
 	company: string example: "This is a company name"
 	home: url example: "This is the company website http://{id}}.liveramp.com"
 	homeArray: url[] example: "Array of urls"
+	timeToManufacture: duration default = "P4D"
 	other: url
 }
 

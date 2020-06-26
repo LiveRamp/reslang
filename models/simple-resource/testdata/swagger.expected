@@ -325,6 +325,11 @@ components:
             format: url
             example: Array of urls
           type: array
+        timeToManufacture:
+          default: P4D
+          type: string
+          format: ISO8601 duration
+          example: P3Y6M4DT12H30M5S
         other:
           type: string
           format: url
@@ -333,6 +338,7 @@ components:
         - company
         - home
         - homeArray
+        - timeToManufacture
         - other
       description: This is a manufacturer
     FooOutput:

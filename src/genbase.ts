@@ -657,6 +657,7 @@ Actions cannot have subresources`
 
         switch (prim) {
             case "string":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 if (attr && attr.constraints) {
                     const con = attr.constraints
@@ -669,6 +670,7 @@ Actions cannot have subresources`
                 }
                 break
             case "uuid":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 schema.format = "uuid"
                 if (example) {
@@ -676,6 +678,7 @@ Actions cannot have subresources`
                 }
                 break
             case "url":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 schema.format = "url"
                 if (example) {
@@ -683,20 +686,25 @@ Actions cannot have subresources`
                 }
                 break
             case "int":
+                this.addDefault(attr, schema, "int")
                 schema.type = "integer"
                 schema.format = "int32"
                 break
             case "long":
+                this.addDefault(attr, schema, "int")
                 schema.type = "integer"
                 schema.format = "int64"
                 break
             case "boolean":
+                this.addDefault(attr, schema, "boolean")
                 schema.type = "boolean"
                 break
             case "double":
+                this.addDefault(attr, schema, "double")
                 schema.type = "number"
                 break
             case "date":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 schema.format = "ISO8601 UTC date"
                 if (example) {
@@ -704,6 +712,7 @@ Actions cannot have subresources`
                 }
                 break
             case "time":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 schema.format = "time"
                 if (example) {
@@ -711,11 +720,71 @@ Actions cannot have subresources`
                 }
                 break
             case "datetime":
+                this.addDefault(attr, schema, "string")
                 schema.type = "string"
                 schema.format = "ISO8601 UTC date-time"
                 if (example) {
                     schema.example = "2019-04-13T03:35:34Z"
                 }
+                break
+            case "duration":
+                this.addDefault(attr, schema, "string")
+                schema.type = "string"
+                schema.format = "ISO8601 duration"
+                if (example) {
+                    schema.example = "P3Y6M4DT12H30M5S"
+                }
+                break
+        }
+    }
+
+    protected addDefault(attr: IAttribute | null, schema: any, type: string) {
+        if (!attr || !attr.default) {
+            return
+        }
+        switch (type) {
+            case "boolean":
+                if (attr.default.type !== "boolean") {
+                    throw Error(
+                        "Attribute " +
+                            attr.name +
+                            " can only have a boolean default value"
+                    )
+                }
+                schema.default = attr.default.value === "true"
+                break
+            case "string":
+                if (attr.default.type !== "string") {
+                    throw Error(
+                        "Attribute " +
+                            attr.name +
+                            " can only have a string default value"
+                    )
+                }
+                schema.default = attr.default.value
+                break
+            case "int":
+                if (
+                    attr.default.type !== "numerical" ||
+                    attr.default.type.includes(".")
+                ) {
+                    throw Error(
+                        "Attribute " +
+                            attr.name +
+                            " can only have an integer default value"
+                    )
+                }
+                schema.default = Number.parseInt(attr.default.value, 10)
+                break
+            case "double":
+                if (attr.default.type !== "numerical") {
+                    throw Error(
+                        "Attribute " +
+                            attr.name +
+                            " can only have a numerical default value"
+                    )
+                }
+                schema.default = Number.parseFloat(attr.default.value)
                 break
         }
     }
@@ -748,6 +817,14 @@ Actions cannot have subresources`
         const schema = schemaLevel ? obj.schema : obj
 
         const prim = isPrimitiveType(name)
+
+        // can only have a default if it is a primitive
+        if (!prim && attr.default) {
+            throw Error(
+                "Can only have defaults on primitive attributes: " + attr.name
+            )
+        }
+
         if (attr.stringMap && !suppressStringmap) {
             schema.type = "object"
             schema.additionalProperties = this.addType(
