@@ -46,9 +46,10 @@ The following primitive types are available. These are translated into appropria
 | string   | Standard string                                                               |
 | double   | Double floating point                                                         |
 | boolean  | True or false                                                                 |
-| date     | Date in ISO8601 format (2019-04-13)                                           |
-| time     | Time in ISO8601 format (22:00:01)                                             |
+| date     | Date in ISO8601 format (e.g. 2019-04-13)                                           |
+| time     | Time in ISO8601 format (e.g. 22:00:01)                                             |
 | datetime | Date+time in ISO8601 format, always with timezone<br />(2019-04-13T03:35:34Z) |
+| duration | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)
 | url      | A URL                                                                         |
 | uuid     | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                   |
 
@@ -326,6 +327,25 @@ This results in the following fields:
 You can specify (or override) the example / format string of any type. For instance, the following will override the usual url format:
 
     location: url "https://gcs.google.com <- put files here!"
+    
+## Default values for attributes
+
+You can specify a default value for any attribute, and that will be inserted into the correct point in Swagger. Only attributes of primitive type can have defaults.
+
+Here is a simple example:
+
+    structure Struct3 {
+        a: double
+            default = 123.9
+        b: int output
+            default = 20
+        c: date default = "12/20/1990"
+        f: boolean
+            default = true
+    }
+
+You can use doubles, integers, booleans and strings. Any complex types such as uuids or datetimes are specified using string defaults, see above.
+
 
 ## Difference between PUT and PATCH
 
