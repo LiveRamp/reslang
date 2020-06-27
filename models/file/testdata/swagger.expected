@@ -660,6 +660,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/StandardError'
+            type: object
           type: array
       required:
         - message

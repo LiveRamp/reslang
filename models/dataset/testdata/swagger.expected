@@ -290,6 +290,7 @@ components:
                STRING: any string data or values can be added to this Field.
           allOf:
             - $ref: '#/components/schemas/FieldTypeEnum'
+          type: string
         enumerated:
           description: Whether or not the Field's values are enumerated.
           type: boolean
@@ -302,6 +303,7 @@ components:
                MULTISET: store all values imported for this audience key potentially duplicate times.
           allOf:
             - $ref: '#/components/schemas/ValueCollectionTypeEnum'
+          type: string
         values:
           description: |-
             The list of enum values for the Field.
@@ -332,6 +334,7 @@ components:
                STRING: any string data or values can be added to this Field.
           allOf:
             - $ref: '#/components/schemas/FieldTypeEnum'
+          type: string
         enumerated:
           description: Whether or not the Field's values are enumerated.
           type: boolean
@@ -344,6 +347,7 @@ components:
                MULTISET: store all values imported for this audience key potentially duplicate times.
           allOf:
             - $ref: '#/components/schemas/ValueCollectionTypeEnum'
+          type: string
         values:
           description: |-
             The list of enum values for the Field.

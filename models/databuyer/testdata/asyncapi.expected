@@ -49,6 +49,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/DeliveryStatus'
+            type: object
           type: array
         complete:
           type: boolean
@@ -71,6 +72,7 @@ components:
         status:
           allOf:
             - $ref: '#/components/schemas/DeliveryStatusEnum'
+          type: string
       required:
         - updated
         - segment
