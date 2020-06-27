@@ -179,6 +179,7 @@ components:
         foo:
           allOf:
             - $ref: '#/components/schemas/v2TestResourceFoo2Output'
+          type: object
       required:
         - name
         - address

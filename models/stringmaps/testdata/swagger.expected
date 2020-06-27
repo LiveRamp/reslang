@@ -146,6 +146,7 @@ components:
         key:
           allOf:
             - $ref: '#/components/schemas/InputKey'
+          type: object
         a:
           default: 123.9
           type: number
@@ -188,6 +189,7 @@ components:
             items:
               allOf:
                 - $ref: '#/components/schemas/Struct2'
+              type: object
             type: array
           items:
             type: object
@@ -197,6 +199,7 @@ components:
         key:
           allOf:
             - $ref: '#/components/schemas/InputKey'
+          type: object
         a:
           default: 123.9
           type: number
@@ -235,6 +238,7 @@ components:
         key:
           allOf:
             - $ref: '#/components/schemas/InputKey'
+          type: object
         d:
           type: integer
           format: int32
@@ -293,6 +297,7 @@ components:
             mystruct:
               allOf:
                 - $ref: '#/components/schemas/Struct2'
+              type: object
     Mystruct2:
       allOf:
         - $ref: '#/components/schemas/InputKey'

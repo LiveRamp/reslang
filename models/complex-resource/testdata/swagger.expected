@@ -83,12 +83,14 @@ paths:
           schema:
             allOf:
               - $ref: '#/components/schemas/BrandEnum'
+            type: string
         - in: query
           name: view
           required: false
           schema:
             allOf:
               - $ref: '#/components/schemas/ViewEnum'
+            type: string
   '/v1/cars/{id}':
     get:
       tags:
@@ -121,6 +123,7 @@ paths:
           schema:
             allOf:
               - $ref: '#/components/schemas/ViewEnum'
+            type: string
   '/v1/cars/{carId}/wheels':
     post:
       tags:
@@ -317,18 +320,22 @@ components:
         brand:
           allOf:
             - $ref: '#/components/schemas/BrandEnum'
+          type: string
         engine:
           allOf:
             - $ref: '#/components/schemas/Specification'
+          type: object
         components:
           allOf:
             - $ref: '#/components/schemas/Specification'
+          type: object
         homeGarageId:
           type: string
           example: Link to simple-resource.Garage resource via its id
         manufacturer:
           allOf:
             - $ref: '#/components/schemas/simpleresourceManufacturer'
+          type: object
         rentedGarageIds:
           items:
             type: string
@@ -355,18 +362,22 @@ components:
         brand:
           allOf:
             - $ref: '#/components/schemas/BrandEnum'
+          type: string
         engine:
           allOf:
             - $ref: '#/components/schemas/Specification'
+          type: object
         components:
           allOf:
             - $ref: '#/components/schemas/Specification'
+          type: object
         homeGarageId:
           type: string
           example: Link to simple-resource.Garage resource via its id
         manufacturer:
           allOf:
             - $ref: '#/components/schemas/simpleresourceManufacturer'
+          type: object
         rentedGarageIds:
           items:
             type: string

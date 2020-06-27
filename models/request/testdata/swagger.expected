@@ -636,6 +636,7 @@ components:
         status:
           allOf:
             - $ref: '#/components/schemas/UploadRequestStatusEnum'
+          type: string
         client:
           type: string
       required:
@@ -653,6 +654,7 @@ components:
         status:
           allOf:
             - $ref: '#/components/schemas/UploadRequestStatusEnum'
+          type: string
         client:
           type: string
       required:
@@ -692,6 +694,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/Record'
+            type: object
           type: array
       required:
         - company
@@ -708,6 +711,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/Record'
+            type: object
           type: array
       required:
         - id
@@ -722,6 +726,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/Record'
+            type: object
           type: array
       required:
         - company
@@ -738,6 +743,7 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/Record'
+            type: object
           type: array
       required:
         - id

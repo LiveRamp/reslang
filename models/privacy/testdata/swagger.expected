@@ -67,12 +67,15 @@ components:
         identifierType:
           allOf:
             - $ref: '#/components/schemas/IdentifierType'
+          type: string
         requestType:
           allOf:
             - $ref: '#/components/schemas/RequestType'
+          type: string
         dataController:
           allOf:
             - $ref: '#/components/schemas/DataController'
+          type: object
         fileUrl:
           type: string
         timeStamp:
