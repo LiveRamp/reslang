@@ -25,7 +25,7 @@ parents = _ first:resname "::" names:(name "::")* {
         return value[0] }))
 }
 resname = name:(("v"[0-9]+"/")?[a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
-name = name:([a-zA-Z]+[a-zA-Z0-9]*) { return name.flat().join(""); }
+name = name:([a-zA-Z_]+[_a-zA-Z0-9]*) { return name.flat().join(""); }
 filename = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
 // descriptions
