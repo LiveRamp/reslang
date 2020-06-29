@@ -56,8 +56,7 @@ export abstract class BaseGen {
     public constructor(
         private dirs: string[],
         private rules: IRules,
-        expandInlines = false,
-        noDocOverride = false
+        expandInlines = false
     ) {
         this.processDefinitions()
         this.checkRules()
