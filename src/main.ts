@@ -109,9 +109,12 @@ if (testwrite) {
     handle(files, false)
 }
 
-function tryClip(text: string) {
+function tryClip(text: string, tag: string, silent: boolean) {
     try {
       clip.writeSync(text)
+      if (!silent) {
+        console.log("Success -- " + tag + " copied to clipboard")
+      }
     } catch (error) {
       console.error("Warning: Failed to copy to clipboard", error.msg)
     }
@@ -125,18 +128,14 @@ function handle(allFiles: string[], silent: boolean) {
             if (args.stdout) {
                 console.log(json)
             } else {
-                if (!silent) {
-                    console.log("Success - parse tree copied to clipboard")
-                }
+                tryClip(json, 'parse tree', silent)
             }
-            tryClip(json)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
             const html = new StripGen(allFiles, rules).generate(!args.plain)
-            tryClip(html)
-            console.log("Success -- html copied to clipboard")
+            tryClip(html, 'html', false)
             if (args.open) {
                 writeFile(html, file.name)
                 open(file.name)
@@ -148,11 +147,8 @@ function handle(allFiles: string[], silent: boolean) {
             if (args.stdout) {
                 console.log(dotviz)
             } else {
-                if (!silent) {
-                    console.log("Success - dotviz copied to clipboard")
-                }
+                tryClip(dotviz, 'dotviz', silent)
             }
-            tryClip(dotviz)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -168,11 +164,8 @@ function handle(allFiles: string[], silent: boolean) {
             if (args.stdout) {
                 console.log(yml)
             } else {
-                if (!silent) {
-                    console.log("Success - AsyncAPI spec copied to clipboard")
-                }
+                tryClip(yml, 'AsyncAPI spec', silent)
             }
-            tryClip(yml)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -196,11 +189,8 @@ function handle(allFiles: string[], silent: boolean) {
             if (args.stdout) {
                 console.log(yml)
             } else {
-                if (!silent) {
-                    console.log("Success - swagger copied to clipboard")
-                }
+                tryClip(yml, 'swagger', silent)
             }
-            tryClip(yml)
             if (args.open) {
                 if (args.web) {
                     console.log(
