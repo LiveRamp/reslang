@@ -109,6 +109,14 @@ if (testwrite) {
     handle(files, false)
 }
 
+function tryClip(text: string) {
+    try {
+      clip.writeSync(text)
+    } catch (error) {
+      console.error("Warning: Failed to copy to clipboard", error.msg)
+    }
+}
+
 function handle(allFiles: string[], silent: boolean) {
     try {
         // generate a parse tree?
@@ -121,13 +129,13 @@ function handle(allFiles: string[], silent: boolean) {
                     console.log("Success - parse tree copied to clipboard")
                 }
             }
-            clip.writeSync(json)
+            tryClip(json)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
             const html = new StripGen(allFiles, rules).generate(!args.plain)
-            clip.writeSync(html)
+            tryClip(html)
             console.log("Success -- html copied to clipboard")
             if (args.open) {
                 writeFile(html, file.name)
@@ -144,7 +152,7 @@ function handle(allFiles: string[], silent: boolean) {
                     console.log("Success - dotviz copied to clipboard")
                 }
             }
-            clip.writeSync(dotviz)
+            tryClip(dotviz)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -164,7 +172,7 @@ function handle(allFiles: string[], silent: boolean) {
                     console.log("Success - AsyncAPI spec copied to clipboard")
                 }
             }
-            clip.writeSync(yml)
+            tryClip(yml)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -192,7 +200,7 @@ function handle(allFiles: string[], silent: boolean) {
                     console.log("Success - swagger copied to clipboard")
                 }
             }
-            clip.writeSync(yml)
+            tryClip(yml)
             if (args.open) {
                 if (args.web) {
                     console.log(
