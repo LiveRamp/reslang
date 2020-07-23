@@ -109,26 +109,36 @@ if (testwrite) {
     handle(files, false)
 }
 
+function tryClip(text: string, tag: string, silent: boolean) {
+    try {
+      clip.writeSync(text)
+      if (!silent) {
+        console.log("Success -- " + tag + " copied to clipboard")
+      }
+    } catch (error) {
+      console.error("Warning: Failed to copy to clipboard", error.msg)
+    }
+}
+
 function handle(allFiles: string[], silent: boolean) {
+    // If we are writing to stdout don't intermingle it with info msgs
+    if (args.stdout) 
+      silent = true
+
     try {
         // generate a parse tree?
         if (args.parsed) {
             const json = new ParseGen(allFiles, rules).generate()
             if (args.stdout) {
                 console.log(json)
-            } else {
-                if (!silent) {
-                    console.log("Success - parse tree copied to clipboard")
-                }
-            }
-            clip.writeSync(json)
+            } 
+            tryClip(json, 'parse tree', silent)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
             const html = new StripGen(allFiles, rules).generate(!args.plain)
-            clip.writeSync(html)
-            console.log("Success -- html copied to clipboard")
+            tryClip(html, 'html', false)
             if (args.open) {
                 writeFile(html, file.name)
                 open(file.name)
@@ -139,12 +149,8 @@ function handle(allFiles: string[], silent: boolean) {
             const dotviz = dot.generate(args.diagram)
             if (args.stdout) {
                 console.log(dotviz)
-            } else {
-                if (!silent) {
-                    console.log("Success - dotviz copied to clipboard")
-                }
-            }
-            clip.writeSync(dotviz)
+            } 
+            tryClip(dotviz, 'dotviz', silent)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -159,12 +165,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(doc), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } else {
-                if (!silent) {
-                    console.log("Success - AsyncAPI spec copied to clipboard")
-                }
-            }
-            clip.writeSync(yml)
+            } 
+            tryClip(yml, 'AsyncAPI spec', silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -187,12 +189,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(swagger), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } else {
-                if (!silent) {
-                    console.log("Success - swagger copied to clipboard")
-                }
-            }
-            clip.writeSync(yml)
+            } 
+            tryClip(yml, 'swagger', silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
