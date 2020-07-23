@@ -127,9 +127,8 @@ function handle(allFiles: string[], silent: boolean) {
             const json = new ParseGen(allFiles, rules).generate()
             if (args.stdout) {
                 console.log(json)
-            } else {
-                tryClip(json, 'parse tree', silent)
-            }
+            } 
+            tryClip(json, 'parse tree', silent)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
@@ -146,9 +145,8 @@ function handle(allFiles: string[], silent: boolean) {
             const dotviz = dot.generate(args.diagram)
             if (args.stdout) {
                 console.log(dotviz)
-            } else {
-                tryClip(dotviz, 'dotviz', silent)
-            }
+            } 
+            tryClip(dotviz, 'dotviz', silent)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -163,9 +161,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(doc), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } else {
-                tryClip(yml, 'AsyncAPI spec', silent)
-            }
+            } 
+            tryClip(yml, 'AsyncAPI spec', silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -188,9 +185,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(swagger), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } else {
-                tryClip(yml, 'swagger', silent)
-            }
+            } 
+            tryClip(yml, 'swagger', silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
