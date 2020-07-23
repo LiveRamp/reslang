@@ -121,6 +121,10 @@ function tryClip(text: string, tag: string, silent: boolean) {
 }
 
 function handle(allFiles: string[], silent: boolean) {
+    // If we are writing to stdout don't intermingle it with info msgs
+    if (args.stdout) 
+      silent = true
+
     try {
         // generate a parse tree?
         if (args.parsed) {
