@@ -256,7 +256,7 @@ Configuration resources can only link to other configuration resources`
 
             // if parent is an action, we have an issue
             if (this.rules.noSubresourcesOnActions && def.parentName) {
-                const parent = this.extractDefinition(def.parentName)
+                const parent = this.extractDefinition(this.parentNameWithSpace(def))
                 if (parent.type === "action") {
                     throw new Error(
                         `RULE NO_ACTION_SUBRESOURCE violated: ${def.name}
@@ -266,6 +266,15 @@ Actions cannot have subresources`
             }
         }
     }
+
+    protected parentNameWithSpace(ref: IReference) {
+       const parentName = ref.parentName
+       if (!parentName) return parentName
+       const parts = ref.name.split('.')
+       if (parts.length != 2) return parentName
+       return parts[0] + '.' + parentName
+    }
+ 
 
     protected getSpace() {
         return (this.namespace.space || this.mainNamespace || "").toLowerCase()
@@ -279,7 +288,7 @@ Actions cannot have subresources`
             if (!current.parentName) {
                 return current
             }
-            current = this.extractDefinition(current.parentName)
+            current = this.extractDefinition(this.parentNameWithSpace(current))
         }
     }
 
