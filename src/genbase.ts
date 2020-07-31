@@ -297,6 +297,12 @@ Actions cannot have subresources`
         if (def) {
             return def
         }
+
+        const parts = definitionName.split(".")
+        if (parts.length == 2 && this.mainNamespace === parts[0]) {
+          return this.extractDefinition(parts[1])
+        }
+
         throw new Error("Cannot find definition for " + definitionName)
     }
 
