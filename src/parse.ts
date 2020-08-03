@@ -80,7 +80,14 @@ function convert(ref: IReference, namespace: string, mainNamespace: string) {
     const parent = ref.parents.length !== 0 ? ref.parents.join("::") : ""
     ref.name = module + (parent ? parent + "::" : "") + ref.short
     ref.parentShort = ref.parents.length !== 0 ? ref.parents[0] : ""
-    ref.parentName = parent
+    // addresses issue https://github.com/LiveRamp/reslang/issues/86
+    if (parent === "") {
+        ref.parentName = ""
+    } else {
+        // add in the namespace if needed
+        ref.parentName =
+            (namespace === mainNamespace ? "" : namespace + ".") + parent
+    }
 }
 
 function addNamespace(

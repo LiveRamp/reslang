@@ -15,7 +15,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.9"
+export const VERSION = "v1.4.10"
 
 // parse the cmd line
 const args = yargs
@@ -111,19 +111,20 @@ if (testwrite) {
 
 function tryClip(text: string, tag: string, silent: boolean) {
     try {
-      clip.writeSync(text)
-      if (!silent) {
-        console.log("Success -- " + tag + " copied to clipboard")
-      }
+        clip.writeSync(text)
+        if (!silent) {
+            console.log("Success -- " + tag + " copied to clipboard")
+        }
     } catch (error) {
-      console.error("Warning: Failed to copy to clipboard", error.msg)
+        console.error("Warning: Failed to copy to clipboard", error.msg)
     }
 }
 
 function handle(allFiles: string[], silent: boolean) {
     // If we are writing to stdout don't intermingle it with info msgs
-    if (args.stdout) 
-      silent = true
+    if (args.stdout) {
+        silent = true
+    }
 
     try {
         // generate a parse tree?
@@ -131,14 +132,14 @@ function handle(allFiles: string[], silent: boolean) {
             const json = new ParseGen(allFiles, rules).generate()
             if (args.stdout) {
                 console.log(json)
-            } 
-            tryClip(json, 'parse tree', silent)
+            }
+            tryClip(json, "parse tree", silent)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
             const html = new StripGen(allFiles, rules).generate(!args.plain)
-            tryClip(html, 'html', false)
+            tryClip(html, "html", false)
             if (args.open) {
                 writeFile(html, file.name)
                 open(file.name)
@@ -149,8 +150,8 @@ function handle(allFiles: string[], silent: boolean) {
             const dotviz = dot.generate(args.diagram)
             if (args.stdout) {
                 console.log(dotviz)
-            } 
-            tryClip(dotviz, 'dotviz', silent)
+            }
+            tryClip(dotviz, "dotviz", silent)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -165,8 +166,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(doc), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } 
-            tryClip(yml, 'AsyncAPI spec', silent)
+            }
+            tryClip(yml, "AsyncAPI spec", silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -189,8 +190,8 @@ function handle(allFiles: string[], silent: boolean) {
                 yaml.dump(clean(swagger), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
-            } 
-            tryClip(yml, 'swagger', silent)
+            }
+            tryClip(yml, "swagger", silent)
             if (args.open) {
                 if (args.web) {
                     console.log(

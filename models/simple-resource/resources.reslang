@@ -33,6 +33,14 @@ singleton resource Foo {
 	/operations PUT GET
 }
 
+subresource Foo::Subfoo {
+	id: string
+}
+
+subresource Foo::Subfoo::Subsubfoo {
+	id: string
+}
+
 // another resource with no id
 resource Bar {
 	name: string query

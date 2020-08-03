@@ -364,6 +364,93 @@
       "kind": "resource-like",
       "future": false,
       "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [
+        "Foo"
+      ],
+      "short": "Subfoo",
+      "name": "Foo::Subfoo",
+      "parentShort": "Foo",
+      "parentName": "Foo",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [
+        "Foo",
+        "Subfoo"
+      ],
+      "short": "Subsubfoo",
+      "name": "Foo::Subfoo::Subsubfoo",
+      "parentShort": "Foo",
+      "parentName": "Foo::Subfoo",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
       "type": "resource",
       "attributes": [
         {

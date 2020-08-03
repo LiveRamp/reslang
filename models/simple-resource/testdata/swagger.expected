@@ -10,6 +10,10 @@ tags:
     description: (resource)  This is a description of a garage
   - name: Foo
     description: (resource)  A resource with no ID
+  - name: 'Foo::Subfoo'
+    description: '(subresource)  '
+  - name: 'Foo::Subfoo::Subsubfoo'
+    description: '(subresource)  '
   - name: Bar
     description: '(resource)  '
   - name: Test
