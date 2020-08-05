@@ -14,9 +14,12 @@ diagram main {
 To generate the dotviz, use a command like the following:
 
 ```
-./reslang models/file --diagram files --open
+./reslang models/file --diagram main --open
 ```
 
+Notice the `--diagram main` option references the diagram name.
+Multiple named `diagram` specifications can be used, allowing the
+entire API diagram to be partitioned for convenient presentation.
 This will open up the online graphviz viewer and copy the dotviz output to the clipboard. Replace the text in the browser with the clipboard text and voila, you have a diagram.
 
 ![Diagram](dotviz.png)
