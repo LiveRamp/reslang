@@ -1,7 +1,6 @@
 {
   "namespace": {
     "comment": "Linked subresource test",
-    "space": "",
     "title": "Linked subresource",
     "version": "0.0.1"
   },

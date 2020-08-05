@@ -96,6 +96,7 @@ export interface IDefinition extends IReference {
 
 export interface IResourceLike extends IDefinition {
     kind: "resource-like"
+    namespace?: string
     attributes?: IAttribute[]
     operations?: IOperation[]
     singleton?: boolean

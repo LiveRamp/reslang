@@ -1,0 +1,21 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"A" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>A        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST</font></td></tr>"}</table>>];
+"Suba" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Suba        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST</font></td></tr>"}</table>>];
+"A" -> "Suba" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"B" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>B        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST</font></td></tr>"}</table>>];
+"Subb" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Subb        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST</font></td></tr>"}</table>>];
+"B" -> "Subb" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+}

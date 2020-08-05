@@ -1,7 +1,6 @@
 {
   "namespace": {
     "comment": "Multiplicity test",
-    "space": "",
     "title": "MultiplicityAPI",
     "version": "0.0.1"
   },

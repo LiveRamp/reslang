@@ -1,0 +1,360 @@
+openapi: 3.0.1
+info:
+  title: Namespace test
+  description: Namespace test
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/namespaces'
+tags:
+  - name: A
+    description: '(resource)  '
+  - name: 'A::Suba'
+    description: '(subresource)  '
+  - name: B
+    description: '(resource)  '
+  - name: 'B::Subb'
+    description: '(subresource)  '
+paths:
+  /aaa/v1/as:
+    post:
+      tags:
+        - A
+      operationId: Create A
+      description: ''
+      responses:
+        '201':
+          description: A created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+  '/aaa/v1/as/{id}':
+    get:
+      tags:
+        - A
+      operationId: Get A
+      description: ''
+      responses:
+        '200':
+          description: A retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AOutput'
+        '404':
+          description: A not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - A
+      operationId: Modify A
+      description: ''
+      responses:
+        '200':
+          description: A modified successfully
+        '404':
+          description: A not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  '/aaa/v1/as/{aId}/subas':
+    post:
+      tags:
+        - 'A::Suba'
+      operationId: 'Create A::Suba'
+      description: ''
+      responses:
+        '201':
+          description: Suba created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: string
+  '/aaa/v1/as/{aId}/subas/{id}':
+    get:
+      tags:
+        - 'A::Suba'
+      operationId: 'Get A::Suba'
+      description: ''
+      responses:
+        '200':
+          description: Suba retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ASubaOutput'
+        '404':
+          description: Suba or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - 'A::Suba'
+      operationId: 'Modify A::Suba'
+      description: ''
+      responses:
+        '200':
+          description: Suba modified successfully
+        '404':
+          description: Suba or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /bbb/v1/bs:
+    post:
+      tags:
+        - B
+      operationId: Create B
+      description: ''
+      responses:
+        '201':
+          description: B created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+  '/bbb/v1/bs/{id}':
+    get:
+      tags:
+        - B
+      operationId: Get B
+      description: ''
+      responses:
+        '200':
+          description: B retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BOutput'
+        '404':
+          description: B not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - B
+      operationId: Modify B
+      description: ''
+      responses:
+        '200':
+          description: B modified successfully
+        '404':
+          description: B not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  '/bbb/v1/bs/{bId}/subbs':
+    post:
+      tags:
+        - 'B::Subb'
+      operationId: 'Create B::Subb'
+      description: ''
+      responses:
+        '201':
+          description: Subb created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: string
+  '/bbb/v1/bs/{bId}/subbs/{id}':
+    get:
+      tags:
+        - 'B::Subb'
+      operationId: 'Get B::Subb'
+      description: ''
+      responses:
+        '200':
+          description: Subb retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BSubbOutput'
+        '404':
+          description: Subb or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - 'B::Subb'
+      operationId: 'Modify B::Subb'
+      description: ''
+      responses:
+        '200':
+          description: Subb modified successfully
+        '404':
+          description: Subb or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    AOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    ASubaOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    BOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    BSubbOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

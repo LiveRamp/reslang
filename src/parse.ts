@@ -18,7 +18,7 @@ export function writeFile(data: string, ...parts: string[]) {
     return fs.writeFileSync(path.join(...parts), data, { encoding: "utf8" })
 }
 
-// grammar is split into 3 separate parts
+// grammar is split into several parts
 const grammar =
     readFile(__dirname, "grammar", "main.pegjs") +
     readFile(__dirname, "grammar", "rest.pegjs") +

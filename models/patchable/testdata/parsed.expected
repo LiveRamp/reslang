@@ -1,7 +1,6 @@
 {
   "namespace": {
     "comment": "This is a simple API for testing patching",
-    "space": "",
     "title": "API for testing patching",
     "version": "1.0.0"
   },

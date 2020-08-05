@@ -56,7 +56,8 @@ export abstract class BaseGen {
     public constructor(
         private dirs: string[],
         private rules: IRules,
-        expandInlines = false
+        expandInlines = false,
+        protected omitNamespace = false
     ) {
         this.processDefinitions()
         this.checkRules()
@@ -849,7 +850,7 @@ Actions cannot have subresources`
                 case "union":
                 case "enum":
                     schema.allOf = [{ $ref: `#/components/schemas/${sane}` }]
-  	            schema.type = def.kind == "enum" ? "string" : "object"		
+                    schema.type = def.kind == "enum" ? "string" : "object"
                     break
                 case "resource-like":
                     // must have a linked annotation
@@ -859,7 +860,7 @@ Actions cannot have subresources`
                         schema.allOf = [
                             { $ref: `#/components/schemas/${sane}Output` }
                         ]
- 	                schema.type = 'object'
+                        schema.type = "object"
                     } else {
                         throw new Error(
                             `Attribute ${attr.name} references resource ${attr.type} but doesn't use "linked" or "full"`

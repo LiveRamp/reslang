@@ -1,7 +1,6 @@
 {
   "namespace": {
     "comment": "Data buyer API",
-    "space": "",
     "title": "Data buyer API",
     "version": "0.0.1"
   },
