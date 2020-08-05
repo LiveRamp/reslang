@@ -123,6 +123,7 @@
       "name": "Garage",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -356,6 +357,7 @@
       "name": "Foo",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -490,6 +492,7 @@
       "name": "Bar",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -537,6 +540,7 @@
       "name": "Test",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

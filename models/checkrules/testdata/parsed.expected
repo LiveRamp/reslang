@@ -131,6 +131,7 @@
       "name": "A",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -540,6 +541,7 @@
       "name": "Asset",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

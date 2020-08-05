@@ -170,6 +170,7 @@
       "name": "Car",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

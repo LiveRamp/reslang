@@ -79,6 +79,7 @@
       "name": "Resource",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -183,6 +184,7 @@
       "name": "SingletonResource",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

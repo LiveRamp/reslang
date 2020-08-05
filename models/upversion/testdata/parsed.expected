@@ -127,6 +127,7 @@
       "name": "ResourceA",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "upversion.reslang"
     },
@@ -208,6 +209,7 @@
       "name": "ResourceB",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "upversion.reslang"
     },
@@ -285,6 +287,7 @@
       "name": "v2/ResourceB",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "upversion.reslang"
     },

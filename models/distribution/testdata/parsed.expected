@@ -87,6 +87,7 @@
       "name": "Destination",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "destination.reslang"
     },
@@ -457,6 +458,7 @@
       "name": "IdentifierPool",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "destination.reslang"
     },

@@ -135,6 +135,7 @@
       "name": "UploadRequest",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

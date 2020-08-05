@@ -442,6 +442,7 @@
       "name": "DistributionRequest",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },
@@ -1133,6 +1134,7 @@
       "name": "Destination",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "distribution-mvp.reslang"
     },

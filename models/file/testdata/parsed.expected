@@ -84,6 +84,7 @@
       "name": "Directory",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "file.reslang"
     },
@@ -250,6 +251,7 @@
       "name": "FileType",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "file.reslang"
     },
@@ -291,6 +293,7 @@
       "name": "Specification",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "file.reslang"
     },
@@ -559,6 +562,7 @@
       "name": "DirectoryDeleteRequest",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "file.reslang"
     },

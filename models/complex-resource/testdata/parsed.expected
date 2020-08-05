@@ -123,6 +123,7 @@
       "name": "simple-resource.Garage",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": true,
       "file": "resources.reslang"
     },
@@ -356,6 +357,7 @@
       "name": "simple-resource.Foo",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": true,
       "file": "resources.reslang"
     },
@@ -490,6 +492,7 @@
       "name": "simple-resource.Bar",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": true,
       "file": "resources.reslang"
     },
@@ -537,6 +540,7 @@
       "name": "simple-resource.Test",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": true,
       "file": "resources.reslang"
     },
@@ -901,6 +905,7 @@
       "name": "Car",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

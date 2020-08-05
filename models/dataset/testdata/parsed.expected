@@ -42,6 +42,7 @@
       "name": "Audience",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "dataset.reslang"
     },

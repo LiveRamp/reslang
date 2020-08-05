@@ -3,7 +3,6 @@ resource B {
     id: string
     /operations
         GET PUT POST
-    /namespace bbb
 }
 
 subresource B::Subb {

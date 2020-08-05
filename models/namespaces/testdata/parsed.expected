@@ -7,7 +7,6 @@
   "definitions": [
     {
       "kind": "resource-like",
-      "namespace": "aaa",
       "future": false,
       "singleton": false,
       "type": "resource",
@@ -58,6 +57,7 @@
       "name": "A",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "a.reslang"
     },
@@ -120,7 +120,6 @@
     },
     {
       "kind": "resource-like",
-      "namespace": "bbb",
       "future": false,
       "singleton": false,
       "type": "resource",
@@ -171,6 +170,7 @@
       "name": "B",
       "parentShort": "",
       "parentName": "",
+      "namespace": "nested",
       "secondary": false,
       "file": "b.reslang"
     },

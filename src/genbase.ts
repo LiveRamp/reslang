@@ -16,11 +16,11 @@ import {
     IStructure,
     IUnion,
     isStructure,
-    isUnion,
     isEvent
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync, statSync } from "fs"
+import { join } from "path"
 import lpath from "path"
 import { IRules } from "./rules"
 import {
@@ -45,6 +45,7 @@ export enum Verbs {
 interface IFileDetails {
     file: string
     full: string
+    namespace: string
 }
 
 export abstract class BaseGen {
@@ -146,13 +147,18 @@ export abstract class BaseGen {
         }
 
         // process all files in this directory
-        const files = this.findFiles([], path + "/" + nspace)
-        files.push({ file: LOCAL, full: LOCAL_INCLUDE })
+        const files = this.findFiles([], join(path, nspace), "")
+        files.push({ file: LOCAL, full: LOCAL_INCLUDE, namespace: "" })
         for (const lst of files) {
             const fname = lst.full
             const reallyMain = main
             if (fname.endsWith(".reslang")) {
-                const local = parseFile(fname, nspace, this.mainNamespace!)
+                const local = parseFile(
+                    fname,
+                    nspace,
+                    this.mainNamespace!,
+                    lst.namespace
+                )
                 if (local[0] && main) {
                     if (!this.namespace) {
                         this.namespace = local[0]
@@ -166,7 +172,7 @@ export abstract class BaseGen {
 
                 // handle any imports
                 for (const imp of local[1] as IImport[]) {
-                    this.processDefinition(path + imp.import, false)
+                    this.processDefinition(path + imp.import, false) //xxx
                 }
                 // copy over all the defs
                 for (const def of local[2] as AnyKind[]) {
@@ -192,14 +198,18 @@ export abstract class BaseGen {
     }
 
     // recursively find files
-    public findFiles(files: IFileDetails[], dirname: string) {
-        const dirs = []
-        readdirSync(dirname).map((fname) => {
-            const full = dirname + "/" + fname
+    public findFiles(
+        files: IFileDetails[],
+        dirname: string,
+        namespace: string
+    ) {
+        readdirSync(join(dirname, namespace)).map((fname) => {
+            const full = join(dirname, namespace, fname)
             if (statSync(full).isDirectory()) {
-                this.findFiles(files, full)
+                this.findFiles(files, dirname, join(namespace, fname))
+            } else {
+                files.push({ file: fname, full, namespace })
             }
-            files.push({ file: fname, full })
         })
         return files
     }

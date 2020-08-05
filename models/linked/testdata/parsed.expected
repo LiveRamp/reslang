@@ -49,6 +49,7 @@
       "name": "Foo",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },
@@ -315,6 +316,7 @@
       "name": "Linking",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

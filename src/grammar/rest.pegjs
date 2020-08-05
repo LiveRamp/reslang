@@ -2,18 +2,13 @@
 
 // defining a resource
 resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
-    attributes:attributes? _ operations:operations? _ namespace:namespace? _
+    attributes:attributes? _ operations:operations? _
 "}" _ ";"? _ {
     return {
         kind: "resource-like",
-        namespace: namespace,
         comment: comment, future: !!future, singleton: !!singleton, type: type, 
         attributes: attributes, operations: operations,
         parents: [], short: respath.short}
-}
-
-namespace = _ comment:description? _ "/namespace" _ space:space _ {
-    return space
 }
 
 subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _

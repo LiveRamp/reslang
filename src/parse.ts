@@ -41,7 +41,8 @@ export function loadParser() {
 export function parseFile(
     file: string,
     parsingNamespace: string,
-    mainNamespace: string
+    mainNamespace: string,
+    additionalNamespace: string
 ) {
     const contents = readFile(file)
 
@@ -58,7 +59,12 @@ export function parseFile(
                 `${error.location.start.column}`
         )
     }
-    addNamespace(tree[2] as AnyKind[], parsingNamespace, mainNamespace)
+    addNamespace(
+        tree[2] as AnyKind[],
+        parsingNamespace,
+        mainNamespace,
+        additionalNamespace
+    )
     addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
     return tree
 }
@@ -93,7 +99,8 @@ function convert(ref: IReference, namespace: string, mainNamespace: string) {
 function addNamespace(
     defs: AnyKind[],
     namespace: string,
-    mainNamespace: string
+    mainNamespace: string,
+    additionalNamespace: string
 ) {
     // normalize all the names: name is unique to doc, short is acceptable display form
     // refs are always in terms of name
@@ -107,6 +114,10 @@ function addNamespace(
 
         // convert the error references
         if (isResourceLike(def)) {
+            // add additional namespace if present
+            if (!def.parentName) {
+                def.namespace = additionalNamespace
+            }
             for (const op of def.operations || []) {
                 for (const err of op.errors) {
                     convert(err.struct, namespace, mainNamespace)

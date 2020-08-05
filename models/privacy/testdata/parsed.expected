@@ -205,6 +205,7 @@
       "name": "ConsentFile",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "consent.reslang"
     },

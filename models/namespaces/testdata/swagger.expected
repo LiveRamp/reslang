@@ -15,7 +15,7 @@ tags:
   - name: 'B::Subb'
     description: '(subresource)  '
 paths:
-  /aaa/v1/as:
+  /v1/as:
     post:
       tags:
         - A
@@ -31,7 +31,7 @@ paths:
                 properties:
                   id:
                     type: string
-  '/aaa/v1/as/{id}':
+  '/v1/as/{id}':
     get:
       tags:
         - A
@@ -76,7 +76,7 @@ paths:
           required: true
           schema:
             type: string
-  '/aaa/v1/as/{aId}/subas':
+  '/v1/as/{aId}/subas':
     post:
       tags:
         - 'A::Suba'
@@ -105,7 +105,7 @@ paths:
           required: true
           schema:
             type: string
-  '/aaa/v1/as/{aId}/subas/{id}':
+  '/v1/as/{aId}/subas/{id}':
     get:
       tags:
         - 'A::Suba'
@@ -162,7 +162,7 @@ paths:
           required: true
           schema:
             type: string
-  /bbb/v1/bs:
+  /nested/v1/bs:
     post:
       tags:
         - B
@@ -178,7 +178,7 @@ paths:
                 properties:
                   id:
                     type: string
-  '/bbb/v1/bs/{id}':
+  '/nested/v1/bs/{id}':
     get:
       tags:
         - B
@@ -223,7 +223,7 @@ paths:
           required: true
           schema:
             type: string
-  '/bbb/v1/bs/{bId}/subbs':
+  '/nested/v1/bs/{bId}/subbs':
     post:
       tags:
         - 'B::Subb'
@@ -252,7 +252,7 @@ paths:
           required: true
           schema:
             type: string
-  '/bbb/v1/bs/{bId}/subbs/{id}':
+  '/nested/v1/bs/{bId}/subbs/{id}':
     get:
       tags:
         - 'B::Subb'

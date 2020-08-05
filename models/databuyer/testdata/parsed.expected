@@ -171,6 +171,7 @@
       "name": "DeliverPurchasedSegments",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "delivery.reslang"
     },
@@ -375,6 +376,7 @@
       "name": "AllDeliveredSegments",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "delivery.reslang"
     },
@@ -523,6 +525,7 @@
       "name": "Segment",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "delivery.reslang"
     },
@@ -564,6 +567,7 @@
       "name": "Destination",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "delivery.reslang"
     },

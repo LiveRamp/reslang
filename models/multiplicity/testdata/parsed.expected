@@ -169,6 +169,7 @@
       "name": "MTest",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "multi.reslang"
     },

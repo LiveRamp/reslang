@@ -139,6 +139,7 @@
       "name": "Person",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "resources.reslang"
     },

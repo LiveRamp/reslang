@@ -85,6 +85,7 @@
       "name": "SimpleResource",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "events.reslang"
     },
@@ -193,6 +194,7 @@
       "name": "v2/TestResource",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "events.reslang"
     },

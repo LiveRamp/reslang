@@ -140,6 +140,7 @@
       "name": "User",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "auth.reslang"
     },
@@ -347,6 +348,7 @@
       "name": "Organization",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "auth.reslang"
     },
@@ -454,6 +456,7 @@
       "name": "Role",
       "parentShort": "",
       "parentName": "",
+      "namespace": "",
       "secondary": false,
       "file": "auth.reslang"
     },
