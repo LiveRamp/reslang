@@ -1,6 +1,5 @@
 
 diagram main {
-    /include
-        all
-        files.reslang
+    /includeall
+        file.reslang
 }
