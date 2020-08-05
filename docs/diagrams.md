@@ -5,7 +5,7 @@ To generate a diagram, add a definition inside one of your .reslang files, speci
 E.g. the File and Directory API diagram is as follows:
 
 ```
-diagram files {
+diagram main {
     /includeall
         files.reslang
 }
