@@ -32,7 +32,7 @@ filename = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("").replace(/\\n/g, "\n")}
 
 // version
-semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.join(""); }
+semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.flat().join(""); }
 
 // whitespace or comment
 _  = ([ \t\r\n]+ / comment)*

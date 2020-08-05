@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Namespace test
   description: Namespace test
-  version: 0.0.1
+  version: 0.0.11
 servers:
   - url: 'https://api.liveramp.com/namespaces'
 tags:

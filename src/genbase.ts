@@ -20,7 +20,7 @@ import {
     isEvent
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
-import { readdirSync } from "fs"
+import { readdirSync, statSync } from "fs"
 import lpath from "path"
 import { IRules } from "./rules"
 import {
@@ -29,8 +29,10 @@ import {
     pluralizeName,
     lowercaseFirst
 } from "./names"
+
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
+
 export enum Verbs {
     POST,
     PUT,
@@ -38,6 +40,11 @@ export enum Verbs {
     GET,
     MULTIGET,
     DELETE
+}
+
+interface IFileDetails {
+    file: string
+    full: string
 }
 
 export abstract class BaseGen {
@@ -139,9 +146,7 @@ export abstract class BaseGen {
         }
 
         // process all files in this directory
-        const files = readdirSync(dirname).map((fname) => {
-            return { file: fname, full: path + nspace + "/" + fname }
-        })
+        const files = this.findFiles([], path + "/" + nspace)
         files.push({ file: LOCAL, full: LOCAL_INCLUDE })
         for (const lst of files) {
             const fname = lst.full
@@ -184,6 +189,19 @@ export abstract class BaseGen {
         if (!this.namespace) {
             throw new Error(`No namespace present in ${dirname}`)
         }
+    }
+
+    // recursively find files
+    public findFiles(files: IFileDetails[], dirname: string) {
+        const dirs = []
+        readdirSync(dirname).map((fname) => {
+            const full = dirname + "/" + fname
+            if (statSync(full).isDirectory()) {
+                this.findFiles(files, full)
+            }
+            files.push({ file: fname, full })
+        })
+        return files
     }
 
     // check all the rules for this api

@@ -2,7 +2,7 @@
   "namespace": {
     "comment": "Namespace test",
     "title": "Namespace test",
-    "version": "0.0.1"
+    "version": "0.0.11"
   },
   "definitions": [
     {
