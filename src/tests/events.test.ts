@@ -7,7 +7,7 @@ import { allModels } from "./allmodels"
 /** event generation tests
  */
 describe("event generation tests", () => {
-    test.each(allModels)("events(%s)", a => {
+    test.each(allModels)("events(%s)", (a) => {
         compare(a)
     })
 })
@@ -15,9 +15,13 @@ describe("event generation tests", () => {
 /** compare the output with saved asyncapi spec */
 function compare(module: string) {
     const asyncapi = new EventsGen([`models/${module}`], { ignoreRules: true })
-    const api = asyncapi.generate()
-
-    const got = strip(yaml.dump(clean(api), { noRefs: true }))
+    let got = ""
+    try {
+        const api = asyncapi.generate()
+        got = strip(yaml.dump(clean(api), { noRefs: true }))
+    } catch (err) {
+        got = "" + err
+    }
     const expected = strip(
         readFile(`models/${module}/testdata/asyncapi.expected`)
     )

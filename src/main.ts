@@ -15,7 +15,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.12"
+export const VERSION = "v1.4.13"
 
 // parse the cmd line
 const args = yargs
@@ -69,7 +69,7 @@ const args = yargs
     .option("testwrite", {
         type: "string",
         describe:
-            "Used to regenerated test data - the data will be written to this filename"
+            "Used to regenerated test data - the data will be written to this filename. Any errors will be written to this file also"
     })
     .option("testdir", {
         type: "string",
@@ -105,7 +105,12 @@ if (testwrite) {
     }
     files.forEach((file) => {
         const fname = lpath.join(args.testdir || "", file)
-        const out = handle([fname], true)
+        let out: string | undefined
+        try {
+            out = handle([fname], true, true)
+        } catch (err) {
+            out = err
+        }
         process.stdout.write(file + " ")
         writeFile(out + "\n", fname, testwrite)
     })
@@ -124,7 +129,7 @@ function tryClip(text: string, tag: string, silent: boolean) {
     }
 }
 
-function handle(allFiles: string[], silent: boolean) {
+function handle(allFiles: string[], silent: boolean, throwErrors = false) {
     // If we are writing to stdout don't intermingle it with info msgs
     if (args.stdout) {
         silent = true
@@ -210,6 +215,9 @@ function handle(allFiles: string[], silent: boolean) {
             return yml
         }
     } catch (error) {
+        if (throwErrors) {
+            throw error
+        }
         errorAndExit(args.stacktrace ? error : error.message)
     }
 }

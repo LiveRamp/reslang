@@ -71,7 +71,7 @@ export default class EventsGen extends BaseGen {
         this.formChannels(channels)
 
         // form messages
-        this.formMessages(messages)
+        const haveEvents = this.formMessages(messages)
 
         // model definitions
         const headerNames = this.formDefinitions(schemas)
@@ -84,6 +84,9 @@ export default class EventsGen extends BaseGen {
             this.liftToHeader(name, schemas, headers)
         }
 
+        if (!haveEvents) {
+            throw new Error("No events are listed in the specification")
+        }
         return asyncapi
     }
 
@@ -120,7 +123,7 @@ export default class EventsGen extends BaseGen {
                 }
             }
             if (isEvent(el)) {
-                let psKey = el.produces ? "subscribe" : "publish"
+                const psKey = el.produces ? "subscribe" : "publish"
                 const details = {
                     description: el.comment || "no documentation",
                     [psKey]: {
@@ -183,6 +186,7 @@ export default class EventsGen extends BaseGen {
 
     private formMessages(messages: any) {
         // handle each primary structure and work out if we should generate structures for it
+        let haveEvents = false
         for (const el of this.defs) {
             // don't generate for any imported def
             if (el.secondary) {
@@ -194,6 +198,7 @@ export default class EventsGen extends BaseGen {
                 !el.future &&
                 this.extractOp(el, "EVENTS")
             ) {
+                haveEvents = true
                 const unique = camelCase(this.formSingleUniqueName(el))
                 messages[unique] = {
                     name: unique,
@@ -205,6 +210,7 @@ export default class EventsGen extends BaseGen {
                 }
             }
             if (isEvent(el)) {
+                haveEvents = true
                 const unique = camelCase(this.formSingleUniqueName(el))
                 messages[unique] = {
                     name: unique,
@@ -218,6 +224,7 @@ export default class EventsGen extends BaseGen {
                 }
             }
         }
+        return haveEvents
     }
 
     private formDefinitions(schemas: any) {

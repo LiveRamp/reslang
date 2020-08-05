@@ -868,7 +868,7 @@ Actions cannot have subresources`
                 case "union":
                 case "enum":
                     schema.allOf = [{ $ref: `#/components/schemas/${sane}` }]
-                    schema.type = def.kind == "enum" ? "string" : "object"
+                    schema.type = def.kind === "enum" ? "string" : "object"
                     break
                 case "resource-like":
                     // must have a linked annotation

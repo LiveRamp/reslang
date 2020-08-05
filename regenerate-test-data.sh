@@ -4,7 +4,7 @@ apis=(linked databuyer eventing dataset checkrules privacy optionality authoriza
 
 echo "Regenerating event files"
 echo "---"
-    ./reslang --noversion --events --ignorerules  ${apis[@]} --testdir ./models --testwrite ./testdata/asyncapi.expected
+    ./reslang --noversion --events --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/asyncapi.expected
 echo
 echo "---"
 echo "Regenerating swagger files"
