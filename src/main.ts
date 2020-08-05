@@ -15,7 +15,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.13"
+export const VERSION = "v1.4.14"
 
 // parse the cmd line
 const args = yargs
@@ -209,7 +209,12 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
                     open("https://editor.swagger.io")
                 } else {
                     // show redoc
-                    myexec("show-redoc")
+                    const output = myexec("show-redoc", !args.stacktrace)
+                    if (output.stderr.includes("EADDRINUSE")) {
+                        throw new Error(
+                            "Cannot start Redoc server on port 8080 - please check you don't have another server running"
+                        )
+                    }
                 }
             }
             return yml
@@ -227,6 +232,6 @@ function errorAndExit(msg: any) {
     process.exit(-1)
 }
 
-function myexec(script: string) {
-    exec(lpath.join(__dirname, "..", script))
+function myexec(script: string, silent: boolean = false) {
+    return exec(lpath.join(__dirname, "..", script), { silent })
 }
