@@ -19,5 +19,6 @@ export const allModels = [
     "stringmaps",
     "upversion",
     "multiplicity",
-    "namespaces"
+    "namespaces",
+    "api-host"
 ]

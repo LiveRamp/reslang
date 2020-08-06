@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: Api Host test
+  description: Api Host test
+  version: 0.0.1
+servers:
+  - url: 'https://api.example.com/api-host'
+tags: []
+paths: {}
+components:
+  parameters: {}
+  schemas:
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message

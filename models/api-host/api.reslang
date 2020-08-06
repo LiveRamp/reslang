@@ -1,0 +1,6 @@
+"Api Host test"
+namespace {
+    title "Api Host test"
+    host "api.example.com"
+    version 0.0.1
+}
