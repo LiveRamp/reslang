@@ -42,7 +42,7 @@ export default class SwagGen extends BaseGen {
             },
             servers: [
                 {
-                    url: `https://api.liveramp.com${
+                    url: `https://${this.getApiHost()}${
                         this.omitNamespace ? "" : "/" + this.getSpace()
                     }`
                 }

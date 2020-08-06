@@ -9,6 +9,7 @@ export interface INamespace {
     space?: string
     title: string
     version: string
+    host?: string
 }
 
 export interface IImport {

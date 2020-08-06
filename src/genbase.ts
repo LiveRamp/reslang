@@ -300,6 +300,10 @@ Actions cannot have subresources`
         return (this.namespace.space || this.mainNamespace || "").toLowerCase()
     }
 
+    protected getApiHost() {
+        return (this.namespace.host || "api.liveramp.com").toLowerCase()
+    }
+
     // find the top level type
     protected getTopLevelType(ref: IReference) {
         const def = this.extractDefinition(ref.name)
