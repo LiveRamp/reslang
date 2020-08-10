@@ -44,8 +44,8 @@ export type DefinitionType =
 export let ResourceLike = [
     "request-resource",
     "asset-resource",
-    "resource",
     "configuration-resource",
+    "resource",
     "subresource"
 ]
 
@@ -99,6 +99,7 @@ export interface IResourceLike extends IDefinition {
     namespace?: string
     attributes?: IAttribute[]
     operations?: IOperation[]
+    events?: IEventOperation[]
     singleton?: boolean
     future?: boolean
     async?: boolean
@@ -200,6 +201,11 @@ export interface IDocEntry {
 export interface IGroup {
     comment: string
     include: IReference[]
+}
+
+export interface IEventOperation {
+    operation: string
+    comment: string
 }
 
 export interface IOperation {

@@ -39,7 +39,9 @@ subresource Directory::File {
 	contents: string queryonly
 
     /operations
-        GET POST MULTIGET EVENTS
+        GET POST MULTIGET
+	/events 
+		POST completed
 }
 
 "This models a long running request"
@@ -49,7 +51,9 @@ request-resource DirectoryDeleteRequest {
 
     /operations
         GET "Can't find anything" 404 SpecialError
-		POST MULTIGET EVENTS
+		POST MULTIGET
+	/events
+	    POST MULTIGET
 }
 
 "If a deletion is corrupted, we generate this event"

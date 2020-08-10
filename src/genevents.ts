@@ -99,11 +99,7 @@ export default class EventsGen extends BaseGen {
             }
 
             const unique = camelCase(this.formSingleUniqueName(el))
-            if (
-                isResourceLike(el) &&
-                !el.future &&
-                this.extractOp(el, "EVENTS")
-            ) {
+            if (isResourceLike(el) && !el.future && el.events) {
                 channels[
                     "topics/" +
                         snakeCase(this.getSpace()) +
@@ -193,11 +189,7 @@ export default class EventsGen extends BaseGen {
                 continue
             }
 
-            if (
-                isResourceLike(el) &&
-                !el.future &&
-                this.extractOp(el, "EVENTS")
-            ) {
+            if (isResourceLike(el) && !el.future && el.events) {
                 haveEvents = true
                 const unique = camelCase(this.formSingleUniqueName(el))
                 messages[unique] = {
@@ -305,7 +297,7 @@ export default class EventsGen extends BaseGen {
                 visited.delete(unique)
                 return
             }
-            if (!this.extractOp(el, "EVENTS") && level === 0) {
+            if (!el.events && level === 0) {
                 visited.delete(unique)
                 return
             }
