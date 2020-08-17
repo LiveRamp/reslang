@@ -52,7 +52,7 @@
           "full": false,
           "modifiers": {
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -137,7 +137,7 @@
           "full": false,
           "modifiers": {
             "mutable": true,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -146,7 +146,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "test"
+          }
         },
         {
           "name": "key",
@@ -444,7 +448,7 @@
           "full": false,
           "modifiers": {
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -483,11 +487,7 @@
             "query": false,
             "representation": false
           },
-          "constraints": {},
-          "default": {
-            "type": "numerical",
-            "value": "20"
-          }
+          "constraints": {}
         },
         {
           "name": "c",
@@ -504,7 +504,7 @@
           "full": false,
           "modifiers": {
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -560,7 +560,7 @@
           "full": false,
           "modifiers": {
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,

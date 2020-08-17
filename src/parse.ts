@@ -110,6 +110,12 @@ function addNamespace(
         // add to all references
         for (const attr of getAllAttributes(def)) {
             convert(attr.type, namespace, mainNamespace)
+            // complain if the attribute has default value but is not optional
+            if (attr.default && !attr.modifiers.optional) {
+                throw new Error(
+                    `Attribute ${attr.name} of ${def.name} has a default, but is not optional`
+                )
+            }
         }
 
         // convert the error references

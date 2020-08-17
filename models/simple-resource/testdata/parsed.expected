@@ -234,7 +234,7 @@
           "full": false,
           "modifiers": {
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,

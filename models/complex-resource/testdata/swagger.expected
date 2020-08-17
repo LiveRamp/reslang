@@ -311,7 +311,6 @@ components:
         - company
         - home
         - homeArray
-        - timeToManufacture
         - other
       description: This is a manufacturer
     CarInput:

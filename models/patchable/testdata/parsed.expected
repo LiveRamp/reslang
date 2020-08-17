@@ -52,7 +52,7 @@
           "full": false,
           "modifiers": {
             "mutable": true,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -61,7 +61,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "Freddo Frog"
+          }
         },
         {
           "name": "address",
@@ -87,7 +91,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "Malibu"
+          }
         },
         {
           "name": "birthDate",
@@ -100,6 +108,32 @@
             "parentName": ""
           },
           "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "extra",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Extra",
+            "name": "Extra",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": true,
           "linked": false,
           "full": false,
           "modifiers": {
@@ -140,6 +174,49 @@
       "parentShort": "",
       "parentName": "",
       "namespace": "",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "Extra",
+      "attributes": [
+        {
+          "name": "notes",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "mutable": true,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "no notes!"
+          }
+        }
+      ],
+      "name": "Extra",
+      "parentShort": "",
+      "parentName": "",
       "secondary": false,
       "file": "resources.reslang"
     },
