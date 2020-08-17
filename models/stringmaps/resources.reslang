@@ -1,9 +1,9 @@
 asset-resource SMap {
     id: int
-    name: string query default="hello"
+    name: string query optional default="hello"
     map: stringmap<int>
     maps: stringmap<Struct2>[] output
-    test: string mutable
+    test: string mutable optional default = "test"
     key: InputKey mutable
     test2: Struct3 inline
 
@@ -27,14 +27,13 @@ union InputKey {
 }
 
 structure Struct3 {
-    a: double
+    a: double optional
         default = 123.9
     b: int output
-        default = 20
-    c: date
+    c: date optional
         default = "12/20/1990"
     e: Struct4 inline
-    f: boolean
+    f: boolean optional
         default = true
 }
 

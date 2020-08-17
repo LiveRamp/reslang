@@ -116,15 +116,19 @@ components:
       type: object
       properties:
         name:
+          default: Freddo Frog
           type: string
         address:
+          default: Malibu
           type: string
         birthDate:
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
+        notes:
+          default: no notes!
+          type: string
       required:
-        - name
         - birthDate
     PersonOutput:
       type: object
@@ -140,25 +144,31 @@ components:
           type: string
           format: ISO8601 UTC date-time
           example: '2019-04-13T03:35:34Z'
+        notes:
+          type: string
       required:
         - id
-        - name
         - birthDate
     PersonPuttable:
       type: object
       properties:
         name:
+          default: Freddo Frog
           type: string
         address:
+          default: Malibu
           type: string
-      required:
-        - name
+        notes:
+          default: no notes!
+          type: string
     PersonPatchable:
       type: object
       properties:
         name:
           type: string
         address:
+          type: string
+        notes:
           type: string
     StandardError:
       type: object

@@ -365,12 +365,10 @@ Actions cannot have subresources`
     ) {
         const attrs = def.attributes || []
         const properties: any = {}
-        const required: string[] = []
+        const required = new Set<string>()
         const request = {
             type: "object",
-            properties,
-            required,
-            description: def.comment
+            properties
         } as {
             type: string
             properties: any
@@ -412,14 +410,29 @@ Actions cannot have subresources`
                 const prop = this.makeProperty(attr)
                 properties[prop.name] = prop.prop
                 if (!optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
+                }
+            }
+        }
+        // if this is a PATCH, remove any defaults
+        for (const name in properties) {
+            if (properties.hasOwnProperty(name)) {
+                if (
+                    verb === Verbs.PATCH ||
+                    verb === Verbs.GET ||
+                    verb === Verbs.MULTIGET ||
+                    required.has(name)
+                ) {
+                    delete properties[name].default
                 }
             }
         }
 
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
+        // placed here to avoid perturbing the swagger too much, based on moving where required is set
+        request.description = def.comment
 
         const unique = camelCase(this.formSingleUniqueName(def))
         if (Object.keys(properties).length !== 0) {
@@ -516,11 +529,11 @@ Actions cannot have subresources`
         attrs: IAttribute[]
     ) {
         const properties: any = {}
-        const required: string[] = []
+        const required = new Set<string>()
         const request = {
             type: "object",
             properties,
-            required,
+            required: new Array<string>(),
             description: def.comment
         } as {
             type: string
@@ -543,14 +556,14 @@ Actions cannot have subresources`
             } else {
                 const prop = this.makeProperty(attr)
                 if (!optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
                 }
                 properties[prop.name] = prop.prop
             }
         }
 
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
 
         if (Object.keys(properties).length !== 0) {
@@ -583,7 +596,7 @@ Actions cannot have subresources`
             }
             mapping[attr.name] = "#/components/schemas/" + camel
         }
-        const required: string[] = ["type"]
+        const required = new Set<string>(["type"])
         const request = {
             type: "object",
             properties: { type: { type: "string" } },
@@ -591,7 +604,7 @@ Actions cannot have subresources`
                 propertyName: "type",
                 mapping
             },
-            required
+            required: new Array<string>()
         }
         definitions[name] = request
 
@@ -603,7 +616,7 @@ Actions cannot have subresources`
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
                 if (!attr.modifiers.optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
                 }
             }
             definitions[capitalizeFirst(attr.name)] = {
@@ -616,8 +629,8 @@ Actions cannot have subresources`
                 ]
             }
         }
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
     }
 
@@ -625,7 +638,7 @@ Actions cannot have subresources`
         attr: IAttribute,
         def: IDefinition,
         properties: any,
-        required: string[]
+        required: Set<string>
     ) {
         const indef = this.extractDefinition(attr.type.name)
         if (!isStructure(indef)) {
@@ -641,7 +654,7 @@ Actions cannot have subresources`
             const prop = this.makeProperty(att)
             properties[prop.name] = prop.prop
             if (!att.modifiers.optional) {
-                required.push(att.name)
+                required.add(att.name)
             }
         }
     }
