@@ -1,0 +1,12 @@
+
+// this is included by default if no other server block is found
+servers {
+    /REST
+        server = "https://api.liveramp.com"
+            environment = PROD
+    /events
+        "Production Google Pubsub server"
+        server = "http://pubsub.google.com"
+            environment = PROD
+            protocol = GOOGLE_PUBSUB
+}

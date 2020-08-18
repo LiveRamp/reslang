@@ -1,0 +1,18 @@
+
+// it should be fine to import this, and have it ignored by the importer
+
+servers {
+    /REST
+        "This is the test server"
+        server = "http://www.liveramp.com:{port:8080}"
+            environment = TEST
+        "This is the prod server"
+        server = "http://www.liveramp.com:{port:8080}"
+            environment = PROD
+    /events
+        "This is the standard event server"
+        server = "http://www.google.com:{port:1020}"
+            environment = PROD
+            protocol = AQMP
+}
+
