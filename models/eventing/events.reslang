@@ -44,7 +44,7 @@ produces event StartSignal {
     /payload
         name: string
         address: string[1..10]
-        foo: value-of v2/TestResource::Foo2
+        // foo: value-of v2/TestResource::Foo2 --> this causes an error with asyncapi, need to look into why
 }
 
 "Event to stop"
