@@ -130,11 +130,11 @@ components:
           type: array
         foo:
           type: string
-          example: Link to Foo resource via its id
+          description: Link to Foo resource via its id
         foos:
+          description: Link to Foo resources via their ids
           items:
             type: string
-            example: Link to Foo resource via its id
           type: array
         bar:
           items:
@@ -142,15 +142,15 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: 'Link to Foo::Bar resource via [fooId, barId]'
+          description: 'Link to Foo::Bar resource via [fooId, barId]'
         bars:
           items:
             items:
               type: string
             type: array
-            example: 'Link to Foo::Bar resource via [fooId, barId]'
             minItems: 2
             maxItems: 2
+          description: 'Link to Foo::Bar resources via [fooId, barId]'
           type: array
       required:
         - id

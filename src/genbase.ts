@@ -1084,9 +1084,19 @@ Actions cannot have subresources`
             this.pushArrayDown(schema, count + 1, count + 1)
         }
 
-        schema.example =
-            `Link to ${attr.type.name} resource via ` +
-            (count ? "[" + ids + lowercaseFirst(def.short) + "Id]" : "its id")
+        if (attr.array) {
+            schema.description =
+                `Link to ${attr.type.name} resources via ` +
+                (count
+                    ? "[" + ids + lowercaseFirst(def.short) + "Id]"
+                    : "their ids")
+        } else {
+            schema.description =
+                `Link to ${attr.type.name} resource via ` +
+                (count
+                    ? "[" + ids + lowercaseFirst(def.short) + "Id]"
+                    : "its id")
+        }
     }
 
     protected pushArrayDown(schema: any, min: number = 0, max: number = 0) {

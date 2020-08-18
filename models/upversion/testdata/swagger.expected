@@ -241,11 +241,11 @@ components:
         bId:
           type: integer
           format: int32
-          example: Link to ResourceB resource via its id
+          description: Link to ResourceB resource via its id
         newBId:
           type: integer
           format: int32
-          example: Link to v2/ResourceB resource via its id
+          description: Link to v2/ResourceB resource via its id
       required:
         - id
         - name

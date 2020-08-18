@@ -38,13 +38,13 @@ components:
         id:
           type: string
         segmentsToDelivers:
+          description: Link to Segment resources via their ids
           items:
             type: string
-            example: Link to Segment resource via its id
           type: array
         whereToDeliver:
           type: string
-          example: Link to Destination resource via its id
+          description: Link to Destination resource via its id
         segmentStatuses:
           items:
             allOf:
@@ -68,7 +68,7 @@ components:
           example: '2019-04-13T03:35:34Z'
         segment:
           type: string
-          example: Link to Segment resource via its id
+          description: Link to Segment resource via its id
         status:
           allOf:
             - $ref: '#/components/schemas/DeliveryStatusEnum'

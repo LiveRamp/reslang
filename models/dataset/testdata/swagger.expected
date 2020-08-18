@@ -397,12 +397,11 @@ components:
       type: object
       properties:
         fieldIDs:
-          description: IDs of Fields to disable.
+          description: 'Link to Audience::Field resources via [audienceId, fieldId]'
           items:
             items:
               type: string
             type: array
-            example: 'Link to Audience::Field resource via [audienceId, fieldId]'
             minItems: 2
             maxItems: 2
           type: array

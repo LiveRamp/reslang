@@ -314,17 +314,14 @@ components:
       properties:
         destinationEndpointId:
           description: >-
-            Reference to a destination's endpoints to be used for distributing
-            the data
+            Link to Destination::Endpoint resource via [destinationId,
+            endpointId]
           items:
             type: integer
             format: int32
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
-            Link to Destination::Endpoint resource via [destinationId,
-            endpointId]
         destinationEndpointProperties:
           description: >-
             A map of keys and values needed to use the selected destination
@@ -395,17 +392,14 @@ components:
           type: string
         destinationEndpointId:
           description: >-
-            Reference to a destination's endpoints to be used for distributing
-            the data
+            Link to Destination::Endpoint resource via [destinationId,
+            endpointId]
           items:
             type: integer
             format: int32
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
-            Link to Destination::Endpoint resource via [destinationId,
-            endpointId]
         destinationEndpointProperties:
           description: >-
             A map of keys and values needed to use the selected destination
