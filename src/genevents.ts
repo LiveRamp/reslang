@@ -37,27 +37,14 @@ export default class EventsGen extends BaseGen {
         const schemas: any = {}
         const channels: ChannelMap = {}
         const headers: any = {}
-        const asyncapi: object = {
+        const asyncapi: any = {
             asyncapi: "2.0.0",
             info: {
                 title: this.namespace.title,
                 description: this.translateDoc(this.namespace.comment),
                 version: this.namespace.version
             },
-            servers: {
-                production: {
-                    url: "pubsub.liveramp.com:{port}",
-                    protocol: "Google Cloud Pub/Sub",
-                    description: "LiveRamp Production pubsub instance",
-                    variables: {
-                        port: {
-                            description:
-                                "Secure connection (TLS) is available through port 8883",
-                            default: "1883"
-                        }
-                    }
-                }
-            },
+            servers: this.formServers(),
             defaultContentType: "application/json",
             channels,
             components: {
@@ -88,6 +75,51 @@ export default class EventsGen extends BaseGen {
             throw new Error("No events are listed in the specification")
         }
         return asyncapi
+    }
+
+    private formServers() {
+        return {
+            production: {
+                url: "pubsub.liveramp.com:{port}",
+                protocol: "Google Cloud Pub/Sub",
+                description: "LiveRamp Production pubsub instance",
+                variables: {
+                    port: {
+                        description:
+                            "Secure connection (TLS) is available through port 8883",
+                        default: "1883"
+                    }
+                }
+            }
+        }
+        let assigned = false
+        const servers: any = {}
+        console.log(this.servers)
+        for (const ev of this.servers.events || []) {
+            // only do 1 env, complain if there are others
+            if (ev.environment === this.environment) {
+                if (!assigned) {
+                    servers["production"] = {
+                        url: ev.url + ":{port}",
+                        protocol: ev.protocol,
+                        description: ev.comment,
+                        variables: {
+                            port: {
+                                description:
+                                    "Secure connection (TLS) is available through port 8883",
+                                default: "1883"
+                            }
+                        }
+                    }
+                    assigned = true
+                } else {
+                    throw new Error(
+                        "Can only have 1 server for the specified environment"
+                    )
+                }
+            }
+        }
+        return servers
     }
 
     private formChannels(channels: ChannelMap) {

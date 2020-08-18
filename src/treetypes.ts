@@ -11,6 +11,18 @@ export interface INamespace {
     version: string
 }
 
+export interface IServers {
+    rest: IServer[]
+    events: IServer[]
+}
+
+export interface IServer {
+    comment: string
+    url: string
+    environment: string
+    protocol?: string
+}
+
 export interface IImport {
     import: string
 }
@@ -40,6 +52,7 @@ export type DefinitionType =
     | "structure"
     | "union"
     | "event"
+    | "server-block"
 
 export let ResourceLike = [
     "request-resource",
@@ -49,7 +62,13 @@ export let ResourceLike = [
     "subresource"
 ]
 
-export type Kind = "resource-like" | "enum" | "structure" | "union" | "event"
+export type Kind =
+    | "resource-like"
+    | "server-block"
+    | "enum"
+    | "structure"
+    | "union"
+    | "event"
 export type AnyKind = IResourceLike | IEnum | IStructure | IUnion | IEvent
 
 // type guards

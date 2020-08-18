@@ -1,5 +1,6 @@
 // these are all the models we want to generate specs for, and to check
 export const allModels = [
+    "servers",
     "linked",
     "databuyer",
     "eventing",

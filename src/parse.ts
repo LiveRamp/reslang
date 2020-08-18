@@ -21,6 +21,7 @@ export function writeFile(data: string, ...parts: string[]) {
 // grammar is split into several parts
 const grammar =
     readFile(__dirname, "grammar", "main.pegjs") +
+    readFile(__dirname, "grammar", "servers.pegjs") +
     readFile(__dirname, "grammar", "rest.pegjs") +
     readFile(__dirname, "grammar", "events.pegjs") +
     readFile(__dirname, "grammar", "diagrams.pegjs") +
@@ -54,18 +55,20 @@ export function parseFile(
             }) as object
         )
     } catch (error) {
+        const loc = error.location
+            ? `location: ${error.location}`
+            : "location unknown"
         throw new Error(
-            `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ` +
-                `${error.location.start.column}`
+            `Problem parsing file ${file}: ${error.message}, ${loc}`
         )
     }
     addNamespace(
-        tree[2] as AnyKind[],
+        tree[3] as AnyKind[],
         parsingNamespace,
         mainNamespace,
         additionalNamespace
     )
-    addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
+    addDiagramNamespace(tree[4] as IDiagram[], parsingNamespace, mainNamespace)
     return tree
 }
 

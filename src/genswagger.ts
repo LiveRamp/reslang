@@ -18,8 +18,7 @@ import {
     isEnum,
     isResourceLike,
     isStructure,
-    isUnion,
-    IDefinition
+    isUnion
 } from "./treetypes"
 
 /**
@@ -33,6 +32,7 @@ export default class SwagGen extends BaseGen {
         const paths: any = {}
         const schemas: any = {}
         const parameters: any = {}
+        const servers: Array<any> = []
         const swag: object = {
             openapi: "3.0.1",
             info: {
@@ -40,18 +40,24 @@ export default class SwagGen extends BaseGen {
                 description: this.translateDoc(this.namespace.comment),
                 version: this.namespace.version
             },
-            servers: [
-                {
-                    url: `https://api.liveramp.com${
-                        this.omitNamespace ? "" : "/" + this.getSpace()
-                    }`
-                }
-            ],
+            servers,
             tags,
             paths,
             components: {
                 parameters,
                 schemas
+            }
+        }
+
+        // extract the server defs
+        for (const rest of this.servers.rest) {
+            if (rest.environment === this.environment) {
+                servers.push({
+                    description: rest.comment,
+                    url:
+                        rest.url +
+                        (this.omitNamespace ? "" : "/" + this.getSpace())
+                })
             }
         }
 

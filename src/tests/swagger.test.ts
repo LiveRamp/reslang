@@ -14,7 +14,13 @@ describe("swagger generation tests", () => {
 
 /** compare the output with saved swagger */
 function compare(module: string) {
-    const swag = new SwagGen([`models/${module}`], { ignoreRules: true }, true)
+    const swag = new SwagGen(
+        [`models/${module}`],
+        { ignoreRules: true },
+        "PROD",
+        "",
+        true
+    )
     const swagger = swag.generate()
 
     const got = strip(yaml.dump(clean(swagger), { noRefs: true }))

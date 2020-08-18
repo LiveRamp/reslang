@@ -1,0 +1,6 @@
+
+"This is a simple server block test"
+namespace {
+    title "Server block test"
+    version 0.0.1
+}

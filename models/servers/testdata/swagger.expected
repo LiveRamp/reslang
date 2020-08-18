@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: Server block test
+  description: This is a simple server block test
+  version: 0.0.1
+servers:
+  - description: This is the prod server
+    url: 'http://prod-api.liveramp.com:8080/servers'
+tags:
+  - name: Test
+    description: '(resource)  '
+paths:
+  /v1/tests:
+    post:
+      tags:
+        - Test
+      operationId: Create Test
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestInput'
+      responses:
+        '201':
+          description: Test created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+  '/v1/tests/{id}':
+    get:
+      tags:
+        - Test
+      operationId: Get Test
+      description: ''
+      responses:
+        '200':
+          description: Test retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestOutput'
+        '404':
+          description: Test not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    TestInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    TestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+
