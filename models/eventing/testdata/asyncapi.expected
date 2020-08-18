@@ -137,19 +137,6 @@ components:
         - id
         - address
       description: A REST subresource
-    v2TestResourceFoo2Output:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        address:
-          items:
-            type: string
-          type: array
-      required:
-        - id
-        - address
     StartSignalHeader:
       type: object
       properties:
@@ -176,14 +163,9 @@ components:
           minItems: 1
           maxItems: 10
           type: array
-        foo:
-          allOf:
-            - $ref: '#/components/schemas/v2TestResourceFoo2Output'
-          type: object
       required:
         - name
         - address
-        - foo
       description: Event to start
     v3StopSignalHeader:
       type: object
