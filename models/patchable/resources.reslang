@@ -5,6 +5,7 @@ configuration-resource Person {
     address: string mutable optional default = "Malibu"
     birthDate: datetime
     extra: Extra inline
+    flag: boolean optional flag
 
     /operations
         POST PUT PATCH GET

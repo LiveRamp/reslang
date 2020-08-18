@@ -146,6 +146,8 @@ components:
           example: '2019-04-13T03:35:34Z'
         notes:
           type: string
+        flag:
+          type: boolean
       required:
         - id
         - birthDate
@@ -161,6 +163,8 @@ components:
         notes:
           default: no notes!
           type: string
+        flag:
+          type: boolean
     PersonPatchable:
       type: object
       properties:
@@ -170,6 +174,8 @@ components:
           type: string
         notes:
           type: string
+        flag:
+          type: boolean
     StandardError:
       type: object
       properties:

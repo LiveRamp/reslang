@@ -25,6 +25,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -51,6 +52,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -77,6 +79,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -103,6 +106,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -159,6 +163,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -185,6 +190,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -211,6 +217,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -260,6 +267,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -286,6 +294,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -315,6 +324,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -368,6 +378,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -394,6 +405,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -423,6 +435,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -477,6 +490,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -503,6 +517,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -543,6 +558,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -569,6 +585,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -619,6 +636,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -645,6 +663,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -699,6 +718,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -725,6 +745,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -780,6 +801,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -806,6 +828,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -862,6 +885,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -888,6 +912,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -961,6 +986,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -988,6 +1014,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -1015,6 +1042,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,

@@ -500,8 +500,20 @@ Actions cannot have subresources`
             if (attr.name === "id" && verb !== Verbs.GET) {
                 continue
             }
-            // if we have a mutation operation and the attribute is not marked as mutable, skip it
-            if (
+            // if this is a flag, only place on PUT, PATCH etc etc
+            if (attr.modifiers.flag) {
+                if (
+                    ![
+                        Verbs.PUT,
+                        Verbs.PATCH,
+                        Verbs.GET,
+                        Verbs.MULTIGET
+                    ].includes(verb)
+                ) {
+                    continue
+                }
+            } else if (
+                // if we have a mutation operation and the attribute is not marked as mutable, skip it
                 (verb === Verbs.PATCH || verb === Verbs.PUT) &&
                 !attr.modifiers.mutable
             ) {

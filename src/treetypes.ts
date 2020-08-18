@@ -179,6 +179,7 @@ export interface IArray {
 }
 
 export interface IModifiers {
+    flag: boolean
     mutable: boolean
     output: boolean
     optional: boolean

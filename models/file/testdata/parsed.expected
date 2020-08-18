@@ -26,6 +26,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -52,6 +53,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -109,6 +111,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -135,6 +138,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -161,6 +165,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -187,6 +192,7 @@
           "linked": true,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -275,6 +281,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -318,6 +325,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -344,6 +352,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -370,6 +379,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -396,6 +406,7 @@
           "linked": true,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -422,6 +433,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -484,6 +496,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -510,6 +523,7 @@
           "linked": true,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -588,6 +602,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -616,6 +631,7 @@
           "linked": true,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -642,6 +658,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -683,6 +700,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -709,6 +727,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -776,6 +795,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -802,6 +822,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -831,6 +852,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -871,6 +893,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -898,6 +921,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -925,6 +949,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -957,10 +982,10 @@
           "parentName": ""
         },
         {
-          "module": "files",
+          "module": "file",
           "parents": [],
           "short": "reslang",
-          "name": "files.reslang",
+          "name": "file.reslang",
           "parentShort": "",
           "parentName": ""
         }
