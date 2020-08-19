@@ -26,6 +26,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -55,6 +56,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": true,
             "optional": false,
             "optionalPost": false,
@@ -81,6 +83,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -149,6 +152,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -176,6 +180,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -206,6 +211,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -233,8 +239,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -263,6 +270,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -303,6 +311,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": true,
             "optional": false,
             "optionalPost": false,
@@ -329,6 +338,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -381,6 +391,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -424,6 +435,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -468,6 +480,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -516,6 +529,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -565,6 +579,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -592,6 +607,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -619,6 +635,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,

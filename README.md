@@ -15,6 +15,7 @@ It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), des
 | [Event intro tutorial](./docs/intro-events.md)       | Describes a simple example of how to generate AsyncAPI to describe events               |
 | [Direct2Dist API](./docs/direct2dist-explanation.md) | This is a more complex example which recreates the entire Direct2Dist API.              |
 | [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.                                   |
+| [Server blocks](./docs/server-blocks.md)             | This explains how to define servers for REST and events APIs                            |
 | [VSCode Syntax highlighting](./vscode/README.md)     | Explains how to install VSCode syntax highlighting. Hint search extensions for Reslang! |
 
 ## Installation

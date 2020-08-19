@@ -445,7 +445,7 @@ components:
         asset:
           type: integer
           format: int32
-          example: Link to Asset resource via its id
+          description: Link to Asset resource via its id
         outputName:
           type: string
       required:

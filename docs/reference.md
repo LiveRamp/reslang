@@ -46,10 +46,10 @@ The following primitive types are available. These are translated into appropria
 | string   | Standard string                                                               |
 | double   | Double floating point                                                         |
 | boolean  | True or false                                                                 |
-| date     | Date in ISO8601 format (e.g. 2019-04-13)                                           |
-| time     | Time in ISO8601 format (e.g. 22:00:01)                                             |
+| date     | Date in ISO8601 format (e.g. 2019-04-13)                                      |
+| time     | Time in ISO8601 format (e.g. 22:00:01)                                        |
 | datetime | Date+time in ISO8601 format, always with timezone<br />(2019-04-13T03:35:34Z) |
-| duration | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)
+| duration | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)                            |
 | url      | A URL                                                                         |
 | uuid     | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                   |
 
@@ -289,6 +289,8 @@ The following modifiers can be placed after the attribute type to indicate that 
     -   The field is included also for PUT and PATCH
 -   output
     -   The field is only included for GET
+-   flag
+    -   The field is included for GET, MULTIGET, PUT and PATCH. It's basically a flag that you can set after creation. It can be marked as optional.
 
 Note that "id" is treated as "output" implicitly.
 

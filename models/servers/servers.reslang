@@ -1,0 +1,26 @@
+
+import servers2
+
+servers {
+    /REST
+        "This is the test server"
+        server = "http://test-api.liveramp.com:{port:8080}"
+            environment = TEST
+        "This is the prod server"
+        server = "http://prod-api.liveramp.com:{port:8080}"
+            environment = PROD
+    /events
+        "This is the standard event server"
+        server = "http://pubsub.google.com:{port:1020}"
+            environment = PROD
+            protocol = AQMP
+}
+
+
+resource Test {
+    id: int
+    name: string
+
+    /operations
+        POST GET
+}

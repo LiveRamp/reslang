@@ -88,7 +88,7 @@ paths:
           schema:
             type: integer
             format: int32
-            example: Link to Organization resource via its id
+            description: Link to Organization resource via its id
   '/v1/users/{id}':
     get:
       tags:
@@ -362,12 +362,12 @@ components:
         parent:
           type: integer
           format: int32
-          example: Link to Organization resource via its id
+          description: Link to Organization resource via its id
         roles:
+          description: Link to Role resources via their ids
           items:
             type: integer
             format: int32
-            example: Link to Role resource via its id
           minItems: 1
           maxItems: 10
           type: array
@@ -386,12 +386,12 @@ components:
         parent:
           type: integer
           format: int32
-          example: Link to Organization resource via its id
+          description: Link to Organization resource via its id
         roles:
+          description: Link to Role resources via their ids
           items:
             type: integer
             format: int32
-            example: Link to Role resource via its id
           minItems: 1
           maxItems: 10
           type: array
@@ -416,7 +416,7 @@ components:
         parentOrganizationId:
           type: integer
           format: int32
-          example: Link to Organization resource via its id
+          description: Link to Organization resource via its id
       required:
         - name
     OrganizationOutput:
@@ -430,7 +430,7 @@ components:
         parentOrganizationId:
           type: integer
           format: int32
-          example: Link to Organization resource via its id
+          description: Link to Organization resource via its id
       required:
         - id
         - name
@@ -450,7 +450,7 @@ components:
         parentRoleId:
           type: integer
           format: int32
-          example: Link to Role resource via its id
+          description: Link to Role resource via its id
       required:
         - name
         - parentRoleId
@@ -465,7 +465,7 @@ components:
         parentRoleId:
           type: integer
           format: int32
-          example: Link to Role resource via its id
+          description: Link to Role resource via its id
       required:
         - id
         - name

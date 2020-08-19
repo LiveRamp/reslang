@@ -1,0 +1,6 @@
+
+"Exists just to test that another module can import this without problems, even though it has a server block"
+namespace {
+    title "Server block test2"
+    version 0.0.1
+}

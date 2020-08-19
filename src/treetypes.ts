@@ -11,6 +11,18 @@ export interface INamespace {
     version: string
 }
 
+export interface IServers {
+    rest: IServer[]
+    events: IServer[]
+}
+
+export interface IServer {
+    comment: string
+    url: string
+    environment: string
+    protocol?: string
+}
+
 export interface IImport {
     import: string
 }
@@ -40,6 +52,7 @@ export type DefinitionType =
     | "structure"
     | "union"
     | "event"
+    | "server-block"
 
 export let ResourceLike = [
     "request-resource",
@@ -49,8 +62,24 @@ export let ResourceLike = [
     "subresource"
 ]
 
-export type Kind = "resource-like" | "enum" | "structure" | "union" | "event"
-export type AnyKind = IResourceLike | IEnum | IStructure | IUnion | IEvent
+export type Kind =
+    | "resource-like"
+    | "server-block"
+    | "enum"
+    | "structure"
+    | "union"
+    | "event"
+    | "produces"
+    | "consumes"
+
+export type AnyKind =
+    | IResourceLike
+    | IEnum
+    | IStructure
+    | IUnion
+    | IEvent
+    | IProduces
+    | IConsumes
 
 // type guards
 export function isResourceLike(def: IDefinition): def is IResourceLike {
@@ -67,6 +96,12 @@ export function isUnion(def: IDefinition): def is IUnion {
 }
 export function isEvent(def: IDefinition): def is IEvent {
     return def.kind === "event"
+}
+export function isProduces(def: IDefinition): def is IProduces {
+    return def.kind === "produces"
+}
+export function isConsumes(def: IDefinition): def is IConsumes {
+    return def.kind === "consumes"
 }
 export function isAction(def: IDefinition): def is IResourceLike {
     return def.type === "action"
@@ -128,10 +163,18 @@ export interface IUnion extends IDefinition {
 
 export interface IEvent extends IDefinition {
     kind: "event"
-    // produces or consumes
-    produces: boolean
     header?: IAttribute[]
     payload?: IAttribute[]
+}
+
+export interface IProduces extends IDefinition {
+    kind: "produces"
+    event: IReference
+}
+
+export interface IConsumes extends IDefinition {
+    kind: "consumes"
+    event: IReference
 }
 
 export interface IAttribute {
@@ -161,6 +204,7 @@ export interface IArray {
 }
 
 export interface IModifiers {
+    flag: boolean
     mutable: boolean
     output: boolean
     optional: boolean

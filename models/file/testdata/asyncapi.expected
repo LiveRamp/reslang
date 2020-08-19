@@ -77,7 +77,7 @@ components:
           type: string
         fileTypeId:
           type: string
-          example: Link to FileType resource via its id
+          description: Link to FileType resource via its id
       required:
         - id
         - name
@@ -93,7 +93,8 @@ components:
         directoryId:
           type: string
           format: uuid
-          example: Link to Directory resource via its id
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to Directory resource via its id
       required:
         - id
         - directoryId
@@ -114,7 +115,8 @@ components:
         directory:
           type: string
           format: uuid
-          example: Link to Directory resource via its id
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to Directory resource via its id
         corrupted:
           type: boolean
       required:

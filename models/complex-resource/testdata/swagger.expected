@@ -311,7 +311,6 @@ components:
         - company
         - home
         - homeArray
-        - timeToManufacture
         - other
       description: This is a manufacturer
     CarInput:
@@ -331,15 +330,15 @@ components:
           type: object
         homeGarageId:
           type: string
-          example: Link to simple-resource.Garage resource via its id
+          description: Link to simple-resource.Garage resource via its id
         manufacturer:
           allOf:
             - $ref: '#/components/schemas/simpleresourceManufacturer'
           type: object
         rentedGarageIds:
+          description: Link to simple-resource.Garage resources via their ids
           items:
             type: string
-            example: Link to simple-resource.Garage resource via its id
           type: array
       required:
         - brand
@@ -373,15 +372,15 @@ components:
           type: object
         homeGarageId:
           type: string
-          example: Link to simple-resource.Garage resource via its id
+          description: Link to simple-resource.Garage resource via its id
         manufacturer:
           allOf:
             - $ref: '#/components/schemas/simpleresourceManufacturer'
           type: object
         rentedGarageIds:
+          description: Link to simple-resource.Garage resources via their ids
           items:
             type: string
-            example: Link to simple-resource.Garage resource via its id
           type: array
       required:
         - id

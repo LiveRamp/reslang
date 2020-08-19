@@ -1038,7 +1038,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::TaxonomyConfiguration resource via
             [destinationId, taxonomyConfigurationId]
       required:
@@ -1071,7 +1071,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::TaxonomyConfiguration resource via
             [destinationId, taxonomyConfigurationId]
       required:
@@ -1097,7 +1097,7 @@ components:
       properties:
         identifierPoolId:
           type: string
-          example: Link to IdentifierPool resource via its id
+          description: Link to IdentifierPool resource via its id
         endpointId:
           items:
             type: integer
@@ -1105,7 +1105,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Endpoint resource via [destinationId,
             endpointId]
       required:
@@ -1125,7 +1125,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Packager resource via [destinationId,
             packagerId]
         formatterId:
@@ -1135,7 +1135,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Formatter resource via [destinationId,
             formatterId]
         delivererId:
@@ -1145,7 +1145,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Deliverer resource via [destinationId,
             delivererId]
         endpointProperties:
@@ -1178,7 +1178,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Packager resource via [destinationId,
             packagerId]
         formatterId:
@@ -1188,7 +1188,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Formatter resource via [destinationId,
             formatterId]
         delivererId:
@@ -1198,7 +1198,7 @@ components:
           minItems: 2
           maxItems: 2
           type: array
-          example: >-
+          description: >-
             Link to Destination::Deliverer resource via [destinationId,
             delivererId]
         endpointProperties:

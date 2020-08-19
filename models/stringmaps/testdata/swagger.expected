@@ -142,6 +142,7 @@ components:
             type: integer
             format: int32
         test:
+          default: test
           type: string
         key:
           allOf:
@@ -162,14 +163,9 @@ components:
           default: true
           type: boolean
       required:
-        - name
         - map
-        - test
         - key
-        - a
-        - c
         - d
-        - f
     SMapOutput:
       type: object
       properties:
@@ -177,7 +173,6 @@ components:
           type: integer
           format: int32
         name:
-          default: hello
           type: string
         map:
           type: object
@@ -201,14 +196,11 @@ components:
             - $ref: '#/components/schemas/InputKey'
           type: object
         a:
-          default: 123.9
           type: number
         b:
-          default: 20
           type: integer
           format: int32
         c:
-          default: 12/20/1990
           type: string
           format: ISO8601 UTC date
           example: '2019-04-13'
@@ -216,24 +208,19 @@ components:
           type: integer
           format: int32
         f:
-          default: true
           type: boolean
       required:
         - id
-        - name
         - map
         - maps
-        - test
         - key
-        - a
         - b
-        - c
         - d
-        - f
     SMapPuttable:
       type: object
       properties:
         test:
+          default: test
           type: string
         key:
           allOf:
@@ -243,7 +230,6 @@ components:
           type: integer
           format: int32
       required:
-        - test
         - key
         - d
     SMapMultiResponse:

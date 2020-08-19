@@ -6,7 +6,9 @@ import {
     IReference,
     getAllAttributes,
     isResourceLike,
-    AnyKind
+    AnyKind,
+    isProduces,
+    isConsumes
 } from "./treetypes"
 import * as path from "path"
 
@@ -21,6 +23,7 @@ export function writeFile(data: string, ...parts: string[]) {
 // grammar is split into several parts
 const grammar =
     readFile(__dirname, "grammar", "main.pegjs") +
+    readFile(__dirname, "grammar", "servers.pegjs") +
     readFile(__dirname, "grammar", "rest.pegjs") +
     readFile(__dirname, "grammar", "events.pegjs") +
     readFile(__dirname, "grammar", "diagrams.pegjs") +
@@ -45,6 +48,13 @@ export function parseFile(
     additionalNamespace: string
 ) {
     const contents = readFile(file)
+    function locToString(location: any) {
+        return location
+            ? location.start
+                ? location.start.line + ", " + location.start.column
+                : "unknown start"
+            : "unknown"
+    }
 
     let tree: any[]
     try {
@@ -54,18 +64,20 @@ export function parseFile(
             }) as object
         )
     } catch (error) {
+        const loc = error.location
+            ? `location: ${locToString(error.location)}`
+            : "location unknown"
         throw new Error(
-            `Problem parsing file ${file}: ${error.message}, location: ${error.location.start.line}, ` +
-                `${error.location.start.column}`
+            `Problem parsing file ${file}: ${error.message}, ${loc}`
         )
     }
     addNamespace(
-        tree[2] as AnyKind[],
+        tree[3] as AnyKind[],
         parsingNamespace,
         mainNamespace,
         additionalNamespace
     )
-    addDiagramNamespace(tree[3] as IDiagram[], parsingNamespace, mainNamespace)
+    addDiagramNamespace(tree[4] as IDiagram[], parsingNamespace, mainNamespace)
     return tree
 }
 
@@ -107,9 +119,20 @@ function addNamespace(
     for (const def of defs || []) {
         convert(def, namespace, mainNamespace)
 
+        // if this is a produces or consumes, convert the reference
+        if (isProduces(def) || isConsumes(def)) {
+            convert(def.event, namespace, mainNamespace)
+        }
+
         // add to all references
         for (const attr of getAllAttributes(def)) {
             convert(attr.type, namespace, mainNamespace)
+            // complain if the attribute has default value but is not optional
+            if (attr.default && !attr.modifiers.optional) {
+                throw new Error(
+                    `Attribute ${attr.name} of ${def.name} has a default, but is not optional`
+                )
+            }
         }
 
         // convert the error references

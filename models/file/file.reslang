@@ -57,13 +57,15 @@ request-resource DirectoryDeleteRequest {
 }
 
 "If a deletion is corrupted, we generate this event"
-produces event DirectoryDeleteIncomplete {
+event DirectoryDeleteIncomplete {
 	/header
 		timeOfFailure: datetime
 	/payload
 		directory: linked Directory
 		corrupted: boolean
 }
+
+produces DirectoryDeleteIncomplete
 
 "This models an action on a request"
 sync action DirectoryDeleteRequest::Cancel {

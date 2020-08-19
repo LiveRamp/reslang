@@ -16,7 +16,11 @@ import {
     IStructure,
     IUnion,
     isStructure,
-    isEvent
+    isEvent,
+    IServers,
+    IServer,
+    isProduces,
+    isConsumes
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync, statSync } from "fs"
@@ -32,6 +36,8 @@ import {
 
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
+const LOCAL_SERVERS = "servers.reslang"
+const LOCAL_SERVERS_INCLUDE = lpath.join(__dirname, "library", LOCAL_SERVERS)
 
 export enum Verbs {
     POST,
@@ -48,10 +54,84 @@ interface IFileDetails {
     namespace: string
 }
 
+// replace any vars in the urls with defaults or values supplied by the users
+export function replaceServerVars(variables: string, servers: IServers) {
+    // parse out the vars into a map
+    const vars = makeVars(variables)
+
+    // iterate over all urls and replace with defaults or variables. complain if var not present
+    for (const rest of servers.rest || []) {
+        rest.url = replaceVars(vars, rest.url)
+    }
+    for (const events of servers.events || []) {
+        events.url = replaceVars(vars, events.url)
+    }
+}
+
+export function makeVars(variables: string) {
+    const vars = new Map<string, string>()
+    for (const pair of variables.split(",")) {
+        const inside = pair.split("=")
+        vars.set(inside[0], inside[1])
+    }
+    return vars
+}
+
+export function replaceVars(vars: Map<string, string>, url: string) {
+    // break up into strings
+    let variable = false
+    const all = new Array<string>()
+    let current = ""
+    for (const ch of url) {
+        if (ch === "{") {
+            variable = true
+            all.push(current)
+            current = "$"
+        } else if (ch === "}") {
+            variable = false
+            all.push(current)
+            current = ""
+        } else {
+            current = current + ch
+        }
+    }
+    if (current) {
+        all.push(current)
+    }
+
+    // replace the string with vars or defaults
+    const replaced = all.map((value, index) => {
+        if (!value.startsWith("$")) {
+            return value
+        }
+
+        value = value.substring(1)
+        const pos = value.indexOf(":")
+        if (pos !== -1) {
+            const varName = value.substring(0, pos)
+            const def = value.substring(pos + 1)
+            if (vars.has(varName)) {
+                return vars.get(varName)
+            } else {
+                return def
+            }
+        } else {
+            if (vars.has(value)) {
+                return vars.get(value)
+            }
+            throw new Error(
+                "Cannot find value or default for variable: " + value
+            )
+        }
+    })
+    return replaced.join("")
+}
+
 export abstract class BaseGen {
     public static readonly COMMENT_REGEX = /See docs:\s*(?<doc>\w+)\.(?<entry>\w+)/
 
     protected namespace!: INamespace
+    protected servers!: IServers
     protected mainNamespace?: string
     // the user defined space, if there is one, in the namespace definition
     protected space?: string
@@ -64,6 +144,8 @@ export abstract class BaseGen {
     public constructor(
         private dirs: string[],
         private rules: IRules,
+        protected environment: string = "PROD",
+        protected vars: string = "",
         expandInlines = false,
         protected omitNamespace = false
     ) {
@@ -150,50 +232,86 @@ export abstract class BaseGen {
         const files = this.findFiles([], join(path, nspace), "")
         files.push({ file: LOCAL, full: LOCAL_INCLUDE, namespace: "" })
         for (const lst of files) {
-            const fname = lst.full
-            const reallyMain = main
-            if (fname.endsWith(".reslang")) {
-                const local = parseFile(
-                    fname,
-                    nspace,
-                    this.mainNamespace!,
-                    lst.namespace
-                )
-                if (local[0] && main) {
-                    if (!this.namespace) {
-                        this.namespace = local[0]
-                    } else {
-                        throw new Error(
-                            "Cannot specify more than one namespace in a directory: " +
-                                local[0]
-                        )
-                    }
-                }
-
-                // handle any imports
-                for (const imp of local[1] as IImport[]) {
-                    this.processDefinition(path + imp.import, false) //xxx
-                }
-                // copy over all the defs
-                for (const def of local[2] as AnyKind[]) {
-                    def.secondary = !reallyMain
-                    def.file = lst.file
-                    this.defs.push(def)
-                }
-                // copy over all the diagrams
-                for (const diag of local[3] as IDiagram[]) {
-                    this.diagrams.push(diag)
-                }
-
-                // copy over all the documentation
-                for (const doc of local[4] as IDocumentation[]) {
-                    this.documentation[doc.name] = doc.entries
-                }
-            }
+            this.parseFile(lst, main, nspace, path)
         }
         // must have a namespace
         if (!this.namespace) {
             throw new Error(`No namespace present in ${dirname}`)
+        }
+        // must have a server block - read in default one if we don't
+        if (!this.servers) {
+            this.parseFile(
+                {
+                    file: LOCAL_SERVERS,
+                    full: LOCAL_SERVERS_INCLUDE,
+                    namespace: ""
+                },
+                main,
+                nspace,
+                path
+            )
+        }
+    }
+
+    public parseFile(
+        lst: IFileDetails,
+        main: boolean,
+        nspace: string,
+        path: string
+    ) {
+        const fname = lst.full
+        const reallyMain = main
+        if (fname.endsWith(".reslang")) {
+            const local = parseFile(
+                fname,
+                nspace,
+                this.mainNamespace!,
+                lst.namespace
+            )
+            if (local[0] && main) {
+                if (!this.namespace) {
+                    this.namespace = local[0]
+                } else {
+                    throw new Error(
+                        "Cannot specify more than one namespace in a module: " +
+                            local[0]
+                    )
+                }
+            }
+
+            // complain if we have more than 1 server block
+            if (local[2] && main) {
+                if (!this.servers) {
+                    this.servers = local[2]
+                    // fix up server block vars
+                    replaceServerVars(this.vars, this.servers)
+                } else {
+                    throw new Error(
+                        "Cannot specify more than one server block in a model: " +
+                            local[2]
+                    )
+                }
+            }
+
+            // handle any imports
+            for (const imp of local[1] as IImport[]) {
+                this.processDefinition(path + imp.import, false)
+            }
+            // copy over all the defs
+            for (const def of local[3] as AnyKind[]) {
+                def.secondary = !reallyMain
+                def.file = lst.file
+                this.defs.push(def)
+            }
+            // copy over all the diagrams
+            for (const diag of local[4] as IDiagram[]) {
+                this.diagrams.push(diag)
+            }
+
+            // copy over all the documentation
+            for (const doc of local[5] as IDocumentation[]) {
+                this.documentation[doc.name] = doc.entries
+            }
         }
     }
 
@@ -365,12 +483,10 @@ Actions cannot have subresources`
     ) {
         const attrs = def.attributes || []
         const properties: any = {}
-        const required: string[] = []
+        const required = new Set<string>()
         const request = {
             type: "object",
-            properties,
-            required,
-            description: def.comment
+            properties
         } as {
             type: string
             properties: any
@@ -386,8 +502,20 @@ Actions cannot have subresources`
             if (attr.name === "id" && verb !== Verbs.GET) {
                 continue
             }
-            // if we have a mutation operation and the attribute is not marked as mutable, skip it
-            if (
+            // if this is a flag, only place on PUT, PATCH etc etc
+            if (attr.modifiers.flag) {
+                if (
+                    ![
+                        Verbs.PUT,
+                        Verbs.PATCH,
+                        Verbs.GET,
+                        Verbs.MULTIGET
+                    ].includes(verb)
+                ) {
+                    continue
+                }
+            } else if (
+                // if we have a mutation operation and the attribute is not marked as mutable, skip it
                 (verb === Verbs.PATCH || verb === Verbs.PUT) &&
                 !attr.modifiers.mutable
             ) {
@@ -412,14 +540,29 @@ Actions cannot have subresources`
                 const prop = this.makeProperty(attr)
                 properties[prop.name] = prop.prop
                 if (!optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
+                }
+            }
+        }
+        // if this is a PATCH, remove any defaults
+        for (const name in properties) {
+            if (properties.hasOwnProperty(name)) {
+                if (
+                    verb === Verbs.PATCH ||
+                    verb === Verbs.GET ||
+                    verb === Verbs.MULTIGET ||
+                    required.has(name)
+                ) {
+                    delete properties[name].default
                 }
             }
         }
 
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
+        // placed here to avoid perturbing the swagger too much, based on moving where required is set
+        request.description = def.comment
 
         const unique = camelCase(this.formSingleUniqueName(def))
         if (Object.keys(properties).length !== 0) {
@@ -467,6 +610,9 @@ Actions cannot have subresources`
 
     // add bulk modifier if needed
     protected formSingleUniqueName(def: AnyKind, addSpaces = true) {
+        if (isProduces(def) || isConsumes(def)) {
+            return def.event.name
+        }
         if (isResourceLike(def) && def.type === "action") {
             const space = addSpaces ? " " : ""
             if (def.bulk) {
@@ -516,11 +662,11 @@ Actions cannot have subresources`
         attrs: IAttribute[]
     ) {
         const properties: any = {}
-        const required: string[] = []
+        const required = new Set<string>()
         const request = {
             type: "object",
             properties,
-            required,
+            required: new Array<string>(),
             description: def.comment
         } as {
             type: string
@@ -543,14 +689,14 @@ Actions cannot have subresources`
             } else {
                 const prop = this.makeProperty(attr)
                 if (!optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
                 }
                 properties[prop.name] = prop.prop
             }
         }
 
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
 
         if (Object.keys(properties).length !== 0) {
@@ -583,7 +729,7 @@ Actions cannot have subresources`
             }
             mapping[attr.name] = "#/components/schemas/" + camel
         }
-        const required: string[] = ["type"]
+        const required = new Set<string>(["type"])
         const request = {
             type: "object",
             properties: { type: { type: "string" } },
@@ -591,7 +737,7 @@ Actions cannot have subresources`
                 propertyName: "type",
                 mapping
             },
-            required
+            required: new Array<string>()
         }
         definitions[name] = request
 
@@ -603,7 +749,7 @@ Actions cannot have subresources`
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
                 if (!attr.modifiers.optional) {
-                    required.push(attr.name)
+                    required.add(attr.name)
                 }
             }
             definitions[capitalizeFirst(attr.name)] = {
@@ -616,8 +762,8 @@ Actions cannot have subresources`
                 ]
             }
         }
-        if (request.required.length === 0) {
-            delete request.required
+        if (required.size !== 0) {
+            request.required = Array.from(required.values())
         }
     }
 
@@ -625,7 +771,7 @@ Actions cannot have subresources`
         attr: IAttribute,
         def: IDefinition,
         properties: any,
-        required: string[]
+        required: Set<string>
     ) {
         const indef = this.extractDefinition(attr.type.name)
         if (!isStructure(indef)) {
@@ -641,7 +787,7 @@ Actions cannot have subresources`
             const prop = this.makeProperty(att)
             properties[prop.name] = prop.prop
             if (!att.modifiers.optional) {
-                required.push(att.name)
+                required.add(att.name)
             }
         }
     }
@@ -943,9 +1089,19 @@ Actions cannot have subresources`
             this.pushArrayDown(schema, count + 1, count + 1)
         }
 
-        schema.example =
-            `Link to ${attr.type.name} resource via ` +
-            (count ? "[" + ids + lowercaseFirst(def.short) + "Id]" : "its id")
+        if (attr.array) {
+            schema.description =
+                `Link to ${attr.type.name} resources via ` +
+                (count
+                    ? "[" + ids + lowercaseFirst(def.short) + "Id]"
+                    : "their ids")
+        } else {
+            schema.description =
+                `Link to ${attr.type.name} resource via ` +
+                (count
+                    ? "[" + ids + lowercaseFirst(def.short) + "Id]"
+                    : "its id")
+        }
     }
 
     protected pushArrayDown(schema: any, min: number = 0, max: number = 0) {

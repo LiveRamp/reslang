@@ -1,4 +1,4 @@
-reslang = namespacedefinition? import* (resource / subresource / action / event / structure / enum )* diagram* docs*
+reslang = namespacedefinition? import* servers? (resource / subresource / action / structure / enum / event / produces / consumes )* diagram* docs*
 
 // defining a namespace
 namespacedefinition = _ comment:description? _ "namespace" _ space:space? _ "{"

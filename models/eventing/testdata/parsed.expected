@@ -27,6 +27,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -53,6 +54,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -110,6 +112,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -136,6 +139,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -162,6 +166,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": true,
             "optionalPost": false,
@@ -219,6 +224,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -248,6 +254,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -297,6 +304,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -326,6 +334,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -381,6 +390,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -410,6 +420,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -438,6 +449,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -469,34 +481,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "foo",
-          "stringMap": false,
-          "type": {
-            "parents": [
-              "v2/TestResource"
-            ],
-            "short": "Foo2",
-            "name": "v2/TestResource::Foo2",
-            "parentShort": "v2/TestResource",
-            "parentName": "v2/TestResource"
-          },
-          "inline": false,
-          "linked": false,
-          "full": true,
-          "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -538,6 +523,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -566,6 +552,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -605,6 +592,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -631,6 +619,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -671,6 +660,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -698,6 +688,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -725,6 +716,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,

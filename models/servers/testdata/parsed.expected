@@ -1,15 +1,112 @@
 {
   "namespace": {
-    "comment": "This is a simple API for testing patching",
-    "title": "API for testing patching",
-    "version": "1.0.0"
+    "comment": "This is a simple server block test",
+    "title": "Server block test",
+    "version": "0.0.1"
   },
   "definitions": [
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "servers2.StandardError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "local.reslang"
+    },
     {
       "kind": "resource-like",
       "future": false,
       "singleton": false,
-      "type": "configuration-resource",
+      "type": "resource",
       "attributes": [
         {
           "name": "id",
@@ -53,124 +150,8 @@
           "full": false,
           "modifiers": {
             "flag": false,
-            "mutable": true,
-            "optional": true,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {},
-          "default": {
-            "type": "string",
-            "value": "Freddo Frog"
-          }
-        },
-        {
-          "name": "address",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": true,
-            "optional": true,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {},
-          "default": {
-            "type": "string",
-            "value": "Malibu"
-          }
-        },
-        {
-          "name": "birthDate",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "datetime",
-            "name": "datetime",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
             "mutable": false,
             "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "extra",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "Extra",
-            "name": "Extra",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": true,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "flag",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "boolean",
-            "name": "boolean",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": true,
-            "mutable": false,
-            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -188,70 +169,18 @@
           "errors": []
         },
         {
-          "operation": "PUT",
-          "errors": []
-        },
-        {
-          "operation": "PATCH",
-          "errors": []
-        },
-        {
           "operation": "GET",
           "errors": []
         }
       ],
       "parents": [],
-      "short": "Person",
-      "name": "Person",
+      "short": "Test",
+      "name": "Test",
       "parentShort": "",
       "parentName": "",
       "namespace": "",
       "secondary": false,
-      "file": "resources.reslang"
-    },
-    {
-      "kind": "structure",
-      "type": "structure",
-      "parents": [],
-      "short": "Extra",
-      "attributes": [
-        {
-          "name": "notes",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": true,
-            "optional": true,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {},
-          "default": {
-            "type": "string",
-            "value": "no notes!"
-          }
-        }
-      ],
-      "name": "Extra",
-      "parentShort": "",
-      "parentName": "",
-      "secondary": false,
-      "file": "resources.reslang"
+      "file": "servers.reslang"
     },
     {
       "kind": "structure",
@@ -354,7 +283,16 @@
   "diagrams": [
     {
       "diagram": "main",
-      "includeAll": "resources.reslang",
+      "include": [
+        {
+          "module": "servers",
+          "parents": [],
+          "short": "reslang",
+          "name": "servers.reslang",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
       "groups": []
     }
   ]

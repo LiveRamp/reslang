@@ -1,34 +1,42 @@
+import file
 
 
 "A simple REST resource"
-resource SimpleResource {
+resource XSimpleResource {
     id: string
     name: string
 
     /operations
-        POST GET EVENTS
+        POST GET
+
+    /events
+        POST GET
 }
 
 "A test REST resource"
-resource v2/TestResource {
+resource v2/XTestResource {
     id: int
     name: string
     number: int optional
 
     /operations
-        POST GET EVENTS
+        POST GET
+    /events
+        POST GET completed
 }
 
 "A REST subresource"
-subresource v2/TestResource::Foo {
+subresource v2/XTestResource::Foo {
     id: int
     address: string[]
     
     /operations
-        EVENTS
+        POST
+    /events
+        POST
 }
 
-subresource v2/TestResource::Foo2 {
+subresource v2/XTestResource::Foo2 {
     id: int
     address: string[]
     
@@ -37,23 +45,28 @@ subresource v2/TestResource::Foo2 {
 }
 
 "Event to start"
-produces event StartSignal {
+event XStartSignal {
     /header
         name: string min-length: 10 max-length: 100
         time: datetime
     /payload
         name: string
         address: string[1..10]
-        foo: value-of v2/TestResource::Foo2
+        // foo: value-of v2/TestResource::Foo2 --> this causes an error with asyncapi, need to look into why
 }
+produces XStartSignal
 
 "Event to stop"
-consumes event v3/StopSignal {
+event v3/XStopSignal {
     /header
         header: Header inline
     /payload
         stopped: datetime
 }
+consumes v3/XStopSignal
+
+
+produces file.DirectoryDeleteIncomplete
 
 structure Header {
     a: int

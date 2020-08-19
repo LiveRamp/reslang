@@ -25,6 +25,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -51,8 +52,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -81,6 +83,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -110,6 +113,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -136,8 +140,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": true,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -146,7 +151,11 @@
             "query": false,
             "representation": false
           },
-          "constraints": {}
+          "constraints": {},
+          "default": {
+            "type": "string",
+            "value": "test"
+          }
         },
         {
           "name": "key",
@@ -162,6 +171,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": true,
             "optional": false,
             "optionalPost": false,
@@ -188,6 +198,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -248,6 +259,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -287,6 +299,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -313,6 +326,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -352,6 +366,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -378,6 +393,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -404,6 +420,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -443,8 +460,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -473,6 +491,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -483,11 +502,7 @@
             "query": false,
             "representation": false
           },
-          "constraints": {},
-          "default": {
-            "type": "numerical",
-            "value": "20"
-          }
+          "constraints": {}
         },
         {
           "name": "c",
@@ -503,8 +518,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -533,6 +549,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -559,8 +576,9 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
-            "optional": false,
+            "optional": true,
             "optionalPost": false,
             "optionalPut": false,
             "optionalGet": false,
@@ -602,6 +620,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": true,
             "optional": false,
             "optionalPost": false,
@@ -642,6 +661,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -669,6 +689,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,
@@ -696,6 +717,7 @@
           "linked": false,
           "full": false,
           "modifiers": {
+            "flag": false,
             "mutable": false,
             "optional": false,
             "optionalPost": false,

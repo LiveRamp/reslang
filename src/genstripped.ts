@@ -6,7 +6,7 @@ import {
     IStructure,
     IUnion,
     IEvent,
-    IAttribute,
+    IAttribute
 } from "./treetypes"
 
 /**
@@ -208,8 +208,7 @@ export default class StripGen extends BaseGen {
             ln("}")
         }
         function printEvent(def: IEvent) {
-            l(keyword(def.produces ? "produces" : "consumes"))
-            ln(keyword(" event ") + name(def.name) + " {")
+            ln(keyword("event ") + name(def.name) + " {")
             if (def.header && def.header.length !== 0) {
                 ln(tab + keyword("/header"))
                 for (const attr of def.header) {
