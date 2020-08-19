@@ -459,10 +459,14 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
         },
         {
-          "operation": "EVENTS",
-          "errors": []
+          "operation": "completed"
         }
       ],
       "parents": [
@@ -565,10 +569,14 @@
         {
           "operation": "MULTIGET",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
         },
         {
-          "operation": "EVENTS",
-          "errors": []
+          "operation": "MULTIGET"
         }
       ],
       "parents": [],
@@ -584,7 +592,6 @@
       "kind": "event",
       "type": "event",
       "comment": "If a deletion is corrupted, we generate this event",
-      "produces": true,
       "parents": [],
       "short": "DirectoryDeleteIncomplete",
       "header": [
@@ -673,6 +680,23 @@
         }
       ],
       "name": "DirectoryDeleteIncomplete",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "produces",
+      "parents": [],
+      "short": "",
+      "event": {
+        "parents": [],
+        "short": "DirectoryDeleteIncomplete",
+        "name": "DirectoryDeleteIncomplete",
+        "parentShort": "",
+        "parentName": ""
+      },
+      "name": "",
       "parentShort": "",
       "parentName": "",
       "secondary": false,

@@ -8,6 +8,994 @@
   "definitions": [
     {
       "kind": "resource-like",
+      "comment": "This models a directory we might create",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "Directory",
+      "name": "file.Directory",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "comment": "This configures up a file type, e.g. .gif",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "type",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "format",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "specId",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Specification",
+            "name": "file.Specification",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "comment": "Get a FileType",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "405",
+                  "comment": "Not Allowed"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "StandardError",
+                "name": "file.StandardError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            },
+            {
+              "codes": [
+                {
+                  "code": "403",
+                  "comment": "Forbidden"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "SpecialError",
+                "name": "file.SpecialError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "FileType",
+      "name": "file.FileType",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": true,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "parents": [],
+      "short": "Specification",
+      "name": "file.Specification",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "comment": "This models a file in a directory",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "url",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "fileTypeId",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "FileType",
+            "name": "file.FileType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "contents",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "completed"
+        }
+      ],
+      "parents": [
+        "Directory"
+      ],
+      "short": "File",
+      "name": "file.Directory::File",
+      "parentShort": "Directory",
+      "parentName": "file.Directory",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "comment": "This models a long running request",
+      "future": false,
+      "singleton": false,
+      "type": "request-resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "directoryId",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Directory",
+            "name": "file.Directory",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "404",
+                  "comment": "Can't find anything"
+                }
+              ],
+              "struct": {
+                "parents": [],
+                "short": "SpecialError",
+                "name": "file.SpecialError",
+                "parentShort": "",
+                "parentName": ""
+              }
+            }
+          ]
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "MULTIGET"
+        }
+      ],
+      "parents": [],
+      "short": "DirectoryDeleteRequest",
+      "name": "file.DirectoryDeleteRequest",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "event",
+      "type": "event",
+      "comment": "If a deletion is corrupted, we generate this event",
+      "parents": [],
+      "short": "DirectoryDeleteIncomplete",
+      "header": [
+        {
+          "name": "timeOfFailure",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "payload": [
+        {
+          "name": "directory",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "Directory",
+            "name": "file.Directory",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "corrupted",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "file.DirectoryDeleteIncomplete",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "produces",
+      "parents": [],
+      "short": "",
+      "event": {
+        "parents": [],
+        "short": "DirectoryDeleteIncomplete",
+        "name": "file.DirectoryDeleteIncomplete",
+        "parentShort": "",
+        "parentName": ""
+      },
+      "name": "file.",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "comment": "This models an action on a request",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "time",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": [
+            {
+              "codes": [
+                {
+                  "code": "200"
+                }
+              ],
+              "struct": {
+                "parents": [
+                  "DirectoryDeleteRequest"
+                ],
+                "short": "Cancel",
+                "name": "file.DirectoryDeleteRequest::Cancel",
+                "parentShort": "DirectoryDeleteRequest",
+                "parentName": "file.DirectoryDeleteRequest"
+              }
+            }
+          ]
+        }
+      ],
+      "parents": [
+        "DirectoryDeleteRequest"
+      ],
+      "short": "Cancel",
+      "name": "file.DirectoryDeleteRequest::Cancel",
+      "parentShort": "DirectoryDeleteRequest",
+      "parentName": "file.DirectoryDeleteRequest",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "SpecialError",
+      "comment": "A non-standard error response",
+      "attributes": [
+        {
+          "name": "message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "time",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errors",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "StandardError",
+            "name": "file.StandardError",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 2
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "file.SpecialError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "file.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "file.StandardError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": true,
+      "file": "local.reslang"
+    },
+    {
+      "kind": "resource-like",
       "comment": "A simple REST resource",
       "future": false,
       "singleton": false,
@@ -76,10 +1064,14 @@
         {
           "operation": "GET",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
         },
         {
-          "operation": "EVENTS",
-          "errors": []
+          "operation": "GET"
         }
       ],
       "parents": [],
@@ -188,10 +1180,17 @@
         {
           "operation": "GET",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
         },
         {
-          "operation": "EVENTS",
-          "errors": []
+          "operation": "GET"
+        },
+        {
+          "operation": "completed"
         }
       ],
       "parents": [],
@@ -270,8 +1269,13 @@
       ],
       "operations": [
         {
-          "operation": "EVENTS",
+          "operation": "POST",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
         }
       ],
       "parents": [
@@ -372,7 +1376,6 @@
       "kind": "event",
       "type": "event",
       "comment": "Event to start",
-      "produces": true,
       "parents": [],
       "short": "StartSignal",
       "header": [
@@ -502,10 +1505,26 @@
       "file": "events.reslang"
     },
     {
+      "kind": "produces",
+      "parents": [],
+      "short": "",
+      "event": {
+        "parents": [],
+        "short": "StartSignal",
+        "name": "StartSignal",
+        "parentShort": "",
+        "parentName": ""
+      },
+      "name": "",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "events.reslang"
+    },
+    {
       "kind": "event",
       "type": "event",
       "comment": "Event to stop",
-      "produces": false,
       "parents": [],
       "short": "v3/StopSignal",
       "header": [
@@ -567,6 +1586,41 @@
         }
       ],
       "name": "v3/StopSignal",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "events.reslang"
+    },
+    {
+      "kind": "consumes",
+      "parents": [],
+      "short": "",
+      "event": {
+        "parents": [],
+        "short": "v3/StopSignal",
+        "name": "v3/StopSignal",
+        "parentShort": "",
+        "parentName": ""
+      },
+      "name": "",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "events.reslang"
+    },
+    {
+      "kind": "produces",
+      "parents": [],
+      "short": "",
+      "event": {
+        "module": "file",
+        "parents": [],
+        "short": "DirectoryDeleteIncomplete",
+        "name": "file.DirectoryDeleteIncomplete",
+        "parentShort": "",
+        "parentName": ""
+      },
+      "name": "",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
@@ -746,6 +1800,27 @@
           "parents": [],
           "short": "reslang",
           "name": "events.reslang",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
+      "groups": []
+    },
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "parents": [],
+          "short": "all",
+          "name": "file.all",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "module": "file",
+          "parents": [],
+          "short": "reslang",
+          "name": "file.reslang",
           "parentShort": "",
           "parentName": ""
         }

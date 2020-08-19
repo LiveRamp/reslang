@@ -83,7 +83,6 @@ export default class EventsGen extends BaseGen {
     private formServers() {
         let assigned = false
         const servers: any = {}
-        console.log(this.servers)
         for (const ev of this.servers.events || []) {
             // only do 1 env, complain if there are others
             if (ev.environment === this.environment) {

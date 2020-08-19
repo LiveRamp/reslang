@@ -4,51 +4,54 @@ info:
   description: API for simple events
   version: 0.0.1
 servers:
-  production:
-    url: 'pubsub.liveramp.com:{port}'
-    protocol: Google Cloud Pub/Sub
-    description: LiveRamp Production pubsub instance
-    variables:
-      port:
-        description: Secure connection (TLS) is available through port 8883
-        default: '1883'
+  PROD:
+    url: 'http://pubsub.google.com'
+    protocol: GOOGLE_PUBSUB
+    description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/andrew-simple-example_v1-simple-resource:
+  topics/andrew-simple-example.v1-simple-resource-resource:
     description: A simple REST resource
     subscribe:
       summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
-  topics/andrew-simple-example_v2-test-resource:
+  topics/andrew-simple-example.v2-test-resource-resource:
     description: A test REST resource
     subscribe:
       summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
-  topics/andrew-simple-example_v2-test-resource-foo:
+  topics/andrew-simple-example.v2-test-resource-foo-resource:
     description: A REST subresource
     subscribe:
       summary: 'REST: v2/TestResource::Foo'
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
-  topics/eventing_v1-start-signal:
+  topics/eventing.v1-start-signal:
     description: Event to start
-    subscribe:
+    publish:
       summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
-  topics/eventing_v3-stop-signal:
+  topics/eventing.v3-stop-signal:
     description: Event to stop
-    publish:
+    subscribe:
       summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:
         $ref: '#/components/messages/v3StopSignal'
+  topics/eventing.v1-directory-delete-incomplete:
+    description: 'If a deletion is corrupted, we generate this event'
+    publish:
+      summary: 'Adhoc: file.DirectoryDeleteIncomplete'
+      operationId: file.DirectoryDeleteIncomplete
+      message:
+        $ref: '#/components/messages/fileDirectoryDeleteIncomplete'
 components:
   messages:
     SimpleResource:
@@ -57,7 +60,7 @@ components:
       summary: A simple REST resource
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/SimpleResourceHeader'
       payload:
         $ref: '#/components/schemas/SimpleResourceOutput'
     v2TestResource:
@@ -66,7 +69,7 @@ components:
       summary: A test REST resource
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/v2TestResourceHeader'
       payload:
         $ref: '#/components/schemas/v2TestResourceOutput'
     v2TestResourceFoo:
@@ -75,7 +78,7 @@ components:
       summary: A REST subresource
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/v2TestResourceFooHeader'
       payload:
         $ref: '#/components/schemas/v2TestResourceFooOutput'
     StartSignal:
@@ -96,7 +99,62 @@ components:
         - $ref: '#/components/messageTraits/v3StopSignalHeader'
       payload:
         $ref: '#/components/schemas/v3StopSignal'
+    fileDirectoryDeleteIncomplete:
+      name: fileDirectoryDeleteIncomplete
+      title: fileDirectoryDeleteIncomplete
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/fileDirectoryDeleteIncompleteHeader'
+      payload:
+        $ref: '#/components/schemas/fileDirectoryDeleteIncomplete'
   schemas:
+    fileDirectoryDeleteIncompleteHeader:
+      type: object
+      properties:
+        timeOfFailure:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - timeOfFailure
+      description: 'If a deletion is corrupted, we generate this event'
+    fileDirectoryDeleteIncomplete:
+      type: object
+      properties:
+        directory:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to file.Directory resource via its id
+        corrupted:
+          type: boolean
+      required:
+        - directory
+        - corrupted
+      description: 'If a deletion is corrupted, we generate this event'
+    SimpleResourceHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - GET
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     SimpleResourceOutput:
       type: object
       properties:
@@ -108,6 +166,30 @@ components:
         - id
         - name
       description: A simple REST resource
+    v2TestResourceHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - GET
+            - completed
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     v2TestResourceOutput:
       type: object
       properties:
@@ -123,6 +205,28 @@ components:
         - id
         - name
       description: A test REST resource
+    v2TestResourceFooHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     v2TestResourceFooOutput:
       type: object
       properties:
@@ -190,23 +294,76 @@ components:
       required:
         - stopped
       description: Event to stop
-    VerbEnum:
-      type: string
-      enum:
-        - POST
-        - PUT
-        - PATCH
-        - GET
-        - MULTIGET
-        - DELETE
   messageTraits:
-    RestHeader:
+    fileDirectoryDeleteIncompleteHeader:
+      headers:
+        type: object
+        properties:
+          timeOfFailure:
+            type: string
+            format: ISO8601 UTC date-time
+            example: '2019-04-13T03:35:34Z'
+        required:
+          - timeOfFailure
+        description: 'If a deletion is corrupted, we generate this event'
+    SimpleResourceHeader:
       headers:
         type: object
         properties:
           verb:
             description: ''
-            $ref: '#/components/schemas/VerbEnum'
+            type: string
+            enum:
+              - POST
+              - GET
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    v2TestResourceHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
+              - GET
+              - completed
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    v2TestResourceFooHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
           location:
             description: ''
             type: string

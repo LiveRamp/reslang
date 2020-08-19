@@ -80,9 +80,6 @@ function checkFullSwagger(
     } catch (error) {
         const got = error.message
         const correct = got.includes(expected)
-        if (!correct) {
-            console.log("$$ got this: " + got)
-        }
         expect(correct).toBe(true)
         return
     }

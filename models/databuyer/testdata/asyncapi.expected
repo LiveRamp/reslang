@@ -4,17 +4,13 @@ info:
   description: Data buyer API
   version: 0.0.1
 servers:
-  production:
-    url: 'pubsub.liveramp.com:{port}'
-    protocol: Google Cloud Pub/Sub
-    description: LiveRamp Production pubsub instance
-    variables:
-      port:
-        description: Secure connection (TLS) is available through port 8883
-        default: '1883'
+  PROD:
+    url: 'http://pubsub.google.com'
+    protocol: GOOGLE_PUBSUB
+    description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/databuyer_v1-deliver-purchased-segments:
+  topics/databuyer.v1-deliver-purchased-segments-resource:
     description: no documentation
     subscribe:
       summary: 'REST: DeliverPurchasedSegments'
@@ -28,10 +24,33 @@ components:
       title: DeliverPurchasedSegments
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/DeliverPurchasedSegmentsHeader'
       payload:
         $ref: '#/components/schemas/DeliverPurchasedSegmentsOutput'
   schemas:
+    DeliverPurchasedSegmentsHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - GET
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     DeliverPurchasedSegmentsOutput:
       type: object
       properties:
@@ -47,9 +66,8 @@ components:
           description: Link to Destination resource via its id
         segmentStatuses:
           items:
-            allOf:
-              - $ref: '#/components/schemas/DeliveryStatus'
             type: object
+            $ref: '#/components/schemas/DeliveryStatus'
           type: array
         complete:
           type: boolean
@@ -70,8 +88,7 @@ components:
           type: string
           description: Link to Segment resource via its id
         status:
-          allOf:
-            - $ref: '#/components/schemas/DeliveryStatusEnum'
+          $ref: '#/components/schemas/DeliveryStatusEnum'
           type: string
       required:
         - updated
@@ -83,23 +100,17 @@ components:
         - PENDING
         - DELIVERED
         - ERROR
-    VerbEnum:
-      type: string
-      enum:
-        - POST
-        - PUT
-        - PATCH
-        - GET
-        - MULTIGET
-        - DELETE
   messageTraits:
-    RestHeader:
+    DeliverPurchasedSegmentsHeader:
       headers:
         type: object
         properties:
           verb:
             description: ''
-            $ref: '#/components/schemas/VerbEnum'
+            type: string
+            enum:
+              - POST
+              - GET
           location:
             description: ''
             type: string

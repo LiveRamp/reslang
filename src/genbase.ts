@@ -147,7 +147,8 @@ export abstract class BaseGen {
         protected environment: string = "PROD",
         protected vars: string = "",
         expandInlines = false,
-        protected omitNamespace = false
+        protected omitNamespace = false,
+        protected generateAllOf = true
     ) {
         this.processDefinitions()
         this.checkRules()
@@ -492,7 +493,6 @@ Actions cannot have subresources`
             properties: any
             required: string[]
             description: string
-            allOf: {}
         }
         for (const attr of attrs as IAttribute[]) {
             if (attr.modifiers.queryonly || attr.modifiers.representation) {
@@ -673,7 +673,6 @@ Actions cannot have subresources`
             properties: any
             required: string[]
             description: string
-            allOf: {}
         }
         const sane = camelCase(def.name) + suffix
 
@@ -752,14 +751,26 @@ Actions cannot have subresources`
                     required.add(attr.name)
                 }
             }
-            definitions[capitalizeFirst(attr.name)] = {
-                allOf: [
-                    { $ref: `#/components/schemas/${name}` },
-                    {
-                        type: "object",
-                        properties
-                    }
-                ]
+            if (this.generateAllOf) {
+                definitions[capitalizeFirst(attr.name)] = {
+                    allOf: [
+                        { $ref: `#/components/schemas/${name}` },
+                        {
+                            type: "object",
+                            properties
+                        }
+                    ]
+                }
+            } else {
+                definitions[capitalizeFirst(attr.name)] = {
+                    allOf: [
+                        { $ref: `#/components/schemas/${name}` },
+                        {
+                            type: "object",
+                            properties
+                        }
+                    ]
+                }
             }
         }
         if (required.size !== 0) {
@@ -1023,7 +1034,13 @@ Actions cannot have subresources`
                 case "structure":
                 case "union":
                 case "enum":
-                    schema.allOf = [{ $ref: `#/components/schemas/${sane}` }]
+                    if (this.generateAllOf) {
+                        schema.allOf = [
+                            { $ref: `#/components/schemas/${sane}` }
+                        ]
+                    } else {
+                        schema.$ref = `#/components/schemas/${sane}`
+                    }
                     schema.type = def.kind === "enum" ? "string" : "object"
                     break
                 case "resource-like":
@@ -1031,9 +1048,13 @@ Actions cannot have subresources`
                     if (attr.linked) {
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
-                        schema.allOf = [
-                            { $ref: `#/components/schemas/${sane}Output` }
-                        ]
+                        if (this.generateAllOf) {
+                            schema.allOf = [
+                                { $ref: `#/components/schemas/${sane}Output` }
+                            ]
+                        } else {
+                            schema.$ref = `#/components/schemas/${sane}Output`
+                        }
                         schema.type = "object"
                     } else {
                         throw new Error(
