@@ -163,12 +163,16 @@
           "errors": []
         },
         {
-          "operation": "EVENTS",
-          "errors": []
-        },
-        {
           "operation": "MULTIGET",
           "errors": []
+        }
+      ],
+      "events": [
+        {
+          "operation": "POST"
+        },
+        {
+          "operation": "GET"
         }
       ],
       "parents": [],

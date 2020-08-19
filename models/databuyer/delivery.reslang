@@ -9,7 +9,9 @@ request-resource DeliverPurchasedSegments {
     complete: boolean
 
     /operations
-        POST GET EVENTS MULTIGET
+        POST GET MULTIGET
+    /events
+        POST GET
 }
 
 
@@ -36,9 +38,9 @@ singleton resource AllDeliveredSegments {
 }
 
 structure DeliveryStatus {
-    updated: datetime
-    segment: linked Segment
-    status: DeliveryStatusEnum
+   updated: datetime
+   segment: linked Segment
+   status: DeliveryStatusEnum
 }
 
 enum DeliveryStatusEnum {

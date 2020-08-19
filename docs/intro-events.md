@@ -2,7 +2,7 @@
 
 If you haven't already, please read the previous [REST tutorial here](./intro.md). This tutorial builds on it.
 
-Reslang can also specify which events a system generates. For REST APIs, the set of events are related to the HTTP verbs and we will send out a full representation of the resource every time. We do this by adding "EVENTS" as an operation to the resource specification.
+Reslang can also specify which events a system generates. For REST APIs, the set of events are related to the HTTP verbs and we will send out a full representation of the resource every time. We do this by adding /events with a list of verbs after. Note that you can specify any one of the HTTP verbs to event on, as well as any user-defined ones (such as "removed", see below). However, any user-defined verb must be in lowercase to distinguish it from the standard HTTP set.
 
     "This models a file in a directory"
     subresource Directory::File {
@@ -14,29 +14,35 @@ Reslang can also specify which events a system generates. For REST APIs, the set
         contents: string queryonly
 
         /operations
-            GET POST MULTIGET EVENTS
+            GET POST MULTIGET
+        /events
+            POST removed
     }
 
 Now, in some cases, the resource lifecycle cannot capture the full set of events. In this case, use the "event" keyword to capture what events are produced by the service:
 
     "If a deletion is corrupted, we generate this event"
-    produces event DirectoryDeleteIncomplete {
+    event DirectoryDeleteIncomplete {
         /header
     	    timeOfFailure: datetime
         /payload
     	    directory: linked Directory
     	    corrupted: boolean
     }
+    produces DirectoryDeleteIncomplete
 
 You can also indicate that your service consumes various events:
 
     "An event of this type let's us know a directory has been changed"
-    consumes event DirectoryNotification {
+    event DirectoryNotification {
         /header
             when: datetime
         /payload
     	    directory: linked Directory
     }
+    consumes DirectoryNotification
+
+You can even import event specifications from other modules, in the same way that you can import structures and resources.
 
 Note that the payload is the body of the event. Header fields are transmitted as "attributes" in Google pubsub - they allow you to read information about the event without having to parse the body. REST resources have a predefined set of header fields related to the resource in question.
 

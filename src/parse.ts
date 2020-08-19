@@ -6,7 +6,9 @@ import {
     IReference,
     getAllAttributes,
     isResourceLike,
-    AnyKind
+    AnyKind,
+    isProduces,
+    isConsumes
 } from "./treetypes"
 import * as path from "path"
 
@@ -46,6 +48,13 @@ export function parseFile(
     additionalNamespace: string
 ) {
     const contents = readFile(file)
+    function locToString(location: any) {
+        return location
+            ? location.start
+                ? location.start.line + ", " + location.start.column
+                : "unknown start"
+            : "unknown"
+    }
 
     let tree: any[]
     try {
@@ -56,7 +65,7 @@ export function parseFile(
         )
     } catch (error) {
         const loc = error.location
-            ? `location: ${error.location}`
+            ? `location: ${locToString(error.location)}`
             : "location unknown"
         throw new Error(
             `Problem parsing file ${file}: ${error.message}, ${loc}`
@@ -109,6 +118,11 @@ function addNamespace(
     // refs are always in terms of name
     for (const def of defs || []) {
         convert(def, namespace, mainNamespace)
+
+        // if this is a produces or consumes, convert the reference
+        if (isProduces(def) || isConsumes(def)) {
+            convert(def.event, namespace, mainNamespace)
+        }
 
         // add to all references
         for (const attr of getAllAttributes(def)) {

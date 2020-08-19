@@ -1,3 +1,4 @@
+import file
 
 
 "A simple REST resource"
@@ -6,7 +7,10 @@ resource SimpleResource {
     name: string
 
     /operations
-        POST GET EVENTS
+        POST GET
+
+    /events
+        POST GET
 }
 
 "A test REST resource"
@@ -16,7 +20,9 @@ resource v2/TestResource {
     number: int optional
 
     /operations
-        POST GET EVENTS
+        POST GET
+    /events
+        POST GET completed
 }
 
 "A REST subresource"
@@ -25,7 +31,9 @@ subresource v2/TestResource::Foo {
     address: string[]
     
     /operations
-        EVENTS
+        POST
+    /events
+        POST
 }
 
 subresource v2/TestResource::Foo2 {
@@ -37,23 +45,28 @@ subresource v2/TestResource::Foo2 {
 }
 
 "Event to start"
-produces event StartSignal {
+event StartSignal {
     /header
         name: string min-length: 10 max-length: 100
         time: datetime
     /payload
         name: string
         address: string[1..10]
-        // foo: value-of v2/TestResource::Foo2 --> this causes an error with asyncapi, need to look into why
+        // foo: value-of v2/TestResource::Foo2 ==> causes event generation to not render correctly, need to find out why
 }
+produces StartSignal
 
 "Event to stop"
-consumes event v3/StopSignal {
+event v3/StopSignal {
     /header
         header: Header inline
     /payload
         stopped: datetime
 }
+consumes v3/StopSignal
+
+
+produces file.DirectoryDeleteIncomplete
 
 structure Header {
     a: int

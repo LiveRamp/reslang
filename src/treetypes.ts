@@ -57,8 +57,8 @@ export type DefinitionType =
 export let ResourceLike = [
     "request-resource",
     "asset-resource",
-    "resource",
     "configuration-resource",
+    "resource",
     "subresource"
 ]
 
@@ -69,7 +69,17 @@ export type Kind =
     | "structure"
     | "union"
     | "event"
-export type AnyKind = IResourceLike | IEnum | IStructure | IUnion | IEvent
+    | "produces"
+    | "consumes"
+
+export type AnyKind =
+    | IResourceLike
+    | IEnum
+    | IStructure
+    | IUnion
+    | IEvent
+    | IProduces
+    | IConsumes
 
 // type guards
 export function isResourceLike(def: IDefinition): def is IResourceLike {
@@ -86,6 +96,12 @@ export function isUnion(def: IDefinition): def is IUnion {
 }
 export function isEvent(def: IDefinition): def is IEvent {
     return def.kind === "event"
+}
+export function isProduces(def: IDefinition): def is IProduces {
+    return def.kind === "produces"
+}
+export function isConsumes(def: IDefinition): def is IConsumes {
+    return def.kind === "consumes"
 }
 export function isAction(def: IDefinition): def is IResourceLike {
     return def.type === "action"
@@ -118,6 +134,7 @@ export interface IResourceLike extends IDefinition {
     namespace?: string
     attributes?: IAttribute[]
     operations?: IOperation[]
+    events?: IEventOperation[]
     singleton?: boolean
     future?: boolean
     async?: boolean
@@ -146,10 +163,18 @@ export interface IUnion extends IDefinition {
 
 export interface IEvent extends IDefinition {
     kind: "event"
-    // produces or consumes
-    produces: boolean
     header?: IAttribute[]
     payload?: IAttribute[]
+}
+
+export interface IProduces extends IDefinition {
+    kind: "produces"
+    event: IReference
+}
+
+export interface IConsumes extends IDefinition {
+    kind: "consumes"
+    event: IReference
 }
 
 export interface IAttribute {
@@ -220,6 +245,11 @@ export interface IDocEntry {
 export interface IGroup {
     comment: string
     include: IReference[]
+}
+
+export interface IEventOperation {
+    operation: string
+    comment: string
 }
 
 export interface IOperation {

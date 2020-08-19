@@ -9,7 +9,7 @@
 
 
 // defining an event
-event = _ comment:description? _ produces:("produces" / "consumes") _ "event" _ name:resname _ "{" _
+event = _ comment:description? _ "event" _ name:resname _ "{" _
     header:header? _ payload:payload? _
 "}" _ ";"? _ {
 
@@ -17,7 +17,6 @@ event = _ comment:description? _ produces:("produces" / "consumes") _ "event" _ 
         kind: "event",
         type: "event",
         comment: comment,
-        produces: produces == "produces",
         parents: [],
         short: name,
         header: header,
@@ -30,4 +29,23 @@ header = _ "/header" _ attrs:attributes+ _ {
 
 payload = _ "/payload" _ attrs:attributes+ _ {
     return attrs[0];
+}
+
+
+produces = _ "produces" _ name:ref {
+    return {
+        kind: "produces",
+        parents: [],
+        short: "",
+        event: name
+    }
+}
+
+consumes = _ "consumes" _ name:ref {
+    return {
+        kind: "consumes",
+        parents: [],
+        short: "",
+        event: name
+    }
 }

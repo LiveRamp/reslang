@@ -3,7 +3,11 @@ import {
     getAllAttributes,
     isEvent,
     getKeyAttributes,
-    AnyKind
+    AnyKind,
+    IResourceLike,
+    isProduces,
+    isConsumes,
+    IReference
 } from "./treetypes"
 import { BaseGen, Verbs } from "./genbase"
 import { camelCase, snakeCase, getVersion } from "./names"
@@ -15,27 +19,29 @@ import { isPrimitiveType } from "./parse"
 
 // The more correct "publish OR subscribe" type was being fiddly,
 // so I didn't bother for now.
-interface Channel {
+interface IChannel {
     description: string
-    publish?: PublishOrSubscribe
-    subscribe?: PublishOrSubscribe
+    publish?: IPublishOrSubscribe
+    subscribe?: IPublishOrSubscribe
 }
 
-interface PublishOrSubscribe {
+interface IPublishOrSubscribe {
     summary: string
     operationId: string
     message: {
         $ref: string
     }
 }
-type ChannelMap = { [name: string]: Channel }
+interface IChannelMap {
+    [name: string]: IChannel
+}
 
 export default class EventsGen extends BaseGen {
     public generate() {
         this.markGenerate()
         const messages: any = {}
         const schemas: any = {}
-        const channels: ChannelMap = {}
+        const channels: IChannelMap = {}
         const headers: any = {}
         const asyncapi: any = {
             asyncapi: "2.0.0",
@@ -63,9 +69,6 @@ export default class EventsGen extends BaseGen {
         // model definitions
         const headerNames = this.formDefinitions(schemas)
 
-        // add standard header definitions - tbd move this to a file
-        this.addStandardHeaderDefinitions(headers, schemas)
-
         // lift the headers
         for (const name of headerNames) {
             this.liftToHeader(name, schemas, headers)
@@ -78,38 +81,16 @@ export default class EventsGen extends BaseGen {
     }
 
     private formServers() {
-        return {
-            production: {
-                url: "pubsub.liveramp.com:{port}",
-                protocol: "Google Cloud Pub/Sub",
-                description: "LiveRamp Production pubsub instance",
-                variables: {
-                    port: {
-                        description:
-                            "Secure connection (TLS) is available through port 8883",
-                        default: "1883"
-                    }
-                }
-            }
-        }
         let assigned = false
         const servers: any = {}
-        console.log(this.servers)
         for (const ev of this.servers.events || []) {
             // only do 1 env, complain if there are others
             if (ev.environment === this.environment) {
                 if (!assigned) {
-                    servers["production"] = {
-                        url: ev.url + ":{port}",
+                    servers[ev.environment] = {
+                        url: ev.url,
                         protocol: ev.protocol,
-                        description: ev.comment,
-                        variables: {
-                            port: {
-                                description:
-                                    "Secure connection (TLS) is available through port 8883",
-                                default: "1883"
-                            }
-                        }
+                        description: ev.comment
                     }
                     assigned = true
                 } else {
@@ -122,8 +103,11 @@ export default class EventsGen extends BaseGen {
         return servers
     }
 
-    private formChannels(channels: ChannelMap) {
+    private formChannels(channels: IChannelMap) {
         // handle each primary structure and work out if we should generate structures for it
+        const produces = new Set<string>()
+        const consumes = new Set<string>()
+        const all = new Set<string>()
         for (const el of this.defs) {
             // don't generate for any imported def
             if (el.secondary) {
@@ -131,18 +115,15 @@ export default class EventsGen extends BaseGen {
             }
 
             const unique = camelCase(this.formSingleUniqueName(el))
-            if (
-                isResourceLike(el) &&
-                !el.future &&
-                this.extractOp(el, "EVENTS")
-            ) {
+            if (isResourceLike(el) && !el.future && el.events) {
                 channels[
                     "topics/" +
                         snakeCase(this.getSpace()) +
-                        "_" +
+                        "." +
                         getVersion(el.name) +
                         "-" +
-                        snakeCase(el.name)
+                        snakeCase(el.name) +
+                        "-resource"
                 ] = {
                     description: el.comment || "no documentation",
                     subscribe: {
@@ -154,61 +135,81 @@ export default class EventsGen extends BaseGen {
                     }
                 }
             }
-            if (isEvent(el)) {
-                const psKey = el.produces ? "subscribe" : "publish"
-                const details = {
-                    description: el.comment || "no documentation",
-                    [psKey]: {
-                        summary: "Adhoc: " + el.name,
-                        operationId: el.name,
-                        message: {
-                            $ref: `#/components/messages/${unique}`
-                        }
-                    }
-                }
-
-                channels[
-                    "topics/" +
-                        this.mainNamespace +
-                        "_" +
-                        getVersion(el.name) +
-                        "-" +
-                        snakeCase(el.name)
-                ] = details
+            if (isProduces(el)) {
+                produces.add(el.event.name)
+                all.add(el.event.name)
+            }
+            if (isConsumes(el)) {
+                consumes.add(el.event.name)
+                all.add(el.event.name)
             }
         }
+
+        all.forEach((name) => {
+            const def = this.extractDefinition(name)
+            const unq = camelCase(this.formSingleUniqueName(def))
+            const details: any = {
+                description: def.comment || "no documentation"
+            }
+            const msg = {
+                summary: "Adhoc: " + def.name,
+                operationId: def.name,
+                message: {
+                    $ref: `#/components/messages/${unq}`
+                }
+            }
+            if (produces.has(name)) {
+                details.publish = msg
+            }
+            if (consumes.has(name)) {
+                details.subscribe = msg
+            }
+
+            channels[
+                "topics/" +
+                    this.mainNamespace +
+                    "." +
+                    getVersion(def.name) +
+                    "-" +
+                    snakeCase(def.short)
+            ] = details
+        })
     }
 
-    private addStandardHeaderDefinitions(headers: any, schemas: any) {
-        headers.RestHeader = {
-            headers: {
-                type: "object",
-                properties: {
-                    verb: {
-                        description: "",
-                        $ref: "#/components/schemas/VerbEnum"
-                    },
-                    location: {
-                        description: "",
-                        type: "string",
-                        format: "url",
-                        example: "https://www.domain.com (url)"
-                    },
-                    ids: {
-                        description: "",
-                        items: {
-                            type: "string"
-                        },
-                        type: "array"
-                    }
+    private addStandardHeaderDefinition(schemas: any, el: IResourceLike) {
+        const name = camelCase(this.formSingleUniqueName(el)) + "Header"
+
+        // form the array of event verbs
+        const verbs: string[] = []
+        for (const op of el.events || []) {
+            verbs.push(op.operation)
+        }
+
+        schemas[name] = {
+            type: "object",
+            properties: {
+                verb: {
+                    description: "",
+                    type: "string",
+                    enum: verbs
                 },
-                required: ["verb", "location", "ids"]
-            }
+                location: {
+                    description: "",
+                    type: "string",
+                    format: "url",
+                    example: "https://www.domain.com (url)"
+                },
+                ids: {
+                    description: "",
+                    items: {
+                        type: "string"
+                    },
+                    type: "array"
+                }
+            },
+            required: ["verb", "location", "ids"]
         }
-        schemas.VerbEnum = {
-            type: "string",
-            enum: ["POST", "PUT", "PATCH", "GET", "MULTIGET", "DELETE"]
-        }
+        return name
     }
 
     private liftToHeader(name: string, schemas: any, headers: any) {
@@ -219,53 +220,70 @@ export default class EventsGen extends BaseGen {
     private formMessages(messages: any) {
         // handle each primary structure and work out if we should generate structures for it
         let haveEvents = false
+        const uniques = new Set<string>()
         for (const el of this.defs) {
             // don't generate for any imported def
             if (el.secondary) {
                 continue
             }
 
-            if (
-                isResourceLike(el) &&
-                !el.future &&
-                this.extractOp(el, "EVENTS")
-            ) {
+            if (isResourceLike(el) && !el.future && el.events) {
                 haveEvents = true
                 const unique = camelCase(this.formSingleUniqueName(el))
-                messages[unique] = {
-                    name: unique,
-                    title: unique,
-                    summary: el.comment,
-                    contentType: "application/json",
-                    traits: [{ $ref: `#/components/messageTraits/RestHeader` }],
-                    payload: { $ref: `#/components/schemas/${unique}Output` }
+                if (!uniques.has(unique)) {
+                    messages[unique] = {
+                        name: unique,
+                        title: unique,
+                        summary: el.comment,
+                        contentType: "application/json",
+                        traits: [
+                            {
+                                $ref: `#/components/messageTraits/${unique}Header`
+                            }
+                        ],
+                        payload: {
+                            $ref: `#/components/schemas/${unique}Output`
+                        }
+                    }
+                    uniques.add(unique)
                 }
             }
-            if (isEvent(el)) {
+            if (isEvent(el) || isProduces(el) || isConsumes(el)) {
                 haveEvents = true
                 const unique = camelCase(this.formSingleUniqueName(el))
-                messages[unique] = {
-                    name: unique,
-                    title: unique,
-                    summary: el.comment,
-                    contentType: "application/json",
-                    traits: [
-                        { $ref: `#/components/messageTraits/${unique}Header` }
-                    ],
-                    payload: { $ref: `#/components/schemas/${unique}` }
+                if (!uniques.has(unique)) {
+                    messages[unique] = {
+                        name: unique,
+                        title: unique,
+                        summary: el.comment,
+                        contentType: "application/json",
+                        traits: [
+                            {
+                                $ref: `#/components/messageTraits/${unique}Header`
+                            }
+                        ],
+                        payload: { $ref: `#/components/schemas/${unique}` }
+                    }
                 }
+                uniques.add(unique)
             }
         }
         return haveEvents
     }
 
     private formDefinitions(schemas: any) {
-        const headers: string[] = []
+        const headerNames: string[] = []
         for (const def of this.defs) {
             if (def.generateInput) {
                 switch (def.kind) {
                     case "resource-like":
                         if (!def.secondary) {
+                            const hdr = this.addStandardHeaderDefinition(
+                                schemas,
+                                def
+                            )
+                            headerNames.push(hdr)
+
                             this.addResourceDefinition(
                                 schemas,
                                 def,
@@ -282,7 +300,7 @@ export default class EventsGen extends BaseGen {
                             "Header",
                             def.header || []
                         )
-                        headers.push(called)
+                        headerNames.push(called)
                         this.addStructureDefinition(
                             schemas,
                             def,
@@ -307,7 +325,7 @@ export default class EventsGen extends BaseGen {
                 }
             }
         }
-        return headers // to lift up
+        return headerNames // to lift up
     }
 
     /** determine if we should generate definitions for each entity */
@@ -315,7 +333,12 @@ export default class EventsGen extends BaseGen {
         // handle each primary structure and work out if we should generate structures for it
         const visited = new Set<string>()
         for (const el of this.defs) {
-            if (isResourceLike(el) || isEvent(el)) {
+            if (
+                isResourceLike(el) ||
+                isEvent(el) ||
+                isProduces(el) ||
+                isConsumes(el)
+            ) {
                 this.follow(el, visited, 0)
             }
         }
@@ -337,10 +360,14 @@ export default class EventsGen extends BaseGen {
                 visited.delete(unique)
                 return
             }
-            if (!this.extractOp(el, "EVENTS") && level === 0) {
+            if (!el.events && level === 0) {
                 visited.delete(unique)
                 return
             }
+        } else if (isProduces(el) || isConsumes(el)) {
+            const def = this.extractDefinition(el.event.name)
+            visited.delete(unique)
+            this.follow(def, visited, level + 1)
         }
 
         el.generateInput = true

@@ -4,33 +4,29 @@ info:
   description: This is a simple API for manipulating files
   version: 1.0.0
 servers:
-  production:
-    url: 'pubsub.liveramp.com:{port}'
-    protocol: Google Cloud Pub/Sub
-    description: LiveRamp Production pubsub instance
-    variables:
-      port:
-        description: Secure connection (TLS) is available through port 8883
-        default: '1883'
+  PROD:
+    url: 'http://pubsub.google.com'
+    protocol: GOOGLE_PUBSUB
+    description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/file_v1-directory-file:
+  topics/file.v1-directory-file-resource:
     description: This models a file in a directory
     subscribe:
       summary: 'REST: Directory::File'
       operationId: 'Directory::File'
       message:
         $ref: '#/components/messages/DirectoryFile'
-  topics/file_v1-directory-delete-request:
+  topics/file.v1-directory-delete-request-resource:
     description: This models a long running request
     subscribe:
       summary: 'REST: DirectoryDeleteRequest'
       operationId: DirectoryDeleteRequest
       message:
         $ref: '#/components/messages/DirectoryDeleteRequest'
-  topics/file_v1-directory-delete-incomplete:
+  topics/file.v1-directory-delete-incomplete:
     description: 'If a deletion is corrupted, we generate this event'
-    subscribe:
+    publish:
       summary: 'Adhoc: DirectoryDeleteIncomplete'
       operationId: DirectoryDeleteIncomplete
       message:
@@ -43,7 +39,7 @@ components:
       summary: This models a file in a directory
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/DirectoryFileHeader'
       payload:
         $ref: '#/components/schemas/DirectoryFileOutput'
     DirectoryDeleteRequest:
@@ -52,7 +48,7 @@ components:
       summary: This models a long running request
       contentType: application/json
       traits:
-        - $ref: '#/components/messageTraits/RestHeader'
+        - $ref: '#/components/messageTraits/DirectoryDeleteRequestHeader'
       payload:
         $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
     DirectoryDeleteIncomplete:
@@ -65,6 +61,29 @@ components:
       payload:
         $ref: '#/components/schemas/DirectoryDeleteIncomplete'
   schemas:
+    DirectoryFileHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - completed
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     DirectoryFileOutput:
       type: object
       properties:
@@ -84,6 +103,29 @@ components:
         - url
         - fileTypeId
       description: This models a file in a directory
+    DirectoryDeleteRequestHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - MULTIGET
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
     DirectoryDeleteRequestOutput:
       type: object
       properties:
@@ -123,23 +165,41 @@ components:
         - directory
         - corrupted
       description: 'If a deletion is corrupted, we generate this event'
-    VerbEnum:
-      type: string
-      enum:
-        - POST
-        - PUT
-        - PATCH
-        - GET
-        - MULTIGET
-        - DELETE
   messageTraits:
-    RestHeader:
+    DirectoryFileHeader:
       headers:
         type: object
         properties:
           verb:
             description: ''
-            $ref: '#/components/schemas/VerbEnum'
+            type: string
+            enum:
+              - POST
+              - completed
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    DirectoryDeleteRequestHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
+              - MULTIGET
           location:
             description: ''
             type: string
