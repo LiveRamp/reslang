@@ -1,0 +1,3117 @@
+{
+  "namespace": {
+    "comment": "This is a simple API for manipulating files",
+    "title": "API for modeling directories and files",
+    "version": "1.0.0"
+  },
+  "definitions": [
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "ownerID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "dataConfigurationID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DataConfiguration",
+            "name": "DataConfiguration",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "deliveryConfigurationIDs",
+          "stringMap": false,
+          "type": {
+            "parents": [
+              "SegmentDeliveryConfiguration"
+            ],
+            "short": "DeliveryConfiguration",
+            "name": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+            "parentShort": "SegmentDeliveryConfiguration",
+            "parentName": "SegmentDeliveryConfiguration"
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "status",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "ConfigurationStatus",
+            "name": "ConfigurationStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "expireAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "sort",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SortType",
+            "name": "SortType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "SegmentDeliveryConfiguration",
+      "name": "SegmentDeliveryConfiguration",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "refreshMode",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RefreshMode",
+            "name": "RefreshMode",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "Deliver",
+      "name": "SegmentDeliveryConfiguration::Deliver",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "Disable",
+      "name": "SegmentDeliveryConfiguration::Disable",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "Enable",
+      "name": "SegmentDeliveryConfiguration::Enable",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "refreshModeIntervalHrs",
+          "stringMap": true,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "deviceTriggerRefreshModes",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeviceTriggerRefreshMode",
+            "name": "DeviceTriggerRefreshMode",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1,
+            "min": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "TriggeringConfiguration",
+      "name": "SegmentDeliveryConfiguration::TriggeringConfiguration",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "adNetworkAccountID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "partnerID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "isDeduplicated",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "areSourceIDsIncludedInDistRecords",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "taxonomyID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "distributionConfigID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "isApprovalRequired",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "boolean",
+            "name": "boolean",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "status",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "ConfigurationStatus",
+            "name": "ConfigurationStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "sort",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SortType",
+            "name": "SortType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "DeliveryConfiguration",
+      "name": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration",
+        "DeliveryConfiguration"
+      ],
+      "short": "Disable",
+      "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration",
+        "DeliveryConfiguration"
+      ],
+      "short": "Enable",
+      "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "subresource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "deviceTypeSpecifications",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeviceTypeSpecification",
+            "name": "DeviceTypeSpecification",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "maxAIMCacheAgeHrs",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "SegmentDeliveryConfiguration"
+      ],
+      "short": "IdentityMappingConfiguration",
+      "name": "SegmentDeliveryConfiguration::IdentityMappingConfiguration",
+      "parentShort": "SegmentDeliveryConfiguration",
+      "parentName": "SegmentDeliveryConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "name",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "rawFields",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RawField",
+            "name": "RawField",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "enumFieldValues",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "EnumFieldValue",
+            "name": "EnumFieldValue",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": true,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "sort",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SortType",
+            "name": "SortType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        },
+        {
+          "operation": "POST",
+          "errors": []
+        },
+        {
+          "operation": "PATCH",
+          "errors": []
+        },
+        {
+          "operation": "PUT",
+          "errors": []
+        },
+        {
+          "operation": "DELETE",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "DataConfiguration",
+      "name": "DataConfiguration",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "rawFields",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RawField",
+            "name": "RawField",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "enumFieldValues",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "EnumFieldValue",
+            "name": "EnumFieldValue",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "DataConfiguration"
+      ],
+      "short": "AddFields",
+      "name": "DataConfiguration::AddFields",
+      "parentShort": "DataConfiguration",
+      "parentName": "DataConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "action",
+      "async": false,
+      "attributes": [
+        {
+          "name": "rawFields",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RawField",
+            "name": "RawField",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "enumFieldValues",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "EnumFieldValue",
+            "name": "EnumFieldValue",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "POST",
+          "errors": []
+        }
+      ],
+      "parents": [
+        "DataConfiguration"
+      ],
+      "short": "DeleteFields",
+      "name": "DataConfiguration::DeleteFields",
+      "parentShort": "DataConfiguration",
+      "parentName": "DataConfiguration",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "id",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "uuid",
+            "name": "uuid",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "segmentDeliveryConfigurationID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SegmentDeliveryConfiguration",
+            "name": "SegmentDeliveryConfiguration",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "triggerType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "TriggerType",
+            "name": "TriggerType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "triggerReason",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "instanceStatus",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeliveryInstanceStatus",
+            "name": "DeliveryInstanceStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "sort",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SortType",
+            "name": "SortType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "GET",
+          "errors": []
+        },
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "DeliveryInstance",
+      "name": "DeliveryInstance",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "resource-like",
+      "future": false,
+      "singleton": false,
+      "type": "resource",
+      "attributes": [
+        {
+          "name": "deliveryInstanceID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DeliveryInstance",
+            "name": "DeliveryInstance",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "dataSource",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "DataSource",
+            "name": "DataSource",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "deliveryConfigurationID",
+          "stringMap": false,
+          "type": {
+            "parents": [
+              "SegmentDeliveryConfiguration"
+            ],
+            "short": "DeliveryConfiguration",
+            "name": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+            "parentShort": "SegmentDeliveryConfiguration",
+            "parentName": "SegmentDeliveryConfiguration"
+          },
+          "inline": false,
+          "linked": true,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "refreshMode",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RefreshMode",
+            "name": "RefreshMode",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "attemptStatus",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SegmentDeliveryAttemptStatus",
+            "name": "SegmentDeliveryAttemptStatus",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "attemptStats",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SegmentDeliveryAttemptStats",
+            "name": "SegmentDeliveryAttemptStats",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "distributionRequestID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": true,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": true,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "createdAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "updatedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": true,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "sort",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "SortType",
+            "name": "SortType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": true,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "operations": [
+        {
+          "operation": "MULTIGET",
+          "errors": []
+        }
+      ],
+      "parents": [],
+      "short": "SegmentDeliveryAttempt",
+      "name": "SegmentDeliveryAttempt",
+      "parentShort": "",
+      "parentName": "",
+      "namespace": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "ConfigurationStatus",
+      "literals": [
+        "DISABLED",
+        "ENABLED",
+        "EXPIRED"
+      ],
+      "name": "ConfigurationStatus",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "DeviceTriggerRefreshMode",
+      "attributes": [
+        {
+          "name": "adNetworkAccountID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "triggerType",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "TriggerType",
+            "name": "TriggerType",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "refreshMode",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RefreshMode",
+            "name": "RefreshMode",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DeviceTriggerRefreshMode",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "DeviceTypeSpecification",
+      "attributes": [
+        {
+          "name": "adNetworkAccountID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "precisionLevel",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "PrecisionLevel",
+            "name": "PrecisionLevel",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "subnetworkIDs",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "array": {
+            "type": 1,
+            "min": 1
+          },
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DeviceTypeSpecification",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "PrecisionLevel",
+      "literals": [
+        "CROSSDEVICE_EXACT",
+        "CROSSDEVICE_PROBABILISTIC_A",
+        "CROSSDEVICE_PROBABILISTIC_B",
+        "CROSSDEVICE_PROBABILISTIC_C",
+        "CROSSDEVICE_PROBABILISTIC_D",
+        "CROSSDEVICE_EXACT_DEPRECATED",
+        "CROSSDEVICE_ENTITY",
+        "CROSSDEVICE_HOUSEHOLD",
+        "WATERFALL_NO_WATERFALLING",
+        "WATERFALL_INDIVIDUAL",
+        "WATERFALL_NAME_AND_POSTAL",
+        "WATERFALL_HOUSEHOLD",
+        "WATERFALL_ZIP_PLUS_SIX",
+        "WATERFALL_NAME_AND_CITY",
+        "WATERFALL_ZIP_PLUS_FOUR",
+        "WATERFALL_ZIP"
+      ],
+      "name": "PrecisionLevel",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "EnumFieldValue",
+      "attributes": [
+        {
+          "name": "fieldID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "valueID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "EnumFieldValue",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "RawField",
+      "attributes": [
+        {
+          "name": "fieldID",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "RawField",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "union",
+      "type": "union",
+      "parents": [],
+      "short": "DataSource",
+      "attributes": [
+        {
+          "name": "raw",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "RawField",
+            "name": "RawField",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": true,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "enum",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "EnumFieldValue",
+            "name": "EnumFieldValue",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": true,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "DataSource",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "RefreshMode",
+      "literals": [
+        "FULL",
+        "NET_NEW",
+        "NET_NEW_WITH_PARTIAL"
+      ],
+      "name": "RefreshMode",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "TriggerType",
+      "literals": [
+        "DIRECT_REQUEST",
+        "SCHEDULED_REFRESH",
+        "UPDATED_CONFIGURATION",
+        "NEW_DATA",
+        "NEW_IDENTITY_MAPPING"
+      ],
+      "name": "TriggerType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "DeliveryInstanceStatus",
+      "literals": [
+        "PROCESSING",
+        "FAILED",
+        "COMPLETED"
+      ],
+      "name": "DeliveryInstanceStatus",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "SegmentDeliveryAttemptStatus",
+      "literals": [
+        "ACTIVE_PROCESSING",
+        "ACTIVE_DELIVERING",
+        "FAILED_PROCESSING",
+        "FAILED_DELIVERING",
+        "COMPLETED_EMPTY",
+        "COMPLETED_DELIVERY"
+      ],
+      "name": "SegmentDeliveryAttemptStatus",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "SegmentDeliveryAttemptStats",
+      "attributes": [
+        {
+          "name": "totalAudienceKeys",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "audienceKeysMatched",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "targetIdentifiersMatched",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "targetIdentifiersDelivered",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "long",
+            "name": "long",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "SegmentDeliveryAttemptStats",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "enum",
+      "type": "enum",
+      "parents": [],
+      "short": "SortType",
+      "literals": [
+        "ASCENDING_TIMESTAMPS",
+        "DESCENDING_TIMESTAMPS"
+      ],
+      "name": "SortType",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "segment-delivery.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "StandardError",
+      "attributes": [
+        {
+          "name": "httpStatus",
+          "comment": "HTTP error status code for this problem",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "errorCode",
+          "comment": "Service specific error code, more granular",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "message",
+          "comment": "General, human readable error message",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "StandardError",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "local.reslang"
+    }
+  ],
+  "diagrams": [
+    {
+      "diagram": "main",
+      "includeAll": "segment-delivery.reslang",
+      "exclude": [
+        {
+          "parents": [],
+          "short": "DataConfiguration",
+          "name": "DataConfiguration",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [
+            "DataConfiguration"
+          ],
+          "short": "AddFields",
+          "name": "DataConfiguration::AddFields",
+          "parentShort": "DataConfiguration",
+          "parentName": "DataConfiguration"
+        },
+        {
+          "parents": [
+            "DataConfiguration"
+          ],
+          "short": "DeleteFields",
+          "name": "DataConfiguration::DeleteFields",
+          "parentShort": "DataConfiguration",
+          "parentName": "DataConfiguration"
+        },
+        {
+          "parents": [],
+          "short": "DeliveryInstance",
+          "name": "DeliveryInstance",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [],
+          "short": "SegmentDeliveryAttempt",
+          "name": "SegmentDeliveryAttempt",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
+      "groups": []
+    },
+    {
+      "diagram": "data",
+      "includeAll": "segment-delivery.reslang",
+      "exclude": [
+        {
+          "parents": [],
+          "short": "DeliveryInstance",
+          "name": "DeliveryInstance",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [],
+          "short": "SegmentDeliveryAttempt",
+          "name": "SegmentDeliveryAttempt",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [],
+          "short": "SegmentDeliveryConfiguration",
+          "name": "SegmentDeliveryConfiguration",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Deliver",
+          "name": "SegmentDeliveryConfiguration::Deliver",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Disable",
+          "name": "SegmentDeliveryConfiguration::Disable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Enable",
+          "name": "SegmentDeliveryConfiguration::Enable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "TriggeringConfiguration",
+          "name": "SegmentDeliveryConfiguration::TriggeringConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "DeliveryConfiguration",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration",
+            "DeliveryConfiguration"
+          ],
+          "short": "Disable",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration",
+            "DeliveryConfiguration"
+          ],
+          "short": "Enable",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "IdentityMappingConfiguration",
+          "name": "SegmentDeliveryConfiguration::IdentityMappingConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        }
+      ],
+      "groups": []
+    },
+    {
+      "diagram": "deliveries",
+      "includeAll": "segment-delivery.reslang",
+      "exclude": [
+        {
+          "parents": [],
+          "short": "DataConfiguration",
+          "name": "DataConfiguration",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [
+            "DataConfiguration"
+          ],
+          "short": "AddFields",
+          "name": "DataConfiguration::AddFields",
+          "parentShort": "DataConfiguration",
+          "parentName": "DataConfiguration"
+        },
+        {
+          "parents": [
+            "DataConfiguration"
+          ],
+          "short": "DeleteFields",
+          "name": "DataConfiguration::DeleteFields",
+          "parentShort": "DataConfiguration",
+          "parentName": "DataConfiguration"
+        },
+        {
+          "parents": [],
+          "short": "SegmentDeliveryConfiguration",
+          "name": "SegmentDeliveryConfiguration",
+          "parentShort": "",
+          "parentName": ""
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Deliver",
+          "name": "SegmentDeliveryConfiguration::Deliver",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Disable",
+          "name": "SegmentDeliveryConfiguration::Disable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "Enable",
+          "name": "SegmentDeliveryConfiguration::Enable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "TriggeringConfiguration",
+          "name": "SegmentDeliveryConfiguration::TriggeringConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "DeliveryConfiguration",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration",
+            "DeliveryConfiguration"
+          ],
+          "short": "Disable",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration",
+            "DeliveryConfiguration"
+          ],
+          "short": "Enable",
+          "name": "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration::DeliveryConfiguration"
+        },
+        {
+          "parents": [
+            "SegmentDeliveryConfiguration"
+          ],
+          "short": "IdentityMappingConfiguration",
+          "name": "SegmentDeliveryConfiguration::IdentityMappingConfiguration",
+          "parentShort": "SegmentDeliveryConfiguration",
+          "parentName": "SegmentDeliveryConfiguration"
+        }
+      ],
+      "groups": []
+    }
+  ]
+}

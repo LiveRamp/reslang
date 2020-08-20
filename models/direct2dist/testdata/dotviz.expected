@@ -7,14 +7,14 @@ digraph G {
 "DistributionRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>DistributionRequest        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">destinationEndpointProperties: string</td></tr><tr><td align="left">inputDataURL: url</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">status: StatusEnum (out)</td></tr><tr><td align="left">statusUpdatedAt: datetime (out)</td></tr><tr><td align="left">distributionType: DistributionTypeEnum (out)</td></tr><tr><td align="left">sort: SortTypeEnum</td></tr><tr><td align="left">createdAfter: datetime</td></tr><tr><td align="left">createdBefore: datetime</td></tr><tr><td align="left">statusUpdatedAfter: datetime</td></tr><tr><td align="left">statusUpdatedBefore: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET status sort createdAfter createdBefore statusUpdatedAfter statusUpdatedBefore</font></td></tr>"}</table>>];
-"Cancel" [label=<
+"DistributionRequest::Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"DistributionRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
-"Retry" [label=<
+"DistributionRequest" -> "DistributionRequest::Cancel" [dir="none" label=< <font point-size="8">action</font> >];
+"DistributionRequest::Retry" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Retry        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"DistributionRequest" -> "Retry" [dir="none" label=< <font point-size="8">action</font> >];
+"DistributionRequest" -> "DistributionRequest::Retry" [dir="none" label=< <font point-size="8">action</font> >];
 "DistributionTypeEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>DistributionTypeEnum  </b></td></tr><hr/><tr><td align="left">BATCH</td></tr></table>>];
@@ -28,14 +28,14 @@ digraph G {
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>DataMappingConfig        </b></td></tr>        <hr/><tr><td align="left">input: InputFormat</td></tr><tr><td align="left">output: OutputFormat</td></tr></table> >];
 "InputFormat" [label=<
-                    <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>InputFormat        </b></td></tr><hr/>"}</table>>];
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>InputFormat        </b></td></tr>        </table> >];
 "InputKeyValue" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>InputKeyValue        </b></td></tr>        <hr/><tr><td align="left">key: int</td></tr><tr><td align="left">value: int</td></tr></table> >];
 "OutputFormat" [label=<
-                    <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>OutputFormat        </b></td></tr><hr/>"}</table>>];
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>OutputFormat        </b></td></tr>        </table> >];
 "OutputKeyValueLabel" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>OutputKeyValueLabel        </b></td></tr>        <hr/><tr><td align="left">keyLabel: string</td></tr><tr><td align="left">valueLabel: string</td></tr></table> >];
@@ -51,11 +51,11 @@ digraph G {
 "Destination" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
-"Endpoint" [label=<
+"Destination::Endpoint" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Endpoint        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
-"Destination" -> "Endpoint" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"DistributionRequest" -> "Endpoint" [label=< <font point-size="8"> destinationEndpointId</font> > arrowhead="vee"];
+"Destination" -> "Destination::Endpoint" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"DistributionRequest" -> "Destination::Endpoint" [label=< <font point-size="8"> destinationEndpointId</font> > arrowhead="vee"];
 "DistributionRequest" -> "DataMappingConfig" [dir="back" arrowtail="diamond" label=< <font point-size="8"> dataMappingConfigs[]</font> >];
 "DistributionRequest" -> "BatchOutputMetadata" [dir="back" arrowtail="diamond" label=< <font point-size="8"> outputMetaData (out)</font> >];
 "InputFormat" -> "InputKeyValue" [dir="back" arrowtail="diamond" label=< <font point-size="8"> inputKeyValue</font> >];

@@ -4,27 +4,27 @@ digraph G {
         edge [fontname = "helvetica"];
         node [shape=none];
         
-"Garage" [label=<
+"simple-resource.Garage" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Garage        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST GET DELETE MULTIGET id name</font></td></tr>"}</table>>];
-"Manufacturer" [label=<
+"simple-resource.Manufacturer" [label=<
                     <table border="1" cellborder="0" cellspacing="1"  color='gray' >
                     <tr><td><b>Manufacturer        </b></td></tr>        <hr/><tr><td align="left">company: string</td></tr><tr><td align="left">home: url</td></tr><tr><td align="left">homeArray: url[]</td></tr><tr><td align="left">timeToManufacture: duration</td></tr><tr><td align="left">other: url</td></tr></table> >];
-"Foo" [label=<
+"simple-resource.Foo" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr>"}</table>>];
-"Subfoo" [label=<
+"simple-resource.Foo::Subfoo" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
                     <tr><td><b>Subfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr>"}</table>>];
-"Foo" -> "Subfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"Subsubfoo" [label=<
+"simple-resource.Foo" -> "simple-resource.Foo::Subfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"simple-resource.Foo::Subfoo::Subsubfoo" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
                     <tr><td><b>Subsubfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr>"}</table>>];
-"Foo" -> "Subsubfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"Bar" [label=<
+"simple-resource.Foo::Subfoo" -> "simple-resource.Foo::Subfoo::Subsubfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"simple-resource.Bar" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
-"Test" [label=<
+"simple-resource.Test" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Test        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
 "Car" [label=<
@@ -36,17 +36,17 @@ digraph G {
 "Specification" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Specification        </b></td></tr>        <hr/><tr><td align="left">type: string</td></tr><tr><td align="left">documentation: string</td></tr></table> >];
-"Wheel" [label=<
+"Car::Wheel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Wheel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">radius: double</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST MULTIGET id</font></td></tr>"}</table>>];
-"Car" -> "Wheel" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Car" -> "Car::Wheel" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "BrandEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>BrandEnum  </b></td></tr><hr/><tr><td align="left">TOYOTA</td></tr><tr><td align="left">FORD</td></tr></table>>];
-"Garage" -> "Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
+"simple-resource.Garage" -> "simple-resource.Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
 "Car" -> "Specification" [dir="back" arrowtail="diamond" label=< <font point-size="8"> engine</font> >];
 "Car" -> "Specification" [dir="back" arrowtail="diamond" label=< <font point-size="8"> components</font> >];
-"Car" -> "Garage" [label=< <font point-size="8"> homeGarageId</font> > arrowhead="vee"];
-"Car" -> "Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
-"Car" -> "Garage" [label=< <font point-size="8"> rentedGarageIds[]</font> > arrowhead="vee"];
+"Car" -> "simple-resource.Garage" [label=< <font point-size="8"> homeGarageId</font> > arrowhead="vee"];
+"Car" -> "simple-resource.Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
+"Car" -> "simple-resource.Garage" [label=< <font point-size="8"> rentedGarageIds[]</font> > arrowhead="vee"];
 }

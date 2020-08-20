@@ -14,8 +14,8 @@ digraph G {
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Struct2        </b></td></tr>        <hr/><tr><td align="left">notes: string</td></tr><tr><td align="left">text: string</td></tr></table> >];
 "InputKey" [label=<
-                    <table border="1" cellborder="0" cellspacing="1"   >
-                    <tr><td><b>InputKey        </b></td></tr><hr/><tr><td align="left">num: int</td></tr>"}</table>>];
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>InputKey        </b></td></tr>        <hr/><tr><td align="left">num: int</td></tr></table> >];
 "Struct3" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Struct3        </b></td></tr>        <hr/><tr><td align="left">a: double</td></tr><tr><td align="left">b: int (out)</td></tr><tr><td align="left">c: date</td></tr><tr><td align="left">f: boolean</td></tr></table> >];

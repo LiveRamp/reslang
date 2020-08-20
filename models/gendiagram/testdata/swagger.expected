@@ -1,0 +1,2086 @@
+openapi: 3.0.1
+info:
+  title: API for modeling directories and files
+  description: This is a simple API for manipulating files
+  version: 1.0.0
+servers:
+  - url: 'https://api.liveramp.com/gendiagram'
+tags:
+  - name: SegmentDeliveryConfiguration
+    description: '(resource)  '
+  - name: Deliver SegmentDeliveryConfiguration
+    description: '(sync action)  '
+  - name: Disable SegmentDeliveryConfiguration
+    description: '(sync action)  '
+  - name: Enable SegmentDeliveryConfiguration
+    description: '(sync action)  '
+  - name: 'SegmentDeliveryConfiguration::TriggeringConfiguration'
+    description: '(subresource)  '
+  - name: 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+    description: '(subresource)  '
+  - name: 'Disable SegmentDeliveryConfiguration::DeliveryConfiguration'
+    description: '(sync action)  '
+  - name: 'Enable SegmentDeliveryConfiguration::DeliveryConfiguration'
+    description: '(sync action)  '
+  - name: 'SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+    description: '(subresource)  '
+  - name: DataConfiguration
+    description: '(resource)  '
+  - name: AddFields DataConfiguration
+    description: '(sync action)  '
+  - name: DeleteFields DataConfiguration
+    description: '(sync action)  '
+  - name: DeliveryInstance
+    description: '(resource)  '
+  - name: SegmentDeliveryAttempt
+    description: '(resource)  '
+paths:
+  /v1/segment-delivery-configurations:
+    post:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Create SegmentDeliveryConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentDeliveryConfigurationInput'
+      responses:
+        '201':
+          description: SegmentDeliveryConfiguration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426655440000
+    get:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Get SegmentDeliveryConfigurations
+      description: ''
+      responses:
+        '200':
+          description: SegmentDeliveryConfigurations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: >-
+                Total number of SegmentDeliveryConfigurations returned by the
+                query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentDeliveryConfigurationMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the SegmentDeliveryConfigurations (starting from 0) to
+            include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of SegmentDeliveryConfigurations to return. If unspecified,
+            10 max will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: ownerID
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: query
+          name: dataConfigurationID
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+            description: Link to DataConfiguration resource via its id
+        - in: query
+          name: status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ConfigurationStatus'
+            type: string
+        - in: query
+          name: sort
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortType'
+            type: string
+  '/v1/segment-delivery-configurations/{id}':
+    get:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Get SegmentDeliveryConfiguration
+      description: ''
+      responses:
+        '200':
+          description: SegmentDeliveryConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentDeliveryConfigurationOutput'
+        '404':
+          description: SegmentDeliveryConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    put:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Modify SegmentDeliveryConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentDeliveryConfigurationPuttable'
+      responses:
+        '200':
+          description: SegmentDeliveryConfiguration modified successfully
+        '404':
+          description: SegmentDeliveryConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    patch:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Patch SegmentDeliveryConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentDeliveryConfigurationPatchable'
+      responses:
+        '200':
+          description: SegmentDeliveryConfiguration patched successfully
+        '404':
+          description: SegmentDeliveryConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    delete:
+      tags:
+        - SegmentDeliveryConfiguration
+      operationId: Delete SegmentDeliveryConfiguration
+      description: ''
+      responses:
+        '200':
+          description: SegmentDeliveryConfiguration deleted successfully
+        '404':
+          description: SegmentDeliveryConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/actions/deliver':
+    post:
+      tags:
+        - Deliver SegmentDeliveryConfiguration
+      operationId: Deliver SegmentDeliveryConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverSegmentDeliveryConfigurationInput'
+      responses:
+        '200':
+          description: Deliver action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/actions/disable':
+    post:
+      tags:
+        - Disable SegmentDeliveryConfiguration
+      operationId: Disable SegmentDeliveryConfiguration
+      description: ''
+      responses:
+        '200':
+          description: Disable action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/actions/enable':
+    post:
+      tags:
+        - Enable SegmentDeliveryConfiguration
+      operationId: Enable SegmentDeliveryConfiguration
+      description: ''
+      responses:
+        '200':
+          description: Enable action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/triggering-configurations/{id}':
+    get:
+      tags:
+        - 'SegmentDeliveryConfiguration::TriggeringConfiguration'
+      operationId: 'Get SegmentDeliveryConfiguration::TriggeringConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: TriggeringConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/SegmentDeliveryConfigurationTriggeringConfigurationOutput
+        '404':
+          description: TriggeringConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - 'SegmentDeliveryConfiguration::TriggeringConfiguration'
+      operationId: 'Modify SegmentDeliveryConfiguration::TriggeringConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationTriggeringConfigurationPuttable
+      responses:
+        '200':
+          description: TriggeringConfiguration modified successfully
+        '404':
+          description: TriggeringConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    patch:
+      tags:
+        - 'SegmentDeliveryConfiguration::TriggeringConfiguration'
+      operationId: 'Patch SegmentDeliveryConfiguration::TriggeringConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationTriggeringConfigurationPatchable
+      responses:
+        '200':
+          description: TriggeringConfiguration patched successfully
+        '404':
+          description: TriggeringConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/delivery-configurations':
+    post:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Create SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationInput
+      responses:
+        '201':
+          description: DeliveryConfiguration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426655440000
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    get:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Get SegmentDeliveryConfiguration::DeliveryConfigurations'
+      description: ''
+      responses:
+        '200':
+          description: DeliveryConfigurations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DeliveryConfigurations returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationMultiResponse
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DeliveryConfigurations (starting from 0) to include in
+            the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DeliveryConfigurations to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: adNetworkAccountID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - in: query
+          name: distributionConfigID
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: query
+          name: status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ConfigurationStatus'
+            type: string
+        - in: query
+          name: sort
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortType'
+            type: string
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/delivery-configurations/{id}':
+    get:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Get SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: DeliveryConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationOutput
+        '404':
+          description: DeliveryConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    put:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Modify SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationPuttable
+      responses:
+        '200':
+          description: DeliveryConfiguration modified successfully
+        '404':
+          description: DeliveryConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    patch:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Patch SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationPatchable
+      responses:
+        '200':
+          description: DeliveryConfiguration patched successfully
+        '404':
+          description: DeliveryConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    delete:
+      tags:
+        - 'SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Delete SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: DeliveryConfiguration deleted successfully
+        '404':
+          description: DeliveryConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/delivery-configurations/{deliveryConfigurationId}/actions/disable':
+    post:
+      tags:
+        - 'Disable SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Disable SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: Disable action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: deliveryConfigurationId
+          description: Id of parent DeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/delivery-configurations/{deliveryConfigurationId}/actions/enable':
+    post:
+      tags:
+        - 'Enable SegmentDeliveryConfiguration::DeliveryConfiguration'
+      operationId: 'Enable SegmentDeliveryConfiguration::DeliveryConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: Enable action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: deliveryConfigurationId
+          description: Id of parent DeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/segment-delivery-configurations/{segmentDeliveryConfigurationId}/identity-mapping-configurations/{id}':
+    get:
+      tags:
+        - 'SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      operationId: 'Get SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: IdentityMappingConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/SegmentDeliveryConfigurationIdentityMappingConfigurationOutput
+        '404':
+          description: IdentityMappingConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - 'SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      operationId: 'Modify SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationIdentityMappingConfigurationPuttable
+      responses:
+        '200':
+          description: IdentityMappingConfiguration modified successfully
+        '404':
+          description: IdentityMappingConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    patch:
+      tags:
+        - 'SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      operationId: 'Patch SegmentDeliveryConfiguration::IdentityMappingConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SegmentDeliveryConfigurationIdentityMappingConfigurationPatchable
+      responses:
+        '200':
+          description: IdentityMappingConfiguration patched successfully
+        '404':
+          description: IdentityMappingConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: segmentDeliveryConfigurationId
+          description: Id of parent SegmentDeliveryConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  /v1/data-configurations:
+    post:
+      tags:
+        - DataConfiguration
+      operationId: Create DataConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataConfigurationInput'
+      responses:
+        '201':
+          description: DataConfiguration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426655440000
+    get:
+      tags:
+        - DataConfiguration
+      operationId: Get DataConfigurations
+      description: ''
+      responses:
+        '200':
+          description: DataConfigurations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DataConfigurations returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataConfigurationMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DataConfigurations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DataConfigurations to return. If unspecified, 10 max will
+            be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortType'
+            type: string
+  '/v1/data-configurations/{id}':
+    get:
+      tags:
+        - DataConfiguration
+      operationId: Get DataConfiguration
+      description: ''
+      responses:
+        '200':
+          description: DataConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataConfigurationOutput'
+        '404':
+          description: DataConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    put:
+      tags:
+        - DataConfiguration
+      operationId: Modify DataConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataConfigurationPuttable'
+      responses:
+        '200':
+          description: DataConfiguration modified successfully
+        '404':
+          description: DataConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    patch:
+      tags:
+        - DataConfiguration
+      operationId: Patch DataConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataConfigurationPatchable'
+      responses:
+        '200':
+          description: DataConfiguration patched successfully
+        '404':
+          description: DataConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+    delete:
+      tags:
+        - DataConfiguration
+      operationId: Delete DataConfiguration
+      description: ''
+      responses:
+        '200':
+          description: DataConfiguration deleted successfully
+        '404':
+          description: DataConfiguration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/data-configurations/{dataConfigurationId}/actions/add-fields':
+    post:
+      tags:
+        - AddFields DataConfiguration
+      operationId: AddFields DataConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddFieldsDataConfigurationInput'
+      responses:
+        '200':
+          description: AddFields action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: dataConfigurationId
+          description: Id of parent DataConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  '/v1/data-configurations/{dataConfigurationId}/actions/delete-fields':
+    post:
+      tags:
+        - DeleteFields DataConfiguration
+      operationId: DeleteFields DataConfiguration
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFieldsDataConfigurationInput'
+      responses:
+        '200':
+          description: DeleteFields action completed
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: dataConfigurationId
+          description: Id of parent DataConfiguration
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  /v1/delivery-instances:
+    get:
+      tags:
+        - DeliveryInstance
+      operationId: Get DeliveryInstances
+      description: ''
+      responses:
+        '200':
+          description: DeliveryInstances retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DeliveryInstances returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryInstanceMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DeliveryInstances (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DeliveryInstances to return. If unspecified, 10 max will
+            be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: segmentDeliveryConfigurationID
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+            description: Link to SegmentDeliveryConfiguration resource via its id
+        - in: query
+          name: triggerType
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/TriggerType'
+            type: string
+        - in: query
+          name: instanceStatus
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DeliveryInstanceStatus'
+            type: string
+        - in: query
+          name: sort
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortType'
+            type: string
+  '/v1/delivery-instances/{id}':
+    get:
+      tags:
+        - DeliveryInstance
+      operationId: Get DeliveryInstance
+      description: ''
+      responses:
+        '200':
+          description: DeliveryInstance retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryInstanceOutput'
+        '404':
+          description: DeliveryInstance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+  /v1/segment-delivery-attempts:
+    get:
+      tags:
+        - SegmentDeliveryAttempt
+      operationId: Get SegmentDeliveryAttempts
+      description: ''
+      responses:
+        '200':
+          description: SegmentDeliveryAttempts retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of SegmentDeliveryAttempts returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentDeliveryAttemptMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the SegmentDeliveryAttempts (starting from 0) to include
+            in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of SegmentDeliveryAttempts to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: deliveryInstanceID
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+            description: Link to DeliveryInstance resource via its id
+        - in: query
+          name: dataSource
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DataSource'
+            type: object
+        - in: query
+          name: deliveryConfigurationID
+          required: false
+          schema:
+            items:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426655440000
+            minItems: 2
+            maxItems: 2
+            type: array
+            description: >-
+              Link to SegmentDeliveryConfiguration::DeliveryConfiguration
+              resource via [segmentDeliveryConfigurationId,
+              deliveryConfigurationId]
+        - in: query
+          name: refreshMode
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/RefreshMode'
+            type: string
+        - in: query
+          name: attemptStatus
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SegmentDeliveryAttemptStatus'
+            type: string
+        - in: query
+          name: distributionRequestID
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - in: query
+          name: sort
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortType'
+            type: string
+components:
+  parameters: {}
+  schemas:
+    SegmentDeliveryConfigurationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        ownerID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        dataConfigurationID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to DataConfiguration resource via its id
+        expireAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - name
+        - ownerID
+        - dataConfigurationID
+    SegmentDeliveryConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        name:
+          type: string
+        ownerID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        dataConfigurationID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to DataConfiguration resource via its id
+        deliveryConfigurationIDs:
+          items:
+            items:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426655440000
+            type: array
+            minItems: 2
+            maxItems: 2
+          description: >-
+            Link to SegmentDeliveryConfiguration::DeliveryConfiguration
+            resources via [segmentDeliveryConfigurationId,
+            deliveryConfigurationId]
+          type: array
+        status:
+          allOf:
+            - $ref: '#/components/schemas/ConfigurationStatus'
+          type: string
+        expireAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - name
+        - ownerID
+        - dataConfigurationID
+        - deliveryConfigurationIDs
+        - status
+        - createdAt
+        - updatedAt
+    SegmentDeliveryConfigurationPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+        dataConfigurationID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to DataConfiguration resource via its id
+        expireAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - name
+        - dataConfigurationID
+    SegmentDeliveryConfigurationPatchable:
+      type: object
+      properties:
+        name:
+          type: string
+        dataConfigurationID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to DataConfiguration resource via its id
+        expireAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+    SegmentDeliveryConfigurationMultiResponse:
+      type: object
+      properties:
+        segmentDeliveryConfigurations:
+          description: Array of retrieved SegmentDeliveryConfigurations
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentDeliveryConfigurationOutput'
+    DeliverSegmentDeliveryConfigurationInput:
+      type: object
+      properties:
+        refreshMode:
+          allOf:
+            - $ref: '#/components/schemas/RefreshMode'
+          type: string
+      required:
+        - refreshMode
+    SegmentDeliveryConfigurationTriggeringConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        refreshModeIntervalHrs:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        deviceTriggerRefreshModes:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTriggerRefreshMode'
+            type: object
+          minItems: 1
+          type: array
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - refreshModeIntervalHrs
+        - deviceTriggerRefreshModes
+        - createdAt
+        - updatedAt
+    SegmentDeliveryConfigurationTriggeringConfigurationPuttable:
+      type: object
+      properties:
+        refreshModeIntervalHrs:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        deviceTriggerRefreshModes:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTriggerRefreshMode'
+            type: object
+          minItems: 1
+          type: array
+      required:
+        - refreshModeIntervalHrs
+        - deviceTriggerRefreshModes
+    SegmentDeliveryConfigurationTriggeringConfigurationPatchable:
+      type: object
+      properties:
+        refreshModeIntervalHrs:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        deviceTriggerRefreshModes:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTriggerRefreshMode'
+            type: object
+          minItems: 1
+          type: array
+    SegmentDeliveryConfigurationDeliveryConfigurationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        adNetworkAccountID:
+          type: integer
+          format: int64
+        partnerID:
+          type: string
+        isDeduplicated:
+          type: boolean
+        areSourceIDsIncludedInDistRecords:
+          type: boolean
+        taxonomyID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        distributionConfigID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        isApprovalRequired:
+          type: boolean
+      required:
+        - name
+        - adNetworkAccountID
+        - taxonomyID
+        - distributionConfigID
+        - isApprovalRequired
+    SegmentDeliveryConfigurationDeliveryConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        name:
+          type: string
+        adNetworkAccountID:
+          type: integer
+          format: int64
+        partnerID:
+          type: string
+        isDeduplicated:
+          type: boolean
+        areSourceIDsIncludedInDistRecords:
+          type: boolean
+        taxonomyID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        distributionConfigID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        isApprovalRequired:
+          type: boolean
+        status:
+          allOf:
+            - $ref: '#/components/schemas/ConfigurationStatus'
+          type: string
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - name
+        - adNetworkAccountID
+        - taxonomyID
+        - distributionConfigID
+        - isApprovalRequired
+        - status
+        - createdAt
+        - updatedAt
+    SegmentDeliveryConfigurationDeliveryConfigurationPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+        partnerID:
+          type: string
+        isDeduplicated:
+          type: boolean
+        areSourceIDsIncludedInDistRecords:
+          type: boolean
+        isApprovalRequired:
+          type: boolean
+      required:
+        - name
+        - isApprovalRequired
+    SegmentDeliveryConfigurationDeliveryConfigurationPatchable:
+      type: object
+      properties:
+        name:
+          type: string
+        partnerID:
+          type: string
+        isDeduplicated:
+          type: boolean
+        areSourceIDsIncludedInDistRecords:
+          type: boolean
+        isApprovalRequired:
+          type: boolean
+    SegmentDeliveryConfigurationDeliveryConfigurationMultiResponse:
+      type: object
+      properties:
+        deliveryConfigurations:
+          description: >-
+            Array of retrieved
+            SegmentDeliveryConfiguration::DeliveryConfigurations
+          type: array
+          items:
+            $ref: >-
+              #/components/schemas/SegmentDeliveryConfigurationDeliveryConfigurationOutput
+    SegmentDeliveryConfigurationIdentityMappingConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        deviceTypeSpecifications:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTypeSpecification'
+            type: object
+          type: array
+        maxAIMCacheAgeHrs:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - deviceTypeSpecifications
+        - maxAIMCacheAgeHrs
+        - createdAt
+        - updatedAt
+    SegmentDeliveryConfigurationIdentityMappingConfigurationPuttable:
+      type: object
+      properties:
+        deviceTypeSpecifications:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTypeSpecification'
+            type: object
+          type: array
+        maxAIMCacheAgeHrs:
+          type: integer
+          format: int32
+      required:
+        - deviceTypeSpecifications
+        - maxAIMCacheAgeHrs
+    SegmentDeliveryConfigurationIdentityMappingConfigurationPatchable:
+      type: object
+      properties:
+        deviceTypeSpecifications:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeviceTypeSpecification'
+            type: object
+          type: array
+        maxAIMCacheAgeHrs:
+          type: integer
+          format: int32
+    DataConfigurationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+      required:
+        - name
+        - rawFields
+        - enumFieldValues
+    DataConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        name:
+          type: string
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - name
+        - rawFields
+        - enumFieldValues
+        - createdAt
+        - updatedAt
+    DataConfigurationPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+      required:
+        - name
+        - rawFields
+        - enumFieldValues
+    DataConfigurationPatchable:
+      type: object
+      properties:
+        name:
+          type: string
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+    DataConfigurationMultiResponse:
+      type: object
+      properties:
+        dataConfigurations:
+          description: Array of retrieved DataConfigurations
+          type: array
+          items:
+            $ref: '#/components/schemas/DataConfigurationOutput'
+    AddFieldsDataConfigurationInput:
+      type: object
+      properties:
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+      required:
+        - rawFields
+        - enumFieldValues
+    DeleteFieldsDataConfigurationInput:
+      type: object
+      properties:
+        rawFields:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/RawField'
+            type: object
+          type: array
+        enumFieldValues:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EnumFieldValue'
+            type: object
+          type: array
+      required:
+        - rawFields
+        - enumFieldValues
+    DeliveryInstanceOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        segmentDeliveryConfigurationID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to SegmentDeliveryConfiguration resource via its id
+        triggerType:
+          allOf:
+            - $ref: '#/components/schemas/TriggerType'
+          type: string
+        triggerReason:
+          type: string
+        instanceStatus:
+          allOf:
+            - $ref: '#/components/schemas/DeliveryInstanceStatus'
+          type: string
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - segmentDeliveryConfigurationID
+        - triggerType
+        - triggerReason
+        - instanceStatus
+        - createdAt
+        - updatedAt
+    DeliveryInstanceMultiResponse:
+      type: object
+      properties:
+        deliveryInstances:
+          description: Array of retrieved DeliveryInstances
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryInstanceOutput'
+    SegmentDeliveryAttemptOutput:
+      type: object
+      properties:
+        deliveryInstanceID:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to DeliveryInstance resource via its id
+        dataSource:
+          allOf:
+            - $ref: '#/components/schemas/DataSource'
+          type: object
+        deliveryConfigurationID:
+          items:
+            type: string
+            format: uuid
+            example: 123e4567-e89b-12d3-a456-426655440000
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to SegmentDeliveryConfiguration::DeliveryConfiguration resource
+            via [segmentDeliveryConfigurationId, deliveryConfigurationId]
+        refreshMode:
+          allOf:
+            - $ref: '#/components/schemas/RefreshMode'
+          type: string
+        attemptStatus:
+          allOf:
+            - $ref: '#/components/schemas/SegmentDeliveryAttemptStatus'
+          type: string
+        attemptStats:
+          allOf:
+            - $ref: '#/components/schemas/SegmentDeliveryAttemptStats'
+          type: object
+        distributionRequestID:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - deliveryInstanceID
+        - dataSource
+        - deliveryConfigurationID
+        - refreshMode
+        - attemptStatus
+        - createdAt
+        - updatedAt
+    SegmentDeliveryAttemptMultiResponse:
+      type: object
+      properties:
+        segmentDeliveryAttempts:
+          description: Array of retrieved SegmentDeliveryAttempts
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentDeliveryAttemptOutput'
+    ConfigurationStatus:
+      type: string
+      enum:
+        - DISABLED
+        - ENABLED
+        - EXPIRED
+    DeviceTriggerRefreshMode:
+      type: object
+      properties:
+        adNetworkAccountID:
+          type: integer
+          format: int64
+        triggerType:
+          allOf:
+            - $ref: '#/components/schemas/TriggerType'
+          type: string
+        refreshMode:
+          allOf:
+            - $ref: '#/components/schemas/RefreshMode'
+          type: string
+      required:
+        - adNetworkAccountID
+        - triggerType
+        - refreshMode
+    DeviceTypeSpecification:
+      type: object
+      properties:
+        adNetworkAccountID:
+          type: integer
+          format: int64
+        precisionLevel:
+          allOf:
+            - $ref: '#/components/schemas/PrecisionLevel'
+          type: string
+        subnetworkIDs:
+          items:
+            type: integer
+            format: int64
+          minItems: 1
+          type: array
+      required:
+        - adNetworkAccountID
+        - precisionLevel
+        - subnetworkIDs
+    PrecisionLevel:
+      type: string
+      enum:
+        - CROSSDEVICE_EXACT
+        - CROSSDEVICE_PROBABILISTIC_A
+        - CROSSDEVICE_PROBABILISTIC_B
+        - CROSSDEVICE_PROBABILISTIC_C
+        - CROSSDEVICE_PROBABILISTIC_D
+        - CROSSDEVICE_EXACT_DEPRECATED
+        - CROSSDEVICE_ENTITY
+        - CROSSDEVICE_HOUSEHOLD
+        - WATERFALL_NO_WATERFALLING
+        - WATERFALL_INDIVIDUAL
+        - WATERFALL_NAME_AND_POSTAL
+        - WATERFALL_HOUSEHOLD
+        - WATERFALL_ZIP_PLUS_SIX
+        - WATERFALL_NAME_AND_CITY
+        - WATERFALL_ZIP_PLUS_FOUR
+        - WATERFALL_ZIP
+    EnumFieldValue:
+      type: object
+      properties:
+        fieldID:
+          type: integer
+          format: int64
+        valueID:
+          type: integer
+          format: int64
+      required:
+        - fieldID
+        - valueID
+    RawField:
+      type: object
+      properties:
+        fieldID:
+          type: integer
+          format: int64
+      required:
+        - fieldID
+    DataSource:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          raw: '#/components/schemas/Raw'
+          enum: '#/components/schemas/Enum'
+      required:
+        - type
+        - fieldID
+        - valueID
+    Raw:
+      allOf:
+        - $ref: '#/components/schemas/DataSource'
+        - type: object
+          properties:
+            fieldID:
+              type: integer
+              format: int64
+    Enum:
+      allOf:
+        - $ref: '#/components/schemas/DataSource'
+        - type: object
+          properties:
+            fieldID:
+              type: integer
+              format: int64
+            valueID:
+              type: integer
+              format: int64
+    RefreshMode:
+      type: string
+      enum:
+        - FULL
+        - NET_NEW
+        - NET_NEW_WITH_PARTIAL
+    TriggerType:
+      type: string
+      enum:
+        - DIRECT_REQUEST
+        - SCHEDULED_REFRESH
+        - UPDATED_CONFIGURATION
+        - NEW_DATA
+        - NEW_IDENTITY_MAPPING
+    DeliveryInstanceStatus:
+      type: string
+      enum:
+        - PROCESSING
+        - FAILED
+        - COMPLETED
+    SegmentDeliveryAttemptStatus:
+      type: string
+      enum:
+        - ACTIVE_PROCESSING
+        - ACTIVE_DELIVERING
+        - FAILED_PROCESSING
+        - FAILED_DELIVERING
+        - COMPLETED_EMPTY
+        - COMPLETED_DELIVERY
+    SegmentDeliveryAttemptStats:
+      type: object
+      properties:
+        totalAudienceKeys:
+          type: integer
+          format: int64
+        audienceKeysMatched:
+          type: integer
+          format: int64
+        targetIdentifiersMatched:
+          type: integer
+          format: int64
+        targetIdentifiersDelivered:
+          type: integer
+          format: int64
+      required:
+        - totalAudienceKeys
+        - audienceKeysMatched
+        - targetIdentifiersMatched
+        - targetIdentifiersDelivered
+    SortType:
+      type: string
+      enum:
+        - ASCENDING_TIMESTAMPS
+        - DESCENDING_TIMESTAMPS
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

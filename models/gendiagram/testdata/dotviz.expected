@@ -1,0 +1,86 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"SegmentDeliveryConfiguration" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>SegmentDeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">ownerID: uuid</td></tr><tr><td align="left">dataConfigurationID: linked DataConfiguration</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">expireAt: datetime</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET name ownerID dataConfigurationID status sort POST PATCH PUT DELETE</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration::Deliver" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Deliver        </b></td></tr><hr/><tr><td align="left">refreshMode: RefreshMode</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Deliver" [dir="none" label=< <font point-size="8">action</font> >];
+"SegmentDeliveryConfiguration::Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Disable" [dir="none" label=< <font point-size="8">action</font> >];
+"SegmentDeliveryConfiguration::Enable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Enable" [dir="none" label=< <font point-size="8">action</font> >];
+"SegmentDeliveryConfiguration::TriggeringConfiguration" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>TriggeringConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">refreshModeIntervalHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::TriggeringConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"SegmentDeliveryConfiguration::DeliveryConfiguration" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>DeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">adNetworkAccountID: long</td></tr><tr><td align="left">partnerID: string</td></tr><tr><td align="left">isDeduplicated: boolean</td></tr><tr><td align="left">areSourceIDsIncludedInDistRecords: boolean</td></tr><tr><td align="left">taxonomyID: uuid</td></tr><tr><td align="left">distributionConfigID: uuid</td></tr><tr><td align="left">isApprovalRequired: boolean</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET adNetworkAccountID distributionConfigID status sort POST PATCH PUT DELETE</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"SegmentDeliveryConfiguration::DeliveryConfiguration::Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration::DeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable" [dir="none" label=< <font point-size="8">action</font> >];
+"SegmentDeliveryConfiguration::DeliveryConfiguration::Enable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration::DeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable" [dir="none" label=< <font point-size="8">action</font> >];
+"SegmentDeliveryConfiguration::IdentityMappingConfiguration" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>IdentityMappingConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">maxAIMCacheAgeHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr>"}</table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::IdentityMappingConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"ConfigurationStatus" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>ConfigurationStatus  </b></td></tr><hr/><tr><td align="left">DISABLED</td></tr><tr><td align="left">ENABLED</td></tr><tr><td align="left">EXPIRED</td></tr></table>>];
+"DeviceTriggerRefreshMode" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>DeviceTriggerRefreshMode        </b></td></tr>        <hr/><tr><td align="left">adNetworkAccountID: long</td></tr><tr><td align="left">triggerType: TriggerType</td></tr><tr><td align="left">refreshMode: RefreshMode</td></tr></table> >];
+"DeviceTypeSpecification" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>DeviceTypeSpecification        </b></td></tr>        <hr/><tr><td align="left">adNetworkAccountID: long</td></tr><tr><td align="left">precisionLevel: PrecisionLevel</td></tr><tr><td align="left">subnetworkIDs: long[1..]</td></tr></table> >];
+"PrecisionLevel" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>PrecisionLevel  </b></td></tr><hr/><tr><td align="left">CROSSDEVICE_EXACT</td></tr><tr><td align="left">CROSSDEVICE_PROBABILISTIC_A</td></tr><tr><td align="left">CROSSDEVICE_PROBABILISTIC_B</td></tr><tr><td align="left">CROSSDEVICE_PROBABILISTIC_C</td></tr><tr><td align="left">CROSSDEVICE_PROBABILISTIC_D</td></tr><tr><td align="left">CROSSDEVICE_EXACT_DEPRECATED</td></tr><tr><td align="left">CROSSDEVICE_ENTITY</td></tr><tr><td align="left">CROSSDEVICE_HOUSEHOLD</td></tr><tr><td align="left">WATERFALL_NO_WATERFALLING</td></tr><tr><td align="left">WATERFALL_INDIVIDUAL</td></tr><tr><td align="left">WATERFALL_NAME_AND_POSTAL</td></tr><tr><td align="left">WATERFALL_HOUSEHOLD</td></tr><tr><td align="left">WATERFALL_ZIP_PLUS_SIX</td></tr><tr><td align="left">WATERFALL_NAME_AND_CITY</td></tr><tr><td align="left">WATERFALL_ZIP_PLUS_FOUR</td></tr><tr><td align="left">WATERFALL_ZIP</td></tr></table>>];
+"EnumFieldValue" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>EnumFieldValue        </b></td></tr>        <hr/><tr><td align="left">fieldID: long</td></tr><tr><td align="left">valueID: long</td></tr></table> >];
+"RawField" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>RawField        </b></td></tr>        <hr/><tr><td align="left">fieldID: long</td></tr></table> >];
+"DataSource" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>DataSource        </b></td></tr>        </table> >];
+"RefreshMode" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>RefreshMode  </b></td></tr><hr/><tr><td align="left">FULL</td></tr><tr><td align="left">NET_NEW</td></tr><tr><td align="left">NET_NEW_WITH_PARTIAL</td></tr></table>>];
+"TriggerType" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>TriggerType  </b></td></tr><hr/><tr><td align="left">DIRECT_REQUEST</td></tr><tr><td align="left">SCHEDULED_REFRESH</td></tr><tr><td align="left">UPDATED_CONFIGURATION</td></tr><tr><td align="left">NEW_DATA</td></tr><tr><td align="left">NEW_IDENTITY_MAPPING</td></tr></table>>];
+"DeliveryInstanceStatus" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>DeliveryInstanceStatus  </b></td></tr><hr/><tr><td align="left">PROCESSING</td></tr><tr><td align="left">FAILED</td></tr><tr><td align="left">COMPLETED</td></tr></table>>];
+"SegmentDeliveryAttemptStatus" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>SegmentDeliveryAttemptStatus  </b></td></tr><hr/><tr><td align="left">ACTIVE_PROCESSING</td></tr><tr><td align="left">ACTIVE_DELIVERING</td></tr><tr><td align="left">FAILED_PROCESSING</td></tr><tr><td align="left">FAILED_DELIVERING</td></tr><tr><td align="left">COMPLETED_EMPTY</td></tr><tr><td align="left">COMPLETED_DELIVERY</td></tr></table>>];
+"SegmentDeliveryAttemptStats" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>SegmentDeliveryAttemptStats        </b></td></tr>        <hr/><tr><td align="left">totalAudienceKeys: long</td></tr><tr><td align="left">audienceKeysMatched: long</td></tr><tr><td align="left">targetIdentifiersMatched: long</td></tr><tr><td align="left">targetIdentifiersDelivered: long</td></tr></table> >];
+"SortType" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>SortType  </b></td></tr><hr/><tr><td align="left">ASCENDING_TIMESTAMPS</td></tr><tr><td align="left">DESCENDING_TIMESTAMPS</td></tr></table>>];
+"SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration" [label=< <font point-size="8"> deliveryConfigurationIDs[..] (out)</font> > arrowhead="vee"];
+"SegmentDeliveryConfiguration::TriggeringConfiguration" -> "DeviceTriggerRefreshMode" [dir="back" arrowtail="diamond" label=< <font point-size="8"> deviceTriggerRefreshModes[1..]</font> >];
+"SegmentDeliveryConfiguration::IdentityMappingConfiguration" -> "DeviceTypeSpecification" [dir="back" arrowtail="diamond" label=< <font point-size="8"> deviceTypeSpecifications[..]</font> >];
+"DataSource" -> "RawField" [dir="back" arrowtail="diamond" label=< <font point-size="8"> raw</font> >];
+"DataSource" -> "EnumFieldValue" [dir="back" arrowtail="diamond" label=< <font point-size="8"> enum</font> >];
+}

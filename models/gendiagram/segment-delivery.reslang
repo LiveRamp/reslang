@@ -1,0 +1,209 @@
+
+resource SegmentDeliveryConfiguration {
+    id: uuid
+    name: string mutable query
+    ownerID: uuid query
+    dataConfigurationID: linked DataConfiguration mutable query
+    deliveryConfigurationIDs: linked SegmentDeliveryConfiguration::DeliveryConfiguration[..] output
+    status: ConfigurationStatus output query
+    expireAt: datetime mutable optional
+    createdAt: datetime output
+    updatedAt: datetime output
+    sort: SortType queryonly
+
+    /operations
+        GET MULTIGET POST PATCH PUT DELETE
+}
+
+sync action SegmentDeliveryConfiguration::Deliver {
+    refreshMode: RefreshMode
+
+    /operations
+        POST
+}
+
+sync action SegmentDeliveryConfiguration::Disable {
+
+    /operations
+        POST
+}
+
+sync action SegmentDeliveryConfiguration::Enable {
+
+    /operations
+        POST
+}
+
+subresource SegmentDeliveryConfiguration::TriggeringConfiguration {
+    id: int
+    refreshModeIntervalHrs: stringmap<int> mutable
+    deviceTriggerRefreshModes: DeviceTriggerRefreshMode[1..] mutable
+    createdAt: datetime output
+    updatedAt: datetime output
+
+    /operations
+        GET PATCH PUT
+}
+
+subresource SegmentDeliveryConfiguration::DeliveryConfiguration {
+    id: uuid
+    name: string mutable
+    adNetworkAccountID: long query
+    partnerID: string mutable optional
+    isDeduplicated: boolean mutable optional
+    areSourceIDsIncludedInDistRecords: boolean mutable optional
+    taxonomyID: uuid
+    distributionConfigID: uuid query
+    isApprovalRequired: boolean mutable
+    status: ConfigurationStatus output query
+    createdAt: datetime output
+    updatedAt: datetime output
+    sort: SortType queryonly
+
+    /operations
+        GET MULTIGET POST PATCH PUT DELETE
+}
+
+sync action SegmentDeliveryConfiguration::DeliveryConfiguration::Disable {
+
+    /operations
+        POST
+}
+
+sync action SegmentDeliveryConfiguration::DeliveryConfiguration::Enable {
+
+    /operations
+        POST
+}
+
+subresource SegmentDeliveryConfiguration::IdentityMappingConfiguration {
+    id: int
+    deviceTypeSpecifications: DeviceTypeSpecification[..] mutable
+    maxAIMCacheAgeHrs: int mutable
+    createdAt: datetime output
+    updatedAt: datetime output
+
+    /operations
+        GET PATCH PUT
+}
+
+resource DataConfiguration {
+    id: uuid
+    name: string mutable query
+    rawFields: RawField[..] mutable
+    enumFieldValues: EnumFieldValue[..] mutable
+    createdAt: datetime output
+    updatedAt: datetime output
+    sort: SortType queryonly
+
+    /operations
+        GET MULTIGET POST PATCH PUT DELETE
+}
+
+sync action DataConfiguration::AddFields {
+    rawFields: RawField[..]
+    enumFieldValues: EnumFieldValue[..]
+
+    /operations
+        POST
+}
+
+sync action DataConfiguration::DeleteFields {
+    rawFields: RawField[..]
+    enumFieldValues: EnumFieldValue[..]
+
+    /operations
+        POST
+}
+
+resource DeliveryInstance {
+    id: uuid
+    segmentDeliveryConfigurationID: linked SegmentDeliveryConfiguration output query
+    triggerType: TriggerType output query
+    triggerReason: string output
+    instanceStatus: DeliveryInstanceStatus output query
+    createdAt: datetime output
+    updatedAt: datetime output
+    sort: SortType queryonly
+
+    /operations
+        GET MULTIGET
+}
+
+resource SegmentDeliveryAttempt {
+    deliveryInstanceID: linked DeliveryInstance output query
+    dataSource: DataSource output query
+    deliveryConfigurationID: linked SegmentDeliveryConfiguration::DeliveryConfiguration output query
+    refreshMode: RefreshMode output query
+    attemptStatus: SegmentDeliveryAttemptStatus output query
+    attemptStats: SegmentDeliveryAttemptStats optional output
+    distributionRequestID: long optional output query
+    createdAt: datetime output
+    updatedAt: datetime output
+    sort: SortType queryonly
+
+    /operations
+        MULTIGET
+}
+
+enum ConfigurationStatus {
+    DISABLED ENABLED EXPIRED
+}
+
+structure DeviceTriggerRefreshMode {
+    adNetworkAccountID: long
+    triggerType: TriggerType
+    refreshMode: RefreshMode
+}
+
+structure DeviceTypeSpecification {
+    adNetworkAccountID: long
+    precisionLevel: PrecisionLevel
+    subnetworkIDs: long[1..]
+}
+
+enum PrecisionLevel {
+    CROSSDEVICE_EXACT CROSSDEVICE_PROBABILISTIC_A CROSSDEVICE_PROBABILISTIC_B CROSSDEVICE_PROBABILISTIC_C CROSSDEVICE_PROBABILISTIC_D CROSSDEVICE_EXACT_DEPRECATED CROSSDEVICE_ENTITY CROSSDEVICE_HOUSEHOLD WATERFALL_NO_WATERFALLING WATERFALL_INDIVIDUAL WATERFALL_NAME_AND_POSTAL WATERFALL_HOUSEHOLD WATERFALL_ZIP_PLUS_SIX WATERFALL_NAME_AND_CITY WATERFALL_ZIP_PLUS_FOUR WATERFALL_ZIP
+}
+
+structure EnumFieldValue {
+    fieldID: long
+    valueID: long
+}
+
+structure RawField {
+    fieldID: long
+}
+
+union DataSource {
+    raw: RawField inline
+    enum: EnumFieldValue inline
+}
+
+enum RefreshMode {
+    FULL NET_NEW NET_NEW_WITH_PARTIAL
+}
+
+enum TriggerType {
+    DIRECT_REQUEST SCHEDULED_REFRESH UPDATED_CONFIGURATION NEW_DATA NEW_IDENTITY_MAPPING
+}
+
+enum DeliveryInstanceStatus {
+    PROCESSING FAILED COMPLETED
+}
+
+enum SegmentDeliveryAttemptStatus {
+    ACTIVE_PROCESSING ACTIVE_DELIVERING FAILED_PROCESSING FAILED_DELIVERING COMPLETED_EMPTY COMPLETED_DELIVERY
+}
+
+structure SegmentDeliveryAttemptStats {
+    totalAudienceKeys: long
+    audienceKeysMatched: long
+    targetIdentifiersMatched: long
+    targetIdentifiersDelivered: long
+}
+
+enum SortType {
+    ASCENDING_TIMESTAMPS DESCENDING_TIMESTAMPS
+}
+

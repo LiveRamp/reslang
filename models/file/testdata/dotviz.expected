@@ -13,10 +13,10 @@ digraph G {
 "Specification" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Specification        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
-"File" [label=<
+"Directory::File" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>File        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="left">contents: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET contents</font></td></tr>"}</table>>];
-"Directory" -> "File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Directory" -> "Directory::File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "DirectoryDeleteRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>DirectoryDeleteRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr>"}</table>>];
@@ -26,15 +26,15 @@ digraph G {
 "" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>        </b></td></tr><hr/>"}</table>>];
-"Cancel" [label=<
+"DirectoryDeleteRequest::Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">time: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"DirectoryDeleteRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
+"DirectoryDeleteRequest" -> "DirectoryDeleteRequest::Cancel" [dir="none" label=< <font point-size="8">action</font> >];
 "SpecialError" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>SpecialError        </b></td></tr>        <hr/><tr><td align="left">message: string</td></tr><tr><td align="left">time: datetime</td></tr></table> >];
 "FileType" -> "Specification" [label=< <font point-size="8"> specId</font> > arrowhead="vee"];
-"File" -> "FileType" [label=< <font point-size="8"> fileTypeId</font> > arrowhead="vee"];
+"Directory::File" -> "FileType" [label=< <font point-size="8"> fileTypeId</font> > arrowhead="vee"];
 "DirectoryDeleteRequest" -> "Directory" [label=< <font point-size="8"> directoryId</font> > arrowhead="vee"];
 "DirectoryDeleteIncomplete" -> "Directory" [label=< <font point-size="8"> directory</font> > arrowhead="vee"];
 }

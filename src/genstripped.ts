@@ -6,7 +6,9 @@ import {
     IStructure,
     IUnion,
     IEvent,
-    IAttribute
+    IAttribute,
+    IProduces,
+    IConsumes
 } from "./treetypes"
 
 /**
@@ -43,6 +45,12 @@ export default class StripGen extends BaseGen {
                     break
                 case "event":
                     printEvent(def)
+                    break
+                case "produces":
+                    printProduces(def)
+                    break
+                case "consumes":
+                    printConsumes(def)
                     break
             }
             ln()
@@ -107,6 +115,15 @@ export default class StripGen extends BaseGen {
                 ln(tab + keyword("/operations"))
                 l(tab + tab)
                 for (const op of def.operations) {
+                    l(op.operation + " ")
+                }
+                ln()
+            }
+            if (def.events && def.events.length !== 0) {
+                ln()
+                ln(tab + keyword("/events"))
+                l(tab + tab)
+                for (const op of def.events) {
                     l(op.operation + " ")
                 }
                 ln()
@@ -222,6 +239,12 @@ export default class StripGen extends BaseGen {
                 }
             }
             ln("}")
+        }
+        function printProduces(def: IProduces) {
+            ln(keyword("produces ") + name(def.event.name))
+        }
+        function printConsumes(def: IConsumes) {
+            ln(keyword("consumes ") + name(def.event.name))
         }
     }
 }

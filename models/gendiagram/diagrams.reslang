@@ -1,0 +1,103 @@
+
+/* This file defines Segment Delivery API diagrams.
+* Each diagram below presents a portion of the overall
+* API.  Putting everything in one diagram makes it too
+* small to read.
+*
+* - `segmentDelivery`:  The main configuration resources
+* - `data`: The associated data (segment) configuration
+* - `deliveries`: Resources generated internally for
+*   delivery objects.  These are not configured by the client.
+*
+* Steps to use these diagrams.
+* - Generate the .dot representation.  Commands shown below.
+*   Reslang can do this two ways:
+*   - The --open option puts the dot text into the copy buffer
+*     and opens the .dot viewer in a browser window.
+*   - The --stdout option emits .dot text to standard output
+*     and lets you take it from there.
+* - Load the dot text into a viewer.  For this we use
+*   https://dreampuf.github.io/GraphvizOnline
+* - Unfortunately, that viewer has an editor window that requires
+*   copy/paste to load text.  No explicit file handling.
+*/
+
+// Command to generate diagram:
+//  ./reslang ~/code/api-specs-segment-delivery \
+//      --diagram segmentDelivery \
+//      --stdout >segment-delivery.dot
+//
+// Then load segment-delivery.dot into
+// https://dreampuf.github.io/GraphvizOnline
+diagram main {
+    /includeAll
+        segment-delivery.reslang
+
+    /exclude
+        // resources and actions
+        DataConfiguration
+        DataConfiguration::AddFields
+        DataConfiguration::DeleteFields
+        DeliveryInstance
+        SegmentDeliveryAttempt
+}
+
+
+// Command to generate diagram:
+//  ./reslang ~/code/api-specs-segment-delivery \
+//      --diagram data \
+//      --stdout >data.dot
+//
+// Then load data.dot into
+// https://dreampuf.github.io/GraphvizOnline
+diagram data {
+    /includeAll
+        segment-delivery.reslang
+
+    /exclude
+        // resources and actions
+        DeliveryInstance
+        SegmentDeliveryAttempt
+        SegmentDeliveryConfiguration
+        SegmentDeliveryConfiguration::Deliver
+        SegmentDeliveryConfiguration::Disable
+        SegmentDeliveryConfiguration::Enable
+
+        // subresources
+        SegmentDeliveryConfiguration::TriggeringConfiguration
+        SegmentDeliveryConfiguration::DeliveryConfiguration
+        SegmentDeliveryConfiguration::DeliveryConfiguration::Disable
+        SegmentDeliveryConfiguration::DeliveryConfiguration::Enable
+        SegmentDeliveryConfiguration::IdentityMappingConfiguration
+}
+
+
+// Command to generate diagram:
+//  ./reslang ~/code/api-specs-segment-delivery \
+//      --diagram deliveries \
+//      --stdout >deliveries.dot
+//
+// Then load deliveries.dot into
+// https://dreampuf.github.io/GraphvizOnline
+diagram deliveries {
+    /includeAll
+        segment-delivery.reslang
+
+    /exclude
+        // resources and actions
+        DataConfiguration
+        DataConfiguration::AddFields
+        DataConfiguration::DeleteFields
+        SegmentDeliveryConfiguration
+        SegmentDeliveryConfiguration::Deliver
+        SegmentDeliveryConfiguration::Disable
+        SegmentDeliveryConfiguration::Enable
+
+        // subresources
+        SegmentDeliveryConfiguration::TriggeringConfiguration
+        SegmentDeliveryConfiguration::DeliveryConfiguration
+        SegmentDeliveryConfiguration::DeliveryConfiguration::Disable
+        SegmentDeliveryConfiguration::DeliveryConfiguration::Enable
+        SegmentDeliveryConfiguration::IdentityMappingConfiguration
+}
+

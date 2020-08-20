@@ -5,7 +5,7 @@ import {
     AnyKind,
     IResourceLike,
     isResourceLike,
-    getAllAttributes,
+    getAllAttributes
 } from "./treetypes"
 import { BaseGen } from "./genbase"
 
@@ -56,7 +56,7 @@ export default class DotvizGen extends BaseGen {
                 "request-resource",
                 "asset-resource",
                 "resource",
-                "configuration-resource",
+                "configuration-resource"
             ].includes(def.type)
                 ? "bgcolor='#ffffcc'"
                 : ""
@@ -76,7 +76,7 @@ export default class DotvizGen extends BaseGen {
                     "asset-resource",
                     "resource",
                     "configuration-resource",
-                    "event",
+                    "event"
                 ].includes(def.type)
                     ? 3
                     : 1
@@ -86,10 +86,10 @@ export default class DotvizGen extends BaseGen {
                     "resource",
                     "configuration-resource",
                     "action",
-                    "subresource",
+                    "subresource"
                 ].includes(def.type)
                     ? "style='rounded'"
-                    : def.type === "event"
+                    : def.type === "event" || def.type === "union"
                     ? "style='dashed'"
                     : ""
                 const padding = "        "
@@ -99,14 +99,18 @@ export default class DotvizGen extends BaseGen {
 
                 if ("structure" === def.type) {
                     if (def.short !== "StandardError") {
-                        viz += `"${def.short}" [label=<${box}${padding}${
+                        viz += `"${def.name}" [label=<${box}${padding}${
                             attrs ? "<hr/>" : ""
                         }${attrs}</table> >];\n`
                     }
+                } else if ("union" === def.type) {
+                    viz += `"${def.name}" [label=<${box}${padding}${
+                        attrs ? "<hr/>" : ""
+                    }${attrs}</table> >];\n`
                 } else if (imported) {
-                    viz += `"${def.short}" [label=<${box}</table>>];\n`
+                    viz += `"${def.name}" [label=<${box}</table>>];\n`
                 } else {
-                    viz += `"${def.short}" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
+                    viz += `"${def.name}" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
                 }
 
                 // from parent to subresource
@@ -115,7 +119,7 @@ export default class DotvizGen extends BaseGen {
                     include.has(def.parentName!)
                 ) {
                     const label = this.makeLabelText("subresource")
-                    viz += `"${def.parentShort}" -> "${def.short}" [dir="back" arrowtail="ediamond" label=${label}];\n`
+                    viz += `"${def.parentName}" -> "${def.name}" [dir="back" arrowtail="ediamond" label=${label}];\n`
                 }
 
                 // from parent to action
@@ -123,7 +127,7 @@ export default class DotvizGen extends BaseGen {
                     const label = this.makeLabelText(
                         def.bulk ? "resource level action" : "action"
                     )
-                    viz += `"${def.parentShort}" -> "${def.short}" [dir="none" label=${label}];\n`
+                    viz += `"${def.parentName}" -> "${def.name}" [dir="none" label=${label}];\n`
                 }
             }
         }
@@ -229,11 +233,11 @@ export default class DotvizGen extends BaseGen {
                     if (attr.linked) {
                         links.push({
                             type: "resource",
-                            from: def.short,
+                            from: def.name,
                             fromName: def.name,
-                            to: attr.type.short,
+                            to: attr.type.name,
                             toName: attr.type.name,
-                            label: ` ${attr.name}${multi}${output}`,
+                            label: ` ${attr.name}${multi}${output}`
                         })
                         continue
                     }
@@ -241,11 +245,11 @@ export default class DotvizGen extends BaseGen {
                         if (type.name !== "StandardError") {
                             links.push({
                                 type: "structure",
-                                from: def.short,
+                                from: def.name,
                                 fromName: def.name,
-                                to: attr.type.short,
+                                to: attr.type.name,
                                 toName: attr.type.name,
-                                label: ` ${attr.name}${multi}${output}`,
+                                label: ` ${attr.name}${multi}${output}`
                             })
                         }
                         continue

@@ -7,44 +7,44 @@ digraph G {
 "UploadRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>UploadRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">status: UploadRequestStatusEnum</td></tr><tr><td align="left">client: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name</font></td></tr>"}</table>>];
-"Status" [label=<
+"UploadRequest::Status" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Status        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">recordsProcessed: int</td></tr><tr><td align="left">completed: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr>"}</table>>];
-"UploadRequest" -> "Status" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"RecordSet" [label=<
+"UploadRequest" -> "UploadRequest::Status" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"UploadRequest::RecordSet" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>RecordSet        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">company: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST</font></td></tr>"}</table>>];
-"UploadRequest" -> "RecordSet" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"Deep" [label=<
+"UploadRequest" -> "UploadRequest::RecordSet" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"UploadRequest::RecordSet::Deep" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Deep        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">company: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST</font></td></tr>"}</table>>];
-"UploadRequest" -> "Deep" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"UploadRequest::RecordSet" -> "UploadRequest::RecordSet::Deep" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Record" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Record        </b></td></tr>        <hr/><tr><td align="left">details: string</td></tr><tr><td align="left">address: string</td></tr></table> >];
-"StartProcessingAction" [label=<
+"UploadRequest::StartProcessingAction" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>StartProcessingAction        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">created: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"UploadRequest" -> "StartProcessingAction" [dir="none" label=< <font point-size="8">action</font> >];
-"StopProcessingAction" [label=<
+"UploadRequest" -> "UploadRequest::StartProcessingAction" [dir="none" label=< <font point-size="8">action</font> >];
+"UploadRequest::StopProcessingAction" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>StopProcessingAction        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"UploadRequest" -> "StopProcessingAction" [dir="none" label=< <font point-size="8">action</font> >];
-"StartProcessingAction" [label=<
+"UploadRequest" -> "UploadRequest::StopProcessingAction" [dir="none" label=< <font point-size="8">action</font> >];
+"UploadRequest::StartProcessingAction" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>StartProcessingAction        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"UploadRequest" -> "StartProcessingAction" [dir="none" label=< <font point-size="8">resource level action</font> >];
-"Clear" [label=<
+"UploadRequest" -> "UploadRequest::StartProcessingAction" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"UploadRequest::RecordSet::Clear" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Clear        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"UploadRequest" -> "Clear" [dir="none" label=< <font point-size="8">resource level action</font> >];
-"Jump" [label=<
+"UploadRequest::RecordSet" -> "UploadRequest::RecordSet::Clear" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"UploadRequest::RecordSet::Deep::Jump" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Jump        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">when: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"UploadRequest" -> "Jump" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"UploadRequest::RecordSet::Deep" -> "UploadRequest::RecordSet::Deep::Jump" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "UploadRequestStatusEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>UploadRequestStatusEnum  </b></td></tr><hr/><tr><td align="left">STARTED</td></tr><tr><td align="left">STOPPED</td></tr><tr><td align="left">COMPLETED</td></tr></table>>];
-"RecordSet" -> "Record" [dir="back" arrowtail="diamond" label=< <font point-size="8"> records[]</font> >];
-"Deep" -> "Record" [dir="back" arrowtail="diamond" label=< <font point-size="8"> records[]</font> >];
+"UploadRequest::RecordSet" -> "Record" [dir="back" arrowtail="diamond" label=< <font point-size="8"> records[]</font> >];
+"UploadRequest::RecordSet::Deep" -> "Record" [dir="back" arrowtail="diamond" label=< <font point-size="8"> records[]</font> >];
 }

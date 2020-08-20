@@ -4,33 +4,33 @@ digraph G {
         edge [fontname = "helvetica"];
         node [shape=none];
         
-"Directory" [label=<
+"file.Directory" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Directory        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id name</font></td></tr>"}</table>>];
-"FileType" [label=<
+"file.FileType" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>FileType        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">type: string</td></tr><tr><td align="left">format: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET type</font></td></tr>"}</table>>];
-"Specification" [label=<
+"file.Specification" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Specification        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
-"File" [label=<
+"file.Directory::File" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
                     <tr><td><b>File        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="left">contents: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET contents</font></td></tr>"}</table>>];
-"Directory" -> "File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"DirectoryDeleteRequest" [label=<
+"file.Directory" -> "file.Directory::File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"file.DirectoryDeleteRequest" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>DirectoryDeleteRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET id</font></td></tr>"}</table>>];
-"DirectoryDeleteIncomplete" [label=<
+"file.DirectoryDeleteIncomplete" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='dashed' color='gray' >
                     <tr><td><b>DirectoryDeleteIncomplete        </b></td></tr><hr/><tr><td align="left">corrupted: boolean</td></tr><tr><td align="left">timeOfFailure: datetime</td></tr>"}</table>>];
-"" [label=<
+"file." [label=<
                     <table border="1" cellborder="0" cellspacing="1"  color='gray' >
                     <tr><td><b>        </b></td></tr><hr/>"}</table>>];
-"Cancel" [label=<
+"file.DirectoryDeleteRequest::Cancel" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
                     <tr><td><b>Cancel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">time: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"DirectoryDeleteRequest" -> "Cancel" [dir="none" label=< <font point-size="8">action</font> >];
-"SpecialError" [label=<
+"file.DirectoryDeleteRequest" -> "file.DirectoryDeleteRequest::Cancel" [dir="none" label=< <font point-size="8">action</font> >];
+"file.SpecialError" [label=<
                     <table border="1" cellborder="0" cellspacing="1"  color='gray' >
                     <tr><td><b>SpecialError        </b></td></tr>        <hr/><tr><td align="left">message: string</td></tr><tr><td align="left">time: datetime</td></tr></table> >];
 "SimpleResource" [label=<
@@ -39,14 +39,14 @@ digraph G {
 "v2/TestResource" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>v2/TestResource        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">number: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"Foo" [label=<
+"v2/TestResource::Foo" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">address: string[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"v2/TestResource" -> "Foo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"Foo2" [label=<
+"v2/TestResource" -> "v2/TestResource::Foo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"v2/TestResource::Foo2" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Foo2        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">address: string[]</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr>"}</table>>];
-"v2/TestResource" -> "Foo2" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"v2/TestResource" -> "v2/TestResource::Foo2" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "StartSignal" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='dashed'  >
                     <tr><td><b>StartSignal        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="left">address: string[1..10]</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">time: datetime</td></tr>"}</table>>];
@@ -65,10 +65,10 @@ digraph G {
 "Header" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Header        </b></td></tr>        <hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: long</td></tr></table> >];
-"FileType" -> "Specification" [label=< <font point-size="8"> specId</font> > arrowhead="vee"];
-"File" -> "FileType" [label=< <font point-size="8"> fileTypeId</font> > arrowhead="vee"];
-"DirectoryDeleteRequest" -> "Directory" [label=< <font point-size="8"> directoryId</font> > arrowhead="vee"];
-"DirectoryDeleteIncomplete" -> "Directory" [label=< <font point-size="8"> directory</font> > arrowhead="vee"];
-"SpecialError" -> "StandardError" [dir="back" arrowtail="diamond" label=< <font point-size="8"> errors[]</font> >];
+"file.FileType" -> "file.Specification" [label=< <font point-size="8"> specId</font> > arrowhead="vee"];
+"file.Directory::File" -> "file.FileType" [label=< <font point-size="8"> fileTypeId</font> > arrowhead="vee"];
+"file.DirectoryDeleteRequest" -> "file.Directory" [label=< <font point-size="8"> directoryId</font> > arrowhead="vee"];
+"file.DirectoryDeleteIncomplete" -> "file.Directory" [label=< <font point-size="8"> directory</font> > arrowhead="vee"];
+"file.SpecialError" -> "file.StandardError" [dir="back" arrowtail="diamond" label=< <font point-size="8"> errors[]</font> >];
 "v3/StopSignal" -> "Header" [dir="back" arrowtail="diamond" label=< <font point-size="8"> header</font> >];
 }

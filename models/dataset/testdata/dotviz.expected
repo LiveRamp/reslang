@@ -7,18 +7,18 @@ digraph G {
 "Audience" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Audience        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
-"Field" [label=<
+"Audience::Field" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Field        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">type: FieldTypeEnum</td></tr><tr><td align="left">enumerated: boolean</td></tr><tr><td align="left">valueCollectionType: ValueCollectionTypeEnum</td></tr><tr><td align="left">values: string[1..]</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET PUT</font></td></tr>"}</table>>];
-"Audience" -> "Field" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
-"Disable" [label=<
+"Audience" -> "Audience::Field" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Audience::Field::Disable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"Audience" -> "Disable" [dir="none" label=< <font point-size="8">action</font> >];
-"Disable" [label=<
+"Audience::Field" -> "Audience::Field::Disable" [dir="none" label=< <font point-size="8">action</font> >];
+"Audience::Field::Disable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
-"Audience" -> "Disable" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"Audience::Field" -> "Audience::Field::Disable" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "FieldTypeEnum" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >
                     <tr><td align="left"><b>FieldTypeEnum  </b></td></tr><hr/><tr><td align="left">STRING</td></tr><tr><td align="left">NUMERIC</td></tr></table>>];
@@ -28,5 +28,5 @@ digraph G {
 "FieldRedirection" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>FieldRedirection        </b></td></tr>        <hr/><tr><td align="left">existingFieldURL: string</td></tr></table> >];
-"Disable" -> "Field" [label=< <font point-size="8"> fieldIDs[]</font> > arrowhead="vee"];
+"Audience::Field::Disable" -> "Audience::Field" [label=< <font point-size="8"> fieldIDs[]</font> > arrowhead="vee"];
 }

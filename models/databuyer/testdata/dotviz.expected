@@ -7,14 +7,14 @@ digraph G {
 "DeliverPurchasedSegments" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>DeliverPurchasedSegments        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">complete: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id</font></td></tr>"}</table>>];
-"search" [label=<
+"DeliverPurchasedSegments::search" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
-"DeliverPurchasedSegments" -> "search" [dir="none" label=< <font point-size="8">resource level action</font> >];
-"search" [label=<
+"DeliverPurchasedSegments" -> "DeliverPurchasedSegments::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"Segment::search" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
-"Segment" -> "search" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"Segment" -> "Segment::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "AllDeliveredSegments" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>AllDeliveredSegments        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr>"}</table>>];

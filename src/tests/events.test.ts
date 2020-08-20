@@ -14,7 +14,16 @@ describe("event generation tests", () => {
 
 /** compare the output with saved asyncapi spec */
 function compare(module: string) {
-    const asyncapi = new EventsGen([`models/${module}`], { ignoreRules: true })
+    const asyncapi = new EventsGen(
+        [`models/${module}`],
+        { ignoreRules: true },
+        "PROD",
+        "",
+        true,
+        false,
+        false
+    )
+
     let got = ""
     try {
         const api = asyncapi.generate()
