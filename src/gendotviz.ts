@@ -32,8 +32,11 @@ export default class DotvizGen extends BaseGen {
         }
         // find exclusions etc
         const exclude = this.formExclusions(diagram)
+        this.checkExists(exclude)
         const imports = this.formImports(diagram)
-        const include = this.formInclusions(diagram, exclude, imports)
+        this.checkExists(imports)
+        const include = this.formInclusions(diagram, exclude)
+        this.checkExists(include)
         const folds = this.formFolds(diagram)
 
         let viz = `digraph G {
@@ -162,6 +165,15 @@ export default class DotvizGen extends BaseGen {
         return viz
     }
 
+    // check each definition exists, or throw an error
+    private checkExists(names: Set<string>) {
+        names.forEach((name) => {
+            if (!name.includes(".reslang")) {
+                this.extractDefinition(name)
+            }
+        })
+    }
+
     private formFolds(diagram: IDiagram) {
         return new Set<string>(
             (diagram.fold || []).map((fold) => fold.attr + "/" + fold.of.name)
@@ -176,11 +188,7 @@ export default class DotvizGen extends BaseGen {
         return new Set<string>((diagram.import || []).map((ref) => ref.name))
     }
 
-    private formInclusions(
-        diagram: IDiagram,
-        exclude: Set<string>,
-        imports: Set<string>
-    ) {
+    private formInclusions(diagram: IDiagram, exclude: Set<string>) {
         const include = new Set<string>(
             (this.defs || [])
                 .filter(

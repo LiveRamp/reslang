@@ -999,13 +999,6 @@
       "diagram": "main",
       "include": [
         {
-          "parents": [],
-          "short": "all",
-          "name": "all",
-          "parentShort": "",
-          "parentName": ""
-        },
-        {
           "module": "file",
           "parents": [],
           "short": "reslang",
