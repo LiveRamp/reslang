@@ -6,38 +6,38 @@ digraph G {
         
 "SegmentDeliveryConfiguration" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>SegmentDeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">ownerID: uuid</td></tr><tr><td align="left">dataConfigurationID: linked DataConfiguration</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">expireAt: datetime</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET name ownerID dataConfigurationID status sort POST PATCH PUT DELETE</font></td></tr>"}</table>>];
+                    <tr><td><b>SegmentDeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">ownerID: uuid</td></tr><tr><td align="left">dataConfigurationID: linked DataConfiguration</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">expireAt: datetime</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET name ownerID dataConfigurationID status sort POST PATCH PUT DELETE</font></td></tr></table>>];
 "SegmentDeliveryConfiguration::Deliver" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Deliver        </b></td></tr><hr/><tr><td align="left">refreshMode: RefreshMode</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Deliver        </b></td></tr><hr/><tr><td align="left">refreshMode: RefreshMode</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Deliver" [dir="none" label=< <font point-size="8">action</font> >];
 "SegmentDeliveryConfiguration::Disable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Disable" [dir="none" label=< <font point-size="8">action</font> >];
 "SegmentDeliveryConfiguration::Enable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::Enable" [dir="none" label=< <font point-size="8">action</font> >];
 "SegmentDeliveryConfiguration::TriggeringConfiguration" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>TriggeringConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">refreshModeIntervalHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr>"}</table>>];
+                    <tr><td><b>TriggeringConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">refreshModeIntervalHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::TriggeringConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "SegmentDeliveryConfiguration::DeliveryConfiguration" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>DeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">adNetworkAccountID: long</td></tr><tr><td align="left">partnerID: string</td></tr><tr><td align="left">isDeduplicated: boolean</td></tr><tr><td align="left">areSourceIDsIncludedInDistRecords: boolean</td></tr><tr><td align="left">taxonomyID: uuid</td></tr><tr><td align="left">distributionConfigID: uuid</td></tr><tr><td align="left">isApprovalRequired: boolean</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET adNetworkAccountID distributionConfigID status sort POST PATCH PUT DELETE</font></td></tr>"}</table>>];
+                    <tr><td><b>DeliveryConfiguration        </b></td></tr><hr/><tr><td align="left">id: uuid</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">adNetworkAccountID: long</td></tr><tr><td align="left">partnerID: string</td></tr><tr><td align="left">isDeduplicated: boolean</td></tr><tr><td align="left">areSourceIDsIncludedInDistRecords: boolean</td></tr><tr><td align="left">taxonomyID: uuid</td></tr><tr><td align="left">distributionConfigID: uuid</td></tr><tr><td align="left">isApprovalRequired: boolean</td></tr><tr><td align="left">status: ConfigurationStatus (out)</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="left">sort: SortType</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET MULTIGET adNetworkAccountID distributionConfigID status sort POST PATCH PUT DELETE</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
 "SegmentDeliveryConfiguration::DeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration::Disable" [dir="none" label=< <font point-size="8">action</font> >];
 "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr>"}</table>>];
+                    <tr><td><b>Enable        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
 "SegmentDeliveryConfiguration::DeliveryConfiguration" -> "SegmentDeliveryConfiguration::DeliveryConfiguration::Enable" [dir="none" label=< <font point-size="8">action</font> >];
 "SegmentDeliveryConfiguration::IdentityMappingConfiguration" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>IdentityMappingConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">maxAIMCacheAgeHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr>"}</table>>];
+                    <tr><td><b>IdentityMappingConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">maxAIMCacheAgeHrs: int</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PATCH PUT</font></td></tr></table>>];
 "SegmentDeliveryConfiguration" -> "SegmentDeliveryConfiguration::IdentityMappingConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "ConfigurationStatus" [label=<
                     <table border="1" cellborder="0" cellspacing="1" >

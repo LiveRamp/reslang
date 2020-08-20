@@ -6,18 +6,18 @@ digraph G {
         
 "DeliverPurchasedSegments" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>DeliverPurchasedSegments        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">complete: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id</font></td></tr>"}</table>>];
+                    <tr><td><b>DeliverPurchasedSegments        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">complete: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id</font></td></tr></table>>];
 "DeliverPurchasedSegments::search" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
+                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr></table>>];
 "DeliverPurchasedSegments" -> "DeliverPurchasedSegments::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "Segment::search" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr>"}</table>>];
+                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr></table>>];
 "Segment" -> "Segment::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
 "AllDeliveredSegments" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>AllDeliveredSegments        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr>"}</table>>];
+                    <tr><td><b>AllDeliveredSegments        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr></table>>];
 "DeliveryStatus" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>DeliveryStatus        </b></td></tr>        <hr/><tr><td align="left">updated: datetime</td></tr><tr><td align="left">status: DeliveryStatusEnum</td></tr></table> >];
@@ -26,10 +26,10 @@ digraph G {
                     <tr><td align="left"><b>DeliveryStatusEnum  </b></td></tr><hr/><tr><td align="left">PENDING</td></tr><tr><td align="left">DELIVERED</td></tr><tr><td align="left">ERROR</td></tr></table>>];
 "Segment" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Segment        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
+                    <tr><td><b>Segment        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "Destination" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr>"}</table>>];
+                    <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "DeliverPurchasedSegments" -> "Segment" [label=< <font point-size="8"> segmentsToDeliver[]</font> > arrowhead="vee"];
 "DeliverPurchasedSegments" -> "Destination" [label=< <font point-size="8"> whereToDeliver</font> > arrowhead="vee"];
 "DeliverPurchasedSegments" -> "DeliveryStatus" [dir="back" arrowtail="diamond" label=< <font point-size="8"> segmentStatuses[] (out)</font> >];

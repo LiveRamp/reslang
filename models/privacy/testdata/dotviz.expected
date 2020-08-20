@@ -6,7 +6,7 @@ digraph G {
         
 "ConsentFile" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>ConsentFile        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">createdSince: datetime</td></tr><tr><td align="left">identifierType: IdentifierType</td></tr><tr><td align="left">requestType: RequestType</td></tr><tr><td align="left">fileUrl: string</td></tr><tr><td align="left">timeStamp: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET createdSince</font></td></tr>"}</table>>];
+                    <tr><td><b>ConsentFile        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">createdSince: datetime</td></tr><tr><td align="left">identifierType: IdentifierType</td></tr><tr><td align="left">requestType: RequestType</td></tr><tr><td align="left">fileUrl: string</td></tr><tr><td align="left">timeStamp: datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET createdSince</font></td></tr></table>>];
 "DataController" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>DataController        </b></td></tr>        <hr/><tr><td align="left">controllerSpecifier: string</td></tr><tr><td align="left">controllerIdentification: string</td></tr><tr><td align="left">liveRampControlled: boolean</td></tr></table> >];

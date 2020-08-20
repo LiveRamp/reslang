@@ -110,7 +110,7 @@ export default class DotvizGen extends BaseGen {
                 } else if (imported) {
                     viz += `"${def.name}" [label=<${box}</table>>];\n`
                 } else {
-                    viz += `"${def.name}" [label=<${box}<hr/>${attrs}${ops}"}</table>>];\n`
+                    viz += `"${def.name}" [label=<${box}<hr/>${attrs}${ops}</table>>];\n`
                 }
 
                 // from parent to subresource
