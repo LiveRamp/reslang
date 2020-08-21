@@ -144,7 +144,7 @@ future resource Specification {
 
 Reslang can also describe events. These fall into 2 categories - events related to a REST resource's lifecycle, and adhoc events.
 
-To generate the first, use the EVENTS operation type:
+To generate the first, use the /events section:
 
     "This models a file in a directory"
     subresource Directory::File {
@@ -156,12 +156,14 @@ To generate the first, use the EVENTS operation type:
         contents: string queryonly
 
         /operations
-            GET POST MULTIGET EVENTS
+            GET POST MULTIGET DELETE
+        /events
+	    POST GET DELETE
     }
 
 To specify an adhoc event, use the "event" construct and let Reslang know if it's generated or consumed by your API:
 
-    produces event DirectoryDeleteIncomplete {
+    event DirectoryDeleteIncomplete {
         /header
     	    timeOfFailure: datetime
         /payload
@@ -169,14 +171,17 @@ To specify an adhoc event, use the "event" construct and let Reslang know if it'
     	    corrupted: boolean
     }
 
-    consumes event DirectoryNotification {
+    event DirectoryNotification {
         /header
     	    when: datetime
         /payload
     	    directory: linked Directory
     }
+    
+    produces DirectoryDeleteIncomplete
+    consume DirectoryNotification
 
-To generate AsyncAPI use something like:
+To generate & view the AsyncAPI specification for your API, use something like:
 
     ./reslang ./models/file --open --events
 
