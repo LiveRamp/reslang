@@ -1,0 +1,8 @@
+
+resource AAA {
+    id: int
+    name: string
+
+    /operations
+        MULTIPOST GET
+}

@@ -138,12 +138,28 @@ export default class SwagGen extends BaseGen {
                 /**
                  * non-id definitions
                  */
-                const post = this.extractOp(el, "POST")
+                const get = this.extractOp(el, "GET")
                 const multiget = this.extractOp(el, "MULTIGET")
+                const post = this.extractOp(el, "POST")
+                const multipost = this.extractOp(el, "MULTIPOST")
+                const put = this.extractOp(el, "PUT")
+                const multiput = this.extractOp(el, "MULTIPUT")
+                const patch = this.extractOp(el, "PATCH")
+                const multipatch = this.extractOp(el, "MULTIPATCH")
+                const del = this.extractOp(el, "DELETE")
+                const multidel = this.extractOp(el, "MULTIDELETE")
 
-                if (singleton && (post || multiget)) {
+                if (
+                    singleton &&
+                    (post ||
+                        multipost ||
+                        multiget ||
+                        multiput ||
+                        multipatch ||
+                        multidel)
+                ) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST, MULTIPOST or MULTIGET`
                     )
                 }
 
@@ -151,7 +167,10 @@ export default class SwagGen extends BaseGen {
                 const top = this.getTopLevelType(el) as IResourceLike
                 const nspace = top.namespace ? "/" + top.namespace : ""
 
-                if (!singleton && (post || multiget)) {
+                if (
+                    !singleton &&
+                    (post || multipost || multipatch || multidel || multiget)
+                ) {
                     paths[
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
@@ -161,17 +180,17 @@ export default class SwagGen extends BaseGen {
                         params,
                         tagKeys,
                         post,
-                        multiget
+                        multiget,
+                        multipost,
+                        multiput,
+                        multipatch,
+                        multidel
                     )
                 }
 
                 /**
                  * id definitions
                  */
-                const get = this.extractOp(el, "GET")
-                const put = this.extractOp(el, "PUT")
-                const patch = this.extractOp(el, "PATCH")
-                const del = this.extractOp(el, "DELETE")
 
                 path = {}
                 if (get || put || patch || del) {
@@ -208,7 +227,11 @@ export default class SwagGen extends BaseGen {
         params: any[],
         tagKeys: { [key: string]: string },
         post: IOperation | null,
-        multiget: IOperation | null
+        multiget: IOperation | null,
+        multipost: IOperation | null,
+        multiput: IOperation | null,
+        multipatch: IOperation | null,
+        mutlidel: IOperation | null
     ) {
         const plural = pluralizeName(el.short)
         const unique = this.formSingleUniqueName(el)
@@ -316,6 +339,68 @@ export default class SwagGen extends BaseGen {
                 tags: [tagKeys[unique]],
                 operationId: this.formOperationId(el, Verbs.POST),
                 description: this.translateDoc(post.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                $ref: `#/components/schemas/${camel}Input`
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (this.empty.has(camel + "Input")) {
+                delete path.post.requestBody
+            }
+            if (params.length) {
+                path.post.parameters = params
+            }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
+        }
+        if (multipost) {
+            const idType = this.extractIdGently(el)
+            // special case - if no id and only MULTIPOST, then adjust accordingly to return nothing
+            const special =
+                !el.async &&
+                el.operations &&
+                el.operations.length === 1 &&
+                !idType
+
+            const content = special
+                ? null
+                : {
+                      "application/json": {
+                          schema: {
+                              type: "object",
+                              properties: {
+                                  id: this.addType(
+                                      this.extractId(el),
+                                      {},
+                                      false
+                                  )
+                              }
+                          }
+                      }
+                  }
+            if (!special) {
+                this.pushArrayDown(content!["application/json"].schema)
+            }
+            const responses: { [code: number]: any } = {
+                201: {
+                    description: plural + " created successfully",
+                    content
+                }
+            }
+
+            this.formErrors(multipost, responses)
+            path.post = {
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.POST),
+                description: this.translateDoc(multipost.comment),
                 requestBody: {
                     content: {
                         "application/json": {
