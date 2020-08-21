@@ -2,8 +2,6 @@
  * types for the parse tree
  */
 
-import { Type } from "js-yaml"
-
 export interface INamespace {
     comment: string
     space?: string

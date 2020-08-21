@@ -41,11 +41,15 @@ const LOCAL_SERVERS_INCLUDE = lpath.join(__dirname, "library", LOCAL_SERVERS)
 
 export enum Verbs {
     POST,
+    MULTIPOST,
     PUT,
+    MULTIPUT,
     PATCH,
+    MULTIPATCH,
     GET,
     MULTIGET,
-    DELETE
+    DELETE,
+    MULTIDELETE
 }
 
 interface IFileDetails {
@@ -151,7 +155,8 @@ export abstract class BaseGen {
         protected generateAllOf = true
     ) {
         this.processDefinitions()
-        this.checkRules()
+        this.checkMandatoryRules()
+        this.checkConfigurableRules()
         if (expandInlines) {
             this.expandInlines()
         }
@@ -333,8 +338,44 @@ export abstract class BaseGen {
         return files
     }
 
+    public checkMandatoryRules() {
+        for (const def of this.defs) {
+            if (isResourceLike(def)) {
+                // collect all the event and rest operations
+                const ops = new Set<string>(
+                    (def.operations || []).map((op) => op.operation)
+                )
+                const eventops = new Set<string>(
+                    (def.events || []).map((op) => {
+                        const str = op.operation
+                        if (str.toLowerCase() === str) {
+                            return "-"
+                        }
+                        return str
+                    })
+                )
+                eventops.delete("-")
+
+                // a resource cannot have both POST and MULTIPOST as they occupy the same URL
+                if (ops.has("POST") && ops.has("MULTIPOST")) {
+                    throw new Error(
+                        `Definition for ${def.short} has both POST and MULTIPOST. You can only have one because they occupy the same URL`
+                    )
+                }
+                // you can only event on an operation if we also implement it as part of the REST side
+                eventops.forEach((op) => {
+                    if (!ops.has(op)) {
+                        throw new Error(
+                            `/event ${op} for definition ${def.short} is not present in /operations`
+                        )
+                    }
+                })
+            }
+        }
+    }
+
     // check all the rules for this api
-    public checkRules() {
+    public checkConfigurableRules() {
         if (this.rules.ignoreRules) {
             return
         }

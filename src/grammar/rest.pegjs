@@ -52,8 +52,12 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-ops = _ comment:description? _ op:("GET" / "PUT" / "PATCH" / "POST" / "DELETE"/ "MULTIGET") _ {return {"operation": op, "comment": comment}}
-eventops = _ comment:description? _ op:("GET" / "PUT" / "PATCH" / "POST" / "DELETE"/ "MULTIGET" / ([a-z_]+[_a-z0-9]*)) _ {return {"operation": Array.isArray(op) ? op.flat().join("") : op, "comment": comment}}
+ops = _ comment:description? _ op:oplist _ {return {"operation": op, "comment": comment}}
+eventops = _ comment:description? _ op:(oplist / ([a-z_]+[_a-z0-9]*)) _ {return {"operation": Array.isArray(op) ? op.flat().join("") : op, "comment": comment}}
+oplist = op:("GET" / "MULTIGET" / "PUT" / "MULTIPUT" / "PATCH" / "MULTIPATCH" / "POST" / "MULTIPOST" / "DELETE"/ "MULTIDELETE") {
+    return op
+}
+
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
