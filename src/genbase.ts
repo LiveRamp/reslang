@@ -33,24 +33,12 @@ import {
     pluralizeName,
     lowercaseFirst
 } from "./names"
+import { Verbs } from "./operations"
 
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
 const LOCAL_SERVERS = "servers.reslang"
 const LOCAL_SERVERS_INCLUDE = lpath.join(__dirname, "library", LOCAL_SERVERS)
-
-export enum Verbs {
-    POST,
-    MULTIPOST,
-    PUT,
-    MULTIPUT,
-    PATCH,
-    MULTIPATCH,
-    GET,
-    MULTIGET,
-    DELETE,
-    MULTIDELETE
-}
 
 interface IFileDetails {
     file: string

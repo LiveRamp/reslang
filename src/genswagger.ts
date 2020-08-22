@@ -1,4 +1,4 @@
-import { BaseGen, Verbs } from "./genbase"
+import { BaseGen } from "./genbase"
 import {
     camelCase,
     getVersion,
@@ -20,6 +20,7 @@ import {
     isStructure,
     isUnion
 } from "./treetypes"
+import { Operations, Verbs } from "./operations"
 
 /**
  * generate swagger from the parsed representation
@@ -363,35 +364,27 @@ export default class SwagGen extends BaseGen {
         }
         if (multipost) {
             const idType = this.extractIdGently(el)
-            // special case - if no id and only MULTIPOST, then adjust accordingly to return nothing
-            const special =
-                !el.async &&
-                el.operations &&
-                el.operations.length === 1 &&
-                !idType
 
-            const content = special
-                ? null
-                : {
-                      "application/json": {
-                          schema: {
-                              type: "object",
-                              properties: {
-                                  id: this.addType(
-                                      this.extractId(el),
-                                      {},
-                                      false
-                                  )
-                              }
-                          }
-                      }
-                  }
-            if (!special) {
-                this.pushArrayDown(content!["application/json"].schema)
+            const content = {
+                "application/json": {
+                    schema: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                id: this.addType(this.extractId(el), {}, false),
+                                error: {
+                                    $ref: "#/components/schemas/StandardError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
             const responses: { [code: number]: any } = {
-                201: {
-                    description: plural + " created successfully",
+                207: {
+                    description:
+                        plural + " resources processed, statuses in body",
                     content
                 }
             }
@@ -405,7 +398,10 @@ export default class SwagGen extends BaseGen {
                     content: {
                         "application/json": {
                             schema: {
-                                $ref: `#/components/schemas/${camel}Input`
+                                type: "array",
+                                items: {
+                                    $ref: `#/components/schemas/${camel}Input`
+                                }
                             }
                         }
                     }
@@ -894,30 +890,25 @@ export default class SwagGen extends BaseGen {
                 // "full" attribute
                 el.generateOutput = true
             } else {
-                const post = this.extractOp(el, "POST")
-                const multiget = this.extractOp(el, "MULTIGET")
+                const ops = new Operations(el)
 
                 if (!el.singleton) {
-                    if (post) {
+                    if (ops.post || ops.multipost) {
                         el.generateInput = true
                     }
-                    if (multiget) {
+                    if (ops.multiget) {
                         el.generateMulti = true
                         el.generateOutput = true
                     }
                 }
 
-                const get = this.extractOp(el, "GET")
-                const put = this.extractOp(el, "PUT")
-                const patch = this.extractOp(el, "PATCH")
-
-                if (put) {
+                if (ops.put) {
                     el.generatePuttable = true
                 }
-                if (patch) {
+                if (ops.patch) {
                     el.generatePatchable = true
                 }
-                if (get) {
+                if (ops.get) {
                     el.generateOutput = true
                 }
 

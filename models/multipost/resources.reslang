@@ -2,7 +2,12 @@
 resource AAA {
     id: int
     name: string
+    data: BBB[]
 
     /operations
-        MULTIPOST GET
+        MULTIPOST GET MULTIGET
+}
+
+structure BBB {
+    name: string
 }

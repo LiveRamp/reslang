@@ -9,9 +9,10 @@ import {
     isConsumes,
     IReference
 } from "./treetypes"
-import { BaseGen, Verbs } from "./genbase"
+import { BaseGen } from "./genbase"
 import { camelCase, snakeCase, getVersion } from "./names"
 import { isPrimitiveType } from "./parse"
+import { Verbs } from "./operations"
 
 /**
  * generate swagger from the parsed representation
