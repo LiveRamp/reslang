@@ -20,7 +20,8 @@ import {
     IServers,
     IServer,
     isProduces,
-    isConsumes
+    isConsumes,
+    isAction
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync, statSync } from "fs"
@@ -33,7 +34,7 @@ import {
     pluralizeName,
     lowercaseFirst
 } from "./names"
-import { Verbs } from "./operations"
+import { Verbs, Operations } from "./operations"
 
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
@@ -329,35 +330,22 @@ export abstract class BaseGen {
     public checkMandatoryRules() {
         for (const def of this.defs) {
             if (isResourceLike(def)) {
-                // collect all the event and rest operations
-                const ops = new Set<string>(
-                    (def.operations || []).map((op) => op.operation)
-                )
-                const eventops = new Set<string>(
-                    (def.events || []).map((op) => {
-                        const str = op.operation
-                        if (str.toLowerCase() === str) {
-                            return "-"
-                        }
-                        return str
-                    })
-                )
-                eventops.delete("-")
+                const ops = new Operations(def)
 
                 // a resource cannot have both POST and MULTIPOST as they occupy the same URL
-                if (ops.has("POST") && ops.has("MULTIPOST")) {
+                if (ops.post && ops.multipost) {
                     throw new Error(
                         `Definition for ${def.short} has both POST and MULTIPOST. You can only have one because they occupy the same URL`
                     )
                 }
-                // you can only event on an operation if we also implement it as part of the REST side
-                eventops.forEach((op) => {
-                    if (!ops.has(op)) {
-                        throw new Error(
-                            `/event ${op} for definition ${def.short} is not present in /operations`
-                        )
-                    }
-                })
+
+                // cannot have an action with any multis apart from MULTIGET
+                if (isAction(def) && ops.isMulti() && !ops.multiget) {
+                    throw new Error(
+                        "Actions cannot have MULTI-mutating operations: " +
+                            def.short
+                    )
+                }
             }
         }
     }
@@ -528,7 +516,12 @@ Actions cannot have subresources`
                 continue
             }
             // no id types for input ever
-            if (attr.name === "id" && verb !== Verbs.GET) {
+            if (
+                attr.name === "id" &&
+                verb !== Verbs.GET &&
+                verb !== Verbs.MULTIPATCH &&
+                verb !== Verbs.MULTIPUT
+            ) {
                 continue
             }
             // if this is a flag, only place on PUT, PATCH etc etc
@@ -536,7 +529,9 @@ Actions cannot have subresources`
                 if (
                     ![
                         Verbs.PUT,
+                        Verbs.MULTIPUT,
                         Verbs.PATCH,
+                        Verbs.MULTIPATCH,
                         Verbs.GET,
                         Verbs.MULTIGET
                     ].includes(verb)
@@ -545,10 +540,15 @@ Actions cannot have subresources`
                 }
             } else if (
                 // if we have a mutation operation and the attribute is not marked as mutable, skip it
-                (verb === Verbs.PATCH || verb === Verbs.PUT) &&
+                (verb === Verbs.PATCH ||
+                    verb === Verbs.PUT ||
+                    verb === Verbs.MULTIPATCH ||
+                    verb === Verbs.MULTIPUT) &&
                 !attr.modifiers.mutable
             ) {
-                continue
+                if (attr.name !== "id") {
+                    continue
+                }
             }
             // if this is marked as output, suppress all other verbs
             if (attr.modifiers.output && verb !== Verbs.GET) {
@@ -556,11 +556,15 @@ Actions cannot have subresources`
             }
 
             // if this optional?
-            let optional = attr.modifiers.optional || verb === Verbs.PATCH
+            let optional =
+                attr.modifiers.optional ||
+                verb === Verbs.PATCH ||
+                verb === Verbs.MULTIPATCH
             optional =
                 optional ||
                 (verb === Verbs.POST && attr.modifiers.optionalPost) ||
                 (verb === Verbs.PUT && attr.modifiers.optionalPut) ||
+                (verb === Verbs.MULTIPUT && attr.modifiers.optionalPut) ||
                 (verb === Verbs.GET && attr.modifiers.optionalGet)
 
             if (attr.inline) {
@@ -578,6 +582,7 @@ Actions cannot have subresources`
             if (properties.hasOwnProperty(name)) {
                 if (
                     verb === Verbs.PATCH ||
+                    verb === Verbs.MULTIPATCH ||
                     verb === Verbs.GET ||
                     verb === Verbs.MULTIGET ||
                     required.has(name)
@@ -615,17 +620,23 @@ Actions cannot have subresources`
             )
         }
 
+        const plural = pluralizeName(def.name)
         switch (verb) {
             case Verbs.POST:
                 return "Create " + bulk + def.name
+            case Verbs.MULTIPOST:
+                return "Create " + bulk + plural
             case Verbs.PUT:
                 return "Modify " + bulk + def.name
+            case Verbs.MULTIPUT:
+                return "Modify " + bulk + plural
             case Verbs.PATCH:
                 return "Patch " + bulk + def.name
+            case Verbs.MULTIPATCH:
+                return "Patch " + bulk + plural
             case Verbs.GET:
                 return "Get " + bulk + def.name
             case Verbs.MULTIGET:
-                const plural = pluralizeName(def.name)
                 return (
                     "Get " +
                     (plural === def.name ? "multiple " : "") +
@@ -634,6 +645,8 @@ Actions cannot have subresources`
                 )
             case Verbs.DELETE:
                 return "Delete " + bulk + def.name
+            case Verbs.MULTIDELETE:
+                return "Delete " + bulk + plural
         }
     }
 

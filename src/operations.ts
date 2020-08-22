@@ -1,4 +1,5 @@
 import { IResourceLike, IOperation } from "./treetypes"
+import { options } from "yargs"
 
 export enum Verbs {
     POST,
@@ -37,6 +38,20 @@ export class Operations {
         this.multipatch = this.extractOp(el, "MULTIPATCH")
         this.delete = this.extractOp(el, "DELETE")
         this.multidelete = this.extractOp(el, "MULTIDELETE")
+    }
+
+    public isIdOps() {
+        return this.get || this.patch || this.put || this.delete
+    }
+
+    public isMulti() {
+        return (
+            this.multiget ||
+            this.multipost ||
+            this.multiput ||
+            this.multipatch ||
+            this.multidelete
+        )
     }
 
     private extractOp(el: any, op: string): IOperation | null {

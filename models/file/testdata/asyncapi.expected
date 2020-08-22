@@ -111,7 +111,6 @@ components:
           type: string
           enum:
             - POST
-            - MULTIGET
         location:
           description: ''
           type: string
@@ -199,7 +198,6 @@ components:
             type: string
             enum:
               - POST
-              - MULTIGET
           location:
             description: ''
             type: string

@@ -142,7 +142,9 @@ export interface IResourceLike extends IDefinition {
     generateOutput: boolean
     generatePuttable: boolean
     generatePatchable: boolean
-    generateMulti: boolean
+    generateMultiGettable: boolean
+    generateMultiPuttable: boolean
+    generateMultiPatchable: boolean
 }
 export interface IEnum extends IDefinition {
     kind: "enum"
