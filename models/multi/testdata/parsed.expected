@@ -281,5 +281,20 @@
       "file": "local.reslang"
     }
   ],
-  "diagrams": []
+  "diagrams": [
+    {
+      "diagram": "main",
+      "include": [
+        {
+          "module": "resources",
+          "parents": [],
+          "short": "reslang",
+          "name": "resources.reslang",
+          "parentShort": "",
+          "parentName": ""
+        }
+      ],
+      "groups": []
+    }
+  ]
 }
