@@ -1,4 +1,4 @@
-import { BaseGen, Verbs } from "./genbase"
+import { BaseGen } from "./genbase"
 import {
     camelCase,
     getVersion,
@@ -20,6 +20,7 @@ import {
     isStructure,
     isUnion
 } from "./treetypes"
+import { Operations, Verbs } from "./operations"
 
 /**
  * generate swagger from the parsed representation
@@ -138,12 +139,11 @@ export default class SwagGen extends BaseGen {
                 /**
                  * non-id definitions
                  */
-                const post = this.extractOp(el, "POST")
-                const multiget = this.extractOp(el, "MULTIGET")
+                const ops = new Operations(el)
 
-                if (singleton && (post || multiget)) {
+                if (singleton && (ops.post || ops.isMulti())) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST, MULTIPOST or MULTIGET`
                     )
                 }
 
@@ -151,30 +151,19 @@ export default class SwagGen extends BaseGen {
                 const top = this.getTopLevelType(el) as IResourceLike
                 const nspace = top.namespace ? "/" + top.namespace : ""
 
-                if (!singleton && (post || multiget)) {
+                if (!singleton && (ops.post || ops.isMulti())) {
                     paths[
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
-                    this.formNonIdOperations(
-                        el,
-                        path,
-                        params,
-                        tagKeys,
-                        post,
-                        multiget
-                    )
+                    this.formNonIdOperations(el, path, params, tagKeys, ops)
                 }
 
                 /**
                  * id definitions
                  */
-                const get = this.extractOp(el, "GET")
-                const put = this.extractOp(el, "PUT")
-                const patch = this.extractOp(el, "PATCH")
-                const del = this.extractOp(el, "DELETE")
 
                 path = {}
-                if (get || put || patch || del) {
+                if (ops.isIdOps()) {
                     if (singleton) {
                         paths[
                             `${nspace}/${major}${parents}/${actionPath}${name}`
@@ -191,10 +180,7 @@ export default class SwagGen extends BaseGen {
                     params,
                     !!singleton,
                     tagKeys,
-                    get,
-                    put,
-                    patch,
-                    del
+                    ops
                 )
             }
         }
@@ -207,8 +193,7 @@ export default class SwagGen extends BaseGen {
         path: any,
         params: any[],
         tagKeys: { [key: string]: string },
-        post: IOperation | null,
-        multiget: IOperation | null
+        ops: Operations
     ) {
         const plural = pluralizeName(el.short)
         const unique = this.formSingleUniqueName(el)
@@ -227,9 +212,8 @@ export default class SwagGen extends BaseGen {
                       }
                   }
 
-        if (post) {
-            const short = el.short
-
+        const short = el.short
+        if (ops.post) {
             const idType = this.extractIdGently(el)
             // special case - if no id and only POST, then adjust accordingly to return nothing
             const special =
@@ -288,10 +272,10 @@ export default class SwagGen extends BaseGen {
                         }
                     }
 
-                    if (!post.errors) {
-                        post.errors = []
+                    if (!ops.post.errors) {
+                        ops.post.errors = []
                     }
-                    post.errors.push({
+                    ops.post.errors.push({
                         codes: [
                             {
                                 code: "409",
@@ -311,11 +295,11 @@ export default class SwagGen extends BaseGen {
                     })
                 }
             }
-            this.formErrors(post, responses)
+            this.formErrors(ops.post, responses)
             path.post = {
                 tags: [tagKeys[unique]],
                 operationId: this.formOperationId(el, Verbs.POST),
-                description: this.translateDoc(post.comment),
+                description: this.translateDoc(ops.post.comment),
                 requestBody: {
                     content: {
                         "application/json": {
@@ -338,8 +322,227 @@ export default class SwagGen extends BaseGen {
                 responses[404] = notFound
             }
         }
+        if (ops.multipost) {
+            const content = {
+                "application/json": {
+                    schema: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                id: this.addType(this.extractId(el), {}, false),
+                                status: {
+                                    $ref: "#/components/schemas/StandardError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            const responses: { [code: number]: any } = {
+                207: {
+                    description:
+                        short + " resources processed, statuses in body",
+                    content
+                }
+            }
+
+            this.formErrors(ops.multipost, responses)
+            path.put = {
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.MULTIPOST),
+                description: this.translateDoc(ops.multipost.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "array",
+                                items: {
+                                    $ref: `#/components/schemas/${camel}Input`
+                                }
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (this.empty.has(camel + "Input")) {
+                delete path.post.requestBody
+            }
+            if (params.length) {
+                path.post.parameters = params
+            }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
+        }
+        if (ops.multiput) {
+            const content = {
+                "application/json": {
+                    schema: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                status: {
+                                    $ref: "#/components/schemas/StandardError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            const responses: { [code: number]: any } = {
+                207: {
+                    description:
+                        short + " modifications processed, statuses in body",
+                    content
+                }
+            }
+
+            this.formErrors(ops.multiput, responses)
+            path.put = {
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.MULTIPUT),
+                description: this.translateDoc(ops.multiput.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "array",
+                                items: {
+                                    $ref: `#/components/schemas/${camel}MultiPuttable`
+                                }
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (this.empty.has(camel + "MultiPuttable")) {
+                delete path.put.requestBody
+            }
+            if (params.length) {
+                path.put.parameters = params
+            }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
+        }
+        if (ops.multipatch) {
+            const content = {
+                "application/json": {
+                    schema: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                status: {
+                                    $ref: "#/components/schemas/StandardError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            const responses: { [code: number]: any } = {
+                207: {
+                    description: short + " patches processed, statuses in body",
+                    content
+                }
+            }
+
+            this.formErrors(ops.multipatch, responses)
+            path.patch = {
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.MULTIPATCH),
+                description: this.translateDoc(ops.multipatch.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "array",
+                                items: {
+                                    $ref: `#/components/schemas/${camel}MultiPatchable`
+                                }
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (this.empty.has(camel + "MultiPatchable")) {
+                delete path.patch.requestBody
+            }
+            if (params.length) {
+                path.patch.parameters = params
+            }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
+        }
+        if (ops.multidelete) {
+            const content = {
+                "application/json": {
+                    schema: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                status: {
+                                    $ref: "#/components/schemas/StandardError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            const responses: { [code: number]: any } = {
+                207: {
+                    description: short + " deletes processed, statuses in body",
+                    content
+                }
+            }
+
+            this.formErrors(ops.multidelete, responses)
+            path.delete = {
+                tags: [tagKeys[unique]],
+                operationId: this.formOperationId(el, Verbs.MULTIDELETE),
+                description: this.translateDoc(ops.multidelete.comment),
+                requestBody: {
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "array",
+                                items: {
+                                    type: "object",
+                                    properties: {
+                                        id: this.addType(
+                                            this.extractId(el),
+                                            {},
+                                            false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                responses
+            }
+            if (params.length) {
+                path.delete.parameters = params
+            }
+            // possible to fail if parents not found
+            if (notFound) {
+                responses[404] = notFound
+            }
+        }
         const gparams = params.slice()
-        if (multiget) {
+        if (ops.multiget) {
             gparams.push({
                 in: "query",
                 name: "offset",
@@ -403,12 +606,12 @@ export default class SwagGen extends BaseGen {
                 responses[404] = notFound
             }
 
-            this.formErrors(multiget, responses)
+            this.formErrors(ops.multiget, responses)
             const rname = this.formSingleUniqueName(el)
             path.get = {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.MULTIGET),
-                description: this.translateDoc(multiget.comment),
+                description: this.translateDoc(ops.multiget.comment),
                 responses
             }
             if (gparams.length) {
@@ -437,10 +640,7 @@ export default class SwagGen extends BaseGen {
         params: any[],
         singleton: boolean,
         tagKeys: { [key: string]: string },
-        get?: IOperation | null,
-        put?: IOperation | null,
-        patch?: IOperation | null,
-        del?: IOperation | null
+        ops: Operations
     ) {
         const short = el.short
         const notFound = {
@@ -458,7 +658,7 @@ export default class SwagGen extends BaseGen {
             }
         }
         const sane = camelCase(this.formSingleUniqueName(el))
-        if (get) {
+        if (ops.get) {
             const responses = {
                 200: {
                     description: short + " retrieved successfully",
@@ -480,12 +680,12 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(sane + "Output")) {
                 delete responses[200].content
             }
-            this.formErrors(get, responses)
+            this.formErrors(ops.get, responses)
             const rname = this.formSingleUniqueName(el)
             path.get = {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.GET),
-                description: this.translateDoc(get.comment),
+                description: this.translateDoc(ops.get.comment),
                 responses
             }
             if (!singleton) {
@@ -515,19 +715,19 @@ export default class SwagGen extends BaseGen {
                 }
             }
         }
-        if (put) {
+        if (ops.put) {
             const responses = {
                 200: {
                     description: short + " modified successfully"
                 },
                 404: notFound
             }
-            this.formErrors(put, responses)
+            this.formErrors(ops.put, responses)
             const rname = this.formSingleUniqueName(el)
             path.put = {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.PUT),
-                description: this.translateDoc(put.comment),
+                description: this.translateDoc(ops.put.comment),
                 requestBody: {
                     content: {
                         "application/json": {
@@ -558,19 +758,19 @@ export default class SwagGen extends BaseGen {
                 }
             }
         }
-        if (patch) {
+        if (ops.patch) {
             const responses = {
                 200: {
                     description: short + " patched successfully"
                 },
                 404: notFound
             }
-            this.formErrors(patch, responses)
+            this.formErrors(ops.patch, responses)
             const rname = this.formSingleUniqueName(el)
             path.patch = {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.PATCH),
-                description: this.translateDoc(patch.comment),
+                description: this.translateDoc(ops.patch.comment),
                 requestBody: {
                     content: {
                         "application/json": {
@@ -601,19 +801,19 @@ export default class SwagGen extends BaseGen {
                 }
             }
         }
-        if (del) {
+        if (ops.delete) {
             const responses = {
                 200: {
                     description: short + " deleted successfully"
                 },
                 404: notFound
             }
-            this.formErrors(del, responses)
+            this.formErrors(ops.delete, responses)
             const rname = this.formSingleUniqueName(el)
             path.delete = {
                 tags: [tagKeys[rname]],
                 operationId: this.formOperationId(el, Verbs.DELETE),
-                description: this.translateDoc(del.comment),
+                description: this.translateDoc(ops.delete.comment),
                 responses
             }
             if (!singleton) {
@@ -723,6 +923,14 @@ export default class SwagGen extends BaseGen {
                         "Puttable"
                     )
                 }
+                if (def.generateMultiPuttable) {
+                    this.addResourceDefinition(
+                        definitions,
+                        def,
+                        Verbs.MULTIPUT,
+                        "MultiPuttable"
+                    )
+                }
                 if (def.generatePatchable) {
                     this.addResourceDefinition(
                         definitions,
@@ -731,9 +939,17 @@ export default class SwagGen extends BaseGen {
                         "Patchable"
                     )
                 }
+                if (def.generateMultiPatchable) {
+                    this.addResourceDefinition(
+                        definitions,
+                        def,
+                        Verbs.MULTIPATCH,
+                        "MultiPatchable"
+                    )
+                }
 
                 // handle multiget
-                if (def.generateMulti) {
+                if (def.generateMultiGettable) {
                     const elements = {
                         description:
                             "Array of retrieved " + pluralizeName(def.name),
@@ -809,30 +1025,31 @@ export default class SwagGen extends BaseGen {
                 // "full" attribute
                 el.generateOutput = true
             } else {
-                const post = this.extractOp(el, "POST")
-                const multiget = this.extractOp(el, "MULTIGET")
+                const ops = new Operations(el)
 
                 if (!el.singleton) {
-                    if (post) {
+                    if (ops.post || ops.multipost) {
                         el.generateInput = true
                     }
-                    if (multiget) {
-                        el.generateMulti = true
+                    if (ops.multiget) {
+                        el.generateMultiGettable = true
                         el.generateOutput = true
                     }
                 }
 
-                const get = this.extractOp(el, "GET")
-                const put = this.extractOp(el, "PUT")
-                const patch = this.extractOp(el, "PATCH")
-
-                if (put) {
+                if (ops.put) {
                     el.generatePuttable = true
                 }
-                if (patch) {
+                if (ops.multiput) {
+                    el.generateMultiPuttable = true
+                }
+                if (ops.patch) {
                     el.generatePatchable = true
                 }
-                if (get) {
+                if (ops.multipatch) {
+                    el.generateMultiPatchable = true
+                }
+                if (ops.get) {
                     el.generateOutput = true
                 }
 

@@ -1,0 +1,5 @@
+"MULTIPOST test"
+namespace {
+    title "MULTIPOST"
+    version 0.0.1
+}

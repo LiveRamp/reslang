@@ -574,9 +574,6 @@
       "events": [
         {
           "operation": "POST"
-        },
-        {
-          "operation": "MULTIGET"
         }
       ],
       "parents": [],

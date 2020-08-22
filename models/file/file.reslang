@@ -53,7 +53,7 @@ request-resource DirectoryDeleteRequest {
         GET "Can't find anything" 404 SpecialError
 		POST MULTIGET
 	/events
-	    POST MULTIGET
+	    POST
 }
 
 "If a deletion is corrupted, we generate this event"
