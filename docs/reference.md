@@ -383,6 +383,30 @@ Reslang supports dictionary structures where the keys are always strings. To spe
 
 ```
 
+## Inline expansion
+
+Putting "inline" after an attribute, will pull all the referenced attributes up one level.
+
+e.g.
+
+    structure A {
+        a: int
+	b: int
+    }
+    structure C {
+        a: A inline
+	c: int
+    }
+
+Is exactly equivalent to defining C as such:
+
+    structure C {
+        a: int
+	b: int
+	c: int
+    }
+
+
 ## Unions
 
 Reslang supports unions, as per the Swagger oneOf specification. The discriminator field is always called type, and it is created implicitly. The names of the union attributes are used as the string value for the type field.
@@ -400,10 +424,6 @@ union MappingOutputUnion {
 
 Only put "inline" if you truly want your structure inlined (e.g. each inlined attribute will be considered as a separate option)
 
-
-## Inline expansion
-
-You can see above that we used the optional inline keyword. This expands all the structure attributes into the union directly.
 
 ## Actions
 
