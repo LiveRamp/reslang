@@ -391,19 +391,19 @@ e.g.
 
     structure A {
         a: int
-	b: int
+        b: int
     }
     structure C {
         a: A inline
-	c: int
+        c: int
     }
 
 Is exactly equivalent to defining C as such:
 
     structure C {
         a: int
-	b: int
-	c: int
+        b: int
+        c: int
     }
 
 
