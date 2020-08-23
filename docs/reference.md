@@ -394,11 +394,12 @@ union MappingOutputUnion {
   outputIdLabel: MappingIdLabel
 }
 
+```
+
 *Note!!!* Prior to v2.0.0, you needed the "inline" keyword on each union attribute - it treated inline in unions differently to structure attributes etc which were inlines. v2.0.0 fixed this.
 
 Only put "inline" if you truly want your structure inlined (e.g. each inlined attribute will be considered as a separate option)
 
-```
 
 ## Inline expansion
 
