@@ -176,8 +176,8 @@ structure RawField {
 }
 
 union DataSource {
-    raw: RawField inline
-    enum: EnumFieldValue inline
+    raw: RawField
+    enum: EnumFieldValue
 }
 
 enum RefreshMode {

@@ -1,0 +1,6 @@
+
+"Ed's example of missing structure in Swsagger"
+namespace {
+    title "Ed's example"
+    version 0.0.1
+}

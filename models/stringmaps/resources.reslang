@@ -23,7 +23,7 @@ structure Struct2 {
 union InputKey {
     num: int
     mystruct: Struct2
-    mystruct2: Struct2 inline
+    mystruct2: Struct2
 }
 
 structure Struct3 {

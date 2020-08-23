@@ -390,9 +390,13 @@ Reslang supports unions, as per the Swagger oneOf specification. The discriminat
 ```
 
 union MappingOutputUnion {
-  outputKeyValueLabel: MappingKeyValueLabel inline
-  outputIdLabel: MappingIdLabel inline
+  outputKeyValueLabel: MappingKeyValueLabel
+  outputIdLabel: MappingIdLabel
 }
+
+*Note!!!* Prior to v2.0.0, you needed the "inline" keyword on each union attribute - it treated inline in unions differently to structure attributes etc which were inlines. v2.0.0 fixed this.
+
+Only put "inline" if you truly want your structure inlined (e.g. each inlined attribute will be considered as a separate option)
 
 ```
 

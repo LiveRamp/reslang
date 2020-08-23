@@ -1987,13 +1987,13 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          raw: '#/components/schemas/Raw'
-          enum: '#/components/schemas/Enum'
+          raw: '#/components/schemas/DataSourceRaw'
+          enum: '#/components/schemas/DataSourceEnum'
       required:
         - type
         - fieldID
         - valueID
-    Raw:
+    DataSourceRaw:
       allOf:
         - $ref: '#/components/schemas/DataSource'
         - type: object
@@ -2001,7 +2001,7 @@ components:
             fieldID:
               type: integer
               format: int64
-    Enum:
+    DataSourceEnum:
       allOf:
         - $ref: '#/components/schemas/DataSource'
         - type: object

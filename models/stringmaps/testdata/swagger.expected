@@ -258,16 +258,15 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          num: '#/components/schemas/Num'
-          mystruct: '#/components/schemas/Mystruct'
-          mystruct2: '#/components/schemas/Mystruct2'
+          num: '#/components/schemas/InputKeyNum'
+          mystruct: '#/components/schemas/InputKeyMystruct'
+          mystruct2: '#/components/schemas/InputKeyMystruct2'
       required:
         - type
         - num
-        - mystruct
         - notes
         - text
-    Num:
+    InputKeyNum:
       allOf:
         - $ref: '#/components/schemas/InputKey'
         - type: object
@@ -275,16 +274,16 @@ components:
             num:
               type: integer
               format: int32
-    Mystruct:
+    InputKeyMystruct:
       allOf:
         - $ref: '#/components/schemas/InputKey'
         - type: object
           properties:
-            mystruct:
-              allOf:
-                - $ref: '#/components/schemas/Struct2'
-              type: object
-    Mystruct2:
+            notes:
+              type: string
+            text:
+              type: string
+    InputKeyMystruct2:
       allOf:
         - $ref: '#/components/schemas/InputKey'
         - type: object

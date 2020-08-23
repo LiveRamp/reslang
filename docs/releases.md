@@ -1,3 +1,7 @@
+## 2.0.0 8/23/2020
+
+Fixed up inlining of attributes in unions, aligned now with treatment of structures.
+
 ## 1.3.0 3/26/2020
 
 Added "value-of" for embedding a full representation of a resource in another structure, as opposed to "link"

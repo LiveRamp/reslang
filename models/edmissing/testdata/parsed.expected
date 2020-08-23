@@ -1,7 +1,7 @@
 {
   "namespace": {
-    "comment": "API for accessing LiveRamp's Direct to Distribution Service",
-    "title": "Direct to Distribution API - BETA ",
+    "comment": "Ed's example of missing structure in Swsagger",
+    "title": "Ed's example",
     "version": "0.0.1"
   },
   "definitions": [
@@ -43,16 +43,14 @@
           "comment": "Reference to a destination's endpoints to be used for distributing the data",
           "stringMap": false,
           "type": {
-            "parents": [
-              "Destination"
-            ],
-            "short": "Endpoint",
-            "name": "Destination::Endpoint",
-            "parentShort": "Destination",
-            "parentName": "Destination"
+            "parents": [],
+            "short": "string",
+            "name": "string",
+            "parentShort": "",
+            "parentName": ""
           },
           "inline": false,
-          "linked": true,
+          "linked": false,
           "full": false,
           "modifiers": {
             "flag": false,
@@ -126,7 +124,7 @@
         },
         {
           "name": "dataMappingConfigs",
-          "comment": "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig",
+          "comment": "Mapping configs required for a given platform",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -189,8 +187,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "StatusEnum",
-            "name": "StatusEnum",
+            "short": "DistributionRequestStatusEnum",
+            "name": "DistributionRequestStatusEnum",
             "parentShort": "",
             "parentName": ""
           },
@@ -206,7 +204,7 @@
             "optionalGet": false,
             "output": true,
             "queryonly": false,
-            "query": true,
+            "query": false,
             "representation": false
           },
           "constraints": {}
@@ -245,8 +243,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "BatchOutputMetadata",
-            "name": "BatchOutputMetadata",
+            "short": "OutputMetadata",
+            "name": "OutputMetadata",
             "parentShort": "",
             "parentName": ""
           },
@@ -295,125 +293,13 @@
           "constraints": {}
         },
         {
-          "name": "sort",
-          "comment": "Sort key and order. See docs: DistMVP.sort",
+          "name": "legacySsaId",
+          "comment": "Returns a list of ids of DistributionRequests belonging to this SSA, limited to the 50 most recent requests, in reverse chronological order.",
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "SortTypeEnum",
-            "name": "SortTypeEnum",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": true,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "createdAfter",
-          "comment": "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdAfter",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "datetime",
-            "name": "datetime",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": true,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "createdBefore",
-          "comment": "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdBefore",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "datetime",
-            "name": "datetime",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": true,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "statusUpdatedAfter",
-          "comment": "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedAfter",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "datetime",
-            "name": "datetime",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": true,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        },
-        {
-          "name": "statusUpdatedBefore",
-          "comment": "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedBefore",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "datetime",
-            "name": "datetime",
+            "short": "long",
+            "name": "long",
             "parentShort": "",
             "parentName": ""
           },
@@ -438,7 +324,7 @@
       "operations": [
         {
           "operation": "GET",
-          "comment": "Get a request. See docs: DistMVP.GET",
+          "comment": "Get a request",
           "errors": []
         },
         {
@@ -448,7 +334,7 @@
         },
         {
           "operation": "MULTIGET",
-          "comment": "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET",
+          "comment": "Use this endpoint to find existing DistributionRequests.",
           "errors": []
         }
       ],
@@ -459,111 +345,7 @@
       "parentName": "",
       "namespace": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
-    },
-    {
-      "kind": "resource-like",
-      "comment": "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel",
-      "future": false,
-      "singleton": false,
-      "type": "action",
-      "async": true,
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
-        }
-      ],
-      "parents": [
-        "DistributionRequest"
-      ],
-      "short": "Cancel",
-      "name": "DistributionRequest::Cancel",
-      "parentShort": "DistributionRequest",
-      "parentName": "DistributionRequest",
-      "secondary": false,
-      "file": "distribution-mvp.reslang"
-    },
-    {
-      "kind": "resource-like",
-      "comment": "Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry",
-      "future": false,
-      "singleton": false,
-      "type": "action",
-      "async": true,
-      "attributes": [
-        {
-          "name": "id",
-          "stringMap": false,
-          "type": {
-            "parents": [],
-            "short": "string",
-            "name": "string",
-            "parentShort": "",
-            "parentName": ""
-          },
-          "inline": false,
-          "linked": false,
-          "full": false,
-          "modifiers": {
-            "flag": false,
-            "mutable": false,
-            "optional": false,
-            "optionalPost": false,
-            "optionalPut": false,
-            "optionalGet": false,
-            "output": false,
-            "queryonly": false,
-            "query": false,
-            "representation": false
-          },
-          "constraints": {}
-        }
-      ],
-      "operations": [
-        {
-          "operation": "POST",
-          "errors": []
-        }
-      ],
-      "parents": [
-        "DistributionRequest"
-      ],
-      "short": "Retry",
-      "name": "DistributionRequest::Retry",
-      "parentShort": "DistributionRequest",
-      "parentName": "DistributionRequest",
-      "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "enum",
@@ -577,7 +359,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "enum",
@@ -594,13 +376,13 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "enum",
       "type": "enum",
       "parents": [],
-      "short": "StatusEnum",
+      "short": "DistributionRequestStatusEnum",
       "literals": [
         "QUEUED",
         "IN_PROGRESS",
@@ -608,11 +390,11 @@
         "FAILED",
         "CANCELLED"
       ],
-      "name": "StatusEnum",
+      "name": "DistributionRequestStatusEnum",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -679,7 +461,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "union",
@@ -719,7 +501,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -786,7 +568,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "union",
@@ -799,8 +581,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "OutputKeyValueLabelStruct",
-            "name": "OutputKeyValueLabelStruct",
+            "short": "OutputKeyValueLabel",
+            "name": "OutputKeyValueLabel",
             "parentShort": "",
             "parentName": ""
           },
@@ -826,8 +608,8 @@
           "stringMap": false,
           "type": {
             "parents": [],
-            "short": "OutputIdLabelStruct",
-            "name": "OutputIdLabelStruct",
+            "short": "OutputIdLabel",
+            "name": "OutputIdLabel",
             "parentShort": "",
             "parentName": ""
           },
@@ -853,13 +635,13 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
       "type": "structure",
       "parents": [],
-      "short": "OutputKeyValueLabelStruct",
+      "short": "OutputKeyValueLabel",
       "attributes": [
         {
           "name": "keyLabel",
@@ -916,17 +698,17 @@
           "constraints": {}
         }
       ],
-      "name": "OutputKeyValueLabelStruct",
+      "name": "OutputKeyValueLabel",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
       "type": "structure",
       "parents": [],
-      "short": "OutputIdLabelStruct",
+      "short": "OutputIdLabel",
       "attributes": [
         {
           "name": "idLabel",
@@ -956,11 +738,11 @@
           "constraints": {}
         }
       ],
-      "name": "OutputIdLabelStruct",
+      "name": "OutputIdLabel",
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -1028,7 +810,7 @@
         },
         {
           "name": "totalDistributionRecords",
-          "comment": "The number of distribution records in the file initially. See docs: DistMVP.TotalRecords",
+          "comment": "The number of distribution records in the file initially.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -1059,7 +841,7 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -1126,7 +908,169 @@
       "parentShort": "",
       "parentName": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "structure",
+      "type": "structure",
+      "parents": [],
+      "short": "StreamingOutputMetadata",
+      "attributes": [
+        {
+          "name": "distributionStartedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "distributionFinishedAt",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "datetime",
+            "name": "datetime",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "totalDistributionRecords",
+          "comment": "The number of distribution records in the file initially.",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "int",
+            "name": "int",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "StreamingOutputMetadata",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "resources.reslang"
+    },
+    {
+      "kind": "union",
+      "type": "union",
+      "parents": [],
+      "short": "OutputMetadata",
+      "attributes": [
+        {
+          "name": "batch",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "BatchOutputMetadata",
+            "name": "BatchOutputMetadata",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        },
+        {
+          "name": "streaming",
+          "stringMap": false,
+          "type": {
+            "parents": [],
+            "short": "StreamingOutputMetadata",
+            "name": "StreamingOutputMetadata",
+            "parentShort": "",
+            "parentName": ""
+          },
+          "inline": false,
+          "linked": false,
+          "full": false,
+          "modifiers": {
+            "flag": false,
+            "mutable": false,
+            "optional": false,
+            "optionalPost": false,
+            "optionalPut": false,
+            "optionalGet": false,
+            "output": false,
+            "queryonly": false,
+            "query": false,
+            "representation": false
+          },
+          "constraints": {}
+        }
+      ],
+      "name": "OutputMetadata",
+      "parentShort": "",
+      "parentName": "",
+      "secondary": false,
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -1169,7 +1113,7 @@
       "parentName": "",
       "namespace": "",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "resource-like",
@@ -1213,7 +1157,7 @@
       "parentShort": "Destination",
       "parentName": "Destination",
       "secondary": false,
-      "file": "distribution-mvp.reslang"
+      "file": "resources.reslang"
     },
     {
       "kind": "structure",
@@ -1318,10 +1262,10 @@
       "diagram": "main",
       "include": [
         {
-          "module": "distribution-mvp",
+          "module": "resources",
           "parents": [],
           "short": "reslang",
-          "name": "distribution-mvp.reslang",
+          "name": "resources.reslang",
           "parentShort": "",
           "parentName": ""
         }

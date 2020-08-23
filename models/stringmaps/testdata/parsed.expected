@@ -416,7 +416,7 @@
             "parentShort": "",
             "parentName": ""
           },
-          "inline": true,
+          "inline": false,
           "linked": false,
           "full": false,
           "modifiers": {

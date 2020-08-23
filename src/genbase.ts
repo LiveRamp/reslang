@@ -18,10 +18,11 @@ import {
     isStructure,
     isEvent,
     IServers,
-    IServer,
     isProduces,
     isConsumes,
-    isAction
+    isAction,
+    isUnion,
+    getAllAttributes
 } from "./treetypes"
 import { parseFile, isPrimitiveType } from "./parse"
 import { readdirSync, statSync } from "fs"
@@ -162,7 +163,7 @@ export abstract class BaseGen {
     public expandInlines() {
         // bring up all the inlines
         for (const def of this.defs) {
-            if (isStructure(def) || isResourceLike(def)) {
+            if (isStructure(def) || isResourceLike(def) || isUnion(def)) {
                 def.attributes = this.expandAttributes(def.attributes || [])
             }
             if (isEvent(def)) {
@@ -567,14 +568,10 @@ Actions cannot have subresources`
                 (verb === Verbs.MULTIPUT && attr.modifiers.optionalPut) ||
                 (verb === Verbs.GET && attr.modifiers.optionalGet)
 
-            if (attr.inline) {
-                this.unpackInlineAttributes(attr, def, properties, required)
-            } else {
-                const prop = this.makeProperty(attr)
-                properties[prop.name] = prop.prop
-                if (!optional) {
-                    required.add(attr.name)
-                }
+            const prop = this.makeProperty(attr)
+            properties[prop.name] = prop.prop
+            if (!optional) {
+                required.add(attr.name)
             }
         }
         // if this is a PATCH, remove any defaults
@@ -725,15 +722,11 @@ Actions cannot have subresources`
             // if this optional?
             const optional = attr.modifiers.optional
 
-            if (attr.inline) {
-                this.unpackInlineAttributes(attr, def, properties, required)
-            } else {
-                const prop = this.makeProperty(attr)
-                if (!optional) {
-                    required.add(attr.name)
-                }
-                properties[prop.name] = prop.prop
+            const prop = this.makeProperty(attr)
+            if (!optional) {
+                required.add(attr.name)
             }
+            properties[prop.name] = prop.prop
         }
 
         if (required.size !== 0) {
@@ -759,13 +752,13 @@ Actions cannot have subresources`
         const name = camelCase(def.name) + suffix
         for (const attr of attrs) {
             // cannot have a competing definition already
-            const camel = capitalizeFirst(attr.name)
+            const camel = capitalizeFirst(name) + capitalizeFirst(attr.name)
             const already = this.extractDefinitionGently(camel)
             if (already && already.generateInput /* struct */) {
                 throw new Error(
                     "Cannot have union attribute called " +
                         camel +
-                        " as definition already exists"
+                        " as a structure definition with the same name already exists. This should be extremely rare"
                 )
             }
             mapping[attr.name] = "#/components/schemas/" + camel
@@ -785,8 +778,8 @@ Actions cannot have subresources`
         // now do the options
         for (const attr of attrs) {
             const properties: any = {}
-            if (attr.inline) {
-                this.unpackInlineAttributes(attr, def, properties, required)
+            if (!isPrimitiveType(attr.type.name)) {
+                this.pullUpUnionAttributes(attr, def, properties, required)
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
                 if (!attr.modifiers.optional) {
@@ -794,7 +787,9 @@ Actions cannot have subresources`
                 }
             }
             if (this.generateAllOf) {
-                definitions[capitalizeFirst(attr.name)] = {
+                definitions[
+                    capitalizeFirst(name) + capitalizeFirst(attr.name)
+                ] = {
                     allOf: [
                         { $ref: `#/components/schemas/${name}` },
                         {
@@ -804,7 +799,9 @@ Actions cannot have subresources`
                     ]
                 }
             } else {
-                definitions[capitalizeFirst(attr.name)] = {
+                definitions[
+                    capitalizeFirst(name) + capitalizeFirst(attr.name)
+                ] = {
                     allOf: [
                         { $ref: `#/components/schemas/${name}` },
                         {
@@ -820,7 +817,7 @@ Actions cannot have subresources`
         }
     }
 
-    protected unpackInlineAttributes(
+    protected pullUpUnionAttributes(
         attr: IAttribute,
         def: IDefinition,
         properties: any,
@@ -829,7 +826,7 @@ Actions cannot have subresources`
         const indef = this.extractDefinition(attr.type.name)
         if (!isStructure(indef)) {
             throw new Error(
-                "Inline attribute " +
+                "Union attribute " +
                     attr.name +
                     " of " +
                     def.short +

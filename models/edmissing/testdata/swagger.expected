@@ -1,0 +1,447 @@
+openapi: 3.0.1
+info:
+  title: Ed's example
+  description: Ed's example of missing structure in Swsagger
+  version: 0.0.1
+servers:
+  - url: 'https://api.liveramp.com/edmissing'
+tags:
+  - name: DistributionRequest
+    description: '(request)  '
+paths:
+  /v1/distribution-requests:
+    post:
+      tags:
+        - DistributionRequest
+      operationId: Create DistributionRequest
+      description: Use this endpoint to create a new DistributionRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributionRequestInput'
+      responses:
+        '201':
+          description: DistributionRequest created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+    get:
+      tags:
+        - DistributionRequest
+      operationId: Get DistributionRequests
+      description: Use this endpoint to find existing DistributionRequests.
+      responses:
+        '200':
+          description: DistributionRequests retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DistributionRequests returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributionRequestMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DistributionRequests (starting from 0) to include in
+            the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: >-
+            Number of DistributionRequests to return. If unspecified, 10 max
+            will be returned. Maximum value for limit can be 100
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: legacySsaId
+          description: >-
+            Returns a list of ids of DistributionRequests belonging to this SSA,
+            limited to the 50 most recent requests, in reverse chronological
+            order.
+          required: false
+          schema:
+            type: integer
+            format: int64
+  '/v1/distribution-requests/{id}':
+    get:
+      tags:
+        - DistributionRequest
+      operationId: Get DistributionRequest
+      description: Get a request
+      responses:
+        '200':
+          description: DistributionRequest retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributionRequestOutput'
+        '404':
+          description: DistributionRequest not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    DistributionRequestInput:
+      type: object
+      properties:
+        destinationEndpointId:
+          description: >-
+            Reference to a destination's endpoints to be used for distributing
+            the data
+          type: string
+        destinationEndpointProperties:
+          description: >-
+            A map of keys and values needed to use the selected destination
+            endpoint
+          type: object
+          additionalProperties:
+            type: string
+        inputDataURL:
+          description: >-
+            URL of the data to be distributed. Currently, we only support files
+            in GCS
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        dataMappingConfigs:
+          description: Mapping configs required for a given platform
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DataMappingConfig'
+            type: object
+          type: array
+      required:
+        - destinationEndpointId
+        - destinationEndpointProperties
+        - inputDataURL
+        - dataMappingConfigs
+    DistributionRequestOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        destinationEndpointId:
+          description: >-
+            Reference to a destination's endpoints to be used for distributing
+            the data
+          type: string
+        destinationEndpointProperties:
+          description: >-
+            A map of keys and values needed to use the selected destination
+            endpoint
+          type: object
+          additionalProperties:
+            type: string
+        inputDataURL:
+          description: >-
+            URL of the data to be distributed. Currently, we only support files
+            in GCS
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        dataMappingConfigs:
+          description: Mapping configs required for a given platform
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DataMappingConfig'
+            type: object
+          type: array
+        createdAt:
+          description: 'Datetime in UTC, formatted as ISO-8601, when the request was created'
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        status:
+          description: Status of the given DistributionRequest
+          allOf:
+            - $ref: '#/components/schemas/DistributionRequestStatusEnum'
+          type: string
+        statusUpdatedAt:
+          description: >-
+            Datetime in UTC, formatted as ISO-8601, when the status of the
+            request last changed
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        outputMetaData:
+          description: Metadata about the batch output
+          allOf:
+            - $ref: '#/components/schemas/OutputMetadata'
+          type: object
+        distributionType:
+          allOf:
+            - $ref: '#/components/schemas/DistributionTypeEnum'
+          type: string
+      required:
+        - id
+        - destinationEndpointId
+        - destinationEndpointProperties
+        - inputDataURL
+        - dataMappingConfigs
+        - createdAt
+        - status
+        - statusUpdatedAt
+        - distributionType
+    DistributionRequestMultiResponse:
+      type: object
+      properties:
+        distributionRequests:
+          description: Array of retrieved DistributionRequests
+          type: array
+          items:
+            $ref: '#/components/schemas/DistributionRequestOutput'
+    DistributionTypeEnum:
+      type: string
+      enum:
+        - BATCH
+    DistributionRequestStatusEnum:
+      type: string
+      enum:
+        - QUEUED
+        - IN_PROGRESS
+        - COMPLETED
+        - FAILED
+        - CANCELLED
+    DataMappingConfig:
+      type: object
+      properties:
+        input:
+          allOf:
+            - $ref: '#/components/schemas/InputFormat'
+          type: object
+        output:
+          allOf:
+            - $ref: '#/components/schemas/OutputFormat'
+          type: object
+      required:
+        - input
+        - output
+    InputFormat:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          inputKeyValue: '#/components/schemas/InputFormatInputKeyValue'
+      required:
+        - type
+        - key
+    InputFormatInputKeyValue:
+      allOf:
+        - $ref: '#/components/schemas/InputFormat'
+        - type: object
+          properties:
+            key:
+              type: integer
+              format: int32
+            value:
+              type: integer
+              format: int32
+    InputKeyValue:
+      type: object
+      properties:
+        key:
+          type: integer
+          format: int32
+        value:
+          type: integer
+          format: int32
+      required:
+        - key
+    OutputFormat:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          outputKeyValueLabel: '#/components/schemas/OutputFormatOutputKeyValueLabel'
+          outputIdLabel: '#/components/schemas/OutputFormatOutputIdLabel'
+      required:
+        - type
+        - keyLabel
+        - idLabel
+    OutputFormatOutputKeyValueLabel:
+      allOf:
+        - $ref: '#/components/schemas/OutputFormat'
+        - type: object
+          properties:
+            keyLabel:
+              type: string
+            valueLabel:
+              type: string
+    OutputFormatOutputIdLabel:
+      allOf:
+        - $ref: '#/components/schemas/OutputFormat'
+        - type: object
+          properties:
+            idLabel:
+              type: string
+    OutputKeyValueLabel:
+      type: object
+      properties:
+        keyLabel:
+          type: string
+        valueLabel:
+          type: string
+      required:
+        - keyLabel
+    OutputIdLabel:
+      type: object
+      properties:
+        idLabel:
+          type: string
+      required:
+        - idLabel
+    BatchOutputMetadata:
+      type: object
+      properties:
+        fileDetails:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FileDetails'
+            type: object
+          type: array
+        totalOutputSize:
+          description: Total size of the distributed data in bytes
+          type: integer
+          format: int32
+        totalDistributionRecords:
+          description: The number of distribution records in the file initially.
+          type: integer
+          format: int32
+      required:
+        - fileDetails
+        - totalOutputSize
+        - totalDistributionRecords
+    FileDetails:
+      type: object
+      properties:
+        fileName:
+          type: string
+        lineCount:
+          type: integer
+          format: int32
+      required:
+        - fileName
+        - lineCount
+    StreamingOutputMetadata:
+      type: object
+      properties:
+        distributionStartedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        distributionFinishedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        totalDistributionRecords:
+          description: The number of distribution records in the file initially.
+          type: integer
+          format: int32
+      required:
+        - distributionStartedAt
+        - distributionFinishedAt
+        - totalDistributionRecords
+    OutputMetadata:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          batch: '#/components/schemas/OutputMetadataBatch'
+          streaming: '#/components/schemas/OutputMetadataStreaming'
+      required:
+        - type
+        - fileDetails
+        - totalOutputSize
+        - totalDistributionRecords
+        - distributionStartedAt
+        - distributionFinishedAt
+    OutputMetadataBatch:
+      allOf:
+        - $ref: '#/components/schemas/OutputMetadata'
+        - type: object
+          properties:
+            fileDetails:
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/FileDetails'
+                type: object
+              type: array
+            totalOutputSize:
+              description: Total size of the distributed data in bytes
+              type: integer
+              format: int32
+            totalDistributionRecords:
+              description: The number of distribution records in the file initially.
+              type: integer
+              format: int32
+    OutputMetadataStreaming:
+      allOf:
+        - $ref: '#/components/schemas/OutputMetadata'
+        - type: object
+          properties:
+            distributionStartedAt:
+              type: string
+              format: ISO8601 UTC date-time
+              example: '2019-04-13T03:35:34Z'
+            distributionFinishedAt:
+              type: string
+              format: ISO8601 UTC date-time
+              example: '2019-04-13T03:35:34Z'
+            totalDistributionRecords:
+              description: The number of distribution records in the file initially.
+              type: integer
+              format: int32
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

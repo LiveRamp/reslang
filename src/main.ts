@@ -15,7 +15,7 @@ import { IRules } from "./rules"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v1.4.21"
+export const VERSION = "v2.0.0"
 
 // parse the cmd line
 const args = yargs
@@ -244,6 +244,8 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
                         throw new Error(
                             "Cannot start Redoc server on port 8080 - please check you don't have another server running"
                         )
+                    } else if (output.stderr) {
+                        throw new Error(output.stderr)
                     }
                 }
             }

@@ -543,11 +543,11 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          inputKeyValue: '#/components/schemas/InputKeyValue'
+          inputKeyValue: '#/components/schemas/InputFormatInputKeyValue'
       required:
         - type
         - key
-    InputKeyValue:
+    InputFormatInputKeyValue:
       allOf:
         - $ref: '#/components/schemas/InputFormat'
         - type: object
@@ -558,6 +558,17 @@ components:
             value:
               type: integer
               format: int32
+    InputKeyValue:
+      type: object
+      properties:
+        key:
+          type: integer
+          format: int32
+        value:
+          type: integer
+          format: int32
+      required:
+        - key
     OutputFormat:
       type: object
       properties:
@@ -566,13 +577,13 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          outputKeyValueLabel: '#/components/schemas/OutputKeyValueLabel'
-          outputIdLabel: '#/components/schemas/OutputIdLabel'
+          outputKeyValueLabel: '#/components/schemas/OutputFormatOutputKeyValueLabel'
+          outputIdLabel: '#/components/schemas/OutputFormatOutputIdLabel'
       required:
         - type
         - keyLabel
         - idLabel
-    OutputKeyValueLabel:
+    OutputFormatOutputKeyValueLabel:
       allOf:
         - $ref: '#/components/schemas/OutputFormat'
         - type: object
@@ -581,13 +592,29 @@ components:
               type: string
             valueLabel:
               type: string
-    OutputIdLabel:
+    OutputFormatOutputIdLabel:
       allOf:
         - $ref: '#/components/schemas/OutputFormat'
         - type: object
           properties:
             idLabel:
               type: string
+    OutputKeyValueLabelStruct:
+      type: object
+      properties:
+        keyLabel:
+          type: string
+        valueLabel:
+          type: string
+      required:
+        - keyLabel
+    OutputIdLabelStruct:
+      type: object
+      properties:
+        idLabel:
+          type: string
+      required:
+        - idLabel
     BatchOutputMetadata:
       type: object
       properties:
