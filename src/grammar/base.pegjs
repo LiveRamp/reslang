@@ -29,7 +29,10 @@ name = name:([a-zA-Z_]+[_a-zA-Z0-9]*) { return name.flat().join(""); }
 filename = fname:[a-zA-Z0-9_-]+  { return fname.join(""); }
 
 // descriptions
-description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {return inner.join("").replace(/\\n/g, "\n")}
+description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {
+    var line = inner.join("").replace(/\\n/g, "\n")
+    return stripWhitespace(line)
+}
 
 // version
 semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.flat().join(""); }
@@ -50,5 +53,5 @@ docs = _ "docs" _ name:resname _ "{" _ docEntries:docEntry* _ "}" _ {
 }
 
 docEntry = _ name:resname _ "=" _ doc:description _ {
-    return {name:name, documentation:doc}
+    return {name:name, documentation: doc}
 }

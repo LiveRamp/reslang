@@ -113,7 +113,7 @@
         },
         {
           "name": "type",
-          "comment": "The type of data that will be imported into this field.\n   NUMERIC: only numeric data/values can be added to this Field.\n   STRING: any string data or values can be added to this Field.",
+          "comment": "The type of data that will be imported into this field.\nNUMERIC: only numeric data/values can be added to this Field.\nSTRING: any string data or values can be added to this Field.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -169,7 +169,7 @@
         },
         {
           "name": "valueCollectionType",
-          "comment": "Determines how the set of values for this Field should be maintained\n   for each audience key that this Field is associated with.\n   SINGLETON: only store the value most recently imported for this audience key.\n   SET: store all values at most once that were imported for this audience key.\n   MULTISET: store all values imported for this audience key potentially duplicate times.",
+          "comment": "Determines how the set of values for this Field should be maintained\nfor each audience key that this Field is associated with.\nSINGLETON: only store the value most recently imported for this audience key.\nSET: store all values at most once that were imported for this audience key.\nMULTISET: store all values imported for this audience key potentially duplicate times.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -197,7 +197,7 @@
         },
         {
           "name": "values",
-          "comment": "The list of enum values for the Field.\n   This is only allowed if enumerated==true for the Field.",
+          "comment": "The list of enum values for the Field.\nThis is only allowed if enumerated==true for the Field.",
           "stringMap": false,
           "type": {
             "parents": [],
@@ -287,7 +287,7 @@
       "operations": [
         {
           "operation": "GET",
-          "comment": "Find a single existing Field in the provided parent Audience.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     All fields of other types will not be included in the response.",
+          "comment": "Find a single existing Field in the provided parent Audience.\nNote: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\nAll fields of other types will not be included in the response.",
           "errors": [
             {
               "codes": [
@@ -359,7 +359,7 @@
         },
         {
           "operation": "MULTIGET",
-          "comment": "Find existing Fields in the provided parent Audience.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     All fields of other types will not be included in the response.",
+          "comment": "Find existing Fields in the provided parent Audience.\nNote: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\nAll fields of other types will not be included in the response.",
           "errors": [
             {
               "codes": [
@@ -380,7 +380,7 @@
         },
         {
           "operation": "PUT",
-          "comment": "Modify the attributes of a Field in the provided parent Audience.\n     Currently the only supported operation is adding values to enumerated Fields.\n     The list of values passed in will be added to the Field's existing set of values.",
+          "comment": "Modify the attributes of a Field in the provided parent Audience.\nCurrently the only supported operation is adding values to enumerated Fields.\nThe list of values passed in will be added to the Field's existing set of values.",
           "errors": [
             {
               "codes": [
@@ -463,7 +463,7 @@
       "operations": [
         {
           "operation": "POST",
-          "comment": "Marks a Field as 'disabled', which means that it will no longer\n     be processed in the audience, will no longer be deliverable,\n     and will no longer have stats calculated for it.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     Attempting to disable any other type of field will trigger a 404 Not Found response.",
+          "comment": "Marks a Field as 'disabled', which means that it will no longer\nbe processed in the audience, will no longer be deliverable,\nand will no longer have stats calculated for it.\nNote: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\nAttempting to disable any other type of field will trigger a 404 Not Found response.",
           "errors": [
             {
               "codes": [
@@ -565,7 +565,7 @@
       "operations": [
         {
           "operation": "POST",
-          "comment": "Marks the set of input Fields 'disabled', which means that they will no longer\n     be processed in the audience, will no longer be deliverable,\n     and will no longer have stats calculated for them.\n     Note: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\n     Attempting to disable any other type of field will trigger a 404 Not Found response.",
+          "comment": "Marks the set of input Fields 'disabled', which means that they will no longer\nbe processed in the audience, will no longer be deliverable,\nand will no longer have stats calculated for them.\nNote: this only works for core fields (raw string, raw numeric, string enum, and numeric enum).\nAttempting to disable any other type of field will trigger a 404 Not Found response.",
           "errors": [
             {
               "codes": [

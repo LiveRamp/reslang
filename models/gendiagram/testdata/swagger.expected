@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: API for modeling directories and files
-  description: This is a simple API for manipulating files
+  description: "A textual name under the client's control.\nThis value may be used to assign a meaningful name\n\n\nto the associated configuration.  The value is not\nrequired to be unique, but the client is encouraged\nto use the value to identify configurations.\n\n    this is code\n\t\twhat do you think\n\n"
   version: 1.0.0
 servers:
   - url: 'https://api.liveramp.com/gendiagram'

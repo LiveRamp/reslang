@@ -1,3 +1,34 @@
+
+{
+    function stripWhitespace(str) {
+        // break it into lines
+        var lines = str.split("\n")
+        var all = []
+        var length = lines.length
+        var indent = ""
+        lines.forEach((value, index) => {
+            // if this is the 2nd line, capture the indent
+            if (index == 1) {
+                indent = value.substring(0, value.length - value.trimLeft().length)
+            }
+
+            // add if this is not an empty first or last line
+            if (value || (index != 0 && index !== length - 1)) {
+                all.push(removeIndent(value, indent))
+            }
+        })
+        return all.join("\n")
+    }
+
+    function removeIndent(str, indent) {
+        if (str.startsWith(indent)) {
+            return str.substring(indent.length)
+        }
+        return str
+    }
+}
+
+
 reslang = namespacedefinition? import* servers? (resource / subresource / action / structure / enum / event / produces / consumes )* diagram* docs*
 
 // defining a namespace

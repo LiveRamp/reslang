@@ -1,4 +1,16 @@
-"This is a simple API for manipulating files"
+    // documentation example - indents will be stripped out
+	"A textual name under the client's control.
+    This value may be used to assign a meaningful name
+
+
+    to the associated configuration.  The value is not
+    required to be unique, but the client is encouraged
+    to use the value to identify configurations.
+
+        this is code
+		what do you think
+
+    "
 namespace {
 	title "API for modeling directories and files"
 	version 1.0.0

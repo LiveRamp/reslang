@@ -186,7 +186,8 @@ paths:
       description: >-
         Use this endpoint to fetch the overview of a given DistributionRequest,
         including current status, input
-                  configuration as well as output metadata, if the request has completed
+
+        configuration as well as output metadata, if the request has completed
       responses:
         '200':
           description: DistributionRequest retrieved successfully
