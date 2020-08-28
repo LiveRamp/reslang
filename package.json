@@ -1,63 +1,63 @@
 {
-  "name": "@liveramp/reslang",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "engines": {
-    "node": ">=12.1.0"
-  },
-  "devDependencies": {
-    "@types/clipboardy": "^2.0.1",
-    "@types/express": "^4.16.1",
-    "@types/jest": "^24.0.13",
-    "@types/js-yaml": "^3.12.1",
-    "@types/open": "^6.1.0",
-    "@types/pegjs": "^0.10.1",
-    "@types/shelljs": "^0.8.5",
-    "@types/yargs": "^13.0.0",
-    "@wessberg/rollup-plugin-ts": "^1.2.24",
-    "jest": "^24.8.0",
-    "rollup": "^2.13.1",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.2.0",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
-  },
-  "dependencies": {
-    "@asyncapi/generator": "^0.34.3",
-    "@types/pluralize": "^0.0.29",
-    "@types/tmp": "^0.1.0",
-    "clipboardy": "^2.0.0",
-    "express": "^4.17.1",
-    "js-yaml": "^3.13.1",
-    "open": "^6.3.0",
-    "pegjs": "^0.10.0",
-    "pluralize": "^8.0.0",
-    "redoc-cli": "^0.9.2",
-    "shelljs": "^0.8.3",
-    "tmp": "^0.1.0",
-    "yargs": "^13.2.4"
-  },
-  "scripts": {
-    "start": "npm run build:live",
-    "build": "tsc -p .",
-    "build:dist": "rollup -c && cp -r src/grammar dist && cp -r src/library dist && cp dist_run.js dist",
-    "build:live": "ts-node src/main.ts",
-    "test": "jest"
-  },
-  "prettier": {
-    "semi": false,
-    "tabWidth": 4,
-    "trailingComma": "none"
-  },
-  "bin": {
-    "reslang": "./dist/run.js"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:LiveRamp/reslang.git"
-  }
+    "name": "@liveramp/reslang",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "Apache V2",
+    "engines": {
+        "node": ">=12.1.0"
+    },
+    "devDependencies": {
+        "@types/clipboardy": "^2.0.1",
+        "@types/express": "^4.16.1",
+        "@types/jest": "^24.0.13",
+        "@types/js-yaml": "^3.12.1",
+        "@types/open": "^6.1.0",
+        "@types/pegjs": "^0.10.1",
+        "@types/shelljs": "^0.8.5",
+        "@types/yargs": "^13.0.0",
+        "@wessberg/rollup-plugin-ts": "^1.2.24",
+        "jest": "^24.8.0",
+        "rollup": "^2.13.1",
+        "ts-jest": "^24.0.2",
+        "ts-node": "^8.2.0",
+        "tslint": "^5.16.0",
+        "typescript": "^3.4.5"
+    },
+    "dependencies": {
+        "@asyncapi/generator": "^0.34.3",
+        "@types/pluralize": "^0.0.29",
+        "@types/tmp": "^0.1.0",
+        "clipboardy": "^2.0.0",
+        "express": "^4.17.1",
+        "js-yaml": "^3.13.1",
+        "open": "^6.3.0",
+        "pegjs": "^0.10.0",
+        "pluralize": "^8.0.0",
+        "redoc-cli": "^0.9.2",
+        "shelljs": "^0.8.3",
+        "tmp": "^0.1.0",
+        "yargs": "^13.2.4"
+    },
+    "scripts": {
+        "start": "npm run build:live",
+        "build": "tsc -p .",
+        "build:dist": "rollup -c && cp -r src/grammar dist && cp -r src/library dist && cp dist_run.js dist",
+        "build:live": "ts-node src/main.ts",
+        "test": "jest"
+    },
+    "prettier": {
+        "semi": false,
+        "tabWidth": 4,
+        "trailingComma": "none"
+    },
+    "bin": {
+        "reslang": "./dist/run.js"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:LiveRamp/reslang.git"
+    }
 }
