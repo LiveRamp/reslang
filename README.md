@@ -2,9 +2,12 @@
 
 Reslang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger which is fully aligned with the RFC API-3 standards.
 
-It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec. Recently we have added the ability to generate [JSON schema](https://json-schema.org/) from a Reslang spec too.
+It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec. Recently we have added the ability to generate [JSON schema](https://json-schema.org/) from the Reslang spec too.
+
 
 [Release notes, v2.0.0 8/23/2020](./docs/releases.md)
+
+Reslang is licensed under [Apache V2](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Docs
 
@@ -29,7 +32,7 @@ It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), des
 3. yarn install
 4. yarn jest
 
-### Installing globally on your machine
+### Installing globally on your machine (for internal LiveRamp users only)
 
 There is some one-time setup required to install Reslang globally. These steps setup your machine to install JS packages from our Github Packages registry. After taking these steps, you'll be able to install any JS package we host on Github Packages with a simple `yarn global add @liveramp/<name>`
 
