@@ -6,9 +6,9 @@ You can generate JSON schema from any structure by doing something like:
 
 Note a few things:
 
-- The default is to use the JSON schema root specificed (e.g. SegmentDeliveryAttemptStats) and include everything it references
-- If you use --followresources it will generate only the same definitions it uses for Swagger resources
-- If you use "noroot" it will include any structs, unions or enums in the file, and ignore resources
+- The default is to use the JSON schema root specified (e.g. SegmentDeliveryAttemptStats) and include everything it references
+- If you use "--followresources" it will generate the same definitions it uses for Swagger resources. You can specifically refer to one of the structures generated off the resources as your root - e.g. SegmentInput is generated as the GET representation for a Segment resource
+- If you use "--jsonschema noroot" it will include any structs, unions or enums in the file, and ignore resources. No root will be used, all the structures will go into the "definitions" section
 
 The example above generates the following schema:
 
