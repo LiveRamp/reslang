@@ -559,17 +559,6 @@ components:
             value:
               type: integer
               format: int32
-    InputKeyValue:
-      type: object
-      properties:
-        key:
-          type: integer
-          format: int32
-        value:
-          type: integer
-          format: int32
-      required:
-        - key
     OutputFormat:
       type: object
       properties:
@@ -600,22 +589,6 @@ components:
           properties:
             idLabel:
               type: string
-    OutputKeyValueLabelStruct:
-      type: object
-      properties:
-        keyLabel:
-          type: string
-        valueLabel:
-          type: string
-      required:
-        - keyLabel
-    OutputIdLabelStruct:
-      type: object
-      properties:
-        idLabel:
-          type: string
-      required:
-        - idLabel
     BatchOutputMetadata:
       type: object
       properties:

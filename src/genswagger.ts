@@ -1002,7 +1002,8 @@ export default class SwagGen extends BaseGen {
         el: AnyKind,
         visited: Set<string>,
         includeErrors: boolean,
-        level: number
+        level: number,
+        fromUnion: boolean = false
     ) {
         // have we seen this before?
         const unique = this.formSingleUniqueName(el)
@@ -1069,7 +1070,12 @@ export default class SwagGen extends BaseGen {
             }
         } else {
             // cover structures, unions etc
-            el.generateInput = true
+            if (fromUnion) {
+                // remove from visited
+                visited.delete(unique)
+            } else {
+                el.generateInput = true
+            }
         }
 
         // now work out if attributes reference any structures or other resources
@@ -1077,7 +1083,13 @@ export default class SwagGen extends BaseGen {
             if (!isPrimitiveType(attr.type.name)) {
                 const def = this.extractDefinition(attr.type.name)
                 if (def && !attr.inline && !attr.linked) {
-                    this.follow(def, visited, includeErrors, level + 1)
+                    this.follow(
+                        def,
+                        visited,
+                        includeErrors,
+                        level + 1,
+                        isUnion(el)
+                    )
                 }
             }
         }
