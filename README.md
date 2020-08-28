@@ -17,6 +17,7 @@ It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), des
 | [MULTI verbs](./docs/multi.md)                       | Describes MULTI- verbs such as MULTIPOST, MULTIPATCH etc                                |
 | [Reference manual](./docs/reference.md)              | This describes the syntax and features in more depth.                                   |
 | [Server blocks](./docs/server-blocks.md)             | This explains how to define servers for REST and events APIs                            |
+| [JSON schema generation](./docs/jsonschema.md)       | This explains how to generate JSON schema definitions from Reslang code                 |
 | [VSCode Syntax highlighting](./vscode/README.md)     | Explains how to install VSCode syntax highlighting. Hint search extensions for Reslang! |
 
 ## Installation
