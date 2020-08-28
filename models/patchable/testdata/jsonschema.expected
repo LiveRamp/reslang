@@ -1,0 +1,121 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "PersonInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "default": "Freddo Frog",
+          "type": "string"
+        },
+        "address": {
+          "default": "Malibu",
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "notes": {
+          "default": "no notes!",
+          "type": "string"
+        }
+      },
+      "required": [
+        "birthDate"
+      ]
+    },
+    "PersonOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "flag": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "birthDate"
+      ]
+    },
+    "PersonPuttable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "default": "Freddo Frog",
+          "type": "string"
+        },
+        "address": {
+          "default": "Malibu",
+          "type": "string"
+        },
+        "notes": {
+          "default": "no notes!",
+          "type": "string"
+        },
+        "flag": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PersonPatchable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "flag": {
+          "type": "boolean"
+        }
+      }
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

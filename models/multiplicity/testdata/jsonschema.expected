@@ -1,0 +1,69 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MTestInput": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 10,
+          "type": "array"
+        },
+        "ages": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 13,
+          "type": "array"
+        },
+        "addresses": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "type": "array"
+        },
+        "nicknames": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "names",
+        "ages",
+        "addresses",
+        "nicknames"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

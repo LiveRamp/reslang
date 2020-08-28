@@ -1,0 +1,142 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ResourceAOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "bId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to ResourceB resource via its id"
+        },
+        "newBId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to v2/ResourceB resource via its id"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "bId",
+        "newBId"
+      ]
+    },
+    "ResourceBInput": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "size"
+      ]
+    },
+    "ResourceBOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "size"
+      ]
+    },
+    "v2ResourceBInput": {
+      "type": "object",
+      "properties": {
+        "totalSize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "totalSize"
+      ]
+    },
+    "v2ResourceBOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalSize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "totalSize"
+      ]
+    },
+    "v2ResourceBSubInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "v2ResourceBSubOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

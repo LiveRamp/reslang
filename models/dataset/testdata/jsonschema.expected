@@ -1,0 +1,195 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AudienceFieldInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the Field.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "description": "The type of data that will be imported into this field.\nNUMERIC: only numeric data/values can be added to this Field.\nSTRING: any string data or values can be added to this Field.",
+          "$ref": "#/definitions/FieldTypeEnum",
+          "type": "string"
+        },
+        "enumerated": {
+          "description": "Whether or not the Field's values are enumerated.",
+          "type": "boolean"
+        },
+        "valueCollectionType": {
+          "description": "Determines how the set of values for this Field should be maintained\nfor each audience key that this Field is associated with.\nSINGLETON: only store the value most recently imported for this audience key.\nSET: store all values at most once that were imported for this audience key.\nMULTISET: store all values imported for this audience key potentially duplicate times.",
+          "$ref": "#/definitions/ValueCollectionTypeEnum",
+          "type": "string"
+        },
+        "values": {
+          "description": "The list of enum values for the Field.\nThis is only allowed if enumerated==true for the Field.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "enumerated",
+        "valueCollectionType"
+      ]
+    },
+    "AudienceFieldOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The id of the Field.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Field.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "description": "The type of data that will be imported into this field.\nNUMERIC: only numeric data/values can be added to this Field.\nSTRING: any string data or values can be added to this Field.",
+          "$ref": "#/definitions/FieldTypeEnum",
+          "type": "string"
+        },
+        "enumerated": {
+          "description": "Whether or not the Field's values are enumerated.",
+          "type": "boolean"
+        },
+        "valueCollectionType": {
+          "description": "Determines how the set of values for this Field should be maintained\nfor each audience key that this Field is associated with.\nSINGLETON: only store the value most recently imported for this audience key.\nSET: store all values at most once that were imported for this audience key.\nMULTISET: store all values imported for this audience key potentially duplicate times.",
+          "$ref": "#/definitions/ValueCollectionTypeEnum",
+          "type": "string"
+        },
+        "values": {
+          "description": "The list of enum values for the Field.\nThis is only allowed if enumerated==true for the Field.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "createdAt": {
+          "description": "Timestamp of when the Field was first created.",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "description": "Timestamp of the last time the Field's metadata was updated.",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "enumerated",
+        "valueCollectionType",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AudienceFieldPuttable": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "description": "The list of enum values for the Field.\nThis is only allowed if enumerated==true for the Field.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      }
+    },
+    "AudienceFieldMultiResponse": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "description": "Array of retrieved Audience::Fields",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AudienceFieldOutput"
+          }
+        }
+      }
+    },
+    "BulkDisableAudienceFieldInput": {
+      "type": "object",
+      "properties": {
+        "fieldIDs": {
+          "description": "Link to Audience::Field resources via [audienceId, fieldId]",
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "fieldIDs"
+      ]
+    },
+    "FieldTypeEnum": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "NUMERIC"
+      ]
+    },
+    "ValueCollectionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "SINGLETON",
+        "SET",
+        "MULTISET"
+      ]
+    },
+    "FieldRedirection": {
+      "type": "object",
+      "properties": {
+        "existingFieldURL": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "existingFieldURL"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

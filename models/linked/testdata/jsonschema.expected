@@ -1,0 +1,114 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "FooOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "FooBarOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "LinkingOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "address": {
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "name": {
+          "items": {
+            "type": "string",
+            "format": "url",
+            "example": "List of urls"
+          },
+          "type": "array"
+        },
+        "foo": {
+          "type": "string",
+          "description": "Link to Foo resource via its id"
+        },
+        "foos": {
+          "description": "Link to Foo resources via their ids",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "bar": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Foo::Bar resource via [fooId, barId]"
+        },
+        "bars": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "description": "Link to Foo::Bar resources via [fooId, barId]",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "address",
+        "name",
+        "foo",
+        "foos",
+        "bar",
+        "bars"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

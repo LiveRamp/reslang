@@ -1,0 +1,1053 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "SegmentDeliveryConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ownerID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "dataConfigurationID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to DataConfiguration resource via its id"
+        },
+        "expireAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "name",
+        "ownerID",
+        "dataConfigurationID"
+      ]
+    },
+    "SegmentDeliveryConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "name": {
+          "type": "string"
+        },
+        "ownerID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "dataConfigurationID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to DataConfiguration resource via its id"
+        },
+        "deliveryConfigurationIDs": {
+          "items": {
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "example": "123e4567-e89b-12d3-a456-426655440000"
+            },
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "description": "Link to SegmentDeliveryConfiguration::DeliveryConfiguration resources via [segmentDeliveryConfigurationId, deliveryConfigurationId]",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/ConfigurationStatus",
+          "type": "string"
+        },
+        "expireAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "ownerID",
+        "dataConfigurationID",
+        "deliveryConfigurationIDs",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SegmentDeliveryConfigurationPuttable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "dataConfigurationID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to DataConfiguration resource via its id"
+        },
+        "expireAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "name",
+        "dataConfigurationID"
+      ]
+    },
+    "SegmentDeliveryConfigurationPatchable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "dataConfigurationID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to DataConfiguration resource via its id"
+        },
+        "expireAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      }
+    },
+    "SegmentDeliveryConfigurationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "segmentDeliveryConfigurations": {
+          "description": "Array of retrieved SegmentDeliveryConfigurations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SegmentDeliveryConfigurationOutput"
+          }
+        }
+      }
+    },
+    "DeliverSegmentDeliveryConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "refreshMode": {
+          "$ref": "#/definitions/RefreshMode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "refreshMode"
+      ]
+    },
+    "SegmentDeliveryConfigurationTriggeringConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "refreshModeIntervalHrs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "deviceTriggerRefreshModes": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTriggerRefreshMode"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "refreshModeIntervalHrs",
+        "deviceTriggerRefreshModes",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SegmentDeliveryConfigurationTriggeringConfigurationPuttable": {
+      "type": "object",
+      "properties": {
+        "refreshModeIntervalHrs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "deviceTriggerRefreshModes": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTriggerRefreshMode"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "refreshModeIntervalHrs",
+        "deviceTriggerRefreshModes"
+      ]
+    },
+    "SegmentDeliveryConfigurationTriggeringConfigurationPatchable": {
+      "type": "object",
+      "properties": {
+        "refreshModeIntervalHrs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "deviceTriggerRefreshModes": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTriggerRefreshMode"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      }
+    },
+    "SegmentDeliveryConfigurationDeliveryConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "adNetworkAccountID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "partnerID": {
+          "type": "string"
+        },
+        "isDeduplicated": {
+          "type": "boolean"
+        },
+        "areSourceIDsIncludedInDistRecords": {
+          "type": "boolean"
+        },
+        "taxonomyID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "distributionConfigID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "isApprovalRequired": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "adNetworkAccountID",
+        "taxonomyID",
+        "distributionConfigID",
+        "isApprovalRequired"
+      ]
+    },
+    "SegmentDeliveryConfigurationDeliveryConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "name": {
+          "type": "string"
+        },
+        "adNetworkAccountID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "partnerID": {
+          "type": "string"
+        },
+        "isDeduplicated": {
+          "type": "boolean"
+        },
+        "areSourceIDsIncludedInDistRecords": {
+          "type": "boolean"
+        },
+        "taxonomyID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "distributionConfigID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "isApprovalRequired": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/definitions/ConfigurationStatus",
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "adNetworkAccountID",
+        "taxonomyID",
+        "distributionConfigID",
+        "isApprovalRequired",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SegmentDeliveryConfigurationDeliveryConfigurationPuttable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "partnerID": {
+          "type": "string"
+        },
+        "isDeduplicated": {
+          "type": "boolean"
+        },
+        "areSourceIDsIncludedInDistRecords": {
+          "type": "boolean"
+        },
+        "isApprovalRequired": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "isApprovalRequired"
+      ]
+    },
+    "SegmentDeliveryConfigurationDeliveryConfigurationPatchable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "partnerID": {
+          "type": "string"
+        },
+        "isDeduplicated": {
+          "type": "boolean"
+        },
+        "areSourceIDsIncludedInDistRecords": {
+          "type": "boolean"
+        },
+        "isApprovalRequired": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SegmentDeliveryConfigurationDeliveryConfigurationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "deliveryConfigurations": {
+          "description": "Array of retrieved SegmentDeliveryConfiguration::DeliveryConfigurations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SegmentDeliveryConfigurationDeliveryConfigurationOutput"
+          }
+        }
+      }
+    },
+    "SegmentDeliveryConfigurationIdentityMappingConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deviceTypeSpecifications": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTypeSpecification"
+          },
+          "type": "array"
+        },
+        "maxAIMCacheAgeHrs": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "deviceTypeSpecifications",
+        "maxAIMCacheAgeHrs",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SegmentDeliveryConfigurationIdentityMappingConfigurationPuttable": {
+      "type": "object",
+      "properties": {
+        "deviceTypeSpecifications": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTypeSpecification"
+          },
+          "type": "array"
+        },
+        "maxAIMCacheAgeHrs": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "deviceTypeSpecifications",
+        "maxAIMCacheAgeHrs"
+      ]
+    },
+    "SegmentDeliveryConfigurationIdentityMappingConfigurationPatchable": {
+      "type": "object",
+      "properties": {
+        "deviceTypeSpecifications": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeviceTypeSpecification"
+          },
+          "type": "array"
+        },
+        "maxAIMCacheAgeHrs": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "DataConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "rawFields",
+        "enumFieldValues"
+      ]
+    },
+    "DataConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "name": {
+          "type": "string"
+        },
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "rawFields",
+        "enumFieldValues",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DataConfigurationPuttable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "rawFields",
+        "enumFieldValues"
+      ]
+    },
+    "DataConfigurationPatchable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "DataConfigurationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "dataConfigurations": {
+          "description": "Array of retrieved DataConfigurations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DataConfigurationOutput"
+          }
+        }
+      }
+    },
+    "AddFieldsDataConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "rawFields",
+        "enumFieldValues"
+      ]
+    },
+    "DeleteFieldsDataConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "rawFields": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/RawField"
+          },
+          "type": "array"
+        },
+        "enumFieldValues": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EnumFieldValue"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "rawFields",
+        "enumFieldValues"
+      ]
+    },
+    "DeliveryInstanceOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000"
+        },
+        "segmentDeliveryConfigurationID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to SegmentDeliveryConfiguration resource via its id"
+        },
+        "triggerType": {
+          "$ref": "#/definitions/TriggerType",
+          "type": "string"
+        },
+        "triggerReason": {
+          "type": "string"
+        },
+        "instanceStatus": {
+          "$ref": "#/definitions/DeliveryInstanceStatus",
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "segmentDeliveryConfigurationID",
+        "triggerType",
+        "triggerReason",
+        "instanceStatus",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DeliveryInstanceMultiResponse": {
+      "type": "object",
+      "properties": {
+        "deliveryInstances": {
+          "description": "Array of retrieved DeliveryInstances",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeliveryInstanceOutput"
+          }
+        }
+      }
+    },
+    "SegmentDeliveryAttemptOutput": {
+      "type": "object",
+      "properties": {
+        "deliveryInstanceID": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426655440000",
+          "description": "Link to DeliveryInstance resource via its id"
+        },
+        "dataSource": {
+          "$ref": "#/definitions/DataSource",
+          "type": "object"
+        },
+        "deliveryConfigurationID": {
+          "items": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426655440000"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to SegmentDeliveryConfiguration::DeliveryConfiguration resource via [segmentDeliveryConfigurationId, deliveryConfigurationId]"
+        },
+        "refreshMode": {
+          "$ref": "#/definitions/RefreshMode",
+          "type": "string"
+        },
+        "attemptStatus": {
+          "$ref": "#/definitions/SegmentDeliveryAttemptStatus",
+          "type": "string"
+        },
+        "attemptStats": {
+          "$ref": "#/definitions/SegmentDeliveryAttemptStats",
+          "type": "object"
+        },
+        "distributionRequestID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "deliveryInstanceID",
+        "dataSource",
+        "deliveryConfigurationID",
+        "refreshMode",
+        "attemptStatus",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SegmentDeliveryAttemptMultiResponse": {
+      "type": "object",
+      "properties": {
+        "segmentDeliveryAttempts": {
+          "description": "Array of retrieved SegmentDeliveryAttempts",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SegmentDeliveryAttemptOutput"
+          }
+        }
+      }
+    },
+    "ConfigurationStatus": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED",
+        "EXPIRED"
+      ]
+    },
+    "DeviceTriggerRefreshMode": {
+      "type": "object",
+      "properties": {
+        "adNetworkAccountID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "triggerType": {
+          "$ref": "#/definitions/TriggerType",
+          "type": "string"
+        },
+        "refreshMode": {
+          "$ref": "#/definitions/RefreshMode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "adNetworkAccountID",
+        "triggerType",
+        "refreshMode"
+      ]
+    },
+    "DeviceTypeSpecification": {
+      "type": "object",
+      "properties": {
+        "adNetworkAccountID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "precisionLevel": {
+          "$ref": "#/definitions/PrecisionLevel",
+          "type": "string"
+        },
+        "subnetworkIDs": {
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "adNetworkAccountID",
+        "precisionLevel",
+        "subnetworkIDs"
+      ]
+    },
+    "PrecisionLevel": {
+      "type": "string",
+      "enum": [
+        "CROSSDEVICE_EXACT",
+        "CROSSDEVICE_PROBABILISTIC_A",
+        "CROSSDEVICE_PROBABILISTIC_B",
+        "CROSSDEVICE_PROBABILISTIC_C",
+        "CROSSDEVICE_PROBABILISTIC_D",
+        "CROSSDEVICE_EXACT_DEPRECATED",
+        "CROSSDEVICE_ENTITY",
+        "CROSSDEVICE_HOUSEHOLD",
+        "WATERFALL_NO_WATERFALLING",
+        "WATERFALL_INDIVIDUAL",
+        "WATERFALL_NAME_AND_POSTAL",
+        "WATERFALL_HOUSEHOLD",
+        "WATERFALL_ZIP_PLUS_SIX",
+        "WATERFALL_NAME_AND_CITY",
+        "WATERFALL_ZIP_PLUS_FOUR",
+        "WATERFALL_ZIP"
+      ]
+    },
+    "EnumFieldValue": {
+      "type": "object",
+      "properties": {
+        "fieldID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "valueID": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "fieldID",
+        "valueID"
+      ]
+    },
+    "RawField": {
+      "type": "object",
+      "properties": {
+        "fieldID": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "fieldID"
+      ]
+    },
+    "DataSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "raw": "#/definitions/DataSourceRaw",
+          "enum": "#/definitions/DataSourceEnum"
+        }
+      },
+      "required": [
+        "type",
+        "fieldID",
+        "valueID"
+      ]
+    },
+    "DataSourceRaw": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DataSource"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fieldID": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "DataSourceEnum": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/DataSource"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fieldID": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "valueID": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "RefreshMode": {
+      "type": "string",
+      "enum": [
+        "FULL",
+        "NET_NEW",
+        "NET_NEW_WITH_PARTIAL"
+      ]
+    },
+    "TriggerType": {
+      "type": "string",
+      "enum": [
+        "DIRECT_REQUEST",
+        "SCHEDULED_REFRESH",
+        "UPDATED_CONFIGURATION",
+        "NEW_DATA",
+        "NEW_IDENTITY_MAPPING"
+      ]
+    },
+    "DeliveryInstanceStatus": {
+      "type": "string",
+      "enum": [
+        "PROCESSING",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
+    "SegmentDeliveryAttemptStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE_PROCESSING",
+        "ACTIVE_DELIVERING",
+        "FAILED_PROCESSING",
+        "FAILED_DELIVERING",
+        "COMPLETED_EMPTY",
+        "COMPLETED_DELIVERY"
+      ]
+    },
+    "SegmentDeliveryAttemptStats": {
+      "type": "object",
+      "properties": {
+        "totalAudienceKeys": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "audienceKeysMatched": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "targetIdentifiersMatched": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "targetIdentifiersDelivered": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "totalAudienceKeys",
+        "audienceKeysMatched",
+        "targetIdentifiersMatched",
+        "targetIdentifiersDelivered"
+      ]
+    },
+    "SortType": {
+      "type": "string",
+      "enum": [
+        "ASCENDING_TIMESTAMPS",
+        "DESCENDING_TIMESTAMPS"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

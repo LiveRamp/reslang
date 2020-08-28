@@ -895,7 +895,8 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private formDefinitions(definitions: any) {
+    // tslint:disable-next-line: member-ordering
+    protected formDefinitions(definitions: any) {
         for (const def of this.defs) {
             const sane = camelCase(this.formSingleUniqueName(def, false))
             if (isResourceLike(def) && !def.secondary) {
@@ -986,7 +987,8 @@ export default class SwagGen extends BaseGen {
     }
 
     /** determine if we should generate input or output definitions for each entity */
-    private markGenerate(includeErrors: boolean) {
+    // tslint:disable-next-line: member-ordering
+    protected markGenerate(includeErrors: boolean) {
         // handle each primary structure and work out if we should generate structures for it
         const visited = new Set<string>()
         for (const el of this.defs) {
@@ -998,7 +1000,8 @@ export default class SwagGen extends BaseGen {
         this.extractDefinition("StandardError").generateInput = true
     }
 
-    private follow(
+    // tslint:disable-next-line: member-ordering
+    protected follow(
         el: AnyKind,
         visited: Set<string>,
         includeErrors: boolean,

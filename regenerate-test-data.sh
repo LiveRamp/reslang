@@ -22,5 +22,10 @@ echo "---"
     ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/dotviz.expected --diagram main 
 echo
 echo "---"
+echo "Regenerating JSON schema files"
+echo "---"
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/jsonschema.expected --jsonschema noroot --followresources
+echo
+echo "---"
 
 echo Updated test data

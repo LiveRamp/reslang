@@ -15,7 +15,7 @@ import { isPrimitiveType } from "./parse"
 import { Verbs } from "./operations"
 
 /**
- * generate swagger from the parsed representation
+ * generate asyncapi from the parsed representation
  */
 
 // The more correct "publish OR subscribe" type was being fiddly,

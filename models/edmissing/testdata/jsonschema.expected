@@ -1,0 +1,366 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DistributionRequestInput": {
+      "type": "object",
+      "properties": {
+        "destinationEndpointId": {
+          "description": "Reference to a destination's endpoints to be used for distributing the data",
+          "type": "string"
+        },
+        "destinationEndpointProperties": {
+          "description": "A map of keys and values needed to use the selected destination endpoint",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "inputDataURL": {
+          "description": "URL of the data to be distributed. Currently, we only support files in GCS",
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "dataMappingConfigs": {
+          "description": "Mapping configs required for a given platform",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DataMappingConfig"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "destinationEndpointId",
+        "destinationEndpointProperties",
+        "inputDataURL",
+        "dataMappingConfigs"
+      ]
+    },
+    "DistributionRequestOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "destinationEndpointId": {
+          "description": "Reference to a destination's endpoints to be used for distributing the data",
+          "type": "string"
+        },
+        "destinationEndpointProperties": {
+          "description": "A map of keys and values needed to use the selected destination endpoint",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "inputDataURL": {
+          "description": "URL of the data to be distributed. Currently, we only support files in GCS",
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "dataMappingConfigs": {
+          "description": "Mapping configs required for a given platform",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DataMappingConfig"
+          },
+          "type": "array"
+        },
+        "createdAt": {
+          "description": "Datetime in UTC, formatted as ISO-8601, when the request was created",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "status": {
+          "description": "Status of the given DistributionRequest",
+          "$ref": "#/definitions/DistributionRequestStatusEnum",
+          "type": "string"
+        },
+        "statusUpdatedAt": {
+          "description": "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "outputMetaData": {
+          "description": "Metadata about the batch output",
+          "$ref": "#/definitions/OutputMetadata",
+          "type": "object"
+        },
+        "distributionType": {
+          "$ref": "#/definitions/DistributionTypeEnum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "destinationEndpointId",
+        "destinationEndpointProperties",
+        "inputDataURL",
+        "dataMappingConfigs",
+        "createdAt",
+        "status",
+        "statusUpdatedAt",
+        "distributionType"
+      ]
+    },
+    "DistributionRequestMultiResponse": {
+      "type": "object",
+      "properties": {
+        "distributionRequests": {
+          "description": "Array of retrieved DistributionRequests",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DistributionRequestOutput"
+          }
+        }
+      }
+    },
+    "DistributionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "BATCH"
+      ]
+    },
+    "DistributionRequestStatusEnum": {
+      "type": "string",
+      "enum": [
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "DataMappingConfig": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/InputFormat",
+          "type": "object"
+        },
+        "output": {
+          "$ref": "#/definitions/OutputFormat",
+          "type": "object"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ]
+    },
+    "InputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "inputKeyValue": "#/definitions/InputFormatInputKeyValue"
+        }
+      },
+      "required": [
+        "type",
+        "key"
+      ]
+    },
+    "InputFormatInputKeyValue": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "value": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "OutputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "outputKeyValueLabel": "#/definitions/OutputFormatOutputKeyValueLabel",
+          "outputIdLabel": "#/definitions/OutputFormatOutputIdLabel"
+        }
+      },
+      "required": [
+        "type",
+        "keyLabel",
+        "idLabel"
+      ]
+    },
+    "OutputFormatOutputKeyValueLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "keyLabel": {
+              "type": "string"
+            },
+            "valueLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "OutputFormatOutputIdLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "idLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "FileDetails": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "lineCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileName",
+        "lineCount"
+      ]
+    },
+    "OutputMetadata": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "batch": "#/definitions/OutputMetadataBatch",
+          "streaming": "#/definitions/OutputMetadataStreaming"
+        }
+      },
+      "required": [
+        "type",
+        "fileDetails",
+        "totalOutputSize",
+        "totalDistributionRecords",
+        "distributionStartedAt",
+        "distributionFinishedAt"
+      ]
+    },
+    "OutputMetadataBatch": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputMetadata"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fileDetails": {
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/FileDetails"
+              },
+              "type": "array"
+            },
+            "totalOutputSize": {
+              "description": "Total size of the distributed data in bytes",
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalDistributionRecords": {
+              "description": "The number of distribution records in the file initially.",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "OutputMetadataStreaming": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputMetadata"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "distributionStartedAt": {
+              "type": "string",
+              "format": "ISO8601 UTC date-time",
+              "example": "2019-04-13T03:35:34Z"
+            },
+            "distributionFinishedAt": {
+              "type": "string",
+              "format": "ISO8601 UTC date-time",
+              "example": "2019-04-13T03:35:34Z"
+            },
+            "totalDistributionRecords": {
+              "description": "The number of distribution records in the file initially.",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

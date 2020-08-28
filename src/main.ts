@@ -12,10 +12,11 @@ import StripGen from "./genstripped"
 import SwagGen from "./genswagger"
 import { clean, readFile, writeFile } from "./parse"
 import { IRules } from "./rules"
+import JsonSchemaGen from "./jsonschemagen"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v2.0.2"
+export const VERSION = "v2.1.0"
 
 // parse the cmd line
 const args = yargs
@@ -97,6 +98,15 @@ const args = yargs
         type: "boolean",
         describe:
             "Force allOf to be generated for AsyncAPI (breaks the viewer but works better for code generation)"
+    })
+    .option("jsonschema", {
+        type: "string",
+        describe:
+            "Create a json schema & use the definition name as the root, output will be copied to clipboard. Use 'noroot' if you just want definitions"
+    })
+    .option("followresources", {
+        type: "boolean",
+        describe: "Use resource definitions when making a JSON schema"
     })
     .check((arg) => {
         if (arg._.length < 1) {
@@ -212,6 +222,25 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
                 }
             }
             return yml
+        } else if (args.jsonschema) {
+            // generate json schema
+            const jsonSchema = new JsonSchemaGen(
+                allFiles,
+                rules,
+                args.env || "PROD",
+                args.vars,
+                true,
+                false,
+                false
+            )
+            jsonSchema.root = args.jsonschema
+            jsonSchema.followResources = !!args.followresources
+            const json = JsonSchemaGen.generateSchemaAndStringify(jsonSchema)
+            if (args.stdout) {
+                console.log(json)
+            }
+            tryClip(json, "JSON Schema", silent)
+            return json
         } else {
             // generate swagger
             const swag = new SwagGen(

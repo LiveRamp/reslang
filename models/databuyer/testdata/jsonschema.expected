@@ -1,0 +1,201 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DeliverPurchasedSegmentsInput": {
+      "type": "object",
+      "properties": {
+        "segmentsToDelivers": {
+          "description": "Link to Segment resources via their ids",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "whereToDeliver": {
+          "type": "string",
+          "description": "Link to Destination resource via its id"
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "segmentsToDeliver",
+        "whereToDeliver",
+        "complete"
+      ]
+    },
+    "DeliverPurchasedSegmentsOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "segmentsToDelivers": {
+          "description": "Link to Segment resources via their ids",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "whereToDeliver": {
+          "type": "string",
+          "description": "Link to Destination resource via its id"
+        },
+        "segmentStatuses": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeliveryStatus"
+          },
+          "type": "array"
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "segmentsToDeliver",
+        "whereToDeliver",
+        "segmentStatuses",
+        "complete"
+      ]
+    },
+    "DeliverPurchasedSegmentsMultiResponse": {
+      "type": "object",
+      "properties": {
+        "deliverPurchasedSegments": {
+          "description": "Array of retrieved DeliverPurchasedSegments",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeliverPurchasedSegmentsOutput"
+          }
+        }
+      }
+    },
+    "BulksearchDeliverPurchasedSegmentsOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "BulksearchDeliverPurchasedSegmentsMultiResponse": {
+      "type": "object",
+      "properties": {
+        "searches": {
+          "description": "Array of retrieved DeliverPurchasedSegments::searches",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BulksearchDeliverPurchasedSegmentsOutput"
+          }
+        }
+      }
+    },
+    "BulksearchSegmentOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "BulksearchSegmentMultiResponse": {
+      "type": "object",
+      "properties": {
+        "searches": {
+          "description": "Array of retrieved Segment::searches",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BulksearchSegmentOutput"
+          }
+        }
+      }
+    },
+    "AllDeliveredSegmentsOutput": {
+      "type": "object",
+      "properties": {
+        "segmentStatuses": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DeliveryStatus"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "segmentStatuses"
+      ]
+    },
+    "DeliveryStatus": {
+      "type": "object",
+      "properties": {
+        "updated": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "segment": {
+          "type": "string",
+          "description": "Link to Segment resource via its id"
+        },
+        "status": {
+          "$ref": "#/definitions/DeliveryStatusEnum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "updated",
+        "segment",
+        "status"
+      ]
+    },
+    "DeliveryStatusEnum": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "DELIVERED",
+        "ERROR"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

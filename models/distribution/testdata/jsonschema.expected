@@ -1,0 +1,540 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DestinationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "description": "A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook"
+    },
+    "DestinationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "A Destination (aka DestinationCustomer) is some company that LiveRamp distributes data to. An example is Facebook"
+    },
+    "DestinationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "destinations": {
+          "description": "Array of retrieved Destinations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationOutput"
+          }
+        }
+      }
+    },
+    "DestinationTaxonomyConfigurationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mappingsMacro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "mappingsMacro"
+      ]
+    },
+    "DestinationTaxonomyConfigurationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "mappingsMacro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "mappingsMacro"
+      ]
+    },
+    "DestinationTaxonomyConfigurationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "taxonomyConfigurations": {
+          "description": "Array of retrieved Destination::TaxonomyConfigurations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationTaxonomyConfigurationOutput"
+          }
+        }
+      }
+    },
+    "DestinationIntegrationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mapping": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/IdentifierTypeMapping"
+          },
+          "type": "array"
+        },
+        "taxonomyConfigurationId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::TaxonomyConfiguration resource via [destinationId, taxonomyConfigurationId]"
+        }
+      },
+      "required": [
+        "name",
+        "mapping",
+        "taxonomyConfigurationId"
+      ],
+      "description": "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store"
+    },
+    "DestinationIntegrationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "mapping": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/IdentifierTypeMapping"
+          },
+          "type": "array"
+        },
+        "taxonomyConfigurationId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::TaxonomyConfiguration resource via [destinationId, taxonomyConfigurationId]"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "mapping",
+        "taxonomyConfigurationId"
+      ],
+      "description": "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store"
+    },
+    "DestinationIntegrationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "integrations": {
+          "description": "Array of retrieved Destination::Integrations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationIntegrationOutput"
+          }
+        }
+      }
+    },
+    "IdentifierTypeMapping": {
+      "type": "object",
+      "properties": {
+        "identifierPoolId": {
+          "type": "string",
+          "description": "Link to IdentifierPool resource via its id"
+        },
+        "endpointId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Endpoint resource via [destinationId, endpointId]"
+        }
+      },
+      "required": [
+        "identifierPoolId",
+        "endpointId"
+      ]
+    },
+    "DestinationEndpointInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "packagerId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Packager resource via [destinationId, packagerId]"
+        },
+        "formatterId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Formatter resource via [destinationId, formatterId]"
+        },
+        "delivererId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Deliverer resource via [destinationId, delivererId]"
+        },
+        "endpointProperties": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EndpointProperty"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "packagerId",
+        "formatterId",
+        "delivererId",
+        "endpointProperties"
+      ]
+    },
+    "DestinationEndpointOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "packagerId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Packager resource via [destinationId, packagerId]"
+        },
+        "formatterId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Formatter resource via [destinationId, formatterId]"
+        },
+        "delivererId": {
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "description": "Link to Destination::Deliverer resource via [destinationId, delivererId]"
+        },
+        "endpointProperties": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/EndpointProperty"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "url",
+        "packagerId",
+        "formatterId",
+        "delivererId",
+        "endpointProperties"
+      ]
+    },
+    "DestinationEndpointMultiResponse": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "description": "Array of retrieved Destination::Endpoints",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationEndpointOutput"
+          }
+        }
+      }
+    },
+    "EndpointProperty": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        },
+        "externallyConfigurable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "default",
+        "externallyConfigurable"
+      ]
+    },
+    "DestinationPackagerInput": {
+      "type": "object",
+      "properties": {
+        "macro": {
+          "type": "string"
+        },
+        "compressionType": {
+          "$ref": "#/definitions/CompressionTypeEnum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "macro",
+        "compressionType"
+      ]
+    },
+    "DestinationPackagerOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "macro": {
+          "type": "string"
+        },
+        "compressionType": {
+          "$ref": "#/definitions/CompressionTypeEnum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "macro",
+        "compressionType"
+      ]
+    },
+    "DestinationPackagerMultiResponse": {
+      "type": "object",
+      "properties": {
+        "packagers": {
+          "description": "Array of retrieved Destination::Packagers",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationPackagerOutput"
+          }
+        }
+      }
+    },
+    "DestinationFormatterInput": {
+      "type": "object",
+      "properties": {
+        "macro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "macro"
+      ]
+    },
+    "DestinationFormatterOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "macro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "macro"
+      ]
+    },
+    "DestinationFormatterMultiResponse": {
+      "type": "object",
+      "properties": {
+        "formatters": {
+          "description": "Array of retrieved Destination::Formatters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationFormatterOutput"
+          }
+        }
+      }
+    },
+    "DestinationDelivererInput": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "$ref": "#/definitions/ProtocolEnum",
+          "type": "string"
+        },
+        "macro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol",
+        "macro"
+      ]
+    },
+    "DestinationDelivererOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "protocol": {
+          "$ref": "#/definitions/ProtocolEnum",
+          "type": "string"
+        },
+        "macro": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "protocol",
+        "macro"
+      ]
+    },
+    "DestinationDelivererMultiResponse": {
+      "type": "object",
+      "properties": {
+        "deliverers": {
+          "description": "Array of retrieved Destination::Deliverers",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DestinationDelivererOutput"
+          }
+        }
+      }
+    },
+    "CompressionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "BZ2",
+        "GZIP",
+        "LZO"
+      ]
+    },
+    "ProtocolEnum": {
+      "type": "string",
+      "enum": [
+        "SFTP",
+        "FTP",
+        "FTPS_EXPLICIT",
+        "S3",
+        "FS_COPY",
+        "APP_NEXUS",
+        "NO_OP",
+        "FTPS_IMPLICIT",
+        "IRON_BOX",
+        "YAHOO",
+        "ACXIOM_FULFILLMENT",
+        "FACEBOOK",
+        "LINKEDIN",
+        "GOOGLE",
+        "KBM",
+        "PINTEREST",
+        "GOOGLE_CUSTOMER_MATCH",
+        "LR_FULFILLMENT",
+        "SNAPCHAT",
+        "BIGQUERY",
+        "GOOGLE_STORE_TRANSACTIONS",
+        "AZURE"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

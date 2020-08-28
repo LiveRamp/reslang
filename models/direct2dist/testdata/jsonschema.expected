@@ -1,0 +1,335 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DistributionRequestInput": {
+      "type": "object",
+      "properties": {
+        "destinationEndpointId": {
+          "description": "Link to Destination::Endpoint resource via [destinationId, endpointId]",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array"
+        },
+        "destinationEndpointProperties": {
+          "description": "A map of keys and values needed to use the selected destination endpoint",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "inputDataURL": {
+          "description": "URL of the data to be distributed. Currently, we only support files in GCS",
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "dataMappingConfigs": {
+          "description": "A destination platform might require a particular key/value data field to be passed as segment IDs or as different key/value information than is contained in the input file. An application user can use the mapping configuration parameters to map a given input data field to the output type or values required by the destination platform.\n\nFor each data field that needs to be transformed, use the input parameters “key” and “value” to specify the key/value pair that should be transformed.\n\nTo map a particular input key/value pair into a specific segment ID, use the “destinationSegmentID” output parameter to specify the required value. For example, to map a data field with the key/value of “gender=female” to the segment ID 'MM1234', 'Pets=Dogs' to segment ID 'MM5678', etc.\n\nTo map a particular input key/value pair into different values for the key and value, use the “key” and “value” output parameters to specify the required values. For example, to map a data field with the key/value of “gender=female” to the key/value of 'G=F', 'Pets=Dogs' to 'Pets in Household=Dogs'.\n\nNote: If you need to pass the input key/value data without any transformation, you still need to create entries for those keys in this array. For example, to pass all values of key 'country' without any transformation, do not set 'value' in both the input and output key/value parameters.\n\nNote: This array can only accept upto 500 entries. For requests with more than 500 entries, an error with status code 422 will be returned",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DataMappingConfig"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "destinationEndpointId",
+        "destinationEndpointProperties",
+        "inputDataURL",
+        "dataMappingConfigs"
+      ]
+    },
+    "DistributionRequestOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "destinationEndpointId": {
+          "description": "Link to Destination::Endpoint resource via [destinationId, endpointId]",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array"
+        },
+        "destinationEndpointProperties": {
+          "description": "A map of keys and values needed to use the selected destination endpoint",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "inputDataURL": {
+          "description": "URL of the data to be distributed. Currently, we only support files in GCS",
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "dataMappingConfigs": {
+          "description": "A destination platform might require a particular key/value data field to be passed as segment IDs or as different key/value information than is contained in the input file. An application user can use the mapping configuration parameters to map a given input data field to the output type or values required by the destination platform.\n\nFor each data field that needs to be transformed, use the input parameters “key” and “value” to specify the key/value pair that should be transformed.\n\nTo map a particular input key/value pair into a specific segment ID, use the “destinationSegmentID” output parameter to specify the required value. For example, to map a data field with the key/value of “gender=female” to the segment ID 'MM1234', 'Pets=Dogs' to segment ID 'MM5678', etc.\n\nTo map a particular input key/value pair into different values for the key and value, use the “key” and “value” output parameters to specify the required values. For example, to map a data field with the key/value of “gender=female” to the key/value of 'G=F', 'Pets=Dogs' to 'Pets in Household=Dogs'.\n\nNote: If you need to pass the input key/value data without any transformation, you still need to create entries for those keys in this array. For example, to pass all values of key 'country' without any transformation, do not set 'value' in both the input and output key/value parameters.\n\nNote: This array can only accept upto 500 entries. For requests with more than 500 entries, an error with status code 422 will be returned",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DataMappingConfig"
+          },
+          "type": "array"
+        },
+        "createdAt": {
+          "description": "Datetime in UTC, formatted as ISO-8601, when the request was created",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "status": {
+          "description": "Status of the given DistributionRequest",
+          "$ref": "#/definitions/StatusEnum",
+          "type": "string"
+        },
+        "statusUpdatedAt": {
+          "description": "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "outputMetaData": {
+          "description": "Metadata about the batch output",
+          "$ref": "#/definitions/BatchOutputMetadata",
+          "type": "object"
+        },
+        "distributionType": {
+          "$ref": "#/definitions/DistributionTypeEnum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "destinationEndpointId",
+        "destinationEndpointProperties",
+        "inputDataURL",
+        "dataMappingConfigs",
+        "createdAt",
+        "status",
+        "statusUpdatedAt",
+        "distributionType"
+      ]
+    },
+    "DistributionRequestMultiResponse": {
+      "type": "object",
+      "properties": {
+        "distributionRequests": {
+          "description": "Array of retrieved DistributionRequests",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DistributionRequestOutput"
+          }
+        }
+      }
+    },
+    "DistributionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "BATCH"
+      ]
+    },
+    "SortTypeEnum": {
+      "type": "string",
+      "enum": [
+        "createdAt:asc",
+        "createdAt:desc",
+        "statusUpdatedAt:asc",
+        "statusUpdatedAt:desc"
+      ]
+    },
+    "StatusEnum": {
+      "type": "string",
+      "enum": [
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "DataMappingConfig": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/InputFormat",
+          "type": "object"
+        },
+        "output": {
+          "$ref": "#/definitions/OutputFormat",
+          "type": "object"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ]
+    },
+    "InputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "inputKeyValue": "#/definitions/InputFormatInputKeyValue"
+        }
+      },
+      "required": [
+        "type",
+        "key"
+      ]
+    },
+    "InputFormatInputKeyValue": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "value": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "OutputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "outputKeyValueLabel": "#/definitions/OutputFormatOutputKeyValueLabel",
+          "outputIdLabel": "#/definitions/OutputFormatOutputIdLabel"
+        }
+      },
+      "required": [
+        "type",
+        "keyLabel",
+        "idLabel"
+      ]
+    },
+    "OutputFormatOutputKeyValueLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "keyLabel": {
+              "type": "string"
+            },
+            "valueLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "OutputFormatOutputIdLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "idLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "BatchOutputMetadata": {
+      "type": "object",
+      "properties": {
+        "fileDetails": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/FileDetails"
+          },
+          "type": "array"
+        },
+        "totalOutputSize": {
+          "description": "Total size of the distributed data in bytes",
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalDistributionRecords": {
+          "description": "The number of distribution records in the file initially passed to this endpoint's corresponding POST route. Each record corresponds to an end user targeted by the distribution request",
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileDetails",
+        "totalOutputSize",
+        "totalDistributionRecords"
+      ]
+    },
+    "FileDetails": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "lineCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileName",
+        "lineCount"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

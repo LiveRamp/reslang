@@ -1,0 +1,114 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ConsentFileOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "identifierType": {
+          "$ref": "#/definitions/IdentifierType",
+          "type": "string"
+        },
+        "requestType": {
+          "$ref": "#/definitions/RequestType",
+          "type": "string"
+        },
+        "dataController": {
+          "$ref": "#/definitions/DataController",
+          "type": "object"
+        },
+        "fileUrl": {
+          "type": "string"
+        },
+        "timeStamp": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "identifierType",
+        "requestType",
+        "dataController",
+        "fileUrl",
+        "timeStamp"
+      ]
+    },
+    "ConsentFileMultiResponse": {
+      "type": "object",
+      "properties": {
+        "consentFiles": {
+          "description": "Array of retrieved ConsentFiles",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsentFileOutput"
+          }
+        }
+      }
+    },
+    "DataController": {
+      "type": "object",
+      "properties": {
+        "controllerSpecifier": {
+          "type": "string"
+        },
+        "controllerIdentification": {
+          "type": "string"
+        },
+        "liveRampControlled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "controllerSpecifier",
+        "controllerIdentification",
+        "liveRampControlled"
+      ]
+    },
+    "RequestType": {
+      "type": "string",
+      "enum": [
+        "OPT_OUT",
+        "DELETE"
+      ]
+    },
+    "IdentifierType": {
+      "type": "string",
+      "enum": [
+        "IDENTITY_LINK",
+        "COOKIE",
+        "IDFA",
+        "AAID",
+        "MUID",
+        "CUSTOM_ID"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}
