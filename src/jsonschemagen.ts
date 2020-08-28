@@ -1,5 +1,5 @@
 import SwagGen from "./genswagger"
-import { isResourceLike, isUnion, isStructure } from "./treetypes"
+import { isResourceLike, isUnion, isStructure, isEnum } from "./treetypes"
 
 /**
  * generate jsonschema from the parsed representation
@@ -73,10 +73,17 @@ export default class JsonSchemaGen extends SwagGen {
             }
             // mark the standarderror as included - it is referenced implicitly by some operations
             this.extractDefinition("StandardError").generateInput = true
-        } else {
-            // just mark every struct and union as generated
+        } else if (this.root !== "noroot") {
+            // only follow a single definition
             for (const el of this.defs) {
-                if (isStructure(el) || isUnion(el)) {
+                if (el.name === this.root) {
+                    this.follow(el, visited, includeErrors, 0)
+                }
+            }
+        } else {
+            // include every struct, union, enum
+            for (const el of this.defs) {
+                if (isStructure(el) || isUnion(el) || isEnum(el)) {
                     if (el.name !== "StandardError") {
                         el.generateInput = true
                     }
