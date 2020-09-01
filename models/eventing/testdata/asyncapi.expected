@@ -5,7 +5,7 @@ info:
   version: 0.0.1
 servers:
   PROD:
-    url: 'http://pubsub.google.com'
+    url: 'https://pubsub.googleapis.com/v1/projects/liveramp-events-prod'
     protocol: GOOGLE_PUBSUB
     description: Production Google Pubsub server
 defaultContentType: application/json

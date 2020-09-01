@@ -10,7 +10,7 @@ To see how to specify the servers, look at the following example:
                 environment = PROD
         /events
             "Production Google Pubsub server"
-            server = "http://pubsub.google.com/{prefix}"
+            server = "http://pubsub.google.com"
                 environment = PROD
                 protocol = GOOGLE_PUBSUB
     }
@@ -34,7 +34,7 @@ If you don't specify any servers, the following are included by default from ./s
                 environment = PROD
         /events
             "Production Google Pubsub server"
-            server = "http://pubsub.google.com"
+            server = "https://pubsub.googleapis.com/v1/projects/liveramp-events-prod"
                 environment = PROD
                 protocol = GOOGLE_PUBSUB
     }

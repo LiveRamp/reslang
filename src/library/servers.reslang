@@ -6,7 +6,7 @@ servers {
             environment = PROD
     /events
         "Production Google Pubsub server"
-        server = "http://pubsub.google.com"
+        server = "https://pubsub.googleapis.com/v1/projects/liveramp-events-prod"
             environment = PROD
             protocol = GOOGLE_PUBSUB
 }
