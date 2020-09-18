@@ -51,7 +51,7 @@
         "trailingComma": "none"
     },
     "bin": {
-        "reslang": "reslang"
+        "reslang": "run-reslang"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
