@@ -1,0 +1,6 @@
+
+"API for simple events"
+namespace andrew/simple-example {
+    title "Simple events"
+    version 0.0.1
+}

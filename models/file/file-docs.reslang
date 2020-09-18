@@ -1,0 +1,6 @@
+docs FileDocs {
+
+DirectoryTag = "This is a directory tag
+                and it describes the functions of the directory resources
+"
+}

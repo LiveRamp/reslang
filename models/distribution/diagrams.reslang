@@ -1,0 +1,7 @@
+
+diagram main {
+    /include
+        endpoint.reslang
+        destination.reslang
+        enums.reslang
+}

@@ -1,0 +1,223 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DistributionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "BATCH"
+      ]
+    },
+    "SortTypeEnum": {
+      "type": "string",
+      "enum": [
+        "createdAt:asc",
+        "createdAt:desc",
+        "statusUpdatedAt:asc",
+        "statusUpdatedAt:desc"
+      ]
+    },
+    "StatusEnum": {
+      "type": "string",
+      "enum": [
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "DataMappingConfig": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/InputFormat",
+          "type": "object"
+        },
+        "output": {
+          "$ref": "#/definitions/OutputFormat",
+          "type": "object"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ]
+    },
+    "InputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "inputKeyValue": "#/definitions/InputFormatInputKeyValue"
+        }
+      },
+      "required": [
+        "type",
+        "key"
+      ]
+    },
+    "InputFormatInputKeyValue": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "value": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "InputKeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "key"
+      ]
+    },
+    "OutputFormat": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "outputKeyValueLabel": "#/definitions/OutputFormatOutputKeyValueLabel",
+          "outputIdLabel": "#/definitions/OutputFormatOutputIdLabel"
+        }
+      },
+      "required": [
+        "type",
+        "keyLabel",
+        "idLabel"
+      ]
+    },
+    "OutputFormatOutputKeyValueLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "keyLabel": {
+              "type": "string"
+            },
+            "valueLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "OutputFormatOutputIdLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputFormat"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "idLabel": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "OutputKeyValueLabelStruct": {
+      "type": "object",
+      "properties": {
+        "keyLabel": {
+          "type": "string"
+        },
+        "valueLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "keyLabel"
+      ]
+    },
+    "OutputIdLabelStruct": {
+      "type": "object",
+      "properties": {
+        "idLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idLabel"
+      ]
+    },
+    "BatchOutputMetadata": {
+      "type": "object",
+      "properties": {
+        "fileDetails": {
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/FileDetails"
+          },
+          "type": "array"
+        },
+        "totalOutputSize": {
+          "description": "Total size of the distributed data in bytes",
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalDistributionRecords": {
+          "description": "The number of distribution records in the file initially passed to this endpoint's corresponding POST route. Each record corresponds to an end user targeted by the distribution request",
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileDetails",
+        "totalOutputSize",
+        "totalDistributionRecords"
+      ]
+    },
+    "FileDetails": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "lineCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileName",
+        "lineCount"
+      ]
+    }
+  }
+}

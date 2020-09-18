@@ -1,0 +1,311 @@
+openapi: 3.0.1
+info:
+  title: Testing out some of the stringmap and other advanced attribute modifiers
+  description: Stringmap etc
+  version: 0.1.2
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/stringmaps'
+tags:
+  - name: SMap
+    description: '(resource)  '
+paths:
+  /v1/s-maps:
+    post:
+      tags:
+        - SMap
+      operationId: Create SMap
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SMapInput'
+      responses:
+        '201':
+          description: SMap created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+    get:
+      tags:
+        - SMap
+      operationId: Get SMaps
+      description: ''
+      responses:
+        '200':
+          description: SMaps retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of SMaps returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMapMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the SMaps (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of SMaps to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            default: hello
+            type: string
+  '/v1/s-maps/{id}':
+    get:
+      tags:
+        - SMap
+      operationId: Get SMap
+      description: ''
+      responses:
+        '200':
+          description: SMap retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMapOutput'
+        '404':
+          description: SMap not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - SMap
+      operationId: Modify SMap
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SMapPuttable'
+      responses:
+        '200':
+          description: SMap modified successfully
+        '404':
+          description: SMap not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    SMapInput:
+      type: object
+      properties:
+        name:
+          default: hello
+          type: string
+        map:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        test:
+          default: test
+          type: string
+        key:
+          allOf:
+            - $ref: '#/components/schemas/InputKey'
+          type: object
+        a:
+          default: 123.9
+          type: number
+        c:
+          default: 12/20/1990
+          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+        d:
+          type: integer
+          format: int32
+        f:
+          default: true
+          type: boolean
+      required:
+        - map
+        - key
+        - d
+    SMapOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        map:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        maps:
+          additionalProperties:
+            items:
+              allOf:
+                - $ref: '#/components/schemas/Struct2'
+              type: object
+            type: array
+          items:
+            type: object
+          type: array
+        test:
+          type: string
+        key:
+          allOf:
+            - $ref: '#/components/schemas/InputKey'
+          type: object
+        a:
+          type: number
+        b:
+          type: integer
+          format: int32
+        c:
+          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+        d:
+          type: integer
+          format: int32
+        f:
+          type: boolean
+      required:
+        - id
+        - map
+        - maps
+        - key
+        - b
+        - d
+    SMapPuttable:
+      type: object
+      properties:
+        test:
+          default: test
+          type: string
+        key:
+          allOf:
+            - $ref: '#/components/schemas/InputKey'
+          type: object
+        d:
+          type: integer
+          format: int32
+      required:
+        - key
+        - d
+    SMapMultiResponse:
+      type: object
+      properties:
+        sMaps:
+          description: Array of retrieved SMaps
+          type: array
+          items:
+            $ref: '#/components/schemas/SMapOutput'
+    Struct2:
+      type: object
+      properties:
+        notes:
+          type: string
+        text:
+          type: string
+      required:
+        - notes
+        - text
+    InputKey:
+      type: object
+      properties:
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          num: '#/components/schemas/InputKeyNum'
+          mystruct: '#/components/schemas/InputKeyMystruct'
+          mystruct2: '#/components/schemas/InputKeyMystruct2'
+      required:
+        - type
+        - num
+        - notes
+        - text
+    InputKeyNum:
+      allOf:
+        - $ref: '#/components/schemas/InputKey'
+        - type: object
+          properties:
+            num:
+              type: integer
+              format: int32
+    InputKeyMystruct:
+      allOf:
+        - $ref: '#/components/schemas/InputKey'
+        - type: object
+          properties:
+            notes:
+              type: string
+            text:
+              type: string
+    InputKeyMystruct2:
+      allOf:
+        - $ref: '#/components/schemas/InputKey'
+        - type: object
+          properties:
+            notes:
+              type: string
+            text:
+              type: string
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

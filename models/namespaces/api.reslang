@@ -1,0 +1,5 @@
+"Namespace test"
+namespace {
+    title "Namespace test"
+    version 0.0.11
+}

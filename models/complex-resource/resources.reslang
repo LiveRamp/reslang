@@ -1,0 +1,43 @@
+import simple-resource
+
+"this is a Car resource"
+asset-resource Car {
+	id: int query
+	bought: date output
+	brand: BrandEnum query
+	engine: Specification
+	components: Specification
+	homeGarageId: linked simple-resource.Garage
+	manufacturer: simple-resource.Manufacturer
+	rentedGarageIds: linked simple-resource.Garage[]
+	view: ViewEnum representation
+
+	/operations
+		POST /* this is a get comment */ GET MULTIGET
+}
+
+enum ViewEnum {
+	FULL
+	BRIEF
+}
+	
+"this is a specification!"
+structure Specification {
+	type: string
+	documentation: string
+}
+
+"A wheel is owned by a car"
+subresource Car::Wheel {
+	id: int query
+	radius: double
+
+	/operations
+		GET PUT POST MULTIGET
+}
+
+"Different brands"
+enum BrandEnum {
+	TOYOTA
+	FORD
+}

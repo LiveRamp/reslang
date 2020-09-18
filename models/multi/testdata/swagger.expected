@@ -1,0 +1,350 @@
+openapi: 3.0.1
+info:
+  title: MULTIPOST
+  description: MULTIPOST test
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/multi'
+tags:
+  - name: Aaa
+    description: '(resource)  '
+paths:
+  /v1/aaas:
+    post:
+      tags:
+        - Aaa
+      operationId: Create Aaas
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AaaInput'
+      responses:
+        '207':
+          description: 'Aaa resources processed, statuses in body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+    put:
+      tags:
+        - Aaa
+      operationId: Modify Aaas
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AaaMultiPuttable'
+      responses:
+        '207':
+          description: 'Aaa modifications processed, statuses in body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+    patch:
+      tags:
+        - Aaa
+      operationId: Patch Aaas
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AaaMultiPatchable'
+      responses:
+        '207':
+          description: 'Aaa patches processed, statuses in body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+    delete:
+      tags:
+        - Aaa
+      operationId: Delete Aaas
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+      responses:
+        '207':
+          description: 'Aaa deletes processed, statuses in body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+    get:
+      tags:
+        - Aaa
+      operationId: Get Aaas
+      description: ''
+      responses:
+        '200':
+          description: Aaas retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Aaas returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AaaMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Aaas (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Aaas to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/aaas/{id}':
+    get:
+      tags:
+        - Aaa
+      operationId: Get Aaa
+      description: ''
+      responses:
+        '200':
+          description: Aaa retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AaaOutput'
+        '404':
+          description: Aaa not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - Aaa
+      operationId: Modify Aaa
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AaaPuttable'
+      responses:
+        '200':
+          description: Aaa modified successfully
+        '404':
+          description: Aaa not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    patch:
+      tags:
+        - Aaa
+      operationId: Patch Aaa
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AaaPatchable'
+      responses:
+        '200':
+          description: Aaa patched successfully
+        '404':
+          description: Aaa not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    delete:
+      tags:
+        - Aaa
+      operationId: Delete Aaa
+      description: ''
+      responses:
+        '200':
+          description: Aaa deleted successfully
+        '404':
+          description: Aaa not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    AaaInput:
+      type: object
+      properties:
+        name:
+          type: string
+        data:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Bbb'
+            type: object
+          type: array
+      required:
+        - name
+        - data
+    AaaOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        data:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Bbb'
+            type: object
+          type: array
+      required:
+        - id
+        - name
+        - data
+    AaaPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    AaaMultiPuttable:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    AaaPatchable:
+      type: object
+      properties:
+        name:
+          type: string
+    AaaMultiPatchable:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    AaaMultiResponse:
+      type: object
+      properties:
+        aaas:
+          description: Array of retrieved Aaas
+          type: array
+          items:
+            $ref: '#/components/schemas/AaaOutput'
+    Bbb:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

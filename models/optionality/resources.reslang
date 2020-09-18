@@ -1,0 +1,20 @@
+
+"A Car Garage"
+configuration-resource Car {
+    id: string
+    make: string
+    nitro: string mutable optional-post
+    created: datetime output
+    location: string mutable optional-put
+
+
+	/operations
+		"Get a single car"
+		GET
+        "Create a car"
+		POST
+        "Update a car"
+        PUT
+        "Patch a car"
+        PATCH
+}

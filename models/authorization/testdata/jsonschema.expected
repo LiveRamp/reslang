@@ -1,0 +1,202 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UserInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Organization resource via its id"
+        },
+        "roles": {
+          "description": "Link to Role resources via their ids",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 1,
+          "maxItems": 10,
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "parent",
+        "roles"
+      ]
+    },
+    "UserOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parent": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Organization resource via its id"
+        },
+        "roles": {
+          "description": "Link to Role resources via their ids",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minItems": 1,
+          "maxItems": 10,
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "parent",
+        "roles"
+      ]
+    },
+    "UserMultiResponse": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "description": "Array of retrieved Users",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserOutput"
+          }
+        }
+      }
+    },
+    "OrganizationInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "parentOrganizationId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Organization resource via its id"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "OrganizationOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parentOrganizationId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Organization resource via its id"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "OrganizationMultiResponse": {
+      "type": "object",
+      "properties": {
+        "organizations": {
+          "description": "Array of retrieved Organizations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrganizationOutput"
+          }
+        }
+      }
+    },
+    "RoleInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "parentRoleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Role resource via its id"
+        }
+      },
+      "required": [
+        "name",
+        "parentRoleId"
+      ]
+    },
+    "RoleOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parentRoleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Link to Role resource via its id"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "parentRoleId"
+      ]
+    },
+    "RoleMultiResponse": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "description": "Array of retrieved Roles",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleOutput"
+          }
+        }
+      }
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

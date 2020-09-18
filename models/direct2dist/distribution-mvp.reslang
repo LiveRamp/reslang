@@ -1,0 +1,131 @@
+
+request-resource DistributionRequest {
+    id: string
+
+      "Reference to a destination's endpoints to be used for distributing the data"
+    destinationEndpointId: linked Destination::Endpoint
+      "A map of keys and values needed to use the selected destination endpoint"
+    destinationEndpointProperties: stringmap<string>
+      "URL of the data to be distributed. Currently, we only support files in GCS"
+    inputDataURL: url
+      "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig"
+    dataMappingConfigs: DataMappingConfig[]
+      "Datetime in UTC, formatted as ISO-8601, when the request was created"
+    createdAt: datetime output
+      "Status of the given DistributionRequest"
+    status: StatusEnum output query
+      "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed"
+    statusUpdatedAt: datetime output
+      "Metadata about the batch output"
+    outputMetaData: BatchOutputMetadata output optional  
+    distributionType: DistributionTypeEnum output
+
+    // query only params
+      "Sort key and order. See docs: DistMVP.sort"
+    sort: SortTypeEnum queryonly
+      "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdAfter"
+    createdAfter: datetime queryonly
+      "Filter the list of DistributionRequests by when it was created. See docs: DistMVP.createdBefore"
+    createdBefore: datetime queryonly
+      "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedAfter"
+    statusUpdatedAfter: datetime queryonly
+      "Filter the list of DistributionRequests by when its status was last updated. See docs: DistMVP.statusUpdatedBefore"
+    statusUpdatedBefore: datetime queryonly
+
+    /operations
+          "Get a request. See docs: DistMVP.GET"
+        GET
+          "Use this endpoint to create a new DistributionRequest"
+        POST
+          "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET"
+        MULTIGET
+}
+
+"Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel"
+async action DistributionRequest::Cancel {
+    id: string
+
+    /operations
+    POST
+}
+
+"Use this action to retry a failed DistributionRequest. See docs: DistMVP.Retry"
+async action DistributionRequest::Retry {
+    id: string
+
+    /operations
+    POST
+}
+
+enum DistributionTypeEnum {
+    BATCH
+}
+
+enum SortTypeEnum {
+    createdAt:asc
+    createdAt:desc
+    statusUpdatedAt:asc
+    statusUpdatedAt:desc
+}
+
+enum StatusEnum {
+    QUEUED
+    IN_PROGRESS
+    COMPLETED
+    FAILED
+    CANCELLED
+}
+
+structure DataMappingConfig {
+    input: InputFormat;
+    output: OutputFormat
+}
+
+union InputFormat {
+    inputKeyValue: InputKeyValue
+}
+
+structure InputKeyValue {
+    key: int
+    value: int optional
+}
+
+union OutputFormat {
+    outputKeyValueLabel: OutputKeyValueLabelStruct
+    outputIdLabel: OutputIdLabelStruct
+}
+
+structure OutputKeyValueLabelStruct {
+    keyLabel: string
+    valueLabel: string optional
+}
+
+structure OutputIdLabelStruct {
+    idLabel: string
+}
+
+structure BatchOutputMetadata {
+    fileDetails: FileDetails[]
+    "Total size of the distributed data in bytes"
+    totalOutputSize: int
+    
+    "The number of distribution records in the file initially. See docs: DistMVP.TotalRecords"
+    totalDistributionRecords: int
+}
+
+structure FileDetails {
+    fileName: string
+    lineCount: int
+}
+
+/**
+  future resources, for linking
+  */
+
+future configuration-resource Destination {
+    id: int
+}
+
+future subresource Destination::Endpoint {
+    id: int
+} 

@@ -1,0 +1,213 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TableColumnInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the Column.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "description": "The type of data that will be imported into column.\nNUMERIC: only numeric data/values can be added to this column.\nSTRING: any string data or values can be added to this column.",
+          "$ref": "#/definitions/ColumnTypeEnum",
+          "type": "string"
+        },
+        "enumerated": {
+          "description": "Whether or not the columns's values are enumerated.",
+          "type": "boolean"
+        },
+        "values": {
+          "description": "The list of enum values for the column\nThis is only allowed if enumerated==true",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "enumerated"
+      ]
+    },
+    "TableColumnOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The id of the Column.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the Column.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "description": "The type of data that will be imported into column.\nNUMERIC: only numeric data/values can be added to this column.\nSTRING: any string data or values can be added to this column.",
+          "$ref": "#/definitions/ColumnTypeEnum",
+          "type": "string"
+        },
+        "enumerated": {
+          "description": "Whether or not the columns's values are enumerated.",
+          "type": "boolean"
+        },
+        "values": {
+          "description": "The list of enum values for the column\nThis is only allowed if enumerated==true",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "createdAt": {
+          "description": "Timestamp of when the column was first created.",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "updatedAt": {
+          "description": "Timestamp of the last time the Columns metadata was updated.",
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "enumerated",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "TableColumnPuttable": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "description": "The list of enum values for the column\nThis is only allowed if enumerated==true",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      }
+    },
+    "TableColumnMultiResponse": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "description": "Array of retrieved Table::Columns",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableColumnOutput"
+          }
+        }
+      }
+    },
+    "BulkDisableTableColumnInput": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "description": "IDs of columns to disable.",
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "columns"
+      ]
+    },
+    "ColumnTypeEnum": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "NUMERIC"
+      ]
+    },
+    "ColumnRedirection": {
+      "type": "object",
+      "properties": {
+        "existingColumnURL": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "existingColumnURL"
+      ]
+    },
+    "TableInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "TableOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "TableMultiResponse": {
+      "type": "object",
+      "properties": {
+        "tables": {
+          "description": "Array of retrieved Tables",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableOutput"
+          }
+        }
+      }
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

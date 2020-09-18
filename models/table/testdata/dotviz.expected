@@ -1,0 +1,29 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Table::Column" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Column        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">type: ColumnTypeEnum</td></tr><tr><td align="left">enumerated: boolean</td></tr><tr><td align="left">values: string[1..]</td></tr><tr><td align="left">createdAt: datetime (out)</td></tr><tr><td align="left">updatedAt: datetime (out)</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET PUT</font></td></tr></table>>];
+"Table" -> "Table::Column" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Table::Column::Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
+"Table::Column" -> "Table::Column::Disable" [dir="none" label=< <font point-size="8">action</font> >];
+"Table::Column::Disable" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Disable        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
+"Table::Column" -> "Table::Column::Disable" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"ColumnTypeEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>ColumnTypeEnum  </b></td></tr><hr/><tr><td align="left">STRING</td></tr><tr><td align="left">NUMERIC</td></tr></table>>];
+"ColumnRedirection" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>ColumnRedirection        </b></td></tr>        <hr/><tr><td align="left">existingColumnURL: string</td></tr></table> >];
+"Table" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Table        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET DELETE</font></td></tr></table>>];
+"Table::Column::Disable" -> "Table::Column" [label=< <font point-size="8"> columns[]</font> > arrowhead="vee"];
+}

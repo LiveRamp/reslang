@@ -1,0 +1,411 @@
+openapi: 3.0.1
+info:
+  title: A simple resource API
+  description: This is the description of the API
+  version: 0.1.2
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/simple-resource'
+tags:
+  - name: Garage
+    description: (resource)  This is a description of a garage
+  - name: Foo
+    description: (resource)  A resource with no ID
+  - name: 'Foo::Subfoo'
+    description: '(subresource)  '
+  - name: 'Foo::Subfoo::Subsubfoo'
+    description: '(subresource)  '
+  - name: Bar
+    description: '(resource)  '
+  - name: Test
+    description: '(resource)  '
+paths:
+  /v1/garages:
+    post:
+      tags:
+        - Garage
+      operationId: Create Garage
+      description: Actual POST comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GarageInput'
+      responses:
+        '201':
+          description: Garage created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 10
+                    maxLength: 300
+    get:
+      tags:
+        - Garage
+      operationId: Get Garages
+      description: ''
+      responses:
+        '200':
+          description: Garages retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Garages returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarageMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Garages (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Garages to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  '/v1/garages/{id}':
+    get:
+      tags:
+        - Garage
+      operationId: Get Garage
+      description: ''
+      responses:
+        '200':
+          description: Garage retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarageOutput'
+        '404':
+          description: Garage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+    put:
+      tags:
+        - Garage
+      operationId: Modify Garage
+      description: Actual PUT comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GaragePuttable'
+      responses:
+        '200':
+          description: Garage modified successfully
+        '404':
+          description: Garage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+    delete:
+      tags:
+        - Garage
+      operationId: Delete Garage
+      description: ''
+      responses:
+        '200':
+          description: Garage deleted successfully
+        '404':
+          description: Garage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+  /v1/foo:
+    get:
+      tags:
+        - Foo
+      operationId: Get Foo
+      description: ''
+      responses:
+        '200':
+          description: Foo retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooOutput'
+        '404':
+          description: Foo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+    put:
+      tags:
+        - Foo
+      operationId: Modify Foo
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooPuttable'
+      responses:
+        '200':
+          description: Foo modified successfully
+        '404':
+          description: Foo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+  /v1/bars:
+    get:
+      tags:
+        - Bar
+      operationId: Get Bars
+      description: ''
+      responses:
+        '200':
+          description: Bars retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Bars returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Bars (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Bars to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  /v1/tests:
+    post:
+      tags:
+        - Test
+      operationId: Create Test
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestInput'
+      responses:
+        '201':
+          description: Test created successfully
+components:
+  parameters: {}
+  schemas:
+    GarageInput:
+      type: object
+      properties:
+        name:
+          type: string
+        manufacturer:
+          allOf:
+            - $ref: '#/components/schemas/Manufacturer'
+          type: object
+      required:
+        - name
+        - manufacturer
+      description: This is a description of a garage
+    GarageOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 10
+          maxLength: 300
+        name:
+          type: string
+        manufacturer:
+          allOf:
+            - $ref: '#/components/schemas/Manufacturer'
+          type: object
+      required:
+        - id
+        - name
+        - manufacturer
+      description: This is a description of a garage
+    GaragePuttable:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+      description: This is a description of a garage
+    GarageMultiResponse:
+      type: object
+      properties:
+        garages:
+          description: Array of retrieved Garages
+          type: array
+          items:
+            $ref: '#/components/schemas/GarageOutput'
+    Manufacturer:
+      type: object
+      properties:
+        company:
+          description: this is a company
+          type: string
+          example: This is a company name
+        home:
+          type: string
+          format: url
+          example: 'This is the company website http://{id}}.liveramp.com'
+        homeArray:
+          items:
+            type: string
+            format: url
+            example: Array of urls
+          type: array
+        timeToManufacture:
+          default: P4D
+          type: string
+          format: ISO8601 duration
+          example: P3Y6M4DT12H30M5S
+        other:
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        other2:
+          type: string
+          format: uri
+          example: 'urn:isbn:0-486-27557-4'
+      required:
+        - company
+        - home
+        - homeArray
+        - other
+        - other2
+      description: This is a manufacturer
+    FooOutput:
+      type: object
+      properties:
+        a:
+          type: integer
+          format: int32
+        b:
+          type: string
+      required:
+        - a
+        - b
+      description: A resource with no ID
+    FooPuttable:
+      type: object
+      properties:
+        a:
+          type: integer
+          format: int32
+      required:
+        - a
+      description: A resource with no ID
+    BarOutput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    BarMultiResponse:
+      type: object
+      properties:
+        bars:
+          description: Array of retrieved Bars
+          type: array
+          items:
+            $ref: '#/components/schemas/BarOutput'
+    TestInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

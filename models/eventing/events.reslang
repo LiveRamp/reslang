@@ -1,0 +1,74 @@
+import file
+
+
+"A simple REST resource"
+resource SimpleResource {
+    id: string
+    name: string
+
+    /operations
+        POST GET
+
+    /events
+        POST GET
+}
+
+"A test REST resource"
+resource v2/TestResource {
+    id: int
+    name: string
+    number: int optional
+
+    /operations
+        POST GET
+    /events
+        POST GET completed
+}
+
+"A REST subresource"
+subresource v2/TestResource::Foo {
+    id: int
+    address: string[]
+    
+    /operations
+        POST
+    /events
+        POST
+}
+
+subresource v2/TestResource::Foo2 {
+    id: int
+    address: string[]
+    
+    /operations
+        POST GET
+}
+
+"Event to start"
+event StartSignal {
+    /header
+        name: string min-length: 10 max-length: 100
+        time: datetime
+    /payload
+        name: string
+        address: string[1..10]
+        // foo: value-of v2/TestResource::Foo2 ==> causes event generation to not render correctly, need to find out why
+}
+produces StartSignal
+
+"Event to stop"
+event v3/StopSignal {
+    /header
+        header: Header inline
+    /payload
+        stopped: datetime
+}
+consumes v3/StopSignal
+
+
+produces file.DirectoryDeleteIncomplete
+
+structure Header {
+    a: int
+    b: long
+}

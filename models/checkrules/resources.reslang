@@ -1,0 +1,46 @@
+
+configuration-resource A {
+    id: int
+    name: string
+    asset: linked Asset output;
+    outputName: string
+    /operations
+        POST GET
+}
+
+subresource A::B {
+    id: int
+    name: string
+    /operations
+        POST GET
+}
+
+subresource A::B::C {
+    id: int
+    name: string
+    /operations
+        POST GET
+}
+
+"Start processing"
+sync action A::B::C::start {
+    id: int
+    name: string
+    /operations
+        POST GET
+}
+
+async action A::B::stop {
+    id: int
+    name: string
+    /operations
+        POST GET
+}
+
+subresource A::B::stop::Deep {
+    id: int
+}
+
+asset-resource Asset {
+    id: int
+}

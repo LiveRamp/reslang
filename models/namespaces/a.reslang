@@ -1,0 +1,12 @@
+
+resource A {
+    id: string
+    /operations
+        GET PUT POST
+}
+
+subresource A::Suba {
+    id: string
+    /operations
+        GET PUT POST
+}

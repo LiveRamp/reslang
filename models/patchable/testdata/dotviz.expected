@@ -1,0 +1,14 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Person" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Person        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">address: string</td></tr><tr><td align="left">birthDate: datetime</td></tr><tr><td align="left">flag: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT PATCH GET</font></td></tr></table>>];
+"Extra" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Extra        </b></td></tr>        <hr/><tr><td align="left">notes: string</td></tr></table> >];
+"Person" -> "Extra" [dir="back" arrowtail="diamond" label=< <font point-size="8"> extra</font> >];
+}

@@ -1,0 +1,6 @@
+
+"Milk delivery API"
+namespace {
+    title "Milk delivery example API"
+    version 0.0.1
+}

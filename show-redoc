@@ -1,0 +1,11 @@
+#!/bin/sh
+
+open_site(){
+  sleep 2
+  open http://localhost:8080
+}
+
+pbpaste > /tmp/api.swagger
+
+open_site &
+./node_modules/.bin/redoc-cli serve /tmp/api.swagger

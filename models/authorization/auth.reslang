@@ -1,0 +1,40 @@
+
+resource User {
+    id: int
+    name: string query
+    parent: linked Organization query
+    roles: linked Role[1..10]
+
+    /operations
+        POST GET MULTIGET
+}
+
+sync action User::Suspend {
+    id: int
+    /operations
+        POST
+}
+
+sync action User::Unsuspend {
+    id: int
+    /operations
+        POST
+}
+
+resource Organization {
+    id: int
+    name: string
+    parentOrganizationId: linked Organization optional
+
+    /operations
+        POST GET MULTIGET
+}
+
+resource Role {
+    id: int
+    name: string
+    parentRoleId: linked Role
+
+    /operations
+        POST GET MULTIGET
+}

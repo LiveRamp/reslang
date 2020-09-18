@@ -1,0 +1,11 @@
+diagram users {
+    /includeall
+        users.reslang
+
+    /import
+        Organization
+
+    /exclude
+        DeleteUsers
+        User::Validate
+}

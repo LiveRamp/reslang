@@ -1,0 +1,104 @@
+"This is a serious tag
+A really serious one..."
+section Files and other arrangements {
+	/include
+		FileType DirectoryDeleteRequest::Cancel
+}
+
+"This is a another tag: See docs: FileDocs.DirectoryTag"
+section Directories and other musings {
+	/include
+		Directory DirectoryDeleteRequest
+}
+
+"This models a directory we might create"
+resource Directory {
+	id: uuid query
+	name: string query
+	/operations
+         MULTIGET pagination=after limit=20 GET POST
+}
+
+"This configures up a file type, e.g. .gif"
+resource FileType {
+	id: string
+	type: string query
+	format: string
+	"this is a specification. comment override"
+	specId: linked Specification
+	// no override
+	specId2: linked Specification
+	"array override"
+	specId3: linked Specification[]
+	// no array override
+	specId4: linked Specification[]
+	/operations
+		"Get a FileType"
+		GET 
+			// NOTE: 404 is added automatically
+			"Not Allowed" 405
+				StandardError
+			"Forbidden" 403
+				SpecialError	
+		POST
+		MULTIGET
+}
+
+future resource Specification {
+	id: string
+}
+
+"This models a file in a directory"
+subresource Directory::File {
+	id: int
+	name: string
+	url: string
+	fileTypeId: linked FileType
+
+	contents: string queryonly
+
+    /operations
+        GET POST MULTIGET
+	/events 
+		POST completed
+}
+
+"This models a long running request"
+request-resource DirectoryDeleteRequest {
+	id: int query
+	directoryId: linked Directory
+
+    /operations
+        GET "Can't find anything" 404 SpecialError
+		POST MULTIGET
+	/events
+	    POST
+}
+
+"If a deletion is corrupted, we generate this event"
+event DirectoryDeleteIncomplete {
+	/header
+		timeOfFailure: datetime
+	/payload
+		directory: linked Directory
+		corrupted: boolean
+}
+
+produces DirectoryDeleteIncomplete
+
+"This models an action on a request"
+sync action DirectoryDeleteRequest::Cancel {
+	id: int
+	time: datetime
+	
+    /operations
+		POST 200 DirectoryDeleteRequest::Cancel 
+}
+
+"A non-standard error response"
+structure SpecialError {
+	message: string
+	time: datetime
+	errors: StandardError[]
+}
+

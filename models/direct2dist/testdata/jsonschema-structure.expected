@@ -1,0 +1,47 @@
+{
+  "$id": "https://schemas.liveramp.com/batchoutputmetadata",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "fileDetails": {
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/FileDetails"
+      },
+      "type": "array"
+    },
+    "totalOutputSize": {
+      "description": "Total size of the distributed data in bytes",
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalDistributionRecords": {
+      "description": "The number of distribution records in the file initially passed to this endpoint's corresponding POST route. Each record corresponds to an end user targeted by the distribution request",
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "fileDetails",
+    "totalOutputSize",
+    "totalDistributionRecords"
+  ],
+  "definitions": {
+    "FileDetails": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "lineCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "fileName",
+        "lineCount"
+      ]
+    }
+  }
+}

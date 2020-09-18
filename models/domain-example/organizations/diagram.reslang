@@ -1,0 +1,4 @@
+diagram organizations {
+    /includeAll
+        organizations.reslang
+}

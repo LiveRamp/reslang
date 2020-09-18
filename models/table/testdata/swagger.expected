@@ -1,0 +1,542 @@
+openapi: 3.0.1
+info:
+  title: Table / Column example we were playing around with
+  description: ''
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/table'
+tags:
+  - name: 'Table::Column'
+    description: '(subresource)  '
+  - name: 'Disable Table::Column'
+    description: '(sync action)  '
+  - name: 'Bulk Disable Table::Column'
+    description: '(bulk sync action)  '
+  - name: Table
+    description: '(resource)  '
+paths:
+  '/v1/tables/{tableId}/columns':
+    post:
+      tags:
+        - 'Table::Column'
+      operationId: 'Create Table::Column'
+      description: Create a new column in the provided parent table.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableColumnInput'
+      responses:
+        '201':
+          description: Column created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: The id of the Column.
+                    type: string
+        '303':
+          description: >-
+            A Column with the same type, enumerability, and name already exists
+            in this Table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ColumnRedirection'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Input has invalid semantics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - 'Table::Column'
+      operationId: 'Get Table::Columns'
+      description: Find existing column in the provided parent table
+      responses:
+        '200':
+          description: Columns retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Columns returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableColumnMultiResponse'
+        '404':
+          description: Cannot find table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: offset
+          description: Offset of the Columns (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Columns to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/tables/{tableId}/columns/{id}':
+    get:
+      tags:
+        - 'Table::Column'
+      operationId: 'Get Table::Column'
+      description: Find a single existing column in the provided parent table
+      responses:
+        '200':
+          description: Column retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableColumnOutput'
+        '404':
+          description: Cannot find resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          description: The id of the Column.
+          schema:
+            type: string
+    put:
+      tags:
+        - 'Table::Column'
+      operationId: 'Modify Table::Column'
+      description: >-
+        Modify the attributes of a column in the provided parent table.
+
+        Currently the only supported operation is adding values to enumerated
+        column.
+
+        The list of values passed in will be added to the column's existing set
+        of values.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableColumnPuttable'
+      responses:
+        '200':
+          description: Column modified successfully
+        '404':
+          description: Cannot find resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Input has invalid semantics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          description: The id of the Column.
+          schema:
+            type: string
+  '/v1/tables/{tableId}/columns/{columnId}/actions/disable':
+    post:
+      tags:
+        - 'Disable Table::Column'
+      operationId: 'Disable Table::Column'
+      description: >-
+        Marks a column as 'disabled', which means that it will no longer
+
+        be processed in the table and will no longer have stats calculated for
+        it
+      responses:
+        '200':
+          description: Disable action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: columnId
+          description: Id of parent Column
+          required: true
+          schema:
+            type: string
+  '/v1/tables/{tableId}/columns/actions/disable':
+    post:
+      tags:
+        - 'Bulk Disable Table::Column'
+      operationId: 'Bulk Disable Table::Column'
+      description: >-
+        Marks the set of columns 'disabled', which means that they will no
+        longer
+
+        be processed in the table
+
+        and will no longer have stats calculated for them
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkDisableTableColumnInput'
+      responses:
+        '200':
+          description: Disable action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: tableId
+          description: Id of parent Table
+          required: true
+          schema:
+            type: string
+  /v1/tables:
+    post:
+      tags:
+        - Table
+      operationId: Create Table
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableInput'
+      responses:
+        '201':
+          description: Table created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+    get:
+      tags:
+        - Table
+      operationId: Get Tables
+      description: ''
+      responses:
+        '200':
+          description: Tables retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Tables returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Tables (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Tables to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/tables/{id}':
+    get:
+      tags:
+        - Table
+      operationId: Get Table
+      description: ''
+      responses:
+        '200':
+          description: Table retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableOutput'
+        '404':
+          description: Table not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    delete:
+      tags:
+        - Table
+      operationId: Delete Table
+      description: ''
+      responses:
+        '200':
+          description: Table deleted successfully
+        '404':
+          description: Table not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    TableColumnInput:
+      type: object
+      properties:
+        name:
+          description: The name of the Column.
+          type: string
+          maxLength: 255
+        type:
+          description: |-
+            The type of data that will be imported into column.
+            NUMERIC: only numeric data/values can be added to this column.
+            STRING: any string data or values can be added to this column.
+          allOf:
+            - $ref: '#/components/schemas/ColumnTypeEnum'
+          type: string
+        enumerated:
+          description: Whether or not the columns's values are enumerated.
+          type: boolean
+        values:
+          description: |-
+            The list of enum values for the column
+            This is only allowed if enumerated==true
+          items:
+            type: string
+          minItems: 1
+          type: array
+      required:
+        - name
+        - type
+        - enumerated
+    TableColumnOutput:
+      type: object
+      properties:
+        id:
+          description: The id of the Column.
+          type: string
+        name:
+          description: The name of the Column.
+          type: string
+          maxLength: 255
+        type:
+          description: |-
+            The type of data that will be imported into column.
+            NUMERIC: only numeric data/values can be added to this column.
+            STRING: any string data or values can be added to this column.
+          allOf:
+            - $ref: '#/components/schemas/ColumnTypeEnum'
+          type: string
+        enumerated:
+          description: Whether or not the columns's values are enumerated.
+          type: boolean
+        values:
+          description: |-
+            The list of enum values for the column
+            This is only allowed if enumerated==true
+          items:
+            type: string
+          minItems: 1
+          type: array
+        createdAt:
+          description: Timestamp of when the column was first created.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          description: Timestamp of the last time the Columns metadata was updated.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - name
+        - type
+        - enumerated
+        - createdAt
+        - updatedAt
+    TableColumnPuttable:
+      type: object
+      properties:
+        values:
+          description: |-
+            The list of enum values for the column
+            This is only allowed if enumerated==true
+          items:
+            type: string
+          minItems: 1
+          type: array
+    TableColumnMultiResponse:
+      type: object
+      properties:
+        columns:
+          description: 'Array of retrieved Table::Columns'
+          type: array
+          items:
+            $ref: '#/components/schemas/TableColumnOutput'
+    BulkDisableTableColumnInput:
+      type: object
+      properties:
+        columns:
+          description: IDs of columns to disable.
+          items:
+            items:
+              type: string
+            type: array
+            minItems: 2
+            maxItems: 2
+          type: array
+      required:
+        - columns
+    ColumnTypeEnum:
+      type: string
+      enum:
+        - STRING
+        - NUMERIC
+    ColumnRedirection:
+      type: object
+      properties:
+        existingColumnURL:
+          type: string
+      required:
+        - existingColumnURL
+    TableInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    TableOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    TableMultiResponse:
+      type: object
+      properties:
+        tables:
+          description: Array of retrieved Tables
+          type: array
+          items:
+            $ref: '#/components/schemas/TableOutput'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

@@ -1,0 +1,56 @@
+
+
+request-resource DeliverMilk {
+    id: string query
+
+    milkToDeliver: linked Milk[]
+    whereToDeliver: linked Address
+    milkStatuses: DeliveryStatus[] output
+    complete: boolean
+
+    /operations
+        POST GET MULTIGET
+    /events
+        POST GET
+}
+
+
+sync bulk action DeliverMilk::search {
+    id: string
+    name: string query
+    /operations
+        MULTIGET
+}
+
+sync bulk action Milk::search {
+    id: string
+    name: string query
+
+    /operations
+        MULTIGET
+}
+
+singleton resource AllDeliveredMilk {
+    milkStatuses: DeliveryStatus[]
+
+    /operations
+        GET
+}
+
+structure DeliveryStatus {
+   updated: datetime
+   milk: linked Milk
+   status: DeliveryStatusEnum
+}
+
+enum DeliveryStatusEnum {
+    PENDING DELIVERED ERROR
+}
+
+future resource Milk {
+    id: string
+}
+
+future resource Address {
+    id: string
+}

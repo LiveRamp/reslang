@@ -1,0 +1,430 @@
+[
+  {
+    "namespace": [
+      {
+        "category": "namespace",
+        "comment": "This is a simple server block test",
+        "title": "Server block test",
+        "version": "0.0.1"
+      }
+    ],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [
+      {
+        "category": "diagram",
+        "diagram": "main",
+        "include": [
+          {
+            "module": "servers",
+            "parents": [],
+            "short": "reslang",
+            "name": "servers.reslang",
+            "parentShort": "",
+            "parentName": ""
+          }
+        ],
+        "groups": []
+      }
+    ],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [
+      {
+        "category": "import",
+        "import": "servers2"
+      }
+    ],
+    "servers": [
+      {
+        "category": "servers",
+        "rest": [
+          {
+            "comment": "This is the test server",
+            "url": "http://test-api.liveramp.com:8080",
+            "environment": "TEST"
+          },
+          {
+            "comment": "This is the prod server",
+            "url": "http://prod-api.liveramp.com:8080",
+            "environment": "PROD"
+          }
+        ],
+        "events": [
+          {
+            "comment": "This is the standard event server",
+            "url": "http://pubsub.google.com:1020",
+            "environment": "PROD",
+            "protocol": "AQMP"
+          }
+        ]
+      }
+    ],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": false,
+        "type": "resource",
+        "attributes": [
+          {
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "name",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "POST",
+            "options": [],
+            "errors": []
+          },
+          {
+            "operation": "GET",
+            "options": [],
+            "errors": []
+          }
+        ],
+        "parents": [],
+        "short": "Test",
+        "name": "Test",
+        "parentShort": "",
+        "parentName": "",
+        "namespace": "",
+        "secondary": false,
+        "file": "servers.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [
+      {
+        "category": "namespace",
+        "comment": "Exists just to test that another module can import this without problems, even though it has a server block",
+        "title": "Server block test2",
+        "version": "0.0.1"
+      }
+    ],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [
+      {
+        "category": "servers",
+        "rest": [
+          {
+            "comment": "This is the test server",
+            "url": "http://www.liveramp.com:{port:8080}",
+            "environment": "TEST"
+          },
+          {
+            "comment": "This is the prod server",
+            "url": "http://www.liveramp.com:{port:8080}",
+            "environment": "PROD"
+          }
+        ],
+        "events": [
+          {
+            "comment": "This is the standard event server",
+            "url": "http://www.google.com:{port:1020}",
+            "environment": "PROD",
+            "protocol": "AQMP"
+          }
+        ]
+      }
+    ],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "structure",
+        "type": "structure",
+        "parents": [],
+        "short": "StandardError",
+        "attributes": [
+          {
+            "name": "httpStatus",
+            "comment": "HTTP error status code for this problem",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "errorCode",
+            "comment": "Service specific error code, more granular",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "message",
+            "comment": "General, human readable error message",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "name": "servers2.StandardError",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": true,
+        "file": "local.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "structure",
+        "type": "structure",
+        "parents": [],
+        "short": "StandardError",
+        "attributes": [
+          {
+            "name": "httpStatus",
+            "comment": "HTTP error status code for this problem",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "errorCode",
+            "comment": "Service specific error code, more granular",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "message",
+            "comment": "General, human readable error message",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "name": "StandardError",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": false,
+        "file": "local.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  }
+]

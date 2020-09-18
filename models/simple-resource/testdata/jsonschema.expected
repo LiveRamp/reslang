@@ -1,0 +1,204 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "GarageInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "$ref": "#/definitions/Manufacturer",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "manufacturer"
+      ],
+      "description": "This is a description of a garage"
+    },
+    "GarageOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "name": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "$ref": "#/definitions/Manufacturer",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "manufacturer"
+      ],
+      "description": "This is a description of a garage"
+    },
+    "GaragePuttable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "description": "This is a description of a garage"
+    },
+    "GarageMultiResponse": {
+      "type": "object",
+      "properties": {
+        "garages": {
+          "description": "Array of retrieved Garages",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GarageOutput"
+          }
+        }
+      }
+    },
+    "Manufacturer": {
+      "type": "object",
+      "properties": {
+        "company": {
+          "description": "this is a company",
+          "type": "string",
+          "example": "This is a company name"
+        },
+        "home": {
+          "type": "string",
+          "format": "url",
+          "example": "This is the company website http://{id}}.liveramp.com"
+        },
+        "homeArray": {
+          "items": {
+            "type": "string",
+            "format": "url",
+            "example": "Array of urls"
+          },
+          "type": "array"
+        },
+        "timeToManufacture": {
+          "default": "P4D",
+          "type": "string",
+          "format": "ISO8601 duration",
+          "example": "P3Y6M4DT12H30M5S"
+        },
+        "other": {
+          "type": "string",
+          "format": "url",
+          "example": "https://www.domain.com (url)"
+        },
+        "other2": {
+          "type": "string",
+          "format": "uri",
+          "example": "urn:isbn:0-486-27557-4"
+        }
+      },
+      "required": [
+        "company",
+        "home",
+        "homeArray",
+        "other",
+        "other2"
+      ],
+      "description": "This is a manufacturer"
+    },
+    "FooOutput": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "b": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "description": "A resource with no ID"
+    },
+    "FooPuttable": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "a"
+      ],
+      "description": "A resource with no ID"
+    },
+    "BarOutput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "BarMultiResponse": {
+      "type": "object",
+      "properties": {
+        "bars": {
+          "description": "Array of retrieved Bars",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BarOutput"
+          }
+        }
+      }
+    },
+    "TestInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

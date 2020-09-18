@@ -1,0 +1,57 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Destination" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name</font></td></tr></table>>];
+"Destination::TaxonomyConfiguration" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>TaxonomyConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">mappingsMacro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET id</font></td></tr></table>>];
+"Destination" -> "Destination::TaxonomyConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Destination::Integration" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Integration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET name</font></td></tr></table>>];
+"Destination" -> "Destination::Integration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"IdentifierTypeMapping" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>IdentifierTypeMapping        </b></td></tr>        </table> >];
+"IdentifierPool" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>IdentifierPool        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
+"Destination::Endpoint" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Endpoint        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET name</font></td></tr></table>>];
+"Destination" -> "Destination::Endpoint" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"EndpointProperty" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>EndpointProperty        </b></td></tr>        <hr/><tr><td align="left">name: string</td></tr><tr><td align="left">default: string</td></tr><tr><td align="left">externallyConfigurable: boolean</td></tr></table> >];
+"Destination::Packager" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Packager        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="left">compressionType: CompressionTypeEnum</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
+"Destination" -> "Destination::Packager" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Destination::Formatter" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Formatter        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
+"Destination" -> "Destination::Formatter" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Destination::Deliverer" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Deliverer        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">protocol: ProtocolEnum</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
+"Destination" -> "Destination::Deliverer" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"CompressionTypeEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>CompressionTypeEnum  </b></td></tr><hr/><tr><td align="left">NONE</td></tr><tr><td align="left">BZ2</td></tr><tr><td align="left">GZIP</td></tr><tr><td align="left">LZO</td></tr></table>>];
+"ProtocolEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>ProtocolEnum  </b></td></tr><hr/><tr><td align="left">SFTP</td></tr><tr><td align="left">FTP</td></tr><tr><td align="left">FTPS_EXPLICIT</td></tr><tr><td align="left">S3</td></tr><tr><td align="left">FS_COPY</td></tr><tr><td align="left">APP_NEXUS</td></tr><tr><td align="left">NO_OP</td></tr><tr><td align="left">FTPS_IMPLICIT</td></tr><tr><td align="left">IRON_BOX</td></tr><tr><td align="left">YAHOO</td></tr><tr><td align="left">ACXIOM_FULFILLMENT</td></tr><tr><td align="left">FACEBOOK</td></tr><tr><td align="left">LINKEDIN</td></tr><tr><td align="left">GOOGLE</td></tr><tr><td align="left">KBM</td></tr><tr><td align="left">PINTEREST</td></tr><tr><td align="left">GOOGLE_CUSTOMER_MATCH</td></tr><tr><td align="left">LR_FULFILLMENT</td></tr><tr><td align="left">SNAPCHAT</td></tr><tr><td align="left">BIGQUERY</td></tr><tr><td align="left">GOOGLE_STORE_TRANSACTIONS</td></tr><tr><td align="left">AZURE</td></tr></table>>];
+"Destination::Integration" -> "IdentifierTypeMapping" [dir="back" arrowtail="diamond" label=< <font point-size="8"> mapping[]</font> >];
+"Destination::Integration" -> "Destination::TaxonomyConfiguration" [label=< <font point-size="8"> taxonomyConfigurationId</font> > arrowhead="vee"];
+"IdentifierTypeMapping" -> "IdentifierPool" [label=< <font point-size="8"> identifierPoolId</font> > arrowhead="vee"];
+"IdentifierTypeMapping" -> "Destination::Endpoint" [label=< <font point-size="8"> endpointId</font> > arrowhead="vee"];
+"Destination::Endpoint" -> "Destination::Packager" [label=< <font point-size="8"> packagerId</font> > arrowhead="vee"];
+"Destination::Endpoint" -> "Destination::Formatter" [label=< <font point-size="8"> formatterId</font> > arrowhead="vee"];
+"Destination::Endpoint" -> "Destination::Deliverer" [label=< <font point-size="8"> delivererId</font> > arrowhead="vee"];
+"Destination::Endpoint" -> "EndpointProperty" [dir="back" arrowtail="diamond" label=< <font point-size="8"> endpointProperties[]</font> >];
+}

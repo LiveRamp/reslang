@@ -1,0 +1,13 @@
+
+resource Aaa {
+    id: int
+    name: string mutable
+    data: Bbb[]
+
+    /operations
+        MULTIPOST GET MULTIGET PUT MULTIPUT PATCH MULTIPATCH DELETE MULTIDELETE
+}
+
+structure Bbb {
+    name: string
+}

@@ -1,0 +1,11 @@
+// This file is included locally in every directory/module by default
+
+structure StandardError {
+        "HTTP error status code for this problem"
+        httpStatus: int
+        "Service specific error code, more granular"
+        errorCode: string
+        "General, human readable error message"
+        message: string
+}
+

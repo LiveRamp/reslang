@@ -1,0 +1,45 @@
+{
+    "name": "reslang-syntax-highlighting",
+    "displayName": "reslang-syntax-highlighting",
+    "description": "Highlight reslang keywords to make dev easier! ",
+    "publisher": "amcveighvscodeextensions",
+    "author": "Matt Connors",
+    "version": "0.0.4",
+    "repository": "https://github.com/LiveRamp/reslang",
+    "engines": {
+        "vscode": "^1.44.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "reslang",
+                "aliases": [
+                    "Reslang",
+                    "reslang"
+                ],
+                "extensions": [
+                    ".reslang"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "reslang",
+                "scopeName": "source.reslang",
+                "path": "./syntaxes/reslang.tmLanguage.json"
+            }
+        ]
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "vsce": "^1.75.0"
+    },
+    "scripts": {
+        "package": "./node_modules/.bin/vsce package",
+        "publish-extension": "./node_modules/.bin/vsce publish"
+    }
+}

@@ -1,0 +1,5 @@
+"Example for REST API introduction"
+namespace {
+	title "API for describing organizations and roles"
+	version 1.0.0
+}

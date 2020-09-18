@@ -1,0 +1,31 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Garage" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Garage        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST GET DELETE MULTIGET id name</font></td></tr></table>>];
+"Manufacturer" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Manufacturer        </b></td></tr>        <hr/><tr><td align="left">company: string</td></tr><tr><td align="left">home: url</td></tr><tr><td align="left">homeArray: url[]</td></tr><tr><td align="left">timeToManufacture: duration</td></tr><tr><td align="left">other: url</td></tr><tr><td align="left">other2: uri</td></tr></table> >];
+"Foo" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr></table>>];
+"Foo::Subfoo" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Subfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
+"Foo" -> "Foo::Subfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Foo::Subfoo::Subsubfoo" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Subsubfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
+"Foo::Subfoo" -> "Foo::Subfoo::Subsubfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"Bar" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr></table>>];
+"Test" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Test        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];
+"Garage" -> "Manufacturer" [dir="back" arrowtail="diamond" label=< <font point-size="8"> manufacturer</font> >];
+}

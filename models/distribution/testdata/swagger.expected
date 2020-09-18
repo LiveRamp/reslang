@@ -1,0 +1,1375 @@
+openapi: 3.0.1
+info:
+  title: Distribution API
+  description: >-
+    Early exploration of the LiveRamp distribution API - very heavily superseded
+    now
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/distribution'
+tags:
+  - name: Destination
+    description: >-
+      (configuration)  A Destination (aka DestinationCustomer) is some company
+      that LiveRamp distributes data to. An example is Facebook
+  - name: 'Destination::TaxonomyConfiguration'
+    description: '(subresource)  '
+  - name: 'Destination::Integration'
+    description: >-
+      (subresource)  An Integration (aka IntegrationGroup) is a particular
+      configuration for sending data to a destination. It specifies the
+      indentifier types, the endpoint that it is going to, and the taxonomy. An
+      example is Facebook UK data store
+  - name: 'Destination::Endpoint'
+    description: '(subresource)  '
+  - name: 'Destination::Packager'
+    description: '(subresource)  '
+  - name: 'Destination::Formatter'
+    description: '(subresource)  '
+  - name: 'Destination::Deliverer'
+    description: '(subresource)  '
+paths:
+  /v1/destinations:
+    post:
+      tags:
+        - Destination
+      operationId: Create Destination
+      description: Create a new destination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationInput'
+      responses:
+        '201':
+          description: Destination created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+    get:
+      tags:
+        - Destination
+      operationId: Get Destinations
+      description: Get all destinations
+      responses:
+        '200':
+          description: Destinations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Destinations returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Destinations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Destinations to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  '/v1/destinations/{id}':
+    get:
+      tags:
+        - Destination
+      operationId: Get Destination
+      description: Retrieve a current destination
+      responses:
+        '200':
+          description: Destination retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationOutput'
+        '404':
+          description: Destination not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/taxonomy-configurations':
+    post:
+      tags:
+        - 'Destination::TaxonomyConfiguration'
+      operationId: 'Create Destination::TaxonomyConfiguration'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationTaxonomyConfigurationInput'
+      responses:
+        '201':
+          description: TaxonomyConfiguration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::TaxonomyConfiguration'
+      operationId: 'Get Destination::TaxonomyConfigurations'
+      description: ''
+      responses:
+        '200':
+          description: TaxonomyConfigurations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of TaxonomyConfigurations returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the TaxonomyConfigurations (starting from 0) to include in
+            the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of TaxonomyConfigurations to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/taxonomy-configurations/{id}':
+    get:
+      tags:
+        - 'Destination::TaxonomyConfiguration'
+      operationId: 'Get Destination::TaxonomyConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: TaxonomyConfiguration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationTaxonomyConfigurationOutput'
+        '404':
+          description: TaxonomyConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - 'Destination::TaxonomyConfiguration'
+      operationId: 'Modify Destination::TaxonomyConfiguration'
+      description: ''
+      responses:
+        '200':
+          description: TaxonomyConfiguration modified successfully
+        '404':
+          description: TaxonomyConfiguration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/integrations':
+    post:
+      tags:
+        - 'Destination::Integration'
+      operationId: 'Create Destination::Integration'
+      description: Create an integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationIntegrationInput'
+      responses:
+        '201':
+          description: Integration created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::Integration'
+      operationId: 'Get Destination::Integrations'
+      description: Retrieve many integrations
+      responses:
+        '200':
+          description: Integrations retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Integrations returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Integrations (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Integrations to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  '/v1/destinations/{destinationId}/integrations/{id}':
+    get:
+      tags:
+        - 'Destination::Integration'
+      operationId: 'Get Destination::Integration'
+      description: Retrieve an integration
+      responses:
+        '200':
+          description: Integration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationIntegrationOutput'
+        '404':
+          description: Integration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - 'Destination::Integration'
+      operationId: 'Modify Destination::Integration'
+      description: Alter an integration
+      responses:
+        '200':
+          description: Integration modified successfully
+        '404':
+          description: Integration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/endpoints':
+    post:
+      tags:
+        - 'Destination::Endpoint'
+      operationId: 'Create Destination::Endpoint'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationEndpointInput'
+      responses:
+        '201':
+          description: Endpoint created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::Endpoint'
+      operationId: 'Get Destination::Endpoints'
+      description: ''
+      responses:
+        '200':
+          description: Endpoints retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Endpoints returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationEndpointMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Endpoints (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Endpoints to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  '/v1/destinations/{destinationId}/endpoints/{id}':
+    get:
+      tags:
+        - 'Destination::Endpoint'
+      operationId: 'Get Destination::Endpoint'
+      description: ''
+      responses:
+        '200':
+          description: Endpoint retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationEndpointOutput'
+        '404':
+          description: Endpoint or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+    put:
+      tags:
+        - 'Destination::Endpoint'
+      operationId: 'Modify Destination::Endpoint'
+      description: ''
+      responses:
+        '200':
+          description: Endpoint modified successfully
+        '404':
+          description: Endpoint or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/packagers':
+    post:
+      tags:
+        - 'Destination::Packager'
+      operationId: 'Create Destination::Packager'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationPackagerInput'
+      responses:
+        '201':
+          description: Packager created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::Packager'
+      operationId: 'Get Destination::Packagers'
+      description: ''
+      responses:
+        '200':
+          description: Packagers retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Packagers returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationPackagerMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Packagers (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Packagers to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/destinations/{destinationId}/packagers/{id}':
+    get:
+      tags:
+        - 'Destination::Packager'
+      operationId: 'Get Destination::Packager'
+      description: ''
+      responses:
+        '200':
+          description: Packager retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationPackagerOutput'
+        '404':
+          description: Packager or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/formatters':
+    post:
+      tags:
+        - 'Destination::Formatter'
+      operationId: 'Create Destination::Formatter'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationFormatterInput'
+      responses:
+        '201':
+          description: Formatter created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::Formatter'
+      operationId: 'Get Destination::Formatters'
+      description: ''
+      responses:
+        '200':
+          description: Formatters retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Formatters returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationFormatterMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Formatters (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Formatters to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/destinations/{destinationId}/formatters/{id}':
+    get:
+      tags:
+        - 'Destination::Formatter'
+      operationId: 'Get Destination::Formatter'
+      description: ''
+      responses:
+        '200':
+          description: Formatter retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationFormatterOutput'
+        '404':
+          description: Formatter or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/destinations/{destinationId}/deliverers':
+    post:
+      tags:
+        - 'Destination::Deliverer'
+      operationId: 'Create Destination::Deliverer'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationDelivererInput'
+      responses:
+        '201':
+          description: Deliverer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+    get:
+      tags:
+        - 'Destination::Deliverer'
+      operationId: 'Get Destination::Deliverers'
+      description: ''
+      responses:
+        '200':
+          description: Deliverers retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Deliverers returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationDelivererMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: offset
+          description: >-
+            Offset of the Deliverers (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Deliverers to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  '/v1/destinations/{destinationId}/deliverers/{id}':
+    get:
+      tags:
+        - 'Destination::Deliverer'
+      operationId: 'Get Destination::Deliverer'
+      description: ''
+      responses:
+        '200':
+          description: Deliverer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationDelivererOutput'
+        '404':
+          description: Deliverer or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: destinationId
+          description: Id of parent Destination
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    DestinationInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+      description: >-
+        A Destination (aka DestinationCustomer) is some company that LiveRamp
+        distributes data to. An example is Facebook
+    DestinationOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+      description: >-
+        A Destination (aka DestinationCustomer) is some company that LiveRamp
+        distributes data to. An example is Facebook
+    DestinationMultiResponse:
+      type: object
+      properties:
+        destinations:
+          description: Array of retrieved Destinations
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationOutput'
+    DestinationTaxonomyConfigurationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        mappingsMacro:
+          type: string
+      required:
+        - name
+        - mappingsMacro
+    DestinationTaxonomyConfigurationOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        mappingsMacro:
+          type: string
+      required:
+        - id
+        - name
+        - mappingsMacro
+    DestinationTaxonomyConfigurationMultiResponse:
+      type: object
+      properties:
+        taxonomyConfigurations:
+          description: 'Array of retrieved Destination::TaxonomyConfigurations'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationTaxonomyConfigurationOutput'
+    DestinationIntegrationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        mapping:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/IdentifierTypeMapping'
+            type: object
+          type: array
+        taxonomyConfigurationId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::TaxonomyConfiguration resource via
+            [destinationId, taxonomyConfigurationId]
+      required:
+        - name
+        - mapping
+        - taxonomyConfigurationId
+      description: >-
+        An Integration (aka IntegrationGroup) is a particular configuration for
+        sending data to a destination. It specifies the indentifier types, the
+        endpoint that it is going to, and the taxonomy. An example is Facebook
+        UK data store
+    DestinationIntegrationOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        mapping:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/IdentifierTypeMapping'
+            type: object
+          type: array
+        taxonomyConfigurationId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::TaxonomyConfiguration resource via
+            [destinationId, taxonomyConfigurationId]
+      required:
+        - id
+        - name
+        - mapping
+        - taxonomyConfigurationId
+      description: >-
+        An Integration (aka IntegrationGroup) is a particular configuration for
+        sending data to a destination. It specifies the indentifier types, the
+        endpoint that it is going to, and the taxonomy. An example is Facebook
+        UK data store
+    DestinationIntegrationMultiResponse:
+      type: object
+      properties:
+        integrations:
+          description: 'Array of retrieved Destination::Integrations'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationIntegrationOutput'
+    IdentifierTypeMapping:
+      type: object
+      properties:
+        identifierPoolId:
+          type: string
+          description: Link to IdentifierPool resource via its id
+        endpointId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Endpoint resource via [destinationId,
+            endpointId]
+      required:
+        - identifierPoolId
+        - endpointId
+    DestinationEndpointInput:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        packagerId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Packager resource via [destinationId,
+            packagerId]
+        formatterId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Formatter resource via [destinationId,
+            formatterId]
+        delivererId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Deliverer resource via [destinationId,
+            delivererId]
+        endpointProperties:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EndpointProperty'
+            type: object
+          type: array
+      required:
+        - name
+        - url
+        - packagerId
+        - formatterId
+        - delivererId
+        - endpointProperties
+    DestinationEndpointOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        url:
+          type: string
+        packagerId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Packager resource via [destinationId,
+            packagerId]
+        formatterId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Formatter resource via [destinationId,
+            formatterId]
+        delivererId:
+          items:
+            type: integer
+            format: int32
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: >-
+            Link to Destination::Deliverer resource via [destinationId,
+            delivererId]
+        endpointProperties:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/EndpointProperty'
+            type: object
+          type: array
+      required:
+        - id
+        - name
+        - url
+        - packagerId
+        - formatterId
+        - delivererId
+        - endpointProperties
+    DestinationEndpointMultiResponse:
+      type: object
+      properties:
+        endpoints:
+          description: 'Array of retrieved Destination::Endpoints'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationEndpointOutput'
+    EndpointProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        default:
+          type: string
+        externallyConfigurable:
+          type: boolean
+      required:
+        - name
+        - default
+        - externallyConfigurable
+    DestinationPackagerInput:
+      type: object
+      properties:
+        macro:
+          type: string
+        compressionType:
+          allOf:
+            - $ref: '#/components/schemas/CompressionTypeEnum'
+          type: string
+      required:
+        - macro
+        - compressionType
+    DestinationPackagerOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        macro:
+          type: string
+        compressionType:
+          allOf:
+            - $ref: '#/components/schemas/CompressionTypeEnum'
+          type: string
+      required:
+        - id
+        - macro
+        - compressionType
+    DestinationPackagerMultiResponse:
+      type: object
+      properties:
+        packagers:
+          description: 'Array of retrieved Destination::Packagers'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationPackagerOutput'
+    DestinationFormatterInput:
+      type: object
+      properties:
+        macro:
+          type: string
+      required:
+        - macro
+    DestinationFormatterOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        macro:
+          type: string
+      required:
+        - id
+        - macro
+    DestinationFormatterMultiResponse:
+      type: object
+      properties:
+        formatters:
+          description: 'Array of retrieved Destination::Formatters'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationFormatterOutput'
+    DestinationDelivererInput:
+      type: object
+      properties:
+        protocol:
+          allOf:
+            - $ref: '#/components/schemas/ProtocolEnum'
+          type: string
+        macro:
+          type: string
+      required:
+        - protocol
+        - macro
+    DestinationDelivererOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        protocol:
+          allOf:
+            - $ref: '#/components/schemas/ProtocolEnum'
+          type: string
+        macro:
+          type: string
+      required:
+        - id
+        - protocol
+        - macro
+    DestinationDelivererMultiResponse:
+      type: object
+      properties:
+        deliverers:
+          description: 'Array of retrieved Destination::Deliverers'
+          type: array
+          items:
+            $ref: '#/components/schemas/DestinationDelivererOutput'
+    CompressionTypeEnum:
+      type: string
+      enum:
+        - NONE
+        - BZ2
+        - GZIP
+        - LZO
+    ProtocolEnum:
+      type: string
+      enum:
+        - SFTP
+        - FTP
+        - FTPS_EXPLICIT
+        - S3
+        - FS_COPY
+        - APP_NEXUS
+        - NO_OP
+        - FTPS_IMPLICIT
+        - IRON_BOX
+        - YAHOO
+        - ACXIOM_FULFILLMENT
+        - FACEBOOK
+        - LINKEDIN
+        - GOOGLE
+        - KBM
+        - PINTEREST
+        - GOOGLE_CUSTOMER_MATCH
+        - LR_FULFILLMENT
+        - SNAPCHAT
+        - BIGQUERY
+        - GOOGLE_STORE_TRANSACTIONS
+        - AZURE
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

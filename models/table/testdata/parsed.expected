@@ -1,0 +1,886 @@
+[
+  {
+    "namespace": [
+      {
+        "category": "namespace",
+        "title": "Table / Column example we were playing around with",
+        "version": "0.0.1"
+      }
+    ],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": false,
+        "type": "subresource",
+        "attributes": [
+          {
+            "name": "id",
+            "comment": "The id of the Column.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "name",
+            "comment": "The name of the Column.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "type",
+            "comment": "The type of data that will be imported into column.\nNUMERIC: only numeric data/values can be added to this column.\nSTRING: any string data or values can be added to this column.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "ColumnTypeEnum",
+              "name": "ColumnTypeEnum",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "enumerated",
+            "comment": "Whether or not the columns's values are enumerated.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "boolean",
+              "name": "boolean",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "values",
+            "comment": "The list of enum values for the column\nThis is only allowed if enumerated==true",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "array": {
+              "type": 1,
+              "min": 1
+            },
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": true,
+              "optional": true,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "createdAt",
+            "comment": "Timestamp of when the column was first created.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "datetime",
+              "name": "datetime",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": true,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "updatedAt",
+            "comment": "Timestamp of the last time the Columns metadata was updated.",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "datetime",
+              "name": "datetime",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": true,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "GET",
+            "comment": "Find a single existing column in the provided parent table",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find resource"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          },
+          {
+            "operation": "POST",
+            "comment": "Create a new column in the provided parent table.",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "303",
+                    "comment": "A Column with the same type, enumerability, and name already exists in this Table"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "ColumnRedirection",
+                  "name": "ColumnRedirection",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              },
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find Table"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              },
+              {
+                "codes": [
+                  {
+                    "code": "422",
+                    "comment": "Input has invalid semantics"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          },
+          {
+            "operation": "MULTIGET",
+            "comment": "Find existing column in the provided parent table",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find table"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          },
+          {
+            "operation": "PUT",
+            "comment": "Modify the attributes of a column in the provided parent table.\nCurrently the only supported operation is adding values to enumerated column.\nThe list of values passed in will be added to the column's existing set of values.",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "422",
+                    "comment": "Input has invalid semantics"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              },
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find resource"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          }
+        ],
+        "parents": [
+          "Table"
+        ],
+        "short": "Column",
+        "name": "Table::Column",
+        "parentShort": "Table",
+        "parentName": "Table",
+        "secondary": false,
+        "file": "column.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": false,
+        "type": "action",
+        "async": false,
+        "attributes": [
+          {
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "POST",
+            "comment": "Marks a column as 'disabled', which means that it will no longer\nbe processed in the table and will no longer have stats calculated for it",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find resource"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          }
+        ],
+        "parents": [
+          "Table",
+          "Column"
+        ],
+        "short": "Disable",
+        "name": "Table::Column::Disable",
+        "parentShort": "Table",
+        "parentName": "Table::Column",
+        "secondary": false,
+        "file": "column.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": false,
+        "type": "action",
+        "async": false,
+        "attributes": [
+          {
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "columns",
+            "comment": "IDs of columns to disable.",
+            "stringMap": false,
+            "type": {
+              "parents": [
+                "Table"
+              ],
+              "short": "Column",
+              "name": "Table::Column",
+              "parentShort": "Table",
+              "parentName": "Table"
+            },
+            "inline": false,
+            "array": {
+              "type": 2
+            },
+            "linked": true,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "POST",
+            "comment": "Marks the set of columns 'disabled', which means that they will no longer\nbe processed in the table\nand will no longer have stats calculated for them",
+            "options": [],
+            "errors": [
+              {
+                "codes": [
+                  {
+                    "code": "404",
+                    "comment": "Cannot find resource"
+                  }
+                ],
+                "struct": {
+                  "parents": [],
+                  "short": "StandardError",
+                  "name": "StandardError",
+                  "parentShort": "",
+                  "parentName": ""
+                }
+              }
+            ]
+          }
+        ],
+        "parents": [
+          "Table",
+          "Column"
+        ],
+        "short": "Disable",
+        "bulk": "bulk",
+        "name": "Table::Column::Disable",
+        "parentShort": "Table",
+        "parentName": "Table::Column",
+        "secondary": false,
+        "file": "column.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "enum",
+        "type": "enum",
+        "parents": [],
+        "short": "ColumnTypeEnum",
+        "literals": [
+          "STRING",
+          "NUMERIC"
+        ],
+        "name": "ColumnTypeEnum",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": false,
+        "file": "column.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "structure",
+        "type": "structure",
+        "parents": [],
+        "short": "ColumnRedirection",
+        "attributes": [
+          {
+            "name": "existingColumnURL",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "name": "ColumnRedirection",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": false,
+        "file": "column.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [
+      {
+        "category": "diagram",
+        "diagram": "main",
+        "include": [
+          {
+            "module": "dataset",
+            "parents": [],
+            "short": "reslang",
+            "name": "dataset.reslang",
+            "parentShort": "",
+            "parentName": ""
+          },
+          {
+            "module": "field",
+            "parents": [],
+            "short": "reslang",
+            "name": "field.reslang",
+            "parentShort": "",
+            "parentName": ""
+          }
+        ],
+        "groups": []
+      }
+    ],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": false,
+        "type": "resource",
+        "attributes": [
+          {
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "name",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "POST",
+            "options": [],
+            "errors": []
+          },
+          {
+            "operation": "GET",
+            "options": [],
+            "errors": []
+          },
+          {
+            "operation": "MULTIGET",
+            "options": [],
+            "errors": []
+          },
+          {
+            "operation": "DELETE",
+            "options": [],
+            "errors": []
+          }
+        ],
+        "parents": [],
+        "short": "Table",
+        "name": "Table",
+        "parentShort": "",
+        "parentName": "",
+        "namespace": "",
+        "secondary": false,
+        "file": "table.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [],
+    "tags": [],
+    "definitions": [
+      {
+        "category": "definition",
+        "kind": "structure",
+        "type": "structure",
+        "parents": [],
+        "short": "StandardError",
+        "attributes": [
+          {
+            "name": "httpStatus",
+            "comment": "HTTP error status code for this problem",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "int",
+              "name": "int",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "errorCode",
+            "comment": "Service specific error code, more granular",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          },
+          {
+            "name": "message",
+            "comment": "General, human readable error message",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "name": "StandardError",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": false,
+        "file": "local.reslang"
+      }
+    ],
+    "diagrams": [],
+    "docs": []
+  },
+  {
+    "namespace": [],
+    "imports": [],
+    "servers": [
+      {
+        "category": "servers",
+        "rest": [
+          {
+            "url": "https://api.liveramp.com",
+            "environment": "PROD"
+          }
+        ],
+        "events": [
+          {
+            "comment": "Production Google Pubsub server",
+            "url": "https://pubsub.googleapis.com/v1/projects/liveramp-events-prod",
+            "environment": "PROD",
+            "protocol": "GOOGLE_PUBSUB"
+          }
+        ]
+      }
+    ],
+    "tags": [],
+    "definitions": [],
+    "diagrams": [],
+    "docs": []
+  }
+]

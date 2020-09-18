@@ -1,0 +1,105 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CarInput": {
+      "type": "object",
+      "properties": {
+        "make": {
+          "type": "string"
+        },
+        "nitro": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "make",
+        "location"
+      ],
+      "description": "A Car Garage"
+    },
+    "CarOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "make": {
+          "type": "string"
+        },
+        "nitro": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "ISO8601 UTC date-time",
+          "example": "2019-04-13T03:35:34Z"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "make",
+        "nitro",
+        "created",
+        "location"
+      ],
+      "description": "A Car Garage"
+    },
+    "CarPuttable": {
+      "type": "object",
+      "properties": {
+        "nitro": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "nitro"
+      ],
+      "description": "A Car Garage"
+    },
+    "CarPatchable": {
+      "type": "object",
+      "properties": {
+        "nitro": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "description": "A Car Garage"
+    },
+    "StandardError": {
+      "type": "object",
+      "properties": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ]
+    }
+  }
+}

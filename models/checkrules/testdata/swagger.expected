@@ -1,0 +1,548 @@
+openapi: 3.0.1
+info:
+  title: Rule checking
+  description: Test for various rule checking
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/checkrules'
+tags:
+  - name: A
+    description: '(configuration)  '
+  - name: 'A::B'
+    description: '(subresource)  '
+  - name: 'A::B::C'
+    description: '(subresource)  '
+  - name: 'Start A::B::C'
+    description: (sync action)  Start processing
+  - name: 'Stop A::B'
+    description: '(async action)  '
+  - name: 'A::B::stop::Deep'
+    description: '(subresource)  '
+  - name: Asset
+    description: '(resource)  '
+paths:
+  /v1/as:
+    post:
+      tags:
+        - A
+      operationId: Create A
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AInput'
+      responses:
+        '201':
+          description: A created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+  '/v1/as/{id}':
+    get:
+      tags:
+        - A
+      operationId: Get A
+      description: ''
+      responses:
+        '200':
+          description: A retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AOutput'
+        '404':
+          description: A not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs':
+    post:
+      tags:
+        - 'A::B'
+      operationId: 'Create A::B'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ABInput'
+      responses:
+        '201':
+          description: B created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{id}':
+    get:
+      tags:
+        - 'A::B'
+      operationId: 'Get A::B'
+      description: ''
+      responses:
+        '200':
+          description: B retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABOutput'
+        '404':
+          description: B or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/cs':
+    post:
+      tags:
+        - 'A::B::C'
+      operationId: 'Create A::B::C'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ABCInput'
+      responses:
+        '201':
+          description: C created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/cs/{id}':
+    get:
+      tags:
+        - 'A::B::C'
+      operationId: 'Get A::B::C'
+      description: ''
+      responses:
+        '200':
+          description: C retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABCOutput'
+        '404':
+          description: C or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/cs/{cId}/actions/start':
+    post:
+      tags:
+        - 'Start A::B::C'
+      operationId: 'start A::B::C'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartABCInput'
+      responses:
+        '200':
+          description: start action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: cId
+          description: Id of parent C
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/cs/{cId}/actions/start/{id}':
+    get:
+      tags:
+        - 'Start A::B::C'
+      operationId: 'Get A::B::C::start'
+      description: ''
+      responses:
+        '200':
+          description: start retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartABCOutput'
+        '404':
+          description: start or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: cId
+          description: Id of parent C
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/actions/stop':
+    post:
+      tags:
+        - 'Stop A::B'
+      operationId: 'stop A::B asynchronously'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopABInput'
+      responses:
+        '200':
+          description: stop action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '202':
+          description: 'stop action has been accepted, but is not yet complete'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '204':
+          description: stop action has already been submitted and we are currently doing it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '409':
+          description: >-
+            stop action has been accepted but cannot be processed due to current
+            state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/as/{aId}/bs/{bId}/actions/stop/{id}':
+    get:
+      tags:
+        - 'Stop A::B'
+      operationId: 'Get A::B::stop'
+      description: ''
+      responses:
+        '200':
+          description: stop retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopABOutput'
+        '404':
+          description: stop or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: aId
+          description: Id of parent A
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: bId
+          description: Id of parent B
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    AInput:
+      type: object
+      properties:
+        name:
+          type: string
+        outputName:
+          type: string
+      required:
+        - name
+        - outputName
+    AOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        asset:
+          type: integer
+          format: int32
+          description: Link to Asset resource via its id
+        outputName:
+          type: string
+      required:
+        - id
+        - name
+        - asset
+        - outputName
+    ABInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    ABOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    ABCInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    ABCOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    StartABCInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+      description: Start processing
+    StartABCOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+      description: Start processing
+    StopABInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    StopABOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      required:
+        - id
+        - name
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

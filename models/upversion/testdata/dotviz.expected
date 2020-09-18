@@ -1,0 +1,22 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"ResourceA" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>ResourceA        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr></table>>];
+"ResourceB" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>ResourceB        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">size: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET PUT</font></td></tr></table>>];
+"v2/ResourceB" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>v2/ResourceB        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">totalSize: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
+"v2/ResourceB::Sub" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>Sub        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
+"v2/ResourceB" -> "v2/ResourceB::Sub" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"ResourceA" -> "ResourceB" [label=< <font point-size="8"> bId</font> > arrowhead="vee"];
+"ResourceA" -> "v2/ResourceB" [label=< <font point-size="8"> newBId</font> > arrowhead="vee"];
+}

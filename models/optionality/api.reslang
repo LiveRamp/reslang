@@ -1,0 +1,5 @@
+"Optionality test"
+namespace {
+    title "Optionality"
+    version 0.0.1
+}

@@ -1,0 +1,354 @@
+openapi: 3.0.1
+info:
+  title: Milk delivery example API
+  description: Milk delivery API
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/milkman'
+tags:
+  - name: DeliverMilk
+    description: '(request)  '
+  - name: Bulk search DeliverMilk
+    description: '(bulk sync action)  '
+  - name: Bulk search Milk
+    description: '(bulk sync action)  '
+  - name: AllDeliveredMilk
+    description: '(resource)  '
+paths:
+  /v1/deliver-milks:
+    post:
+      tags:
+        - DeliverMilk
+      operationId: Create DeliverMilk
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverMilkInput'
+      responses:
+        '201':
+          description: DeliverMilk created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+    get:
+      tags:
+        - DeliverMilk
+      operationId: Get DeliverMilks
+      description: ''
+      responses:
+        '200':
+          description: DeliverMilks retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of DeliverMilks returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverMilkMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the DeliverMilks (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of DeliverMilks to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+  '/v1/deliver-milks/{id}':
+    get:
+      tags:
+        - DeliverMilk
+      operationId: Get DeliverMilk
+      description: ''
+      responses:
+        '200':
+          description: DeliverMilk retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverMilkOutput'
+        '404':
+          description: DeliverMilk not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /v1/deliver-milks/actions/search:
+    get:
+      tags:
+        - Bulk search DeliverMilk
+      operationId: 'Get Bulk DeliverMilk::searches'
+      description: ''
+      responses:
+        '200':
+          description: searches retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of searches returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulksearchDeliverMilkMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the searches (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of searches to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  /v1/milks/actions/search:
+    get:
+      tags:
+        - Bulk search Milk
+      operationId: 'Get Bulk Milk::searches'
+      description: ''
+      responses:
+        '200':
+          description: searches retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of searches returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulksearchMilkMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the searches (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of searches to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  /v1/all-delivered-milk:
+    get:
+      tags:
+        - AllDeliveredMilk
+      operationId: Get AllDeliveredMilk
+      description: ''
+      responses:
+        '200':
+          description: AllDeliveredMilk retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllDeliveredMilkOutput'
+        '404':
+          description: AllDeliveredMilk not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+components:
+  parameters: {}
+  schemas:
+    DeliverMilkInput:
+      type: object
+      properties:
+        milkToDelivers:
+          description: Link to Milk resources via their ids
+          items:
+            type: string
+          type: array
+        whereToDeliver:
+          type: string
+          description: Link to Address resource via its id
+        complete:
+          type: boolean
+      required:
+        - milkToDeliver
+        - whereToDeliver
+        - complete
+    DeliverMilkOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        milkToDelivers:
+          description: Link to Milk resources via their ids
+          items:
+            type: string
+          type: array
+        whereToDeliver:
+          type: string
+          description: Link to Address resource via its id
+        milkStatuses:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeliveryStatus'
+            type: object
+          type: array
+        complete:
+          type: boolean
+      required:
+        - id
+        - milkToDeliver
+        - whereToDeliver
+        - milkStatuses
+        - complete
+    DeliverMilkMultiResponse:
+      type: object
+      properties:
+        deliverMilks:
+          description: Array of retrieved DeliverMilks
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliverMilkOutput'
+    BulksearchDeliverMilkOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    BulksearchDeliverMilkMultiResponse:
+      type: object
+      properties:
+        searches:
+          description: 'Array of retrieved DeliverMilk::searches'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulksearchDeliverMilkOutput'
+    BulksearchMilkOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    BulksearchMilkMultiResponse:
+      type: object
+      properties:
+        searches:
+          description: 'Array of retrieved Milk::searches'
+          type: array
+          items:
+            $ref: '#/components/schemas/BulksearchMilkOutput'
+    AllDeliveredMilkOutput:
+      type: object
+      properties:
+        milkStatuses:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/DeliveryStatus'
+            type: object
+          type: array
+      required:
+        - milkStatuses
+    DeliveryStatus:
+      type: object
+      properties:
+        updated:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        milk:
+          type: string
+          description: Link to Milk resource via its id
+        status:
+          allOf:
+            - $ref: '#/components/schemas/DeliveryStatusEnum'
+          type: string
+      required:
+        - updated
+        - milk
+        - status
+    DeliveryStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - DELIVERED
+        - ERROR
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

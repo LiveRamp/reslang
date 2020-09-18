@@ -1,0 +1,16 @@
+
+configuration-resource Person {
+    id: int
+    name: string optional mutable default = "Freddo Frog"
+    address: string mutable optional default = "Malibu"
+    birthDate: datetime
+    extra: Extra inline
+    flag: boolean optional flag
+
+    /operations
+        POST PUT PATCH GET
+}
+
+structure Extra {
+    notes: string mutable optional default = "no notes!"
+}

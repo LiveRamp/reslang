@@ -1,0 +1,226 @@
+asyncapi: 2.0.0
+info:
+  title: API for modeling directories and files
+  description: This is a simple API for manipulating files
+  version: 1.0.0
+servers:
+  PROD:
+    url: 'https://pubsub.googleapis.com/v1/projects/liveramp-events-prod'
+    protocol: GOOGLE_PUBSUB
+    description: Production Google Pubsub server
+defaultContentType: application/json
+channels:
+  topics/file.v1-directory-file-resource:
+    description: This models a file in a directory
+    subscribe:
+      summary: 'REST: Directory::File'
+      operationId: 'Directory::File'
+      message:
+        $ref: '#/components/messages/DirectoryFile'
+  topics/file.v1-directory-delete-request-resource:
+    description: This models a long running request
+    subscribe:
+      summary: 'REST: DirectoryDeleteRequest'
+      operationId: DirectoryDeleteRequest
+      message:
+        $ref: '#/components/messages/DirectoryDeleteRequest'
+  topics/file.v1-directory-delete-incomplete:
+    description: 'If a deletion is corrupted, we generate this event'
+    publish:
+      summary: 'Adhoc: DirectoryDeleteIncomplete'
+      operationId: DirectoryDeleteIncomplete
+      message:
+        $ref: '#/components/messages/DirectoryDeleteIncomplete'
+components:
+  messages:
+    DirectoryFile:
+      name: DirectoryFile
+      title: DirectoryFile
+      summary: This models a file in a directory
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/DirectoryFileHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryFileOutput'
+    DirectoryDeleteRequest:
+      name: DirectoryDeleteRequest
+      title: DirectoryDeleteRequest
+      summary: This models a long running request
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/DirectoryDeleteRequestHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
+    DirectoryDeleteIncomplete:
+      name: DirectoryDeleteIncomplete
+      title: DirectoryDeleteIncomplete
+      summary: 'If a deletion is corrupted, we generate this event'
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/DirectoryDeleteIncompleteHeader'
+      payload:
+        $ref: '#/components/schemas/DirectoryDeleteIncomplete'
+  schemas:
+    DirectoryFileHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - completed
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
+    DirectoryFileOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        url:
+          type: string
+        fileTypeId:
+          type: string
+          description: Link to FileType resource via its id
+      required:
+        - id
+        - name
+        - url
+        - fileTypeId
+      description: This models a file in a directory
+    DirectoryDeleteRequestHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
+    DirectoryDeleteRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        directoryId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to Directory resource via its id
+      required:
+        - id
+        - directoryId
+      description: This models a long running request
+    DirectoryDeleteIncompleteHeader:
+      type: object
+      properties:
+        timeOfFailure:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - timeOfFailure
+      description: 'If a deletion is corrupted, we generate this event'
+    DirectoryDeleteIncomplete:
+      type: object
+      properties:
+        directory:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+          description: Link to Directory resource via its id
+        corrupted:
+          type: boolean
+      required:
+        - directory
+        - corrupted
+      description: 'If a deletion is corrupted, we generate this event'
+  messageTraits:
+    DirectoryFileHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
+              - completed
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    DirectoryDeleteRequestHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    DirectoryDeleteIncompleteHeader:
+      headers:
+        type: object
+        properties:
+          timeOfFailure:
+            type: string
+            format: ISO8601 UTC date-time
+            example: '2019-04-13T03:35:34Z'
+        required:
+          - timeOfFailure
+        description: 'If a deletion is corrupted, we generate this event'
+

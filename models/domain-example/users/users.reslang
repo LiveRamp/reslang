@@ -1,0 +1,36 @@
+import organizations
+
+
+"This models a user"
+configuration-resource User {
+	id: string
+	name: string mutable
+	primaryOrgId: linked organizations.Organization query mutable
+
+	/operations
+        GET POST MULTIGET
+}
+
+subresource User::OrgRole {
+	id: string
+	roleId: linked organizations.Role
+	orgId: linked organizations.Organization
+
+	/operations
+		GET POST MULTIGET DELETE
+}
+
+sync action User::Validate {
+	id: string
+
+	/operations
+		GET POST
+}
+
+request-resource DeleteUsers {
+	id: int
+	orgId: linked organizations.Organization
+
+	/operations
+		GET POST
+}

@@ -1,0 +1,38 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"DeliverMilk" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>DeliverMilk        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">complete: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET id</font></td></tr></table>>];
+"DeliverMilk::search" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr></table>>];
+"DeliverMilk" -> "DeliverMilk::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"Milk::search" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <tr><td><b>search        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET name</font></td></tr></table>>];
+"Milk" -> "Milk::search" [dir="none" label=< <font point-size="8">resource level action</font> >];
+"AllDeliveredMilk" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>AllDeliveredMilk        </b></td></tr><hr/><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr></table>>];
+"DeliveryStatus" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>DeliveryStatus        </b></td></tr>        <hr/><tr><td align="left">updated: datetime</td></tr><tr><td align="left">status: DeliveryStatusEnum</td></tr></table> >];
+"DeliveryStatusEnum" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" >
+                    <tr><td align="left"><b>DeliveryStatusEnum  </b></td></tr><hr/><tr><td align="left">PENDING</td></tr><tr><td align="left">DELIVERED</td></tr><tr><td align="left">ERROR</td></tr></table>>];
+"Milk" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Milk        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
+"Address" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Address        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
+"DeliverMilk" -> "Milk" [label=< <font point-size="8"> milkToDeliver[]</font> > arrowhead="vee"];
+"DeliverMilk" -> "Address" [label=< <font point-size="8"> whereToDeliver</font> > arrowhead="vee"];
+"DeliverMilk" -> "DeliveryStatus" [dir="back" arrowtail="diamond" label=< <font point-size="8"> milkStatuses[] (out)</font> >];
+"AllDeliveredMilk" -> "DeliveryStatus" [dir="back" arrowtail="diamond" label=< <font point-size="8"> milkStatuses[]</font> >];
+"DeliveryStatus" -> "Milk" [label=< <font point-size="8"> milk</font> > arrowhead="vee"];
+}

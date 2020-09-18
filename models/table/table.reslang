@@ -1,0 +1,8 @@
+
+resource Table {
+  id: string
+  name: string
+
+  /operations
+    POST GET MULTIGET DELETE
+}

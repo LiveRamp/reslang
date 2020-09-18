@@ -1,0 +1,129 @@
+asyncapi: 2.0.0
+info:
+  title: Milk delivery example API
+  description: Milk delivery API
+  version: 0.0.1
+servers:
+  PROD:
+    url: 'https://pubsub.googleapis.com/v1/projects/liveramp-events-prod'
+    protocol: GOOGLE_PUBSUB
+    description: Production Google Pubsub server
+defaultContentType: application/json
+channels:
+  topics/milkman.v1-deliver-milk-resource:
+    description: no documentation
+    subscribe:
+      summary: 'REST: DeliverMilk'
+      operationId: DeliverMilk
+      message:
+        $ref: '#/components/messages/DeliverMilk'
+components:
+  messages:
+    DeliverMilk:
+      name: DeliverMilk
+      title: DeliverMilk
+      summary: ''
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/DeliverMilkHeader'
+      payload:
+        $ref: '#/components/schemas/DeliverMilkOutput'
+  schemas:
+    DeliverMilkHeader:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+          enum:
+            - POST
+            - GET
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
+    DeliverMilkOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        milkToDelivers:
+          description: Link to Milk resources via their ids
+          items:
+            type: string
+          type: array
+        whereToDeliver:
+          type: string
+          description: Link to Address resource via its id
+        milkStatuses:
+          items:
+            type: object
+            $ref: '#/components/schemas/DeliveryStatus'
+          type: array
+        complete:
+          type: boolean
+      required:
+        - id
+        - milkToDeliver
+        - whereToDeliver
+        - milkStatuses
+        - complete
+    DeliveryStatus:
+      type: object
+      properties:
+        updated:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        milk:
+          type: string
+          description: Link to Milk resource via its id
+        status:
+          $ref: '#/components/schemas/DeliveryStatusEnum'
+          type: string
+      required:
+        - updated
+        - milk
+        - status
+    DeliveryStatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - DELIVERED
+        - ERROR
+  messageTraits:
+    DeliverMilkHeader:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
+            enum:
+              - POST
+              - GET
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+

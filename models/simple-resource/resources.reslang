@@ -1,0 +1,54 @@
+
+// A garage is a place to store cars
+"This is a description of a garage"
+resource Garage {
+	// simple id 
+	id: string query min-length:10 max-length: 300
+	name: string query mutable
+	manufacturer: Manufacturer
+
+	/operations
+		"Actual PUT comment"
+		// this is a PUT comment
+		PUT
+		// this is a POST comment
+		"Actual POST comment"
+		POST GET DELETE MULTIGET
+}
+
+"This is a manufacturer"
+structure Manufacturer {
+	"this is a company"
+	company: string example: "This is a company name"
+	home: url example: "This is the company website http://{id}}.liveramp.com"
+	homeArray: url[] example: "Array of urls"
+	timeToManufacture: duration optional default = "P4D"
+	other: url
+	other2: uri
+}
+
+"A resource with no ID"
+singleton resource Foo {
+	a: int mutable
+	b: string
+	/operations PUT GET
+}
+
+subresource Foo::Subfoo {
+	id: string
+}
+
+subresource Foo::Subfoo::Subsubfoo {
+	id: string
+}
+
+// another resource with no id
+resource Bar {
+	name: string query
+	/operations MULTIGET
+}
+
+resource Test {
+	name: string
+	/operations POST
+}

@@ -1,0 +1,6 @@
+
+"Early exploration of the LiveRamp distribution API - very heavily superseded now"
+namespace {
+    title "Distribution API"
+    version 0.0.1
+}

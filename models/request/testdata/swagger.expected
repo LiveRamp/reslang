@@ -1,0 +1,881 @@
+openapi: 3.0.1
+info:
+  title: API of a request
+  description: This is the description of the API
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/request'
+tags:
+  - name: UploadRequest
+    description: '(request)  '
+  - name: 'UploadRequest::Status'
+    description: '(subresource)  '
+  - name: 'UploadRequest::RecordSet'
+    description: '(subresource)  '
+  - name: 'UploadRequest::RecordSet::Deep'
+    description: '(subresource)  '
+  - name: StartProcessingAction UploadRequest
+    description: '(async action)  '
+  - name: StopProcessingAction UploadRequest
+    description: '(sync action)  '
+  - name: Bulk StartProcessingAction UploadRequest
+    description: '(bulk sync action)  '
+  - name: 'Bulk Clear UploadRequest::RecordSet'
+    description: '(bulk sync action)  '
+  - name: 'Bulk Jump UploadRequest::RecordSet::Deep'
+    description: '(bulk sync action)  '
+paths:
+  /v1/upload-requests:
+    post:
+      tags:
+        - UploadRequest
+      operationId: Create UploadRequest
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestInput'
+      responses:
+        '201':
+          description: UploadRequest created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+    get:
+      tags:
+        - UploadRequest
+      operationId: Get UploadRequests
+      description: ''
+      responses:
+        '200':
+          description: UploadRequests retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of UploadRequests returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: >-
+            Offset of the UploadRequests (starting from 0) to include in the
+            response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of UploadRequests to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+  '/v1/upload-requests/{id}':
+    get:
+      tags:
+        - UploadRequest
+      operationId: Get UploadRequest
+      description: ''
+      responses:
+        '200':
+          description: UploadRequest retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestOutput'
+        '404':
+          description: UploadRequest not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/status':
+    get:
+      tags:
+        - 'UploadRequest::Status'
+      operationId: 'Get UploadRequest::Status'
+      description: ''
+      responses:
+        '200':
+          description: Status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestStatusOutput'
+        '404':
+          description: Status or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets':
+    post:
+      tags:
+        - 'UploadRequest::RecordSet'
+      operationId: 'Create UploadRequest::RecordSet'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestRecordSetInput'
+      responses:
+        '201':
+          description: RecordSet created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{id}':
+    get:
+      tags:
+        - 'UploadRequest::RecordSet'
+      operationId: 'Get UploadRequest::RecordSet'
+      description: ''
+      responses:
+        '200':
+          description: RecordSet retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestRecordSetOutput'
+        '404':
+          description: RecordSet or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps':
+    post:
+      tags:
+        - 'UploadRequest::RecordSet::Deep'
+      operationId: 'Create UploadRequest::RecordSet::Deep'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequestRecordSetDeepInput'
+      responses:
+        '201':
+          description: Deep created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: recordSetId
+          description: Id of parent RecordSet
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps/{id}':
+    get:
+      tags:
+        - 'UploadRequest::RecordSet::Deep'
+      operationId: 'Get UploadRequest::RecordSet::Deep'
+      description: ''
+      responses:
+        '200':
+          description: Deep retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRequestRecordSetDeepOutput'
+        '404':
+          description: Deep or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: recordSetId
+          description: Id of parent RecordSet
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/actions/start-processing-action':
+    post:
+      tags:
+        - StartProcessingAction UploadRequest
+      operationId: StartProcessingAction UploadRequest asynchronously
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartProcessingActionUploadRequestInput'
+      responses:
+        '200':
+          description: StartProcessingAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '202':
+          description: >-
+            StartProcessingAction action has been accepted, but is not yet
+            complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '204':
+          description: >-
+            StartProcessingAction action has already been submitted and we are
+            currently doing it
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '409':
+          description: >-
+            StartProcessingAction action has been accepted but cannot be
+            processed due to current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action':
+    post:
+      tags:
+        - StopProcessingAction UploadRequest
+      operationId: StopProcessingAction UploadRequest
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopProcessingActionUploadRequestInput'
+      responses:
+        '200':
+          description: StopProcessingAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/actions/stop-processing-action/{id}':
+    get:
+      tags:
+        - StopProcessingAction UploadRequest
+      operationId: 'Get UploadRequest::StopProcessingAction'
+      description: ''
+      responses:
+        '200':
+          description: StopProcessingAction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StopProcessingActionUploadRequestOutput'
+        '404':
+          description: StopProcessingAction or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  /v1/upload-requests/actions/start-processing-action:
+    post:
+      tags:
+        - Bulk StartProcessingAction UploadRequest
+      operationId: Bulk StartProcessingAction UploadRequest
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkStartProcessingActionUploadRequestInput'
+      responses:
+        '200':
+          description: StartProcessingAction action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+  '/v1/upload-requests/actions/start-processing-action/{id}':
+    get:
+      tags:
+        - Bulk StartProcessingAction UploadRequest
+      operationId: 'Get Bulk UploadRequest::StartProcessingAction'
+      description: ''
+      responses:
+        '200':
+          description: StartProcessingAction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/BulkStartProcessingActionUploadRequestOutput
+        '404':
+          description: StartProcessingAction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/actions/clear':
+    post:
+      tags:
+        - 'Bulk Clear UploadRequest::RecordSet'
+      operationId: 'Bulk Clear UploadRequest::RecordSet'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkClearUploadRequestRecordSetInput'
+      responses:
+        '200':
+          description: Clear action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/actions/clear/{id}':
+    get:
+      tags:
+        - 'Bulk Clear UploadRequest::RecordSet'
+      operationId: 'Get Bulk UploadRequest::RecordSet::Clear'
+      description: ''
+      responses:
+        '200':
+          description: Clear retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkClearUploadRequestRecordSetOutput'
+        '404':
+          description: Clear or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps/actions/jump':
+    post:
+      tags:
+        - 'Bulk Jump UploadRequest::RecordSet::Deep'
+      operationId: 'Bulk Jump UploadRequest::RecordSet::Deep'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkJumpUploadRequestRecordSetDeepInput'
+      responses:
+        '200':
+          description: Jump action completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: recordSetId
+          description: Id of parent RecordSet
+          required: true
+          schema:
+            type: integer
+            format: int32
+  '/v1/upload-requests/{uploadRequestId}/record-sets/{recordSetId}/deeps/actions/jump/{id}':
+    get:
+      tags:
+        - 'Bulk Jump UploadRequest::RecordSet::Deep'
+      operationId: 'Get Bulk UploadRequest::RecordSet::Deep::Jump'
+      description: ''
+      responses:
+        '200':
+          description: Jump retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkJumpUploadRequestRecordSetDeepOutput'
+        '404':
+          description: Jump or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: uploadRequestId
+          description: Id of parent UploadRequest
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: recordSetId
+          description: Id of parent RecordSet
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    UploadRequestInput:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          allOf:
+            - $ref: '#/components/schemas/UploadRequestStatusEnum'
+          type: string
+        client:
+          type: string
+      required:
+        - name
+        - status
+        - client
+    UploadRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        status:
+          allOf:
+            - $ref: '#/components/schemas/UploadRequestStatusEnum'
+          type: string
+        client:
+          type: string
+      required:
+        - id
+        - name
+        - status
+        - client
+    UploadRequestMultiResponse:
+      type: object
+      properties:
+        uploadRequests:
+          description: Array of retrieved UploadRequests
+          type: array
+          items:
+            $ref: '#/components/schemas/UploadRequestOutput'
+    UploadRequestStatusOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        recordsProcessed:
+          type: integer
+          format: int32
+        completed:
+          type: boolean
+      required:
+        - id
+        - recordsProcessed
+        - completed
+    UploadRequestRecordSetInput:
+      type: object
+      properties:
+        company:
+          type: string
+        records:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Record'
+            type: object
+          type: array
+      required:
+        - company
+        - records
+    UploadRequestRecordSetOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        company:
+          type: string
+        records:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Record'
+            type: object
+          type: array
+      required:
+        - id
+        - company
+        - records
+    UploadRequestRecordSetDeepInput:
+      type: object
+      properties:
+        company:
+          type: string
+        records:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Record'
+            type: object
+          type: array
+      required:
+        - company
+        - records
+    UploadRequestRecordSetDeepOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        company:
+          type: string
+        records:
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Record'
+            type: object
+          type: array
+      required:
+        - id
+        - company
+        - records
+    Record:
+      type: object
+      properties:
+        details:
+          type: string
+        address:
+          type: string
+      required:
+        - details
+        - address
+    StartProcessingActionUploadRequestInput:
+      type: object
+      properties:
+        created:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - created
+    StopProcessingActionUploadRequestInput:
+      type: object
+      properties:
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    StopProcessingActionUploadRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    BulkStartProcessingActionUploadRequestInput:
+      type: object
+      properties:
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    BulkStartProcessingActionUploadRequestOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    BulkClearUploadRequestRecordSetInput:
+      type: object
+      properties:
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    BulkClearUploadRequestRecordSetOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    BulkJumpUploadRequestRecordSetDeepInput:
+      type: object
+      properties:
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - when
+    BulkJumpUploadRequestRecordSetDeepOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        when:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+        - id
+        - when
+    UploadRequestStatusEnum:
+      type: string
+      enum:
+        - STARTED
+        - STOPPED
+        - COMPLETED
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

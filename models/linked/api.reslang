@@ -1,0 +1,5 @@
+"Linked subresource test"
+namespace {
+    title "Linked subresource"
+    version 0.0.1
+}

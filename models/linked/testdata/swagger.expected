@@ -1,0 +1,181 @@
+openapi: 3.0.1
+info:
+  title: Linked subresource
+  description: Linked subresource test
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/linked'
+tags:
+  - name: Foo
+    description: '(resource)  '
+  - name: 'Foo::Bar'
+    description: '(subresource)  '
+  - name: Linking
+    description: '(resource)  '
+paths:
+  '/v1/foos/{id}':
+    get:
+      tags:
+        - Foo
+      operationId: Get Foo
+      description: ''
+      responses:
+        '200':
+          description: Foo retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooOutput'
+        '404':
+          description: Foo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  '/v1/foos/{fooId}/bars/{id}':
+    get:
+      tags:
+        - 'Foo::Bar'
+      operationId: 'Get Foo::Bar'
+      description: ''
+      responses:
+        '200':
+          description: Bar retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooBarOutput'
+        '404':
+          description: Bar or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: fooId
+          description: Id of parent Foo
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  '/v1/linkings/{id}':
+    get:
+      tags:
+        - Linking
+      operationId: Get Linking
+      description: ''
+      responses:
+        '200':
+          description: Linking retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkingOutput'
+        '404':
+          description: Linking not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+components:
+  parameters: {}
+  schemas:
+    FooOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    FooBarOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    LinkingOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        name:
+          items:
+            type: string
+            format: url
+            example: List of urls
+          type: array
+        foo:
+          type: string
+          description: Link to Foo resource via its id
+        foos:
+          description: Link to Foo resources via their ids
+          items:
+            type: string
+          type: array
+        bar:
+          items:
+            type: string
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: 'Link to Foo::Bar resource via [fooId, barId]'
+        bars:
+          items:
+            items:
+              type: string
+            type: array
+            minItems: 2
+            maxItems: 2
+          description: 'Link to Foo::Bar resources via [fooId, barId]'
+          type: array
+      required:
+        - id
+        - address
+        - name
+        - foo
+        - foos
+        - bar
+        - bars
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

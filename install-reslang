@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# install reslang as a command line tool
+
+BASEDIR=$PWD
+echo "
+cd \"$BASEDIR\"
+./src/main.ts \"\$@\"
+" > reslang
+chmod +x reslang
+yarn unlink >& /dev/null
+yarn link
+
+

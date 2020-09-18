@@ -1,0 +1,43 @@
+asset-resource SMap {
+    id: int
+    name: string query optional default="hello"
+    map: stringmap<int>
+    maps: stringmap<Struct2>[] output
+    test: string mutable optional default = "test"
+    key: InputKey mutable
+    test2: Struct3 inline
+
+    /operations
+        PUT POST GET MULTIGET
+}
+
+structure Struct1 {
+    text: string
+}
+
+structure Struct2 {
+    notes: string
+    text: string
+}
+
+union InputKey {
+    num: int
+    mystruct: Struct2
+    mystruct2: Struct2
+}
+
+structure Struct3 {
+    a: double optional
+        default = 123.9
+    b: int output
+    c: date optional
+        default = "12/20/1990"
+    e: Struct4 inline
+    f: boolean optional
+        default = true
+}
+
+structure Struct4 {
+    d: int mutable
+}
+

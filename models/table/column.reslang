@@ -1,0 +1,90 @@
+subresource Table::Column {
+  "The id of the Column."
+  id: string
+
+  "The name of the Column."
+  name: string max-length:255
+  
+  "The type of data that will be imported into column.
+   NUMERIC: only numeric data/values can be added to this column.
+   STRING: any string data or values can be added to this column."
+  type: ColumnTypeEnum
+
+  "Whether or not the columns's values are enumerated."
+  enumerated: boolean
+
+  "The list of enum values for the column
+   This is only allowed if enumerated==true"
+  values: string[1..] mutable optional
+
+  // output attributes
+  "Timestamp of when the column was first created."
+  createdAt: datetime output
+
+  "Timestamp of the last time the Columns metadata was updated."
+  updatedAt: datetime output
+
+  /operations
+    "Find a single existing column in the provided parent table"
+    GET
+      "Cannot find resource" 404
+        StandardError
+
+    "Create a new column in the provided parent table."
+    POST
+      "A Column with the same type, enumerability, and name already exists in this Table" 303
+        ColumnRedirection
+      "Cannot find Table" 404
+        StandardError
+      "Input has invalid semantics" 422
+        StandardError
+
+    "Find existing column in the provided parent table"
+    MULTIGET
+      "Cannot find table" 404
+        StandardError
+
+    "Modify the attributes of a column in the provided parent table.
+     Currently the only supported operation is adding values to enumerated column.
+     The list of values passed in will be added to the column's existing set of values."
+    PUT
+      "Input has invalid semantics" 422
+        StandardError
+      "Cannot find resource" 404
+        StandardError
+}
+
+sync action Table::Column::Disable {
+  id: int
+
+  /operations
+    "Marks a column as 'disabled', which means that it will no longer
+     be processed in the table and will no longer have stats calculated for it"
+    POST
+      "Cannot find resource" 404
+        StandardError
+}
+
+sync bulk action Table::Column::Disable {
+  id: int
+
+  "IDs of columns to disable."
+  columns: linked Table::Column[]
+
+  /operations
+    "Marks the set of columns 'disabled', which means that they will no longer
+     be processed in the table
+     and will no longer have stats calculated for them"
+    POST
+      "Cannot find resource" 404
+        StandardError
+}
+
+enum ColumnTypeEnum {
+  STRING
+  NUMERIC
+}
+
+structure ColumnRedirection {
+  existingColumnURL: string
+}

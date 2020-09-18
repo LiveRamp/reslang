@@ -1,0 +1,14 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"Aaa" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>Aaa        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIPOST GET MULTIGET PUT MULTIPUT PATCH MULTIPATCH DELETE MULTIDELETE</font></td></tr></table>>];
+"Bbb" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>Bbb        </b></td></tr>        <hr/><tr><td align="left">name: string</td></tr></table> >];
+"Aaa" -> "Bbb" [dir="back" arrowtail="diamond" label=< <font point-size="8"> data[]</font> >];
+}
