@@ -121,7 +121,7 @@ This copies the dotviz to the clipboard (and opens the Dotviz viewer in the brow
 
 ## Example Swagger Output
 
-The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API descripotion is 48 lines, whereas the Swagger is 440+ lines)
+The Swagger looks as follows in the Swagger Editor - the top level API description reflects the namespace declaration. (Note that the Reslang API description is 48 lines, whereas the Swagger is 440+ lines)
 
 ![API header](api.png)
 
