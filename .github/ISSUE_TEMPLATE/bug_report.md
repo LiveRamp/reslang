@@ -1,38 +1,43 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+name: Bug Report
+about: Report a Reslang Bug
+title: ""
+labels: "bug"
+assignees: ""
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+<!--
+**Priority**: Please add the appropriate priority label to the issue.
+
+High Priority: Reslang is generating invalid or incomplete OpenAPI or AsyncAPI specs. The specs need to be edited before they can be used. Tooling is broken and there is no known workaround.
+Medium Priority: OpenAPI or AsyncAPI specs are not being generated as expected, but the bug does not meet the criteria for High Priority. Tooling is broken, but there is an easy workaround.
+Low Priority: Something is not working as expected, but it does not affect generated artifacts.
+-->
+
+**Describe The Bug**
+
+<!-- A clear and concise description of what the bug is. -->
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+<!--
+Steps to reproduce the behavior. e.g.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+1. Run this command '...'
+2. Then...
+-->
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+**Expected Behavior**
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+<!-- A clear and concise description of what you expected to happen. -->
 
-**Additional context**
-Add any other context about the problem here.
+**Reslang Version**
+
+<!--
+If you are not using the Reslang Docker image tagged with `master` or the
+most up-to-date Reslang source code, please specify the Reslang version, commit
+hash, or Docker image tag. Try using the latest version to see if the bug has
+been fixed in a newer release
+-->
+
+Master/Latest
