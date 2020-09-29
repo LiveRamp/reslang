@@ -147,6 +147,7 @@ export default class EventsGen extends BaseGen {
             }
         }
 
+      //  foo !!!
         all.forEach((name) => {
             const def = this.extractDefinition(name)
             const unq = camelCase(this.formSingleUniqueName(def))
