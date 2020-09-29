@@ -1,5 +1,6 @@
 import {
     IDefinition,
+
     IAttribute,
     IImport,
     INamespace,
@@ -1261,34 +1262,6 @@ Actions cannot have subresources`
         if (max) {
             schema.maxItems = max
         } else {
-            delete schema.maxItems
-        }
-        delete schema.type
-        delete schema.format
-        delete schema.example
-        delete schema.$ref
-        delete schema.allOf
-        schema.type = "array"
-    }
-
-    protected translateDoc(comment?: string) {
-        if (!comment) {
-            return ""
-        }
-        const match = comment.match(BaseGen.COMMENT_REGEX)
-        if (!match) {
-            return comment
-        }
-        const [_, doc, entry] = match
-        // search for the docs
-        const docs = this.documentation[doc]
-        for (const ent of docs || []) {
-            if (ent.name === entry) {
-                return ent.documentation
-            }
-        }
-        throw new Error(
-            "Cannot find documentation entry for " + doc + "." + entry
         )
     }
 }
