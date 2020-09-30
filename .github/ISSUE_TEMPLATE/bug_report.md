@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 <!--
-**Priority**: Please add the appropriate priority label to the issue.
+PRIORITY LABELS: Please add the appropriate priority label to the issue.
 
 High Priority: Reslang is generating invalid or incomplete OpenAPI or AsyncAPI specs. The specs need to be edited before they can be used. Tooling is broken and there is no known workaround.
 Medium Priority: OpenAPI or AsyncAPI specs are not being generated as expected, but the bug does not meet the criteria for High Priority. Tooling is broken, but there is an easy workaround.
