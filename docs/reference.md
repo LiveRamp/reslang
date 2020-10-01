@@ -177,9 +177,9 @@ To specify an adhoc event, use the "event" construct and let Reslang know if it'
         /payload
     	    directory: linked Directory
     }
-    
+
     produces DirectoryDeleteIncomplete
-    consume DirectoryNotification
+    consumes DirectoryNotification
 
 To generate & view the AsyncAPI specification for your API, use something like:
 
@@ -277,7 +277,7 @@ E.g.
         /operations
             GET POST MULTIGET
     }
-    
+
     enum DetailEnum { STANDARD DETAILS }
 
 View will turn into a query parameter on both GET and MULTIGET.
@@ -334,7 +334,7 @@ This results in the following fields:
 You can specify (or override) the example / format string of any type. For instance, the following will override the usual url format:
 
     location: url "https://gcs.google.com <- put files here!"
-    
+
 ## Default values for attributes
 
 You can specify a default value for any attribute, and that will be inserted into the correct point in Swagger. Only attributes of primitive type can have defaults.
