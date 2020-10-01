@@ -10,42 +10,42 @@ servers:
     description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/andrew-simple-example.v1-simple-resource-resource:
+  topics/andrew/simple-example/v1-simple-resource-resource:
     description: A simple REST resource
     subscribe:
       summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
-  topics/andrew-simple-example.v2-test-resource-resource:
+  topics/andrew/simple-example/v2-test-resource-resource:
     description: A test REST resource
     subscribe:
       summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
-  topics/andrew-simple-example.v2-test-resource-foo-resource:
+  topics/andrew/simple-example/v2-test-resource-foo-resource:
     description: A REST subresource
     subscribe:
       summary: 'REST: v2/TestResource::Foo'
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
-  topics/eventing.v1-start-signal:
+  topics/eventing/v1-start-signal:
     description: Event to start
     publish:
       summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
-  topics/eventing.v3-stop-signal:
+  topics/eventing/v3-stop-signal:
     description: Event to stop
     subscribe:
       summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:
         $ref: '#/components/messages/v3StopSignal'
-  topics/eventing.v1-directory-delete-incomplete:
+  topics/eventing/v1-directory-delete-incomplete:
     description: 'If a deletion is corrupted, we generate this event'
     publish:
       summary: 'Adhoc: file.DirectoryDeleteIncomplete'
@@ -409,4 +409,3 @@ components:
           - a
           - b
         description: Event to stop
-

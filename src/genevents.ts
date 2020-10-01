@@ -117,15 +117,12 @@ export default class EventsGen extends BaseGen {
 
             const unique = camelCase(this.formSingleUniqueName(el))
             if (isResourceLike(el) && !el.future && el.events) {
-                channels[
-                    "topics/" +
-                        snakeCase(this.getSpace()) +
-                        "." +
-                        getVersion(el.name) +
-                        "-" +
-                        snakeCase(el.name) +
-                        "-resource"
-                ] = {
+                let name = this.topicName(
+                    this.getSpace(),
+                    getVersion(el.name),
+                    snakeCase(el.name)
+                )
+                channels[`${name}-resource`] = {
                     description:
                         this.translateDoc(el.comment) || "no documentation",
                     subscribe: {
@@ -167,15 +164,12 @@ export default class EventsGen extends BaseGen {
             if (consumes.has(name)) {
                 details.subscribe = msg
             }
-
-            channels[
-                "topics/" +
-                    this.mainNamespace +
-                    "." +
-                    getVersion(def.name) +
-                    "-" +
-                    snakeCase(def.short)
-            ] = details
+            let topicName = this.topicName(
+                this.mainNamespace || "",
+                getVersion(def.name),
+                snakeCase(def.short)
+            )
+            channels[topicName] = details
         })
     }
 
@@ -384,5 +378,15 @@ export default class EventsGen extends BaseGen {
                 }
             }
         }
+    }
+
+    private topicName(
+        namespace: string,
+        version: string,
+        name: string
+    ): string {
+        let str = `${version}-${name}`
+        if (namespace !== "") str = `${namespace}/${str}`
+        return `topics/${str}`
     }
 }
