@@ -1,7 +1,7 @@
 import pluralize from "pluralize"
 
 /**
- * remove version & change to correct snake case
+ * remove version & change to correct kebab case (hyphen-delimited)
  * @param name the name to fix
  */
 export function kebabCase(name: string) {
