@@ -1,3 +1,8 @@
+## 3.0.0 10/2/2020
+
+Generate terraform-compatible GCP topic names.
+Generate names with SLASH ("/") instead of DOT (".") between a topic's namespace and its versioned resource name. Even though DOT is a valid topic-name character according to GCP, it causes issues with terraform.
+
 ## 2.2.5 9/16/2020
 
 Now installable as a cmd line tool. Please follow the installation instructions, or run ./install-reslang to create links
