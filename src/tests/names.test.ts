@@ -1,6 +1,6 @@
 import {
     pluralizeName,
-    snakeCase,
+    kebabCase,
     getVersion,
     capitalizeFirst,
     lowercaseFirst,
@@ -9,15 +9,15 @@ import {
 
 describe("name tests", () => {
     test("name1", () => {
-        expect(snakeCase("One two")).toBe("one-two")
+        expect(kebabCase("One two")).toBe("one-two")
     })
 
     test("name2", () => {
-        expect(snakeCase("v2/One Two")).toBe("one-two")
+        expect(kebabCase("v2/One Two")).toBe("one-two")
     })
 
     test("name3", () => {
-        expect(snakeCase("andrew/test-two")).toBe("andrew-test-two")
+        expect(kebabCase("andrew/test-two")).toBe("andrew-test-two")
     })
 
     test("pluralize1", () => {
@@ -50,7 +50,7 @@ describe("name tests", () => {
     })
 
     test("version gone1", () => {
-        expect(snakeCase("v2/fooBar")).toBe("foo-bar")
+        expect(kebabCase("v2/fooBar")).toBe("foo-bar")
     })
     test("version not gone", () => {
         expect(camelCase("v2/Foo-Bar")).toBe("v2FooBar")

@@ -4,7 +4,7 @@ import pluralize from "pluralize"
  * remove version & change to correct snake case
  * @param name the name to fix
  */
-export function snakeCase(name: string) {
+export function kebabCase(name: string) {
     let fix = ""
     let dash = false
     for (const ch of removeVersion(name)) {

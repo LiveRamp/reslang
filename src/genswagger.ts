@@ -4,7 +4,7 @@ import {
     getVersion,
     lowercaseFirst,
     pluralizeName,
-    snakeCase
+    kebabCase
 } from "./names"
 import { isPrimitiveType } from "./parse"
 import {
@@ -97,7 +97,7 @@ export default class SwagGen extends BaseGen {
                         major = maybe
                     }
                     const singular = lowercaseFirst(camelCase(actual.short))
-                    let full = snakeCase(actual.short)
+                    let full = kebabCase(actual.short)
                     if (
                         isResourceLike(actual) &&
                         !actual.singleton &&
@@ -129,7 +129,7 @@ export default class SwagGen extends BaseGen {
                 let path: any = {}
 
                 // name of resource
-                let name = snakeCase(el.short)
+                let name = kebabCase(el.short)
                 const actionPath = action ? "actions/" : ""
 
                 if (!el.singleton && !action) {
