@@ -10,7 +10,7 @@ import {
     IReference
 } from "./treetypes"
 import { BaseGen } from "./genbase"
-import { camelCase, snakeCase, getVersion } from "./names"
+import { camelCase, kebabCase, getVersion } from "./names"
 import { isPrimitiveType } from "./parse"
 import { Verbs } from "./operations"
 
@@ -119,11 +119,11 @@ export default class EventsGen extends BaseGen {
             if (isResourceLike(el) && !el.future && el.events) {
                 channels[
                     "topics/" +
-                        snakeCase(this.getSpace()) +
+                        kebabCase(this.getSpace()) +
                         "." +
                         getVersion(el.name) +
                         "-" +
-                        snakeCase(el.name) +
+                        kebabCase(el.name) +
                         "-resource"
                 ] = {
                     description:
@@ -174,7 +174,7 @@ export default class EventsGen extends BaseGen {
                     "." +
                     getVersion(def.name) +
                     "-" +
-                    snakeCase(def.short)
+                    kebabCase(def.short)
             ] = details
         })
     }
