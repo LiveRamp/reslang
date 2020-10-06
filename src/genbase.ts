@@ -1205,7 +1205,24 @@ Actions cannot have subresources`
         // check all parents have the same id type
         let count = 0
         let ids = ""
-        for (const parent of def.parents) {
+        for (let parent of def.parents) {
+            // This is a complicated, dirty hotfix for accessing imported
+            // subresources. Basically, there are times when reslang imports
+            // peer directories, but it does not track a subresource's parents
+            // correctly.
+            //
+            // Given an imported subresource: otherdir.A::B, Reslang will store
+            // B's parents as: ['A'], when it should really be ['otherdir.A'].
+            //
+            // So, it loses the namespace from all subresources parents,
+            // which leads Reslang to throw an error trying to find
+            // a definition for B's parents ('A' is not defined).
+            //
+            // Future-proof this bandaid by only prepending a parent with
+            // its namespace if it does not already have a namespace.
+            let ns = this.namespacePrefix(def.name)
+            if (ns && !this.namespacePrefix(parent)) parent = `${ns}.${parent}`
+
             const parDef = this.extractDefinition(parent) as IResourceLike
             if (!parDef.singleton) {
                 const typeName = this.extractId(parDef).type.name
@@ -1290,5 +1307,21 @@ Actions cannot have subresources`
         throw new Error(
             "Cannot find documentation entry for " + doc + "." + entry
         )
+    }
+
+    // hasNamespacePrefix returns true for strings that are qualified by a
+    // namespace. It appears that namespaces precede a string, and are separated
+    // from the rest of the string name by a dot. E.g
+    //
+    // namespace.ResourceName::SubresourceName
+    //
+    // Resources cannot be qualified by more than one namespace, and periods
+    // are illegal characters outside of namespace delimiting, so there can
+    // be a maximum of 1 period.
+    protected namespacePrefix(el: string): string | null {
+        let parts = el.split(".")
+        if (parts.length !== 2) return null
+
+        return parts[0]
     }
 }
