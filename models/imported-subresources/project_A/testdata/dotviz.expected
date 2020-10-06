@@ -1,0 +1,18 @@
+digraph G {
+    graph [fontname = "helvetica"];
+    node [fontname = "helvetica"];
+    edge [fontname = "helvetica"];
+    node [shape=none];
+
+    "project_B.Top" [label=<
+    <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
+    <tr><td><b>Top </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
+    "project_B.Top::Sub" [label=<
+    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
+    <tr><td><b>Sub </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">isCool: boolean</td></tr></table>>];
+    "project_B.Top" -> "project_B.Top::Sub" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+    "ReeSource" [label=<
+    <table border="3" cellborder="0" cellspacing="1" style='rounded' bgcolor='#ffffcc'>
+    <tr><td><b>ReeSource </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr></table>>];
+    "ReeSource" -> "project_B.Top::Sub" [label=< <font point-size="8"> referenceB</font> > arrowhead="vee"];
+    }

@@ -1,0 +1,50 @@
+{
+    "$id": "https://schemas.liveramp.com/noroot",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ReeSourceOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "referenceB": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "type": "array",
+                    "description": "Link to project_B.Top::Sub resource via [topId, subId]"
+                }
+            },
+            "required": [
+                "id",
+                "referenceB"
+            ]
+        },
+        "StandardError": {
+            "type": "object",
+            "properties": {
+                "httpStatus": {
+                    "description": "HTTP error status code for this problem",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "errorCode": {
+                    "description": "Service specific error code, more granular",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "General, human readable error message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "httpStatus",
+                "errorCode",
+                "message"
+            ]
+        }
+    }
+}

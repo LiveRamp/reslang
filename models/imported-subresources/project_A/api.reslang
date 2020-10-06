@@ -1,0 +1,20 @@
+import project_B
+
+namespace projectA {
+  title "project A"
+  version 0.0.1
+}
+
+resource ReeSource {
+  id: string
+
+  referenceB: linked project_B.Top::Sub
+
+  /operations
+    GET
+}
+
+diagram main {
+    /include
+        api.reslang
+}
