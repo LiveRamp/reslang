@@ -1,6 +1,6 @@
 
 structure = _ comment:description? _ type:("structure" / "union")  _ name:name  _ "{" _
-    attrs:attribute+ _
+    attrs:attribute* _
 "}" _ ";"? _ {
     return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "attributes": attrs}
 }
