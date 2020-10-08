@@ -409,7 +409,11 @@ Is exactly equivalent to defining C as such:
 
 ## Unions
 
-Reslang supports unions, as per the Swagger oneOf specification. The discriminator field is always called type, and it is created implicitly. The names of the union attributes are used as the string value for the type field.
+Reslang supports unions using polymorphism via OpenAPI's `allOf` keyword. You
+can think of attributes of a union as being represented as subclasses of the union
+type itself. The discriminator field is always called `type`, and it is created
+implicitly. The names of the union attributes are used as the string value for
+the type field.
 
 ```
 
