@@ -1309,8 +1309,10 @@ Actions cannot have subresources`
         )
     }
 
-    // hasNamespacePrefix returns true for strings that are qualified by a
-    // namespace. It appears that namespaces precede a string, and are separated
+    // namespacePrefix returns the namespace prefix for strings that are qualified by a
+    // namespace. If no namespace qualifier is found, this function returns null.
+    //
+    // It appears that namespaces precede a string, and are separated
     // from the rest of the string name by a dot. E.g
     //
     // namespace.ResourceName::SubresourceName
