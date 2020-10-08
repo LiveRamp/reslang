@@ -1,0 +1,14 @@
+namespace projectB {
+  title "project B"
+  version 0.0.1
+}
+
+resource Top {
+  id: string
+}
+
+subresource Top::Sub {
+  id: string
+
+  isCool: boolean
+}

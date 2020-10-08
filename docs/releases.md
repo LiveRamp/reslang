@@ -1,3 +1,7 @@
+## 2.2.6 10/08/2020
+
+Fix bug so that imported subresources are able to be referenced.
+
 ## 2.2.5 9/16/2020
 
 Now installable as a cmd line tool. Please follow the installation instructions, or run ./install-reslang to create links

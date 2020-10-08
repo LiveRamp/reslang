@@ -1,0 +1,72 @@
+openapi: 3.0.1
+    info:
+    title: project A
+    description: ''
+    version: 0.0.1
+    servers:
+    - description: ''
+    url: 'https://api.liveramp.com/projecta'
+    tags:
+    - name: ReeSource
+    description: '(resource) '
+    paths:
+    '/v1/ree-sources/{id}':
+    get:
+    tags:
+    - ReeSource
+    operationId: Get ReeSource
+    description: ''
+    responses:
+    '200':
+    description: ReeSource retrieved successfully
+    content:
+    application/json:
+    schema:
+    $ref: '#/components/schemas/ReeSourceOutput'
+    '404':
+    description: ReeSource not found
+    content:
+    application/json:
+    schema:
+    $ref: '#/components/schemas/StandardError'
+    parameters:
+    - in: path
+    name: id
+    required: true
+    schema:
+    type: string
+    components:
+    parameters: {}
+    schemas:
+    ReeSourceOutput:
+    type: object
+    properties:
+    id:
+    type: string
+    referenceB:
+    items:
+    type: string
+    minItems: 2
+    maxItems: 2
+    type: array
+    description: 'Link to project_B.Top::Sub resource via [topId, subId]'
+    required:
+    - id
+    - referenceB
+    StandardError:
+    type: object
+    properties:
+    httpStatus:
+    description: HTTP error status code for this problem
+    type: integer
+    format: int32
+    errorCode:
+    description: 'Service specific error code, more granular'
+    type: string
+    message:
+    description: 'General, human readable error message'
+    type: string
+    required:
+    - httpStatus
+    - errorCode
+    - message
