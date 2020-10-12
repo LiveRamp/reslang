@@ -85,8 +85,9 @@ Note that versioning is not possible (or necessary) for subresources
 
 ### Imports & References
 
-You can import a peer directory into your current .reslang file using `import otherdirectory`. Since the directory must be a peer to the current working directory, slashes are not allowed in the import path. You should then refer to the imported elements by their full name `othernamespace.Resource`.
+You can import a peer directory into your current .reslang file using `import otherdirectory`. Since the directory must be a peer to the current working directory, slashes are not allowed in the import path. You should then refer to the imported elements by their full name, prefixed by the directory name e.g `otherdirectory.Resource`.
 
+Important to note that the `namespace` declared in the imported package is not used when referencing imported resources. Often, the namespace is equivalent to the directory name. But when it's not, please ensure that you reference `otherdirectory.Resource`, and **not** `othernamespace.Resource`.
 ```
 import identity
 
