@@ -27,14 +27,14 @@ exit "$1"
 #   $1 : string
 is_absolute_path() {
   case "$1" in
-    /*) : 0 ;;
-    *) : 1 ;;
+    /*) return 0 ;;
+     *) return 1 ;;
   esac
-
-  return "$_"
 }
 
 main() {
+  if [ "$#" -lt 1 ]; then usage 1 ; fi
+
   local host_path; local mount_path;
   host_path="$1" ; shift ;
   mount_path=/app/reslang/"$(basename "$host_path")"
