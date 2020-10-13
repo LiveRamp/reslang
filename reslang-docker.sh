@@ -9,7 +9,7 @@ usage() {
 
   Usage: run a Reslang container image on a specified directory.
 
-  $ $0 [ RESLANG_DIR ] [ OPTS ...]
+  $ $0 RESLANG_DIR [ OPTS ...]
 
   Examples:
 
