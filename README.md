@@ -130,3 +130,14 @@ Reslang can produce a nice pretty-printed, stripped down version of the Reslang 
     reslang models/resources --stripped --open
 
 Will open a browser on the stripped down file. If you just want plain text, add --plain
+
+## Requesting new features
+
+New features and enhancements that involve changing LiveRamp's API standards
+will not be considered until the [API standards proposal process][standards process] is complete.
+
+Other enhancements should be requested by opening a GitHub Issue using the
+appropriate issue template or by opening a Pull Request and having your changes
+reviewed by the API Squad.
+
+[standards process]: https://docs.google.com/document/d/1X3fcFYLdsRzsQeX89zdmCOoisNsD6X-wcrtYcb8MkGA/edit
