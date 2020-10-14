@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a Reslang Bug
+about: Report a Reslang bug
 title: ""
 labels: "bug"
 assignees: ""
