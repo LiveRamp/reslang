@@ -62,6 +62,11 @@ export default class SwagGen extends BaseGen {
             }
         }
 
+        if (servers.length === 0)
+            throw new Error(
+                `no server found with environment "${this.environment}" (are you passing the correct value to --env?)`
+            )
+
         // model definitions
         this.formDefinitions(schemas)
 
