@@ -32,20 +32,25 @@ is_absolute_path() {
   esac
 }
 
+# Run a reslang container on a user-specified directory.
+# NOTE: The reslang directory's parent is mounted into the container, so that
+# it can access imported resources from peers. In reslang, all imports refer
+# to peer directories.
 main() {
   if [ "$#" -lt 1 ]; then usage 1 ; fi
 
-  local host_path; local mount_path;
+  local host_path; local workspace;
   host_path="$1" ; shift ;
-  mount_path=/app/reslang/"$(basename "$host_path")"
+  parent_dir="$(dirname "$host_path")"
+  workspace=/app/reslang/workspace/
 
   if ! is_absolute_path "$host_path"; then
     printf "error: expected absolute path, got %s\n" "$host_path"
     usage 1
   fi
 
-  docker run -v "${host_path}:${mount_path}" "$RESLANG_IMG" \
-    "${mount_path}" --stdout "$@"
+  docker run -v "$parent_dir":"$workspace" "$RESLANG_IMG" \
+    "$workspace"/"$(basename "$host_path")" --stdout "$@"
 }
 
 main "$@"
