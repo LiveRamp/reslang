@@ -169,14 +169,15 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const json = new ParseGen(allFiles, rules).generate()
             if (args.stdout) {
                 console.log(json)
+            } else {
+                tryClip(json, "parse tree", silent)
             }
-            tryClip(json, "parse tree", silent)
             return json
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
             const html = new StripGen(allFiles, rules).generate(!args.plain)
-            tryClip(html, "html", false)
+            if (!args.stdout) tryClip(html, "html", false)
             if (args.open) {
                 writeFile(html, file.name)
                 open(file.name)
@@ -187,8 +188,9 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const dotviz = dot.generate(args.diagram)
             if (args.stdout) {
                 console.log(dotviz)
+            } else {
+                tryClip(dotviz, "dotviz", silent)
             }
-            tryClip(dotviz, "dotviz", silent)
             if (args.open) {
                 open("https://dreampuf.github.io/GraphvizOnline")
             }
@@ -211,8 +213,9 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
                 yaml.dump(clean(doc), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
+            } else {
+                tryClip(yml, "AsyncAPI spec", silent)
             }
-            tryClip(yml, "AsyncAPI spec", silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
@@ -241,8 +244,9 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const json = JsonSchemaGen.generateSchemaAndStringify(jsonSchema)
             if (args.stdout) {
                 console.log(json)
+            } else {
+                tryClip(json, "JSON Schema", silent)
             }
-            tryClip(json, "JSON Schema", silent)
             return json
         } else {
             // generate swagger
@@ -261,8 +265,9 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
                 yaml.dump(clean(swagger), { noRefs: true })
             if (args.stdout) {
                 console.log(yml)
+            } else {
+                tryClip(yml, "swagger", silent)
             }
-            tryClip(yml, "swagger", silent)
             if (args.open) {
                 if (args.web) {
                     console.log(
