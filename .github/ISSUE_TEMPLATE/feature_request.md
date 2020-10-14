@@ -1,9 +1,11 @@
 ---
 name: Feature Request
-about: Request a New Reslang Feature
+about: Request a new Reslang feature
 title: ""
 labels: "enhancement"
 assignees: ""
 ---
 
 **Describe your request**
+
+**Describe the value this feature would provide**
