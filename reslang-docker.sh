@@ -16,7 +16,11 @@ usage() {
   $ $0 /abs/path/to/reslang_directory
   $ $0 /abs/path/to/reslang_directory --diagram diagram_name
 
-  OPTS: All options available to Reslang can be passed to this script.
+  OPTS: The following options will **not** work with this script:
+
+    --web, --open, --stripped, --testwrite, --testdir
+
+  To use those options, please run reslang un-containerized.
 USAGE
 
 exit "$1"
