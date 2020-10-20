@@ -2,6 +2,7 @@ import {
     pluralizeName,
     kebabCase,
     getVersion,
+    removeVersion,
     capitalizeFirst,
     lowercaseFirst,
     camelCase
@@ -59,5 +60,12 @@ describe("getVersion", () => {
 
     it("defaults to v1", () => {
         expect(getVersion("andrew")).toBe("v1")
+    })
+})
+
+describe("removeVersion", () => {
+    it("removes the version", () => {
+        expect(removeVersion("v2/andrew")).toBe("andrew")
+        expect(removeVersion("v12/andrew")).toBe("andrew")
     })
 })
