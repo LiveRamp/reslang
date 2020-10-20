@@ -39,7 +39,7 @@ export function camelCase(name: string) {
     return fix
 }
 
-function removeVersion(name: string) {
+export function removeVersion(name: string) {
     return name.replace(/^v\d+[-\/]/, "")
 }
 
