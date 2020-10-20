@@ -40,15 +40,11 @@ export function camelCase(name: string) {
 }
 
 function removeVersion(name: string) {
-    const match = name.match(/(?<version>v[0-9]+[\-\/])?(?<name>.*)/)
-    return match ? match.groups!.name : "unknown"
+    return name.replace(/^v\d+[-\/]/, "")
 }
 
 export function getVersion(name: string) {
-    const match = name.match(/((?<version>v[0-9])[\-\/])?(.*)/)
-    return match && match.groups && match.groups.version
-        ? match.groups.version
-        : "v1"
+    return (match => (match ? match[1] : "v1"))(name.match(/^(v\d+)[-\/]/))
 }
 
 export function capitalizeFirst(name: string) {

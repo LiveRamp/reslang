@@ -30,12 +30,6 @@ describe("name tests", () => {
         expect(pluralizeName("sheeps")).toBe("sheeps")
     })
 
-    test("version1", () => {
-        expect(getVersion("v2/andrew")).toBe("v2")
-    })
-    test("version2", () => {
-        expect(getVersion("andrew")).toBe("v1")
-    })
     test("indexOf1", () => {
         expect("a.b".indexOf(".")).toBe(1)
     })
@@ -54,5 +48,16 @@ describe("name tests", () => {
     })
     test("version not gone", () => {
         expect(camelCase("v2/Foo-Bar")).toBe("v2FooBar")
+    })
+})
+
+describe("getVersion", () => {
+    it("gets the version", () => {
+        expect(getVersion("v2/andrew")).toBe("v2")
+        expect(getVersion("v12/andrew")).toBe("v12")
+    })
+
+    it("defaults to v1", () => {
+        expect(getVersion("andrew")).toBe("v1")
     })
 })
