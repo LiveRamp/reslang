@@ -65,8 +65,10 @@ resource v1/ExampleResource {
     GET
 }
 ```
+
 This produces the following Swagger output:
-```
+
+```yaml
 ...
     ExampleResourceOutput:
       type: object
