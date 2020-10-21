@@ -67,6 +67,7 @@ resource v1/ExampleResource {
 ```
 This produces the following Swagger output:
 ```
+...
     ExampleResourceOutput:
       type: object
       properties:
@@ -80,6 +81,7 @@ This produces the following Swagger output:
       required:
         - id
         - myString
+...
 ```
 
 
