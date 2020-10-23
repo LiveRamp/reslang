@@ -53,6 +53,40 @@ The following primitive types are available. These are translated into appropria
 | url      | A URL                                                                         |
 | uuid     | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                   |
 
+#### Strings
+Strings can optionally have the `max-length` and `min-length` modifiers, which will be translated into `minLength` and `maxLength` in Swagger:
+
+```
+resource v1/ExampleResource {
+  id: int
+  myString: string min-length:1 max-length:10
+
+  /operations
+    GET
+}
+```
+
+This produces the following Swagger output:
+
+```yaml
+...
+    ExampleResourceOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        myString:
+          type: string
+          minLength: 1
+          maxLength: 10
+      required:
+        - id
+        - myString
+...
+```
+
+
 ### Versioning
 
 Granular versioning is possible on toplevel resources and other elements such as structures. By default all definitions are v1 if not specified. However, we can place another version at the front to indicate a breaking change in the resource e.g. v2/resource.
