@@ -36,10 +36,12 @@ export function loadParser() {
     try {
         return peg.generate(grammar)
     } catch (error) {
-        throw new Error(
-            `Problem reading grammar: ${error.message}, location: ${error.location.start.line},
-            ${error.location.start.column}`
-        )
+        let line = error.location?.start?.line
+        let col = error.location?.start?.column
+        throw new Error(`
+Problem reading grammar: ${error.message}
+${line ? ("location: " + line + col ? ":" + col : "") : ""}
+${error.stack}`)
     }
 }
 
