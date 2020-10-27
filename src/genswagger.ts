@@ -13,6 +13,7 @@ import {
     getKeyAttributes,
     IAttribute,
     IOperation,
+    IOption,
     IResourceLike,
     isAction,
     isEnum,
@@ -21,6 +22,7 @@ import {
     isUnion
 } from "./treetypes"
 import { Operations, Verbs } from "./operations"
+import { Pagination, Cursor, strategy } from "./swagger/pagination/index"
 
 /**
  * generate swagger from the parsed representation
@@ -546,50 +548,27 @@ export default class SwagGen extends BaseGen {
                 responses[404] = notFound
             }
         }
-        const gparams = params.slice()
+        let gparams = params.slice()
         if (ops.multiget) {
-            const pagination = this.retrieveOption(ops.multiget, "pagination")
             // limit has already been checked to be a number
-            const limit = Number(this.retrieveOption(ops.multiget, "limit"))
+            const limit = Number(
+                this.retrieveOption(ops.multiget, "limit")
+            ) as number
             const maxLimit = Number(
                 this.retrieveOption(ops.multiget, "max-limit")
+            ) as number
+
+            let klass = Pagination.withStrategy(
+                this.getPaginationStrategy(ops.multiget)
             )
-            if (pagination === "offset") {
-                gparams.push({
-                    in: "query",
-                    name: "offset",
-                    description: `Offset of the ${plural} (starting from 0) to include in the response.`,
-                    schema: {
-                        type: "integer",
-                        format: "int32",
-                        default: 0,
-                        minimum: 0
-                    }
-                })
-            } else if (pagination === "cursor") {
-                gparams.push({
-                    in: "query",
-                    name: "cursor",
-                    description: `The value returned as "_pagination.after" in the previous query. Starts from beginning if not specified`,
-                    schema: {
-                        type: "string"
-                    }
-                })
-            }
-            if (pagination === "offset" || pagination === "cursor") {
-                gparams.push({
-                    in: "query",
-                    name: "limit",
-                    description: `Number of ${plural} to return`,
-                    schema: {
-                        type: "integer",
-                        format: "int32",
-                        default: limit,
-                        minimum: 1,
-                        maximum: maxLimit
-                    }
-                })
-            }
+            let paginator: Pagination = new klass(
+                plural,
+                limit,
+                maxLimit,
+                ops.multiget.pagination
+            )
+
+            gparams = [...gparams, ...paginator.queryParams()]
 
             for (const attr of el.attributes as IAttribute[]) {
                 if (
@@ -610,12 +589,6 @@ export default class SwagGen extends BaseGen {
             const responses: any = {
                 200: {
                     description: plural + " retrieved successfully",
-                    headers: {
-                        "X-Total-Count": {
-                            description: `Total number of ${plural} returned by the query`,
-                            schema: { type: "integer", format: "int32" }
-                        }
-                    },
                     content: {
                         "application/json": {
                             schema: {
@@ -625,10 +598,18 @@ export default class SwagGen extends BaseGen {
                     }
                 }
             }
-            if (pagination === "cursor") {
-                responses["200"].headers["X-Next-After"] = {
-                    description: `The opaque token to set as "after" in the next query, to continue getting results. If it is null, then there is no more data`,
-                    schema: { type: "string" }
+            if (paginator.strategy() === strategy.Cursor) {
+                responses["200"].content[
+                    "application/json"
+                ].schema = (paginator as Cursor).wrapResponse(
+                    `#/components/schemas/${camel}MultiResponse`
+                )
+            } else if (paginator.strategy() === strategy.Offset) {
+                responses["200"].headers = {
+                    "X-Total-Count": {
+                        description: `Total number of ${plural} returned by the query`,
+                        schema: { type: "integer", format: "int32" }
+                    }
                 }
             }
             if (notFound) {
@@ -881,6 +862,15 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    // getPaginationStrategy finds an operations pagination strategy,
+    // or defaults to Cursor strategy if not defined.
+    private getPaginationStrategy(op: IOperation): strategy {
+        let strat = op.pagination?.find((o) => o.name === "strategy")?.value
+
+        if (strat) return strat as strategy
+        return strategy.Cursor
+    }
+
     private formErrors(op: IOperation, responses: any) {
         for (const err of op.errors || []) {
             for (const code of err.codes) {
@@ -1055,30 +1045,6 @@ export default class SwagGen extends BaseGen {
                     const plural = lowercaseFirst(pluralizeName(def.short))
                     props[plural] = elements
                     definitions[sane + "MultiResponse"] = full
-                    if (
-                        def.operations
-                            ?.map((o) => o.operation)
-                            .includes("MULTIGET")
-                    ) {
-                        definitions[sane + "MultiResponsePaginated"] = {
-                            allOf: [
-                                { $ref: sane + "MultiResponse" },
-                                {
-                                    type: "object",
-                                    properties: {
-                                        _pagination: {
-                                            type: "object",
-                                            properties: {
-                                                after: {
-                                                    type: "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
                 }
             }
             if (isStructure(def) && def.generateInput) {

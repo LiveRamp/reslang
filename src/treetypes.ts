@@ -264,6 +264,7 @@ export interface IEventOperation {
 export interface IOperation {
     operation: string
     options: IOption[]
+    pagination?: IOption[]
     comment: string
     errors: IError[]
 }
