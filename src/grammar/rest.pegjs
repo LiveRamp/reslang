@@ -55,8 +55,23 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-ops = _ comment:description? _ op:(mainops / multiops) _ options:options _ {return {"operation": op, "comment": comment, "options": options}}
-eventops = _ comment:description? _ op:(mainops / ([a-z_]+[_a-z0-9]*)) _ {return {"operation": Array.isArray(op) ? op.flat().join("") : op, "comment": comment}}
+ops =
+    _ comment:description? _ op:(mainops / multiops) _ allOptions: options _ {
+    return {
+        operation: op,
+        comment: comment,
+        options: allOptions.standard,
+        pagination: allOptions.pagination
+    }
+}
+
+eventops = _ comment:description? _ op:(mainops / ([a-z_]+[_a-z0-9]*)) _ {
+    return {
+        operation: Array.isArray(op) ? op.flat().join("") : op,
+        comment: comment
+    }
+}
+
 oplist = op:("GET" / "MULTIGET" / "PUT" / "MULTIPUT" / "PATCH" / "MULTIPATCH" / "POST" / "MULTIPOST" / "DELETE"/ "MULTIDELETE") {
     return op
 }
@@ -66,9 +81,33 @@ mainops = op:("GET" / "PUT" / "PATCH" / "POST" / "DELETE") {
 multiops = op:("MULTIGET" / "MULTIPUT" / "MULTIPATCH" / "MULTIPOST" / "MULTIDELETE") {
     return op
 }
-options = options:option* {
-    return options
+
+/*
+    Verb options
+    ------------
+
+    Options represent modifiers to resource verbs (GET, PUT, ...).
+
+    For example, in this code:
+    ```
+        /operations
+            GET foo=bar
+    ```
+    foo=bar is parsed as { name: "foo", value: "bar" } and is an option to "GET".
+
+    Besides simple key=val options, certain verbs can be modified
+    using pagination (see the pagination rule for details).
+
+    If more verb options are introduced to this grammar, they should be included
+    in this "options" rule.
+*/
+options = arr:(option / pagination)* {
+    return {
+        standard: arr.filter(o => !o.pagination),
+        pagination: arr.find(o => o.pagination),
+    }
 }
+
 option = _ name:[a-z_\-]+ _ "=" _ value:[a-zA-Z0-9_\-]+ _ {
     return {name: name.join(""), value: value.join("")}
 }
@@ -77,5 +116,47 @@ ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
 
+/*
+    Pagination configuration
+    ------------------------
 
+    According to RFC-3, LiveRamp RESTful APIs should default to using
+    cursor-based pagination for MULTIGET responses.
 
+    While teams converge, Reslang remains backward compatible and continues
+    to support offset pagination. To use offset pagination, specify
+    `pagination { strategy = offset }` after a MULTIGET.
+
+    If "cursor" is the specified strategy, then `after = string`
+    is a required setting.
+
+    Only certain pagination options are allowed:
+        ["after", "before", "total", "next", "previous"]
+
+    Example of a valid config:
+        pagination {
+            after = string
+            before = string
+            total = integer
+        }
+*/
+pagination = _ "pagination" _ "{" _ options:option+ "}" _ {
+    let strategies = ["cursor", "offset"]
+    let allowed = ["strategy", "after", "before", "total", "next", "previous"]
+
+    let strategy = options.find(o => o.name === "strategy")
+    if (!strategies.includes(strategy.value)) throw new Error(`
+    Must specify a valid pagination strategy.
+    Expected one of ${strategies.join("|")}, but got: ${strategy.value || "<BLANK>"}
+    `)
+
+    let invalidOptions = options.map(o => o.name)
+        .filter(name => !allowed.includes(name))
+
+    if (invalidOptions.length)
+        throw new Error(`Invalid pagination options: ${invalidOptions}`)
+
+    return {
+        pagination: options
+    }
+}
