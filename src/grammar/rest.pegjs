@@ -93,7 +93,8 @@ multiops = op:("MULTIGET" / "MULTIPUT" / "MULTIPATCH" / "MULTIPOST" / "MULTIDELE
         /operations
             GET foo=bar
     ```
-    foo=bar is parsed as { name: "foo", value: "bar" } and is an option to "GET".
+    foo=bar is parsed as { name: "foo", value: "bar" } and is a
+    standard option to "GET".
 
     Besides simple key=val options, certain verbs can be modified
     using pagination (see the pagination rule for details).
@@ -102,9 +103,11 @@ multiops = op:("MULTIGET" / "MULTIPUT" / "MULTIPATCH" / "MULTIPOST" / "MULTIDELE
     in this "options" rule.
 */
 options = arr:(option / pagination)* {
+    let standard = arr.filter(o => !o.pagination)
+    let pagination = arr.find(o => o.pagination) || {}
     return {
-        standard: arr.filter(o => !o.pagination),
-        pagination: arr.find(o => o.pagination),
+        standard,
+        ...pagination,    // Splat because `pagination` itself has the form `{ pagination: [] }`
     }
 }
 
