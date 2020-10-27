@@ -2,15 +2,20 @@
 
 // defining a resource
 resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
-    attributes:attributes? _ operations:operations? _ events:events? _
+    attributes:attributes? _ eventsAndOps:eventsAndOperationsAnyOrder _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
-        comment: comment, future: !!future, singleton: !!singleton, type: type, 
-        attributes: attributes, operations: operations, events,
+        comment: comment, future: !!future, singleton: !!singleton, type: type,
+        attributes: attributes, operations: eventsAndOps.ops, events: eventsAndOps.events,
         parents: [], short: respath.short}
 }
+
+eventsAndOperationsAnyOrder =
+  _ o:operations _ e:events? {return {events: e, ops: o}} /
+  _ e:events _ o:operations? {return {events: e, ops: o}} /
+  _ {return {events: null, ops: null}}
 
 subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _ events:events? _
@@ -18,7 +23,7 @@ subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"?
     return {
         category: "definition",
         kind: "resource-like",
-        comment: comment, future: !!future, singleton: !!singleton, type: type, 
+        comment: comment, future: !!future, singleton: !!singleton, type: type,
         attributes: attributes, operations: operations, events,
         parents: respath.parents, short: respath.short}
 }
@@ -29,7 +34,7 @@ action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bu
     return {
         category: "definition",
         kind: "resource-like",
-        comment: comment, future: !!future, singleton: false, type: "action", async: async == "async", 
+        comment: comment, future: !!future, singleton: false, type: "action", async: async == "async",
         attributes: attributes, operations: operations, events,
         parents: respath.parents, short: respath.short,
         bulk: bulk}
@@ -75,7 +80,3 @@ option = _ name:[a-z_\-]+ _ "=" _ value:[a-zA-Z0-9_\-]+ _ {
 
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
-
-
-
-
