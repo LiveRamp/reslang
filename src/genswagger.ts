@@ -566,17 +566,17 @@ export default class SwagGen extends BaseGen {
                         minimum: 0
                     }
                 })
-            } else if (pagination === "after") {
+            } else if (pagination === "cursor") {
                 gparams.push({
                     in: "query",
-                    name: "after",
-                    description: `The value returned as X-Next-After in the previous query. Starts from beginning if not specified`,
+                    name: "cursor",
+                    description: `The value returned as "_pagination.after" in the previous query. Starts from beginning if not specified`,
                     schema: {
                         type: "string"
                     }
                 })
             }
-            if (pagination === "offset" || pagination === "after") {
+            if (pagination === "offset" || pagination === "cursor") {
                 gparams.push({
                     in: "query",
                     name: "limit",
@@ -625,9 +625,9 @@ export default class SwagGen extends BaseGen {
                     }
                 }
             }
-            if (pagination === "after") {
+            if (pagination === "cursor") {
                 responses["200"].headers["X-Next-After"] = {
-                    description: `The opaque token to set as "after" in the next query, to continue getting results. If it isn't present, there is no more data`,
+                    description: `The opaque token to set as "after" in the next query, to continue getting results. If it is null, then there is no more data`,
                     schema: { type: "string" }
                 }
             }
@@ -1038,12 +1038,13 @@ export default class SwagGen extends BaseGen {
 
                 // handle multiget
                 if (def.generateMultiGettable) {
+                    let refName = "#/components/schemas/" + sane + "Output"
                     const elements = {
                         description:
                             "Array of retrieved " + pluralizeName(def.name),
                         type: "array",
                         items: {
-                            $ref: "#/components/schemas/" + sane + "Output"
+                            $ref: refName
                         }
                     }
                     const props: { [name: string]: any } = {}
@@ -1054,6 +1055,30 @@ export default class SwagGen extends BaseGen {
                     const plural = lowercaseFirst(pluralizeName(def.short))
                     props[plural] = elements
                     definitions[sane + "MultiResponse"] = full
+                    if (
+                        def.operations
+                            ?.map((o) => o.operation)
+                            .includes("MULTIGET")
+                    ) {
+                        definitions[sane + "MultiResponsePaginated"] = {
+                            allOf: [
+                                { $ref: sane + "MultiResponse" },
+                                {
+                                    type: "object",
+                                    properties: {
+                                        _pagination: {
+                                            type: "object",
+                                            properties: {
+                                                after: {
+                                                    type: "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
             }
             if (isStructure(def) && def.generateInput) {

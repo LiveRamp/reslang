@@ -460,7 +460,9 @@ Actions cannot have subresources`
                             const name = option.name
                             const val = option.value
                             if (name === "pagination") {
-                                if (!["offset", "cursor", "none"]) {
+                                if (
+                                    !["offset", "cursor", "none"].includes(name)
+                                ) {
                                     throw new Error(
                                         "MULTIGET of resource " +
                                             def.name +
