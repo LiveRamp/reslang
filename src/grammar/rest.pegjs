@@ -80,3 +80,9 @@ option = _ name:[a-z_\-]+ _ "=" _ value:[a-zA-Z0-9_\-]+ _ {
 
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
+
+httpHeaders = _ comment:description? _ type:("http-headers")  _ name:name  _ "{" _
+    "name:" _ headerName:"LR-Org-ID" _
+"}" _ ";"? _ {
+    return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName}
+}

@@ -30,7 +30,7 @@
 
 
 reslang = (namespacedefinition / import / servers / tag / resource / subresource /
-            action / structure / enum / event / produces / consumes / diagram / docs)*
+            action / structure / httpHeaders / enum / event / produces / consumes / diagram / docs)*
 
 // defining a namespace
 namespacedefinition = _ comment:description? _ "namespace" _ space:space? _ "{"
