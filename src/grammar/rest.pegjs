@@ -82,7 +82,8 @@ ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
 httpHeaders = _ comment:description? _ type:("http-headers")  _ name:name  _ "{" _
-    "name:" _ headerName:"LR-Org-ID" _
+    // TODO find a good regex for the header names!!
+    "name:" _ headerName:name _
 "}" _ ";"? _ {
     return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName}
 }
