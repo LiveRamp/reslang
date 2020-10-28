@@ -142,6 +142,7 @@ export interface IResourceLike extends IDefinition {
     attributes?: IAttribute[]
     operations?: IOperation[]
     events?: IEventOperation[]
+    requestHeaders: IRequestHeader[]
     singleton?: boolean
     future?: boolean
     async?: boolean
@@ -266,6 +267,12 @@ export interface IOperation {
     options: IOption[]
     comment: string
     errors: IError[]
+}
+
+// TODO rename this stuff... IOperationAndHeaderDefinition perhaps
+export interface IRequestHeader {
+    opOrWildcard: string
+    headerObjName: string
 }
 
 export interface IOption {
