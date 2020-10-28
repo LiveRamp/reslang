@@ -2,16 +2,18 @@
 
 // defining a resource
 resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
-    attributes:attributes? _ eventsAndOps:eventsAndOperationsAnyOrder _
+    attributes:attributes? _ requestHeaders:requestHeaders? _ eventsAndOps:eventsAndOperationsAnyOrder _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type,
         attributes: attributes, operations: eventsAndOps.ops, events: eventsAndOps.events,
+        requestHeaders: requestHeaders,
         parents: [], short: respath.short}
 }
 
+// TODO figure out how we want to order the request-headers section
 eventsAndOperationsAnyOrder =
   _ o:operations _ e:events? {return {events: e, ops: o}} /
   _ e:events _ o:operations? {return {events: e, ops: o}} /
@@ -52,6 +54,17 @@ operation = _ operation:ops _ errors: errors* _ ";"? _ {
 events = _ "/events" _ ops:eventops+ _ {
     return ops;
 }
+
+//TODO rename this new stuff vvv
+requestHeaders = _ "/request-headers" _ operationsAndHeaders:operationOrWildcard* _ {
+    return operationsAndHeaders;
+}
+
+operationOrWildcard =
+  opOrWildcard:(oplist / "*" ) _ headerObjName:name _ {
+    return {opOrWildcard: opOrWildcard, headerObjName: headerObjName}
+  }
+//TODO rename this new stuff ^^^
 
 errors = _ codes:errorcode+ _ struct:ref _ {
     return {codes: codes, "struct": struct}
