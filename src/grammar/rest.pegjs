@@ -130,14 +130,12 @@ id "id" = _ name:name _ ","? _ {return name}
     to support offset pagination. To use offset pagination, specify
     `pagination { strategy = offset }` after a MULTIGET.
 
-    If "cursor" is the specified strategy, then `after = string`
-    is a required setting.
-
     Only certain pagination options are allowed:
         ["after", "before", "total", "next", "previous"]
 
     Example of a valid config:
         pagination {
+            strategy = cursor
             after = string
             before = string
             total = integer
