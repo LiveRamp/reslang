@@ -257,7 +257,7 @@ When "before" is null, there are no previous records to fetch for this search.`
 
     /**
       isValidQueryParam returns true if the input is the name of a valid
-      cursor-based pagination response field. See enum responseField for valid
+      cursor-based pagination response field. See enum queryParam for valid
       values.
      */
     isValidQueryParam = (name: string) => {
