@@ -3,6 +3,7 @@ import { IOption } from "../../treetypes"
 type paginationProps = {
     [name: string]: { type: string; description: string }
 }
+
 type paginationResponse = {
     _pagination: {
         type: string
@@ -10,23 +11,42 @@ type paginationResponse = {
     }
 }
 
-export type swaggerParam = {
+type wrappedResponse = {
+    allOf: [{ $ref: string }, { type: string; properties: any }]
+}
+
+type swaggerParam = {
     in: string
     name: string
     description: string
     schema: {}
 }
 
+/**
+ strategy represents one of the officially sanctioned pagination strategies.
+ For now, it is "cursor" "offset", and "none".
+*/
 export enum strategy {
     Cursor = "cursor",
-    Offset = "offset"
+    Offset = "offset",
+    None = "none"
 }
 
+/**
+ queryParam enumerates the sanctioned pagination query parameters.
+ This only deals with cursor pagination, since that is officially supported.
+ For APIs that still to use offset+limit pagination, those query params
+ are hardcoded in the Offset class.
+*/
 export enum queryParam {
     After = "after",
     Before = "before"
 }
 
+/**
+ responseField enumerates the sanctioned pagination response fields.
+ This only deals with cursor pagination, since that is officially supported.
+ */
 export enum responseField {
     After = "after",
     Before = "before",
@@ -35,16 +55,7 @@ export enum responseField {
     Previous = "previous"
 }
 
-export function defaultPaginationParams(): IOption[] {
-    return [
-        {
-            name: "after",
-            value: "string"
-        }
-    ]
-}
-
-/*
+/**
   Pagination is the common behavior between all pagination strategies
   (cursor and offset).
 */
@@ -53,12 +64,15 @@ export abstract class Pagination {
         readonly resourceName: string,
         readonly defaultLimit: number,
         readonly maxLimit: number,
-        readonly opts: IOption[] = defaultPaginationParams()
+        readonly opts: IOption[]
     ) {}
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
 
-    // qLimit returns a Swagger query param for "limit"
+    /**
+     qLimit returns a Swagger query param for "limit".
+     This param is the same in both offset and cursor pagination.
+    */
     qLimit(): swaggerParam {
         return {
             in: "query",
@@ -74,20 +88,38 @@ export abstract class Pagination {
         }
     }
 
-    // withStrategy returns the proper constructor for the given pagination
-    // strategy.
+    /**
+      withStrategy returns the proper constructor for the given pagination
+      strategy.
+    */
     public static withStrategy(strat: strategy): any {
         switch (strat) {
             case strategy.Cursor:
                 return Cursor
             case strategy.Offset:
                 return Offset
+            case strategy.None:
+                return NoOp
         }
 
         return assertUnreachable(strat)
     }
 }
 
+export class NoOp extends Pagination {
+    strategy(): strategy {
+        return strategy.None
+    }
+
+    queryParams(): swaggerParam[] {
+        return []
+    }
+}
+
+/**
+ * Offset pagination is deprecated. Params are hardcoded, and Reslang
+ * will eventually cease to support it.
+ */
 export class Offset extends Pagination {
     queryParams(): swaggerParam[] {
         return [this.offsetParam(), this.qLimit()]
@@ -112,6 +144,10 @@ export class Offset extends Pagination {
     }
 }
 
+/**
+ * For more info on Cursor pagination techniques, see the API Squad's doc:
+ * TODO -- post doc with explanations and best practices. Jira: API-410
+ */
 export class Cursor extends Pagination {
     queryParams = (): swaggerParam[] => {
         return [
@@ -123,6 +159,11 @@ export class Cursor extends Pagination {
         ]
     }
 
+    /**
+     * qAfter stands for "query After". It is a standard param that should be the same
+     * across all LiveRamp APIs. If the need for customizing these descriptions
+     * presents itself, that should be a pretty simple change.
+     */
     qAfter(): swaggerParam {
         return {
             in: "query",
@@ -134,6 +175,11 @@ export class Cursor extends Pagination {
         }
     }
 
+    /**
+     * qBefore stands for "query Before". It is a standard param that should be the same
+     * across all LiveRamp APIs. If the need for customizing these descriptions
+     * presents itself, that should be a pretty simple change.
+     */
     qBefore(): swaggerParam {
         return {
             in: "query",
@@ -145,6 +191,9 @@ export class Cursor extends Pagination {
         }
     }
 
+    /**
+     Convert a queryParam to a standardized Swagger query parameter
+     */
     queryToSwagger = (param: queryParam): swaggerParam => {
         switch (param) {
             case queryParam.After:
@@ -155,8 +204,10 @@ export class Cursor extends Pagination {
         return assertUnreachable(param)
     }
 
-    // describeResponseField returns the Swagger description of a given
-    // pagination parameter.
+    /**
+      describeResponseField returns the standard Swagger-friendly description
+      of a given pagination response field.
+    */
     describeResponseField = (param: responseField): string => {
         switch (param) {
             case responseField.After:
@@ -178,9 +229,11 @@ When "before" is null, there are no previous records to fetch for this search.`
         return assertUnreachable(param)
     }
 
-    // addSwaggerProp merges an option into the given object.
-    // It turns the option's name into a top-level key, whose value
-    // is an object with "type" and "description".
+    /**
+       addSwaggerProp merges an option into the given object.
+      It turns the option's name into a top-level key, whose value
+      is an object with "type" and "description".
+    */
     addSwaggerProp = (obj: paginationProps, opt: IOption): paginationProps => {
         return {
             ...obj,
@@ -193,23 +246,29 @@ When "before" is null, there are no previous records to fetch for this search.`
         }
     }
 
-    // isValidResponseField returns true if the input is the name of a valid
-    // cursor-based pagination response field. See enum responseField for valid
-    // values.
+    /**
+      isValidResponseField returns true if the input is the name of a valid
+      cursor-based pagination response field. See enum responseField for valid
+      values.
+    */
     isValidResponseField(name: string) {
         return Object.values(responseField).includes(name as responseField)
     }
 
-    // isValidQueryParam returns true if the input is the name of a valid
-    // cursor-based pagination response field. See enum responseField for valid
-    // values.
+    /**
+      isValidQueryParam returns true if the input is the name of a valid
+      cursor-based pagination response field. See enum responseField for valid
+      values.
+     */
     isValidQueryParam = (name: string) => {
         return Object.values(queryParam).includes(name as queryParam)
     }
 
-    // getPaginationResponse turns the user-defined pagination
-    // options into a form that Swagger understands, which
-    // complies with RFC-3 (hence the "_pagination" key).
+    /**
+      getPaginationResponse turns the user-defined pagination
+      options into a form that Swagger understands, which
+      complies with RFC-3 (hence the "_pagination" key).
+    */
     getPaginationResponse = (): paginationResponse => {
         let validOpts = this.opts.filter((opt) =>
             this.isValidResponseField(opt.name)
@@ -222,13 +281,15 @@ When "before" is null, there are no previous records to fetch for this search.`
         }
     }
 
-    // wrapResponse uses the standard Swagger way of implementing inheritance
-    // ("allOf"). to add pagination to an existing "multi" response.
-    // Since the #ref for the queried resource should have already
-    // been built by Reslang, this method can wrap that #ref with pagination
-    // info, instead of re-defining the entire response body.
-    // ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
-    wrapResponse = (ref: string) => {
+    /**
+      wrapResponse uses the standard Swagger way of implementing inheritance
+      ("allOf"). to add pagination to an existing "multi" response.
+      This method wraps the given #ref with pagination info, instead of
+      re-defining the entire response body.
+
+      ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
+    */
+    wrapResponse = (ref: string): wrappedResponse => {
         return {
             allOf: [
                 { $ref: ref },
@@ -247,11 +308,13 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 }
 
-// Utility function for testing whether a switch block is exhaustive.
-// Typescript won't warn you out of the box if a switch() doesn't
-// cover all of an Enum's types, so adding a call to this function
-// at the end of a switch will allow the compiler to warn in such situations.
-// ref: https://stackoverflow.com/a/39419171
+/**
+  Utility function for testing whether a switch block is exhaustive.
+  Typescript won't warn you out of the box if a switch() doesn't
+  cover all of an Enum's types, so adding a call to this function
+  at the end of a switch will allow the compiler to warn in such situations.
+  ref: https://stackoverflow.com/a/39419171
+*/
 function assertUnreachable(x: never): never {
     throw new Error("invariant: didn't expect to get here")
 }

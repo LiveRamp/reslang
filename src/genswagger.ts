@@ -565,7 +565,7 @@ export default class SwagGen extends BaseGen {
                 plural,
                 limit,
                 maxLimit,
-                ops.multiget.pagination
+                ops.multiget.pagination || this.defaultPaginationParams()
             )
 
             gparams = [...gparams, ...paginator.queryParams()]
@@ -862,13 +862,28 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    // getPaginationStrategy finds an operations pagination strategy,
-    // or defaults to Cursor strategy if not defined.
+    /**
+        getPaginationStrategy finds an operation's pagination strategy,
+        or defaults to Cursor strategy if not defined.
+     */
     private getPaginationStrategy(op: IOperation): strategy {
         let strat = op.pagination?.find((o) => o.name === "strategy")?.value
 
         if (strat) return strat as strategy
         return strategy.Cursor
+    }
+    /**
+     defaultPaginationParams returns the pagination options when none
+     are specified by the user. Since cursor pagination is the default
+     strategy, the only required pagination parameter is the "after" cursor.
+    */
+    private defaultPaginationParams(): IOption[] {
+        return [
+            {
+                name: "after",
+                value: "string"
+            }
+        ]
     }
 
     private formErrors(op: IOperation, responses: any) {
