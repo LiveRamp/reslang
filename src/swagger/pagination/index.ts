@@ -1,23 +1,43 @@
 import { IOption } from "../../treetypes"
 
-type paginationProps = {
+/**
+ * swaggerProps is how Swagger structures `properties` fields, where the key
+ * of the object is the property name, and it maps to an object
+ * with `type` and `description` fields.
+ */
+type swaggerProps = {
     [name: string]: { type: string; description: string }
 }
 
+/**
+ * paginationResponse is the RFC-3 compliant structure for cursor-based
+ * pagination responses.
+ */
 type paginationResponse = {
     _pagination: {
-        type: string
-        properties: paginationProps
+        type: "object"
+        properties: swaggerProps
     }
 }
 
+/**
+ * wrappedResponse uses Swagger's recommended means of inheritance to
+ * "infuse" a normal "#/components" response with pagination info.
+ * The "allOf" style is what Swagger recommends for implementing inheritance.
+ */
 type wrappedResponse = {
-    allOf: [{ $ref: string }, { type: string; properties: any }]
+    allOf: [
+        { $ref: string },
+        { type: "object"; properties: paginationResponse }
+    ]
 }
 
+/**
+ * swaggerParam is how Swagger structures request parameters.
+ */
 type swaggerParam = {
     in: string
-    name: string
+    name: queryParam
     description: string
     schema: {}
 }
@@ -27,7 +47,14 @@ type swaggerParam = {
  For now, it is "cursor" "offset", and "none".
 */
 export enum strategy {
+    /**
+     * Officially supported pagination strategy. Send a cursor when a search
+     * overflows so that subsequent searches use a stable search window.
+     */
     Cursor = "cursor",
+    /**
+     * Offset pagination is deprecated. Please consider switching to Cursor.
+     */
     Offset = "offset",
     None = "none"
 }
@@ -76,7 +103,7 @@ export abstract class Pagination {
     qLimit(): swaggerParam {
         return {
             in: "query",
-            name: "limit",
+            name: "limit" as queryParam,
             description: `Number of ${this.resourceName} to return`,
             schema: {
                 type: "integer",
@@ -122,13 +149,17 @@ export class NoOp extends Pagination {
  */
 export class Offset extends Pagination {
     queryParams(): swaggerParam[] {
-        return [this.offsetParam(), this.qLimit()]
+        return [this.qOffset(), this.qLimit()]
     }
 
-    offsetParam(): swaggerParam {
+    /**
+     * qOffset ("query Offset") returns a query param for offset pagination
+     * that Swagger understands.
+     */
+    qOffset(): swaggerParam {
         return {
             in: "query",
-            name: "offset",
+            name: "offset" as queryParam,
             description: `Offset of the ${this.resourceName} (starting from 0) to include in the response.`,
             schema: {
                 type: "integer",
@@ -155,7 +186,7 @@ export class Cursor extends Pagination {
             ...this.opts
                 .map((o) => o.name as queryParam)
                 .filter(this.isValidQueryParam)
-                .map(this.queryToSwagger)
+                .map(this.nameToSwaggerParam)
         ]
     }
 
@@ -167,7 +198,7 @@ export class Cursor extends Pagination {
     qAfter(): swaggerParam {
         return {
             in: "query",
-            name: "after",
+            name: queryParam.After,
             description: `The value returned as "_pagination.after" in the previous query. Starts from the beginning if not specified`,
             schema: {
                 type: "string"
@@ -183,7 +214,7 @@ export class Cursor extends Pagination {
     qBefore(): swaggerParam {
         return {
             in: "query",
-            name: "before",
+            name: queryParam.Before,
             description: `The value returned as "_pagination.before" in the previous query.`,
             schema: {
                 type: "string"
@@ -192,16 +223,16 @@ export class Cursor extends Pagination {
     }
 
     /**
-     Convert a queryParam to a standardized Swagger query parameter
+     Convert a queryParam string to a standardized Swagger query parameter
      */
-    queryToSwagger = (param: queryParam): swaggerParam => {
-        switch (param) {
+    nameToSwaggerParam = (name: queryParam): swaggerParam => {
+        switch (name) {
             case queryParam.After:
                 return this.qAfter()
             case queryParam.Before:
                 return this.qBefore()
         }
-        return assertUnreachable(param)
+        return assertUnreachable(name)
     }
 
     /**
@@ -230,11 +261,14 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-       addSwaggerProp merges an option into the given object.
+      addSwaggerProp merges an option into the given object.
       It turns the option's name into a top-level key, whose value
       is an object with "type" and "description".
+
+      The option's name must be a valid responseField, and value must be
+      a supported Swagger data type.
     */
-    addSwaggerProp = (obj: paginationProps, opt: IOption): paginationProps => {
+    addSwaggerProp = (obj: swaggerProps, opt: IOption): swaggerProps => {
         return {
             ...obj,
             [opt.name]: {
