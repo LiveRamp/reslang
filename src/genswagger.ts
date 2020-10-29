@@ -22,7 +22,12 @@ import {
     isUnion
 } from "./treetypes"
 import { Operations, Verbs } from "./operations"
-import { Pagination, Cursor, strategy } from "./swagger/pagination/index"
+import {
+    Pagination,
+    Cursor,
+    Offset,
+    strategy
+} from "./swagger/pagination/index"
 
 /**
  * generate swagger from the parsed representation
@@ -586,32 +591,28 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-            const responses: any = {
+
+            let schema: any = {
+                $ref: `#/components/schemas/${camel}MultiResponse`
+            }
+            let description = plural + " retrieved successfully"
+            let strat = paginator.strategy()
+            let headers =
+                strat === strategy.Offset
+                    ? (paginator as Offset).xTotalCountHeader()
+                    : {}
+            schema =
+                strat === strategy.Cursor
+                    ? (paginator as Cursor).addPaginationToSchema(schema)
+                    : schema
+            let responses: any = {
                 200: {
-                    description: plural + " retrieved successfully",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                $ref: `#/components/schemas/${camel}MultiResponse`
-                            }
-                        }
-                    }
+                    description,
+                    headers,
+                    content: this.jsonContentSchema(schema)
                 }
             }
-            if (paginator.strategy() === strategy.Cursor) {
-                responses["200"].content[
-                    "application/json"
-                ].schema = (paginator as Cursor).wrapResponse(
-                    `#/components/schemas/${camel}MultiResponse`
-                )
-            } else if (paginator.strategy() === strategy.Offset) {
-                responses["200"].headers = {
-                    "X-Total-Count": {
-                        description: `Total number of ${plural} returned by the query`,
-                        schema: { type: "integer", format: "int32" }
-                    }
-                }
-            }
+
             if (notFound) {
                 responses[404] = notFound
             }
@@ -626,6 +627,14 @@ export default class SwagGen extends BaseGen {
             }
             if (gparams.length) {
                 path.get.parameters = gparams
+            }
+        }
+    }
+
+    private jsonContentSchema(schema: any) {
+        return {
+            "application/json": {
+                schema
             }
         }
     }

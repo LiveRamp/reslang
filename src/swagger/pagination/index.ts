@@ -26,10 +26,7 @@ type paginationResponse = {
  * The "allOf" style is what Swagger recommends for implementing inheritance.
  */
 type wrappedResponse = {
-    allOf: [
-        { $ref: string },
-        { type: "object"; properties: paginationResponse }
-    ]
+    allOf: [{}, { type: "object"; properties: paginationResponse }]
 }
 
 /**
@@ -166,6 +163,15 @@ export class Offset extends Pagination {
                 format: "int32",
                 default: 0,
                 minimum: 0
+            }
+        }
+    }
+
+    xTotalCountHeader = () => {
+        return {
+            "X-Total-Count": {
+                description: `Total number of ${this.resourceName} returned by the query`,
+                schema: { type: "integer", format: "int32" }
             }
         }
     }
@@ -316,17 +322,17 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-      wrapResponse uses the standard Swagger way of implementing inheritance
+      addPaginationToSchema uses the standard Swagger way of implementing inheritance
       ("allOf"). to add pagination to an existing "multi" response.
-      This method wraps the given #ref with pagination info, instead of
+      This method wraps the given schema with pagination info, instead of
       re-defining the entire response body.
 
       ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
     */
-    wrapResponse = (ref: string): wrappedResponse => {
+    addPaginationToSchema = (schema: {}): wrappedResponse => {
         return {
             allOf: [
-                { $ref: ref },
+                schema,
                 {
                     type: "object",
                     properties: {
