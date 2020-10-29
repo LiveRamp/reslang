@@ -7,7 +7,7 @@ request-resource UploadRequest {
     client: string
 
 	/operations
-		POST GET MULTIGET
+		POST GET MULTIGET pagination { strategy = offset }
 }
 
 singleton subresource UploadRequest::Status {
@@ -24,7 +24,7 @@ subresource UploadRequest::RecordSet {
     company: string
     records: Record[]
 
-    /operations 
+    /operations
         GET POST
 }
 
@@ -33,7 +33,7 @@ subresource UploadRequest::RecordSet::Deep {
     company: string
     records: Record[]
 
-    /operations 
+    /operations
         GET POST
 }
 
@@ -45,7 +45,7 @@ structure Record {
 async action UploadRequest::StartProcessingAction  {
     id: string
     created: datetime
-    
+
     /operations
         POST
 }

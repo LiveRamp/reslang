@@ -7,7 +7,7 @@ configuration-resource Organization {
 	info: OrgInfo
 
 	/operations
-		GET POST PUT MULTIGET
+		GET POST PUT MULTIGET pagination { strategy = offset }
 }
 
 structure Address {
@@ -17,7 +17,7 @@ structure Address {
 
 union OrgInfo {
 	public: string
-	private: string	
+	private: string
 }
 
 configuration-resource Role {
@@ -26,5 +26,5 @@ configuration-resource Role {
 	name: string mutable
 
 	/operations
-		GET POST PUT MULTIGET
+		GET POST PUT MULTIGET pagination { strategy = offset }
 }

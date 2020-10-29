@@ -8,7 +8,7 @@ asset-resource SMap {
     test2: Struct3 inline
 
     /operations
-        PUT POST GET MULTIGET
+        PUT POST GET MULTIGET pagination { strategy = offset }
 }
 
 structure Struct1 {
@@ -40,4 +40,3 @@ structure Struct3 {
 structure Struct4 {
     d: int mutable
 }
-

@@ -13,14 +13,14 @@ asset-resource Car {
 	view: ViewEnum representation
 
 	/operations
-		POST /* this is a get comment */ GET MULTIGET
+		POST /* this is a get comment */ GET MULTIGET pagination { strategy = offset }
 }
 
 enum ViewEnum {
 	FULL
 	BRIEF
 }
-	
+
 "this is a specification!"
 structure Specification {
 	type: string
@@ -33,7 +33,7 @@ subresource Car::Wheel {
 	radius: double
 
 	/operations
-		GET PUT POST MULTIGET
+		GET PUT POST MULTIGET pagination { strategy = offset }
 }
 
 "Different brands"

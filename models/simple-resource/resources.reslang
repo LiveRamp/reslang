@@ -2,7 +2,7 @@
 // A garage is a place to store cars
 "This is a description of a garage"
 resource Garage {
-	// simple id 
+	// simple id
 	id: string query min-length:10 max-length: 300
 	name: string query mutable
 	manufacturer: Manufacturer
@@ -13,7 +13,7 @@ resource Garage {
 		PUT
 		// this is a POST comment
 		"Actual POST comment"
-		POST GET DELETE MULTIGET
+		POST GET DELETE MULTIGET pagination { strategy = offset }
 }
 
 "This is a manufacturer"
@@ -45,7 +45,7 @@ subresource Foo::Subfoo::Subsubfoo {
 // another resource with no id
 resource Bar {
 	name: string query
-	/operations MULTIGET
+	/operations MULTIGET pagination { strategy = offset }
 }
 
 resource Test {

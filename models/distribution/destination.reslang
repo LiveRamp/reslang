@@ -9,7 +9,7 @@ configuration-resource Destination {
         "Retrieve a current destination"
         GET
         "Get all destinations"
-        MULTIGET
+        MULTIGET pagination { strategy = offset }
 }
 
 subresource Destination::TaxonomyConfiguration {
@@ -17,7 +17,7 @@ subresource Destination::TaxonomyConfiguration {
     name: string
     mappingsMacro: string
     /operations
-        POST PUT GET MULTIGET
+        POST PUT GET MULTIGET pagination { strategy = offset }
 }
 
 "An Integration (aka IntegrationGroup) is a particular configuration for sending data to a destination. It specifies the indentifier types, the endpoint that it is going to, and the taxonomy. An example is Facebook UK data store"
@@ -35,7 +35,7 @@ subresource Destination::Integration {
         "Retrieve an integration"
         GET
         "Retrieve many integrations"
-        MULTIGET
+        MULTIGET pagination { strategy = offset }
 }
 
 structure IdentifierTypeMapping {
@@ -46,4 +46,3 @@ structure IdentifierTypeMapping {
 future configuration-resource IdentifierPool {
     id: string
 }
-

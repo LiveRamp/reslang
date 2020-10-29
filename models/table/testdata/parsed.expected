@@ -309,6 +309,12 @@
             "operation": "MULTIGET",
             "comment": "Find existing column in the provided parent table",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": [
               {
                 "codes": [
@@ -727,6 +733,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           },
           {

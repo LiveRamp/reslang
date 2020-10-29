@@ -8,7 +8,7 @@ configuration-resource User {
 	primaryOrgId: linked organizations.Organization query mutable
 
 	/operations
-        GET POST MULTIGET
+        GET POST MULTIGET pagination { strategy = offset }
 }
 
 subresource User::OrgRole {
@@ -17,7 +17,7 @@ subresource User::OrgRole {
 	orgId: linked organizations.Organization
 
 	/operations
-		GET POST MULTIGET DELETE
+		GET POST MULTIGET pagination { strategy = offset } DELETE
 }
 
 sync action User::Validate {

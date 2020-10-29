@@ -16,7 +16,7 @@ resource Directory {
 	id: uuid query
 	name: string query
 	/operations
-         MULTIGET pagination=after limit=20 GET POST
+         MULTIGET limit=20 GET POST
 }
 
 "This configures up a file type, e.g. .gif"
@@ -34,14 +34,14 @@ resource FileType {
 	specId4: linked Specification[]
 	/operations
 		"Get a FileType"
-		GET 
+		GET
 			// NOTE: 404 is added automatically
 			"Not Allowed" 405
 				StandardError
 			"Forbidden" 403
-				SpecialError	
+				SpecialError
 		POST
-		MULTIGET
+		MULTIGET pagination { strategy = offset }
 }
 
 future resource Specification {
@@ -58,8 +58,8 @@ subresource Directory::File {
 	contents: string queryonly
 
     /operations
-        GET POST MULTIGET
-	/events 
+        GET POST MULTIGET pagination { strategy = offset }
+	/events
 		POST completed
 }
 
@@ -70,7 +70,7 @@ request-resource DirectoryDeleteRequest {
 
     /operations
         GET "Can't find anything" 404 SpecialError
-		POST MULTIGET
+		POST MULTIGET pagination { strategy = offset }
 	/events
 	    POST
 }
@@ -90,9 +90,9 @@ produces DirectoryDeleteIncomplete
 sync action DirectoryDeleteRequest::Cancel {
 	id: int
 	time: datetime
-	
+
     /operations
-		POST 200 DirectoryDeleteRequest::Cancel 
+		POST 200 DirectoryDeleteRequest::Cancel
 }
 
 "A non-standard error response"
@@ -101,4 +101,3 @@ structure SpecialError {
 	time: datetime
 	errors: StandardError[]
 }
-

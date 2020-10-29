@@ -5,7 +5,7 @@ resource Aaa {
     data: Bbb[]
 
     /operations
-        MULTIPOST GET MULTIGET PUT MULTIPUT PATCH MULTIPATCH DELETE MULTIDELETE
+        MULTIPOST GET MULTIGET pagination { strategy = offset } PUT MULTIPUT PATCH MULTIPATCH DELETE MULTIDELETE
 }
 
 structure Bbb {

@@ -101,6 +101,12 @@
             "operation": "MULTIGET",
             "comment": "Get all destinations",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -221,6 +227,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -379,6 +391,12 @@
             "operation": "MULTIGET",
             "comment": "Retrieve many integrations",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -782,6 +800,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -993,6 +1017,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -1082,6 +1112,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],
@@ -1198,6 +1234,12 @@
           {
             "operation": "MULTIGET",
             "options": [],
+            "pagination": [
+              {
+                "name": "strategy",
+                "value": "offset"
+              }
+            ],
             "errors": []
           }
         ],

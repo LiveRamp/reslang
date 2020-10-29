@@ -4,7 +4,7 @@ subresource Table::Column {
 
   "The name of the Column."
   name: string max-length:255
-  
+
   "The type of data that will be imported into column.
    NUMERIC: only numeric data/values can be added to this column.
    STRING: any string data or values can be added to this column."
@@ -40,7 +40,7 @@ subresource Table::Column {
         StandardError
 
     "Find existing column in the provided parent table"
-    MULTIGET
+    MULTIGET pagination { strategy = offset }
       "Cannot find table" 404
         StandardError
 

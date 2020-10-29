@@ -49,31 +49,29 @@ paths:
       responses:
         '200':
           description: Directories retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Directories returned by the query
-              schema:
-                type: integer
-                format: int32
-            X-Next-After:
-              description: >-
-                The opaque token to set as "after" in the next query, to
-                continue getting results. If it isn't present, there is no more
-                data
-              schema:
-                type: string
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DirectoryMultiResponse'
+                allOf:
+                - $ref: '#/components/schemas/DirectoryMultiResponse'
+                - type: object
+                  properties:
+                    _pagination:
+                      type: object
+                      properties:
+                        after:
+                          type: string
+                          description: >-
+                          This field is a cursor to be passed as a query
+                          parameter in subsequent, paginated searches.
+
+                          It allows the next request to begin from where the
+                          current search left off.
+
+                          When "after" is null, there are no more records
+                          to fetch for this search.
       parameters:
-        - in: query
-          name: after
-          description: >-
-            The value returned as X-Next-After in the previous query. Starts
-            from beginning if not specified
-          schema:
-            type: string
         - in: query
           name: limit
           description: Number of Directories to return
@@ -83,6 +81,13 @@ paths:
             default: 20
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            The value returned as "_pagination.after" in the previous query.
+            Starts from the beginning if not specified
+          schema:
+            type: string
         - in: query
           name: id
           required: false
@@ -715,4 +720,3 @@ components:
         - httpStatus
         - errorCode
         - message
-

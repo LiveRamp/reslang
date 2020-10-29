@@ -17,7 +17,7 @@ request-resource DistributionRequest {
       "Datetime in UTC, formatted as ISO-8601, when the status of the request last changed"
     statusUpdatedAt: datetime output
       "Metadata about the batch output"
-    outputMetaData: BatchOutputMetadata output optional  
+    outputMetaData: BatchOutputMetadata output optional
     distributionType: DistributionTypeEnum output
 
     // query only params
@@ -38,7 +38,7 @@ request-resource DistributionRequest {
           "Use this endpoint to create a new DistributionRequest"
         POST
           "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET"
-        MULTIGET
+        MULTIGET pagination { strategy = offset }
 }
 
 "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel"
@@ -108,7 +108,7 @@ structure BatchOutputMetadata {
     fileDetails: FileDetails[]
     "Total size of the distributed data in bytes"
     totalOutputSize: int
-    
+
     "The number of distribution records in the file initially. See docs: DistMVP.TotalRecords"
     totalDistributionRecords: int
 }
@@ -128,4 +128,4 @@ future configuration-resource Destination {
 
 future subresource Destination::Endpoint {
     id: int
-} 
+}

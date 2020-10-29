@@ -9,7 +9,7 @@ request-resource DeliverMilk {
     complete: boolean
 
     /operations
-        POST GET MULTIGET
+        POST GET MULTIGET pagination { strategy = offset }
     /events
         POST GET
 }
@@ -19,7 +19,7 @@ sync bulk action DeliverMilk::search {
     id: string
     name: string query
     /operations
-        MULTIGET
+        MULTIGET pagination { strategy = offset }
 }
 
 sync bulk action Milk::search {
@@ -27,7 +27,7 @@ sync bulk action Milk::search {
     name: string query
 
     /operations
-        MULTIGET
+        MULTIGET pagination { strategy = offset }
 }
 
 singleton resource AllDeliveredMilk {
