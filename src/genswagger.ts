@@ -14,6 +14,7 @@ import {
     IAttribute,
     IOperation,
     IResourceLike,
+    IRequestHeader,
     isAction,
     isEnum,
     isResourceLike,
@@ -546,6 +547,7 @@ export default class SwagGen extends BaseGen {
                 responses[404] = notFound
             }
         }
+        // TODO add request header params section here somewhere
         const gparams = params.slice()
         if (ops.multiget) {
             const pagination = this.retrieveOption(ops.multiget, "pagination")

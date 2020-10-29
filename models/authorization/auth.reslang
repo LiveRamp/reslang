@@ -35,6 +35,15 @@ resource Role {
     name: string
     parentRoleId: linked Role
 
+    /request-headers
+      * AuthnHeader
+      POST OrgIDHeader
+
     /operations
         POST GET MULTIGET
+}
+
+"for your access token, ya know?"
+http-header AuthnHeader {
+  name: Authorization
 }

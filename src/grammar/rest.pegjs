@@ -94,7 +94,7 @@ option = _ name:[a-z_\-]+ _ "=" _ value:[a-zA-Z0-9_\-]+ _ {
 ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
-httpHeaders = _ comment:description? _ type:("http-headers")  _ name:name  _ "{" _
+httpHeader = _ comment:description? _ type:("http-header")  _ name:name  _ "{" _
     // TODO find a good regex for the header names!!
     "name:" _ headerName:name _
 "}" _ ";"? _ {
