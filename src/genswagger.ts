@@ -548,6 +548,33 @@ export default class SwagGen extends BaseGen {
             }
         }
         // TODO add request header params section here somewhere
+        if (el.requestHeaders) {
+          params.push("POOP")
+        }
+
+        console.log("###############")
+        console.log(el.requestHeaders)
+        console.log("***************")
+
+        let verbs
+        if (el) {
+            if (el.operations) {
+                // doing this nesting hack to avoid `operations could be undefined` compiler error
+                verbs = el.operations.map(op => op.operation)
+            }
+        }
+        // TODO turn this pseudo code into real code!
+        // TODO then, do something very similar in formIdOperations
+        // if the resource el supports an operation
+        //      AND that operation shows up in a requestHeader opOrWildcard,
+        // then params.push an appropriate header param
+        console.log( verbs)
+        // This is what the el.requestHeaders looks like
+        // [
+        //   { opOrWildcard: '*', headerObjName: 'AuthnHeader' },
+        //   { opOrWildcard: 'POST', headerObjName: 'OrgIDHeader' }
+        // ]
+
         const gparams = params.slice()
         if (ops.multiget) {
             const pagination = this.retrieveOption(ops.multiget, "pagination")
