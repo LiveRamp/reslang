@@ -563,9 +563,7 @@ export default class SwagGen extends BaseGen {
                 this.retrieveOption(ops.multiget, "max-limit")
             ) as number
 
-            let klass = Pagination.withStrategy(
-                this.getPaginationStrategy(ops.multiget)
-            )
+            let klass = Pagination.use(this.getPaginationStrategy(ops.multiget))
             let paginator: Pagination = new klass(
                 plural,
                 limit,

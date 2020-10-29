@@ -113,10 +113,10 @@ export abstract class Pagination {
     }
 
     /**
-      withStrategy returns the proper constructor for the given pagination
+      use returns the proper constructor for the given pagination
       strategy.
     */
-    public static withStrategy(strat: strategy): any {
+    public static use(strat: strategy): any {
         switch (strat) {
             case strategy.Cursor:
                 return Cursor
