@@ -156,6 +156,11 @@ export interface IResourceLike extends IDefinition {
     generateMultiPuttable: boolean
     generateMultiPatchable: boolean
 }
+
+export interface IHTTPHeader extends IDefinition {
+    headerName: string
+}
+
 export interface IEnum extends IDefinition {
     kind: "enum"
     literals?: string[]
