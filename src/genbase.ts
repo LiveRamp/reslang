@@ -460,15 +460,11 @@ Actions cannot have subresources`
                             const name = option.name
                             const val = option.value
                             if (name === "pagination") {
-                                if (
-                                    !["offset", "cursor", "none"].includes(name)
-                                ) {
-                                    throw new Error(
-                                        "MULTIGET of resource " +
-                                            def.name +
-                                            " must have pagination value of offset, cursor or none"
-                                    )
-                                }
+                                throw new Error(
+                                    "MULTIGET of resource " +
+                                        def.name +
+                                        " must specify its pagination with a 'pagination' block. See reference.md for details"
+                                )
                             } else if (name === "limit") {
                                 // must be numeric
                                 if (isNaN(Number(val))) {
