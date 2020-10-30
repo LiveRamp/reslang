@@ -40,7 +40,7 @@ resource BellsAndWhistles {
         strategy = cursor
         after = string
         before = string
-        total = integer
+        total = int
         next = string
         previous = string
       }

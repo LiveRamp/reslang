@@ -231,7 +231,7 @@
                             },
                             {
                                 "name": "total",
-                                "value": "integer"
+                                "value": "int"
                             },
                             {
                                 "name": "next",

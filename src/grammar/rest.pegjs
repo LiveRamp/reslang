@@ -138,7 +138,7 @@ id "id" = _ name:name _ ","? _ {return name}
             strategy = cursor
             after = string
             before = string
-            total = integer
+            total = int
         }
 */
 pagination = _ "pagination" _ "{" _ options:option+ "}" _ {

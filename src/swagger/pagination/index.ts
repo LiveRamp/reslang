@@ -300,6 +300,25 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
+     * toSwaggerProp translates a reslang option into a Swagger property.
+     *
+     * Note that some types need to be translated.
+     * For example, in Reslang we have `int`, but in Swagger we have `integer`.
+     *
+     */
+    toSwaggerProp(opt: IOption): swaggerProps {
+        let typ = opt.value
+        let description = this.describeResponseField(opt.name as responseField)
+        switch (typ) {
+            /* If we discover more types to translate, add them to this switch. */
+            case "int":
+                typ = "integer"
+                break
+        }
+        return { [opt.name]: { type: typ, description } }
+    }
+
+    /**
       addSwaggerProp merges an option into the given object.
       It turns the option's name into a top-level key, whose value
       is an object with "type" and "description".
@@ -310,12 +329,7 @@ When "before" is null, there are no previous records to fetch for this search.`
     addSwaggerProp = (obj: swaggerProps, opt: IOption): swaggerProps => {
         return {
             ...obj,
-            [opt.name]: {
-                type: opt.value,
-                description: this.describeResponseField(
-                    opt.name as responseField
-                )
-            }
+            ...this.toSwaggerProp(opt)
         }
     }
 
