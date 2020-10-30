@@ -100,6 +100,13 @@ paths:
                               to fetch for this search.
       parameters:
         - in: query
+          name: after
+          description: >-
+            The value returned as "_pagination.after" in the previous query.
+            Starts from the beginning if not specified
+          schema:
+            type: string
+        - in: query
           name: limit
           description: Number of ImplicitCursors to return
           schema:
@@ -108,13 +115,6 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
-        - in: query
-          name: after
-          description: >-
-            The value returned as "_pagination.after" in the previous query.
-            Starts from the beginning if not specified
-          schema:
-            type: string
   /v1/bells-and-whistles:
     get:
       tags:

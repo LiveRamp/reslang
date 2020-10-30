@@ -222,6 +222,10 @@
                                 "value": "cursor"
                             },
                             {
+                                "name": "limit",
+                                "value": "10"
+                            },
+                            {
                                 "name": "after",
                                 "value": "string"
                             },

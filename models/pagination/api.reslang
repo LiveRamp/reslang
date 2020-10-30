@@ -38,6 +38,7 @@ resource BellsAndWhistles {
     MULTIGET
       pagination {
         strategy = cursor
+        limit = 10
         after = string
         before = string
         total = int

@@ -3,7 +3,6 @@ import {
     IAttribute,
     IImport,
     INamespace,
-    IOperation,
     IDiagram,
     IDocumentation,
     IDocEntry,
@@ -463,17 +462,12 @@ Actions cannot have subresources`
                                 throw new Error(
                                     "MULTIGET of resource " +
                                         def.name +
-                                        " must specify its pagination with a 'pagination' block. See reference.md for details"
+                                        " must specify its pagination with a 'pagination' block. See reference.md for details."
                                 )
                             } else if (name === "limit") {
-                                // must be numeric
-                                if (isNaN(Number(val))) {
-                                    throw new Error(
-                                        "MULTIGET of resource " +
-                                            def.name +
-                                            " must have an integer limit value"
-                                    )
-                                }
+                                throw new Error(
+                                    `MULTIGET of resource ${def.name} must configure its limit within a 'pagination' block. See reference.md for details.`
+                                )
                             } else {
                                 throw new Error(
                                     "Operation " +

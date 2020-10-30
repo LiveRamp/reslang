@@ -16,7 +16,7 @@ resource Directory {
 	id: uuid query
 	name: string query
 	/operations
-         MULTIGET limit=20 GET POST
+         MULTIGET GET POST
 }
 
 "This configures up a file type, e.g. .gif"

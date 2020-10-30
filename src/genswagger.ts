@@ -26,8 +26,7 @@ import {
     Pagination,
     Cursor,
     Offset,
-    strategy,
-    validField
+    strategy
 } from "./swagger/pagination/index"
 
 /**
@@ -565,12 +564,12 @@ export default class SwagGen extends BaseGen {
             ) as number
 
             let klass = Pagination.use(this.getPaginationStrategy(ops.multiget))
-            this.warnInvalidPaginationOpts(ops.multiget.pagination || [])
+            this.warnInvalidPaginationOpts(
+                ops.multiget.pagination || this.defaultPaginationParams()
+            )
 
             let paginator: Pagination = new klass(
                 plural,
-                limit,
-                maxLimit,
                 ops.multiget.pagination || this.defaultPaginationParams()
             )
 
@@ -633,15 +632,22 @@ export default class SwagGen extends BaseGen {
     }
 
     private warnInvalidPaginationOpts(opts: IOption[]): void {
-        let invalid = opts
-            .filter((o) => o.name !== "strategy")
-            .map((o) => o.name as validField)
-            .filter((name) => !Object.values(validField).includes(name))
+        let valid = [
+            "after",
+            "before",
+            "total",
+            "next",
+            "previous",
+            "strategy",
+            "limit",
+            "maxLimit"
+        ]
+        let invalid = opts.filter(({ name }) => !valid.includes(name))
         if (invalid.length)
             console.error(
-                `unexpected pagination field: valid fields are [ ${Object.values(
-                    validField
-                ).join(" | ")} ], but got [ ${invalid.join(" | ")} ]`
+                `unexpected pagination field: valid fields are [ ${valid.join(
+                    " | "
+                )} ], but got [ ${invalid.join(" | ")} ]`
             )
     }
 
@@ -898,13 +904,22 @@ export default class SwagGen extends BaseGen {
     /**
      defaultPaginationParams returns the pagination options when none
      are specified by the user. Since cursor pagination is the default
-     strategy, the only required pagination parameter is the "after" cursor.
+     strategy, the only required pagination parameters are the "after" cursor
+     and the limit.
     */
     private defaultPaginationParams(): IOption[] {
         return [
             {
                 name: "after",
                 value: "string"
+            },
+            {
+                name: "limit",
+                value: String(this.rules.limit || 10)
+            },
+            {
+                name: "maxLimit",
+                value: String(this.rules.maxLimit || 100)
             }
         ]
     }

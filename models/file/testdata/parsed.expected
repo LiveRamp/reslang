@@ -177,12 +177,7 @@
         "operations": [
           {
             "operation": "MULTIGET",
-            "options": [
-              {
-                "name": "limit",
-                "value": "20"
-              }
-            ],
+            "options": [],
             "errors": []
           },
           {

@@ -11,7 +11,7 @@ describe("Pagination", () => {
 })
 
 describe("NoOp", () => {
-    let instance = new NoOp("foo", 0, 0, [])
+    let instance = new NoOp("foo", [])
     describe("#strategy", () => {
         it("returns the correct strategy", () => {
             expect(instance.strategy()).toEqual(strategy.None)
@@ -25,17 +25,17 @@ describe("NoOp", () => {
 })
 
 describe("Offset", () => {
-    let instance = new Offset("foo", 0, 0, [])
+    let instance = new Offset("foo", [])
     describe("#strategy", () => {
         it("returns the correct strategy", () => {
             expect(instance.strategy()).toEqual(strategy.Offset)
         })
     })
     describe("#queryParams", () => {
-        let params = instance.queryParams()
         let offset = "offset" as queryParam
         let limit = "limit" as queryParam
         it("returns offset and limit query params", () => {
+            let params = instance.queryParams()
             expect(params.length).toBe(2)
             expect(params).toEqual(
                 expect.arrayContaining([
@@ -64,17 +64,9 @@ describe("Offset", () => {
 
 describe("Cursor", () => {
     describe("#queryParams", () => {
-        it("returns limit param by default", () => {
-            let params = new Cursor("", 0, 0, []).queryParams()
-            expect(params.length).toBe(1)
-            expect(params).toEqual(
-                expect.arrayContaining([
-                    expect.objectContaining({ in: "query", name: "limit" })
-                ])
-            )
-        })
-        it("supports 'before' and 'after' param", () => {
-            let params = new Cursor("", 0, 0, [
+        it("supports 'limit', 'before' and 'after' params", () => {
+            let params = new Cursor("", [
+                { name: "limit", value: "int" },
                 { name: "after", value: "string" },
                 { name: "before", value: "string" }
             ]).queryParams()
@@ -89,10 +81,12 @@ describe("Cursor", () => {
         })
     })
 
-    describe("#nameToSwaggerParam", () => {
-        let instance = new Cursor("", 0, 0, [])
+    describe("#optToQueryParam", () => {
+        let instance = new Cursor("", [])
         it("builds an 'after' param", () => {
-            expect(instance.nameToSwaggerParam("after" as queryParam)).toEqual(
+            expect(
+                instance.optToQueryParam({ name: "after", value: "string" })
+            ).toEqual(
                 expect.objectContaining({
                     in: "query",
                     name: "after",
@@ -101,11 +95,24 @@ describe("Cursor", () => {
             )
         })
         it("builds a 'before' param", () => {
-            expect(instance.nameToSwaggerParam("before" as queryParam)).toEqual(
+            expect(
+                instance.optToQueryParam({ name: "before", value: "string" })
+            ).toEqual(
                 expect.objectContaining({
                     in: "query",
                     name: "before",
                     description: expect.stringContaining("_pagination.before")
+                })
+            )
+        })
+        it("builds a 'limit' param", () => {
+            expect(
+                instance.optToQueryParam({ name: "limit", value: "int" })
+            ).toEqual(
+                expect.objectContaining({
+                    in: "query",
+                    name: "limit",
+                    description: expect.stringContaining("Number of ")
                 })
             )
         })
@@ -114,7 +121,7 @@ describe("Cursor", () => {
     describe("#getPaginationResponse", () => {
         it("returns an RFC-3 compliant pagination response", () => {
             let opt = { name: "after", value: "string" }
-            let instance = new Cursor("", 0, 0, [opt])
+            let instance = new Cursor("", [opt])
             expect(instance.getPaginationResponse()).toEqual(
                 expect.objectContaining({
                     _pagination: {
@@ -132,7 +139,7 @@ describe("Cursor", () => {
     })
 
     describe("#addPaginationToSchema", () => {
-        let instance = new Cursor("", 0, 0, [])
+        let instance = new Cursor("", [])
         it("infuses a response schema with pagination info", () => {
             let schema = { $ref: "#/components/foo" }
             expect(instance.addPaginationToSchema(schema)).toEqual(

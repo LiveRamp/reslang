@@ -1,6 +1,11 @@
 import { IOption } from "../../treetypes"
 
 /**
+ * This module is meant to make adding pagination to Swagger specs as easy
+ * as possible.
+ */
+
+/**
  * swaggerProps is how Swagger structures `properties` fields, where the key
  * of the object is the property name, and it maps to an object
  * with `type` and `description` fields.
@@ -63,15 +68,16 @@ export enum strategy {
  are hardcoded in the Offset class.
 */
 export enum queryParam {
+    Limit = "limit",
     After = "after",
     Before = "before"
 }
 
 /**
- validField enumerates the sanctioned pagination response fields.
+ responseField enumerates the sanctioned pagination response fields.
  This only deals with cursor pagination, since that is officially supported.
  */
-export enum validField {
+export enum responseField {
     After = "after",
     Before = "before",
     Total = "total",
@@ -84,12 +90,33 @@ export enum validField {
   (cursor and offset).
 */
 export abstract class Pagination {
-    constructor(
-        readonly resourceName: string,
-        readonly defaultLimit: number,
-        readonly maxLimit: number,
-        readonly opts: IOption[]
-    ) {}
+    readonly queryOpts: IOption[]
+    readonly responseOpts: IOption[]
+
+    /**
+     *
+     * @param resourceName
+     * @param opts
+     *
+     * On construction, a Pagination class will categorize its `opts` into
+     * either query options or response options. Query options are those
+     * to be included as query params, and response options are returned
+     * to consumers via the '_pagination' field.
+     *
+     * Some options are neither response- nor query-options, such as
+     * "strategy" or "maxLimit". These behind-the-scenes options can always
+     * be accessed with #opts, while #queryOpts and #responseOpts
+     * are guaranteed to be valid members of their corresponding enums.
+     */
+    constructor(readonly resourceName: string, readonly opts: IOption[]) {
+        this.resourceName = resourceName
+        this.queryOpts = opts.filter((o) =>
+            Object.values(queryParam).includes(o.name as queryParam)
+        )
+        this.responseOpts = opts.filter((o) =>
+            Object.values(responseField).includes(o.name as responseField)
+        )
+    }
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
 
@@ -98,16 +125,18 @@ export abstract class Pagination {
      This param is the same in both offset and cursor pagination.
     */
     qLimit(): swaggerParam {
+        let limit = this.queryOpts.find((o) => o.name === "limit")?.value || 10
+        let max = this.opts.find((o) => o.name === "maxLimit")?.value || 100
         return {
             in: "query",
-            name: "limit" as queryParam,
+            name: queryParam.Limit,
             description: `Number of ${this.resourceName} to return`,
             schema: {
                 type: "integer",
                 format: "int32",
-                default: this.defaultLimit,
+                default: Number(limit),
                 minimum: 1,
-                maximum: this.maxLimit
+                maximum: Number(max)
             }
         }
     }
@@ -212,13 +241,7 @@ export class Cursor extends Pagination {
      * with `limit` and then all of the user defined options.
      */
     queryParams = (): swaggerParam[] => {
-        return [
-            this.qLimit(),
-            ...this.opts
-                .map((o) => o.name as queryParam)
-                .filter(this.isValidQueryParam)
-                .map(this.nameToSwaggerParam)
-        ]
+        return this.queryOpts.map(this.optToQueryParam)
     }
 
     /**
@@ -256,12 +279,14 @@ export class Cursor extends Pagination {
     /**
      Convert a queryParam name to a standardized Swagger query parameter object
      */
-    nameToSwaggerParam = (name: queryParam): swaggerParam => {
-        switch (name) {
+    optToQueryParam = (opt: IOption): swaggerParam => {
+        switch (opt.name as queryParam) {
             case queryParam.After:
                 return this.qAfter()
             case queryParam.Before:
                 return this.qBefore()
+            case queryParam.Limit:
+                return this.qLimit()
         }
         assertUnreachable(name)
         throw new Error(
@@ -277,21 +302,21 @@ export class Cursor extends Pagination {
       describeResponseField returns the standard  description
       of a given pagination response field.
     */
-    describeResponseField = (param: validField): string => {
+    describeResponseField = (param: responseField): string => {
         switch (param) {
-            case validField.After:
+            case responseField.After:
                 return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
 It allows the next request to begin from where the current search left off.
 When "after" is  null, there are no more records to fetch for this search.`
-            case validField.Before:
+            case responseField.Before:
                 return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
 It allows the next request to query previous results.
 When "before" is null, there are no previous records to fetch for this search.`
-            case validField.Next:
+            case responseField.Next:
                 return `The hyperlink to fetch the next set of results.`
-            case validField.Previous:
+            case responseField.Previous:
                 return `The hyperlink to fetch the previous set of results.`
-            case validField.Total:
+            case responseField.Total:
                 return `The total number of results.`
         }
 
@@ -299,7 +324,7 @@ When "before" is null, there are no previous records to fetch for this search.`
         throw new Error(
             unexpectedEnumMsg(
                 "pagination field",
-                Object.values(validField),
+                Object.values(responseField),
                 param
             )
         )
@@ -312,9 +337,9 @@ When "before" is null, there are no previous records to fetch for this search.`
      * For example, in Reslang we have `int`, but in Swagger we have `integer`.
      *
      */
-    toSwaggerProp(opt: IOption): swaggerProps {
+    toSwaggerProp = (opt: IOption): swaggerProps => {
         let typ = opt.value
-        let description = this.describeResponseField(opt.name as validField)
+        let description = this.describeResponseField(opt.name as responseField)
         switch (typ) {
             /* If we discover more types to translate, add them to this switch. */
             case "int":
@@ -325,51 +350,17 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-      addSwaggerProp merges an option into the given object.
-      It turns the option's name into a top-level key, whose value
-      is an object with "type" and "description".
-
-      The option's name must be a valid validField, and value must be
-      a supported Swagger data type.
-    */
-    addSwaggerProp = (obj: swaggerProps, opt: IOption): swaggerProps => {
-        return {
-            ...obj,
-            ...this.toSwaggerProp(opt)
-        }
-    }
-
-    /**
-      isValidResponseField returns true if the input is the name of a valid
-      cursor-based pagination response field. See enum validField for valid
-      values.
-    */
-    isValidResponseField(name: string) {
-        return Object.values(validField).includes(name as validField)
-    }
-
-    /**
-      isValidQueryParam returns true if the input is the name of a valid
-      cursor-based pagination response field. See enum queryParam for valid
-      values.
-     */
-    isValidQueryParam = (name: string) => {
-        return Object.values(queryParam).includes(name as queryParam)
-    }
-
-    /**
       getPaginationResponse turns the user-defined pagination
       options into a form that Swagger understands, which
       complies with RFC-3 (hence the "_pagination" key).
     */
     getPaginationResponse = (): paginationResponse => {
-        let validOpts = this.opts.filter((opt) =>
-            this.isValidResponseField(opt.name)
-        )
         return {
             _pagination: {
                 type: "object",
-                properties: validOpts.reduce(this.addSwaggerProp, {})
+                properties: this.responseOpts
+                    .map(this.toSwaggerProp)
+                    .reduce(merge, {})
             }
         }
     }
@@ -423,4 +414,14 @@ function unexpectedEnumMsg(
     return `unexpected ${category}: expected one of [ ${okValues.join(
         " | "
     )} ], but got ${got}`
+}
+
+/**
+ * merge is a utility function for merging two objects
+ */
+function merge(first: {}, second: {}): {} {
+    return {
+        ...first,
+        ...second
+    }
 }
