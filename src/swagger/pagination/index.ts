@@ -68,10 +68,10 @@ export enum queryParam {
 }
 
 /**
- responseField enumerates the sanctioned pagination response fields.
+ validField enumerates the sanctioned pagination response fields.
  This only deals with cursor pagination, since that is officially supported.
  */
-export enum responseField {
+export enum validField {
     After = "after",
     Before = "before",
     Total = "total",
@@ -126,11 +126,13 @@ export abstract class Pagination {
                 return NoOp
         }
 
-        return assertUnreachable(
-            strat,
-            `unexpected pagination strategy: expected one of [ ${Object.values(
-                strategy
-            ).join(" | ")} ] but got ${strat}`
+        assertUnreachable(strat)
+        throw new Error(
+            unexpectedEnumMsg(
+                "pagination strategy",
+                Object.values(strategy),
+                strat
+            )
         )
     }
 }
@@ -261,11 +263,13 @@ export class Cursor extends Pagination {
             case queryParam.Before:
                 return this.qBefore()
         }
-        return assertUnreachable(
-            name,
-            `unexpected pagination query param: expected one of ${Object.values(
-                queryParam
-            ).join(" | ")}, but got ${name}`
+        assertUnreachable(name)
+        throw new Error(
+            unexpectedEnumMsg(
+                "pagination query param",
+                Object.values(queryParam),
+                name
+            )
         )
     }
 
@@ -273,29 +277,31 @@ export class Cursor extends Pagination {
       describeResponseField returns the standard  description
       of a given pagination response field.
     */
-    describeResponseField = (param: responseField): string => {
+    describeResponseField = (param: validField): string => {
         switch (param) {
-            case responseField.After:
+            case validField.After:
                 return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
 It allows the next request to begin from where the current search left off.
 When "after" is  null, there are no more records to fetch for this search.`
-            case responseField.Before:
+            case validField.Before:
                 return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
 It allows the next request to query previous results.
 When "before" is null, there are no previous records to fetch for this search.`
-            case responseField.Next:
+            case validField.Next:
                 return `The hyperlink to fetch the next set of results.`
-            case responseField.Previous:
+            case validField.Previous:
                 return `The hyperlink to fetch the previous set of results.`
-            case responseField.Total:
+            case validField.Total:
                 return `The total number of results.`
         }
 
-        return assertUnreachable(
-            param,
-            `unexpected pagination field: expected one of ${Object.values(
-                responseField
-            ).join(" | ")}, but got ${param} `
+        assertUnreachable(param)
+        throw new Error(
+            unexpectedEnumMsg(
+                "pagination field",
+                Object.values(validField),
+                param
+            )
         )
     }
 
@@ -308,7 +314,7 @@ When "before" is null, there are no previous records to fetch for this search.`
      */
     toSwaggerProp(opt: IOption): swaggerProps {
         let typ = opt.value
-        let description = this.describeResponseField(opt.name as responseField)
+        let description = this.describeResponseField(opt.name as validField)
         switch (typ) {
             /* If we discover more types to translate, add them to this switch. */
             case "int":
@@ -323,7 +329,7 @@ When "before" is null, there are no previous records to fetch for this search.`
       It turns the option's name into a top-level key, whose value
       is an object with "type" and "description".
 
-      The option's name must be a valid responseField, and value must be
+      The option's name must be a valid validField, and value must be
       a supported Swagger data type.
     */
     addSwaggerProp = (obj: swaggerProps, opt: IOption): swaggerProps => {
@@ -335,11 +341,11 @@ When "before" is null, there are no previous records to fetch for this search.`
 
     /**
       isValidResponseField returns true if the input is the name of a valid
-      cursor-based pagination response field. See enum responseField for valid
+      cursor-based pagination response field. See enum validField for valid
       values.
     */
     isValidResponseField(name: string) {
-        return Object.values(responseField).includes(name as responseField)
+        return Object.values(validField).includes(name as validField)
     }
 
     /**
@@ -405,6 +411,16 @@ When "before" is null, there are no previous records to fetch for this search.`
   at the end of a switch will allow the compiler to warn in such situations.
   ref: https://stackoverflow.com/a/39419171
 */
-function assertUnreachable(x: never, msg: string): never {
-    throw new Error(msg)
+function assertUnreachable(x: never) {
+    /** no implementation */
+}
+
+function unexpectedEnumMsg(
+    category: string,
+    okValues: any[],
+    got: any
+): string {
+    return `unexpected ${category}: expected one of [ ${okValues.join(
+        " | "
+    )} ], but got ${got}`
 }

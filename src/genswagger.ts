@@ -26,7 +26,8 @@ import {
     Pagination,
     Cursor,
     Offset,
-    strategy
+    strategy,
+    validField
 } from "./swagger/pagination/index"
 
 /**
@@ -564,6 +565,8 @@ export default class SwagGen extends BaseGen {
             ) as number
 
             let klass = Pagination.use(this.getPaginationStrategy(ops.multiget))
+            this.warnInvalidPaginationOpts(ops.multiget.pagination || [])
+
             let paginator: Pagination = new klass(
                 plural,
                 limit,
@@ -627,6 +630,19 @@ export default class SwagGen extends BaseGen {
                 path.get.parameters = gparams
             }
         }
+    }
+
+    private warnInvalidPaginationOpts(opts: IOption[]): void {
+        let invalid = opts
+            .filter((o) => o.name !== "strategy")
+            .map((o) => o.name as validField)
+            .filter((name) => !Object.values(validField).includes(name))
+        if (invalid.length)
+            console.error(
+                `unexpected pagination field: valid fields are [ ${Object.values(
+                    validField
+                ).join(" | ")} ], but got [ ${invalid.join(" | ")} ]`
+            )
     }
 
     private jsonContentSchema(schema: any) {
