@@ -1,0 +1,121 @@
+{
+    "$id": "https://schemas.liveramp.com/noroot",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "UnpaginatedOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "UnpaginatedMultiResponse": {
+            "type": "object",
+            "properties": {
+                "unpaginateds": {
+                    "description": "Array of retrieved Unpaginateds",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UnpaginatedOutput"
+                    }
+                }
+            }
+        },
+        "LegacyOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "LegacyMultiResponse": {
+            "type": "object",
+            "properties": {
+                "legacies": {
+                    "description": "Array of retrieved Legacies",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LegacyOutput"
+                    }
+                }
+            }
+        },
+        "ImplicitCursorOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "ImplicitCursorMultiResponse": {
+            "type": "object",
+            "properties": {
+                "implicitCursors": {
+                    "description": "Array of retrieved ImplicitCursors",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ImplicitCursorOutput"
+                    }
+                }
+            }
+        },
+        "BellsAndWhistlesOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "BellsAndWhistlesMultiResponse": {
+            "type": "object",
+            "properties": {
+                "bellsAndWhistles": {
+                    "description": "Array of retrieved BellsAndWhistles",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BellsAndWhistlesOutput"
+                    }
+                }
+            }
+        },
+        "StandardError": {
+            "type": "object",
+            "properties": {
+                "httpStatus": {
+                    "description": "HTTP error status code for this problem",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "errorCode": {
+                    "description": "Service specific error code, more granular",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "General, human readable error message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "httpStatus",
+                "errorCode",
+                "message"
+            ]
+        }
+    }
+}

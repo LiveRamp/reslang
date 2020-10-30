@@ -142,21 +142,6 @@ id "id" = _ name:name _ ","? _ {return name}
         }
 */
 pagination = _ "pagination" _ "{" _ options:option+ "}" _ {
-    let strategies = ["cursor", "offset"]
-    let allowed = ["strategy", "after", "before", "total", "next", "previous"]
-
-    let strategy = options.find(o => o.name === "strategy")
-    if (!strategies.includes(strategy.value)) throw new Error(`
-    Must specify a valid pagination strategy.
-    Expected one of ${strategies.join(" | ")}, but got: ${strategy.value || "<BLANK>"}
-    `)
-
-    let invalidOptions = options.map(o => o.name)
-        .filter(name => !allowed.includes(name))
-
-    if (invalidOptions.length)
-        throw new Error(`Invalid pagination options: ${invalidOptions}`)
-
     return {
         pagination: options
     }

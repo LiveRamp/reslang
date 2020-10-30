@@ -126,7 +126,12 @@ export abstract class Pagination {
                 return NoOp
         }
 
-        return assertUnreachable(strat)
+        return assertUnreachable(
+            strat,
+            `unexpected pagination strategy: expected one of [ ${Object.values(
+                strategy
+            ).join(" | ")} ] but got ${strat}`
+        )
     }
 }
 
@@ -138,13 +143,20 @@ export class NoOp extends Pagination {
     queryParams(): swaggerParam[] {
         return []
     }
+
+    validateOpts() {
+        return { success: true, reasons: [] }
+    }
 }
 
 /**
  * Offset pagination is deprecated. Params are hardcoded, and Reslang
- * will eventually cease to support it.
+ * wll eventually cease to support it.
  */
 export class Offset extends Pagination {
+    /**
+     * queryParams returns an array of swagger query params: offset and limit
+     */
     queryParams(): swaggerParam[] {
         return [this.qOffset(), this.qLimit()]
     }
@@ -167,6 +179,10 @@ export class Offset extends Pagination {
         }
     }
 
+    /**
+     * xTotalCountHeader returns the X-Total-Count swagger object returned
+     * as a header in paginated queries.
+     */
     xTotalCountHeader = () => {
         return {
             "X-Total-Count": {
@@ -176,6 +192,9 @@ export class Offset extends Pagination {
         }
     }
 
+    /**
+     * return the Offset strategy
+     */
     strategy(): strategy {
         return strategy.Offset
     }
@@ -186,6 +205,10 @@ export class Offset extends Pagination {
  * TODO -- post doc with explanations and best practices. Jira: API-410
  */
 export class Cursor extends Pagination {
+    /**
+     * queryParams returns an array of swagger query params, starting
+     * with `limit` and then all of the user defined options.
+     */
     queryParams = (): swaggerParam[] => {
         return [
             this.qLimit(),
@@ -197,7 +220,7 @@ export class Cursor extends Pagination {
     }
 
     /**
-     * qAfter stands for "query After". It is a standard param that should be the same
+     * qAfter stands for "query After". It returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
      */
@@ -213,7 +236,7 @@ export class Cursor extends Pagination {
     }
 
     /**
-     * qBefore stands for "query Before". It is a standard param that should be the same
+     * qBefore stands for "query Before". It returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
      */
@@ -229,7 +252,7 @@ export class Cursor extends Pagination {
     }
 
     /**
-     Convert a queryParam string to a standardized Swagger query parameter
+     Convert a queryParam name to a standardized Swagger query parameter object
      */
     nameToSwaggerParam = (name: queryParam): swaggerParam => {
         switch (name) {
@@ -238,11 +261,16 @@ export class Cursor extends Pagination {
             case queryParam.Before:
                 return this.qBefore()
         }
-        return assertUnreachable(name)
+        return assertUnreachable(
+            name,
+            `unexpected pagination query param: expected one of ${Object.values(
+                queryParam
+            ).join(" | ")}, but got ${name}`
+        )
     }
 
     /**
-      describeResponseField returns the standard Swagger-friendly description
+      describeResponseField returns the standard  description
       of a given pagination response field.
     */
     describeResponseField = (param: responseField): string => {
@@ -263,7 +291,12 @@ When "before" is null, there are no previous records to fetch for this search.`
                 return `The total number of results.`
         }
 
-        return assertUnreachable(param)
+        return assertUnreachable(
+            param,
+            `unexpected pagination field: expected one of ${Object.values(
+                responseField
+            ).join(" | ")}, but got ${param} `
+        )
     }
 
     /**
@@ -343,6 +376,9 @@ When "before" is null, there are no previous records to fetch for this search.`
         }
     }
 
+    /**
+     * return the Cursor strategy
+     */
     strategy(): strategy {
         return strategy.Cursor
     }
@@ -355,6 +391,6 @@ When "before" is null, there are no previous records to fetch for this search.`
   at the end of a switch will allow the compiler to warn in such situations.
   ref: https://stackoverflow.com/a/39419171
 */
-function assertUnreachable(x: never): never {
-    throw new Error("invariant: didn't expect to get here")
+function assertUnreachable(x: never, msg: string): never {
+    throw new Error(msg)
 }
