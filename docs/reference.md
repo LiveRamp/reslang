@@ -298,6 +298,10 @@ A multi-GET is a GET on the plural resource, returning a collection of resources
 
 ```
 
+#### Pagination
+
+All multi-GET operations support pagination. For details about customizing a multi-GET's pagination response, see [pagination.md](./pagination.md).
+
 ### Representation parameters
 
 A representation parameter is used to adjust how much detail is returned on a GET or MULTIGET.
