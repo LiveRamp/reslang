@@ -15,6 +15,7 @@ import {
     IOperation,
     IResourceLike,
     IRequestHeader,
+    IHTTPHeader,
     isAction,
     isEnum,
     isResourceLike,
@@ -1196,35 +1197,56 @@ export default class SwagGen extends BaseGen {
         el: IResourceLike,
         path: any,
     ) {
-        // TODO
-        // if the resource el supports an operation
-        //      AND that operation shows up in a requestHeader opOrWildcard,
-        // then params.push an appropriate header param
         if (! el.requestHeaders) {
           return
         }
-
-        console.log("********")
-        console.log(el.requestHeaders)
+        if (! el.operations) {
+            throw new Error(
+                `resource "${el.name}" defines request headers, but does not define any operations`
+            )
+        }
 
         for (const header of el.requestHeaders) {
-            if (header.opOrWildcard) {
-                continue
+            // TODO could make a method on defs to get http headers by name
+            const headerObjDef = this.defs.find(d => {
+                return d.kind === "http-header" && d.name === header.headerObjName
+            }) as IHTTPHeader
+            // error if this.defs does not include an http-header with name = header.headerObjName
+            if (!headerObjDef) {
+                throw new Error(
+                    `no http-header definition found with name "${header.headerObjName}"`
+                )
             }
+
+            // if wildcard, add header to all ops in el.operations
+            if (header.opOrWildcard === "*") {
+                el.operations.forEach((op) => {
+                    this.addHeaderParamToSwaggerPath(path, headerObjDef, op.operation)
+                })
+            }
+
+            if (!el.operations.find(op => op.operation === header.opOrWildcard)) {
+                throw new Error(
+                    `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
+                )
+            }
+
+            this.addHeaderParamToSwaggerPath(path, headerObjDef, header.opOrWildcard)
+
         }
 
-        let verbs
-        if (el.operations) {
-            verbs = el.operations.map(op => op.operation)
-        }
+    }
 
-        // This is what the el.requestHeaders looks like
-        // [
-        //   { opOrWildcard: '*', headerObjName: 'AuthnHeader' },
-        //   { opOrWildcard: 'POST', headerObjName: 'OrgIDHeader' }
-        // ]
+    private addHeaderParamToSwaggerPath(
+        path: any,
+        headerObjDef: IHTTPHeader,
+        operation: string,
+    ) {
+        // TODO take in an operation, e.g. "POST", then create the lowercased
+        // subobject on `path` as well as the sub-sub object parameters
 
-        // do this for each operation, as appropriate
-        // path.post.parameters = postHeaderParams
+        // TODO take headerName, description from headers and insert it into swagger obj
+
+        // TODO add swagger obj to path.post.parameters
     }
 }
