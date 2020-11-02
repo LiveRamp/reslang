@@ -29,6 +29,22 @@ import { Operations, Verbs } from "./operations"
  */
 
 export default class SwagGen extends BaseGen {
+
+    // TODO add insanely good comment here
+    // this could also be a union type with a switch statement -CJ
+    private reslangOperationToSwaggerPathsKey: Record<string, string> = {
+            GET: "get",
+            MULTIGET: "get",
+            DELETE: "delete",
+            MULTIDELETE: "delete",
+            POST: "post",
+            MULTIPOST: "post",
+            PUT: "put",
+            MULTIPUT: "put",
+            PATCH: "patch",
+            MULTIPATCH: "patch",
+        }
+
     public generate() {
         this.markGenerate(true)
         const tags: any[] = []
@@ -1244,9 +1260,16 @@ export default class SwagGen extends BaseGen {
     ) {
         // TODO take in an operation, e.g. "POST", then create the lowercased
         // subobject on `path` as well as the sub-sub object parameters
+        const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
+        if (!(pathKey in path)) {
+            path.pathKey = {parameters: []}
+        } else if (!("parameters" in path.pathKey)) {
+            path.pathKey.parameters = []
+        }
 
         // TODO take headerName, description from headers and insert it into swagger obj
+        const headerParameterSwagger = {foo: 1}
 
-        // TODO add swagger obj to path.post.parameters
+        path.pathKey.parameters.push(headerParameterSwagger)
     }
 }
