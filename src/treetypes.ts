@@ -78,6 +78,7 @@ export type Kind =
     | "event"
     | "produces"
     | "consumes"
+    | "http-header"
 
 export type AnyKind =
     | IResourceLike
@@ -87,6 +88,7 @@ export type AnyKind =
     | IEvent
     | IProduces
     | IConsumes
+    | IHTTPHeader
 
 // type guards
 export function isResourceLike(def: IDefinition): def is IResourceLike {
@@ -158,6 +160,7 @@ export interface IResourceLike extends IDefinition {
 }
 
 export interface IHTTPHeader extends IDefinition {
+    kind: "http-header"
     headerName: string
 }
 
