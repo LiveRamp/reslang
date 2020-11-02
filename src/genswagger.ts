@@ -63,10 +63,11 @@ export default class SwagGen extends BaseGen {
             }
         }
 
-        if (servers.length === 0)
+        if (servers.length === 0) {
             throw new Error(
                 `no server found with environment "${this.environment}" (are you passing the correct value to --env?)`
             )
+        }
 
         // model definitions
         this.formDefinitions(schemas)
@@ -130,10 +131,11 @@ export default class SwagGen extends BaseGen {
                 }
                 // reverse the order so it looks more natural
                 params = params.reverse()
-                this.addHeaderParams(el, params)
 
                 const singleton = el.singleton
                 let path: any = {}
+
+                this.addHeaderParams(el, path)
 
                 // name of resource
                 let name = kebabCase(el.short)
@@ -170,6 +172,8 @@ export default class SwagGen extends BaseGen {
                  */
 
                 path = {}
+                this.addHeaderParams(el, path)
+
                 if (ops.isIdOps()) {
                     if (singleton) {
                         paths[
@@ -321,6 +325,7 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(camel + "Input")) {
                 delete path.post.requestBody
             }
+            // TODO for all the if (params.length) blocks, concat params instead of assigning params
             if (params.length) {
                 path.post.parameters = params
             }
@@ -1189,29 +1194,37 @@ export default class SwagGen extends BaseGen {
 
     private addHeaderParams(
         el: IResourceLike,
-        params: any[],
+        path: any,
     ) {
         // TODO
         // if the resource el supports an operation
         //      AND that operation shows up in a requestHeader opOrWildcard,
         // then params.push an appropriate header param
-        if (el.requestHeaders) {
-          params.push("POOP")
+        if (! el.requestHeaders) {
+          return
         }
-        let verbs
 
+        console.log("********")
+        console.log(el.requestHeaders)
+
+        for (const header of el.requestHeaders) {
+            if (header.opOrWildcard) {
+                continue
+            }
+        }
+
+        let verbs
         if (el.operations) {
             verbs = el.operations.map(op => op.operation)
         }
-        // TODO turn this pseudo code into real code!
-        // TODO then, do something very similar in formIdOperations
-        // console.log( verbs)
+
         // This is what the el.requestHeaders looks like
         // [
         //   { opOrWildcard: '*', headerObjName: 'AuthnHeader' },
         //   { opOrWildcard: 'POST', headerObjName: 'OrgIDHeader' }
         // ]
 
-        params.push("nick jaczko")
+        // do this for each operation, as appropriate
+        // path.post.parameters = postHeaderParams
     }
 }
