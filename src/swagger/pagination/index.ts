@@ -174,10 +174,6 @@ export class NoOp extends Pagination {
     queryParams(): swaggerParam[] {
         return []
     }
-
-    validateOpts() {
-        return { success: true, reasons: [] }
-    }
 }
 
 /**
