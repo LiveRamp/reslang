@@ -179,6 +179,15 @@ export default class SwagGen extends BaseGen {
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
                     this.formNonIdOperations(el, path, params, tagKeys, ops)
+                    // TODO get rid of this hack
+                    this.reslangOperationToSwaggerPathsKey = {
+                        MULTIDELETE: "delete",
+                        MULTIGET: "get",
+                        MULTIPATCH: "patch",
+                        MULTIPOST: "post",
+                        MULTIPUT: "put",
+                        POST: "post"
+                    }
                     // addHeaderParams must be called after formNonIdOperations
                     this.addHeaderParams(el, path)
                 }
@@ -208,6 +217,13 @@ export default class SwagGen extends BaseGen {
                     tagKeys,
                     ops
                 )
+                // TODO get rid of this hack
+                this.reslangOperationToSwaggerPathsKey = {
+                    DELETE: "delete",
+                    GET: "get",
+                    PATCH: "patch",
+                    PUT: "put"
+                }
                 // addHeaderParams must be called after formIdOperations
                 this.addHeaderParams(el, path)
             }
@@ -342,7 +358,6 @@ export default class SwagGen extends BaseGen {
             if (this.empty.has(camel + "Input")) {
                 delete path.post.requestBody
             }
-            // TODO for all the if (params.length) blocks, concat params instead of assigning params
             if (params.length) {
                 path.post.parameters = params
             }
@@ -1266,6 +1281,10 @@ export default class SwagGen extends BaseGen {
         operation: string
     ) {
         const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
+        if (!pathKey) {
+            // TODO do something better
+            return
+        }
         if (!(pathKey in path)) {
             path[pathKey] = { parameters: [] }
         } else if (!("parameters" in path[pathKey])) {
@@ -1277,7 +1296,9 @@ export default class SwagGen extends BaseGen {
             in: "header",
             name: headerObjDef.headerName,
             required: true, // TODO this could be MVP, or we could modify the syntax to allow optional headers now
-            type: "string"
+            schema: {
+                type: "string"
+            }
         }
 
         path[pathKey].parameters.push(headerParameterSwagger)
