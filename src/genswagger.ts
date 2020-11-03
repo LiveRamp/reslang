@@ -555,23 +555,13 @@ export default class SwagGen extends BaseGen {
         }
         let gparams = params.slice()
         if (ops.multiget) {
-            // limit has already been checked to be a number
-            const limit = Number(
-                this.retrieveOption(ops.multiget, "limit")
-            ) as number
-            const maxLimit = Number(
-                this.retrieveOption(ops.multiget, "max-limit")
-            ) as number
+            let paginationOpts =
+                ops.multiget.pagination || this.defaultPaginationParams()
 
             let klass = Pagination.use(this.getPaginationStrategy(ops.multiget))
-            this.warnInvalidPaginationOpts(
-                ops.multiget.pagination || this.defaultPaginationParams()
-            )
+            this.warnInvalidPaginationOpts(paginationOpts)
 
-            let paginator: Pagination = new klass(
-                plural,
-                ops.multiget.pagination || this.defaultPaginationParams()
-            )
+            let paginator: Pagination = new klass(plural, paginationOpts)
 
             gparams = [...gparams, ...paginator.queryParams()]
 
@@ -665,15 +655,6 @@ export default class SwagGen extends BaseGen {
             if (option.name === optionName) {
                 return option.value
             }
-        }
-        // see if we have something set in the global options
-        switch (optionName) {
-            case "pagination":
-                return this.rules.pagination
-            case "limit":
-                return this.rules.limit
-            case "max-limit":
-                return this.rules.maxLimit
         }
         return null
     }
