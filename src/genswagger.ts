@@ -29,21 +29,20 @@ import { Operations, Verbs } from "./operations"
  */
 
 export default class SwagGen extends BaseGen {
-
     // TODO add insanely good comment here
     // this could also be a union type with a switch statement -CJ
     private reslangOperationToSwaggerPathsKey: Record<string, string> = {
-            GET: "get",
-            MULTIGET: "get",
-            DELETE: "delete",
-            MULTIDELETE: "delete",
-            POST: "post",
-            MULTIPOST: "post",
-            PUT: "put",
-            MULTIPUT: "put",
-            PATCH: "patch",
-            MULTIPATCH: "patch",
-        }
+        GET: "get",
+        MULTIGET: "get",
+        DELETE: "delete",
+        MULTIDELETE: "delete",
+        POST: "post",
+        MULTIPOST: "post",
+        PUT: "put",
+        MULTIPUT: "put",
+        PATCH: "patch",
+        MULTIPATCH: "patch"
+    }
 
     public generate() {
         this.markGenerate(true)
@@ -1209,14 +1208,11 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private addHeaderParams(
-        el: IResourceLike,
-        path: any,
-    ) {
-        if (! el.requestHeaders) {
-          return
+    private addHeaderParams(el: IResourceLike, path: any) {
+        if (!el.requestHeaders) {
+            return
         }
-        if (! el.operations) {
+        if (!el.operations) {
             throw new Error(
                 `resource "${el.name}" defines request headers, but does not define any operations`
             )
@@ -1224,8 +1220,10 @@ export default class SwagGen extends BaseGen {
 
         for (const header of el.requestHeaders) {
             // TODO could make a method on defs to get http headers by name
-            const headerObjDef = this.defs.find(d => {
-                return d.kind === "http-header" && d.name === header.headerObjName
+            const headerObjDef = this.defs.find((d) => {
+                return (
+                    d.kind === "http-header" && d.name === header.headerObjName
+                )
             }) as IHTTPHeader
             // error if this.defs does not include an http-header with name = header.headerObjName
             if (!headerObjDef) {
@@ -1237,37 +1235,47 @@ export default class SwagGen extends BaseGen {
             // if wildcard, add header to all ops in el.operations
             if (header.opOrWildcard === "*") {
                 el.operations.forEach((op) => {
-                    this.addHeaderParamToSwaggerPath(path, headerObjDef, op.operation)
+                    this.addHeaderParamToSwaggerPath(
+                        path,
+                        headerObjDef,
+                        op.operation
+                    )
                 })
-            } else if (!el.operations.find(op => op.operation === header.opOrWildcard)) {
+            } else if (
+                !el.operations.find(
+                    (op) => op.operation === header.opOrWildcard
+                )
+            ) {
                 throw new Error(
                     `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
                 )
             }
-                this.addHeaderParamToSwaggerPath(path, headerObjDef, header.opOrWildcard)
-
+            this.addHeaderParamToSwaggerPath(
+                path,
+                headerObjDef,
+                header.opOrWildcard
+            )
         }
-
     }
 
     private addHeaderParamToSwaggerPath(
         path: any,
         headerObjDef: IHTTPHeader,
-        operation: string,
+        operation: string
     ) {
         const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
         if (!(pathKey in path)) {
             console.log("ADDING THE PATH KEY")
             console.log(operation)
             console.log(pathKey)
-            path[pathKey] = {parameters: []}
+            path[pathKey] = { parameters: [] }
         } else if (!("parameters" in path[pathKey])) {
             console.log("ADDING THE PARAMETER KEY")
             path[pathKey].parameters = []
         }
 
         // TODO take headerName, description from headers and insert it into swagger obj
-        const headerParameterSwagger = {foo: "POOP"}
+        const headerParameterSwagger = { foo: "POOP" }
 
         path[pathKey].parameters.push(headerParameterSwagger)
     }
