@@ -47,3 +47,8 @@ resource Role {
 http-header AuthnHeader {
   name: Authorization
 }
+
+"for your org ID, ya know?"
+http-header OrgIDHeader {
+  name: LROrgID
+}

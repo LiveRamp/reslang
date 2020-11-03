@@ -1239,15 +1239,12 @@ export default class SwagGen extends BaseGen {
                 el.operations.forEach((op) => {
                     this.addHeaderParamToSwaggerPath(path, headerObjDef, op.operation)
                 })
-            }
-
-            if (!el.operations.find(op => op.operation === header.opOrWildcard)) {
+            } else if (!el.operations.find(op => op.operation === header.opOrWildcard)) {
                 throw new Error(
                     `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
                 )
             }
-
-            this.addHeaderParamToSwaggerPath(path, headerObjDef, header.opOrWildcard)
+                this.addHeaderParamToSwaggerPath(path, headerObjDef, header.opOrWildcard)
 
         }
 
@@ -1258,18 +1255,20 @@ export default class SwagGen extends BaseGen {
         headerObjDef: IHTTPHeader,
         operation: string,
     ) {
-        // TODO take in an operation, e.g. "POST", then create the lowercased
-        // subobject on `path` as well as the sub-sub object parameters
         const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
         if (!(pathKey in path)) {
-            path.pathKey = {parameters: []}
-        } else if (!("parameters" in path.pathKey)) {
-            path.pathKey.parameters = []
+            console.log("ADDING THE PATH KEY")
+            console.log(operation)
+            console.log(pathKey)
+            path[pathKey] = {parameters: []}
+        } else if (!("parameters" in path[pathKey])) {
+            console.log("ADDING THE PARAMETER KEY")
+            path[pathKey].parameters = []
         }
 
         // TODO take headerName, description from headers and insert it into swagger obj
-        const headerParameterSwagger = {foo: 1}
+        const headerParameterSwagger = {foo: "POOP"}
 
-        path.pathKey.parameters.push(headerParameterSwagger)
+        path[pathKey].parameters.push(headerParameterSwagger)
     }
 }
