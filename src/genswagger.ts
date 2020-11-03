@@ -1250,6 +1250,7 @@ export default class SwagGen extends BaseGen {
                     `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
                 )
             }
+            // TODO should this be in an else block? it was getting called too infrequently
             this.addHeaderParamToSwaggerPath(
                 path,
                 headerObjDef,
@@ -1265,17 +1266,18 @@ export default class SwagGen extends BaseGen {
     ) {
         const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
         if (!(pathKey in path)) {
-            console.log("ADDING THE PATH KEY")
-            console.log(operation)
-            console.log(pathKey)
             path[pathKey] = { parameters: [] }
         } else if (!("parameters" in path[pathKey])) {
-            console.log("ADDING THE PARAMETER KEY")
             path[pathKey].parameters = []
         }
 
-        // TODO take headerName, description from headers and insert it into swagger obj
-        const headerParameterSwagger = { foo: "POOP" }
+        const headerParameterSwagger = {
+            description: headerObjDef.comment,
+            in: "header",
+            name: headerObjDef.headerName,
+            required: true, // TODO this could be MVP, or we could modify the syntax to allow optional headers now
+            type: "string"
+        }
 
         path[pathKey].parameters.push(headerParameterSwagger)
     }
