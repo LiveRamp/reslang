@@ -151,8 +151,6 @@ export default class SwagGen extends BaseGen {
                 const singleton = el.singleton
                 let path: any = {}
 
-                this.addHeaderParams(el, path)
-
                 // name of resource
                 let name = kebabCase(el.short)
                 const actionPath = action ? "actions/" : ""
@@ -181,6 +179,8 @@ export default class SwagGen extends BaseGen {
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
                     this.formNonIdOperations(el, path, params, tagKeys, ops)
+                    // addHeaderParams must be called after formNonIdOperations
+                    this.addHeaderParams(el, path)
                 }
 
                 /**
@@ -188,7 +188,6 @@ export default class SwagGen extends BaseGen {
                  */
 
                 path = {}
-                this.addHeaderParams(el, path)
 
                 if (ops.isIdOps()) {
                     if (singleton) {
@@ -209,6 +208,8 @@ export default class SwagGen extends BaseGen {
                     tagKeys,
                     ops
                 )
+                // addHeaderParams must be called after formIdOperations
+                this.addHeaderParams(el, path)
             }
         }
 
@@ -1225,7 +1226,7 @@ export default class SwagGen extends BaseGen {
                     d.kind === "http-header" && d.name === header.headerObjName
                 )
             }) as IHTTPHeader
-            // error if this.defs does not include an http-header with name = header.headerObjName
+
             if (!headerObjDef) {
                 throw new Error(
                     `no http-header definition found with name "${header.headerObjName}"`
@@ -1249,13 +1250,13 @@ export default class SwagGen extends BaseGen {
                 throw new Error(
                     `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
                 )
+            } else {
+                this.addHeaderParamToSwaggerPath(
+                    path,
+                    headerObjDef,
+                    header.opOrWildcard
+                )
             }
-            // TODO should this be in an else block? it was getting called too infrequently
-            this.addHeaderParamToSwaggerPath(
-                path,
-                headerObjDef,
-                header.opOrWildcard
-            )
         }
     }
 
