@@ -32,15 +32,13 @@ describe("Offset", () => {
         })
     })
     describe("#queryParams", () => {
-        let offset = "offset" as queryParam
-        let limit = "limit" as queryParam
         it("returns offset and limit query params", () => {
             let params = instance.queryParams()
             expect(params.length).toBe(2)
             expect(params).toEqual(
                 expect.arrayContaining([
-                    expect.objectContaining({ name: offset, in: "query" }),
-                    expect.objectContaining({ name: limit, in: "query" })
+                    expect.objectContaining({ name: "offset", in: "query" }),
+                    expect.objectContaining({ name: "limit", in: "query" })
                 ])
             )
         })
@@ -66,7 +64,7 @@ describe("Cursor", () => {
     describe("#queryParams", () => {
         it("supports 'limit', 'before' and 'after' params", () => {
             let params = new Cursor("", [
-                { name: "limit", value: "int" },
+                { name: "defaultLimit", value: "int" },
                 { name: "after", value: "string" },
                 { name: "before", value: "string" }
             ]).queryParams()
@@ -107,7 +105,7 @@ describe("Cursor", () => {
         })
         it("builds a 'limit' param", () => {
             expect(
-                instance.optToQueryParam({ name: "limit", value: "int" })
+                instance.optToQueryParam({ name: "defaultLimit", value: "int" })
             ).toEqual(
                 expect.objectContaining({
                     in: "query",

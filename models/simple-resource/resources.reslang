@@ -13,7 +13,7 @@ resource Garage {
 		PUT
 		// this is a POST comment
 		"Actual POST comment"
-		POST GET DELETE MULTIGET pagination { strategy = offset }
+		POST GET DELETE MULTIGET deprecated-offset-pagination
 }
 
 "This is a manufacturer"
@@ -45,7 +45,7 @@ subresource Foo::Subfoo::Subsubfoo {
 // another resource with no id
 resource Bar {
 	name: string query
-	/operations MULTIGET pagination { strategy = offset }
+	/operations MULTIGET deprecated-offset-pagination
 }
 
 resource Test {

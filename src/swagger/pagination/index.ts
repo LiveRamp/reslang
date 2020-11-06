@@ -39,7 +39,7 @@ type wrappedResponse = {
  */
 type swaggerParam = {
     in: string
-    name: queryParam
+    name: string
     description: string
     schema: {}
 }
@@ -68,7 +68,7 @@ export enum strategy {
  are hardcoded in the Offset class.
 */
 export enum queryParam {
-    Limit = "limit",
+    Limit = "defaultLimit",
     After = "after",
     Before = "before"
 }
@@ -125,16 +125,16 @@ export abstract class Pagination {
      This param is the same in both offset and cursor pagination.
     */
     qLimit(): swaggerParam {
-        let limit = this.queryOpts.find((o) => o.name === "limit")?.value || 10
+        let defaultLimit = this.queryOpts.find((o) => o.name === "defaultLimit")?.value || 10
         let max = this.opts.find((o) => o.name === "maxLimit")?.value || 100
         return {
             in: "query",
-            name: queryParam.Limit,
+            name: "limit",
             description: `Number of ${this.resourceName} to return`,
             schema: {
                 type: "integer",
                 format: "int32",
-                default: Number(limit),
+                default: Number(defaultLimit),
                 minimum: 1,
                 maximum: Number(max)
             }
@@ -195,7 +195,7 @@ export class Offset extends Pagination {
     qOffset(): swaggerParam {
         return {
             in: "query",
-            name: "offset" as queryParam,
+            name: "offset",
             description: `Offset of the ${this.resourceName} (starting from 0) to include in the response.`,
             schema: {
                 type: "integer",
@@ -248,8 +248,10 @@ export class Cursor extends Pagination {
     qAfter(): swaggerParam {
         return {
             in: "query",
-            name: queryParam.After,
-            description: `The value returned as "_pagination.after" in the previous query. Starts from the beginning if not specified`,
+            name: "after",
+            description: (
+`This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`
+            ),
             schema: {
                 type: "string"
             }
@@ -264,8 +266,8 @@ export class Cursor extends Pagination {
     qBefore(): swaggerParam {
         return {
             in: "query",
-            name: queryParam.Before,
-            description: `The value returned as "_pagination.before" in the previous query.`,
+            name: "before",
+            description: `This value is a cursor that enables backward-paginated searches. Its value can be found under "_pagination.before" in the previous response from this endpoint.`,
             schema: {
                 type: "string"
             }
@@ -306,7 +308,7 @@ It allows the next request to begin from where the current search left off.
 When "after" is  null, there are no more records to fetch for this search.`
             case responseField.Before:
                 return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
-It allows the next request to query previous results.
+It allows the next request to query the previous page of results.
 When "before" is null, there are no previous records to fetch for this search.`
             case responseField.Next:
                 return `The hyperlink to fetch the next set of results.`

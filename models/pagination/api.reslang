@@ -14,14 +14,14 @@ resource Unpaginated {
 	id: string
 
 	/operations
-		MULTIGET pagination { strategy = none }
+		MULTIGET no-pagination
 }
 
 resource Legacy {
 	id: string
 
 	/operations
-		MULTIGET pagination { strategy = offset }
+		MULTIGET deprecated-offset-pagination
 }
 
 resource ImplicitCursor {

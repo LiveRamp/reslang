@@ -13,7 +13,7 @@ asset-resource Car {
 	view: ViewEnum representation
 
 	/operations
-		POST /* this is a get comment */ GET MULTIGET pagination { strategy = offset }
+		POST /* this is a get comment */ GET MULTIGET deprecated-offset-pagination
 }
 
 enum ViewEnum {
@@ -33,7 +33,7 @@ subresource Car::Wheel {
 	radius: double
 
 	/operations
-		GET PUT POST MULTIGET pagination { strategy = offset }
+		GET PUT POST MULTIGET deprecated-offset-pagination
 }
 
 "Different brands"

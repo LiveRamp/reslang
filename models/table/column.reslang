@@ -40,7 +40,7 @@ subresource Table::Column {
         StandardError
 
     "Find existing column in the provided parent table"
-    MULTIGET pagination { strategy = offset }
+    MULTIGET deprecated-offset-pagination
       "Cannot find table" 404
         StandardError
 

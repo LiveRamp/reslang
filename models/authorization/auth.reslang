@@ -6,7 +6,7 @@ resource User {
     roles: linked Role[1..10]
 
     /operations
-        POST GET MULTIGET pagination { strategy = offset }
+        POST GET MULTIGET
 }
 
 sync action User::Suspend {
@@ -27,9 +27,7 @@ resource Organization {
     parentOrganizationId: linked Organization optional
 
     /operations
-        POST GET MULTIGET pagination {
-            strategy = offset
-        }
+        POST GET MULTIGET
 }
 
 resource Role {
@@ -38,5 +36,5 @@ resource Role {
     parentRoleId: linked Role
 
     /operations
-        POST GET MULTIGET pagination { strategy = offset }
+        POST GET MULTIGET
 }

@@ -123,26 +123,67 @@ id "id" = _ name:name _ ","? _ {return name}
     Pagination configuration
     ------------------------
 
-    According to RFC-3, LiveRamp RESTful APIs should default to using
+    According to RFC API-3, LiveRamp RESTful APIs should default to using
     cursor-based pagination for MULTIGET responses.
 
     While teams converge, Reslang remains backward compatible and continues
     to support offset pagination. To use offset pagination, specify
-    `pagination { strategy = offset }` after a MULTIGET.
+    `deprecated-offset-pagination` after a MULTIGET.
 
     Only certain pagination options are allowed:
-        ["after", "before", "total", "next", "previous"]
+        ["defaultLimit", "maxLimit", "after", "before", "total", "next", "previous"]
 
-    Example of a valid config:
+    All default to false, except "after". Example of a valid config:
         pagination {
-            strategy = cursor
-            after = string
-            before = string
-            total = int
+            defaultLimit = 10
+            after = true // same as not specifying it
+            before = true
+            next = true
+            total = false   // a comment to enable this later
         }
 */
-pagination = _ "pagination" _ "{" _ options:option+ "}" _ {
-    return {
-        pagination: options
+
+pagination = p: (cursorOptions / "deprecated-offset-pagination" / "no-pagination") {
+  if (p === "deprecated-offset-pagination") {
+    return { pagination: [{ strategy: "offset" }] }
+  }
+  if (p === "no-pagination") {
+    return { pagination: [{ strategy: "none" }]}
+  }
+  else {
+      return {
+        pagination: [
+            { name: "strategy", value: "cursor" },
+            ...p.pagination
+        ]
+      }
     }
+}
+
+cursorOptions = _ "pagination" _ "{" _ options:(cursorOption / comment)+ "}" _ {
+    return {
+        pagination: options.filter(o => o.hasOwnProperty("name")) // filter out the comments
+    }
+}
+
+/*
+  cursorOption
+  ------------
+    cursorOption is an object of the form { name, value }, but
+    the `value` field is always a boolean or number.
+
+    Normally, these will be booleans e.g. `total = true`, where `true` indicates
+    that the field should be included in the API response.
+
+    Some options, like `defaultLimit` and `maxLimit`, require numbers to
+    be specified, as opposed to booleans.
+*/
+
+cursorOption = _ name:[a-z_\-]+ _ "=" _ val:(bool / number) _ comment? _ {
+    let value = typeof val === "boolean" ? val : val.join("")
+    return {name: name.join(""), value }
+}
+
+bool = b: ("true" / "false") {
+  return b === "true"
 }

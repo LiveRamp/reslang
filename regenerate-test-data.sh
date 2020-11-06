@@ -14,6 +14,7 @@ apis=(
     "multiplicity"
     "namespaces"
     "optionality"
+    "pagination"
     "patchable"
     "request"
     "servers"
@@ -38,7 +39,7 @@ echo
 echo "---"
 echo "Regenerating Dotviz files"
 echo "---"
-    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/dotviz.expected --diagram main 
+    ./reslang --noversion --ignorerules ${apis[@]} --testdir ./models --testwrite ./testdata/dotviz.expected --diagram main
 echo
 echo "---"
 echo "Regenerating JSON schema files"

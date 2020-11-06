@@ -113,12 +113,12 @@ For APIs that still use the legacy `limit+offset` pagination strategy, this can 
 
 ```
 /operations
-   MULTIGET pagination { strategy = offset }
+   MULTIGET deprecated-offset-pagination
 ```
 
 And for un-paginated multi-GET operations, pass a strategy of `none`:
 
 ```
 /operations
-  MULTIGET pagination { strategy = none }
+  MULTIGET no-pagination
 ```

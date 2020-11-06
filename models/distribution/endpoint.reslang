@@ -8,7 +8,7 @@ subresource Destination::Endpoint {
     endpointProperties: EndpointProperty[]
     // other stuff like formatter, packager
     /operations
-        POST PUT GET MULTIGET pagination { strategy = offset }
+        POST PUT GET MULTIGET deprecated-offset-pagination
 }
 
 structure EndpointProperty {
@@ -23,7 +23,7 @@ subresource Destination::Packager {
     compressionType: CompressionTypeEnum
 
     /operations
-        POST GET MULTIGET pagination { strategy = offset }
+        POST GET MULTIGET deprecated-offset-pagination
 }
 
 subresource Destination::Formatter {
@@ -31,7 +31,7 @@ subresource Destination::Formatter {
     macro: string
 
     /operations
-        POST GET MULTIGET pagination { strategy = offset }
+        POST GET MULTIGET deprecated-offset-pagination
 }
 
 subresource Destination::Deliverer {
@@ -40,5 +40,5 @@ subresource Destination::Deliverer {
     macro: string
 
     /operations
-        POST GET MULTIGET pagination { strategy = offset }
+        POST GET MULTIGET deprecated-offset-pagination
 }

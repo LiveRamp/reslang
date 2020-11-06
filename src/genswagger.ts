@@ -629,7 +629,7 @@ export default class SwagGen extends BaseGen {
             "next",
             "previous",
             "strategy",
-            "limit",
+            "defaultLimit",
             "maxLimit"
         ]
         let invalid = opts.filter(({ name }) => !valid.includes(name))
@@ -895,7 +895,7 @@ export default class SwagGen extends BaseGen {
                 value: "string"
             },
             {
-                name: "limit",
+                name: "defaultLimit",
                 value: String(this.rules.limit || 10)
             },
             {

@@ -38,7 +38,7 @@ request-resource DistributionRequest {
           "Use this endpoint to create a new DistributionRequest"
         POST
           "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET"
-        MULTIGET pagination { strategy = offset }
+        MULTIGET deprecated-offset-pagination
 }
 
 "Use this action to cancel a given DistributionRequest. See docs: DistMVP.Cancel"
