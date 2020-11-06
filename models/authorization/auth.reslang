@@ -50,5 +50,5 @@ http-header AuthnHeader {
 
 "for your org ID, ya know?"
 http-header OrgIDHeader {
-  name: LROrgID
+  name: LR-Org-ID
 }

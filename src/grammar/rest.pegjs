@@ -95,8 +95,7 @@ ids "ids" = ids:id+ {return ids}
 id "id" = _ name:name _ ","? _ {return name}
 
 httpHeader = _ comment:description? _ type:("http-header")  _ name:name  _ "{" _
-    // TODO find a good regex for the header names!!
-    "name:" _ headerName:name _
+    "name:" _ headerName:[a-zA-Z0-9\-]+ _
 "}" _ ";"? _ {
-    return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName}
+    return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName.join("")}
 }
