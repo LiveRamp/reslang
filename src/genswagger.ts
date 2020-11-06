@@ -30,18 +30,20 @@ import { Operations, Verbs } from "./operations"
 
 export default class SwagGen extends BaseGen {
     // TODO add insanely good comment here
-    // this could also be a union type with a switch statement -CJ
-    private reslangOperationToSwaggerPathsKey: Record<string, string> = {
-        GET: "get",
-        MULTIGET: "get",
+    private reslangIdOperationsToSwaggerPathKeys: Record<string, string> = {
         DELETE: "delete",
-        MULTIDELETE: "delete",
-        POST: "post",
-        MULTIPOST: "post",
-        PUT: "put",
-        MULTIPUT: "put",
+        GET: "get",
         PATCH: "patch",
-        MULTIPATCH: "patch"
+        PUT: "put"
+    }
+
+    private reslangNonIdOperationsToSwaggerPathKeys: Record<string, string> = {
+        MULTIDELETE: "delete",
+        MULTIGET: "get",
+        MULTIPATCH: "patch",
+        MULTIPOST: "post",
+        MULTIPUT: "put",
+        POST: "post"
     }
 
     public generate() {
@@ -166,7 +168,7 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && (ops.post || ops.isMulti())) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST, MULTIPOST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST, or MULTI operations`
                     )
                 }
 
@@ -179,17 +181,12 @@ export default class SwagGen extends BaseGen {
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
                     this.formNonIdOperations(el, path, params, tagKeys, ops)
-                    // TODO get rid of this hack
-                    this.reslangOperationToSwaggerPathsKey = {
-                        MULTIDELETE: "delete",
-                        MULTIGET: "get",
-                        MULTIPATCH: "patch",
-                        MULTIPOST: "post",
-                        MULTIPUT: "put",
-                        POST: "post"
-                    }
                     // addHeaderParams must be called after formNonIdOperations
-                    this.addHeaderParams(el, path)
+                    this.addHeaderParams(
+                        el,
+                        path,
+                        this.reslangNonIdOperationsToSwaggerPathKeys
+                    )
                 }
 
                 /**
@@ -217,15 +214,12 @@ export default class SwagGen extends BaseGen {
                     tagKeys,
                     ops
                 )
-                // TODO get rid of this hack
-                this.reslangOperationToSwaggerPathsKey = {
-                    DELETE: "delete",
-                    GET: "get",
-                    PATCH: "patch",
-                    PUT: "put"
-                }
                 // addHeaderParams must be called after formIdOperations
-                this.addHeaderParams(el, path)
+                this.addHeaderParams(
+                    el,
+                    path,
+                    this.reslangIdOperationsToSwaggerPathKeys
+                )
             }
         }
 
@@ -1224,7 +1218,11 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private addHeaderParams(el: IResourceLike, path: any) {
+    private addHeaderParams(
+        el: IResourceLike,
+        path: any,
+        supportedReslangOperationsSwaggerPathKeys: Record<string, string>
+    ) {
         if (!el.requestHeaders) {
             return
         }
@@ -1254,7 +1252,8 @@ export default class SwagGen extends BaseGen {
                     this.addHeaderParamToSwaggerPath(
                         path,
                         headerObjDef,
-                        op.operation
+                        op.operation,
+                        supportedReslangOperationsSwaggerPathKeys
                     )
                 })
             } else if (
@@ -1269,7 +1268,8 @@ export default class SwagGen extends BaseGen {
                 this.addHeaderParamToSwaggerPath(
                     path,
                     headerObjDef,
-                    header.opOrWildcard
+                    header.opOrWildcard,
+                    supportedReslangOperationsSwaggerPathKeys
                 )
             }
         }
@@ -1278,24 +1278,26 @@ export default class SwagGen extends BaseGen {
     private addHeaderParamToSwaggerPath(
         path: any,
         headerObjDef: IHTTPHeader,
-        operation: string
+        operation: string,
+        supportedReslangOperationsSwaggerPathKeys: Record<string, string>
     ) {
-        const pathKey = this.reslangOperationToSwaggerPathsKey[operation]
+        const pathKey = supportedReslangOperationsSwaggerPathKeys[operation]
         if (!pathKey) {
-            // TODO do something better
             return
         }
+        // TODO factor this out: create pathOperationParametersIfNotExists
         if (!(pathKey in path)) {
             path[pathKey] = { parameters: [] }
         } else if (!("parameters" in path[pathKey])) {
             path[pathKey].parameters = []
         }
+        ///////////
 
         const headerParameterSwagger = {
             description: headerObjDef.comment,
             in: "header",
             name: headerObjDef.headerName,
-            required: true, // TODO this could be MVP, or we could modify the syntax to allow optional headers now
+            required: true,
             schema: {
                 type: "string"
             }
