@@ -99,8 +99,7 @@ multiops = op:("MULTIGET" / "MULTIPUT" / "MULTIPATCH" / "MULTIPOST" / "MULTIDELE
     Besides simple key=val options, certain verbs can be modified
     using pagination (see the pagination rule for details).
 
-    If more verb options are introduced to this grammar, they should be included
-    in this "options" rule.
+TODO: I don't think there are any non-pagination options.
 */
 options = arr:(option / pagination)* {
     let standard = arr.filter(o => !o.pagination)
@@ -143,26 +142,29 @@ id "id" = _ name:name _ ","? _ {return name}
         }
 */
 
-pagination = p: (cursorOptions / "deprecated-offset-pagination" / "no-pagination") {
-  if (p === "deprecated-offset-pagination") {
-    return { pagination: [{ strategy: "offset" }] }
+pagination = config: (cursorOptions / "deprecated-offset-pagination" / "no-pagination") {
+  if (config === "deprecated-offset-pagination") {
+    return { pagination: { strategy: "offset" } }
   }
-  if (p === "no-pagination") {
-    return { pagination: [{ strategy: "none" }]}
+  if (config === "no-pagination") {
+    return { pagination: { strategy: "none" }}
   }
   else {
       return {
-        pagination: [
-            { name: "strategy", value: "cursor" },
-            ...p.pagination
-        ]
+        pagination: {
+            strategy: "cursor",
+            options: config.pagination.options
+        }
       }
     }
 }
 
 cursorOptions = _ "pagination" _ "{" _ options:(cursorOption / comment)+ "}" _ {
     return {
-        pagination: options.filter(o => o.hasOwnProperty("name")) // filter out the comments
+        pagination: {
+            strategy: "cursor",
+            options: options.filter(o => o.hasOwnProperty("name")) // filter out the comments
+        }
     }
 }
 
@@ -179,8 +181,7 @@ cursorOptions = _ "pagination" _ "{" _ options:(cursorOption / comment)+ "}" _ {
     be specified, as opposed to booleans.
 */
 
-cursorOption = _ name:[a-z_\-]+ _ "=" _ val:(bool / number) _ comment? _ {
-    let value = typeof val === "boolean" ? val : val.join("")
+cursorOption = _ name:[a-zA-Z_\-]+ _ "=" _ value:(bool / number) _ comment? _ {
     return {name: name.join(""), value }
 }
 

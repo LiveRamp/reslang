@@ -13,7 +13,6 @@ import {
     getKeyAttributes,
     IAttribute,
     IOperation,
-    IOption,
     IResourceLike,
     isAction,
     isEnum,
@@ -26,7 +25,8 @@ import {
     Pagination,
     Cursor,
     Offset,
-    strategy
+    strategy,
+    PaginationOption,
 } from "./swagger/pagination/index"
 
 /**
@@ -556,10 +556,10 @@ export default class SwagGen extends BaseGen {
         let gparams = params.slice()
         if (ops.multiget) {
             let paginationOpts =
-                ops.multiget.pagination || this.defaultPaginationParams()
+                ops.multiget.pagination?.options || this.defaultPaginationOpts()
 
-            let klass = Pagination.use(this.getPaginationStrategy(ops.multiget))
-            this.warnInvalidPaginationOpts(paginationOpts)
+            let strat = ops.multiget.pagination?.strategy as strategy || strategy.Cursor
+            let klass = Pagination.use(strat)
 
             let paginator: Pagination = new klass(plural, paginationOpts)
 
@@ -586,15 +586,12 @@ export default class SwagGen extends BaseGen {
                 $ref: `#/components/schemas/${camel}MultiResponse`
             }
             let description = plural + " retrieved successfully"
-            let strat = paginator.strategy()
             let headers =
                 strat === strategy.Offset
                     ? (paginator as Offset).xTotalCountHeader()
                     : {}
-            schema =
-                strat === strategy.Cursor
-                    ? (paginator as Cursor).addPaginationToSchema(schema)
-                    : schema
+            if (strat === strategy.Cursor) schema = (paginator as Cursor).addPaginationToSchema(schema)
+
             let responses: any = {
                 200: {
                     description,
@@ -619,26 +616,6 @@ export default class SwagGen extends BaseGen {
                 path.get.parameters = gparams
             }
         }
-    }
-
-    private warnInvalidPaginationOpts(opts: IOption[]): void {
-        let valid = [
-            "after",
-            "before",
-            "total",
-            "next",
-            "previous",
-            "strategy",
-            "defaultLimit",
-            "maxLimit"
-        ]
-        let invalid = opts.filter(({ name }) => !valid.includes(name))
-        if (invalid.length)
-            console.error(
-                `unexpected pagination field: valid fields are [ ${valid.join(
-                    " | "
-                )} ], but got [ ${invalid.join(" | ")} ]`
-            )
     }
 
     private jsonContentSchema(schema: any) {
@@ -877,30 +854,27 @@ export default class SwagGen extends BaseGen {
         or defaults to Cursor strategy if not defined.
      */
     private getPaginationStrategy(op: IOperation): strategy {
-        let strat = op.pagination?.find((o) => o.name === "strategy")?.value
-
-        if (strat) return strat as strategy
-        return strategy.Cursor
+        return op.pagination?.strategy as strategy || strategy.Cursor
     }
     /**
-     defaultPaginationParams returns the pagination options when none
+     defaultPaginationOpts returns the pagination options when none
      are specified by the user. Since cursor pagination is the default
      strategy, the only required pagination parameters are the "after" cursor
      and the limit.
     */
-    private defaultPaginationParams(): IOption[] {
+    private defaultPaginationOpts(): PaginationOption[] {
         return [
             {
                 name: "after",
-                value: "string"
+                value: true
             },
             {
                 name: "defaultLimit",
-                value: String(this.rules.limit || 10)
+                value: this.rules.limit || 10
             },
             {
                 name: "maxLimit",
-                value: String(this.rules.maxLimit || 100)
+                value: this.rules.maxLimit || 100
             }
         ]
     }

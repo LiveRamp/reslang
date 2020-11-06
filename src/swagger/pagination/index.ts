@@ -1,4 +1,25 @@
-import { IOption } from "../../treetypes"
+export type PaginationOption = {
+    name: string
+    value: any
+}
+
+export function isValidPaginationOption(str: string): boolean {
+    switch(str as validOptionName) {
+        case "strategy":
+        case "maxLimit":
+        case "defaultLimit":
+        case queryParam.After:
+        case queryParam.Before:
+        case responseField.After:
+        case responseField.Before:
+        case responseField.Total:
+        case responseField.Next:
+        case responseField.Previous:
+            return true
+    }
+    console.error("unrecognized pagination option:", str)
+    return false
+}
 
 /**
  * This module is meant to make adding pagination to Swagger specs as easy
@@ -37,7 +58,7 @@ type wrappedResponse = {
 /**
  * swaggerParam is how Swagger structures request parameters.
  */
-type swaggerParam = {
+export type swaggerParam = {
     in: string
     name: string
     description: string
@@ -68,10 +89,11 @@ export enum strategy {
  are hardcoded in the Offset class.
 */
 export enum queryParam {
-    Limit = "defaultLimit",
     After = "after",
     Before = "before"
 }
+
+export type limitOption = "maxLimit" | "defaultLimit"
 
 /**
  responseField enumerates the sanctioned pagination response fields.
@@ -85,13 +107,15 @@ export enum responseField {
     Previous = "previous"
 }
 
+type validOptionName = "strategy" | limitOption | queryParam | responseField
+
 /**
   Pagination is the common behavior between all pagination strategies
   (cursor and offset).
 */
 export abstract class Pagination {
-    readonly queryOpts: IOption[]
-    readonly responseOpts: IOption[]
+    readonly queryOpts: PaginationOption[]
+    readonly responseOpts: PaginationOption[]
 
     /**
      *
@@ -108,7 +132,7 @@ export abstract class Pagination {
      * be accessed with #opts, while #queryOpts and #responseOpts
      * are guaranteed to be valid members of their corresponding enums.
      */
-    constructor(readonly resourceName: string, readonly opts: IOption[]) {
+    constructor(readonly resourceName: string, readonly opts: PaginationOption[]) {
         this.resourceName = resourceName
         this.queryOpts = opts.filter((o) =>
             Object.values(queryParam).includes(o.name as queryParam)
@@ -116,17 +140,19 @@ export abstract class Pagination {
         this.responseOpts = opts.filter((o) =>
             Object.values(responseField).includes(o.name as responseField)
         )
+        this.opts = opts.filter(o => isValidPaginationOption(o.name))
     }
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
+
 
     /**
      qLimit returns a Swagger query param for "limit".
      This param is the same in both offset and cursor pagination.
     */
     qLimit(): swaggerParam {
-        let defaultLimit = this.queryOpts.find((o) => o.name === "defaultLimit")?.value || 10
-        let max = this.opts.find((o) => o.name === "maxLimit")?.value || 100
+        let defaultLimit = this.opts.find((o) => o.name === "defaultLimit")?.value || 10
+        let maxLimit = this.opts.find((o) => o.name === "maxLimit")?.value || 100
         return {
             in: "query",
             name: "limit",
@@ -136,7 +162,7 @@ export abstract class Pagination {
                 format: "int32",
                 default: Number(defaultLimit),
                 minimum: 1,
-                maximum: Number(max)
+                maximum: Number(maxLimit)
             }
         }
     }
@@ -232,34 +258,49 @@ export class Offset extends Pagination {
  * TODO -- post doc with explanations and best practices. Jira: API-410
  */
 export class Cursor extends Pagination {
-    /**
-     * queryParams returns an array of swagger query params, starting
-     * with `limit` and then all of the user defined options.
-     */
-    queryParams = (): swaggerParam[] => {
-        return this.queryOpts.map(this.optToQueryParam)
+    queryParams=(): swaggerParam[] => {
+        let init = [this.qLimit()]
+        return [...init, ...this.queryOpts.filter(o => !!o.value).map(this.optToQueryParam)]
     }
 
     /**
-     * qAfter stands for "query After". It returns a standard param that should be the same
+     Convert a queryParam name to a standardized Swagger query parameter object
+     */
+    optToQueryParam = (opt: PaginationOption): swaggerParam => {
+        switch (opt.name as queryParam) {
+            case queryParam.After:
+                return this.qAfter()
+            case queryParam.Before:
+                return this.qBefore()
+        }
+        assertUnreachable(name)
+        throw new Error(
+            unexpectedEnumMsg(
+                "pagination query param",
+                Object.values(queryParam),
+                name
+            )
+        )
+    }
+        /**
+     * qAfter returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
      */
-    qAfter(): swaggerParam {
-        return {
-            in: "query",
-            name: "after",
-            description: (
-`This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`
-            ),
-            schema: {
-                type: "string"
+        qAfter(): swaggerParam {
+            return {
+                in: "query",
+                name: "after",
+                description: (
+    `This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`
+                ),
+                schema: {
+                    type: "string"
+                }
             }
         }
-    }
-
-    /**
-     * qBefore stands for "query Before". It returns a standard param that should be the same
+         /**
+     * qBefore returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
      */
@@ -272,29 +313,10 @@ export class Cursor extends Pagination {
                 type: "string"
             }
         }
+
     }
 
-    /**
-     Convert a queryParam name to a standardized Swagger query parameter object
-     */
-    optToQueryParam = (opt: IOption): swaggerParam => {
-        switch (opt.name as queryParam) {
-            case queryParam.After:
-                return this.qAfter()
-            case queryParam.Before:
-                return this.qBefore()
-            case queryParam.Limit:
-                return this.qLimit()
-        }
-        assertUnreachable(name)
-        throw new Error(
-            unexpectedEnumMsg(
-                "pagination query param",
-                Object.values(queryParam),
-                name
-            )
-        )
-    }
+
 
     /**
       describeResponseField returns the standard  description
@@ -328,6 +350,29 @@ When "before" is null, there are no previous records to fetch for this search.`
         )
     }
 
+    swaggerType = (field: responseField): string => {
+        switch (field) {
+            case responseField.After:
+                return "string"
+            case responseField.Before:
+                return "string"
+            case responseField.Total:
+                return "integer"
+            case responseField.Next:
+                return "string"
+            case  responseField.Previous:
+                return "string"
+        }
+        assertUnreachable(field)
+        throw new Error(
+            unexpectedEnumMsg(
+                "pagination response field",
+                Object.values(responseField),
+                field
+            )
+        )
+    }
+
     /**
      * toSwaggerProp translates a reslang option into a Swagger property.
      *
@@ -335,16 +380,15 @@ When "before" is null, there are no previous records to fetch for this search.`
      * For example, in Reslang we have `int`, but in Swagger we have `integer`.
      *
      */
-    toSwaggerProp = (opt: IOption): swaggerProps => {
-        let typ = opt.value
-        let description = this.describeResponseField(opt.name as responseField)
-        switch (typ) {
-            /* If we discover more types to translate, add them to this switch. */
-            case "int":
-                typ = "integer"
-                break
-        }
-        return { [opt.name]: { type: typ, description } }
+    toSwaggerProp = (opt: PaginationOption): swaggerProps => {
+        let name = opt.name as responseField
+        let description = this.describeResponseField(name)
+
+        return { [opt.name]: { type: this.swaggerType(name), description } }
+    }
+
+    toSwaggerProps = (opts: PaginationOption[]): swaggerProps => {
+        return opts.map(this.toSwaggerProp).reduce(merge, {})
     }
 
     /**
@@ -356,9 +400,7 @@ When "before" is null, there are no previous records to fetch for this search.`
         return {
             _pagination: {
                 type: "object",
-                properties: this.responseOpts
-                    .map(this.toSwaggerProp)
-                    .reduce(merge, {})
+                properties: this.toSwaggerProps(this.responseOpts)
             }
         }
     }
@@ -411,7 +453,7 @@ function unexpectedEnumMsg(
 ): string {
     return `unexpected ${category}: expected one of [ ${okValues.join(
         " | "
-    )} ], but got ${got}`
+    )} ], but got ${JSON.stringify(got)}`
 }
 
 /**

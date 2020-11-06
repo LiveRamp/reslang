@@ -1,4 +1,4 @@
-import { Pagination, Offset, Cursor, NoOp, strategy, queryParam } from "./index"
+import { Pagination, Offset, Cursor, NoOp, strategy, queryParam, limitOption } from "./index"
 
 describe("Pagination", () => {
     describe(".use", () => {
@@ -64,9 +64,9 @@ describe("Cursor", () => {
     describe("#queryParams", () => {
         it("supports 'limit', 'before' and 'after' params", () => {
             let params = new Cursor("", [
-                { name: "defaultLimit", value: "int" },
-                { name: "after", value: "string" },
-                { name: "before", value: "string" }
+                { name: "defaultLimit", value: 10 },
+                { name: queryParam.After, value: true },
+                { name: queryParam.Before, value: true }
             ]).queryParams()
             expect(params.length).toBe(3)
             expect(params).toEqual(
@@ -83,7 +83,7 @@ describe("Cursor", () => {
         let instance = new Cursor("", [])
         it("builds an 'after' param", () => {
             expect(
-                instance.optToQueryParam({ name: "after", value: "string" })
+                instance.optToQueryParam({ name: "after", value: true })
             ).toEqual(
                 expect.objectContaining({
                     in: "query",
@@ -94,7 +94,7 @@ describe("Cursor", () => {
         })
         it("builds a 'before' param", () => {
             expect(
-                instance.optToQueryParam({ name: "before", value: "string" })
+                instance.optToQueryParam({ name: "before", value: true })
             ).toEqual(
                 expect.objectContaining({
                     in: "query",
@@ -103,22 +103,11 @@ describe("Cursor", () => {
                 })
             )
         })
-        it("builds a 'limit' param", () => {
-            expect(
-                instance.optToQueryParam({ name: "defaultLimit", value: "int" })
-            ).toEqual(
-                expect.objectContaining({
-                    in: "query",
-                    name: "limit",
-                    description: expect.stringContaining("Number of ")
-                })
-            )
-        })
     })
 
     describe("#getPaginationResponse", () => {
         it("returns an RFC-3 compliant pagination response", () => {
-            let opt = { name: "after", value: "string" }
+            let opt = { name: "after", value: true }
             let instance = new Cursor("", [opt])
             expect(instance.getPaginationResponse()).toEqual(
                 expect.objectContaining({
