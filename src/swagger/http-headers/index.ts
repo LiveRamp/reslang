@@ -22,12 +22,14 @@ export function addHeaderParams(
 
     for (const header of el.requestHeaders) {
         const headerObjDef = reslangDefinitions.find((d) => {
-            return d.kind === "http-header" && d.name === header.headerObjName
+            return (
+                d.kind === "http-header" && d.name === header.httpHeaderDefName
+            )
         }) as IHTTPHeader
 
         if (!headerObjDef) {
             throw new Error(
-                `no http-header definition found with name "${header.headerObjName}"`
+                `no http-header definition found with name "${header.httpHeaderDefName}"`
             )
         }
 

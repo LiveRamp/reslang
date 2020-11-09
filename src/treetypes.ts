@@ -280,7 +280,7 @@ export interface IOperation {
 // TODO rename this stuff... IOperationAndHeaderDefinition perhaps
 export interface IRequestHeader {
     opOrWildcard: string
-    headerObjName: string
+    httpHeaderDefName: string
 }
 
 export interface IOption {

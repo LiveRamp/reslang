@@ -68,17 +68,28 @@ events = _ "/events" _ ops:eventops+ _ {
     return ops
 }
 
-//TODO rename this new stuff vvv
-requestHeaders = _ "/request-headers" _ operationsAndHeaders:operationOrWildcard* _ {
+// requestHeaders matches a subsection of resource definitions that is to be
+// used for specifying which HTTP verbs ("operations" in Reslang parlance)
+// require http headers on requests. Http headers defined in an `http-header`
+// Reslang definition can be added to requests by specifying an operation, or
+// "*" followed by the name of an http-header definition. For example,
+//
+//    /request-headers
+//      *    myCoolHeader
+//      POST myPostHeader
+//
+// will add myCoolHeader header to all of the resource's operations and add
+// myPostHeader for POST requests.
+requestHeaders = _ "/request-headers" _ operationsAndHeaders:operationOrWildcardAndHeaderDefName* _ {
     operationsAndHeaders.subsectionLabel = "requestHeaders"
     return operationsAndHeaders
 }
 
-operationOrWildcard =
-  opOrWildcard:(oplist / "*" ) _ headerObjName:name _ {
-    return {opOrWildcard: opOrWildcard, headerObjName: headerObjName}
-  }
-//TODO rename this new stuff ^^^
+// operationOrWildcardAndHeaderDefName matches one operation + http-header definition
+// name pair. these pairs comprise the contents of the /request-headers section.
+operationOrWildcardAndHeaderDefName = opOrWildcard:(oplist / "*" ) _ httpHeaderDefName:name _ {
+    return {opOrWildcard: opOrWildcard, httpHeaderDefName: httpHeaderDefName}
+}
 
 errors = _ codes:errorcode+ _ struct:ref _ {
     return {codes: codes, "struct": struct}
