@@ -2,56 +2,62 @@
 
 // defining a resource
 resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
-    attributes:attributes? _ resourceSubsections:resourceDefinitionSubsections? _
+    attributes:attributes? _ subsections:operationsEventsAndRequestHeadersSubsections? _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type,
-        attributes: attributes, operations: resourceSubsections.ops, events: resourceSubsections.events,
-        requestHeaders: resourceSubsections.requestHeaders,
+        attributes: attributes, operations: subsections.ops, events: subsections.events,
+        requestHeaders: subsections.requestHeaders,
         parents: [], short: respath.short}
 }
 
-// resourceDefinitionSubsections matches the subsections of resource
-// definitions (e.g. /events, /operations, /request-headers), in any order. an
-// expression cannot access labels set inside an sub-expression. instead, a
-// `subsectionLabel` field was added to each subsection so that
-// resourceDefinitionSubsections can return an object keyed by subsection label
-resourceDefinitionSubsections =
-    _ subsectionsWithLabels:(operations / events / requestHeaders )* {
-        let subsections = {}
-        subsectionsWithLabels.forEach((s) => {
-            let l = s.subsectionLabel
-            delete s.subsectionLabel
-            subsections[l] = s
-        })
-        return subsections
-    }
-
 
 subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _
-    attributes:attributes? _ operations:operations? _ events:events? _
+    attributes:attributes? _ subsections:operationsEventsAndRequestHeadersSubsections? _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type,
-        attributes: attributes, operations: operations, events,
+        attributes: attributes, operations: subsections.ops, events: subsections.events,
+        requestHeaders: subsections.requestHeaders,
         parents: respath.parents, short: respath.short}
 }
 
 action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bulk:("bulk" / "resource-level")? _ "action" _ respath:parentrespath _ "{" _
-    attributes:attributes? _ operations:operations? _ events:events? _
+    attributes:attributes? _ subsections:operationsEventsAndRequestHeadersSubsections? _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
         comment: comment, future: !!future, singleton: false, type: "action", async: async == "async",
-        attributes: attributes, operations: operations, events,
+        attributes: attributes, operations: subsections.ops, events: subsections.events,
+        requestHeaders: subsections.requestHeaders,
         parents: respath.parents, short: respath.short,
         bulk: bulk}
 }
+
+// operationsEventsAndRequestHeadersSubsections matches /events, /operations,
+// and /request-headers subsections in any order. resource, subresource, and
+// action definitions can al have these subsections. an expression cannot
+// access labels set inside an sub-expression. instead, a `subsectionLabel`
+// field was added to each subsection so that
+// operationsEventsAndRequestHeadersSubsections can return an object keyed by
+// subsection label
+operationsEventsAndRequestHeadersSubsections =
+    _ subsectionsWithLabels:(operations / events / requestHeaders )* {
+        let subsections = {}
+        subsectionsWithLabels.forEach((s) => {
+            let l = s.subsectionLabel
+            // this label isn't used in the swagger generation and doesn't need
+            // to be clutter the parse tree
+            delete s.subsectionLabel
+            subsections[l] = s
+        })
+        return subsections
+    }
 
 operations = _ "/operations" _ ops:operation+ _ {
     ops.subsectionLabel = "ops"
