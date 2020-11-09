@@ -2,22 +2,33 @@
 
 // defining a resource
 resource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("configuration-resource" / "asset-resource" / "resource" / "request-resource") _ respath:noparentrespath _ "{" _
-    attributes:attributes? _ requestHeaders:requestHeaders? _ eventsAndOps:eventsAndOperationsAnyOrder _
+    attributes:attributes? _ resourceSubsections:resourceDefinitionSubsections? _
 "}" _ ";"? _ {
     return {
         category: "definition",
         kind: "resource-like",
         comment: comment, future: !!future, singleton: !!singleton, type: type,
-        attributes: attributes, operations: eventsAndOps.ops, events: eventsAndOps.events,
-        requestHeaders: requestHeaders,
+        attributes: attributes, operations: resourceSubsections.ops, events: resourceSubsections.events,
+        requestHeaders: resourceSubsections.requestHeaders,
         parents: [], short: respath.short}
 }
 
-// TODO figure out how we want to order the request-headers section
-eventsAndOperationsAnyOrder =
-  _ o:operations _ e:events? {return {events: e, ops: o}} /
-  _ e:events _ o:operations? {return {events: e, ops: o}} /
-  _ {return {events: null, ops: null}}
+// resourceDefinitionSubsections matches the subsections of resource
+// definitions (e.g. /events, /operations, /request-headers), in any order. an
+// expression cannot access labels set inside an sub-expression. instead, a
+// `subsectionLabel` field was added to each subsection so that
+// resourceDefinitionSubsections can return an object keyed by subsection label
+resourceDefinitionSubsections =
+    _ subsectionsWithLabels:(operations / events / requestHeaders )* {
+        let subsections = {}
+        subsectionsWithLabels.forEach((s) => {
+            let l = s.subsectionLabel
+            delete s.subsectionLabel
+            subsections[l] = s
+        })
+        return subsections
+    }
+
 
 subresource = _ comment:description? _ future:"future"? _ singleton:"singleton"? _ type:("subresource") _ respath:parentrespath _ "{" _
     attributes:attributes? _ operations:operations? _ events:events? _
@@ -43,7 +54,8 @@ action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bu
 }
 
 operations = _ "/operations" _ ops:operation+ _ {
-    return ops;
+    ops.subsectionLabel = "ops"
+    return ops
 }
 
 operation = _ operation:ops _ errors: errors* _ ";"? _ {
@@ -52,12 +64,14 @@ operation = _ operation:ops _ errors: errors* _ ";"? _ {
 }
 
 events = _ "/events" _ ops:eventops+ _ {
-    return ops;
+    ops.subsectionLabel = "events"
+    return ops
 }
 
 //TODO rename this new stuff vvv
 requestHeaders = _ "/request-headers" _ operationsAndHeaders:operationOrWildcard* _ {
-    return operationsAndHeaders;
+    operationsAndHeaders.subsectionLabel = "requestHeaders"
+    return operationsAndHeaders
 }
 
 operationOrWildcard =
