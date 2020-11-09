@@ -1,4 +1,4 @@
-import { Pagination, Offset, Cursor, NoOp, strategy, queryParam, limitOption } from "./index"
+import { Pagination, Offset, Cursor, NoOp, strategy, queryParam } from "./index"
 
 describe("Pagination", () => {
     describe(".use", () => {
@@ -62,16 +62,15 @@ describe("Offset", () => {
 
 describe("Cursor", () => {
     describe("#queryParams", () => {
-        it("supports 'limit', 'before' and 'after' params", () => {
+        it("supports 'before', 'after', and 'limit' (by default) params", () => {
             let params = new Cursor("", [
-                { name: "defaultLimit", value: 10 },
                 { name: queryParam.After, value: true },
                 { name: queryParam.Before, value: true }
             ]).queryParams()
             expect(params.length).toBe(3)
             expect(params).toEqual(
                 expect.arrayContaining([
-                    expect.objectContaining({ in: "query", name: "limit" }),
+                    expect.objectContaining({ in: "query", name: "limit" }), // limit is always included, by default
                     expect.objectContaining({ in: "query", name: "after" }),
                     expect.objectContaining({ in: "query", name: "before" })
                 ])

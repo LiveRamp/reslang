@@ -35,14 +35,13 @@ resource BellsAndWhistles {
   id: string
 
   /operations
-    MULTIGET
-      pagination {
-        strategy = cursor
-        limit = 10
-        after = string
-        before = string
-        total = int
-        next = string
-        previous = string
-      }
+    MULTIGET pagination {
+      defaultLimit  = 10
+      maxLimit      = 100
+      after         = true
+      before        = true
+      total         = true
+      next          = true
+      previous      = false
+    }
 }

@@ -4,7 +4,7 @@ export type PaginationOption = {
 }
 
 export function isValidPaginationOption(str: string): boolean {
-    switch(str as validOptionName) {
+    switch (str as validOptionName) {
         case "strategy":
         case "maxLimit":
         case "defaultLimit":
@@ -83,10 +83,14 @@ export enum strategy {
 }
 
 /**
- queryParam enumerates the sanctioned pagination query parameters.
+ queryParam enumerates the sanctioned user-defined pagination query parameters.
  This only deals with cursor pagination, since that is officially supported.
  For APIs that still to use offset+limit pagination, those query params
  are hardcoded in the Offset class.
+
+ This enum does not include "limit", since that is not user-defined.
+ It will always be included in API specs by necessity, and the only configs
+ that users can specify are in this module's `limitOption` enum.
 */
 export enum queryParam {
     After = "after",
@@ -132,7 +136,10 @@ export abstract class Pagination {
      * be accessed with #opts, while #queryOpts and #responseOpts
      * are guaranteed to be valid members of their corresponding enums.
      */
-    constructor(readonly resourceName: string, readonly opts: PaginationOption[]) {
+    constructor(
+        readonly resourceName: string,
+        readonly opts: PaginationOption[]
+    ) {
         this.resourceName = resourceName
         this.queryOpts = opts.filter((o) =>
             Object.values(queryParam).includes(o.name as queryParam)
@@ -140,19 +147,20 @@ export abstract class Pagination {
         this.responseOpts = opts.filter((o) =>
             Object.values(responseField).includes(o.name as responseField)
         )
-        this.opts = opts.filter(o => isValidPaginationOption(o.name))
+        this.opts = opts.filter((o) => isValidPaginationOption(o.name))
     }
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
-
 
     /**
      qLimit returns a Swagger query param for "limit".
      This param is the same in both offset and cursor pagination.
     */
     qLimit(): swaggerParam {
-        let defaultLimit = this.opts.find((o) => o.name === "defaultLimit")?.value || 10
-        let maxLimit = this.opts.find((o) => o.name === "maxLimit")?.value || 100
+        let defaultLimit =
+            this.opts.find((o) => o.name === "defaultLimit")?.value || 10
+        let maxLimit =
+            this.opts.find((o) => o.name === "maxLimit")?.value || 100
         return {
             in: "query",
             name: "limit",
@@ -258,9 +266,25 @@ export class Offset extends Pagination {
  * TODO -- post doc with explanations and best practices. Jira: API-410
  */
 export class Cursor extends Pagination {
-    queryParams=(): swaggerParam[] => {
-        let init = [this.qLimit()]
-        return [...init, ...this.queryOpts.filter(o => !!o.value).map(this.optToQueryParam)]
+    /**
+     * queryParams returns an array of swagger-compliant query params
+     * as specified by the instance's pagination options.
+     *
+     * The array will always include a "limit" param.
+     *
+     * Any options with a value of `false` will not be returned. This supports
+     * the use-case of explicitly marking an option as `false` in the reslang
+     * spec, maybe as a form of "TODO". Code that consumes this module
+     * is free to either filter out the false values itself, or rely on this
+     * method to filter them out.
+     */
+    queryParams = (): swaggerParam[] => {
+        return [
+            this.qLimit(),
+            ...this.queryOpts
+                .filter((o) => o.value !== false)
+                .map(this.optToQueryParam)
+        ]
     }
 
     /**
@@ -282,24 +306,22 @@ export class Cursor extends Pagination {
             )
         )
     }
-        /**
+    /**
      * qAfter returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
      */
-        qAfter(): swaggerParam {
-            return {
-                in: "query",
-                name: "after",
-                description: (
-    `This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`
-                ),
-                schema: {
-                    type: "string"
-                }
+    qAfter(): swaggerParam {
+        return {
+            in: "query",
+            name: "after",
+            description: `This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`,
+            schema: {
+                type: "string"
             }
         }
-         /**
+    }
+    /**
      * qBefore returns a standard param that should be the same
      * across all LiveRamp APIs. If the need for customizing these descriptions
      * presents itself, that should be a pretty simple change.
@@ -313,10 +335,7 @@ export class Cursor extends Pagination {
                 type: "string"
             }
         }
-
     }
-
-
 
     /**
       describeResponseField returns the standard  description
@@ -360,7 +379,7 @@ When "before" is null, there are no previous records to fetch for this search.`
                 return "integer"
             case responseField.Next:
                 return "string"
-            case  responseField.Previous:
+            case responseField.Previous:
                 return "string"
         }
         assertUnreachable(field)

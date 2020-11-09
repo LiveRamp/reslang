@@ -13,6 +13,7 @@ import {
     getKeyAttributes,
     IAttribute,
     IOperation,
+    IOption,
     IResourceLike,
     isAction,
     isEnum,
@@ -27,6 +28,8 @@ import {
     Offset,
     strategy,
     PaginationOption,
+    isValidPaginationOption,
+    swaggerParam
 } from "./swagger/pagination/index"
 
 /**
@@ -555,14 +558,10 @@ export default class SwagGen extends BaseGen {
         }
         let gparams = params.slice()
         if (ops.multiget) {
-            let paginationOpts =
-                ops.multiget.pagination?.options || this.defaultPaginationOpts()
-
-            let strat = ops.multiget.pagination?.strategy as strategy || strategy.Cursor
-            let klass = Pagination.use(strat)
-
-            let paginator: Pagination = new klass(plural, paginationOpts)
-
+            let paginator: Pagination = this.getPaginator(
+                plural,
+                ops.multiget.pagination
+            )
             gparams = [...gparams, ...paginator.queryParams()]
 
             for (const attr of el.attributes as IAttribute[]) {
@@ -587,10 +586,12 @@ export default class SwagGen extends BaseGen {
             }
             let description = plural + " retrieved successfully"
             let headers =
-                strat === strategy.Offset
+                paginator.strategy() === strategy.Offset
                     ? (paginator as Offset).xTotalCountHeader()
                     : {}
-            if (strat === strategy.Cursor) schema = (paginator as Cursor).addPaginationToSchema(schema)
+            if (paginator.strategy() === strategy.Cursor) {
+                schema = (paginator as Cursor).addPaginationToSchema(schema)
+            }
 
             let responses: any = {
                 200: {
@@ -618,6 +619,26 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    /**
+     * getPaginator returns the correct pagination instance for a config.
+     *
+     * It defaults to a Cursor paginator if no strategy is specified,
+     * and it defaults to the default pagination options if none are specified
+     * (see #defaultPaginationOpts for more info).
+     */
+    private getPaginator(
+        name: string,
+        config: { strategy: string; options: [] } | undefined
+    ): Pagination {
+        let opts = this.pegJsOptionsToPaginationOptions(
+            config?.options || this.defaultPaginationOpts()
+        )
+        let strat = (config?.strategy as strategy) || strategy.Cursor
+        let klass = Pagination.use(strat)
+
+        return new klass(name, opts)
+    }
+
     private jsonContentSchema(schema: any) {
         return {
             "application/json": {
@@ -626,14 +647,22 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private retrieveOption(multiget: IOperation, optionName: string) {
-        // now see if we have set this value in the options
-        for (const option of multiget.options) {
-            if (option.name === optionName) {
-                return option.value
-            }
-        }
-        return null
+    /* pegJsOptionsToPaginationOptions converts parsed pegjs options into
+     * options that the Pagination module understands.
+     *
+     * In reslang, an "option" means specifically an object of { name, value }.
+     * This function filters a list of options down to the valid pagination
+     * options, and returns those with a non-false value.
+     *
+     * (The false value is supported in pegjs for apis which want to explicitly
+     * mark a value as not included.)
+     */
+    private pegJsOptionsToPaginationOptions(
+        opts: { name: string; value: any }[]
+    ): PaginationOption[] {
+        return opts
+            .filter((o) => isValidPaginationOption(o.name))
+            .filter((o) => o.value !== false)
     }
 
     private addParentPathParam(
@@ -850,17 +879,10 @@ export default class SwagGen extends BaseGen {
     }
 
     /**
-        getPaginationStrategy finds an operation's pagination strategy,
-        or defaults to Cursor strategy if not defined.
-     */
-    private getPaginationStrategy(op: IOperation): strategy {
-        return op.pagination?.strategy as strategy || strategy.Cursor
-    }
-    /**
      defaultPaginationOpts returns the pagination options when none
      are specified by the user. Since cursor pagination is the default
      strategy, the only required pagination parameters are the "after" cursor
-     and the limit.
+     and the limit configs.
     */
     private defaultPaginationOpts(): PaginationOption[] {
         return [

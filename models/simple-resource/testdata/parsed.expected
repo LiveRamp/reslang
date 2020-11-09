@@ -165,12 +165,9 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": [
-              {
-                "name": "strategy",
-                "value": "offset"
-              }
-            ],
+            "pagination": {
+              "strategy": "offset"
+            },
             "errors": []
           }
         ],
@@ -585,12 +582,9 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": [
-              {
-                "name": "strategy",
-                "value": "offset"
-              }
-            ],
+            "pagination": {
+              "strategy": "offset"
+            },
             "errors": []
           }
         ],

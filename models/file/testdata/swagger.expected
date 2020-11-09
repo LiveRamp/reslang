@@ -54,31 +54,24 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/DirectoryMultiResponse'
-                - type: object
-                  properties:
-                    _pagination:
-                      type: object
-                      properties:
-                        after:
-                          type: string
-                          description: >-
-                          This field is a cursor to be passed as a query
-                          parameter in subsequent, paginated searches.
+                  - $ref: '#/components/schemas/DirectoryMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
 
-                          It allows the next request to begin from where the
-                          current search left off.
+                              It allows the next request to begin from where the
+                              current search left off.
 
-                          When "after" is null, there are no more records
-                          to fetch for this search.
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
       parameters:
-        - in: query
-          name: after
-          description: >-
-            The value returned as "_pagination.after" in the previous query.
-            Starts from the beginning if not specified
-          schema:
-            type: string
         - in: query
           name: limit
           description: Number of Directories to return
@@ -88,6 +81,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: id
           required: false
@@ -720,3 +721,4 @@ components:
         - httpStatus
         - errorCode
         - message
+

@@ -554,12 +554,9 @@
             "operation": "MULTIGET",
             "comment": "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET",
             "options": [],
-            "pagination": [
-              {
-                "name": "strategy",
-                "value": "offset"
-              }
-            ],
+            "pagination": {
+              "strategy": "offset"
+            },
             "errors": []
           }
         ],
