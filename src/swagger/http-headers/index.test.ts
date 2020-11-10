@@ -51,29 +51,51 @@ describe("addHeaderParams", () => {
             } as IHTTPHeader
         ] as AnyKind[]
     })
-    // reslangDefinitions: AnyKind[],
-    // supportedReslangOperationsSwaggerPathKeys: Record<string, string>
-    it("Returns the correct class", () => {})
 
-    // it("errors if resource defines request headers for an operation it does not support", () => {
-    //     expect(
-    //         addHeaderParams(
-    //             resource,
-    //             path,
-    //             reslangDefinitions,
-    //             reslangIdOperationsToSwaggerPathKeys
-    //         )
-    //     ).toThrow()
-    // })
-    it("errors if request header references an undefined http-header", () => {})
-    it("adds headers to all defined operations if '*' wildcard is provided as an operation", () => {})
+    it("errors if resource defines request headers for an operation it does not support", () => {
+        resource.operations = []
+
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).toThrow()
+    })
+
+    it("errors if request header references an undefined http-header", () => {
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).toThrow()
+    })
+
+    it("adds headers to all defined operations if '*' wildcard is provided as an operation", () => {
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).toThrow()
+    })
+
     it("adds headers to the correct operations", () => {
-        addHeaderParams(
-            resource,
-            path,
-            reslangDefinitions,
-            reslangIdOperationsToSwaggerPathKeys
-        )
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).not.toThrow()
         expect(path.get.parameters).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
@@ -89,44 +111,25 @@ describe("addHeaderParams", () => {
         )
     })
 
-    it("creates the correctly nested 'parameters' object if it did not exist", () => {})
-    it("does not overwrite the 'parameters' object if it did exist", () => {})
-})
+    it("creates the correctly nested 'parameters' object if it did not exist", () => {
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).not.toThrow()
+    })
 
-// describe("Offset", () => {
-//     let instance = new Offset("foo", [])
-//     describe("#strategy", () => {
-//         it("returns the correct strategy", () => {
-//             expect(instance.strategy()).toEqual(strategy.Offset)
-//         })
-//     })
-//     describe("#queryParams", () => {
-//         let offset = "offset" as queryParam
-//         let limit = "limit" as queryParam
-//         it("returns offset and limit query params", () => {
-//             let params = instance.queryParams()
-//             expect(params.length).toBe(2)
-//             expect(params).toEqual(
-//                 expect.arrayContaining([
-//                     expect.objectContaining({ name: offset, in: "query" }),
-//                     expect.objectContaining({ name: limit, in: "query" })
-//                 ])
-//             )
-//         })
-//     })
-//     describe("#xTotalCountHeader", () => {
-//         it("returns the X-Total-Count swagger header", () => {
-//             expect(instance.xTotalCountHeader()).toEqual(
-//                 expect.objectContaining({
-//                     "X-Total-Count": {
-//                         description: expect.stringContaining("Total number of"),
-//                         schema: {
-//                             type: "integer",
-//                             format: "int32"
-//                         }
-//                     }
-//                 })
-//             )
-//         })
-//     })
-// })
+    it("does not overwrite the 'parameters' object if it did exist", () => {
+        expect(() => {
+            addHeaderParams(
+                resource,
+                path,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).not.toThrow()
+    })
+})
