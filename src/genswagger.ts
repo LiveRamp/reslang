@@ -31,9 +31,21 @@ import { Operations, Verbs } from "./operations"
 
 export default class SwagGen extends BaseGen {
     // Reslang "operations" are uppercase string constants (DELETE, GET, etc.).
-    // elements of the swagger `paths` arrays have keys for each operation, but
-    // the keys are not the same as the Reslang operation. this Record maps
-    // Reslang ID operations to their swagger counterparts.
+    // swagger path objects have keys for each operation, but the keys are
+    // not the same as the Reslang operation. these Records maps Reslang ID
+    // operations to their swagger counterparts.
+    //
+    // ID and non-ID operations use the same keys on the swagger path objects. For
+    // example, GET and MULTIGET both use 'get'. However, Reslang will always use
+    // different paths for GET and MULTIGET (the latter path will not include a
+    // resource ID as a path parameter).
+    //
+    // Reslang avoids conflicts relating to the path key re-use by generating
+    // the swagger path objects for ID operations (e.g. GET) and non-ID
+    // operations (e.g.  MULTIGET) separately. See the `formIdOperations` and
+    // `formNonIdOperations` functions. We keep separate swagger path key
+    // mappings for ID and non-ID operations so that `addHeaderParams` does not
+    // consider headers for the wrong path.
     private reslangIdOperationsToSwaggerPathKeys: Record<string, string> = {
         DELETE: "delete",
         GET: "get",
@@ -41,7 +53,6 @@ export default class SwagGen extends BaseGen {
         PUT: "put"
     }
 
-    // TODO can we combine these into one map? if not, make it clear in this description why we cannot
     private reslangNonIdOperationsToSwaggerPathKeys: Record<string, string> = {
         MULTIDELETE: "delete",
         MULTIGET: "get",

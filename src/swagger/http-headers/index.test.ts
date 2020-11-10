@@ -63,6 +63,17 @@ describe("addHeaderParams", () => {
         }).toThrow()
     })
 
+    it("does nothing if resource defines request headers for an operation it does support, but the operation is not in the 'allowed' record", () => {
+        expect(() => {
+            addHeaderParams(
+                resource,
+                swaggerPath,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).toThrow()
+    })
+
     it("adds headers to all defined operations if '*' wildcard is provided as an operation", () => {
         resource.requestHeaders = [
             {
@@ -110,6 +121,7 @@ describe("addHeaderParams", () => {
         console.log("*****************")
         console.log(swaggerPath)
         console.log("*****************")
+        // TODO failing :(
         expect(swaggerPath.get.parameters).toEqual(
             expect.arrayContaining([
                 expect.objectContaining(myCoolHeaderExpectedSwagger)

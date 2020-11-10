@@ -9,7 +9,7 @@ export function addHeaderParams(
     el: IResourceLike,
     path: any,
     reslangDefinitions: AnyKind[],
-    supportedReslangOperationsSwaggerPathKeys: Record<string, string>
+    allowedReslangOperationsSwaggerPathKeys: Record<string, string>
 ) {
     if (!el.requestHeaders) {
         return
@@ -21,13 +21,13 @@ export function addHeaderParams(
     }
 
     for (const header of el.requestHeaders) {
-        const headerObjDef = reslangDefinitions.find((d) => {
+        const headerDef = reslangDefinitions.find((d) => {
             return (
                 d.kind === "http-header" && d.name === header.httpHeaderDefName
             )
         }) as IHTTPHeader
 
-        if (!headerObjDef) {
+        if (!headerDef) {
             throw new Error(
                 `no http-header definition found with name "${header.httpHeaderDefName}"`
             )
@@ -38,23 +38,23 @@ export function addHeaderParams(
             el.operations.forEach((op) => {
                 addHeaderParamToSwaggerPath(
                     path,
-                    headerObjDef,
+                    headerDef,
                     op.operation,
-                    supportedReslangOperationsSwaggerPathKeys
+                    allowedReslangOperationsSwaggerPathKeys
                 )
             })
         } else if (
             !el.operations.find((op) => op.operation === header.opOrWildcard)
         ) {
             throw new Error(
-                `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a supported operation`
+                `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a allowed operation`
             )
         } else {
             addHeaderParamToSwaggerPath(
                 path,
-                headerObjDef,
+                headerDef,
                 header.opOrWildcard,
-                supportedReslangOperationsSwaggerPathKeys
+                allowedReslangOperationsSwaggerPathKeys
             )
         }
     }
@@ -62,26 +62,22 @@ export function addHeaderParams(
 
 function addHeaderParamToSwaggerPath(
     path: any,
-    // TODO rename headerObjDef
-    headerObjDef: IHTTPHeader,
+    headerDef: IHTTPHeader,
     operation: string,
-    supportedReslangOperationsSwaggerPathKeys: Record<string, string>
+    allowedReslangOperationsSwaggerPathKeys: Record<string, string>
 ) {
-    const pathKey = supportedReslangOperationsSwaggerPathKeys[operation]
+    const pathKey = allowedReslangOperationsSwaggerPathKeys[operation]
     if (!pathKey) {
+        // non-id operation but addHeaderParams was called for an ID path, or vice versa
         return
     }
-    // create path[pathKey].parameters if it does not exist
-    if (!(pathKey in path)) {
-        path[pathKey] = { parameters: [] }
-    } else if (!("parameters" in path[pathKey])) {
-        path[pathKey].parameters = []
-    }
+
+    createParametersArrayIfNotExists(path, pathKey)
 
     const headerParameterSwagger = {
-        description: headerObjDef.comment,
+        description: headerDef.comment,
         in: "header",
-        name: headerObjDef.headerName,
+        name: headerDef.headerName,
         required: true,
         schema: {
             type: "string"
@@ -89,4 +85,14 @@ function addHeaderParamToSwaggerPath(
     }
 
     path[pathKey].parameters.push(headerParameterSwagger)
+}
+
+// createParametersArrayIfNotExists sets path[pathKey].parameters to an empty
+// array iff the parameters key does not exist
+function createParametersArrayIfNotExists(path: any, pathKey: string) {
+    if (!(pathKey in path)) {
+        path[pathKey] = { parameters: [] }
+    } else if (!("parameters" in path[pathKey])) {
+        path[pathKey].parameters = []
+    }
 }
