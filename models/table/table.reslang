@@ -4,5 +4,5 @@ resource Table {
   name: string
 
   /operations
-    POST GET MULTIGET deprecated-offset-pagination DELETE
+    POST GET MULTIGET  DELETE
 }

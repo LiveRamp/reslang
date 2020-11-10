@@ -17,6 +17,10 @@ Reslang makes it easy to comply with LiveRamp's pagination standards by supporti
 
 When these blocks are omitted, Reslang defaults to a compliant cursor pagination strategy. But the block can also be included and customized to support all fields mentioned in the RFC above.
 
+### Example
+
+For an example of pagination blocks in Reslang, see [pagination api](models/pagination/api.reslang).
+
 ### Default behavior
 
 This code...

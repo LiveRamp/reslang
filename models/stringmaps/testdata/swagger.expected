@@ -40,25 +40,29 @@ paths:
       responses:
         '200':
           description: SMaps retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of SMaps returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SMapMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/SMapMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
       parameters:
-        - in: query
-          name: offset
-          description: Offset of the SMaps (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
         - in: query
           name: limit
           description: Number of SMaps to return
@@ -68,6 +72,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: name
           required: false

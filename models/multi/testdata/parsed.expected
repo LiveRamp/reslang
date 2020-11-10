@@ -152,9 +152,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           },
           {

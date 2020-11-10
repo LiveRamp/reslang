@@ -101,9 +101,6 @@
             "operation": "MULTIGET",
             "comment": "Get all destinations",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -224,9 +221,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -385,9 +379,6 @@
             "operation": "MULTIGET",
             "comment": "Retrieve many integrations",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -791,9 +782,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -1005,9 +993,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -1097,9 +1082,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -1216,9 +1198,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],

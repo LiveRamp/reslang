@@ -7,7 +7,7 @@ request-resource UploadRequest {
     client: string
 
 	/operations
-		POST GET MULTIGET deprecated-offset-pagination
+		POST GET MULTIGET
 }
 
 singleton subresource UploadRequest::Status {

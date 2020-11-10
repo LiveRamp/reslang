@@ -165,9 +165,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],
@@ -582,9 +579,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           }
         ],

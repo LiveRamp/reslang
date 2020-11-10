@@ -60,27 +60,29 @@ paths:
       responses:
         '200':
           description: Destinations retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Destinations returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
       parameters:
-        - in: query
-          name: offset
-          description: >-
-            Offset of the Destinations (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
         - in: query
           name: limit
           description: Number of Destinations to return
@@ -90,6 +92,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: name
           required: false
@@ -165,17 +175,29 @@ paths:
       responses:
         '200':
           description: TaxonomyConfigurations retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of TaxonomyConfigurations returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: >-
-                  #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
+                allOf:
+                  - $ref: >-
+                      #/components/schemas/DestinationTaxonomyConfigurationMultiResponse
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -191,16 +213,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the TaxonomyConfigurations (starting from 0) to include in
-            the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of TaxonomyConfigurations to return
           schema:
@@ -209,6 +221,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: id
           required: false
@@ -320,16 +340,28 @@ paths:
       responses:
         '200':
           description: Integrations retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Integrations returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationIntegrationMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -345,16 +377,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the Integrations (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Integrations to return
           schema:
@@ -363,6 +385,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: name
           required: false
@@ -473,16 +503,28 @@ paths:
       responses:
         '200':
           description: Endpoints retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Endpoints returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationEndpointMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationEndpointMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -498,16 +540,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the Endpoints (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Endpoints to return
           schema:
@@ -516,6 +548,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
         - in: query
           name: name
           required: false
@@ -626,16 +666,28 @@ paths:
       responses:
         '200':
           description: Packagers retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Packagers returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationPackagerMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationPackagerMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -651,16 +703,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the Packagers (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Packagers to return
           schema:
@@ -669,6 +711,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
   '/v1/destinations/{destinationId}/packagers/{id}':
     get:
       tags:
@@ -746,16 +796,28 @@ paths:
       responses:
         '200':
           description: Formatters retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Formatters returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationFormatterMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationFormatterMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -771,16 +833,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the Formatters (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Formatters to return
           schema:
@@ -789,6 +841,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
   '/v1/destinations/{destinationId}/formatters/{id}':
     get:
       tags:
@@ -866,16 +926,28 @@ paths:
       responses:
         '200':
           description: Deliverers retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Deliverers returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DestinationDelivererMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/DestinationDelivererMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Parent resource(s) not found
           content:
@@ -891,16 +963,6 @@ paths:
             type: integer
             format: int32
         - in: query
-          name: offset
-          description: >-
-            Offset of the Deliverers (starting from 0) to include in the
-            response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Deliverers to return
           schema:
@@ -909,6 +971,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
   '/v1/destinations/{destinationId}/deliverers/{id}':
     get:
       tags:

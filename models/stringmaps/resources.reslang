@@ -8,7 +8,7 @@ asset-resource SMap {
     test2: Struct3 inline
 
     /operations
-        PUT POST GET MULTIGET deprecated-offset-pagination
+        PUT POST GET MULTIGET
 }
 
 structure Struct1 {

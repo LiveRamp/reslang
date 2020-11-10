@@ -41,7 +41,7 @@ resource FileType {
 			"Forbidden" 403
 				SpecialError
 		POST
-		MULTIGET deprecated-offset-pagination
+		MULTIGET
 }
 
 future resource Specification {
@@ -58,7 +58,7 @@ subresource Directory::File {
 	contents: string queryonly
 
     /operations
-        GET POST MULTIGET deprecated-offset-pagination
+        GET POST MULTIGET
 	/events
 		POST completed
 }
@@ -70,7 +70,7 @@ request-resource DirectoryDeleteRequest {
 
     /operations
         GET "Can't find anything" 404 SpecialError
-		POST MULTIGET deprecated-offset-pagination
+		POST MULTIGET
 	/events
 	    POST
 }

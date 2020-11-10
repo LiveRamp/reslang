@@ -73,16 +73,28 @@ paths:
       responses:
         '200':
           description: Columns retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Columns returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TableColumnMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/TableColumnMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
         '404':
           description: Cannot find table
           content:
@@ -97,14 +109,6 @@ paths:
           schema:
             type: string
         - in: query
-          name: offset
-          description: Offset of the Columns (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
-        - in: query
           name: limit
           description: Number of Columns to return
           schema:
@@ -113,6 +117,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
   '/v1/tables/{tableId}/columns/{id}':
     get:
       tags:
@@ -300,25 +312,29 @@ paths:
       responses:
         '200':
           description: Tables retrieved successfully
-          headers:
-            X-Total-Count:
-              description: Total number of Tables returned by the query
-              schema:
-                type: integer
-                format: int32
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TableMultiResponse'
+                allOf:
+                  - $ref: '#/components/schemas/TableMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
       parameters:
-        - in: query
-          name: offset
-          description: Offset of the Tables (starting from 0) to include in the response.
-          schema:
-            type: integer
-            format: int32
-            default: 0
-            minimum: 0
         - in: query
           name: limit
           description: Number of Tables to return
@@ -328,6 +344,14 @@ paths:
             default: 10
             minimum: 1
             maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
   '/v1/tables/{id}':
     get:
       tags:

@@ -7,7 +7,7 @@ configuration-resource Organization {
 	info: OrgInfo
 
 	/operations
-		GET POST PUT MULTIGET deprecated-offset-pagination
+		GET POST PUT MULTIGET
 }
 
 structure Address {
@@ -26,5 +26,5 @@ configuration-resource Role {
 	name: string mutable
 
 	/operations
-		GET POST PUT MULTIGET deprecated-offset-pagination
+		GET POST PUT MULTIGET
 }

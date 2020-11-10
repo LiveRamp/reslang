@@ -309,9 +309,6 @@
             "operation": "MULTIGET",
             "comment": "Find existing column in the provided parent table",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": [
               {
                 "codes": [
@@ -730,9 +727,6 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "pagination": {
-              "strategy": "offset"
-            },
             "errors": []
           },
           {
