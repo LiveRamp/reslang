@@ -8,7 +8,7 @@ import {
 import { addHeaderParams } from "./index"
 
 describe("addHeaderParams", () => {
-    let path = {} as any
+    let swaggerPath = {} as any
     let resource = {} as IResourceLike
     let reslangDefinitions = [] as AnyKind[]
     const reslangIdOperationsToSwaggerPathKeys: Record<string, string> = {
@@ -27,29 +27,9 @@ describe("addHeaderParams", () => {
         POST: "post"
     }
     beforeEach(() => {
-        path = {}
-        resource = {
-            name: "MyCoolResource",
-            operations: [
-                {
-                    operation: "GET"
-                }
-            ] as IOperation[],
-            requestHeaders: [
-                {
-                    opOrWildcard: "GET",
-                    httpHeaderDefName: "MyCoolHeaderDef"
-                }
-            ] as IRequestHeader[]
-        } as IResourceLike
-        reslangDefinitions = [
-            {
-                kind: "http-header",
-                name: "MyCoolHeaderDef",
-                headerName: "MyCoolHeader",
-                comment: "This is the header you use for cool things"
-            } as IHTTPHeader
-        ] as AnyKind[]
+        swaggerPath = {}
+        resource = sampleResource
+        reslangDefinitions = sampleReslangDefinitions
     })
 
     it("errors if resource defines request headers for an operation it does not support", () => {
@@ -58,7 +38,7 @@ describe("addHeaderParams", () => {
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
@@ -66,10 +46,17 @@ describe("addHeaderParams", () => {
     })
 
     it("errors if request header references an undefined http-header", () => {
+        resource.requestHeaders = [
+            {
+                opOrWildcard: "GET",
+                httpHeaderDefName: "WhatTheHeckIsThisHeader"
+            }
+        ] as IRequestHeader[]
+
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
@@ -77,36 +64,55 @@ describe("addHeaderParams", () => {
     })
 
     it("adds headers to all defined operations if '*' wildcard is provided as an operation", () => {
+        resource.requestHeaders = [
+            {
+                opOrWildcard: "*",
+                httpHeaderDefName: "MyCoolHeaderDef"
+            }
+        ] as IRequestHeader[]
+
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
-        }).toThrow()
+        }).not.toThrow()
+        // TODO
+        // expect(swaggerPath.get.parameters).toEqual(
+        //     expect.arrayContaining([
+        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
+        //     ])
+        // )
+        // expect(swaggerPath.post.parameters).toEqual(
+        //     expect.arrayContaining([
+        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
+        //     ])
+        // )
+        // expect(swaggerPath.post.parameters).toEqual(
+        //     expect.arrayContaining([
+        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
+        //     ])
+        // )
     })
 
     it("adds headers to the correct operations", () => {
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
         }).not.toThrow()
-        expect(path.get.parameters).toEqual(
+
+        console.log("*****************")
+        console.log(swaggerPath)
+        console.log("*****************")
+        expect(swaggerPath.get.parameters).toEqual(
             expect.arrayContaining([
-                expect.objectContaining({
-                    description: "This is the header you use for cool things",
-                    in: "header",
-                    name: "MyCoolHeader",
-                    required: true,
-                    schema: {
-                        type: "string"
-                    }
-                })
+                expect.objectContaining(myCoolHeaderExpectedSwagger)
             ])
         )
     })
@@ -115,7 +121,7 @@ describe("addHeaderParams", () => {
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
@@ -123,13 +129,60 @@ describe("addHeaderParams", () => {
     })
 
     it("does not overwrite the 'parameters' object if it did exist", () => {
+        swaggerPath.get = {}
+        swaggerPath.get.parameters = ["don't stomp on me!"]
+
         expect(() => {
             addHeaderParams(
                 resource,
-                path,
+                swaggerPath,
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
         }).not.toThrow()
+
+        expect(swaggerPath.get.parameters).toEqual(
+            expect.arrayContaining(["don't stomp on me!"])
+        )
     })
 })
+
+const sampleResource = {
+    name: "MyCoolResource",
+    operations: [
+        {
+            operation: "GET"
+        },
+        {
+            operation: "POST"
+        },
+        {
+            operation: "MULTIGET"
+        }
+    ] as IOperation[],
+    requestHeaders: [
+        {
+            opOrWildcard: "GET",
+            httpHeaderDefName: "MyCoolHeaderDef"
+        }
+    ] as IRequestHeader[]
+} as IResourceLike
+
+const sampleReslangDefinitions = [
+    {
+        kind: "http-header",
+        name: "MyCoolHeaderDef",
+        headerName: "MyCoolHeader",
+        comment: "This is the header you use for cool things"
+    } as IHTTPHeader
+] as AnyKind[]
+
+const myCoolHeaderExpectedSwagger = {
+    description: "This is the header you use for cool things",
+    in: "header",
+    name: "MyCoolHeader",
+    required: true,
+    schema: {
+        type: "string"
+    }
+}

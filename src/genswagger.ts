@@ -186,7 +186,14 @@ export default class SwagGen extends BaseGen {
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
                     this.formNonIdOperations(el, path, params, tagKeys, ops)
-                    // addHeaderParams must be called after formNonIdOperations
+
+                    // addHeaderParams will not over-write swagger parameters
+                    // set by formNonIdOperations, but the opposite is not
+                    // true. ideally, neither would over-write parameters set
+                    // by the other but refactoring formNonIdOperations is
+                    // somewhat risky considering its complexity and lack of
+                    // test coverage. for now it is simpler and safer to just
+                    // call addHeaderParams after formNonIdOperations
                     addHeaderParams(
                         el,
                         path,
@@ -220,7 +227,14 @@ export default class SwagGen extends BaseGen {
                     tagKeys,
                     ops
                 )
-                // addHeaderParams must be called after formIdOperations
+
+                // addHeaderParams will not over-write swagger parameters set
+                // by formIdOperations, but the opposite is not true. ideally,
+                // neither would over-write parameters set by the other but
+                // refactoring formIdOperations is somewhat risky considering
+                // its complexity and lack of test coverage. for now it is
+                // simpler and safer to just call addHeaderParams after
+                // formIdOperations
                 addHeaderParams(
                     el,
                     path,
