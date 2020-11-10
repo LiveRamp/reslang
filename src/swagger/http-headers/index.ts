@@ -62,6 +62,7 @@ export function addHeaderParams(
 
 function addHeaderParamToSwaggerPath(
     path: any,
+    // TODO rename headerObjDef
     headerObjDef: IHTTPHeader,
     operation: string,
     supportedReslangOperationsSwaggerPathKeys: Record<string, string>
@@ -70,13 +71,12 @@ function addHeaderParamToSwaggerPath(
     if (!pathKey) {
         return
     }
-    // TODO factor this out: create pathOperationParametersIfNotExists
+    // create path[pathKey].parameters if it does not exist
     if (!(pathKey in path)) {
         path[pathKey] = { parameters: [] }
     } else if (!("parameters" in path[pathKey])) {
         path[pathKey].parameters = []
     }
-    ///////////
 
     const headerParameterSwagger = {
         description: headerObjDef.comment,

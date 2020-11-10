@@ -30,7 +30,10 @@ import { Operations, Verbs } from "./operations"
  */
 
 export default class SwagGen extends BaseGen {
-    // TODO add insanely good comment here
+    // Reslang "operations" are uppercase string constants (DELETE, GET, etc.).
+    // elements of the swagger `paths` arrays have keys for each operation, but
+    // the keys are not the same as the Reslang operation. this Record maps
+    // Reslang ID operations to their swagger counterparts.
     private reslangIdOperationsToSwaggerPathKeys: Record<string, string> = {
         DELETE: "delete",
         GET: "get",
@@ -38,6 +41,7 @@ export default class SwagGen extends BaseGen {
         PUT: "put"
     }
 
+    // TODO can we combine these into one map? if not, make it clear in this description why we cannot
     private reslangNonIdOperationsToSwaggerPathKeys: Record<string, string> = {
         MULTIDELETE: "delete",
         MULTIGET: "get",
