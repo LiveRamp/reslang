@@ -4,7 +4,6 @@
 -   [Pagination](#pagination)
     -   [Default behavior](#default-behavior)
     -   [Custom pagination responses](#custom-pagination-responses)
-        -   [Concrete values vs. variables](#concrete-values-vs-variables)
         -   [Query params](#query-params)
     -   [Legacy pagination](#legacy-pagination)
 
@@ -12,9 +11,11 @@
 
 ## Pagination
 
-All multi-GET operations are paginated by default. LiveRamp's officially supported pagination strategy is defined [here](https://docs.google.com/document/d/1O0s85E2RljltCTGAKiQq8h_-WfwR7lWV-e6OFxPppdg/edit).
+All multi-GET operations are paginated by default. LiveRamp's officially supported cursor pagination strategy is defined in [RFC API-3](https://liveramp.atlassian.net/wiki/spaces/CI/pages/1014498273/RFC+API-3+LiveRamp+API+Standards).
 
-(TODO: once Proposal 1 is merged to RFC-3, link the RFC instead)
+Reslang makes it easy to comply with LiveRamp's pagination standards by supporting `pagination {}` blocks for `MULTIGET`s.
+
+When these blocks are omitted, Reslang defaults to a compliant cursor pagination strategy. But the block can also be included and customized to support all fields mentioned in the RFC above.
 
 ### Default behavior
 
@@ -30,54 +31,54 @@ This code...
 ```
 /operations
   MULTIGET pagination {
-    strategy = cursor
-    limit = 10
-    after = string
+    after = true
+    defaultLimit = <the default limit from rules.json>
+    maxLimit = <the maximum limit from rules.json>
 }
 ```
 
-In other words, Reslang's default behavior for multi-GET operations is to:
+This default block will cause Reslang to:
 
-1. include a `_pagination` field in the response body, which itself contains a field called `after`. This is the value to be passed as a query parameter in subsequent searches.
+1. include a `_pagination` field in the response body, which itself contains a field called `after`.
 2. specify a query parameter for this operation called `after`, which represents a cursor (see [Query params](#query-params)).
-3. specify a query parameter for this operation called `limit`, indicating how many resources to return be default.
+3. specify a query parameter for this operation called `limit`, indicating how many resources to return by default.
 
 So, the final response body will include:
 
-```
+```json
 {
-  <...snip...>
+  "theResults": ["resource_1", "resource_2", ...],
 
-  _pagination: {
-    after: <CURSOR>
+  "_pagination": {
+    "after": "<cursor string>"
   }
 }
 ```
 
 ### Custom pagination responses
 
-To customize a multi-GET's pagination response, supply a `pagination` block. These blocks support several optional fields:
+To customize a multi-GET's pagination response, supply a `pagination` block. These blocks must be specified immediately after the `MULTIGET` keyword, and they support several optional fields:
 
 ```
 /operations
   MULTIGET pagination {
-    strategy = cursor
-    limit = 10
-    maxLimit = 100
-    after = string
-    before = string
-    total = int
-    next = string
-    previous = string
+    defaultLimit  = 10
+    maxLimit      = 100
+    after         = true
+    before        = true
+    total         = true
+    next          = true
+    previous      = true
 }
 ```
 
-In order:
+Values marked as `true` are included in the generated swagger spec, and values marked `false` are not. Marking a value as `false` can help make the omission of a certain field explicit, but it is equivalent to removing it from the block entirely.
 
--   `strategy` is the means of pagination, with supported values of: `[ cursor | offset | none ]`
--   `limit` is the default amount of resources to return
--   `maxLimit` is the maximum limit allowed to be specified in search requests
--   `after` is a cursor that can be passed to subsequent searches to continue retrieving results
+Field definitions:
+
+-   `defaultLimit` is the number of resources to return when the user does not specify a `limit` in the query
+-   `maxLimit` is the maximum limit allowed to be specified in a query
+-   `after` is a cursor that can be passed to subsequent queries to continue retrieving results
 -   `before` is a cursor that can implement backward searches
 -   `total` indicates the number of records that would be returned given an infinite limit
 -   `next` is a hypermedia link that will return the next set of results
@@ -85,38 +86,26 @@ In order:
 
 Reslang will warn and ignore all unrecognized pagination options.
 
-#### Concrete values vs. variables
-
-Some pagination fields are concrete, and some are variable. For example, `limit` and `maxLimit` must be specified:
-
-```
-limit = 10
-maxLimit = 100
-```
-
-But other fields, such as `after`, do not have fixed values. Instead, they are declared as variables by specifying only their type:
-
-```
-after = string
-total = int
-```
-
 #### Query params
 
-When `after` and `before` cursors are specified in a pagination block, Reslang will automatically add these as query parameters to the given operation, in addition to adding them to the `_pagination` response body.
+Since `limit` is necessary for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](src/library/rules.json) (or default to sensible values).
 
-The other fields (`total`, `next`, and `previous`) do not correspond to query params, so they are added only to the `_pagination` response body.
+When `after` and/or `before` cursors are specified in a pagination block, Reslang will automatically add these as query parameters to the given operation, in addition to adding them to the `_pagination` response body. The cursors are only useful if they are present in both queries and responses.
+
+The other fields (`total`, `next`, and `previous`) do not correspond to query params, so they are only ever added to the `_pagination` response body.
 
 ### Legacy pagination
 
-For APIs that still use the legacy `limit+offset` pagination strategy, this can be specified:
+For APIs that still use the legacy limit+offset pagination strategy, this can be specified with the `deprecated-offset-pagination` keyword:
 
 ```
 /operations
    MULTIGET deprecated-offset-pagination
 ```
 
-And for un-paginated multi-GET operations, pass a strategy of `none`:
+Note the lack of curlies `{}`. This keyword offers backward-compatible limit+offset pagination, and includes hard-coded query params (`limit` and `offset`), as well as a hard-coded response header (`X-Total-Count`).
+
+And finally, if you happen to need un-paginated multi-GET operations, use the `no-pagination` keyword:
 
 ```
 /operations
