@@ -13,7 +13,6 @@ import {
     getKeyAttributes,
     IAttribute,
     IOperation,
-    IOption,
     IResourceLike,
     isAction,
     isEnum,
@@ -29,7 +28,8 @@ import {
     strategy,
     PaginationOption,
     isValidPaginationOption,
-    swaggerParam
+    queryParam,
+    validOptionName
 } from "./swagger/pagination/index"
 
 /**
@@ -627,7 +627,7 @@ export default class SwagGen extends BaseGen {
      * (see #defaultPaginationOpts for more info).
      */
     private getPaginator(
-        name: string,
+        resourceName: string,
         config: { strategy: string; options: [] } | undefined
     ): Pagination {
         let opts = this.pegJsOptionsToPaginationOptions(
@@ -636,7 +636,7 @@ export default class SwagGen extends BaseGen {
         let strat = (config?.strategy as strategy) || strategy.Cursor
         let klass = Pagination.use(strat)
 
-        return new klass(name, opts)
+        return new klass(resourceName, opts)
     }
 
     private jsonContentSchema(schema: any) {
@@ -661,6 +661,7 @@ export default class SwagGen extends BaseGen {
         opts: { name: string; value: any }[]
     ): PaginationOption[] {
         return opts
+            .map((o) => ({ ...o, name: o.name as validOptionName }))
             .filter((o) => isValidPaginationOption(o.name))
             .filter((o) => o.value !== false)
     }
@@ -887,7 +888,7 @@ export default class SwagGen extends BaseGen {
     private defaultPaginationOpts(): PaginationOption[] {
         return [
             {
-                name: "after",
+                name: queryParam.After, // this could equivalently be `responseField.After`, since they are always the same strings under the hood
                 value: true
             },
             {

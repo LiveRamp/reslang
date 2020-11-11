@@ -1,7 +1,13 @@
-export type PaginationOption = {
-    name: string
-    value: any
-}
+type _option<T> = { name: T; value: any }
+
+/**
+ * PaginationOption represents any option (`name` and `value` fields) whose
+ * name is a valid pagination option string (see `validOptionName`).
+ */
+export type PaginationOption = _option<validOptionName>
+
+type QueryOption = _option<queryParam>
+type ResponseOption = _option<responseField>
 
 export function isValidPaginationOption(str: string): boolean {
     switch (str as validOptionName) {
@@ -20,11 +26,6 @@ export function isValidPaginationOption(str: string): boolean {
     console.error("unrecognized pagination option:", str)
     return false
 }
-
-/**
- * This module is meant to make adding pagination to Swagger specs as easy
- * as possible.
- */
 
 /**
  * swaggerProps is how Swagger structures `properties` fields, where the key
@@ -111,15 +112,23 @@ export enum responseField {
     Previous = "previous"
 }
 
-type validOptionName = "strategy" | limitOption | queryParam | responseField
+/**
+ * validOptionName is the union of every valid string to set as the `name`
+ * of a pagination option.
+ */
+export type validOptionName =
+    | "strategy"
+    | limitOption
+    | queryParam
+    | responseField
 
 /**
   Pagination is the common behavior between all pagination strategies
   (cursor and offset).
 */
 export abstract class Pagination {
-    readonly queryOpts: PaginationOption[]
-    readonly responseOpts: PaginationOption[]
+    readonly queryOpts: QueryOption[]
+    readonly responseOpts: ResponseOption[]
 
     /**
      *
@@ -141,14 +150,20 @@ export abstract class Pagination {
         readonly opts: PaginationOption[]
     ) {
         this.resourceName = resourceName
-        this.queryOpts = opts.filter((o) =>
-            Object.values(queryParam).includes(o.name as queryParam)
-        )
-        this.responseOpts = opts.filter((o) =>
-            Object.values(responseField).includes(o.name as responseField)
-        )
         this.opts = opts.filter((o) => isValidPaginationOption(o.name))
+
+        this.queryOpts = opts
+            .filter((o) =>
+                Object.values(queryParam).includes(o.name as queryParam)
+            )
+            .map((o) => o as QueryOption)
+        this.responseOpts = opts
+            .filter((o) =>
+                Object.values(responseField).includes(o.name as responseField)
+            )
+            .map((o) => o as ResponseOption)
     }
+
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
 
@@ -291,8 +306,8 @@ export class Cursor extends Pagination {
     /**
      Convert a queryParam name to a standardized Swagger query parameter object
      */
-    optToQueryParam = (opt: PaginationOption): swaggerParam => {
-        switch (opt.name as queryParam) {
+    optToQueryParam = (opt: QueryOption): swaggerParam => {
+        switch (opt.name) {
             case queryParam.After:
                 return this.qAfter()
             case queryParam.Before:
@@ -370,6 +385,9 @@ When "before" is null, there are no previous records to fetch for this search.`
         )
     }
 
+    /**
+     * swaggerType returns the Swagger-supported type for a give response field.
+     */
     swaggerType = (field: responseField): string => {
         switch (field) {
             case responseField.After:
@@ -394,21 +412,23 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-     * toSwaggerProp translates a reslang option into a Swagger property.
-     *
-     * Note that some types need to be translated.
-     * For example, in Reslang we have `int`, but in Swagger we have `integer`.
-     *
+     * toResponseProp translates an option into a Swagger response property.
      */
-    toSwaggerProp = (opt: PaginationOption): swaggerProps => {
-        let name = opt.name as responseField
+    toResponseProp = (opt: ResponseOption): swaggerProps => {
+        let { name } = opt
         let description = this.describeResponseField(name)
 
-        return { [opt.name]: { type: this.swaggerType(name), description } }
+        return { [name]: { type: this.swaggerType(name), description } }
     }
 
-    toSwaggerProps = (opts: PaginationOption[]): swaggerProps => {
-        return opts.map(this.toSwaggerProp).reduce(merge, {})
+    /**
+     * toResponseProps turns a list of ResponseOptions into an object
+     * that Swagger recognizes as an object of "properties".
+     *
+     * This is the structure returned in Swagger responses.
+     */
+    toResponseProps = (opts: ResponseOption[]): swaggerProps => {
+        return opts.map(this.toResponseProp).reduce(merge, {})
     }
 
     /**
@@ -420,7 +440,7 @@ When "before" is null, there are no previous records to fetch for this search.`
         return {
             _pagination: {
                 type: "object",
-                properties: this.toSwaggerProps(this.responseOpts)
+                properties: this.toResponseProps(this.responseOpts)
             }
         }
     }

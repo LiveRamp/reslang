@@ -82,7 +82,10 @@ describe("Cursor", () => {
         let instance = new Cursor("", [])
         it("builds an 'after' param", () => {
             expect(
-                instance.optToQueryParam({ name: "after", value: true })
+                instance.optToQueryParam({
+                    name: queryParam.After,
+                    value: true
+                })
             ).toEqual(
                 expect.objectContaining({
                     in: "query",
@@ -93,7 +96,10 @@ describe("Cursor", () => {
         })
         it("builds a 'before' param", () => {
             expect(
-                instance.optToQueryParam({ name: "before", value: true })
+                instance.optToQueryParam({
+                    name: queryParam.Before,
+                    value: true
+                })
             ).toEqual(
                 expect.objectContaining({
                     in: "query",
@@ -106,7 +112,7 @@ describe("Cursor", () => {
 
     describe("#getPaginationResponse", () => {
         it("returns an RFC-3 compliant pagination response", () => {
-            let opt = { name: "after", value: true }
+            let opt = { name: queryParam.After, value: true }
             let instance = new Cursor("", [opt])
             expect(instance.getPaginationResponse()).toEqual(
                 expect.objectContaining({
