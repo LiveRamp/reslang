@@ -7,6 +7,10 @@ resource User {
 
     /operations
         POST GET MULTIGET
+
+    /request-headers
+      * AuthnHeader
+      POST OrgIDHeader
 }
 
 sync action User::Suspend {
@@ -17,8 +21,13 @@ sync action User::Suspend {
 
 sync action User::Unsuspend {
     id: int
+
     /operations
         POST
+
+    /request-headers
+      * AuthnHeader
+      * OrgIDHeader
 }
 
 resource Organization {
