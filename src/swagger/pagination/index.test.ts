@@ -1,17 +1,25 @@
-import { Pagination, Offset, Cursor, NoOp, strategy, queryParam } from "./index"
+import {
+    Pagination,
+    Offset,
+    Cursor,
+    None,
+    strategy,
+    queryParam,
+    responseField
+} from "./index"
 
 describe("Pagination", () => {
     describe(".use", () => {
         it("Returns the correct class", () => {
             expect(Pagination.use(strategy.Cursor)).toEqual(Cursor)
             expect(Pagination.use(strategy.Offset)).toEqual(Offset)
-            expect(Pagination.use(strategy.None)).toEqual(NoOp)
+            expect(Pagination.use(strategy.None)).toEqual(None)
         })
     })
 })
 
-describe("NoOp", () => {
-    let instance = new NoOp("foo", [])
+describe("None", () => {
+    let instance = new None("foo", [])
     describe("#strategy", () => {
         it("returns the correct strategy", () => {
             expect(instance.strategy()).toEqual(strategy.None)
@@ -61,6 +69,18 @@ describe("Offset", () => {
 })
 
 describe("Cursor", () => {
+    describe("constructor", () => {
+        it("de-dups options by name", () => {
+            let instance = new Cursor("", [
+                { name: responseField.Total, value: true },
+                { name: responseField.Total, value: true },
+                { name: responseField.Total, value: true }
+            ])
+            expect(instance.opts.length).toBe(1)
+            expect(instance.opts[0].name).toBe(responseField.Total)
+        })
+    })
+
     describe("#queryParams", () => {
         it("supports 'before', 'after', and 'limit' (by default) params", () => {
             let params = new Cursor("", [

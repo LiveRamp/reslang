@@ -144,11 +144,15 @@ export abstract class Pagination {
      * "strategy" or "maxLimit". These behind-the-scenes options can always
      * be accessed with #opts, while #queryOpts and #responseOpts
      * are guaranteed to be valid members of their corresponding enums.
+     *
+     * #opts is de-duped by name, so that only one of each valid option will
+     * be in the final array.
      */
     constructor(
         readonly resourceName: string,
         readonly opts: PaginationOption[]
     ) {
+        opts = uniqueBy(opts, (o) => o.name)
         this.resourceName = resourceName
         this.opts = opts.filter((o) => isValidPaginationOption(o.name))
 
@@ -201,7 +205,7 @@ export abstract class Pagination {
             case strategy.Offset:
                 return Offset
             case strategy.None:
-                return NoOp
+                return None
         }
 
         assertUnreachable(strat)
@@ -215,7 +219,7 @@ export abstract class Pagination {
     }
 }
 
-export class NoOp extends Pagination {
+export class None extends Pagination {
     strategy(): strategy {
         return strategy.None
     }
@@ -504,4 +508,22 @@ function merge(first: {}, second: {}): {} {
         ...first,
         ...second
     }
+}
+
+type Unary<T> = (_a: T) => any
+/**
+ * uniqueBy takes a list and a unary accessor, and returns a new
+ * list with members de-duped
+ */
+function uniqueBy<T>(arr: T[], f: Unary<T>): T[] {
+    let seen = new Set()
+    let ret = []
+    for (let obj of arr) {
+        let key = f(obj)
+        if (seen.has(key)) continue
+
+        ret.push(obj)
+        seen.add(key)
+    }
+    return ret
 }
