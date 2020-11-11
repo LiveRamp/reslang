@@ -9,6 +9,14 @@ export type PaginationOption = _option<validOptionName>
 type QueryOption = _option<queryParam>
 type ResponseOption = _option<responseField>
 
+/**
+ * isValidPaginationOption returns true if the string is a
+ * validPatinationOption.
+ *
+ * Use this function to ensure that data provided from other sources
+ * is compatible with the pagination module, and to filter out any
+ * invalid options.
+ */
 export function isValidPaginationOption(str: string): boolean {
     switch (str as validOptionName) {
         case "strategy":
@@ -157,19 +165,26 @@ export abstract class Pagination {
         this.opts = opts.filter((o) => isValidPaginationOption(o.name))
 
         this.queryOpts = opts
-            .filter((o) =>
-                Object.values(queryParam).includes(o.name as queryParam)
-            )
+            .filter((o) => this.isValidQueryParam(o.name))
             .map((o) => o as QueryOption)
+            .filter((o) => o.value !== false)
+
         this.responseOpts = opts
-            .filter((o) =>
-                Object.values(responseField).includes(o.name as responseField)
-            )
+            .filter((o) => this.isValidResponseField(o.name))
             .map((o) => o as ResponseOption)
+            .filter((o) => o.value !== false)
     }
 
     abstract queryParams(): swaggerParam[]
     abstract strategy(): strategy
+
+    isValidQueryParam(str: string): boolean {
+        return Object.values(queryParam).includes(str as queryParam)
+    }
+
+    isValidResponseField(str: string): boolean {
+        return Object.values(responseField).includes(str as responseField)
+    }
 
     /**
      qLimit returns a Swagger query param for "limit".
@@ -291,20 +306,9 @@ export class Cursor extends Pagination {
      * as specified by the instance's pagination options.
      *
      * The array will always include a "limit" param.
-     *
-     * Any options with a value of `false` will not be returned. This supports
-     * the use-case of explicitly marking an option as `false` in the reslang
-     * spec, maybe as a form of "TODO". Code that consumes this module
-     * is free to either filter out the false values itself, or rely on this
-     * method to filter them out.
      */
     queryParams = (): swaggerParam[] => {
-        return [
-            this.qLimit(),
-            ...this.queryOpts
-                .filter((o) => o.value !== false)
-                .map(this.optToQueryParam)
-        ]
+        return [this.qLimit(), ...this.queryOpts.map(this.optToQueryParam)]
     }
 
     /**
