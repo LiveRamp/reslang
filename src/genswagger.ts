@@ -661,9 +661,9 @@ export default class SwagGen extends BaseGen {
         opts: { name: string; value: any }[]
     ): PaginationOption[] {
         return opts
-            .map((o) => ({ ...o, name: o.name as validOptionName }))
             .filter((o) => isValidPaginationOption(o.name))
             .filter((o) => o.value !== false)
+            .map((o) => o as PaginationOption)
     }
 
     private addParentPathParam(
