@@ -41,15 +41,17 @@ This code...
 }
 ```
 
-This default block will cause Reslang to:
+This block will cause Reslang to include a `_pagination` object in the response body, which itself contains a cursor called `after`. For details about these fields, see [Custom pagination responses](#custom-pagination-responses).
 
-1. include a `_pagination` field in the response body, which itself contains a field called `after`.
-2. specify a query parameter for this operation called `after`, which represents a cursor (see [Query params](#query-params)).
-3. specify a query parameter for this operation called `limit`, indicating how many resources to return by default.
+This block will also cause Reslang to specify a query parameter for this operation called `after`, which represents a cursor, as well as a query parameter called `limit`, indicating how many resources to return by default (see [Query params](#query-params) for details).
 
-So, the final response body will include:
+A request and response might look like:
 
-```json
+```
+GET /the-resources?limit=10&after=abc123xyz HTTP/1.1
+
+...
+
 {
   "theResults": ["resource_1", "resource_2", ...],
 
@@ -76,7 +78,7 @@ To customize a multi-GET's pagination response, supply a `pagination` block. The
 }
 ```
 
-Values marked as `true` are included in the generated swagger spec, and values marked `false` are not. Marking a value as `false` can help make the omission of a certain field explicit, but it is equivalent to removing it from the block entirely.
+Besides `defaultLimit` and `maxLimit`, all values in the block are booleans: they're either included in the `_pagination` response (`true`), or they're not (`false`). Marking a value as `false` can help make the omission of a certain field explicit, but it is equivalent to removing it from the block entirely.
 
 Field definitions:
 
@@ -92,7 +94,7 @@ Reslang will warn and ignore all unrecognized pagination options.
 
 #### Query params
 
-Since `limit` is necessary for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](src/library/rules.json) (or default to sensible values).
+Since `limit` is supported for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](src/library/rules.json) (or default to sensible values).
 
 When `after` and/or `before` cursors are specified in a pagination block, Reslang will automatically add these as query parameters to the given operation, in addition to adding them to the `_pagination` response body. The cursors are only useful if they are present in both queries and responses.
 
