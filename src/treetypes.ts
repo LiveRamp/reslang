@@ -277,7 +277,6 @@ export interface IOperation {
     errors: IError[]
 }
 
-// TODO rename this stuff... IOperationAndHeaderDefinition perhaps
 export interface IRequestHeader {
     opOrWildcard: string
     httpHeaderDefName: string
