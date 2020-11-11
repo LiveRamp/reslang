@@ -36,7 +36,7 @@ type swaggerProps = {
 }
 
 /**
- * paginationResponse is the RFC-3 compliant structure for cursor-based
+ * paginationResponse is the RFC API-3 compliant structure for cursor-based
  * pagination responses.
  */
 type paginationResponse = {
@@ -414,7 +414,7 @@ When "before" is null, there are no previous records to fetch for this search.`
     /**
       getPaginationResponse turns the user-defined pagination
       options into a form that Swagger understands, which
-      complies with RFC-3 (hence the "_pagination" key).
+      complies with RFC API-3 (hence the "_pagination" key).
     */
     getPaginationResponse = (): paginationResponse => {
         return {
