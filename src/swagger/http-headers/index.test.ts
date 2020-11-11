@@ -15,20 +15,11 @@ describe("addHeaderParams", () => {
         DELETE: "delete",
         GET: "get",
         PATCH: "patch",
-        PUT: "put",
-        // }
-        // TODO do we need to go back to two maps?
-        // const reslangNonIdOperationsToSwaggerPathKeys: Record<string, string> = {
-        MULTIDELETE: "delete",
-        MULTIGET: "get",
-        MULTIPATCH: "patch",
-        MULTIPOST: "post",
-        MULTIPUT: "put",
-        POST: "post"
+        PUT: "put"
     }
     beforeEach(() => {
         swaggerPath = {}
-        resource = sampleResource
+        resource = { ...sampleResource }
         reslangDefinitions = sampleReslangDefinitions
     })
 
@@ -63,7 +54,14 @@ describe("addHeaderParams", () => {
         }).toThrow()
     })
 
-    it("does nothing if resource defines request headers for an operation it does support, but the operation is not in the 'allowed' record", () => {
+    it("ignores request headers for valid operations that are not in the 'allowed' record", () => {
+        resource.requestHeaders = [
+            {
+                opOrWildcard: "MULTIPUT",
+                httpHeaderDefName: "MyCoolHeaderDef"
+            }
+        ] as IRequestHeader[]
+
         expect(() => {
             addHeaderParams(
                 resource,
@@ -71,7 +69,8 @@ describe("addHeaderParams", () => {
                 reslangDefinitions,
                 reslangIdOperationsToSwaggerPathKeys
             )
-        }).toThrow()
+        }).not.toThrow()
+        expect(swaggerPath.put).toEqual(undefined)
     })
 
     it("adds headers to all defined operations if '*' wildcard is provided as an operation", () => {
@@ -90,22 +89,16 @@ describe("addHeaderParams", () => {
                 reslangIdOperationsToSwaggerPathKeys
             )
         }).not.toThrow()
-        // TODO
-        // expect(swaggerPath.get.parameters).toEqual(
-        //     expect.arrayContaining([
-        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
-        //     ])
-        // )
-        // expect(swaggerPath.post.parameters).toEqual(
-        //     expect.arrayContaining([
-        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
-        //     ])
-        // )
-        // expect(swaggerPath.post.parameters).toEqual(
-        //     expect.arrayContaining([
-        //         expect.objectContaining(myCoolHeaderExpectedSwagger)
-        //     ])
-        // )
+        expect(swaggerPath.get.parameters).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(myCoolHeaderExpectedSwagger)
+            ])
+        )
+        expect(swaggerPath.post.parameters).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(myCoolHeaderExpectedSwagger)
+            ])
+        )
     })
 
     it("adds headers to the correct operations", () => {
@@ -121,23 +114,11 @@ describe("addHeaderParams", () => {
         console.log("*****************")
         console.log(swaggerPath)
         console.log("*****************")
-        // TODO failing :(
         expect(swaggerPath.get.parameters).toEqual(
             expect.arrayContaining([
                 expect.objectContaining(myCoolHeaderExpectedSwagger)
             ])
         )
-    })
-
-    it("creates the correctly nested 'parameters' object if it did not exist", () => {
-        expect(() => {
-            addHeaderParams(
-                resource,
-                swaggerPath,
-                reslangDefinitions,
-                reslangIdOperationsToSwaggerPathKeys
-            )
-        }).not.toThrow()
     })
 
     it("does not overwrite the 'parameters' object if it did exist", () => {
@@ -169,7 +150,7 @@ const sampleResource = {
             operation: "POST"
         },
         {
-            operation: "MULTIGET"
+            operation: "MULTIPUT"
         }
     ] as IOperation[],
     requestHeaders: [
