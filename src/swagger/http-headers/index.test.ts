@@ -94,7 +94,7 @@ describe("addHeaderParams", () => {
                 expect.objectContaining(myCoolHeaderExpectedSwagger)
             ])
         )
-        expect(swaggerPath.post.parameters).toEqual(
+        expect(swaggerPath.patch.parameters).toEqual(
             expect.arrayContaining([
                 expect.objectContaining(myCoolHeaderExpectedSwagger)
             ])
@@ -111,9 +111,6 @@ describe("addHeaderParams", () => {
             )
         }).not.toThrow()
 
-        console.log("*****************")
-        console.log(swaggerPath)
-        console.log("*****************")
         expect(swaggerPath.get.parameters).toEqual(
             expect.arrayContaining([
                 expect.objectContaining(myCoolHeaderExpectedSwagger)
@@ -147,7 +144,7 @@ const sampleResource = {
             operation: "GET"
         },
         {
-            operation: "POST"
+            operation: "PATCH"
         },
         {
             operation: "MULTIPUT"
