@@ -262,8 +262,9 @@ export class Offset extends Pagination {
 }
 
 /**
- * For more info on Cursor pagination techniques, see the API Squad's doc:
- * TODO -- post doc with explanations and best practices. Jira: API-410
+ * Cursor pagination is the officially supported LiveRamp pagination strategy.
+ * It allows for stable search windows by indexing to specific records,
+ * as opposed to relying on offsets and limits.
  */
 export class Cursor extends Pagination {
     /**

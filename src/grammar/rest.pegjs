@@ -98,8 +98,6 @@ multiops = op:("MULTIGET" / "MULTIPUT" / "MULTIPATCH" / "MULTIPOST" / "MULTIDELE
 
     Besides simple key=val options, certain verbs can be modified
     using pagination (see the pagination rule for details).
-
-TODO: I don't think there are any non-pagination options.
 */
 options = arr:(option / pagination)* {
     let standard = arr.filter(o => !o.pagination)
