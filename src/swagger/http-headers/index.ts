@@ -84,6 +84,16 @@ function addHeaderParamToSwaggerPath(
         }
     }
 
+    // don't add duplicate header params
+    if (
+        path[pathKey].parameters.some(
+            (p: any) =>
+                p.in === "header" && p.name === headerParameterSwagger.name
+        )
+    ) {
+        return
+    }
+
     path[pathKey].parameters.push(headerParameterSwagger)
 }
 

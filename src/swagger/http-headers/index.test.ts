@@ -135,6 +135,25 @@ describe("addHeaderParams", () => {
             expect.arrayContaining(["don't stomp on me!"])
         )
     })
+
+    it("does not add duplicate header parameters", () => {
+        swaggerPath.get = {}
+        swaggerPath.get.parameters = [myCoolHeaderExpectedSwagger]
+
+        expect(() => {
+            addHeaderParams(
+                resource,
+                swaggerPath,
+                reslangDefinitions,
+                reslangIdOperationsToSwaggerPathKeys
+            )
+        }).not.toThrow()
+
+        const coolHeaderCount = swaggerPath.get.parameters.filter(
+            (e: any) => e.name === "MyCoolHeader"
+        ).length
+        expect(coolHeaderCount).toEqual(1)
+    })
 })
 
 const sampleResource = {
