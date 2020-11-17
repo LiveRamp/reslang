@@ -78,6 +78,7 @@ export type Kind =
     | "event"
     | "produces"
     | "consumes"
+    | "http-header"
 
 export type AnyKind =
     | IResourceLike
@@ -87,6 +88,7 @@ export type AnyKind =
     | IEvent
     | IProduces
     | IConsumes
+    | IHTTPHeader
 
 // type guards
 export function isResourceLike(def: IDefinition): def is IResourceLike {
@@ -142,6 +144,7 @@ export interface IResourceLike extends IDefinition {
     attributes?: IAttribute[]
     operations?: IOperation[]
     events?: IEventOperation[]
+    requestHeaders: IRequestHeader[]
     singleton?: boolean
     future?: boolean
     async?: boolean
@@ -155,6 +158,12 @@ export interface IResourceLike extends IDefinition {
     generateMultiPuttable: boolean
     generateMultiPatchable: boolean
 }
+
+export interface IHTTPHeader extends IDefinition {
+    kind: "http-header"
+    headerName: string
+}
+
 export interface IEnum extends IDefinition {
     kind: "enum"
     literals?: string[]
@@ -266,6 +275,11 @@ export interface IOperation {
     options: IOption[]
     comment: string
     errors: IError[]
+}
+
+export interface IRequestHeader {
+    opOrWildcard: string
+    httpHeaderDefName: string
 }
 
 export interface IOption {

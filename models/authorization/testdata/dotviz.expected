@@ -21,6 +21,12 @@ digraph G {
 "Role" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Role        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
+"AuthnHeader" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>AuthnHeader        </b></td></tr><hr/></table>>];
+"OrgIDHeader" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>OrgIDHeader        </b></td></tr><hr/></table>>];
 "User" -> "Organization" [label=< <font point-size="8"> parent</font> > arrowhead="vee"];
 "User" -> "Role" [label=< <font point-size="8"> roles[1..10]</font> > arrowhead="vee"];
 "Organization" -> "Organization" [label=< <font point-size="8"> parentOrganizationId</font> > arrowhead="vee"];

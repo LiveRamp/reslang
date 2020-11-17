@@ -117,6 +117,65 @@ subresource v2/ResourceB::Sub {
 
 Note that versioning is not possible (or necessary) for subresources
 
+### HTTP Request Headers
+
+When requests to your API need to include HTTP headers (for example, to pass
+authentication or authorization information) you can use a `/request-headers`
+section. Any Reslang structure that supports `/operations` sections also
+supports `/request-headers` sections.
+
+In order to require a specific HTTP header on requests, you must first add an
+`http-header` definition to your Reslang file. For example:
+
+```
+"The standard header for passing bearer tokens. e.g. `Bearer $ACCESS_TOKEN`"
+http-header AuthHeader {
+  name: Authorization
+}
+```
+
+In this example, `AuthHeader` is the name of the `http-header` definition,
+`"The standard header...` is the description that will appear with the header
+parameter in the generated Swagger, and `Authorization` is the header name.
+
+Now, the `AuthHeader` header can be referenced in the `/request-headers`
+section in a resource, subresource, or action definition. For example:
+
+```
+resource v1/ExampleResource {
+  id: int
+  myString: string min-length:1 max-length:10
+
+  /operations
+    POST
+
+  /request-headers
+    POST AuthHeader
+}
+```
+
+This will add the `AuthHeader` as a required header parameter for all
+`v1/ExampleResource` POST requests in the generated Swagger.
+
+The `/request-headers` section also supports one operation wildcard: `*`. When
+used, it will add the specifed header to all of the operations in the
+`/operations` section. For example:
+
+```
+/operations
+  GET POST MULTIGET
+
+/request-headers
+  *    AuthHeader
+  POST CoolHeader
+```
+
+`AuthHeader` will be required for GET, POST, and MULTIGET requests but
+`CoolHeader` will only be required for POST requests
+
+The `/request-headers` section cannot include operations that are not defined
+in the `/operations` section,
+
 ### Imports & References
 
 You can import a peer directory into your current .reslang file using `import otherdirectory`. Since the directory must be a peer to the current working directory, slashes are not allowed in the import path. You should then refer to the imported elements by their full name, prefixed by the directory name e.g `otherdirectory.Resource`.

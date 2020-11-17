@@ -159,6 +159,16 @@
             "errors": []
           }
         ],
+        "requestHeaders": [
+          {
+            "opOrWildcard": "*",
+            "httpHeaderDefName": "AuthnHeader"
+          },
+          {
+            "opOrWildcard": "POST",
+            "httpHeaderDefName": "OrgIDHeader"
+          }
+        ],
         "parents": [],
         "short": "User",
         "name": "User",
@@ -262,6 +272,16 @@
             "operation": "POST",
             "options": [],
             "errors": []
+          }
+        ],
+        "requestHeaders": [
+          {
+            "opOrWildcard": "*",
+            "httpHeaderDefName": "AuthnHeader"
+          },
+          {
+            "opOrWildcard": "*",
+            "httpHeaderDefName": "OrgIDHeader"
           }
         ],
         "parents": [
@@ -495,12 +515,50 @@
             "errors": []
           }
         ],
+        "requestHeaders": [
+          {
+            "opOrWildcard": "*",
+            "httpHeaderDefName": "AuthnHeader"
+          },
+          {
+            "opOrWildcard": "POST",
+            "httpHeaderDefName": "OrgIDHeader"
+          }
+        ],
         "parents": [],
         "short": "Role",
         "name": "Role",
         "parentShort": "",
         "parentName": "",
         "namespace": "",
+        "secondary": false,
+        "file": "auth.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "http-header",
+        "type": "http-header",
+        "parents": [],
+        "short": "AuthnHeader",
+        "comment": "for your access token, ya know?",
+        "headerName": "Authorization",
+        "name": "AuthnHeader",
+        "parentShort": "",
+        "parentName": "",
+        "secondary": false,
+        "file": "auth.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "http-header",
+        "type": "http-header",
+        "parents": [],
+        "short": "OrgIDHeader",
+        "comment": "for your org ID, ya know?",
+        "headerName": "LR-Org-ID",
+        "name": "OrgIDHeader",
+        "parentShort": "",
+        "parentName": "",
         "secondary": false,
         "file": "auth.reslang"
       }
