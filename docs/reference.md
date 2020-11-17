@@ -166,12 +166,12 @@ used, it will add the specifed header to all of the operations in the
   GET POST MULTIGET
 
 /request-headers
-  POST AuthHeader
-  *   CoolHeader
+  *    AuthHeader
+  POST CoolHeader
 ```
 
-`CoolHeader` will be required for GET, POST, and MULTIGET requests but
-`AuthHeader` will only be required for POST requests
+`AuthHeader` will be required for GET, POST, and MULTIGET requests but
+`CoolHeader` will only be required for POST requests
 
 The `/request-headers` section cannot include operations that are not defined
 in the `/operations` section,

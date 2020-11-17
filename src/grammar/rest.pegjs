@@ -41,7 +41,7 @@ action = _ comment:description? _ future:"future"? _ async:("sync"/"async") _ bu
 
 // operationsEventsAndRequestHeadersSubsections matches /events, /operations,
 // and /request-headers subsections in any order. resource, subresource, and
-// action definitions can al have these subsections. an expression cannot
+// action definitions can all have these subsections. an expression cannot
 // access labels set inside an sub-expression. instead, a `subsectionLabel`
 // field was added to each subsection so that
 // operationsEventsAndRequestHeadersSubsections can return an object keyed by
