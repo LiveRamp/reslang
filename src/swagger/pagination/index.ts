@@ -501,7 +501,7 @@ function unexpectedEnumMsg(
 ): string {
     return `unexpected ${category}: expected one of [ ${okValues.join(
         " | "
-    )} ], but got ${JSON.stringify(JSON.stringify(got))}`
+    )} ], but got ${JSON.stringify(got)}`
 }
 
 /**

@@ -234,6 +234,8 @@ cursorOption = _ name:[a-zA-Z_\-]+ _ "=" _ value:(bool / number) _ comment? _ {
 
 bool = b: ("true" / "false") {
   return b === "true"
+}
+
 httpHeader = _ comment:description? _ type:("http-header")  _ name:name  _ "{" _
     "name:" _ headerName:[a-zA-Z0-9\-]+ _
 "}" _ ";"? _ {

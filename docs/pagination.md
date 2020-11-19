@@ -2,6 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 -   [Pagination](#pagination)
+    -   [Example](#example)
     -   [Default behavior](#default-behavior)
     -   [Custom pagination responses](#custom-pagination-responses)
         -   [Query params](#query-params)
@@ -19,7 +20,7 @@ When these blocks are omitted, Reslang defaults to a compliant cursor pagination
 
 ### Example
 
-For an example of pagination blocks in Reslang, see [pagination api](models/pagination/api.reslang).
+For an example of pagination blocks in Reslang, see [pagination api](../models/pagination/api.reslang).
 
 ### Default behavior
 
@@ -94,7 +95,7 @@ Reslang will warn and ignore all unrecognized pagination options.
 
 #### Query params
 
-Since `limit` is supported for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](src/library/rules.json) (or default to sensible values).
+Since `limit` is supported for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](../src/library/rules.json) (or default to sensible values).
 
 When `after` and/or `before` cursors are specified in a pagination block, Reslang will automatically add these as query parameters to the given operation, in addition to adding them to the `_pagination` response body. The cursors are only useful if they are present in both queries and responses.
 

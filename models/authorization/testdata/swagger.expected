@@ -402,6 +402,8 @@ paths:
             This value is a cursor that enables continued paginated searches.
             Its value can be found under "_pagination.after" in the previous
             response from this endpoint.
+          schema:
+            type: string
         - description: 'for your access token, ya know?'
           in: header
           name: Authorization
