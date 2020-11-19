@@ -1,3 +1,7 @@
+## 3.0.0 11/19/2020
+
+Use cursor pagination by default. Offset+limit pagination is still supported by use of a deprecated keyword, to be sunsetted in the future.
+
 ## 2.3.0 11/10/2020
 
 Support HTTP request headers.
