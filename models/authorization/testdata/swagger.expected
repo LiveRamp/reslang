@@ -40,6 +40,19 @@ paths:
                   id:
                     type: integer
                     format: int32
+      parameters:
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+        - description: 'for your org ID, ya know?'
+          in: header
+          name: LR-Org-ID
+          required: true
+          schema:
+            type: string
     get:
       tags:
         - User
@@ -100,6 +113,12 @@ paths:
             type: integer
             format: int32
             description: Link to Organization resource via its id
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
   '/v1/users/{id}':
     get:
       tags:
@@ -126,6 +145,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
   '/v1/users/{userId}/actions/suspend':
     post:
       tags:
@@ -188,6 +213,18 @@ paths:
           schema:
             type: integer
             format: int32
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+        - description: 'for your org ID, ya know?'
+          in: header
+          name: LR-Org-ID
+          required: true
+          schema:
+            type: string
   /v1/organizations:
     post:
       tags:
@@ -306,6 +343,19 @@ paths:
                   id:
                     type: integer
                     format: int32
+      parameters:
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+        - description: 'for your org ID, ya know?'
+          in: header
+          name: LR-Org-ID
+          required: true
+          schema:
+            type: string
     get:
       tags:
         - Role
@@ -352,6 +402,10 @@ paths:
             This value is a cursor that enables continued paginated searches.
             Its value can be found under "_pagination.after" in the previous
             response from this endpoint.
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
           schema:
             type: string
   '/v1/roles/{id}':
@@ -380,6 +434,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - description: 'for your access token, ya know?'
+          in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
 components:
   parameters: {}
   schemas:
@@ -524,4 +584,3 @@ components:
         - httpStatus
         - errorCode
         - message
-

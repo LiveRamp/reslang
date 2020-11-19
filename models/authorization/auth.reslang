@@ -7,6 +7,10 @@ resource User {
 
     /operations
         POST GET MULTIGET
+
+    /request-headers
+      * AuthnHeader
+      POST OrgIDHeader
 }
 
 sync action User::Suspend {
@@ -17,8 +21,13 @@ sync action User::Suspend {
 
 sync action User::Unsuspend {
     id: int
+
     /operations
         POST
+
+    /request-headers
+      * AuthnHeader
+      * OrgIDHeader
 }
 
 resource Organization {
@@ -35,6 +44,20 @@ resource Role {
     name: string
     parentRoleId: linked Role
 
+    /request-headers
+      * AuthnHeader
+      POST OrgIDHeader
+
     /operations
         POST GET MULTIGET
+}
+
+"for your access token, ya know?"
+http-header AuthnHeader {
+  name: Authorization
+}
+
+"for your org ID, ya know?"
+http-header OrgIDHeader {
+  name: LR-Org-ID
 }

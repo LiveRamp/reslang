@@ -1,3 +1,7 @@
+## 2.3.0 11/10/2020
+
+Support HTTP request headers.
+
 ## 2.2.6 10/08/2020
 
 Fix bug so that imported subresources are able to be referenced.

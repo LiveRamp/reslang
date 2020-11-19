@@ -1,4 +1,5 @@
 import { BaseGen } from "./genbase"
+import { addHeaderParams } from "./swagger/http-headers"
 import {
     camelCase,
     getVersion,
@@ -14,6 +15,8 @@ import {
     IAttribute,
     IOperation,
     IResourceLike,
+    IRequestHeader,
+    IHTTPHeader,
     isAction,
     isEnum,
     isResourceLike,
@@ -37,6 +40,38 @@ import {
  */
 
 export default class SwagGen extends BaseGen {
+    // Reslang "operations" are uppercase string constants (DELETE, GET, etc.).
+    // swagger path objects have keys for each operation, but the keys are
+    // not the same as the Reslang operation. these Records maps Reslang ID
+    // operations to their swagger counterparts.
+    //
+    // ID and non-ID operations use the same keys on the swagger path objects. For
+    // example, GET and MULTIGET both use 'get'. However, Reslang will always use
+    // different paths for GET and MULTIGET (the latter path will not include a
+    // resource ID as a path parameter).
+    //
+    // Reslang avoids conflicts relating to the path key re-use by generating
+    // the swagger path objects for ID operations (e.g. GET) and non-ID
+    // operations (e.g.  MULTIGET) separately. See the `formIdOperations` and
+    // `formNonIdOperations` functions. We keep separate swagger path key
+    // mappings for ID and non-ID operations so that `addHeaderParams` does not
+    // consider headers for the wrong path.
+    private reslangIdOperationsToSwaggerPathKeys: Record<string, string> = {
+        DELETE: "delete",
+        GET: "get",
+        PATCH: "patch",
+        PUT: "put"
+    }
+
+    private reslangNonIdOperationsToSwaggerPathKeys: Record<string, string> = {
+        MULTIDELETE: "delete",
+        MULTIGET: "get",
+        MULTIPATCH: "patch",
+        MULTIPOST: "post",
+        MULTIPUT: "put",
+        POST: "post"
+    }
+
     public generate() {
         this.markGenerate(true)
         const tags: any[] = []
@@ -72,10 +107,11 @@ export default class SwagGen extends BaseGen {
             }
         }
 
-        if (servers.length === 0)
+        if (servers.length === 0) {
             throw new Error(
                 `no server found with environment "${this.environment}" (are you passing the correct value to --env?)`
             )
+        }
 
         // model definitions
         this.formDefinitions(schemas)
@@ -158,7 +194,7 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && (ops.post || ops.isMulti())) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST, MULTIPOST or MULTIGET`
+                        `${el.short} is a singleton - cannot have POST, or MULTI operations`
                     )
                 }
 
@@ -171,6 +207,20 @@ export default class SwagGen extends BaseGen {
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
                     this.formNonIdOperations(el, path, params, tagKeys, ops)
+
+                    // addHeaderParams will not over-write swagger parameters
+                    // set by formNonIdOperations, but the opposite is not
+                    // true. ideally, neither would over-write parameters set
+                    // by the other but refactoring formNonIdOperations is
+                    // somewhat risky considering its complexity and lack of
+                    // test coverage. for now it is simpler and safer to just
+                    // call addHeaderParams after formNonIdOperations
+                    addHeaderParams(
+                        el,
+                        path,
+                        this.defs,
+                        this.reslangNonIdOperationsToSwaggerPathKeys
+                    )
                 }
 
                 /**
@@ -178,6 +228,7 @@ export default class SwagGen extends BaseGen {
                  */
 
                 path = {}
+
                 if (ops.isIdOps()) {
                     if (singleton) {
                         paths[
@@ -196,6 +247,20 @@ export default class SwagGen extends BaseGen {
                     !!singleton,
                     tagKeys,
                     ops
+                )
+
+                // addHeaderParams will not over-write swagger parameters set
+                // by formIdOperations, but the opposite is not true. ideally,
+                // neither would over-write parameters set by the other but
+                // refactoring formIdOperations is somewhat risky considering
+                // its complexity and lack of test coverage. for now it is
+                // simpler and safer to just call addHeaderParams after
+                // formIdOperations
+                addHeaderParams(
+                    el,
+                    path,
+                    this.defs,
+                    this.reslangIdOperationsToSwaggerPathKeys
                 )
             }
         }
