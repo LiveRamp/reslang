@@ -20,7 +20,7 @@ enum ViewEnum {
 	FULL
 	BRIEF
 }
-	
+
 "this is a specification!"
 structure Specification {
 	type: string

@@ -17,7 +17,7 @@ structure Address {
 
 union OrgInfo {
 	public: string
-	private: string	
+	private: string
 }
 
 configuration-resource Role {

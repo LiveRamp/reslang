@@ -16,7 +16,7 @@ describe("swagger generation tests", () => {
 function compare(module: string) {
     const swag = new SwagGen(
         [`models/${module}`],
-        { ignoreRules: true, pagination: "offset", limit: 10, maxLimit: 100 },
+        { ignoreRules: true, pagination: "cursor", limit: 10, maxLimit: 100 },
         "PROD",
         "",
         true

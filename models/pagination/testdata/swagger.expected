@@ -1,0 +1,273 @@
+openapi: 3.0.1
+info:
+  title: Pagination Example
+  description: Prepare to get paginated.
+  version: 0.0.1
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/pagination'
+tags:
+  - name: Unpaginated
+    description: '(resource)  '
+  - name: Legacy
+    description: '(resource)  '
+  - name: ImplicitCursor
+    description: '(resource)  '
+  - name: BellsAndWhistles
+    description: '(resource)  '
+paths:
+  /v1/unpaginateds:
+    get:
+      tags:
+        - Unpaginated
+      operationId: Get Unpaginateds
+      description: ''
+      responses:
+        '200':
+          description: Unpaginateds retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnpaginatedMultiResponse'
+  /v1/legacies:
+    get:
+      tags:
+        - Legacy
+      operationId: Get Legacies
+      description: ''
+      responses:
+        '200':
+          description: Legacies retrieved successfully
+          headers:
+            X-Total-Count:
+              description: Total number of Legacies returned by the query
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyMultiResponse'
+      parameters:
+        - in: query
+          name: offset
+          description: Offset of the Legacies (starting from 0) to include in the response.
+          schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+        - in: query
+          name: limit
+          description: Number of Legacies to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+  /v1/implicit-cursors:
+    get:
+      tags:
+        - ImplicitCursor
+      operationId: Get ImplicitCursors
+      description: ''
+      responses:
+        '200':
+          description: ImplicitCursors retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ImplicitCursorMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
+      parameters:
+        - in: query
+          name: limit
+          description: Number of ImplicitCursors to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
+  /v1/bells-and-whistles:
+    get:
+      tags:
+        - BellsAndWhistles
+      operationId: Get multiple BellsAndWhistles
+      description: ''
+      responses:
+        '200':
+          description: BellsAndWhistles retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BellsAndWhistlesMultiResponse'
+                  - type: object
+                    properties:
+                      _pagination:
+                        type: object
+                        properties:
+                          after:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to begin from where the
+                              current search left off.
+
+                              When "after" is  null, there are no more records
+                              to fetch for this search.
+                          before:
+                            type: string
+                            description: >-
+                              This field is a cursor to be passed as a query
+                              parameter in subsequent, paginated searches.
+
+                              It allows the next request to query the previous
+                              page of results.
+
+                              When "before" is null, there are no previous
+                              records to fetch for this search.
+                          total:
+                            type: integer
+                            description: The total number of results.
+                          next:
+                            type: string
+                            description: The hyperlink to fetch the next set of results.
+      parameters:
+        - in: query
+          name: limit
+          description: Number of BellsAndWhistles to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated searches.
+            Its value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
+        - in: query
+          name: before
+          description: >-
+            This value is a cursor that enables backward-paginated searches. Its
+            value can be found under "_pagination.before" in the previous
+            response from this endpoint.
+          schema:
+            type: string
+components:
+  parameters: {}
+  schemas:
+    UnpaginatedOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    UnpaginatedMultiResponse:
+      type: object
+      properties:
+        unpaginateds:
+          description: Array of retrieved Unpaginateds
+          type: array
+          items:
+            $ref: '#/components/schemas/UnpaginatedOutput'
+    LegacyOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    LegacyMultiResponse:
+      type: object
+      properties:
+        legacies:
+          description: Array of retrieved Legacies
+          type: array
+          items:
+            $ref: '#/components/schemas/LegacyOutput'
+    ImplicitCursorOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    ImplicitCursorMultiResponse:
+      type: object
+      properties:
+        implicitCursors:
+          description: Array of retrieved ImplicitCursors
+          type: array
+          items:
+            $ref: '#/components/schemas/ImplicitCursorOutput'
+    BellsAndWhistlesOutput:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    BellsAndWhistlesMultiResponse:
+      type: object
+      properties:
+        bellsAndWhistles:
+          description: Array of retrieved BellsAndWhistles
+          type: array
+          items:
+            $ref: '#/components/schemas/BellsAndWhistlesOutput'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+

@@ -953,16 +953,7 @@
         "operations": [
           {
             "operation": "MULTIGET",
-            "options": [
-              {
-                "name": "pagination",
-                "value": "after"
-              },
-              {
-                "name": "limit",
-                "value": "20"
-              }
-            ],
+            "options": [],
             "errors": []
           },
           {

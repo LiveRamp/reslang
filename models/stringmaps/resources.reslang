@@ -40,4 +40,3 @@ structure Struct3 {
 structure Struct4 {
     d: int mutable
 }
-

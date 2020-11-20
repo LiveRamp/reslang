@@ -17,7 +17,7 @@ subresource User::OrgRole {
 	orgId: linked organizations.Organization
 
 	/operations
-		GET POST MULTIGET DELETE
+		GET POST MULTIGET  DELETE
 }
 
 sync action User::Validate {

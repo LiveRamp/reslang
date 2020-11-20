@@ -24,6 +24,16 @@ import {
     isUnion
 } from "./treetypes"
 import { Operations, Verbs } from "./operations"
+import {
+    Pagination,
+    Cursor,
+    Offset,
+    strategy,
+    PaginationOption,
+    isValidPaginationOption,
+    queryParam,
+    validOptionName
+} from "./swagger/pagination/index"
 
 /**
  * generate swagger from the parsed representation
@@ -611,50 +621,13 @@ export default class SwagGen extends BaseGen {
                 responses[404] = notFound
             }
         }
-        const gparams = params.slice()
+        let gparams = params.slice()
         if (ops.multiget) {
-            const pagination = this.retrieveOption(ops.multiget, "pagination")
-            // limit has already been checked to be a number
-            const limit = Number(this.retrieveOption(ops.multiget, "limit"))
-            const maxLimit = Number(
-                this.retrieveOption(ops.multiget, "max-limit")
+            let paginator: Pagination = this.getPaginator(
+                plural,
+                ops.multiget.pagination
             )
-            if (pagination === "offset") {
-                gparams.push({
-                    in: "query",
-                    name: "offset",
-                    description: `Offset of the ${plural} (starting from 0) to include in the response.`,
-                    schema: {
-                        type: "integer",
-                        format: "int32",
-                        default: 0,
-                        minimum: 0
-                    }
-                })
-            } else if (pagination === "after") {
-                gparams.push({
-                    in: "query",
-                    name: "after",
-                    description: `The value returned as X-Next-After in the previous query. Starts from beginning if not specified`,
-                    schema: {
-                        type: "string"
-                    }
-                })
-            }
-            if (pagination === "offset" || pagination === "after") {
-                gparams.push({
-                    in: "query",
-                    name: "limit",
-                    description: `Number of ${plural} to return`,
-                    schema: {
-                        type: "integer",
-                        format: "int32",
-                        default: limit,
-                        minimum: 1,
-                        maximum: maxLimit
-                    }
-                })
-            }
+            gparams = [...gparams, ...paginator.queryParams()]
 
             for (const attr of el.attributes as IAttribute[]) {
                 if (
@@ -672,30 +645,27 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-            const responses: any = {
+
+            let schema: any = {
+                $ref: `#/components/schemas/${camel}MultiResponse`
+            }
+            let description = plural + " retrieved successfully"
+            let headers =
+                paginator.strategy() === strategy.Offset
+                    ? (paginator as Offset).xTotalCountHeader()
+                    : {}
+            if (paginator.strategy() === strategy.Cursor) {
+                schema = (paginator as Cursor).addPaginationToSchema(schema)
+            }
+
+            let responses: any = {
                 200: {
-                    description: plural + " retrieved successfully",
-                    headers: {
-                        "X-Total-Count": {
-                            description: `Total number of ${plural} returned by the query`,
-                            schema: { type: "integer", format: "int32" }
-                        }
-                    },
-                    content: {
-                        "application/json": {
-                            schema: {
-                                $ref: `#/components/schemas/${camel}MultiResponse`
-                            }
-                        }
-                    }
+                    description,
+                    headers,
+                    content: this.jsonContentSchema(schema)
                 }
             }
-            if (pagination === "after") {
-                responses["200"].headers["X-Next-After"] = {
-                    description: `The opaque token to set as "after" in the next query, to continue getting results. If it isn't present, there is no more data`,
-                    schema: { type: "string" }
-                }
-            }
+
             if (notFound) {
                 responses[404] = notFound
             }
@@ -714,23 +684,51 @@ export default class SwagGen extends BaseGen {
         }
     }
 
-    private retrieveOption(multiget: IOperation, optionName: string) {
-        // now see if we have set this value in the options
-        for (const option of multiget.options) {
-            if (option.name === optionName) {
-                return option.value
+    /**
+     * getPaginator returns the correct pagination instance for a config.
+     *
+     * It defaults to a Cursor paginator if no strategy is specified,
+     * and it defaults to the default pagination options if none are specified
+     * (see #defaultPaginationOpts for more info).
+     */
+    private getPaginator(
+        resourceName: string,
+        config: { strategy: string; options: [] } | undefined
+    ): Pagination {
+        let opts = this.pegJsOptionsToPaginationOptions(
+            config?.options || this.defaultPaginationOpts()
+        )
+        let strat = (config?.strategy as strategy) || strategy.Cursor
+        let klass = Pagination.use(strat)
+
+        return new klass(resourceName, opts)
+    }
+
+    private jsonContentSchema(schema: any) {
+        return {
+            "application/json": {
+                schema
             }
         }
-        // see if we have something set in the global options
-        switch (optionName) {
-            case "pagination":
-                return this.rules.pagination
-            case "limit":
-                return this.rules.limit
-            case "max-limit":
-                return this.rules.maxLimit
-        }
-        return null
+    }
+
+    /* pegJsOptionsToPaginationOptions converts parsed pegjs options into
+     * options that the Pagination module understands.
+     *
+     * In reslang, an "option" means specifically an object of { name, value }.
+     * This function filters a list of options down to the valid pagination
+     * options, and returns those with a non-false value.
+     *
+     * (The false value is supported in pegjs for apis which want to explicitly
+     * mark a value as not included.)
+     */
+    private pegJsOptionsToPaginationOptions(
+        opts: { name: string; value: any }[]
+    ): PaginationOption[] {
+        return opts
+            .filter((o) => isValidPaginationOption(o.name))
+            .filter((o) => o.value !== false)
+            .map((o) => o as PaginationOption)
     }
 
     private addParentPathParam(
@@ -946,6 +944,29 @@ export default class SwagGen extends BaseGen {
         }
     }
 
+    /**
+     defaultPaginationOpts returns the pagination options when none
+     are specified by the user. Since cursor pagination is the default
+     strategy, the only required pagination parameters are the "after" cursor
+     and the limit configs.
+    */
+    private defaultPaginationOpts(): PaginationOption[] {
+        return [
+            {
+                name: queryParam.After, // this could equivalently be `responseField.After`, since they are always the same strings under the hood
+                value: true
+            },
+            {
+                name: "defaultLimit",
+                value: this.rules.limit || 10
+            },
+            {
+                name: "maxLimit",
+                value: this.rules.maxLimit || 100
+            }
+        ]
+    }
+
     private formErrors(op: IOperation, responses: any) {
         for (const err of op.errors || []) {
             for (const code of err.codes) {
@@ -1103,12 +1124,13 @@ export default class SwagGen extends BaseGen {
 
                 // handle multiget
                 if (def.generateMultiGettable) {
+                    let refName = "#/components/schemas/" + sane + "Output"
                     const elements = {
                         description:
                             "Array of retrieved " + pluralizeName(def.name),
                         type: "array",
                         items: {
-                            $ref: "#/components/schemas/" + sane + "Output"
+                            $ref: refName
                         }
                     }
                     const props: { [name: string]: any } = {}

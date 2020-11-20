@@ -46,4 +46,3 @@ structure IdentifierTypeMapping {
 future configuration-resource IdentifierPool {
     id: string
 }
-

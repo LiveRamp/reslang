@@ -1,0 +1,47 @@
+"Prepare to get paginated."
+
+namespace {
+    title "Pagination Example"
+    version 0.0.1
+}
+
+diagram main {
+    /include
+        api.reslang
+}
+
+resource Unpaginated {
+	id: string
+
+	/operations
+		MULTIGET no-pagination
+}
+
+resource Legacy {
+	id: string
+
+	/operations
+		MULTIGET deprecated-offset-pagination
+}
+
+resource ImplicitCursor {
+  id: string
+
+  /operations
+    MULTIGET
+}
+
+resource BellsAndWhistles {
+  id: string
+
+  /operations
+    MULTIGET pagination {
+      defaultLimit  = 10
+      maxLimit      = 100
+      after         = true
+      before        = true
+      total         = true
+      next          = true
+      previous      = false
+    }
+}

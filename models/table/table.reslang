@@ -4,5 +4,5 @@ resource Table {
   name: string
 
   /operations
-    POST GET MULTIGET DELETE
+    POST GET MULTIGET  DELETE
 }

@@ -38,7 +38,7 @@ subresource Destination::Deliverer {
     id: int
     protocol: ProtocolEnum
     macro: string
-    
+
     /operations
         POST GET MULTIGET
 }

@@ -6,7 +6,7 @@
     "noSubresourcesOnActions": true,
     "links": "IDs",
     "returnBodyOnUpdate": false,
-    "pagination": "offset",
+    "pagination": "cursor",
     "limit": 10,
     "maxLimit": 100
 }

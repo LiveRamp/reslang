@@ -14,6 +14,7 @@ export const allModels = [
     "multiplicity",
     "namespaces",
     "optionality",
+    "pagination",
     "patchable",
     "request",
     "servers",
