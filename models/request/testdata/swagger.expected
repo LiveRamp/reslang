@@ -60,24 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/UploadRequestMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/UploadRequestMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -679,6 +662,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UploadRequestOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     UploadRequestStatusOutput:
       type: object
       properties:

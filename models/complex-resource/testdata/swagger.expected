@@ -46,24 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/CarMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/CarMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -183,24 +166,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/CarWheelMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/CarWheelMultiResponse'
         '404':
           description: Parent resource(s) not found
           content:
@@ -426,6 +392,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CarOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     ViewEnum:
       type: string
       enum:
@@ -470,6 +450,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CarWheelOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     BrandEnum:
       type: string
       description: Different brands

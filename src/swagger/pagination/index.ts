@@ -460,6 +460,12 @@ When "before" is null, there are no previous records to fetch for this search.`
       re-defining the entire response body.
 
       ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
+
+      NOTE: This breaks some code generation, specifically for Spring
+      (and possibly others). Opt instead to directly merge `getPaginationResponse`
+      into the schema's response body.
+
+      Slackground: https://liveramp.slack.com/archives/CPBAEKS9X/p1606844746397000
     */
     addPaginationToSchema = (schema: {}): wrappedResponse => {
         return {

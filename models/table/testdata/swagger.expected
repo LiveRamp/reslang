@@ -77,24 +77,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/TableColumnMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/TableColumnMultiResponse'
         '404':
           description: Cannot find table
           content:
@@ -316,24 +299,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/TableMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/TableMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -495,6 +461,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TableColumnOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     BulkDisableTableColumnInput:
       type: object
       properties:
@@ -546,6 +526,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TableOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     StandardError:
       type: object
       properties:

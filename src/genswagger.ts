@@ -206,7 +206,14 @@ export default class SwagGen extends BaseGen {
                     paths[
                         `${nspace}/${major}${parents}/${actionPath}${name}`
                     ] = path
-                    this.formNonIdOperations(el, path, params, tagKeys, ops)
+                    this.formNonIdOperations(
+                        el,
+                        path,
+                        params,
+                        tagKeys,
+                        ops,
+                        schemas
+                    )
 
                     // addHeaderParams will not over-write swagger parameters
                     // set by formNonIdOperations, but the opposite is not
@@ -273,7 +280,8 @@ export default class SwagGen extends BaseGen {
         path: any,
         params: any[],
         tagKeys: { [key: string]: string },
-        ops: Operations
+        ops: Operations,
+        schemas: { [$ref: string]: { type: string; properties: {} } }
     ) {
         const plural = pluralizeName(el.short)
         const unique = this.formSingleUniqueName(el)
@@ -645,17 +653,18 @@ export default class SwagGen extends BaseGen {
                     )
                 }
             }
-
-            let schema: any = {
-                $ref: `#/components/schemas/${camel}MultiResponse`
-            }
+            let ref = `${camel}MultiResponse`
+            let schema: any = { $ref: `#/components/schemas/${ref}` }
             let description = plural + " retrieved successfully"
             let headers =
                 paginator.strategy() === strategy.Offset
                     ? (paginator as Offset).xTotalCountHeader()
                     : {}
             if (paginator.strategy() === strategy.Cursor) {
-                schema = (paginator as Cursor).addPaginationToSchema(schema)
+                schemas[ref].properties = {
+                    ...schemas[ref].properties,
+                    ...(paginator as Cursor).getPaginationResponse()
+                }
             }
 
             let responses: any = {

@@ -53,24 +53,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/DirectoryMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/DirectoryMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -161,24 +144,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/FileTypeMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/FileTypeMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -288,24 +254,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/DirectoryFileMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/DirectoryFileMultiResponse'
         '404':
           description: Parent resource(s) not found
           content:
@@ -411,24 +360,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/DirectoryDeleteRequestMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/DirectoryDeleteRequestMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -543,6 +475,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     FileTypeInput:
       type: object
       properties:
@@ -616,6 +562,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FileTypeOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     DirectoryFileInput:
       type: object
       properties:
@@ -658,6 +618,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryFileOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     DirectoryDeleteRequestInput:
       type: object
       properties:
@@ -692,6 +666,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     CancelDirectoryDeleteRequestInput:
       type: object
       properties:
