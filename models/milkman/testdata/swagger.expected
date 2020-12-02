@@ -49,24 +49,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/DeliverMilkMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/DeliverMilkMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -128,24 +111,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BulksearchDeliverMilkMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/BulksearchDeliverMilkMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -182,24 +148,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BulksearchMilkMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/BulksearchMilkMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -297,6 +246,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DeliverMilkOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     BulksearchDeliverMilkOutput:
       type: object
       properties:
@@ -315,6 +278,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulksearchDeliverMilkOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     BulksearchMilkOutput:
       type: object
       properties:
@@ -333,6 +310,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulksearchMilkOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     AllDeliveredMilkOutput:
       type: object
       properties:

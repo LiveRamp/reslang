@@ -80,24 +80,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/ImplicitCursorMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
+                $ref: '#/components/schemas/ImplicitCursorMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -129,41 +112,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/BellsAndWhistlesMultiResponse'
-                  - type: object
-                    properties:
-                      _pagination:
-                        type: object
-                        properties:
-                          after:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to begin from where the
-                              current search left off.
-
-                              When "after" is  null, there are no more records
-                              to fetch for this search.
-                          before:
-                            type: string
-                            description: >-
-                              This field is a cursor to be passed as a query
-                              parameter in subsequent, paginated searches.
-
-                              It allows the next request to query the previous
-                              page of results.
-
-                              When "before" is null, there are no previous
-                              records to fetch for this search.
-                          total:
-                            type: integer
-                            description: The total number of results.
-                          next:
-                            type: string
-                            description: The hyperlink to fetch the next set of results.
+                $ref: '#/components/schemas/BellsAndWhistlesMultiResponse'
       parameters:
         - in: query
           name: limit
@@ -238,6 +187,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImplicitCursorOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
     BellsAndWhistlesOutput:
       type: object
       properties:
@@ -253,6 +216,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BellsAndWhistlesOutput'
+        _pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to begin from where the current
+                search left off.
+
+                When "after" is  null, there are no more records to fetch for
+                this search.
+            before:
+              type: string
+              description: >-
+                This field is a cursor to be passed as a query parameter in
+                subsequent, paginated searches.
+
+                It allows the next request to query the previous page of
+                results.
+
+                When "before" is null, there are no previous records to fetch
+                for this search.
+            total:
+              type: integer
+              description: The total number of results.
+            next:
+              type: string
+              description: The hyperlink to fetch the next set of results.
     StandardError:
       type: object
       properties:
