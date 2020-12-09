@@ -120,7 +120,7 @@ export default class EventsGen extends BaseGen {
                 channels[
                     "topics/" +
                         kebabCase(this.getSpace()) +
-                        "." +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
                         kebabCase(el.name) +
@@ -171,7 +171,7 @@ export default class EventsGen extends BaseGen {
             channels[
                 "topics/" +
                     this.mainNamespace +
-                    "." +
+                    "_" +
                     getVersion(def.name) +
                     "-" +
                     kebabCase(def.short)
