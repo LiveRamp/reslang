@@ -10,21 +10,21 @@ servers:
     description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/andrew-simple-example_v1-simple-resource-resource:
+  topics/andrew-simple-example_v1-simple-resource:
     description: A simple REST resource
     subscribe:
       summary: 'REST: SimpleResource'
       operationId: SimpleResource
       message:
         $ref: '#/components/messages/SimpleResource'
-  topics/andrew-simple-example_v2-test-resource-resource:
+  topics/andrew-simple-example_v2-test-resource:
     description: A test REST resource
     subscribe:
       summary: 'REST: v2/TestResource'
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'
-  topics/andrew-simple-example_v2-test-resource-foo-resource:
+  topics/andrew-simple-example_v2-test-resource-foo:
     description: A REST subresource
     subscribe:
       summary: 'REST: v2/TestResource::Foo'

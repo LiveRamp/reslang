@@ -10,7 +10,7 @@ servers:
     description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/milkman_v1-deliver-milk-resource:
+  topics/milkman_v1-deliver-milk:
     description: no documentation
     subscribe:
       summary: 'REST: DeliverMilk'

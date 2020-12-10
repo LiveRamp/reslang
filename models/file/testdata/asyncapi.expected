@@ -10,14 +10,14 @@ servers:
     description: Production Google Pubsub server
 defaultContentType: application/json
 channels:
-  topics/file_v1-directory-file-resource:
+  topics/file_v1-directory-file:
     description: This models a file in a directory
     subscribe:
       summary: 'REST: Directory::File'
       operationId: 'Directory::File'
       message:
         $ref: '#/components/messages/DirectoryFile'
-  topics/file_v1-directory-delete-request-resource:
+  topics/file_v1-directory-delete-request:
     description: This models a long running request
     subscribe:
       summary: 'REST: DirectoryDeleteRequest'

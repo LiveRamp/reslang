@@ -123,8 +123,7 @@ export default class EventsGen extends BaseGen {
                         "_" +
                         getVersion(el.name) +
                         "-" +
-                        kebabCase(el.name) +
-                        "-resource"
+                        kebabCase(el.name)
                 ] = {
                     description:
                         this.translateDoc(el.comment) || "no documentation",
