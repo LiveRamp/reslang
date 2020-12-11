@@ -120,11 +120,10 @@ export default class EventsGen extends BaseGen {
                 channels[
                     "topics/" +
                         kebabCase(this.getSpace()) +
-                        "." +
+                        "_" +
                         getVersion(el.name) +
                         "-" +
-                        kebabCase(el.name) +
-                        "-resource"
+                        kebabCase(el.name)
                 ] = {
                     description:
                         this.translateDoc(el.comment) || "no documentation",
@@ -171,7 +170,7 @@ export default class EventsGen extends BaseGen {
             channels[
                 "topics/" +
                     this.mainNamespace +
-                    "." +
+                    "_" +
                     getVersion(def.name) +
                     "-" +
                     kebabCase(def.short)
