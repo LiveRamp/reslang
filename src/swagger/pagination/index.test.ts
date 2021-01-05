@@ -140,7 +140,7 @@ describe("Cursor", () => {
                         type: "object",
                         properties: {
                             after: {
-                                type: "string",
+                                type: ["string", "null"],
                                 description: expect.stringContaining("cursor")
                             }
                         }

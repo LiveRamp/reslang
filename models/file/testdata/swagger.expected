@@ -479,7 +479,9 @@ components:
           type: object
           properties:
             after:
-              type: string
+              type:
+                - string
+                - 'null'
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -566,7 +568,9 @@ components:
           type: object
           properties:
             after:
-              type: string
+              type:
+                - string
+                - 'null'
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -622,7 +626,9 @@ components:
           type: object
           properties:
             after:
-              type: string
+              type:
+                - string
+                - 'null'
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -670,7 +676,9 @@ components:
           type: object
           properties:
             after:
-              type: string
+              type:
+                - string
+                - 'null'
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.

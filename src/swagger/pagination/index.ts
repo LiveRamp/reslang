@@ -41,7 +41,7 @@ export function isValidPaginationOption(str: string): boolean {
  * with `type` and `description` fields.
  */
 type swaggerProps = {
-    [name: string]: { type: string; description: string }
+    [name: string]: { type: string | string[]; description: string }
 }
 
 /**
@@ -396,18 +396,18 @@ When "before" is null, there are no previous records to fetch for this search.`
     /**
      * swaggerType returns the Swagger-supported type for a give response field.
      */
-    swaggerType = (field: responseField): string => {
+    swaggerType = (field: responseField): string | string[] => {
         switch (field) {
             case responseField.After:
-                return "string"
+                return ["string", "null"]
             case responseField.Before:
-                return "string"
+                return ["string", "null"]
             case responseField.Total:
                 return "integer"
             case responseField.Next:
-                return "string"
+                return ["string", "null"]
             case responseField.Previous:
-                return "string"
+                return ["string", "null"]
         }
         assertUnreachable(field)
         throw new Error(
