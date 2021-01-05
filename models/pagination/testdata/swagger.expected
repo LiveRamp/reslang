@@ -191,9 +191,8 @@ components:
           type: object
           properties:
             after:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -222,9 +221,8 @@ components:
           type: object
           properties:
             after:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -235,9 +233,8 @@ components:
                 When "after" is  null, there are no more records to fetch for
                 this search.
             before:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -249,11 +246,11 @@ components:
                 for this search.
             total:
               type: integer
+              nullable: false
               description: The total number of results.
             next:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: The hyperlink to fetch the next set of results.
     StandardError:
       type: object

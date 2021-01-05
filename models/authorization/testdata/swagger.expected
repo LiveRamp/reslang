@@ -452,9 +452,8 @@ components:
           type: object
           properties:
             after:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -502,9 +501,8 @@ components:
           type: object
           properties:
             after:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -554,9 +552,8 @@ components:
           type: object
           properties:
             after:
-              type:
-                - string
-                - 'null'
+              type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
