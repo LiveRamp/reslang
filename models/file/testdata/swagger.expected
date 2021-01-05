@@ -480,6 +480,7 @@ components:
           properties:
             after:
               type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -567,6 +568,7 @@ components:
           properties:
             after:
               type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -623,6 +625,7 @@ components:
           properties:
             after:
               type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
@@ -671,6 +674,7 @@ components:
           properties:
             after:
               type: string
+              nullable: true
               description: >-
                 This field is a cursor to be passed as a query parameter in
                 subsequent, paginated searches.
