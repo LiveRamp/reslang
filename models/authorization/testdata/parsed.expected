@@ -140,6 +140,33 @@
               "representation": false
             },
             "constraints": {}
+          },
+          {
+            "name": "createdAt",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "rfc3339datetime",
+              "name": "rfc3339datetime",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
           }
         ],
         "operations": [

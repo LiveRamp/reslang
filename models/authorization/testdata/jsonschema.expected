@@ -22,12 +22,18 @@
           "minItems": 1,
           "maxItems": 10,
           "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2006-01-02T15:04:05Z07:00"
         }
       },
       "required": [
         "name",
         "parent",
-        "roles"
+        "roles",
+        "createdAt"
       ]
     },
     "UserOutput": {
@@ -54,13 +60,19 @@
           "minItems": 1,
           "maxItems": 10,
           "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2006-01-02T15:04:05Z07:00"
         }
       },
       "required": [
         "id",
         "name",
         "parent",
-        "roles"
+        "roles",
+        "createdAt"
       ]
     },
     "UserMultiResponse": {
