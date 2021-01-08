@@ -1,6 +1,6 @@
 {
     "name": "@liveramp/reslang",
-    "version": "4.0.1",
+    "version": "5.1.0",
     "main": "index.js",
     "license": "Apache-2.0",
     "engines": {
