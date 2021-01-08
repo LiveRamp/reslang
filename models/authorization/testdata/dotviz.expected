@@ -6,7 +6,7 @@ digraph G {
         
 "User" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
-                    <tr><td><b>User        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name parent</font></td></tr></table>>];
+                    <tr><td><b>User        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">createdAt: rfc3339datetime</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name parent</font></td></tr></table>>];
 "User::Suspend" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
                     <tr><td><b>Suspend        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST</font></td></tr></table>>];

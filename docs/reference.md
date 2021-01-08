@@ -39,21 +39,23 @@ You can use the "singleton" keyword before a resource or subresource definition 
 
 The following primitive types are available. These are translated into appropriate Swagger types - in some cases (datetime etc) the primitive type is translated into a string type because Swagger has no notion of time-based values. If a translation occurs, then an appropriate comment / example text will be inserted as documentation
 
-| Type     | Description                                                                   |
-| -------- | ----------------------------------------------------------------------------- |
-| int      | 32-bit integer                                                                |
-| long     | 64-bit integer                                                                |
-| string   | Standard string                                                               |
-| double   | Double floating point                                                         |
-| boolean  | True or false                                                                 |
-| date     | Date in ISO8601 format (e.g. 2019-04-13)                                      |
-| time     | Time in ISO8601 format (e.g. 22:00:01)                                        |
-| datetime | Date+time in ISO8601 format, always with timezone<br />(2019-04-13T03:35:34Z) |
-| duration | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)                            |
-| url      | A URL                                                                         |
-| uuid     | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                   |
+| Type            | Description                                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------------------- |
+| int             | 32-bit integer                                                                                          |
+| long            | 64-bit integer                                                                                          |
+| string          | Standard string                                                                                         |
+| double          | Double floating point                                                                                   |
+| boolean         | True or false                                                                                           |
+| date            | Date in ISO8601 format (e.g. 2019-04-13)                                                                |
+| time            | Time in ISO8601 format (e.g. 22:00:01)                                                                  |
+| datetime        | Date+time in ISO8601 format, always with timezone<br />(2019-04-13T03:35:34Z)                           |
+| rfc3339datetime | Uses the OpenAPI `date-time` format, which is equivalent to RFC3339. (e.g. `2006-01-02T15:04:05Z07:00`) |
+| duration        | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)                                                      |
+| url             | A URL                                                                                                   |
+| uuid            | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                                             |
 
 #### Strings
+
 Strings can optionally have the `max-length` and `min-length` modifiers, which will be translated into `minLength` and `maxLength` in Swagger:
 
 ```

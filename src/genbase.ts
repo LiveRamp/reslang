@@ -1022,6 +1022,15 @@ Actions cannot have subresources`
                     schema.example = "2019-04-13T03:35:34Z"
                 }
                 break
+            case "rfc3339datetime":
+                this.addDefault(attr, schema, "string")
+                schema.type = "string"
+                // RFC3339 is the default OpenAPI date-time format
+                schema.format = "date-time"
+                if (example) {
+                    schema.example = "2006-01-02T15:04:05Z07:00"
+                }
+                break
             case "duration":
                 this.addDefault(attr, schema, "string")
                 schema.type = "string"

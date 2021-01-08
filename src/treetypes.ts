@@ -40,6 +40,7 @@ export let PrimitiveType = [
     "date",
     "time",
     "datetime",
+    "rfc3339datetime",
     "duration",
     "url",
     "uri",
@@ -273,7 +274,7 @@ export interface IEventOperation {
 export interface IOperation {
     operation: string
     options: IOption[]
-    pagination?: {strategy: string, options: []}
+    pagination?: { strategy: string; options: [] }
     comment: string
     errors: IError[]
 }

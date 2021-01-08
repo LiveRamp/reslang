@@ -4,6 +4,7 @@ resource User {
     name: string query
     parent: linked Organization query
     roles: linked Role[1..10]
+    createdAt: rfc3339datetime
 
     /operations
         POST GET MULTIGET
