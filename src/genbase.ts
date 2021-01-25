@@ -1028,7 +1028,7 @@ Actions cannot have subresources`
                 // RFC3339 is the default OpenAPI date-time format
                 schema.format = "date-time"
                 if (example) {
-                    schema.example = "2006-01-02T15:04:05Z07:00"
+                    schema.example = "2006-01-02T15:04:05Z"
                 }
                 break
             case "duration":
