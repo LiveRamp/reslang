@@ -4,7 +4,7 @@
 
 Reslang provides an opinionated, resource oriented approach to APIs. In this paradigm, you have resources (and subresources) on the server and you can perform operations on them via the REST verbs - the famous uniform interface. i.e.you can GET a resource, use POST to create, PUT & PUT to update, and DELETE to delete.
 
-Why is our approach opinionated? Well, it biases away from HATEOAS towards a simpler more pragmatic view. References to other resources are represented by ids, rather than links. It also allows you to drop down into an OO paradigm of custom verbs / actions. Finally it enforces our standards on APIs, which are documented [here](./docs/LiveRampAPIStandards.pdf) - diverging from these is intentionally difficult simply because reslang encodes the standards automatically, you never need to even be concerned with them.
+Why is our approach opinionated? Well, it biases away from HATEOAS towards a simpler more pragmatic view. References to other resources are represented by ids, rather than links. It also allows you to drop down into an OO paradigm of custom verbs / actions. Finally it enforces our standards on APIs, which are documented [here](https://liveramp.atlassian.net/wiki/spaces/CI/pages/1014498273/RFC+API-3+LiveRamp+API+Standards) - diverging from these is intentionally difficult simply because reslang encodes the standards automatically, you never need to even be concerned with them.
 
 ## The Getout Clause: Escaping from Pure Resources
 
