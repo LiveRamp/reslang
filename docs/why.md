@@ -2,7 +2,7 @@
 
 Reslang (aka Resource Language) is a fast and expressive way to create resource-oriented Swagger API definitions.
 
-You can think of it as a Domain Specific Language for creating APIs, specifically tailored for the LiveRamp environment. The Swagger output produced automatically conforms to [LiveRamp's API standards](./docs/LiveRampAPIStandards.pdf).
+You can think of it as a Domain Specific Language for creating APIs, specifically tailored for the LiveRamp environment. The Swagger output produced automatically conforms to [LiveRamp's API standards](https://liveramp.atlassian.net/wiki/spaces/CI/pages/1014498273/RFC+API-3+LiveRamp+API+Standards).
 
 ## Key Advantages Over Swagger
 

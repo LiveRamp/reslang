@@ -1,6 +1,6 @@
 # Reslang: API definitions made easy
 
-Reslang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger/OpenAPI which is fully aligned with [LiveRamp's API standards](./docs/LiveRampAPIStandards.pdf).
+Reslang is a simple language for describing resource-oriented APIs & turning them into Swagger. It produces Swagger/OpenAPI which is fully aligned with [LiveRamp's API standards](https://liveramp.atlassian.net/wiki/spaces/CI/pages/1014498273/RFC+API-3+LiveRamp+API+Standards).
 
 It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec. Recently we have added the ability to generate [JSON schema](https://json-schema.org/) from the Reslang spec too.
 
