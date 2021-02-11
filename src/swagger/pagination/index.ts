@@ -49,10 +49,8 @@ type swaggerProps = {
  * pagination responses.
  */
 type paginationResponse = {
-    _pagination: {
-        type: "object"
-        properties: swaggerProps
-    }
+    type: "object"
+    properties: swaggerProps
 }
 
 /**
@@ -446,10 +444,8 @@ When "before" is null, there are no previous records to fetch for this search.`
     */
     getPaginationResponse = (): paginationResponse => {
         return {
-            _pagination: {
-                type: "object",
-                properties: this.toResponseProps(this.responseOpts)
-            }
+            type: "object",
+            properties: this.toResponseProps(this.responseOpts)
         }
     }
 

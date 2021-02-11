@@ -654,6 +654,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
             let ref = `${camel}MultiResponse`
+            let paginationResponseRef = `${camel}MultiResponsePagination`
             let schema: any = { $ref: `#/components/schemas/${ref}` }
             let description = plural + " retrieved successfully"
             let headers =
@@ -663,6 +664,9 @@ export default class SwagGen extends BaseGen {
             if (paginator.strategy() === strategy.Cursor) {
                 schemas[ref].properties = {
                     ...schemas[ref].properties,
+                    _pagination: {$ref: `#/components/schemas/${paginationResponseRef}`},
+                }
+                schemas[paginationResponseRef] = {
                     ...(paginator as Cursor).getPaginationResponse()
                 }
             }
