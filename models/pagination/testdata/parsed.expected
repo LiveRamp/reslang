@@ -204,6 +204,33 @@
               "representation": false
             },
             "constraints": {}
+          },
+          {
+            "name": "details",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "arbitraryObject",
+              "name": "arbitraryObject",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
           }
         ],
         "operations": [
