@@ -76,10 +76,18 @@
       "properties": {
         "id": {
           "type": "string"
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": true,
+          "example": {
+            "anyKeys": "anyValues"
+          }
         }
       },
       "required": [
-        "id"
+        "id",
+        "details"
       ]
     },
     "BellsAndWhistlesMultiResponse": {

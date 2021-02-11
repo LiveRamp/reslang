@@ -44,7 +44,8 @@ export let PrimitiveType = [
     "duration",
     "url",
     "uri",
-    "uuid"
+    "uuid",
+    "arbitraryObject"
 ]
 
 export type DefinitionType =

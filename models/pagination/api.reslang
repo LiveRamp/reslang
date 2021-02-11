@@ -33,6 +33,7 @@ resource ImplicitCursor {
 
 resource BellsAndWhistles {
   id: string
+  details: arbitraryObject
 
   /operations
     MULTIGET pagination {
