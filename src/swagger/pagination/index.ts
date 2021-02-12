@@ -45,10 +45,11 @@ type swaggerProps = {
 }
 
 /**
- * paginationResponse is the RFC API-3 compliant structure for cursor-based
- * pagination responses.
+ * paginationResponseBody is the RFC API-3 compliant structure for cursor-based
+ * pagination responses. It should be included in MULTIGET responses under the
+ * `_pagination` field
  */
-type paginationResponse = {
+type paginationResponseBody = {
     type: "object"
     properties: swaggerProps
 }
@@ -59,7 +60,7 @@ type paginationResponse = {
  * The "allOf" style is what Swagger recommends for implementing inheritance.
  */
 type wrappedResponse = {
-    allOf: [{}, { type: "object"; properties: paginationResponse }]
+    allOf: [{}, { type: "object"; properties: paginationResponseBody }]
 }
 
 /**
@@ -438,11 +439,11 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-      getPaginationResponse turns the user-defined pagination
+      getPaginationResponseBody turns the user-defined pagination
       options into a form that Swagger understands, which
       complies with RFC API-3 (hence the "_pagination" key).
     */
-    getPaginationResponse = (): paginationResponse => {
+    getPaginationResponseBody = (): paginationResponseBody => {
         return {
             type: "object",
             properties: this.toResponseProps(this.responseOpts)
@@ -458,7 +459,7 @@ When "before" is null, there are no previous records to fetch for this search.`
       ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
 
       NOTE: This breaks some code generation, specifically for Spring
-      (and possibly others). Opt instead to directly merge `getPaginationResponse`
+      (and possibly others). Opt instead to directly merge `getPaginationResponseBody`
       into the schema's response body.
 
       Slackground: https://liveramp.slack.com/archives/CPBAEKS9X/p1606844746397000
@@ -470,7 +471,7 @@ When "before" is null, there are no previous records to fetch for this search.`
                 {
                     type: "object",
                     properties: {
-                        ...this.getPaginationResponse()
+                        ...this.getPaginationResponseBody()
                     }
                 }
             ]

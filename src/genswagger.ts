@@ -667,7 +667,7 @@ export default class SwagGen extends BaseGen {
                     _pagination: {$ref: `#/components/schemas/${paginationResponseRef}`},
                 }
                 schemas[paginationResponseRef] = {
-                    ...(paginator as Cursor).getPaginationResponse()
+                    ...(paginator as Cursor).getPaginationResponseBody()
                 }
             }
 
