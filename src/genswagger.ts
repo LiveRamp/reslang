@@ -664,7 +664,8 @@ export default class SwagGen extends BaseGen {
             if (paginator.strategy() === strategy.Cursor) {
                 schemas[ref].properties = {
                     ...schemas[ref].properties,
-                    // TODO the name `_pagination` field is pretty important - maybe this should be a constant somewhere?
+                    // `_pagination` is the RFC API-3 required response body
+                    // field for the pagination information
                     _pagination: {$ref: `#/components/schemas/${paginationResponseRef}`},
                 }
                 schemas[paginationResponseRef] = {
