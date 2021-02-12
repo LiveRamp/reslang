@@ -55,16 +55,6 @@ type paginationResponseBody = {
 }
 
 /**
- * wrappedResponse uses Swagger's recommended means of inheritance to
- * "infuse" a normal "#/components" response with pagination info.
- * The "allOf" style is what Swagger recommends for implementing inheritance.
- */
-//TODO  only used by (unused) addPaginationToSchema func
-type wrappedResponse = {
-    allOf: [{}, { type: "object"; properties: paginationResponseBody }]
-}
-
-/**
  * swaggerParam is how Swagger structures request parameters.
  */
 export type swaggerParam = {
@@ -448,35 +438,6 @@ When "before" is null, there are no previous records to fetch for this search.`
         return {
             type: "object",
             properties: this.toResponseProps(this.responseOpts)
-        }
-    }
-
-    /**
-      addPaginationToSchema uses the standard Swagger way of implementing inheritance
-      ("allOf"). to add pagination to an existing "multi" response.
-      This method wraps the given schema with pagination info, instead of
-      re-defining the entire response body.
-
-      ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
-
-      NOTE: This breaks some code generation, specifically for Spring
-      (and possibly others). Opt instead to directly merge `getPaginationResponseBody`
-      into the schema's response body.
-
-      Slackground: https://liveramp.slack.com/archives/CPBAEKS9X/p1606844746397000
-    */
-    // TODO unused!
-    addPaginationToSchema = (schema: {}): wrappedResponse => {
-        return {
-            allOf: [
-                schema,
-                {
-                    type: "object",
-                    properties: {
-                        ...this.getPaginationResponseBody()
-                    }
-                }
-            ]
         }
     }
 

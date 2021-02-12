@@ -130,42 +130,20 @@ describe("Cursor", () => {
         })
     })
 
-    describe("#getPaginationResponse", () => {
-        it("returns an RFC-3 compliant pagination response", () => {
+    describe("#getPaginationResponseBody", () => {
+        it("returns an RFC-3 compliant pagination response body", () => {
             let opt = { name: queryParam.After, value: true }
             let instance = new Cursor("", [opt])
-            expect(instance.getPaginationResponse()).toEqual(
+            expect(instance.getPaginationResponseBody()).toEqual(
                 expect.objectContaining({
-                    _pagination: {
-                        type: "object",
-                        properties: {
-                            after: {
-                                type: "string",
-                                nullable: true,
-                                description: expect.stringContaining("cursor")
-                            }
+                    type: "object",
+                    properties: {
+                        after: {
+                            type: "string",
+                            nullable: true,
+                            description: expect.stringContaining("cursor")
                         }
                     }
-                })
-            )
-        })
-    })
-
-    describe("#addPaginationToSchema", () => {
-        let instance = new Cursor("", [])
-        it("infuses a response schema with pagination info", () => {
-            let schema = { $ref: "#/components/foo" }
-            expect(instance.addPaginationToSchema(schema)).toEqual(
-                expect.objectContaining({
-                    allOf: expect.arrayContaining([
-                        expect.objectContaining({ $ref: "#/components/foo" }),
-                        expect.objectContaining({
-                            type: "object",
-                            properties: expect.objectContaining({
-                                _pagination: expect.objectContaining({})
-                            })
-                        })
-                    ])
                 })
             )
         })
