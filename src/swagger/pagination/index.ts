@@ -59,6 +59,7 @@ type paginationResponseBody = {
  * "infuse" a normal "#/components" response with pagination info.
  * The "allOf" style is what Swagger recommends for implementing inheritance.
  */
+//TODO  only used by (unused) addPaginationToSchema func
 type wrappedResponse = {
     allOf: [{}, { type: "object"; properties: paginationResponseBody }]
 }
@@ -464,6 +465,7 @@ When "before" is null, there are no previous records to fetch for this search.`
 
       Slackground: https://liveramp.slack.com/archives/CPBAEKS9X/p1606844746397000
     */
+    // TODO unused!
     addPaginationToSchema = (schema: {}): wrappedResponse => {
         return {
             allOf: [
