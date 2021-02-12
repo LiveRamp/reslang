@@ -393,20 +393,7 @@ components:
           items:
             $ref: '#/components/schemas/CarOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/CarMultiResponsePagination'
     ViewEnum:
       type: string
       enum:
@@ -452,20 +439,7 @@ components:
           items:
             $ref: '#/components/schemas/CarWheelOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/CarWheelMultiResponsePagination'
     BrandEnum:
       type: string
       description: Different brands
@@ -489,4 +463,34 @@ components:
         - httpStatus
         - errorCode
         - message
+    CarMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    CarWheelMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
 

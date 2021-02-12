@@ -476,20 +476,7 @@ components:
           items:
             $ref: '#/components/schemas/DirectoryOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/DirectoryMultiResponsePagination'
     FileTypeInput:
       type: object
       properties:
@@ -564,20 +551,7 @@ components:
           items:
             $ref: '#/components/schemas/FileTypeOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/FileTypeMultiResponsePagination'
     DirectoryFileInput:
       type: object
       properties:
@@ -621,20 +595,7 @@ components:
           items:
             $ref: '#/components/schemas/DirectoryFileOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/DirectoryFileMultiResponsePagination'
     DirectoryDeleteRequestInput:
       type: object
       properties:
@@ -670,20 +631,7 @@ components:
           items:
             $ref: '#/components/schemas/DirectoryDeleteRequestOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/DirectoryDeleteRequestMultiResponsePagination'
     CancelDirectoryDeleteRequestInput:
       type: object
       properties:
@@ -745,4 +693,64 @@ components:
         - httpStatus
         - errorCode
         - message
+    DirectoryMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    FileTypeMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    DirectoryFileMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    DirectoryDeleteRequestMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
 
