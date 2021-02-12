@@ -1039,6 +1039,12 @@ Actions cannot have subresources`
                     schema.example = "P3Y6M4DT12H30M5S"
                 }
                 break
+            case "arbitraryObject":
+                schema.type = "object"
+                schema.additionalProperties = true
+                if (example) {
+                    schema.example = { anyKeys: "anyValues" }
+                }
         }
     }
 

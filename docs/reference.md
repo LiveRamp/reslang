@@ -53,6 +53,7 @@ The following primitive types are available. These are translated into appropria
 | duration        | Duration in IS08601 format (e.g. P3Y6M4DT12H30M5S)                                                      |
 | url             | A URL                                                                                                   |
 | uuid            | A string UUID (e.g. "123e4567-e89b-12d3-a456-426655440000")                                             |
+| arbitraryObject | A free-form mapping of keys and values. This object is a special case of `stringmap` since it has no defined schema. It would be equivalent to something like `stringmap<any>`.
 
 #### Strings
 
