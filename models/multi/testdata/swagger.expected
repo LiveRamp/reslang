@@ -319,20 +319,7 @@ components:
           items:
             $ref: '#/components/schemas/AaaOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/AaaMultiResponsePagination'
     Bbb:
       type: object
       properties:
@@ -357,4 +344,19 @@ components:
         - httpStatus
         - errorCode
         - message
+    AaaMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
 

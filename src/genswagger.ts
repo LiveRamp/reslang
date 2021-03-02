@@ -654,6 +654,7 @@ export default class SwagGen extends BaseGen {
                 }
             }
             let ref = `${camel}MultiResponse`
+            let paginationResponseRef = `${camel}MultiResponsePagination`
             let schema: any = { $ref: `#/components/schemas/${ref}` }
             let description = plural + " retrieved successfully"
             let headers =
@@ -663,7 +664,12 @@ export default class SwagGen extends BaseGen {
             if (paginator.strategy() === strategy.Cursor) {
                 schemas[ref].properties = {
                     ...schemas[ref].properties,
-                    ...(paginator as Cursor).getPaginationResponse()
+                    // `_pagination` is the RFC API-3 required response body
+                    // field for the pagination information
+                    _pagination: {$ref: `#/components/schemas/${paginationResponseRef}`},
+                }
+                schemas[paginationResponseRef] = {
+                    ...(paginator as Cursor).getPaginationResponseBody()
                 }
             }
 

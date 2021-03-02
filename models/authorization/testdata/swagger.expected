@@ -459,20 +459,7 @@ components:
           items:
             $ref: '#/components/schemas/UserOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/UserMultiResponsePagination'
     OrganizationInput:
       type: object
       properties:
@@ -508,20 +495,7 @@ components:
           items:
             $ref: '#/components/schemas/OrganizationOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/OrganizationMultiResponsePagination'
     RoleInput:
       type: object
       properties:
@@ -559,20 +533,7 @@ components:
           items:
             $ref: '#/components/schemas/RoleOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/RoleMultiResponsePagination'
     StandardError:
       type: object
       properties:
@@ -590,3 +551,49 @@ components:
         - httpStatus
         - errorCode
         - message
+    UserMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    OrganizationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    RoleMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+

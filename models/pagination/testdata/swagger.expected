@@ -188,20 +188,7 @@ components:
           items:
             $ref: '#/components/schemas/ImplicitCursorOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
+          $ref: '#/components/schemas/ImplicitCursorMultiResponsePagination'
     BellsAndWhistlesOutput:
       type: object
       properties:
@@ -224,40 +211,7 @@ components:
           items:
             $ref: '#/components/schemas/BellsAndWhistlesOutput'
         _pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to begin from where the current
-                search left off.
-
-                When "after" is  null, there are no more records to fetch for
-                this search.
-            before:
-              type: string
-              nullable: true
-              description: >-
-                This field is a cursor to be passed as a query parameter in
-                subsequent, paginated searches.
-
-                It allows the next request to query the previous page of
-                results.
-
-                When "before" is null, there are no previous records to fetch
-                for this search.
-            total:
-              type: integer
-              nullable: false
-              description: The total number of results.
-            next:
-              type: string
-              nullable: true
-              description: The hyperlink to fetch the next set of results.
+          $ref: '#/components/schemas/BellsAndWhistlesMultiResponsePagination'
     StandardError:
       type: object
       properties:
@@ -275,4 +229,53 @@ components:
         - httpStatus
         - errorCode
         - message
+    ImplicitCursorMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+    BellsAndWhistlesMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to begin from where the current search
+            left off.
+
+            When "after" is  null, there are no more records to fetch for this
+            search.
+        before:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated searches.
+
+            It allows the next request to query the previous page of results.
+
+            When "before" is null, there are no previous records to fetch for
+            this search.
+        total:
+          type: integer
+          nullable: false
+          description: The total number of results.
+        next:
+          type: string
+          nullable: true
+          description: The hyperlink to fetch the next set of results.
 

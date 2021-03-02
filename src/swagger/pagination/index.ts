@@ -45,23 +45,13 @@ type swaggerProps = {
 }
 
 /**
- * paginationResponse is the RFC API-3 compliant structure for cursor-based
- * pagination responses.
+ * paginationResponseBody is the RFC API-3 compliant structure for cursor-based
+ * pagination responses. It should be included in MULTIGET responses under the
+ * `_pagination` field
  */
-type paginationResponse = {
-    _pagination: {
-        type: "object"
-        properties: swaggerProps
-    }
-}
-
-/**
- * wrappedResponse uses Swagger's recommended means of inheritance to
- * "infuse" a normal "#/components" response with pagination info.
- * The "allOf" style is what Swagger recommends for implementing inheritance.
- */
-type wrappedResponse = {
-    allOf: [{}, { type: "object"; properties: paginationResponse }]
+type paginationResponseBody = {
+    type: "object"
+    properties: swaggerProps
 }
 
 /**
@@ -440,44 +430,14 @@ When "before" is null, there are no previous records to fetch for this search.`
     }
 
     /**
-      getPaginationResponse turns the user-defined pagination
+      getPaginationResponseBody turns the user-defined pagination
       options into a form that Swagger understands, which
       complies with RFC API-3 (hence the "_pagination" key).
     */
-    getPaginationResponse = (): paginationResponse => {
+    getPaginationResponseBody = (): paginationResponseBody => {
         return {
-            _pagination: {
-                type: "object",
-                properties: this.toResponseProps(this.responseOpts)
-            }
-        }
-    }
-
-    /**
-      addPaginationToSchema uses the standard Swagger way of implementing inheritance
-      ("allOf"). to add pagination to an existing "multi" response.
-      This method wraps the given schema with pagination info, instead of
-      re-defining the entire response body.
-
-      ref: https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
-
-      NOTE: This breaks some code generation, specifically for Spring
-      (and possibly others). Opt instead to directly merge `getPaginationResponse`
-      into the schema's response body.
-
-      Slackground: https://liveramp.slack.com/archives/CPBAEKS9X/p1606844746397000
-    */
-    addPaginationToSchema = (schema: {}): wrappedResponse => {
-        return {
-            allOf: [
-                schema,
-                {
-                    type: "object",
-                    properties: {
-                        ...this.getPaginationResponse()
-                    }
-                }
-            ]
+            type: "object",
+            properties: this.toResponseProps(this.responseOpts)
         }
     }
 
