@@ -279,6 +279,11 @@
         ],
         "operations": [
           {
+            "operation": "POST",
+            "options": [],
+            "errors": []
+          },
+          {
             "operation": "PUT",
             "options": [],
             "errors": []

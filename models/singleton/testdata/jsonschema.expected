@@ -51,6 +51,17 @@
         "name"
       ]
     },
+    "SingletonResourceMetadataInput": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "info"
+      ]
+    },
     "SingletonResourceMetadataOutput": {
       "type": "object",
       "properties": {

@@ -56,7 +56,7 @@ export class Operations {
     }
 
     containsNonIdOps(): boolean {
-        return !!(this.post || this.containsMultiOps)
+        return !!(this.post || this.containsMultiOps())
     }
 
     containsIdOps(): boolean {
