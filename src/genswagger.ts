@@ -193,7 +193,7 @@ export default class SwagGen extends BaseGen {
 
                 if (singleton && ops.hasMultiOps()) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST, or MULTI operations`
+                        `${el.short} is a singleton - cannot MULTI operations`
                     )
                 }
 
