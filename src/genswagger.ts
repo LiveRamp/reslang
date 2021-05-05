@@ -191,7 +191,7 @@ export default class SwagGen extends BaseGen {
                  */
                 const ops = new Operations(el)
 
-                if (singleton && ops.containsMultiOps()) {
+                if (singleton && ops.hasMultiOps()) {
                     throw new Error(
                         `${el.short} is a singleton - cannot have POST, or MULTI operations`
                     )
@@ -203,11 +203,11 @@ export default class SwagGen extends BaseGen {
                 const basepath: string = `${nspace}/${major}${parents}/${actionPath}${name}`
 
                 let nonIdOpNameToOperationObjectMap: any = {}
-                if (ops.containsNonIdOps() || (singleton && ops.containsOps)) {
+                if (ops.hasNonIdOps() || (singleton && ops.hasOps())) {
                     paths[basepath] = nonIdOpNameToOperationObjectMap
                 }
 
-                if (ops.containsNonIdOps()) {
+                if (ops.hasNonIdOps()) {
                     this.formNonIdOperations(
                         el,
                         nonIdOpNameToOperationObjectMap,
@@ -232,7 +232,7 @@ export default class SwagGen extends BaseGen {
                     )
                 }
 
-                if (ops.containsIdOps()) {
+                if (ops.hasIdOps()) {
                     let opNameToOperationObjectMap
 
                     if (singleton) {

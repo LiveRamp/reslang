@@ -14,8 +14,11 @@ digraph G {
 "SingletonResource" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>SingletonResource        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr></table>>];
-"SingletonResource::Metadata" [label=<
+"SingletonResource::PostableSingletonSub" [label=<
                     <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
-                    <tr><td><b>Metadata        </b></td></tr><hr/><tr><td align="left">info: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  POST PUT GET</font></td></tr></table>>];
-"SingletonResource" -> "SingletonResource::Metadata" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+                    <tr><td><b>PostableSingletonSub        </b></td></tr><hr/><tr><td align="left">info: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  POST PUT GET</font></td></tr></table>>];
+"SingletonResource" -> "SingletonResource::PostableSingletonSub" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
+"PostableSingletonResource" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded' bgcolor='#ffffcc'>
+                    <tr><td><b>PostableSingletonResource </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton POST</font></td></tr></table>>];
 }
