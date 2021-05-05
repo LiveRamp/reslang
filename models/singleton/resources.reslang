@@ -26,5 +26,5 @@ singleton subresource SingletonResource::Metadata {
     info: string
 
     /operations
-        PUT GET
+        POST PUT GET
 }

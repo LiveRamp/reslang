@@ -147,6 +147,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/StandardError'
   /v1/singleton-resource/metadata:
+    post:
+      tags:
+        - 'SingletonResource::Metadata'
+      operationId: 'Create SingletonResource::Metadata'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingletonResourceMetadataInput'
+      responses:
+        '201':
+          description: Metadata created successfully
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
     get:
       tags:
         - 'SingletonResource::Metadata'
@@ -214,6 +233,13 @@ components:
           type: string
       required:
         - name
+    SingletonResourceMetadataInput:
+      type: object
+      properties:
+        info:
+          type: string
+      required:
+        - info
     SingletonResourceMetadataOutput:
       type: object
       properties:
