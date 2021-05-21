@@ -177,7 +177,6 @@ export default class SwagGen extends BaseGen {
                 params = params.reverse()
 
                 const singleton = el.singleton
-                let path: any = {}
 
                 // name of resource
                 let name = kebabCase(el.short)
@@ -192,23 +191,26 @@ export default class SwagGen extends BaseGen {
                  */
                 const ops = new Operations(el)
 
-                if (singleton && (ops.post || ops.isMulti())) {
+                if (singleton && ops.hasMultiOps()) {
                     throw new Error(
-                        `${el.short} is a singleton - cannot have POST, or MULTI operations`
+                        `${el.short} is a singleton - cannot MULTI operations`
                     )
                 }
 
                 // use the namespace override if needed
                 const top = this.getTopLevelType(el) as IResourceLike
                 const nspace = top.namespace ? "/" + top.namespace : ""
+                const basepath: string = `${nspace}/${major}${parents}/${actionPath}${name}`
 
-                if (!singleton && (ops.post || ops.isMulti())) {
-                    paths[
-                        `${nspace}/${major}${parents}/${actionPath}${name}`
-                    ] = path
+                let nonIdOpNameToOperationObjectMap: any = {}
+                if (ops.hasNonIdOps() || (singleton && ops.hasOps())) {
+                    paths[basepath] = nonIdOpNameToOperationObjectMap
+                }
+
+                if (ops.hasNonIdOps()) {
                     this.formNonIdOperations(
                         el,
-                        path,
+                        nonIdOpNameToOperationObjectMap,
                         params,
                         tagKeys,
                         ops,
@@ -224,51 +226,46 @@ export default class SwagGen extends BaseGen {
                     // call addHeaderParams after formNonIdOperations
                     addHeaderParams(
                         el,
-                        path,
+                        nonIdOpNameToOperationObjectMap,
                         this.defs,
                         this.reslangNonIdOperationsToSwaggerPathKeys
                     )
                 }
 
-                /**
-                 * id definitions
-                 */
+                if (ops.hasIdOps()) {
+                    let opNameToOperationObjectMap
 
-                path = {}
-
-                if (ops.isIdOps()) {
                     if (singleton) {
-                        paths[
-                            `${nspace}/${major}${parents}/${actionPath}${name}`
-                        ] = path
+                        opNameToOperationObjectMap = nonIdOpNameToOperationObjectMap
                     } else {
-                        paths[
-                            `${nspace}/${major}${parents}/${actionPath}${name}/{id}`
-                        ] = path
+                        let idOpNameToOperationObjectMap: any = {}
+                        paths[`${basepath}/{id}`] = idOpNameToOperationObjectMap
+                        opNameToOperationObjectMap = idOpNameToOperationObjectMap
                     }
-                }
-                this.formIdOperations(
-                    el,
-                    path,
-                    params,
-                    !!singleton,
-                    tagKeys,
-                    ops
-                )
 
-                // addHeaderParams will not over-write swagger parameters set
-                // by formIdOperations, but the opposite is not true. ideally,
-                // neither would over-write parameters set by the other but
-                // refactoring formIdOperations is somewhat risky considering
-                // its complexity and lack of test coverage. for now it is
-                // simpler and safer to just call addHeaderParams after
-                // formIdOperations
-                addHeaderParams(
-                    el,
-                    path,
-                    this.defs,
-                    this.reslangIdOperationsToSwaggerPathKeys
-                )
+                    this.formIdOperations(
+                        el,
+                        opNameToOperationObjectMap,
+                        params,
+                        !!singleton,
+                        tagKeys,
+                        ops
+                    )
+
+                    // addHeaderParams will not over-write swagger parameters set
+                    // by formIdOperations, but the opposite is not true. ideally,
+                    // neither would over-write parameters set by the other but
+                    // refactoring formIdOperations is somewhat risky considering
+                    // its complexity and lack of test coverage. for now it is
+                    // simpler and safer to just call addHeaderParams after
+                    // formIdOperations
+                    addHeaderParams(
+                        el,
+                        opNameToOperationObjectMap,
+                        this.defs,
+                        this.reslangIdOperationsToSwaggerPathKeys
+                    )
+                }
             }
         }
 
@@ -303,16 +300,17 @@ export default class SwagGen extends BaseGen {
         const short = el.short
         if (ops.post) {
             const idType = this.extractIdGently(el)
+
             // special case - if no id and only POST, then adjust accordingly to return nothing
-            const special =
+            const postOnlyResourceWithoutId =
                 !el.async &&
                 el.operations &&
                 el.operations.length === 1 &&
                 !idType
 
-            const content = special
-                ? null
-                : {
+            const postReturnsId = !(el.singleton || postOnlyResourceWithoutId)
+            const content = postReturnsId
+                ? {
                       "application/json": {
                           schema: {
                               type: "object",
@@ -326,6 +324,8 @@ export default class SwagGen extends BaseGen {
                           }
                       }
                   }
+                : null
+
             let responses: { [code: number]: any } = {
                 201: {
                     description: short + " created successfully",
@@ -666,7 +666,9 @@ export default class SwagGen extends BaseGen {
                     ...schemas[ref].properties,
                     // `_pagination` is the RFC API-3 required response body
                     // field for the pagination information
-                    _pagination: {$ref: `#/components/schemas/${paginationResponseRef}`},
+                    _pagination: {
+                        $ref: `#/components/schemas/${paginationResponseRef}`
+                    }
                 }
                 schemas[paginationResponseRef] = {
                     ...(paginator as Cursor).getPaginationResponseBody()
@@ -1221,7 +1223,7 @@ export default class SwagGen extends BaseGen {
                 const ops = new Operations(el)
 
                 if (!el.singleton) {
-                    if (ops.post || ops.multipost) {
+                    if (ops.multipost) {
                         el.generateInput = true
                     }
                     if (ops.multiget) {
@@ -1230,6 +1232,9 @@ export default class SwagGen extends BaseGen {
                     }
                 }
 
+                if (ops.post) {
+                    el.generateInput = true
+                }
                 if (ops.put) {
                     el.generatePuttable = true
                 }

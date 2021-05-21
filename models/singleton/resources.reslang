@@ -1,5 +1,3 @@
-
-
 resource Resource {
     id: int
     name: string
@@ -22,9 +20,16 @@ singleton resource SingletonResource {
         PUT GET
 }
 
-singleton subresource SingletonResource::Metadata {
+singleton subresource SingletonResource::PostableSingletonSub {
     info: string
 
     /operations
-        PUT GET
+        POST PUT GET
+}
+
+singleton resource PostableSingletonResource {
+    name: string
+
+    /operations
+        POST
 }

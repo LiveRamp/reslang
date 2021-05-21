@@ -355,7 +355,7 @@ export abstract class BaseGen {
                 }
 
                 // cannot have an action with any multis apart from MULTIGET
-                if (isAction(def) && ops.isMulti() && !ops.multiget) {
+                if (isAction(def) && ops.hasMultiOps() && !ops.multiget) {
                     throw new Error(
                         "Actions cannot have MULTI-mutating operations: " +
                             def.short

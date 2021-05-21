@@ -13,8 +13,10 @@ tags:
     description: '(subresource)  '
   - name: SingletonResource
     description: '(resource)  '
-  - name: 'SingletonResource::Metadata'
+  - name: 'SingletonResource::PostableSingletonSub'
     description: '(subresource)  '
+  - name: PostableSingletonResource
+    description: '(resource)  '
 paths:
   /v1/resources:
     post:
@@ -146,39 +148,73 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
-  /v1/singleton-resource/metadata:
-    get:
+  /v1/singleton-resource/postable-singleton-sub:
+    post:
       tags:
-        - 'SingletonResource::Metadata'
-      operationId: 'Get SingletonResource::Metadata'
+        - 'SingletonResource::PostableSingletonSub'
+      operationId: 'Create SingletonResource::PostableSingletonSub'
       description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingletonResourcePostableSingletonSubInput'
       responses:
-        '200':
-          description: Metadata retrieved successfully
+        '201':
+          description: PostableSingletonSub created successfully
+        '404':
+          description: Parent resource(s) not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SingletonResourceMetadataOutput'
+                $ref: '#/components/schemas/StandardError'
+    get:
+      tags:
+        - 'SingletonResource::PostableSingletonSub'
+      operationId: 'Get SingletonResource::PostableSingletonSub'
+      description: ''
+      responses:
+        '200':
+          description: PostableSingletonSub retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/SingletonResourcePostableSingletonSubOutput
         '404':
-          description: Metadata or parent resource(s) not found
+          description: PostableSingletonSub or parent resource(s) not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
     put:
       tags:
-        - 'SingletonResource::Metadata'
-      operationId: 'Modify SingletonResource::Metadata'
+        - 'SingletonResource::PostableSingletonSub'
+      operationId: 'Modify SingletonResource::PostableSingletonSub'
       description: ''
       responses:
         '200':
-          description: Metadata modified successfully
+          description: PostableSingletonSub modified successfully
         '404':
-          description: Metadata or parent resource(s) not found
+          description: PostableSingletonSub or parent resource(s) not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardError'
+  /v1/postable-singleton-resource:
+    post:
+      tags:
+        - PostableSingletonResource
+      operationId: Create PostableSingletonResource
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostableSingletonResourceInput'
+      responses:
+        '201':
+          description: PostableSingletonResource created successfully
 components:
   parameters: {}
   schemas:
@@ -214,13 +250,27 @@ components:
           type: string
       required:
         - name
-    SingletonResourceMetadataOutput:
+    SingletonResourcePostableSingletonSubInput:
       type: object
       properties:
         info:
           type: string
       required:
         - info
+    SingletonResourcePostableSingletonSubOutput:
+      type: object
+      properties:
+        info:
+          type: string
+      required:
+        - info
+    PostableSingletonResourceInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
     StandardError:
       type: object
       properties:

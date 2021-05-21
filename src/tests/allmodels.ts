@@ -19,6 +19,7 @@ export const allModels = [
     "request",
     "servers",
     "simple-resource",
+    "singleton",
     "stringmaps",
     "table",
     "upversion"

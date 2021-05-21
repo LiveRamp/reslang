@@ -279,6 +279,11 @@
         ],
         "operations": [
           {
+            "operation": "POST",
+            "options": [],
+            "errors": []
+          },
+          {
             "operation": "PUT",
             "options": [],
             "errors": []
@@ -292,10 +297,61 @@
         "parents": [
           "SingletonResource"
         ],
-        "short": "Metadata",
-        "name": "SingletonResource::Metadata",
+        "short": "PostableSingletonSub",
+        "name": "SingletonResource::PostableSingletonSub",
         "parentShort": "SingletonResource",
         "parentName": "SingletonResource",
+        "secondary": false,
+        "file": "resources.reslang"
+      },
+      {
+        "category": "definition",
+        "kind": "resource-like",
+        "future": false,
+        "singleton": true,
+        "type": "resource",
+        "attributes": [
+          {
+            "name": "name",
+            "stringMap": false,
+            "type": {
+              "parents": [],
+              "short": "string",
+              "name": "string",
+              "parentShort": "",
+              "parentName": ""
+            },
+            "inline": false,
+            "linked": false,
+            "full": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "optionalGet": false,
+              "output": false,
+              "queryonly": false,
+              "query": false,
+              "representation": false
+            },
+            "constraints": {}
+          }
+        ],
+        "operations": [
+          {
+            "operation": "POST",
+            "options": [],
+            "errors": []
+          }
+        ],
+        "parents": [],
+        "short": "PostableSingletonResource",
+        "name": "PostableSingletonResource",
+        "parentShort": "",
+        "parentName": "",
+        "namespace": "",
         "secondary": false,
         "file": "resources.reslang"
       }

@@ -51,7 +51,7 @@
         "name"
       ]
     },
-    "SingletonResourceMetadataOutput": {
+    "SingletonResourcePostableSingletonSubInput": {
       "type": "object",
       "properties": {
         "info": {
@@ -60,6 +60,28 @@
       },
       "required": [
         "info"
+      ]
+    },
+    "SingletonResourcePostableSingletonSubOutput": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "info"
+      ]
+    },
+    "PostableSingletonResourceInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
       ]
     },
     "StandardError": {

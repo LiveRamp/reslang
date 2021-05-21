@@ -40,12 +40,31 @@ export class Operations {
         this.multidelete = this.extractOp(el, "MULTIDELETE")
     }
 
-    public isIdOps() {
-        return this.get || this.patch || this.put || this.delete
+    hasOps(): boolean {
+        return !!(
+            this.get ||
+            this.multiget ||
+            this.post ||
+            this.multipost ||
+            this.put ||
+            this.multiput ||
+            this.patch ||
+            this.multipatch ||
+            this.delete ||
+            this.multidelete
+        )
     }
 
-    public isMulti() {
-        return (
+    hasNonIdOps(): boolean {
+        return !!(this.post || this.hasMultiOps())
+    }
+
+    hasIdOps(): boolean {
+        return !!(this.get || this.patch || this.put || this.delete)
+    }
+
+    hasMultiOps(): boolean {
+        return !!(
             this.multiget ||
             this.multipost ||
             this.multiput ||
