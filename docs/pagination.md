@@ -86,7 +86,7 @@ Field definitions:
 -   `defaultLimit` is the number of resources to return when the user does not specify a `limit` in the query
 -   `maxLimit` is the maximum limit allowed to be specified in a query
 -   `after` is a cursor that can be passed to subsequent queries to continue retrieving results
--   `before` is a cursor that can implement backward searches
+-   `before` is a cursor that can implement backward pagination
 -   `total` indicates the number of records that would be returned given an infinite limit
 -   `next` is a hypermedia link that will return the next set of results
 -   `previous` is a hypermedia link that will return the previous set of results.
@@ -95,7 +95,7 @@ Reslang will warn and ignore all unrecognized pagination options.
 
 #### Query params
 
-Since `limit` is supported for all paginated search requests, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](../src/library/rules.json) (or default to sensible values).
+Since `limit` is supported for all paginated queries, Reslang will always ensure that it is specified as a query parameter. If no `defaultLimit` or `maxLimit` are specified in the `pagination {}` block, then Reslang will use whatever is configured in [rules.json](../src/library/rules.json) (or default to sensible values).
 
 When `after` and/or `before` cursors are specified in a pagination block, Reslang will automatically add these as query parameters to the given operation, in addition to adding them to the `_pagination` response body. The cursors are only useful if they are present in both queries and responses.
 
