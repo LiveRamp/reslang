@@ -384,10 +384,13 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(ops.post, responses)
+            let operationId = this.formOperationId(el, Verbs.POST);
+            let {summary, description} = this.parseOperationComment(ops.post.comment, operationId)
             path.post = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.POST),
-                description: this.translateDoc(ops.post.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -436,10 +439,13 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multipost, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPOST);
+            let {summary, description} = this.parseOperationComment(ops.multipost.comment, operationId)
             path.post = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPOST),
-                description: this.translateDoc(ops.multipost.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -490,10 +496,13 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multiput, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPUT);
+            let {summary, description} = this.parseOperationComment(ops.multiput.comment, operationId)
             path.put = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPUT),
-                description: this.translateDoc(ops.multiput.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -543,10 +552,13 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multipatch, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPATCH);
+            let {summary, description} = this.parseOperationComment(ops.multipatch.comment, operationId)
             path.patch = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPATCH),
-                description: this.translateDoc(ops.multipatch.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -596,10 +608,13 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multidelete, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIDELETE);
+            let {summary, description} = this.parseOperationComment(ops.multidelete.comment, operationId)
             path.delete = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIDELETE),
-                description: this.translateDoc(ops.multidelete.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -656,7 +671,6 @@ export default class SwagGen extends BaseGen {
             let ref = `${camel}MultiResponse`
             let paginationResponseRef = `${camel}MultiResponsePagination`
             let schema: any = { $ref: `#/components/schemas/${ref}` }
-            let description = plural + " retrieved successfully"
             let headers =
                 paginator.strategy() === strategy.Offset
                     ? (paginator as Offset).xTotalCountHeader()
@@ -677,7 +691,7 @@ export default class SwagGen extends BaseGen {
 
             let responses: any = {
                 200: {
-                    description,
+                    description: `${plural} retrieved successfully`,
                     headers,
                     content: this.jsonContentSchema(schema)
                 }
@@ -689,10 +703,13 @@ export default class SwagGen extends BaseGen {
 
             this.formErrors(ops.multiget, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.MULTIGET);
+            let {summary, description} = this.parseOperationComment(ops.multiget.comment, operationId)
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.MULTIGET),
-                description: this.translateDoc(ops.multiget.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 responses
             }
             if (gparams.length) {
@@ -810,10 +827,13 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.get, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.GET);
+            let {summary, description} = this.parseOperationComment(ops.get.comment, operationId)
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.GET),
-                description: this.translateDoc(ops.get.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 responses
             }
             if (!singleton) {
@@ -852,10 +872,13 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.put, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.PUT);
+            let {summary, description} = this.parseOperationComment(ops.put.comment, operationId)
             path.put = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.PUT),
-                description: this.translateDoc(ops.put.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -895,10 +918,13 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.patch, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.PATCH);
+            let {summary, description} = this.parseOperationComment(ops.patch.comment, operationId)
             path.patch = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.PATCH),
-                description: this.translateDoc(ops.patch.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -938,10 +964,13 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.delete, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.DELETE);
+            let {summary, description} = this.parseOperationComment(ops.delete.comment, operationId)
             path.delete = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.DELETE),
-                description: this.translateDoc(ops.delete.comment),
+                operationId: operationId,
+                description: description,
+                summary: summary,
                 responses
             }
             if (!singleton) {

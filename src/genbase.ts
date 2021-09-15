@@ -122,6 +122,7 @@ export function replaceVars(vars: Map<string, string>, url: string) {
 
 export abstract class BaseGen {
     public static readonly COMMENT_REGEX = /See docs:\s*(?<doc>\w+)\.(?<entry>\w+)/
+    public static readonly SUMMARY_REGEX = /Summary:\s+(?<content>[^\n]+)(\n|$)/
 
     protected namespace!: INamespace
     protected servers!: IServers
@@ -1295,13 +1296,13 @@ Actions cannot have subresources`
         schema.type = "array"
     }
 
-    protected translateDoc(comment?: string) {
+    protected translateDoc(comment?: string, fallback?: string): string {
         if (!comment) {
             return ""
         }
         const match = comment.match(BaseGen.COMMENT_REGEX)
         if (!match) {
-            return comment
+            return fallback ?? comment
         }
         const [_, doc, entry] = match
         // search for the docs
@@ -1314,6 +1315,81 @@ Actions cannot have subresources`
         throw new Error(
             "Cannot find documentation entry for " + doc + "." + entry
         )
+    }
+
+    /**
+     * Parses reslang comment into a summary and description for an operation.
+     * It's possible to pass an explicit Summary with `Summary:` until a new line or end of comment.
+     *
+     * If that's missing, it will try to fall back into the first sentences if separated by newline, period, or dash as summary, in addition
+     * it uses length (<72 chars) and lack punctuation as a flag that
+     *
+     * Since summary is expected by OpenApi spec, this fallbacks to operationId as summary
+     * (e.g. "Get Distribution")
+     *
+     * See https://swagger.io/specification/#operation-object
+     * @param comment
+     * @param operationId
+     * @protected
+     */
+    protected parseOperationComment(comment: string, operationId: string) {
+        if (!comment) {
+            return {summary: operationId, description: ""}
+        }
+
+        // Explicit See docs: set
+        // Has to be used for description.
+        let descriptionByDocsReference = this.translateDoc(comment, "_noreference_")
+        let hasDocsReference = descriptionByDocsReference != "_noreference_"
+
+        // Explicit Summary: set
+        // Has to be used for summary
+        let match = comment.match(BaseGen.SUMMARY_REGEX)
+        if (match) {
+            let [_, summary] = match
+            let description = hasDocsReference
+                ? descriptionByDocsReference
+                : comment.replace(BaseGen.SUMMARY_REGEX, "")
+            return {summary, description}
+        }
+
+        // Deduce from readable separators
+        let input = comment.replace(BaseGen.COMMENT_REGEX, "")
+        const trailingSeparators = /[\s.-]+$/;
+        const summaryMaxLength = 72;
+        const summaryDenyRegex = /\p{Punctuation}/;
+        for (const sep of ["\n", ". ", " - "]) {
+            let sepIdx = input.indexOf(sep);
+            if (sepIdx == -1) {
+                continue
+            }
+
+            let summary = input.substr(0, sepIdx).replace(trailingSeparators, "");
+            if (summary.length > summaryMaxLength || summary.match(summaryDenyRegex)) {
+                continue
+            }
+
+            if (hasDocsReference) {
+                return {summary, description: descriptionByDocsReference}
+            }
+
+            let descriptionIdx = sepIdx + sep.length;
+            if (descriptionIdx < input.length) {
+                let description = input.substr(descriptionIdx);
+                return {summary, description}
+            }
+
+            return {summary};
+        }
+        // No separators found, try to use complete comment as summary
+        let summary = input.replace(trailingSeparators, "");
+        if (summary.length > summaryMaxLength || summary.match(summaryDenyRegex)) {
+            // fallback to operationId
+            let description = hasDocsReference ? descriptionByDocsReference : comment
+            return {summary: operationId, description}
+        }
+        let description = hasDocsReference ? descriptionByDocsReference : ""
+        return {summary, description}
     }
 
     // namespacePrefix returns the namespace prefix for strings that are qualified by a
