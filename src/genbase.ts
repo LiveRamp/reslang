@@ -1357,7 +1357,7 @@ Actions cannot have subresources`
         let input = comment.replace(BaseGen.COMMENT_REGEX, "")
         const trailingSeparators = /[\s.-]+$/;
         const summaryMaxLength = 72;
-        const summaryDenyRegex = /\p{Punctuation}/;
+        const summaryDenyRegex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/;
         for (const sep of ["\n", ". ", " - "]) {
             let sepIdx = input.indexOf(sep);
             if (sepIdx == -1) {

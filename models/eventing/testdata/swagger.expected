@@ -22,6 +22,7 @@ paths:
         - SimpleResource
       operationId: Create SimpleResource
       description: ''
+      summary: Create SimpleResource
       requestBody:
         content:
           application/json:
@@ -43,6 +44,7 @@ paths:
         - SimpleResource
       operationId: Get SimpleResource
       description: ''
+      summary: Get SimpleResource
       responses:
         '200':
           description: SimpleResource retrieved successfully
@@ -68,6 +70,7 @@ paths:
         - v2/TestResource
       operationId: Create v2/TestResource
       description: ''
+      summary: Create v2/TestResource
       requestBody:
         content:
           application/json:
@@ -90,6 +93,7 @@ paths:
         - v2/TestResource
       operationId: Get v2/TestResource
       description: ''
+      summary: Get v2/TestResource
       responses:
         '200':
           description: v2/TestResource retrieved successfully
@@ -116,6 +120,7 @@ paths:
         - 'v2/TestResource::Foo'
       operationId: 'Create v2/TestResource::Foo'
       description: ''
+      summary: 'Create v2/TestResource::Foo'
       requestBody:
         content:
           application/json:
@@ -152,6 +157,7 @@ paths:
         - 'v2/TestResource::Foo2'
       operationId: 'Create v2/TestResource::Foo2'
       description: ''
+      summary: 'Create v2/TestResource::Foo2'
       requestBody:
         content:
           application/json:
@@ -188,6 +194,7 @@ paths:
         - 'v2/TestResource::Foo2'
       operationId: 'Get v2/TestResource::Foo2'
       description: ''
+      summary: 'Get v2/TestResource::Foo2'
       responses:
         '200':
           description: Foo2 retrieved successfully

@@ -15,7 +15,8 @@ paths:
       tags:
         - Car
       operationId: Create Car
-      description: Create a car
+      description: ''
+      summary: Create a car
       requestBody:
         content:
           application/json:
@@ -36,7 +37,8 @@ paths:
       tags:
         - Car
       operationId: Get Car
-      description: Get a single car
+      description: ''
+      summary: Get a single car
       responses:
         '200':
           description: Car retrieved successfully
@@ -60,7 +62,8 @@ paths:
       tags:
         - Car
       operationId: Modify Car
-      description: Update a car
+      description: ''
+      summary: Update a car
       requestBody:
         content:
           application/json:
@@ -85,7 +88,8 @@ paths:
       tags:
         - Car
       operationId: Patch Car
-      description: Patch a car
+      description: ''
+      summary: Patch a car
       requestBody:
         content:
           application/json:

@@ -22,6 +22,7 @@ paths:
         - ResourceA
       operationId: Get ResourceA
       description: ''
+      summary: Get ResourceA
       responses:
         '200':
           description: ResourceA retrieved successfully
@@ -48,6 +49,7 @@ paths:
         - ResourceB
       operationId: Create ResourceB
       description: ''
+      summary: Create ResourceB
       requestBody:
         content:
           application/json:
@@ -70,6 +72,7 @@ paths:
         - ResourceB
       operationId: Get ResourceB
       description: ''
+      summary: Get ResourceB
       responses:
         '200':
           description: ResourceB retrieved successfully
@@ -95,6 +98,7 @@ paths:
         - ResourceB
       operationId: Modify ResourceB
       description: ''
+      summary: Modify ResourceB
       responses:
         '200':
           description: ResourceB modified successfully
@@ -117,6 +121,7 @@ paths:
         - v2/ResourceB
       operationId: Create v2/ResourceB
       description: ''
+      summary: Create v2/ResourceB
       requestBody:
         content:
           application/json:
@@ -139,6 +144,7 @@ paths:
         - v2/ResourceB
       operationId: Get v2/ResourceB
       description: ''
+      summary: Get v2/ResourceB
       responses:
         '200':
           description: v2/ResourceB retrieved successfully
@@ -165,6 +171,7 @@ paths:
         - 'v2/ResourceB::Sub'
       operationId: 'Create v2/ResourceB::Sub'
       description: ''
+      summary: 'Create v2/ResourceB::Sub'
       requestBody:
         content:
           application/json:
@@ -201,6 +208,7 @@ paths:
         - 'v2/ResourceB::Sub'
       operationId: 'Get v2/ResourceB::Sub'
       description: ''
+      summary: 'Get v2/ResourceB::Sub'
       responses:
         '200':
           description: Sub retrieved successfully

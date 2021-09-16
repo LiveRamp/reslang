@@ -16,6 +16,7 @@ paths:
         - Aaa
       operationId: Create Aaas
       description: ''
+      summary: Create Aaas
       requestBody:
         content:
           application/json:
@@ -43,6 +44,7 @@ paths:
         - Aaa
       operationId: Modify Aaas
       description: ''
+      summary: Modify Aaas
       requestBody:
         content:
           application/json:
@@ -67,6 +69,7 @@ paths:
         - Aaa
       operationId: Patch Aaas
       description: ''
+      summary: Patch Aaas
       requestBody:
         content:
           application/json:
@@ -91,6 +94,7 @@ paths:
         - Aaa
       operationId: Delete Aaas
       description: ''
+      summary: Delete Aaas
       requestBody:
         content:
           application/json:
@@ -119,6 +123,7 @@ paths:
         - Aaa
       operationId: Get Aaas
       description: ''
+      summary: Get Aaas
       responses:
         '200':
           description: Aaas retrieved successfully
@@ -151,6 +156,7 @@ paths:
         - Aaa
       operationId: Get Aaa
       description: ''
+      summary: Get Aaa
       responses:
         '200':
           description: Aaa retrieved successfully
@@ -176,6 +182,7 @@ paths:
         - Aaa
       operationId: Modify Aaa
       description: ''
+      summary: Modify Aaa
       requestBody:
         content:
           application/json:
@@ -202,6 +209,7 @@ paths:
         - Aaa
       operationId: Patch Aaa
       description: ''
+      summary: Patch Aaa
       requestBody:
         content:
           application/json:
@@ -228,6 +236,7 @@ paths:
         - Aaa
       operationId: Delete Aaa
       description: ''
+      summary: Delete Aaa
       responses:
         '200':
           description: Aaa deleted successfully

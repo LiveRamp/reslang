@@ -16,6 +16,7 @@ paths:
         - Test
       operationId: Create Test
       description: ''
+      summary: Create Test
       requestBody:
         content:
           application/json:
@@ -38,6 +39,7 @@ paths:
         - Test
       operationId: Get Test
       description: ''
+      summary: Get Test
       responses:
         '200':
           description: Test retrieved successfully

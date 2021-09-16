@@ -24,6 +24,7 @@ paths:
         - Resource
       operationId: Create Resource
       description: ''
+      summary: Create Resource
       requestBody:
         content:
           application/json:
@@ -46,6 +47,7 @@ paths:
         - Resource
       operationId: Get Resource
       description: ''
+      summary: Get Resource
       responses:
         '200':
           description: Resource retrieved successfully
@@ -72,6 +74,7 @@ paths:
         - 'Resource::Metadata'
       operationId: 'Get Resource::Metadata'
       description: ''
+      summary: 'Get Resource::Metadata'
       responses:
         '200':
           description: Metadata retrieved successfully
@@ -98,6 +101,7 @@ paths:
         - 'Resource::Metadata'
       operationId: 'Modify Resource::Metadata'
       description: ''
+      summary: 'Modify Resource::Metadata'
       responses:
         '200':
           description: Metadata modified successfully
@@ -121,6 +125,7 @@ paths:
         - SingletonResource
       operationId: Get SingletonResource
       description: ''
+      summary: Get SingletonResource
       responses:
         '200':
           description: SingletonResource retrieved successfully
@@ -139,6 +144,7 @@ paths:
         - SingletonResource
       operationId: Modify SingletonResource
       description: ''
+      summary: Modify SingletonResource
       responses:
         '200':
           description: SingletonResource modified successfully
@@ -154,6 +160,7 @@ paths:
         - 'SingletonResource::PostableSingletonSub'
       operationId: 'Create SingletonResource::PostableSingletonSub'
       description: ''
+      summary: 'Create SingletonResource::PostableSingletonSub'
       requestBody:
         content:
           application/json:
@@ -173,6 +180,7 @@ paths:
         - 'SingletonResource::PostableSingletonSub'
       operationId: 'Get SingletonResource::PostableSingletonSub'
       description: ''
+      summary: 'Get SingletonResource::PostableSingletonSub'
       responses:
         '200':
           description: PostableSingletonSub retrieved successfully
@@ -192,6 +200,7 @@ paths:
         - 'SingletonResource::PostableSingletonSub'
       operationId: 'Modify SingletonResource::PostableSingletonSub'
       description: ''
+      summary: 'Modify SingletonResource::PostableSingletonSub'
       responses:
         '200':
           description: PostableSingletonSub modified successfully
@@ -207,6 +216,7 @@ paths:
         - PostableSingletonResource
       operationId: Create PostableSingletonResource
       description: ''
+      summary: Create PostableSingletonResource
       requestBody:
         content:
           application/json:
