@@ -104,11 +104,30 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
+operation_description = "\"" _ summary:operation_summary? _ inner:(!"\"" i:. {return i} )* "\"" {
+    var description = inner.join("").replace(/\\n/g, "\n")
+    if (!summary) {
+        summary = ""
+    }
+    return {
+        "description": description,
+        "summary": summary
+    }
+}
+
+operation_summary = "Summary:" _ content:(!"\n" !"\"" i:. {return i})* "\n" "\s"* {
+    return content.join("")
+}
+
 ops =
-    _ comment:description? _ op:(mainops / multiops) _ allOptions: options _ {
+    _ comment:operation_description? _ op:(mainops / multiops) _ allOptions: options _ {
+    if (!comment) {
+        comment = {}
+    }
     return {
         operation: op,
-        comment: comment,
+        comment: comment.description,
+        summary: comment.summary,
         options: allOptions.standard,
         pagination: allOptions.pagination
     }
