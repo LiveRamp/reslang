@@ -1296,16 +1296,37 @@ Actions cannot have subresources`
         schema.type = "array"
     }
 
-    protected translateDoc(comment?: string, fallback?: string): string {
+    /**
+     * Reslang provides openapi/asyncapi description to its definitions.
+     * These descriptions are extracted from comment that corresponds to the definition.
+     * These comments might reference to a documentation block in reslang resources,
+     * in such cases those are used as descriptions instead.
+     *
+     * @param comment
+     * @protected
+     */
+    protected translateDoc(comment?: string): string {
         if (!comment) {
             return ""
         }
+        const [match, documentation] = this.tryDescriptionFromDocumentation(comment)
+        if (match) {
+            return documentation
+        }
+        return comment
+    }
+
+    private tryDescriptionFromDocumentation(comment: string): [boolean, string] {
         const match = comment.match(BaseGen.COMMENT_REGEX)
         if (!match) {
-            return fallback ?? comment
+            return [false, ""]
         }
         const [_, doc, entry] = match
-        // search for the docs
+        let documentation = this.queryDocumentation(doc, entry);
+        return [true, documentation]
+    }
+
+    private queryDocumentation(doc: string, entry: string): string {
         const docs = this.documentation[doc]
         for (const ent of docs || []) {
             if (ent.name === entry) {
@@ -1339,16 +1360,15 @@ Actions cannot have subresources`
 
         // Explicit See docs: set
         // Has to be used for description.
-        let descriptionByDocsReference = this.translateDoc(comment, "_noreference_")
-        let hasDocsReference = descriptionByDocsReference != "_noreference_"
+        const [hasDocumentation, documentation] = this.tryDescriptionFromDocumentation(comment)
 
         // Explicit Summary: set
         // Has to be used for summary
         let match = comment.match(BaseGen.SUMMARY_REGEX)
         if (match) {
             let [_, summary] = match
-            let description = hasDocsReference
-                ? descriptionByDocsReference
+            let description = hasDocumentation
+                ? documentation
                 : comment.replace(BaseGen.SUMMARY_REGEX, "")
             return {summary, description}
         }
@@ -1369,8 +1389,8 @@ Actions cannot have subresources`
                 continue
             }
 
-            if (hasDocsReference) {
-                return {summary, description: descriptionByDocsReference}
+            if (hasDocumentation) {
+                return {summary, description: documentation}
             }
 
             let descriptionIdx = sepIdx + sep.length;
@@ -1385,10 +1405,10 @@ Actions cannot have subresources`
         let summary = input.replace(trailingSeparators, "");
         if (summary.length > summaryMaxLength || summary.match(summaryDenyRegex)) {
             // fallback to operationId
-            let description = hasDocsReference ? descriptionByDocsReference : comment
+            let description = hasDocumentation ? documentation : comment
             return {summary: operationId, description}
         }
-        let description = hasDocsReference ? descriptionByDocsReference : ""
+        let description = hasDocumentation ? documentation : ""
         return {summary, description}
     }
 
