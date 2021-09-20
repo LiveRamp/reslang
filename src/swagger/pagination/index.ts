@@ -70,8 +70,8 @@ export type swaggerParam = {
 */
 export enum strategy {
     /**
-     * Officially supported pagination strategy. Send a cursor when a search
-     * overflows so that subsequent searches use a stable search window.
+     * Officially supported pagination strategy. Send a cursor when a query
+     * overflows so that subsequent requests use a stable window.
      */
     Cursor = "cursor",
     /**
@@ -287,7 +287,7 @@ export class Offset extends Pagination {
 
 /**
  * Cursor pagination is the officially supported LiveRamp pagination strategy.
- * It allows for stable search windows by indexing to specific records,
+ * It allows for stable windows by indexing to specific records,
  * as opposed to relying on offsets and limits.
  */
 export class Cursor extends Pagination {
@@ -329,7 +329,7 @@ export class Cursor extends Pagination {
         return {
             in: "query",
             name: "after",
-            description: `This value is a cursor that enables continued paginated searches. Its value can be found under "_pagination.after" in the previous response from this endpoint.`,
+            description: `This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.`,
             schema: {
                 type: "string"
             }
@@ -344,7 +344,7 @@ export class Cursor extends Pagination {
         return {
             in: "query",
             name: "before",
-            description: `This value is a cursor that enables backward-paginated searches. Its value can be found under "_pagination.before" in the previous response from this endpoint.`,
+            description: `This value is a cursor that enables backward-paginated queries. Its value can be found under "_pagination.before" in the previous response from this endpoint.`,
             schema: {
                 type: "string"
             }
@@ -358,13 +358,13 @@ export class Cursor extends Pagination {
     describeResponseField = (param: responseField): string => {
         switch (param) {
             case responseField.After:
-                return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
-It allows the next request to begin from where the current search left off.
-When "after" is  null, there are no more records to fetch for this search.`
+                return `This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+It allows the next request to begin from where the current request left off.
+When "after" is  null, there are no more records to fetch.`
             case responseField.Before:
-                return `This field is a cursor to be passed as a query parameter in subsequent, paginated searches.
+                return `This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
 It allows the next request to query the previous page of results.
-When "before" is null, there are no previous records to fetch for this search.`
+When "before" is null, there are no previous records to fetch.`
             case responseField.Next:
                 return `The hyperlink to fetch the next set of results.`
             case responseField.Previous:
