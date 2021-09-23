@@ -122,7 +122,9 @@ operation_summary = "Summary:" _ content:(!"\n" !"\"" i:. {return i})* "\n" "\s"
 ops =
     _ comment:operation_description? _ op:(mainops / multiops) _ allOptions: options _ {
     if (!comment) {
-        comment = {}
+        comment = {
+            summary: ""
+        }
     }
     return {
         operation: op,
