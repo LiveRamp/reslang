@@ -22,6 +22,7 @@ paths:
         - 'Table::Column'
       operationId: 'Create Table::Column'
       description: Create a new column in the provided parent table.
+      summary: 'Create Table::Column'
       requestBody:
         content:
           application/json:
@@ -70,6 +71,7 @@ paths:
         - 'Table::Column'
       operationId: 'Get Table::Columns'
       description: Find existing column in the provided parent table
+      summary: 'Get Table::Columns'
       responses:
         '200':
           description: Columns retrieved successfully
@@ -114,6 +116,7 @@ paths:
         - 'Table::Column'
       operationId: 'Get Table::Column'
       description: Find a single existing column in the provided parent table
+      summary: 'Get Table::Column'
       responses:
         '200':
           description: Column retrieved successfully
@@ -152,6 +155,7 @@ paths:
 
         The list of values passed in will be added to the column's existing set
         of values.
+      summary: 'Modify Table::Column'
       requestBody:
         content:
           application/json:
@@ -195,6 +199,7 @@ paths:
 
         be processed in the table and will no longer have stats calculated for
         it
+      summary: 'Disable Table::Column'
       responses:
         '200':
           description: Disable action completed
@@ -237,6 +242,7 @@ paths:
         be processed in the table
 
         and will no longer have stats calculated for them
+      summary: 'Bulk Disable Table::Column'
       requestBody:
         content:
           application/json:
@@ -272,6 +278,7 @@ paths:
         - Table
       operationId: Create Table
       description: ''
+      summary: Create Table
       requestBody:
         content:
           application/json:
@@ -292,6 +299,7 @@ paths:
         - Table
       operationId: Get Tables
       description: ''
+      summary: Get Tables
       responses:
         '200':
           description: Tables retrieved successfully
@@ -324,6 +332,7 @@ paths:
         - Table
       operationId: Get Table
       description: ''
+      summary: Get Table
       responses:
         '200':
           description: Table retrieved successfully
@@ -348,6 +357,7 @@ paths:
         - Table
       operationId: Delete Table
       description: ''
+      summary: Delete Table
       responses:
         '200':
           description: Table deleted successfully

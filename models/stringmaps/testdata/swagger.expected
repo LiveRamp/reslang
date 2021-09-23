@@ -16,6 +16,7 @@ paths:
         - SMap
       operationId: Create SMap
       description: ''
+      summary: Create SMap
       requestBody:
         content:
           application/json:
@@ -37,6 +38,7 @@ paths:
         - SMap
       operationId: Get SMaps
       description: ''
+      summary: Get SMaps
       responses:
         '200':
           description: SMaps retrieved successfully
@@ -75,6 +77,7 @@ paths:
         - SMap
       operationId: Get SMap
       description: ''
+      summary: Get SMap
       responses:
         '200':
           description: SMap retrieved successfully
@@ -100,6 +103,7 @@ paths:
         - SMap
       operationId: Modify SMap
       description: ''
+      summary: Modify SMap
       requestBody:
         content:
           application/json:
