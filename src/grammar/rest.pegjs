@@ -104,19 +104,27 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-operation_description = "\"" summary:operation_summary? _ inner:(!"\"" i:. {return i} )* "\"" {
-    var description = inner.join("").replace(/\\n/g, "\n")
-    if (!summary) {
-        summary = ""
+operation_description = i:summary_only / i:summary_description / description:description {
+    if (typeof i !== 'undefined') {
+        return i
     }
+    return {"summary": "", "description": description}
+}
+
+
+summary_description = "\"" summary:summary "\n" _ description:(!"\"" i:. {return i})* "\"" {
     return {
-        "description": stripWhitespace(description),
+        "description": stripWhitespace(description.join("").replace(/\\n/g, "\n")),
         "summary": summary
     }
 }
 
-operation_summary = "Summary:" _ content:(!"\n" !"\"" i:. {return i})* "\n" "\s"* {
-    return content.join("")
+summary_only = "\"" summary:summary "\"" {
+    return {"summary": summary, "description": ""}
+}
+
+summary = "Summary:" _ inner:(!"\n" !"\"" i:. {return i})* {
+    return inner.join("")
 }
 
 ops =
