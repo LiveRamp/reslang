@@ -104,13 +104,13 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
-operation_description = "\"" _ summary:operation_summary? _ inner:(!"\"" i:. {return i} )* "\"" {
+operation_description = "\"" summary:operation_summary? _ inner:(!"\"" i:. {return i} )* "\"" {
     var description = inner.join("").replace(/\\n/g, "\n")
     if (!summary) {
         summary = ""
     }
     return {
-        "description": description,
+        "description": stripWhitespace(description),
         "summary": summary
     }
 }
