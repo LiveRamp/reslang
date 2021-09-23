@@ -542,19 +542,22 @@
             "operation": "GET",
             "comment": "Get a request. See docs: DistMVP.GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "POST",
             "comment": "Use this endpoint to create a new DistributionRequest",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "comment": "Use this endpoint to find existing DistributionRequests. See docs: DistMVP.MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -607,7 +610,8 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [
@@ -661,7 +665,8 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [

@@ -54,7 +54,8 @@
             "pagination": {
               "strategy": "none"
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -108,7 +109,8 @@
             "pagination": {
               "strategy": "offset"
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -159,7 +161,8 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -270,7 +273,8 @@
                 }
               ]
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
