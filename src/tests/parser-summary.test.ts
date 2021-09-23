@@ -64,4 +64,24 @@ describe("reslang summary parsing tests", () => {
             }`, {output: "parser"}));
         expect(tree).toEqual(expected(operation("POST", "my summary", "my description")))
     })
+    test("summaries ignore dangling whitespace", () => {
+        let tree = clean(parser.parse(
+            `resource test {
+                /operations
+                "Summary: my summary     
+                my description"
+                POST
+            }`, {output: "parser"}));
+        expect(tree).toEqual(expected(operation("POST", "my summary", "my description")))
+    })
+    test("summaries ignore danling dot", () => {
+        let tree = clean(parser.parse(
+            `resource test {
+                /operations
+                "Summary: my summary.
+                my description"
+                POST
+            }`, {output: "parser"}));
+        expect(tree).toEqual(expected(operation("POST", "my summary", "my description")))
+    })
 })
