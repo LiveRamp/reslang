@@ -94,8 +94,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -126,15 +126,15 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
         - in: query
           name: before
           description: >-
-            This value is a cursor that enables backward-paginated searches. Its
+            This value is a cursor that enables backward-paginated queries. Its
             value can be found under "_pagination.before" in the previous
             response from this endpoint.
           schema:
@@ -237,13 +237,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     BellsAndWhistlesMultiResponsePagination:
       type: object
       properties:
@@ -252,24 +251,22 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
         before:
           type: string
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
             It allows the next request to query the previous page of results.
 
-            When "before" is null, there are no previous records to fetch for
-            this search.
+            When "before" is null, there are no previous records to fetch.
         total:
           type: integer
           nullable: false
