@@ -36,6 +36,7 @@ paths:
         - Destination
       operationId: Create Destination
       description: Create a new destination
+      summary: Create Destination
       requestBody:
         content:
           application/json:
@@ -57,6 +58,7 @@ paths:
         - Destination
       operationId: Get Destinations
       description: Get all destinations
+      summary: Get Destinations
       responses:
         '200':
           description: Destinations retrieved successfully
@@ -94,6 +96,7 @@ paths:
         - Destination
       operationId: Get Destination
       description: Retrieve a current destination
+      summary: Get Destination
       responses:
         '200':
           description: Destination retrieved successfully
@@ -120,6 +123,7 @@ paths:
         - 'Destination::TaxonomyConfiguration'
       operationId: 'Create Destination::TaxonomyConfiguration'
       description: ''
+      summary: 'Create Destination::TaxonomyConfiguration'
       requestBody:
         content:
           application/json:
@@ -155,6 +159,7 @@ paths:
         - 'Destination::TaxonomyConfiguration'
       operationId: 'Get Destination::TaxonomyConfigurations'
       description: ''
+      summary: 'Get Destination::TaxonomyConfigurations'
       responses:
         '200':
           description: TaxonomyConfigurations retrieved successfully
@@ -207,6 +212,7 @@ paths:
         - 'Destination::TaxonomyConfiguration'
       operationId: 'Get Destination::TaxonomyConfiguration'
       description: ''
+      summary: 'Get Destination::TaxonomyConfiguration'
       responses:
         '200':
           description: TaxonomyConfiguration retrieved successfully
@@ -239,6 +245,7 @@ paths:
         - 'Destination::TaxonomyConfiguration'
       operationId: 'Modify Destination::TaxonomyConfiguration'
       description: ''
+      summary: 'Modify Destination::TaxonomyConfiguration'
       responses:
         '200':
           description: TaxonomyConfiguration modified successfully
@@ -268,6 +275,7 @@ paths:
         - 'Destination::Integration'
       operationId: 'Create Destination::Integration'
       description: Create an integration
+      summary: 'Create Destination::Integration'
       requestBody:
         content:
           application/json:
@@ -303,6 +311,7 @@ paths:
         - 'Destination::Integration'
       operationId: 'Get Destination::Integrations'
       description: Retrieve many integrations
+      summary: 'Get Destination::Integrations'
       responses:
         '200':
           description: Integrations retrieved successfully
@@ -353,6 +362,7 @@ paths:
         - 'Destination::Integration'
       operationId: 'Get Destination::Integration'
       description: Retrieve an integration
+      summary: 'Get Destination::Integration'
       responses:
         '200':
           description: Integration retrieved successfully
@@ -385,6 +395,7 @@ paths:
         - 'Destination::Integration'
       operationId: 'Modify Destination::Integration'
       description: Alter an integration
+      summary: 'Modify Destination::Integration'
       responses:
         '200':
           description: Integration modified successfully
@@ -414,6 +425,7 @@ paths:
         - 'Destination::Endpoint'
       operationId: 'Create Destination::Endpoint'
       description: ''
+      summary: 'Create Destination::Endpoint'
       requestBody:
         content:
           application/json:
@@ -449,6 +461,7 @@ paths:
         - 'Destination::Endpoint'
       operationId: 'Get Destination::Endpoints'
       description: ''
+      summary: 'Get Destination::Endpoints'
       responses:
         '200':
           description: Endpoints retrieved successfully
@@ -499,6 +512,7 @@ paths:
         - 'Destination::Endpoint'
       operationId: 'Get Destination::Endpoint'
       description: ''
+      summary: 'Get Destination::Endpoint'
       responses:
         '200':
           description: Endpoint retrieved successfully
@@ -531,6 +545,7 @@ paths:
         - 'Destination::Endpoint'
       operationId: 'Modify Destination::Endpoint'
       description: ''
+      summary: 'Modify Destination::Endpoint'
       responses:
         '200':
           description: Endpoint modified successfully
@@ -560,6 +575,7 @@ paths:
         - 'Destination::Packager'
       operationId: 'Create Destination::Packager'
       description: ''
+      summary: 'Create Destination::Packager'
       requestBody:
         content:
           application/json:
@@ -595,6 +611,7 @@ paths:
         - 'Destination::Packager'
       operationId: 'Get Destination::Packagers'
       description: ''
+      summary: 'Get Destination::Packagers'
       responses:
         '200':
           description: Packagers retrieved successfully
@@ -640,6 +657,7 @@ paths:
         - 'Destination::Packager'
       operationId: 'Get Destination::Packager'
       description: ''
+      summary: 'Get Destination::Packager'
       responses:
         '200':
           description: Packager retrieved successfully
@@ -673,6 +691,7 @@ paths:
         - 'Destination::Formatter'
       operationId: 'Create Destination::Formatter'
       description: ''
+      summary: 'Create Destination::Formatter'
       requestBody:
         content:
           application/json:
@@ -708,6 +727,7 @@ paths:
         - 'Destination::Formatter'
       operationId: 'Get Destination::Formatters'
       description: ''
+      summary: 'Get Destination::Formatters'
       responses:
         '200':
           description: Formatters retrieved successfully
@@ -753,6 +773,7 @@ paths:
         - 'Destination::Formatter'
       operationId: 'Get Destination::Formatter'
       description: ''
+      summary: 'Get Destination::Formatter'
       responses:
         '200':
           description: Formatter retrieved successfully
@@ -786,6 +807,7 @@ paths:
         - 'Destination::Deliverer'
       operationId: 'Create Destination::Deliverer'
       description: ''
+      summary: 'Create Destination::Deliverer'
       requestBody:
         content:
           application/json:
@@ -821,6 +843,7 @@ paths:
         - 'Destination::Deliverer'
       operationId: 'Get Destination::Deliverers'
       description: ''
+      summary: 'Get Destination::Deliverers'
       responses:
         '200':
           description: Deliverers retrieved successfully
@@ -866,6 +889,7 @@ paths:
         - 'Destination::Deliverer'
       operationId: 'Get Destination::Deliverer'
       description: ''
+      summary: 'Get Destination::Deliverer'
       responses:
         '200':
           description: Deliverer retrieved successfully

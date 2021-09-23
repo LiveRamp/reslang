@@ -22,6 +22,7 @@ paths:
         - DeliverMilk
       operationId: Create DeliverMilk
       description: ''
+      summary: Create DeliverMilk
       requestBody:
         content:
           application/json:
@@ -42,6 +43,7 @@ paths:
         - DeliverMilk
       operationId: Get DeliverMilks
       description: ''
+      summary: Get DeliverMilks
       responses:
         '200':
           description: DeliverMilks retrieved successfully
@@ -79,6 +81,7 @@ paths:
         - DeliverMilk
       operationId: Get DeliverMilk
       description: ''
+      summary: Get DeliverMilk
       responses:
         '200':
           description: DeliverMilk retrieved successfully
@@ -104,6 +107,7 @@ paths:
         - Bulk search DeliverMilk
       operationId: 'Get Bulk DeliverMilk::searches'
       description: ''
+      summary: 'Get Bulk DeliverMilk::searches'
       responses:
         '200':
           description: searches retrieved successfully
@@ -141,6 +145,7 @@ paths:
         - Bulk search Milk
       operationId: 'Get Bulk Milk::searches'
       description: ''
+      summary: 'Get Bulk Milk::searches'
       responses:
         '200':
           description: searches retrieved successfully
@@ -178,6 +183,7 @@ paths:
         - AllDeliveredMilk
       operationId: Get AllDeliveredMilk
       description: ''
+      summary: Get AllDeliveredMilk
       responses:
         '200':
           description: AllDeliveredMilk retrieved successfully

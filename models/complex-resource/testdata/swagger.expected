@@ -18,6 +18,7 @@ paths:
         - Car
       operationId: Create Car
       description: ''
+      summary: Create Car
       requestBody:
         content:
           application/json:
@@ -39,6 +40,7 @@ paths:
         - Car
       operationId: Get Cars
       description: ''
+      summary: Get Cars
       responses:
         '200':
           description: Cars retrieved successfully
@@ -91,6 +93,7 @@ paths:
         - Car
       operationId: Get Car
       description: ''
+      summary: Get Car
       responses:
         '200':
           description: Car retrieved successfully
@@ -124,6 +127,7 @@ paths:
         - 'Car::Wheel'
       operationId: 'Create Car::Wheel'
       description: ''
+      summary: 'Create Car::Wheel'
       requestBody:
         content:
           application/json:
@@ -159,6 +163,7 @@ paths:
         - 'Car::Wheel'
       operationId: 'Get Car::Wheels'
       description: ''
+      summary: 'Get Car::Wheels'
       responses:
         '200':
           description: Wheels retrieved successfully
@@ -210,6 +215,7 @@ paths:
         - 'Car::Wheel'
       operationId: 'Get Car::Wheel'
       description: ''
+      summary: 'Get Car::Wheel'
       responses:
         '200':
           description: Wheel retrieved successfully
@@ -242,6 +248,7 @@ paths:
         - 'Car::Wheel'
       operationId: 'Modify Car::Wheel'
       description: ''
+      summary: 'Modify Car::Wheel'
       responses:
         '200':
           description: Wheel modified successfully

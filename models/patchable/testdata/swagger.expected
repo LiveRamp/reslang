@@ -16,6 +16,7 @@ paths:
         - Person
       operationId: Create Person
       description: ''
+      summary: Create Person
       requestBody:
         content:
           application/json:
@@ -38,6 +39,7 @@ paths:
         - Person
       operationId: Get Person
       description: ''
+      summary: Get Person
       responses:
         '200':
           description: Person retrieved successfully
@@ -63,6 +65,7 @@ paths:
         - Person
       operationId: Modify Person
       description: ''
+      summary: Modify Person
       requestBody:
         content:
           application/json:
@@ -89,6 +92,7 @@ paths:
         - Person
       operationId: Patch Person
       description: ''
+      summary: Patch Person
       requestBody:
         content:
           application/json:
