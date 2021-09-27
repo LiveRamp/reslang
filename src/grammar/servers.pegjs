@@ -4,7 +4,8 @@
 
 // - there are 2 types of servers - REST and EVENTS
 // - each server entry starts with a URL, an environment name, and an optional protocol
-// - during swagger generation runtime, a default PROD server will be added (see src/library/servers.reslang & LOCAL_SERVERS_INCLUDE in src/genbase.ts)
+// - during swagger generation runtime, a default PROD server will be added and used
+//   (see src/library/servers.reslang & LOCAL_SERVERS_INCLUDE in src/genbase.ts & args.env in src/main.ts)
 // - variables can be specified in the URL - using the syntax {variable_name[:optional_default]}
 // - the variables are taken from variables passed in through the command line switch: --var port=8020
 
