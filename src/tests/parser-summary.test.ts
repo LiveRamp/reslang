@@ -85,4 +85,40 @@ describe("reslang summary parsing tests", () => {
             }`, {output: "parser"}));
         expect(tree).toEqual(expected(operation("POST", "", "my description\nSummary: my summary\nmy description")))
     })
+    test("summaries cannot be defined last line", () => {
+        let tree = clean(parser.parse(
+            `resource test {
+                /operations
+                "my description
+                Summary: my summary"
+                POST
+            }`, {output: "parser"}));
+        expect(tree).toEqual(expected(operation("POST", "", "my description\nSummary: my summary")))
+    })
+    test("summaries may follow white space", () => {
+        expect(clean(parser.parse(
+            `resource test {
+                /operations
+                " Summary: my summary"
+                POST
+            }`, {output: "parser"}))).toEqual(expected(
+                operation("POST", "my summary", "")))
+        expect(clean(parser.parse(
+            `resource test {
+                /operations
+                " Summary: my summary
+                my description"
+                POST
+            }`, {output: "parser"}))).toEqual(expected(
+            operation("POST", "my summary", "my description")))
+        expect(clean(parser.parse(
+            `resource test {
+                /operations
+                "
+                Summary: my summary
+                my description"
+                POST
+            }`, {output: "parser"}))).toEqual(expected(
+            operation("POST", "my summary", "my description")))
+    })
 })

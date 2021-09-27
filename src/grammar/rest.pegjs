@@ -123,7 +123,7 @@ summary_only = "\"" summary:summary "\"" {
     return {"summary": summary, "description": ""}
 }
 
-summary = "Summary:" _ inner:(!"\n" !"\"" i:. {return i})* {
+summary = _ "Summary:" _ inner:(!"\n" !"\"" i:. {return i})* {
     return inner.join("")
 }
 
