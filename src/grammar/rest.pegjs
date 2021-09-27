@@ -115,7 +115,7 @@ operation_description = i:summary_only / i:summary_description / description:des
 summary_description = "\"" summary:summary "\n" _ description:(!"\"" i:. {return i})* "\"" {
     return {
         "description": stripWhitespace(description.join("").replace(/\\n/g, "\n")),
-        "summary": summary.trimRight().replace(/\.$/, "")
+        "summary": summary.trimRight()
     }
 }
 
