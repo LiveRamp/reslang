@@ -72,6 +72,17 @@ describe("reslang summary parsing tests", () => {
                 my description"
                 POST
             }`, {output: "parser"}));
-        expect(tree).toEqual(expected(operation("POST", "my summary", "my description")))
+         expect(tree).toEqual(expected(operation("POST", "my summary", "my description")))
+    })
+    test("summaries cannot be defined in middle lines", () => {
+        let tree = clean(parser.parse(
+            `resource test {
+                /operations
+                "my description
+                Summary: my summary
+                my description"
+                POST
+            }`, {output: "parser"}));
+        expect(tree).toEqual(expected(operation("POST", "", "my description\nSummary: my summary\nmy description")))
     })
 })
