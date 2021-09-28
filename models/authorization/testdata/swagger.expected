@@ -24,6 +24,7 @@ paths:
         - User
       operationId: Create User
       description: ''
+      summary: Create User
       requestBody:
         content:
           application/json:
@@ -58,6 +59,7 @@ paths:
         - User
       operationId: Get Users
       description: ''
+      summary: Get Users
       responses:
         '200':
           description: Users retrieved successfully
@@ -79,8 +81,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -108,6 +110,7 @@ paths:
         - User
       operationId: Get User
       description: ''
+      summary: Get User
       responses:
         '200':
           description: User retrieved successfully
@@ -140,6 +143,7 @@ paths:
         - Suspend User
       operationId: Suspend User
       description: ''
+      summary: Suspend User
       responses:
         '200':
           description: Suspend action completed
@@ -171,6 +175,7 @@ paths:
         - Unsuspend User
       operationId: Unsuspend User
       description: ''
+      summary: Unsuspend User
       responses:
         '200':
           description: Unsuspend action completed
@@ -214,6 +219,7 @@ paths:
         - Organization
       operationId: Create Organization
       description: ''
+      summary: Create Organization
       requestBody:
         content:
           application/json:
@@ -235,6 +241,7 @@ paths:
         - Organization
       operationId: Get Organizations
       description: ''
+      summary: Get Organizations
       responses:
         '200':
           description: Organizations retrieved successfully
@@ -256,8 +263,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -267,6 +274,7 @@ paths:
         - Organization
       operationId: Get Organization
       description: ''
+      summary: Get Organization
       responses:
         '200':
           description: Organization retrieved successfully
@@ -293,6 +301,7 @@ paths:
         - Role
       operationId: Create Role
       description: ''
+      summary: Create Role
       requestBody:
         content:
           application/json:
@@ -327,6 +336,7 @@ paths:
         - Role
       operationId: Get Roles
       description: ''
+      summary: Get Roles
       responses:
         '200':
           description: Roles retrieved successfully
@@ -348,8 +358,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -365,6 +375,7 @@ paths:
         - Role
       operationId: Get Role
       description: ''
+      summary: Get Role
       responses:
         '200':
           description: Role retrieved successfully
@@ -559,13 +570,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     OrganizationMultiResponsePagination:
       type: object
       properties:
@@ -574,13 +584,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     RoleMultiResponsePagination:
       type: object
       properties:
@@ -589,11 +598,10 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
 

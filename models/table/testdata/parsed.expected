@@ -251,7 +251,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           },
           {
             "operation": "POST",
@@ -303,7 +304,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
@@ -325,7 +327,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           },
           {
             "operation": "PUT",
@@ -362,7 +365,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           }
         ],
         "parents": [
@@ -432,7 +436,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           }
         ],
         "parents": [
@@ -536,7 +541,8 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           }
         ],
         "parents": [
@@ -717,22 +723,26 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "DELETE",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],

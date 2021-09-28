@@ -104,11 +104,40 @@ errorcode = _ comment:description? _ code:[0-9]+ {
     return {"code": code.join(""), "comment": comment}
 }
 
+operation_description = i:summary_only / i:summary_description / description:description {
+    if (typeof i !== 'undefined') {
+        return i
+    }
+    return {"summary": "", "description": description}
+}
+
+
+summary_description = "\"" summary:summary "\n" _ description:(!"\"" i:. {return i})* "\"" {
+    return {
+        "description": stripWhitespace(description.join("").replace(/\\n/g, "\n")),
+        "summary": summary.trimRight()
+    }
+}
+
+summary_only = "\"" summary:summary "\"" {
+    return {"summary": summary, "description": ""}
+}
+
+summary = _ "Summary:" _ inner:(!"\n" !"\"" i:. {return i})* {
+    return inner.join("")
+}
+
 ops =
-    _ comment:description? _ op:(mainops / multiops) _ allOptions: options _ {
+    _ comment:operation_description? _ op:(mainops / multiops) _ allOptions: options _ {
+    if (!comment) {
+        comment = {
+            summary: ""
+        }
+    }
     return {
         operation: op,
-        comment: comment,
+        comment: comment.description,
+        summary: comment.summary,
         options: allOptions.standard,
         pagination: allOptions.pagination
     }
