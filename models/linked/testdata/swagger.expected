@@ -20,6 +20,7 @@ paths:
         - Foo
       operationId: Get Foo
       description: ''
+      summary: Get Foo
       responses:
         '200':
           description: Foo retrieved successfully
@@ -45,6 +46,7 @@ paths:
         - 'Foo::Bar'
       operationId: 'Get Foo::Bar'
       description: ''
+      summary: 'Get Foo::Bar'
       responses:
         '200':
           description: Bar retrieved successfully
@@ -76,6 +78,7 @@ paths:
         - Linking
       operationId: Get Linking
       description: ''
+      summary: Get Linking
       responses:
         '200':
           description: Linking retrieved successfully

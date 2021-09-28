@@ -26,6 +26,7 @@ paths:
         - Garage
       operationId: Create Garage
       description: Actual POST comment
+      summary: Create Garage
       requestBody:
         content:
           application/json:
@@ -48,6 +49,7 @@ paths:
         - Garage
       operationId: Get Garages
       description: ''
+      summary: Get Garages
       responses:
         '200':
           description: Garages retrieved successfully
@@ -69,8 +71,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -92,6 +94,7 @@ paths:
         - Garage
       operationId: Get Garage
       description: ''
+      summary: Get Garage
       responses:
         '200':
           description: Garage retrieved successfully
@@ -118,6 +121,7 @@ paths:
         - Garage
       operationId: Modify Garage
       description: Actual PUT comment
+      summary: Modify Garage
       requestBody:
         content:
           application/json:
@@ -145,6 +149,7 @@ paths:
         - Garage
       operationId: Delete Garage
       description: ''
+      summary: Delete Garage
       responses:
         '200':
           description: Garage deleted successfully
@@ -168,6 +173,7 @@ paths:
         - Foo
       operationId: Get Foo
       description: ''
+      summary: Get Foo
       responses:
         '200':
           description: Foo retrieved successfully
@@ -186,6 +192,7 @@ paths:
         - Foo
       operationId: Modify Foo
       description: ''
+      summary: Modify Foo
       requestBody:
         content:
           application/json:
@@ -206,6 +213,7 @@ paths:
         - Bar
       operationId: Get Bars
       description: ''
+      summary: Get Bars
       responses:
         '200':
           description: Bars retrieved successfully
@@ -227,8 +235,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -243,6 +251,7 @@ paths:
         - Test
       operationId: Create Test
       description: ''
+      summary: Create Test
       requestBody:
         content:
           application/json:
@@ -410,13 +419,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     BarMultiResponsePagination:
       type: object
       properties:
@@ -425,11 +433,10 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
 

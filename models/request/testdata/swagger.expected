@@ -32,6 +32,7 @@ paths:
         - UploadRequest
       operationId: Create UploadRequest
       description: ''
+      summary: Create UploadRequest
       requestBody:
         content:
           application/json:
@@ -53,6 +54,7 @@ paths:
         - UploadRequest
       operationId: Get UploadRequests
       description: ''
+      summary: Get UploadRequests
       responses:
         '200':
           description: UploadRequests retrieved successfully
@@ -74,8 +76,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -90,6 +92,7 @@ paths:
         - UploadRequest
       operationId: Get UploadRequest
       description: ''
+      summary: Get UploadRequest
       responses:
         '200':
           description: UploadRequest retrieved successfully
@@ -116,6 +119,7 @@ paths:
         - 'UploadRequest::Status'
       operationId: 'Get UploadRequest::Status'
       description: ''
+      summary: 'Get UploadRequest::Status'
       responses:
         '200':
           description: Status retrieved successfully
@@ -143,6 +147,7 @@ paths:
         - 'UploadRequest::RecordSet'
       operationId: 'Create UploadRequest::RecordSet'
       description: ''
+      summary: 'Create UploadRequest::RecordSet'
       requestBody:
         content:
           application/json:
@@ -179,6 +184,7 @@ paths:
         - 'UploadRequest::RecordSet'
       operationId: 'Get UploadRequest::RecordSet'
       description: ''
+      summary: 'Get UploadRequest::RecordSet'
       responses:
         '200':
           description: RecordSet retrieved successfully
@@ -212,6 +218,7 @@ paths:
         - 'UploadRequest::RecordSet::Deep'
       operationId: 'Create UploadRequest::RecordSet::Deep'
       description: ''
+      summary: 'Create UploadRequest::RecordSet::Deep'
       requestBody:
         content:
           application/json:
@@ -255,6 +262,7 @@ paths:
         - 'UploadRequest::RecordSet::Deep'
       operationId: 'Get UploadRequest::RecordSet::Deep'
       description: ''
+      summary: 'Get UploadRequest::RecordSet::Deep'
       responses:
         '200':
           description: Deep retrieved successfully
@@ -295,6 +303,7 @@ paths:
         - StartProcessingAction UploadRequest
       operationId: StartProcessingAction UploadRequest asynchronously
       description: ''
+      summary: StartProcessingAction UploadRequest asynchronously
       requestBody:
         content:
           application/json:
@@ -353,6 +362,7 @@ paths:
         - StopProcessingAction UploadRequest
       operationId: StopProcessingAction UploadRequest
       description: ''
+      summary: StopProcessingAction UploadRequest
       requestBody:
         content:
           application/json:
@@ -389,6 +399,7 @@ paths:
         - StopProcessingAction UploadRequest
       operationId: 'Get UploadRequest::StopProcessingAction'
       description: ''
+      summary: 'Get UploadRequest::StopProcessingAction'
       responses:
         '200':
           description: StopProcessingAction retrieved successfully
@@ -422,6 +433,7 @@ paths:
         - Bulk StartProcessingAction UploadRequest
       operationId: Bulk StartProcessingAction UploadRequest
       description: ''
+      summary: Bulk StartProcessingAction UploadRequest
       requestBody:
         content:
           application/json:
@@ -444,6 +456,7 @@ paths:
         - Bulk StartProcessingAction UploadRequest
       operationId: 'Get Bulk UploadRequest::StartProcessingAction'
       description: ''
+      summary: 'Get Bulk UploadRequest::StartProcessingAction'
       responses:
         '200':
           description: StartProcessingAction retrieved successfully
@@ -471,6 +484,7 @@ paths:
         - 'Bulk Clear UploadRequest::RecordSet'
       operationId: 'Bulk Clear UploadRequest::RecordSet'
       description: ''
+      summary: 'Bulk Clear UploadRequest::RecordSet'
       requestBody:
         content:
           application/json:
@@ -507,6 +521,7 @@ paths:
         - 'Bulk Clear UploadRequest::RecordSet'
       operationId: 'Get Bulk UploadRequest::RecordSet::Clear'
       description: ''
+      summary: 'Get Bulk UploadRequest::RecordSet::Clear'
       responses:
         '200':
           description: Clear retrieved successfully
@@ -540,6 +555,7 @@ paths:
         - 'Bulk Jump UploadRequest::RecordSet::Deep'
       operationId: 'Bulk Jump UploadRequest::RecordSet::Deep'
       description: ''
+      summary: 'Bulk Jump UploadRequest::RecordSet::Deep'
       requestBody:
         content:
           application/json:
@@ -583,6 +599,7 @@ paths:
         - 'Bulk Jump UploadRequest::RecordSet::Deep'
       operationId: 'Get Bulk UploadRequest::RecordSet::Deep::Jump'
       description: ''
+      summary: 'Get Bulk UploadRequest::RecordSet::Deep::Jump'
       responses:
         '200':
           description: Jump retrieved successfully
@@ -881,11 +898,10 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
 

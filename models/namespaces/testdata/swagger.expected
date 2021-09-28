@@ -22,6 +22,7 @@ paths:
         - A
       operationId: Create A
       description: ''
+      summary: Create A
       responses:
         '201':
           description: A created successfully
@@ -38,6 +39,7 @@ paths:
         - A
       operationId: Get A
       description: ''
+      summary: Get A
       responses:
         '200':
           description: A retrieved successfully
@@ -62,6 +64,7 @@ paths:
         - A
       operationId: Modify A
       description: ''
+      summary: Modify A
       responses:
         '200':
           description: A modified successfully
@@ -83,6 +86,7 @@ paths:
         - 'A::Suba'
       operationId: 'Create A::Suba'
       description: ''
+      summary: 'Create A::Suba'
       responses:
         '201':
           description: Suba created successfully
@@ -112,6 +116,7 @@ paths:
         - 'A::Suba'
       operationId: 'Get A::Suba'
       description: ''
+      summary: 'Get A::Suba'
       responses:
         '200':
           description: Suba retrieved successfully
@@ -142,6 +147,7 @@ paths:
         - 'A::Suba'
       operationId: 'Modify A::Suba'
       description: ''
+      summary: 'Modify A::Suba'
       responses:
         '200':
           description: Suba modified successfully
@@ -169,6 +175,7 @@ paths:
         - B
       operationId: Create B
       description: ''
+      summary: Create B
       responses:
         '201':
           description: B created successfully
@@ -185,6 +192,7 @@ paths:
         - B
       operationId: Get B
       description: ''
+      summary: Get B
       responses:
         '200':
           description: B retrieved successfully
@@ -209,6 +217,7 @@ paths:
         - B
       operationId: Modify B
       description: ''
+      summary: Modify B
       responses:
         '200':
           description: B modified successfully
@@ -230,6 +239,7 @@ paths:
         - 'B::Subb'
       operationId: 'Create B::Subb'
       description: ''
+      summary: 'Create B::Subb'
       responses:
         '201':
           description: Subb created successfully
@@ -259,6 +269,7 @@ paths:
         - 'B::Subb'
       operationId: 'Get B::Subb'
       description: ''
+      summary: 'Get B::Subb'
       responses:
         '200':
           description: Subb retrieved successfully
@@ -289,6 +300,7 @@ paths:
         - 'B::Subb'
       operationId: 'Modify B::Subb'
       description: ''
+      summary: 'Modify B::Subb'
       responses:
         '200':
           description: Subb modified successfully

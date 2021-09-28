@@ -16,6 +16,7 @@ paths:
         - Car
       operationId: Create Car
       description: Create a car
+      summary: Create Car
       requestBody:
         content:
           application/json:
@@ -37,6 +38,7 @@ paths:
         - Car
       operationId: Get Car
       description: Get a single car
+      summary: Get Car
       responses:
         '200':
           description: Car retrieved successfully
@@ -61,6 +63,7 @@ paths:
         - Car
       operationId: Modify Car
       description: Update a car
+      summary: Modify Car
       requestBody:
         content:
           application/json:
@@ -86,6 +89,7 @@ paths:
         - Car
       operationId: Patch Car
       description: Patch a car
+      summary: Patch Car
       requestBody:
         content:
           application/json:

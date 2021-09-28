@@ -16,6 +16,7 @@ paths:
         - MTest
       operationId: Create MTest
       description: ''
+      summary: Create MTest
       requestBody:
         content:
           application/json:

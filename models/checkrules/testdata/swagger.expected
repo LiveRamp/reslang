@@ -28,6 +28,7 @@ paths:
         - A
       operationId: Create A
       description: ''
+      summary: Create A
       requestBody:
         content:
           application/json:
@@ -50,6 +51,7 @@ paths:
         - A
       operationId: Get A
       description: ''
+      summary: Get A
       responses:
         '200':
           description: A retrieved successfully
@@ -76,6 +78,7 @@ paths:
         - 'A::B'
       operationId: 'Create A::B'
       description: ''
+      summary: 'Create A::B'
       requestBody:
         content:
           application/json:
@@ -112,6 +115,7 @@ paths:
         - 'A::B'
       operationId: 'Get A::B'
       description: ''
+      summary: 'Get A::B'
       responses:
         '200':
           description: B retrieved successfully
@@ -145,6 +149,7 @@ paths:
         - 'A::B::C'
       operationId: 'Create A::B::C'
       description: ''
+      summary: 'Create A::B::C'
       requestBody:
         content:
           application/json:
@@ -188,6 +193,7 @@ paths:
         - 'A::B::C'
       operationId: 'Get A::B::C'
       description: ''
+      summary: 'Get A::B::C'
       responses:
         '200':
           description: C retrieved successfully
@@ -228,6 +234,7 @@ paths:
         - 'Start A::B::C'
       operationId: 'start A::B::C'
       description: ''
+      summary: 'start A::B::C'
       requestBody:
         content:
           application/json:
@@ -278,6 +285,7 @@ paths:
         - 'Start A::B::C'
       operationId: 'Get A::B::C::start'
       description: ''
+      summary: 'Get A::B::C::start'
       responses:
         '200':
           description: start retrieved successfully
@@ -325,6 +333,7 @@ paths:
         - 'Stop A::B'
       operationId: 'stop A::B asynchronously'
       description: ''
+      summary: 'stop A::B asynchronously'
       requestBody:
         content:
           application/json:
@@ -388,6 +397,7 @@ paths:
         - 'Stop A::B'
       operationId: 'Get A::B::stop'
       description: ''
+      summary: 'Get A::B::stop'
       responses:
         '200':
           description: stop retrieved successfully
