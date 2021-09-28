@@ -139,7 +139,7 @@ export abstract class BaseGen {
     public constructor(
         private dirs: string[],
         protected rules: IRules,
-        protected environment: string = "PROD",
+        protected environment: string,
         protected vars: string = "",
         expandInlines = false,
         protected omitNamespace = false,
