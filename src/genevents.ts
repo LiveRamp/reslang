@@ -180,21 +180,12 @@ export default class EventsGen extends BaseGen {
 
     private addStandardHeaderDefinition(schemas: any, el: IResourceLike) {
         const name = camelCase(this.formSingleUniqueName(el)) + "Header"
-
-        // form the array of event verbs
-        const verbs: string[] = []
-        for (const op of el.events || []) {
-            verbs.push(op.operation)
-        }
+        const verb = this.buildVerbProperty(el);
 
         schemas[name] = {
             type: "object",
             properties: {
-                verb: {
-                    description: "",
-                    type: "string",
-                    enum: verbs
-                },
+                verb: verb,
                 location: {
                     description: "",
                     type: "string",
@@ -212,6 +203,21 @@ export default class EventsGen extends BaseGen {
             required: ["verb", "location", "ids"]
         }
         return name
+    }
+
+    public buildVerbProperty(el: IResourceLike) {
+        const verbs: string[] = []
+        for (const op of el.events || []) {
+            verbs.push(op.operation)
+        }
+        return verbs.length > 0 ? {
+            description: "",
+            type: "string",
+            "enum": verbs
+        } : {
+            description: "",
+            type: "string",
+        };
     }
 
     private liftToHeader(name: string, schemas: any, headers: any) {
