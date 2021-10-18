@@ -52,7 +52,7 @@ event StartSignal {
     /payload
         name: string
         address: string[1..10]
-        // foo: value-of v2/TestResource::Foo2 ==> causes event generation to not render correctly, need to find out why
+        foo: value-of v2/TestResource::Foo2
 }
 produces StartSignal
 

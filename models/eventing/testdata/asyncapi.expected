@@ -242,6 +242,39 @@ components:
         - id
         - address
       description: A REST subresource
+    v2TestResourceFoo2Header:
+      type: object
+      properties:
+        verb:
+          description: ''
+          type: string
+        location:
+          description: ''
+          type: string
+          format: url
+          example: 'https://www.domain.com (url)'
+        ids:
+          description: ''
+          items:
+            type: string
+          type: array
+      required:
+        - verb
+        - location
+        - ids
+    v2TestResourceFoo2Output:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          items:
+            type: string
+          type: array
+      required:
+        - id
+        - address
     StartSignalHeader:
       type: object
       properties:
@@ -268,9 +301,13 @@ components:
           minItems: 1
           maxItems: 10
           type: array
+        foo:
+          $ref: '#/components/schemas/v2TestResourceFoo2Output'
+          type: object
       required:
         - name
         - address
+        - foo
       description: Event to start
     v3StopSignalHeader:
       type: object
@@ -365,6 +402,27 @@ components:
             type: string
             enum:
               - POST
+          location:
+            description: ''
+            type: string
+            format: url
+            example: 'https://www.domain.com (url)'
+          ids:
+            description: ''
+            items:
+              type: string
+            type: array
+        required:
+          - verb
+          - location
+          - ids
+    v2TestResourceFoo2Header:
+      headers:
+        type: object
+        properties:
+          verb:
+            description: ''
+            type: string
           location:
             description: ''
             type: string
