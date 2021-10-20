@@ -16,6 +16,7 @@ import {
     IUnion,
     isStructure,
     isEvent,
+    isEnum,
     IServers,
     isProduces,
     isConsumes,
@@ -1111,7 +1112,6 @@ Actions cannot have subresources`
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
-        const sane = camelCase(name)
 
         // allow description overrides by caller
         if (!obj.description) {
@@ -1126,14 +1126,7 @@ Actions cannot have subresources`
         }
         const schema = schemaLevel ? obj.schema : obj
 
-        const prim = isPrimitiveType(name)
-
-        // can only have a default if it is a primitive
-        if (!prim && attr.default) {
-            throw Error(
-                "Can only have defaults on primitive attributes: " + attr.name
-            )
-        }
+        this.validateDefaults(name, attr);
 
         if (attr.stringMap && !suppressStringmap) {
             schema.type = "object"
@@ -1144,7 +1137,7 @@ Actions cannot have subresources`
                 true,
                 true
             )
-        } else if (prim) {
+        } else if (isPrimitiveType(name)) {
             this.translatePrimitive(
                 attr,
                 type.name,
@@ -1157,28 +1150,20 @@ Actions cannot have subresources`
             switch (def.kind) {
                 case "structure":
                 case "union":
+                    this.setSchemaRefs(schema, name)
+                    schema.type = "object"
+                    break
                 case "enum":
-                    if (this.generateAllOf) {
-                        schema.allOf = [
-                            { $ref: `#/components/schemas/${sane}` }
-                        ]
-                    } else {
-                        schema.$ref = `#/components/schemas/${sane}`
-                    }
-                    schema.type = def.kind === "enum" ? "string" : "object"
+                    this.setSchemaRefs(schema, name)
+                    schema.type = "string"
+                    this.addDefault(attr, schema, "string")
                     break
                 case "resource-like":
                     // must have a linked annotation
                     if (attr.linked) {
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
-                        if (this.generateAllOf) {
-                            schema.allOf = [
-                                { $ref: `#/components/schemas/${sane}Output` }
-                            ]
-                        } else {
-                            schema.$ref = `#/components/schemas/${sane}Output`
-                        }
+                        this.setSchemaRefs(schema, name)
                         schema.type = "object"
                     } else {
                         throw new Error(
@@ -1333,4 +1318,30 @@ Actions cannot have subresources`
 
         return parts[0]
     }
-}
+
+    protected setSchemaRefs(schema: any, name: string) {
+        const sane = camelCase(name)
+        if (this.generateAllOf) {
+            schema.allOf = [
+                {$ref: `#/components/schemas/${sane}`}
+            ]
+        } else {
+            schema.$ref = `#/components/schemas/${sane}`
+        }
+    }
+
+    protected validateDefaults(name: string, attr: IAttribute) {
+        if (!attr.default) {
+            return // No defaults, nothing to validate
+        }
+        if (isPrimitiveType(name)) {
+            return // Primitive types can have defaults
+        }
+        let def = this.extractDefinitionGently(name);
+        if (def != null && isEnum(def)) {
+            return // Enum objects can have defaults
+        }
+        throw Error(
+            "Can only have defaults on primitive attributes: " + attr.name
+        )
+    }}
