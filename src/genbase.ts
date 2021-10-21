@@ -1077,7 +1077,7 @@ Actions cannot have subresources`
             case "int":
                 if (
                     attr.default.type !== "numerical" ||
-                    attr.default.type.includes(".")
+                    attr.default.value.includes(".")
                 ) {
                     throw Error(
                         "Attribute " +
