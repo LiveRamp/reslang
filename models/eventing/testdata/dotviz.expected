@@ -46,7 +46,7 @@ digraph G {
 "v2/TestResource" -> "v2/TestResource::Foo2" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "StartSignal" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='dashed'  >
-                    <tr><td><b>StartSignal        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="left">address: string[1..10]</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">time: datetime</td></tr></table>>];
+                    <tr><td><b>StartSignal        </b></td></tr><hr/><tr><td align="left">name: string</td></tr><tr><td align="left">address: string[1..10]</td></tr><tr><td align="left">foo: Foo2</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">time: datetime</td></tr></table>>];
 "v3/StopSignal" [label=<
                     <table border="3" cellborder="0" cellspacing="1" style='dashed'  >
                     <tr><td><b>v3/StopSignal        </b></td></tr><hr/><tr><td align="left">stopped: datetime</td></tr></table>>];
