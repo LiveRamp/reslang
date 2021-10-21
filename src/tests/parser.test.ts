@@ -23,7 +23,7 @@ c d`)
 })
 
 function compare(module: string) {
-    const parser = new ParseGen([`models/${module}`], { ignoreRules: true })
+    const parser = new ParseGen([`models/${module}`], { ignoreRules: true }, "PROD")
     const got = parser.generate()
     const expected = readFile(`models/${module}/testdata/parsed.expected`)
     expect(JSON.parse(got)).toStrictEqual(JSON.parse(expected))
