@@ -573,6 +573,35 @@
               "representation": false
             },
             "constraints": {}
+          },
+          {
+            "constraints": {},
+            "full": true,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "foo",
+            "stringMap": false,
+            "type": {
+              "name": "v2/TestResource::Foo2",
+              "parentName": "v2/TestResource",
+              "parentShort": "v2/TestResource",
+              "parents": [
+                "v2/TestResource"
+              ],
+              "short": "Foo2"
+            }
           }
         ],
         "name": "StartSignal",
