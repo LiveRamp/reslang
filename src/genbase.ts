@@ -1344,6 +1344,6 @@ Actions cannot have subresources`
             return // Enum objects can have defaults
         }
         throw Error(
-            "Can only have defaults on primitive attributes: " + attr.name
+            "Can only have defaults on primitive attributes or enums: " + attr.name
         )
     }}
