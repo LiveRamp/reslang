@@ -18,10 +18,10 @@ describe("reslang summary parsing tests", () => {
             singleton: false
         }];
     }
-    function operation(operation: string, summary: string, comment?: string) {
+    function operation(verb: string, summary: string, comment?: string) {
         return {
             summary: summary,
-            operation: operation,
+            operation: verb,
             comment: comment,
             options: [],
             errors: []
