@@ -1087,15 +1087,14 @@ Actions cannot have subresources`
                 break
             case "enum":
                 const def = this.extractDefinition(attr.type.name) as IEnum
-                const literals = def.literals || [];
-                const invalidEnumDefaultValue = "Attribute " + attr.name +
-                    " expected one of [" + literals.join(", ") + "] as default value" +
-                    " but " + attr.default.value + " was found instead"
-                if (attr.default.type !== "enum") {
-                    throw Error(invalidEnumDefaultValue)
-                }
-                if (!literals.includes(attr.default.value)) {
-                    throw Error(invalidEnumDefaultValue)
+                const literals = def.literals || []
+                if (
+                    attr.default.type !== "enum" ||
+                    !literals.includes(attr.default.value)
+                ) {
+                    throw Error("Attribute " + attr.name +
+                        " expected one of [" + literals.join(", ") + "] as default value" +
+                        " but " + attr.default.value + " was found instead")
                 }
                 schema.default = attr.default.value
                 break
