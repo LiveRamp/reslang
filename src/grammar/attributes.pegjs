@@ -17,7 +17,7 @@ example = _ "example:" _ format: description _ {
     return format
 }
 
-default = _ "default" _ "=" _ value: (boolean / string / numerical) _ {
+default = _ "default" _ "=" _ value: (boolean / string / numerical / enum_literal) _ {
     return value
 }
 
@@ -25,12 +25,20 @@ boolean = _ val:("true" / "false") {
     return {"type": "boolean", "value": val}
 }
 
-numerical = _ val:([\+\-]?[0-9]*("."[0-9]+)?) _ {
-    return {"type": "numerical", "value": val.flat().join("")}
+sign = "+" / "-"
+decimal = ("." [0-9]+)
+        / ([0-9]+ "." [0-9]+)
+        / [0-9]+
+numerical = _ val:$(sign? decimal) _ {
+    return {"type": "numerical", "value": val}
 }
 
 string = _ "\"" val:([^\"]+) "\"" _ {
     return {"type": "string", "value": val.flat().join("")}
+}
+
+enum_literal = _ val: literalname _ {
+    return {"type": "enum", "value": val }
 }
 
 array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
