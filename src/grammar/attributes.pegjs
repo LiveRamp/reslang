@@ -29,8 +29,8 @@ sign = "+" / "-"
 decimal = ("." [0-9]+)
         / ([0-9]+ "." [0-9]+)
         / [0-9]+
-numerical = _ val:(sign? decimal) _ {
-    return {"type": "numerical", "value": val.flat().join("")}
+numerical = _ val:$(sign? decimal) _ {
+    return {"type": "numerical", "value": val}
 }
 
 string = _ "\"" val:([^\"]+) "\"" _ {
