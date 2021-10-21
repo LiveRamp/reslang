@@ -1085,6 +1085,20 @@ Actions cannot have subresources`
                 }
                 schema.default = Number.parseFloat(attr.default.value)
                 break
+            case "enum":
+                const def = this.extractDefinition(attr.type.name) as IEnum
+                const literals = def.literals || [];
+                const invalidEnumDefaultValue = "Attribute " + attr.name +
+                    " expected one of [" + literals.join(", ") + "] as default value" +
+                    " but " + attr.default.value + " was found instead"
+                if (attr.default.type !== "enum") {
+                    throw Error(invalidEnumDefaultValue)
+                }
+                if (!literals.includes(attr.default.value)) {
+                    throw Error(invalidEnumDefaultValue)
+                }
+                schema.default = attr.default.value
+                break
         }
     }
 
@@ -1144,7 +1158,7 @@ Actions cannot have subresources`
                 case "enum":
                     this.setSchemaRefs(schema, name)
                     schema.type = "string"
-                    this.addDefault(attr, schema, "string")
+                    this.addDefault(attr, schema, "enum")
                     break
                 case "resource-like":
                     // must have a linked annotation
