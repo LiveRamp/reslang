@@ -1053,24 +1053,20 @@ Actions cannot have subresources`
         if (!attr || !attr.default) {
             return
         }
+        const invalidDefaultValue = "Attribute " + attr.name +
+            " can only have a " + type + " default value" +
+            " but " + attr.default.type + " value " + attr.default.value +
+            " was found instead"
         switch (type) {
             case "boolean":
                 if (attr.default.type !== "boolean") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a boolean default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = attr.default.value === "true"
                 break
             case "string":
                 if (attr.default.type !== "string") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a string default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = attr.default.value
                 break
@@ -1079,21 +1075,13 @@ Actions cannot have subresources`
                     attr.default.type !== "numerical" ||
                     attr.default.value.includes(".")
                 ) {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have an integer default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = Number.parseInt(attr.default.value, 10)
                 break
             case "double":
                 if (attr.default.type !== "numerical") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a numerical default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = Number.parseFloat(attr.default.value)
                 break
