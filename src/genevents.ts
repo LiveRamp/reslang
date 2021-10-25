@@ -162,19 +162,12 @@ export default class EventsGen extends BaseGen {
                 details.subscribe = msg
             }
 
-            channels[
-                "topics/" +
-                    this.mainNamespace +
-                    "_" +
-                    getVersion(def.name) +
-                    "-" +
-                    kebabCase(def.short)
-            ] = details
+            channels[topic] = details
         })
     }
 
     private topicOfDefiniton(def: IReference) {
-        let ns = this.mainNamespace;
+        let ns = kebabCase(this.getSpace());
         let version = getVersion(def.name);
         let name = kebabCase(def.short);
         return this.sanitizeTopic(ns, version, name);
