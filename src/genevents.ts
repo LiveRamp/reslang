@@ -181,7 +181,10 @@ export default class EventsGen extends BaseGen {
     }
 
     private toEventTopic(ns: string, version: string, name: string) {
-        return `topics/${ns}_${version}-${name}`;
+        const basic = `${ns}_${version}-${name}`;
+        const escaped = basic.replace(/[^a-zA-Z0-9_-]/, "_");
+        const prefixed = "topics/" + escaped;
+        return prefixed
     }
 
     private addStandardHeaderDefinition(schemas: any, el: IResourceLike) {
