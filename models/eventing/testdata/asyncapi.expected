@@ -31,21 +31,21 @@ channels:
       operationId: 'v2/TestResource::Foo'
       message:
         $ref: '#/components/messages/v2TestResourceFoo'
-  topics/eventing_v1-start-signal:
+  topics/andrew-simple-example_v1-start-signal:
     description: Event to start
     publish:
       summary: 'Adhoc: StartSignal'
       operationId: StartSignal
       message:
         $ref: '#/components/messages/StartSignal'
-  topics/eventing_v3-stop-signal:
+  topics/andrew-simple-example_v3-stop-signal:
     description: Event to stop
     subscribe:
       summary: 'Adhoc: v3/StopSignal'
       operationId: v3/StopSignal
       message:
         $ref: '#/components/messages/v3StopSignal'
-  topics/eventing_v1-directory-delete-incomplete:
+  topics/andrew-simple-example_v1-directory-delete-incomplete:
     description: 'If a deletion is corrupted, we generate this event'
     publish:
       summary: 'Adhoc: file.DirectoryDeleteIncomplete'
