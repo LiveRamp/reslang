@@ -117,14 +117,8 @@ export default class EventsGen extends BaseGen {
 
             const unique = camelCase(this.formSingleUniqueName(el))
             if (isResourceLike(el) && !el.future && el.events) {
-                channels[
-                    "topics/" +
-                        kebabCase(this.getSpace()) +
-                        "_" +
-                        getVersion(el.name) +
-                        "-" +
-                        kebabCase(el.name)
-                ] = {
+                const topic = this.topicOfRestResource(el);
+                channels[topic] = {
                     description:
                         this.translateDoc(el.comment) || "no documentation",
                     subscribe: {
@@ -148,6 +142,7 @@ export default class EventsGen extends BaseGen {
 
         all.forEach((name) => {
             const def = this.extractDefinition(name)
+            const topic = this.topicOfAdhocEvent(def);
             const unq = camelCase(this.formSingleUniqueName(def))
             const details: any = {
                 description:
@@ -167,15 +162,29 @@ export default class EventsGen extends BaseGen {
                 details.subscribe = msg
             }
 
-            channels[
-                "topics/" +
-                    this.mainNamespace +
-                    "_" +
-                    getVersion(def.name) +
-                    "-" +
-                    kebabCase(def.short)
-            ] = details
+            channels[topic] = details
         })
+    }
+
+    private topicOfAdhocEvent(def: IReference) {
+        let ns = kebabCase(this.getSpace());
+        let version = getVersion(def.name);
+        let name = kebabCase(def.short);
+        return this.toEventTopic(ns, version, name);
+    }
+
+    private topicOfRestResource(el: IReference) {
+        let ns = kebabCase(this.getSpace());
+        let version = getVersion(el.name);
+        let name = kebabCase(el.name);
+        return this.toEventTopic(ns, version, name);
+    }
+
+    private toEventTopic(ns: string, version: string, name: string) {
+        const basic = `${ns}_${version}-${name}`;
+        const escaped = basic.replace(/[^a-zA-Z0-9_-]/, "_");
+        const prefixed = "topics/" + escaped;
+        return prefixed
     }
 
     private addStandardHeaderDefinition(schemas: any, el: IResourceLike) {
