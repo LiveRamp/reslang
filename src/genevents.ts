@@ -117,7 +117,7 @@ export default class EventsGen extends BaseGen {
 
             const unique = camelCase(this.formSingleUniqueName(el))
             if (isResourceLike(el) && !el.future && el.events) {
-                let topic = this.topicOfEventResource(el);
+                const topic = this.topicOfRestResource(el);
                 channels[topic] = {
                     description:
                         this.translateDoc(el.comment) || "no documentation",
@@ -142,7 +142,7 @@ export default class EventsGen extends BaseGen {
 
         all.forEach((name) => {
             const def = this.extractDefinition(name)
-            const topic = this.topicOfDefiniton(def);
+            const topic = this.topicOfAdhocEvent(def);
             const unq = camelCase(this.formSingleUniqueName(def))
             const details: any = {
                 description:
@@ -166,21 +166,21 @@ export default class EventsGen extends BaseGen {
         })
     }
 
-    private topicOfDefiniton(def: IReference) {
+    private topicOfAdhocEvent(def: IReference) {
         let ns = kebabCase(this.getSpace());
         let version = getVersion(def.name);
         let name = kebabCase(def.short);
-        return this.sanitizeTopic(ns, version, name);
+        return this.toEventTopic(ns, version, name);
     }
 
-    private topicOfEventResource(el: IResourceLike) {
+    private topicOfRestResource(el: IReference) {
         let ns = kebabCase(this.getSpace());
         let version = getVersion(el.name);
         let name = kebabCase(el.name);
-        return this.sanitizeTopic(ns, version, name);
+        return this.toEventTopic(ns, version, name);
     }
 
-    private sanitizeTopic(ns: string | undefined, version: string, name: string) {
+    private toEventTopic(ns: string, version: string, name: string) {
         return `topics/${ns}_${version}-${name}`;
     }
 
