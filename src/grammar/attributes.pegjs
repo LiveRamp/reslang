@@ -47,7 +47,19 @@ array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
 array2 = "[]" {
     return {"type": 2} }
 
-modifiers = modifiers:modifiers_elem* { return Object.assign({}, ...modifiers) }
+modifiers = modifiers:modifiers_elem* { return Object.assign({
+    "flag": false,
+    "mutable": false,
+    "optional": false,
+    "optionalGet": false,
+    "optionalPost": false,
+    "optionalPut": false,
+    "output": false,
+    "query": false,
+    "queryonly": false,
+    "representation": false,
+    "nullable": false
+}, ...modifiers) }
 modifiers_elem = _  it:modifier (__ / ";") { return it }
 modifier =
   ( "flag"
