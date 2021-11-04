@@ -1189,6 +1189,9 @@ Actions cannot have subresources`
             this.pushArrayDown(schema, attr.array.min, attr.array.max)
         }
 
+        if (attr.modifiers.nullable) {
+            schema.nullable = true
+        }
         return obj
     }
 

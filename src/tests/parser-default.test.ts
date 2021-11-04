@@ -25,6 +25,7 @@ describe("reslang default parsing tests", () => {
                     "query": false,
                     "queryonly": false,
                     "representation": false,
+                    "nullable": false
             },
             "name": attrName,
             "stringMap": false,

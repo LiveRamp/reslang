@@ -234,6 +234,7 @@ export interface IModifiers {
     query: boolean
     queryonly: boolean
     representation: boolean
+    nullable: boolean
 }
 
 export interface IConstraints {
