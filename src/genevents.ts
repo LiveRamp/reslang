@@ -134,7 +134,7 @@ export default class EventsGen extends BaseGen {
         all.forEach((name) => {
             const def = this.extractDefinition(name)
             const topic = this.topicOfAdhocEvent(def);
-            const channel = this.eventChannelForAdhocDefinition(def, produces, name, consumes);
+            const channel = this.eventChannelForAdhocDefinition(def, name, produces, consumes);
             channels[topic] = channel
         })
     }
@@ -146,7 +146,7 @@ export default class EventsGen extends BaseGen {
         return this.toEventTopic(ns, version, name);
     }
 
-    private eventChannelForAdhocDefinition(def: IReference, produces: Set, name, consumes: Set) {
+    private eventChannelForAdhocDefinition(def: AnyKind, name: string, produces: Set<string>, consumes: Set<string>) {
         const unq = camelCase(this.formSingleUniqueName(def))
         const channel: any = {
             description:
@@ -185,7 +185,7 @@ export default class EventsGen extends BaseGen {
             description: channelDescription,
             subscribe: {
                 summary: "REST: " + el.name,
-                description: subscribeOpDescription,
+                description: subscribeOpDescription != "" ? subscribeOpDescription : null,
                 operationId: el.name,
                 message: {
                     $ref: `#/components/messages/${unique}`
