@@ -17,7 +17,7 @@ example = _ "example:" _ format: description _ {
     return format
 }
 
-default = _ "default" _ "=" _ value: (boolean / string / numerical) _ {
+default = _ "default" _ "=" _ value: (boolean / string / numerical / enum_literal) _ {
     return value
 }
 
@@ -25,12 +25,20 @@ boolean = _ val:("true" / "false") {
     return {"type": "boolean", "value": val}
 }
 
-numerical = _ val:([\+\-]?[0-9]*("."[0-9]+)?) _ {
-    return {"type": "numerical", "value": val.flat().join("")}
+sign = "+" / "-"
+decimal = ("." [0-9]+)
+        / ([0-9]+ "." [0-9]+)
+        / [0-9]+
+numerical = _ val:$(sign? decimal) _ {
+    return {"type": "numerical", "value": val}
 }
 
 string = _ "\"" val:([^\"]+) "\"" _ {
     return {"type": "string", "value": val.flat().join("")}
+}
+
+enum_literal = _ val: literalname _ {
+    return {"type": "enum", "value": val }
 }
 
 array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
@@ -39,12 +47,37 @@ array1 = "[" min:([0-9]+)? _ ".." _ max:([0-9]+)? "]" {
 array2 = "[]" {
     return {"type": 2} }
 
-modifiers = modifiers:(_ ("flag" / "mutable" / "output" /"optional-post" / "optional-put" / "optional-get" / "queryonly" / "query" /  "representation" / "optional")(__ / ";"))* {
-    var flat = modifiers.flat()
-    return {flag: flat.includes("flag"), mutable: flat.includes("mutable"), optional: flat.includes("optional"),
-            optionalPost: flat.includes("optional-post"), optionalPut: flat.includes("optional-put"),
-            optionalGet: flat.includes("optional-get"), output: flat.includes("output"),
-            queryonly: flat.includes("queryonly"), query: flat.includes("query"), representation: flat.includes("representation")}
+modifiers = modifiers:modifiers_elem* { return Object.assign({
+    "flag": false,
+    "mutable": false,
+    "optional": false,
+    "optionalGet": false,
+    "optionalPost": false,
+    "optionalPut": false,
+    "output": false,
+    "query": false,
+    "queryonly": false,
+    "representation": false,
+    "nullable": false
+}, ...modifiers) }
+modifiers_elem = _  it:modifier (__ / ";") { return it }
+modifier =
+  ( "flag"
+  / "mutable"
+  / "output"
+  / "optional-post"
+  / "optional-put"
+  / "optional-get"
+  / "queryonly"
+  / "query"
+  / "representation"
+  / "optional"
+  / "nullable"
+  ) {
+ 	const kebabCase = /-./g
+    const camelCase = function(s) { return s[1].toUpperCase() }
+ 	const key = text().replace(kebabCase, camelCase)
+ 	return {[key]: true}
 }
 
 constraints = constraints:(_ (maxLength / minLength) (__ / ";"))* {

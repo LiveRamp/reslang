@@ -83,7 +83,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -110,7 +111,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -119,12 +121,14 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "events": [
@@ -175,7 +179,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -202,7 +207,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -229,7 +235,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -238,12 +245,14 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "events": [
@@ -297,7 +306,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -327,7 +337,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -336,7 +347,8 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "events": [
@@ -384,7 +396,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -414,7 +427,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -423,12 +437,14 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [
@@ -472,7 +488,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {
               "minLength": 10,
@@ -502,7 +519,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -531,7 +549,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -563,9 +582,40 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
+          },
+          {
+            "constraints": {},
+            "full": true,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false,
+              "nullable": false
+            },
+            "name": "foo",
+            "stringMap": false,
+            "type": {
+              "name": "v2/TestResource::Foo2",
+              "parentName": "v2/TestResource",
+              "parentShort": "v2/TestResource",
+              "parents": [
+                "v2/TestResource"
+              ],
+              "short": "Foo2"
+            }
           }
         ],
         "name": "StartSignal",
@@ -624,7 +674,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -653,7 +704,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -733,7 +785,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -760,7 +813,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -918,7 +972,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -945,7 +1000,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -954,17 +1010,20 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -1007,7 +1066,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1034,7 +1094,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1061,7 +1122,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1089,7 +1151,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1116,7 +1179,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1147,7 +1211,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1177,7 +1242,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1218,17 +1284,20 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           },
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -1270,7 +1339,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1315,7 +1385,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1342,7 +1413,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1369,7 +1441,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1396,7 +1469,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1423,7 +1497,8 @@
               "output": false,
               "queryonly": true,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1432,17 +1507,20 @@
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "events": [
@@ -1494,7 +1572,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1521,7 +1600,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1546,17 +1626,20 @@
                   "parentName": ""
                 }
               }
-            ]
+            ],
+            "summary": ""
           },
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "events": [
@@ -1604,7 +1687,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1633,7 +1717,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1660,7 +1745,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1722,7 +1808,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1749,7 +1836,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1775,7 +1863,8 @@
                   "parentName": "file.DirectoryDeleteRequest"
                 }
               }
-            ]
+            ],
+            "summary": ""
           }
         ],
         "parents": [
@@ -1819,7 +1908,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1846,7 +1936,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1876,7 +1967,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -1928,7 +2020,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1956,7 +2049,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -1984,7 +2078,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -2063,7 +2158,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -2091,7 +2187,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -2119,7 +2216,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }

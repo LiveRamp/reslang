@@ -56,7 +56,7 @@ function check(
     model: string = "models/checkrules"
 ) {
     try {
-        const _ = new ParseGen([model], rules)
+        const _ = new ParseGen([model], rules, "PROD")
     } catch (error) {
         const got = error.message
         const correct = got.includes(expected)
@@ -76,7 +76,7 @@ function checkFullSwagger(
     model: string = "models/checkrules"
 ) {
     try {
-        const _ = new SwagGen([model], rules).generate()
+        const _ = new SwagGen([model], rules, "PROD").generate()
     } catch (error) {
         const got = error.message
         const correct = got.includes(expected)

@@ -384,10 +384,12 @@ export default class SwagGen extends BaseGen {
                 }
             }
             this.formErrors(ops.post, responses)
+            let operationId = this.formOperationId(el, Verbs.POST);
             path.post = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.POST),
+                operationId: operationId,
                 description: this.translateDoc(ops.post.comment),
+                summary: ops.post.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -436,10 +438,12 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multipost, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPOST)
             path.post = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPOST),
+                operationId: operationId,
                 description: this.translateDoc(ops.multipost.comment),
+                summary: ops.multipost.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -490,10 +494,12 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multiput, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPUT);
             path.put = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPUT),
+                operationId: operationId,
                 description: this.translateDoc(ops.multiput.comment),
+                summary: ops.multiput.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -543,10 +549,12 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multipatch, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIPATCH);
             path.patch = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIPATCH),
+                operationId: operationId,
                 description: this.translateDoc(ops.multipatch.comment),
+                summary: ops.multipatch.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -596,10 +604,12 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multidelete, responses)
+            let operationId = this.formOperationId(el, Verbs.MULTIDELETE);
             path.delete = {
                 tags: [tagKeys[unique]],
-                operationId: this.formOperationId(el, Verbs.MULTIDELETE),
+                operationId: operationId,
                 description: this.translateDoc(ops.multidelete.comment),
+                summary: ops.multidelete.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -656,7 +666,6 @@ export default class SwagGen extends BaseGen {
             let ref = `${camel}MultiResponse`
             let paginationResponseRef = `${camel}MultiResponsePagination`
             let schema: any = { $ref: `#/components/schemas/${ref}` }
-            let description = plural + " retrieved successfully"
             let headers =
                 paginator.strategy() === strategy.Offset
                     ? (paginator as Offset).xTotalCountHeader()
@@ -677,7 +686,7 @@ export default class SwagGen extends BaseGen {
 
             let responses: any = {
                 200: {
-                    description,
+                    description: `${plural} retrieved successfully`,
                     headers,
                     content: this.jsonContentSchema(schema)
                 }
@@ -689,10 +698,12 @@ export default class SwagGen extends BaseGen {
 
             this.formErrors(ops.multiget, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.MULTIGET);
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.MULTIGET),
+                operationId: operationId,
                 description: this.translateDoc(ops.multiget.comment),
+                summary: ops.multiget.summary || operationId,
                 responses
             }
             if (gparams.length) {
@@ -810,10 +821,12 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.get, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.GET);
             path.get = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.GET),
+                operationId: operationId,
                 description: this.translateDoc(ops.get.comment),
+                summary: ops.get.summary || operationId,
                 responses
             }
             if (!singleton) {
@@ -852,10 +865,12 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.put, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.PUT);
             path.put = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.PUT),
+                operationId: operationId,
                 description: this.translateDoc(ops.put.comment),
+                summary: ops.put.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -895,10 +910,12 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.patch, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.PATCH);
             path.patch = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.PATCH),
+                operationId: operationId,
                 description: this.translateDoc(ops.patch.comment),
+                summary: ops.patch.summary || operationId,
                 requestBody: {
                     content: {
                         "application/json": {
@@ -938,10 +955,12 @@ export default class SwagGen extends BaseGen {
             }
             this.formErrors(ops.delete, responses)
             const rname = this.formSingleUniqueName(el)
+            let operationId = this.formOperationId(el, Verbs.DELETE);
             path.delete = {
                 tags: [tagKeys[rname]],
-                operationId: this.formOperationId(el, Verbs.DELETE),
+                operationId: operationId,
                 description: this.translateDoc(ops.delete.comment),
+                summary: ops.delete.summary || operationId,
                 responses
             }
             if (!singleton) {

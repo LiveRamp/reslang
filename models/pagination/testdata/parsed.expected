@@ -42,7 +42,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -54,7 +55,8 @@
             "pagination": {
               "strategy": "none"
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -96,7 +98,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -108,7 +111,8 @@
             "pagination": {
               "strategy": "offset"
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -150,7 +154,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -159,7 +164,8 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -201,7 +207,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -228,7 +235,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -270,7 +278,8 @@
                 }
               ]
             },
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -339,7 +348,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -367,7 +377,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -395,7 +406,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }

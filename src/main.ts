@@ -18,7 +18,7 @@ import JsonSchemaGen from "./genjsonschema"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v6.1.1"
+export const VERSION = "v6.2.1"
 
 // parse the cmd line
 const args = yargs
@@ -89,6 +89,7 @@ const args = yargs
     })
     .option("env", {
         type: "string",
+        "default": "PROD",
         describe:
             "Specify environment for including urls in the server block. Defaults to PROD"
     })
@@ -166,7 +167,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
     try {
         // generate a parse tree?
         if (args.parsed) {
-            const json = new ParseGen(allFiles, rules).generate()
+            const json = new ParseGen(allFiles, rules, args.env).generate()
             if (args.stdout) {
                 console.log(json)
             } else {
@@ -176,7 +177,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
         } else if (args.stripped) {
             // pretty print the reslang in stripped down form
             const file = tmp.fileSync({ postfix: ".html" })
-            const html = new StripGen(allFiles, rules).generate(!args.plain)
+            const html = new StripGen(allFiles, rules, args.env).generate(!args.plain)
             if (!args.stdout) tryClip(html, "html", false)
             if (args.open) {
                 writeFile(html, file.name)
@@ -184,7 +185,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             }
         } else if (args.diagram) {
             // generate .viz?
-            const dot = new DotvizGen(allFiles, rules)
+            const dot = new DotvizGen(allFiles, rules, args.env)
             const dotviz = dot.generate(args.diagram)
             if (args.stdout) {
                 console.log(dotviz)
@@ -200,7 +201,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const events = new EventsGen(
                 allFiles,
                 rules,
-                args.env || "PROD",
+                args.env,
                 args.vars,
                 true,
                 false,
@@ -233,7 +234,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const jsonSchema = new JsonSchemaGen(
                 allFiles,
                 rules,
-                args.env || "PROD",
+                args.env,
                 args.vars,
                 true,
                 false,
@@ -253,7 +254,7 @@ function handle(allFiles: string[], silent: boolean, throwErrors = false) {
             const swag = new SwagGen(
                 allFiles,
                 rules,
-                args.env || "PROD",
+                args.env,
                 args.vars,
                 true,
                 args.omitnamespace

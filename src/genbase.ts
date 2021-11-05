@@ -16,6 +16,7 @@ import {
     IUnion,
     isStructure,
     isEvent,
+    isEnum,
     IServers,
     isProduces,
     isConsumes,
@@ -139,7 +140,7 @@ export abstract class BaseGen {
     public constructor(
         private dirs: string[],
         protected rules: IRules,
-        protected environment: string = "PROD",
+        protected environment: string,
         protected vars: string = "",
         expandInlines = false,
         protected omitNamespace = false,
@@ -1052,49 +1053,50 @@ Actions cannot have subresources`
         if (!attr || !attr.default) {
             return
         }
+        const invalidDefaultValue = "Attribute " + attr.name +
+            " can only have a " + type + " default value" +
+            " but " + attr.default.type + " value " + attr.default.value +
+            " was found instead"
         switch (type) {
             case "boolean":
                 if (attr.default.type !== "boolean") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a boolean default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = attr.default.value === "true"
                 break
             case "string":
                 if (attr.default.type !== "string") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a string default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = attr.default.value
                 break
             case "int":
                 if (
                     attr.default.type !== "numerical" ||
-                    attr.default.type.includes(".")
+                    attr.default.value.includes(".")
                 ) {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have an integer default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = Number.parseInt(attr.default.value, 10)
                 break
             case "double":
                 if (attr.default.type !== "numerical") {
-                    throw Error(
-                        "Attribute " +
-                            attr.name +
-                            " can only have a numerical default value"
-                    )
+                    throw Error(invalidDefaultValue)
                 }
                 schema.default = Number.parseFloat(attr.default.value)
+                break
+            case "enum":
+                const def = this.extractDefinition(attr.type.name) as IEnum
+                const literals = def.literals || []
+                if (
+                    attr.default.type !== "enum" ||
+                    !literals.includes(attr.default.value)
+                ) {
+                    throw Error("Attribute " + attr.name +
+                        " expected one of [" + literals.join(", ") + "] as default value" +
+                        " but " + attr.default.value + " was found instead")
+                }
+                schema.default = attr.default.value
                 break
         }
     }
@@ -1111,7 +1113,6 @@ Actions cannot have subresources`
         // if this is a stringmap then add it
         const type = attr.type
         const name = type.name
-        const sane = camelCase(name)
 
         // allow description overrides by caller
         if (!obj.description) {
@@ -1126,14 +1127,7 @@ Actions cannot have subresources`
         }
         const schema = schemaLevel ? obj.schema : obj
 
-        const prim = isPrimitiveType(name)
-
-        // can only have a default if it is a primitive
-        if (!prim && attr.default) {
-            throw Error(
-                "Can only have defaults on primitive attributes: " + attr.name
-            )
-        }
+        this.validateDefaults(name, attr);
 
         if (attr.stringMap && !suppressStringmap) {
             schema.type = "object"
@@ -1144,7 +1138,7 @@ Actions cannot have subresources`
                 true,
                 true
             )
-        } else if (prim) {
+        } else if (isPrimitiveType(name)) {
             this.translatePrimitive(
                 attr,
                 type.name,
@@ -1157,28 +1151,20 @@ Actions cannot have subresources`
             switch (def.kind) {
                 case "structure":
                 case "union":
+                    this.setSchemaRefs(schema, name)
+                    schema.type = "object"
+                    break
                 case "enum":
-                    if (this.generateAllOf) {
-                        schema.allOf = [
-                            { $ref: `#/components/schemas/${sane}` }
-                        ]
-                    } else {
-                        schema.$ref = `#/components/schemas/${sane}`
-                    }
-                    schema.type = def.kind === "enum" ? "string" : "object"
+                    this.setSchemaRefs(schema, name)
+                    schema.type = "string"
+                    this.addDefault(attr, schema, "enum")
                     break
                 case "resource-like":
                     // must have a linked annotation
                     if (attr.linked) {
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
-                        if (this.generateAllOf) {
-                            schema.allOf = [
-                                { $ref: `#/components/schemas/${sane}Output` }
-                            ]
-                        } else {
-                            schema.$ref = `#/components/schemas/${sane}Output`
-                        }
+                        this.setSchemaRefs(schema, name)
                         schema.type = "object"
                     } else {
                         throw new Error(
@@ -1203,6 +1189,9 @@ Actions cannot have subresources`
             this.pushArrayDown(schema, attr.array.min, attr.array.max)
         }
 
+        if (attr.modifiers.nullable) {
+            schema.nullable = true
+        }
         return obj
     }
 
@@ -1333,4 +1322,30 @@ Actions cannot have subresources`
 
         return parts[0]
     }
-}
+
+    protected setSchemaRefs(schema: any, name: string) {
+        const sane = camelCase(name)
+        if (this.generateAllOf) {
+            schema.allOf = [
+                {$ref: `#/components/schemas/${sane}`}
+            ]
+        } else {
+            schema.$ref = `#/components/schemas/${sane}`
+        }
+    }
+
+    protected validateDefaults(name: string, attr: IAttribute) {
+        if (!attr.default) {
+            return // No defaults, nothing to validate
+        }
+        if (isPrimitiveType(name)) {
+            return // Primitive types can have defaults
+        }
+        let def = this.extractDefinitionGently(name);
+        if (def != null && isEnum(def)) {
+            return // Enum objects can have defaults
+        }
+        throw Error(
+            "Can only have defaults on primitive attributes or enums: " + attr.name
+        )
+    }}

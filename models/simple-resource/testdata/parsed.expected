@@ -77,7 +77,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {
               "minLength": 10,
@@ -107,7 +108,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -134,7 +136,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -144,28 +147,33 @@
             "operation": "PUT",
             "comment": "Actual PUT comment",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "POST",
             "comment": "Actual POST comment",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "DELETE",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -209,7 +217,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {},
             "example": "This is a company name"
@@ -237,7 +246,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {},
             "example": "This is the company website http://{id}}.liveramp.com"
@@ -268,7 +278,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {},
             "example": "Array of urls"
@@ -296,7 +307,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {},
             "default": {
@@ -327,7 +339,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -354,7 +367,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -396,7 +410,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -423,7 +438,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -432,12 +448,14 @@
           {
             "operation": "PUT",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "GET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -479,7 +497,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -524,7 +543,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -570,7 +590,8 @@
               "output": false,
               "queryonly": false,
               "query": true,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -579,7 +600,8 @@
           {
             "operation": "MULTIGET",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -621,7 +643,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -630,7 +653,8 @@
           {
             "operation": "POST",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -683,7 +707,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -711,7 +736,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -739,7 +765,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }

@@ -1,6 +1,6 @@
 # Reference Manual
 
-The reslang grammar is fully described by these [railroad diagrams](./bnf/railroad-for-reslang.pdf).
+The reslang grammar is fully described by these [railroad diagrams](./bnf/railroad-for-reslang.html).
 
 Note that we will draw heavily on the example specified [here](../models/direct2dist). This demo namespace models the complete Direct2Dist specification, which allows ids to be sent directly to a destination. This is explained in more detail [here](./direct2dist-explanation.md).
 
@@ -343,9 +343,27 @@ enum StatusEnum {
 
 Note that the literals can include the lowercase, colons, numbers etc.
 
-### 2 types of comments
+### Comments
 
-// && /\* \*/ comments are developer only comments. A comment using quotes ("this is a comment") will get transferred to the Swagger description field of the element it appears before.
+// && /\* \*/ comments are developer only comments. 
+
+### Descriptions
+
+Quoted strings (e.g. "this is a description") will get transferred to the Swagger description field of the element it appears before.
+These are applicable for most definitions including resources and operations.
+
+Descriptions for operations (e.g. quoted string preceeding `GET`, `POST`, `PUT`) may also include an optional summary which will be passed to its
+corresponding Swagger field. Summaries are usually displayed in the left sidebar in Swagger UI.
+
+e.g.
+```
+resource IntegrationConnection {
+    /operations
+        "Summary: Create a new IntegrationConnection
+        The configProperties and the configuredIdentifierTypeIDs must be consistent with the integration"
+        POST
+}
+```
 
 ### Multiget
 

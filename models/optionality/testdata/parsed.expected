@@ -77,7 +77,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -104,7 +105,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -131,7 +133,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -158,7 +161,8 @@
               "output": true,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -185,7 +189,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }
@@ -195,25 +200,29 @@
             "operation": "GET",
             "comment": "Get a single car",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "POST",
             "comment": "Create a car",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "PUT",
             "comment": "Update a car",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           },
           {
             "operation": "PATCH",
             "comment": "Patch a car",
             "options": [],
-            "errors": []
+            "errors": [],
+            "summary": ""
           }
         ],
         "parents": [],
@@ -266,7 +275,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -294,7 +304,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           },
@@ -322,7 +333,8 @@
               "output": false,
               "queryonly": false,
               "query": false,
-              "representation": false
+              "representation": false,
+              "nullable": false
             },
             "constraints": {}
           }

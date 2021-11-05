@@ -24,6 +24,7 @@ paths:
         - Directories and other musings
       operationId: Create Directory
       description: ''
+      summary: Create Directory
       requestBody:
         content:
           application/json:
@@ -46,6 +47,7 @@ paths:
         - Directories and other musings
       operationId: Get Directories
       description: ''
+      summary: Get Directories
       responses:
         '200':
           description: Directories retrieved successfully
@@ -67,8 +69,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -90,6 +92,7 @@ paths:
         - Directories and other musings
       operationId: Get Directory
       description: ''
+      summary: Get Directory
       responses:
         '200':
           description: Directory retrieved successfully
@@ -117,6 +120,7 @@ paths:
         - Files and other arrangements
       operationId: Create FileType
       description: ''
+      summary: Create FileType
       requestBody:
         content:
           application/json:
@@ -137,6 +141,7 @@ paths:
         - Files and other arrangements
       operationId: Get FileTypes
       description: ''
+      summary: Get FileTypes
       responses:
         '200':
           description: FileTypes retrieved successfully
@@ -158,8 +163,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -174,6 +179,7 @@ paths:
         - Files and other arrangements
       operationId: Get FileType
       description: Get a FileType
+      summary: Get FileType
       responses:
         '200':
           description: FileType retrieved successfully
@@ -211,6 +217,7 @@ paths:
         - 'Directory::File'
       operationId: 'Create Directory::File'
       description: ''
+      summary: 'Create Directory::File'
       requestBody:
         content:
           application/json:
@@ -247,6 +254,7 @@ paths:
         - 'Directory::File'
       operationId: 'Get Directory::Files'
       description: ''
+      summary: 'Get Directory::Files'
       responses:
         '200':
           description: Files retrieved successfully
@@ -282,8 +290,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -298,6 +306,7 @@ paths:
         - 'Directory::File'
       operationId: 'Get Directory::File'
       description: ''
+      summary: 'Get Directory::File'
       responses:
         '200':
           description: File retrieved successfully
@@ -332,6 +341,7 @@ paths:
         - Directories and other musings
       operationId: Create DirectoryDeleteRequest
       description: ''
+      summary: Create DirectoryDeleteRequest
       requestBody:
         content:
           application/json:
@@ -353,6 +363,7 @@ paths:
         - Directories and other musings
       operationId: Get DirectoryDeleteRequests
       description: ''
+      summary: Get DirectoryDeleteRequests
       responses:
         '200':
           description: DirectoryDeleteRequests retrieved successfully
@@ -374,8 +385,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -391,6 +402,7 @@ paths:
         - Directories and other musings
       operationId: Get DirectoryDeleteRequest
       description: ''
+      summary: Get DirectoryDeleteRequest
       responses:
         '200':
           description: DirectoryDeleteRequest retrieved successfully
@@ -417,6 +429,7 @@ paths:
         - Files and other arrangements
       operationId: Cancel DirectoryDeleteRequest
       description: ''
+      summary: Cancel DirectoryDeleteRequest
       requestBody:
         content:
           application/json:
@@ -701,13 +714,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     FileTypeMultiResponsePagination:
       type: object
       properties:
@@ -716,13 +728,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     DirectoryFileMultiResponsePagination:
       type: object
       properties:
@@ -731,13 +742,12 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
     DirectoryDeleteRequestMultiResponsePagination:
       type: object
       properties:
@@ -746,11 +756,10 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
 

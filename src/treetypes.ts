@@ -234,6 +234,7 @@ export interface IModifiers {
     query: boolean
     queryonly: boolean
     representation: boolean
+    nullable: boolean
 }
 
 export interface IConstraints {
@@ -277,6 +278,7 @@ export interface IOperation {
     options: IOption[]
     pagination?: { strategy: string; options: [] }
     comment: string
+    summary: string
     errors: IError[]
 }
 

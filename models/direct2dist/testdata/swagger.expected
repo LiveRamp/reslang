@@ -30,6 +30,7 @@ paths:
         - DistributionRequest
       operationId: Create DistributionRequest
       description: Use this endpoint to create a new DistributionRequest
+      summary: Create DistributionRequest
       requestBody:
         content:
           application/json:
@@ -55,6 +56,7 @@ paths:
         default. Response of this method includes a header “X-Total-Count” to
         indicate the total number of records. Use this value along with query
         parameters, offset and limit, to iterate through the entire result set
+      summary: Get DistributionRequests
       responses:
         '200':
           description: DistributionRequests retrieved successfully
@@ -76,8 +78,8 @@ paths:
         - in: query
           name: after
           description: >-
-            This value is a cursor that enables continued paginated searches.
-            Its value can be found under "_pagination.after" in the previous
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
             response from this endpoint.
           schema:
             type: string
@@ -182,6 +184,7 @@ paths:
         including current status, input
 
         configuration as well as output metadata, if the request has completed
+      summary: Get DistributionRequest
       responses:
         '200':
           description: DistributionRequest retrieved successfully
@@ -207,6 +210,7 @@ paths:
         - Cancel DistributionRequest
       operationId: Cancel DistributionRequest asynchronously
       description: ''
+      summary: Cancel DistributionRequest asynchronously
       responses:
         '200':
           description: Cancel action completed
@@ -257,6 +261,7 @@ paths:
         - Retry DistributionRequest
       operationId: Retry DistributionRequest asynchronously
       description: ''
+      summary: Retry DistributionRequest asynchronously
       responses:
         '200':
           description: Retry action completed
@@ -645,11 +650,10 @@ components:
           nullable: true
           description: >-
             This field is a cursor to be passed as a query parameter in
-            subsequent, paginated searches.
+            subsequent, paginated queries.
 
-            It allows the next request to begin from where the current search
+            It allows the next request to begin from where the current request
             left off.
 
-            When "after" is  null, there are no more records to fetch for this
-            search.
+            When "after" is  null, there are no more records to fetch.
 
