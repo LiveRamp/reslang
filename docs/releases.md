@@ -1,3 +1,7 @@
+## 6.2.2 11/08/2021
+
+- Include the descriptions from `/events` syntax in the generated description for operations in asyncapi spec.
+
 ## 6.2.1 11/05/2021
 
 - Add `nullable`: Added support to generate nullable attributes in schemas for swagger specs.
