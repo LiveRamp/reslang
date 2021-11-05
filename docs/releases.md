@@ -1,4 +1,8 @@
-## 6.2.2 11/05/2021
+## 6.2.2 11/23/2021
+
+- Include the descriptions from `/events` syntax in the generated description for operations in asyncapi spec.
+
+## 6.2.2 11/15/2021
 
 - Fix `SyntaxError: Error resolving $ref pointer` when generating swagger/asyncapi using resourcelike attributes.
 
