@@ -118,17 +118,8 @@ export default class EventsGen extends BaseGen {
             const unique = camelCase(this.formSingleUniqueName(el))
             if (isResourceLike(el) && !el.future && el.events) {
                 const topic = this.topicOfRestResource(el);
-                channels[topic] = {
-                    description:
-                        this.translateDoc(el.comment) || "no documentation",
-                    subscribe: {
-                        summary: "REST: " + el.name,
-                        operationId: el.name,
-                        message: {
-                            $ref: `#/components/messages/${unique}`
-                        }
-                    }
-                }
+                const channel = this.eventChannelForRestResource(el, unique);
+                channels[topic] = channel
             }
             if (isProduces(el)) {
                 produces.add(el.event.name)
@@ -143,26 +134,8 @@ export default class EventsGen extends BaseGen {
         all.forEach((name) => {
             const def = this.extractDefinition(name)
             const topic = this.topicOfAdhocEvent(def);
-            const unq = camelCase(this.formSingleUniqueName(def))
-            const details: any = {
-                description:
-                    this.translateDoc(def.comment) || "no documentation"
-            }
-            const msg = {
-                summary: "Adhoc: " + def.name,
-                operationId: def.name,
-                message: {
-                    $ref: `#/components/messages/${unq}`
-                }
-            }
-            if (produces.has(name)) {
-                details.publish = msg
-            }
-            if (consumes.has(name)) {
-                details.subscribe = msg
-            }
-
-            channels[topic] = details
+            const channel = this.eventChannelForAdhocDefinition(def, name, produces, consumes);
+            channels[topic] = channel
         })
     }
 
@@ -173,11 +146,53 @@ export default class EventsGen extends BaseGen {
         return this.toEventTopic(ns, version, name);
     }
 
+    private eventChannelForAdhocDefinition(def: AnyKind, name: string, produces: Set<string>, consumes: Set<string>) {
+        const unq = camelCase(this.formSingleUniqueName(def))
+        const channel: any = {
+            description:
+                this.translateDoc(def.comment) || "no documentation"
+        }
+        const operationBody = {
+            summary: "Adhoc: " + def.name,
+            operationId: def.name,
+            message: {
+                $ref: `#/components/messages/${unq}`
+            }
+        }
+        if (produces.has(name)) {
+            channel.publish = operationBody
+        }
+        if (consumes.has(name)) {
+            channel.subscribe = operationBody
+        }
+        return channel;
+    }
+
     private topicOfRestResource(el: IReference) {
         let ns = kebabCase(this.getSpace());
         let version = getVersion(el.name);
         let name = kebabCase(el.name);
         return this.toEventTopic(ns, version, name);
+    }
+
+    private eventChannelForRestResource(el: IResourceLike, unique: string) {
+        const channelDescription = this.translateDoc(el.comment) || "no documentation";
+        const subscribeOpDescription = el.events
+            ?.map(e => this.translateDoc(e.comment))
+            .filter(d => !!d)
+            .join("\n\n") ?? ""
+        let channelForRestResource = {
+            description: channelDescription,
+            subscribe: {
+                summary: "REST: " + el.name,
+                description: subscribeOpDescription != "" ? subscribeOpDescription : null,
+                operationId: el.name,
+                message: {
+                    $ref: `#/components/messages/${unique}`
+                }
+            }
+        };
+        return channelForRestResource;
     }
 
     private toEventTopic(ns: string, version: string, name: string) {
