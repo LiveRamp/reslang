@@ -1,0 +1,23 @@
+" Test for subresources
+Reslang generates `Output` and `Input` schema for each of the
+resource-like definitions it receives in any given *.reslang file.
+
+Currently it only tests attribues of type `value-of <subresource>`
+TODO: Other resourcelike attributes.
+"
+namespace test/resourcelike-attribute {
+    title "Resource-like attributes test"
+    version 0.0.1
+}
+
+resource UpperResource {
+    id: string
+    subresource: value-of UpperResource::LowerResource
+
+    /operations
+      GET
+}
+
+subresource UpperResource::LowerResource {
+    name: string
+}
