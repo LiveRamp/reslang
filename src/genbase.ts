@@ -1164,7 +1164,11 @@ Actions cannot have subresources`
                     if (attr.linked) {
                         this.addLinkedType(def, schema, attr)
                     } else if (attr.full) {
-                        this.setSchemaRefs(schema, name)
+                        // TOOD: formalize a function to obtain a schema ref from a reslang definition.
+                        //       for now it seems some places append "Output" to their references
+                        //       likely this is special logic for "resource-like" kinds.
+                        let fullAttrSchemaRef = `${name}Output`
+                        this.setSchemaRefs(schema, fullAttrSchemaRef)
                         schema.type = "object"
                     } else {
                         throw new Error(

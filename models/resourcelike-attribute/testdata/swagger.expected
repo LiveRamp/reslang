@@ -1,31 +1,39 @@
 openapi: 3.0.1
 info:
-  title: project A
-  description: ''
+  title: Resource-like attributes test
+  description: |-
+    Test for subresources
+    Reslang generates `Output` and `Input` schema for each of the
+    resource-like definitions it receives in any given *.reslang file.
+
+    Currently it only tests attribues of type `value-of <subresource>`
+    TODO: Other resourcelike attributes.
   version: 0.0.1
 servers:
   - description: ''
-    url: 'https://api.liveramp.com/projecta'
+    url: 'https://api.liveramp.com/test/resourcelike-attribute'
 tags:
-  - name: ReeSource
+  - name: UpperResource
     description: '(resource)  '
+  - name: 'UpperResource::LowerResource'
+    description: '(subresource)  '
 paths:
-  '/v1/ree-sources/{id}':
+  '/v1/upper-resources/{id}':
     get:
       tags:
-        - ReeSource
-      operationId: Get ReeSource
+        - UpperResource
+      operationId: Get UpperResource
       description: ''
-      summary: Get ReeSource
+      summary: Get UpperResource
       responses:
         '200':
-          description: ReeSource retrieved successfully
+          description: UpperResource retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReeSourceOutput'
+                $ref: '#/components/schemas/UpperResourceOutput'
         '404':
-          description: ReeSource not found
+          description: UpperResource not found
           content:
             application/json:
               schema:
@@ -39,21 +47,25 @@ paths:
 components:
   parameters: {}
   schemas:
-    ReeSourceOutput:
+    UpperResourceOutput:
       type: object
       properties:
         id:
           type: string
-        referenceB:
-          items:
-            type: string
-          minItems: 2
-          maxItems: 2
-          type: array
-          description: 'Link to project_B.Top::Sub resource via [topId, subId]'
+        subresource:
+          allOf:
+            - $ref: '#/components/schemas/UpperResourceLowerResourceOutput'
+          type: object
       required:
         - id
-        - referenceB
+        - subresource
+    UpperResourceLowerResourceOutput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
     StandardError:
       type: object
       properties:

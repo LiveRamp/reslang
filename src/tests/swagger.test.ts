@@ -1,8 +1,7 @@
-import { readFile, clean } from "../parse"
-import { strip } from "./utilities"
+import {clean, readFile} from "../parse"
 import SwagGen from "../genswagger"
 import yaml from "js-yaml"
-import { allModels } from "./allmodels"
+import {allModels} from "./allmodels"
 
 /** swagger generation tests
  */
@@ -21,12 +20,9 @@ function compare(module: string) {
         "",
         true
     )
-    const swagger = swag.generate()
+    const got = swag.generate();
+    const expected = yaml.load(readFile(`models/${module}/testdata/swagger.expected`));
 
-    const got = strip(yaml.dump(clean(swagger), { noRefs: true }))
-    const expected = strip(
-        readFile(`models/${module}/testdata/swagger.expected`)
-    )
-
-    expect(got).toBe(expected)
+    expect(yaml.dump(clean(got), {noRefs: true}))
+        .toStrictEqual(yaml.dump(clean(expected), {noRefs: true}))
 }

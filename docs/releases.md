@@ -1,3 +1,7 @@
+## 6.2.2 11/05/2021
+
+- Fix `SyntaxError: Error resolving $ref pointer` when generating swagger/asyncapi using resourcelike attributes.
+
 ## 6.2.1 11/05/2021
 
 - Add `nullable`: Added support to generate nullable attributes in schemas for swagger specs.

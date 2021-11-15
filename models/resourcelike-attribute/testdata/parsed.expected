@@ -1,0 +1,302 @@
+[
+  {
+    "definitions": [],
+    "diagrams": [
+      {
+        "category": "diagram",
+        "diagram": "main",
+        "groups": []
+      }
+    ],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [
+      {
+        "attributes": [
+          {
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          },
+          {
+            "constraints": {},
+            "full": true,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "subresource",
+            "stringMap": false,
+            "type": {
+              "name": "UpperResource::LowerResource",
+              "parentName": "UpperResource",
+              "parentShort": "UpperResource",
+              "parents": [
+                "UpperResource"
+              ],
+              "short": "LowerResource"
+            }
+          }
+        ],
+        "category": "definition",
+        "file": "main.reslang",
+        "future": false,
+        "kind": "resource-like",
+        "name": "UpperResource",
+        "namespace": "",
+        "operations": [
+          {
+            "errors": [],
+            "operation": "GET",
+            "options": [],
+            "summary": ""
+          }
+        ],
+        "parentName": "",
+        "parentShort": "",
+        "parents": [],
+        "secondary": false,
+        "short": "UpperResource",
+        "singleton": false,
+        "type": "resource"
+      },
+      {
+        "attributes": [
+          {
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "name",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          }
+        ],
+        "category": "definition",
+        "file": "main.reslang",
+        "future": false,
+        "kind": "resource-like",
+        "name": "UpperResource::LowerResource",
+        "parentName": "UpperResource",
+        "parentShort": "UpperResource",
+        "parents": [
+          "UpperResource"
+        ],
+        "secondary": false,
+        "short": "LowerResource",
+        "singleton": false,
+        "type": "subresource"
+      }
+    ],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [
+      {
+        "category": "namespace",
+        "comment": "Test for subresources\nReslang generates `Output` and `Input` schema for each of the\nresource-like definitions it receives in any given *.reslang file.\n\nCurrently it only tests attribues of type `value-of <subresource>`\nTODO: Other resourcelike attributes.",
+        "space": "test/resourcelike-attribute",
+        "title": "Resource-like attributes test",
+        "version": "0.0.1"
+      }
+    ],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [
+      {
+        "attributes": [
+          {
+            "comment": "HTTP error status code for this problem",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "httpStatus",
+            "stringMap": false,
+            "type": {
+              "name": "int",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "int"
+            }
+          },
+          {
+            "comment": "Service specific error code, more granular",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "errorCode",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          },
+          {
+            "comment": "General, human readable error message",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "message",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          }
+        ],
+        "category": "definition",
+        "file": "local.reslang",
+        "kind": "structure",
+        "name": "StandardError",
+        "parentName": "",
+        "parentShort": "",
+        "parents": [],
+        "secondary": false,
+        "short": "StandardError",
+        "type": "structure"
+      }
+    ],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [
+      {
+        "category": "servers",
+        "events": [
+          {
+            "comment": "Production Google Pubsub server",
+            "environment": "PROD",
+            "protocol": "GOOGLE_PUBSUB",
+            "url": "https://pubsub.googleapis.com/v1/projects/liveramp-events-prod"
+          }
+        ],
+        "rest": [
+          {
+            "environment": "PROD",
+            "url": "https://api.liveramp.com"
+          }
+        ]
+      }
+    ],
+    "tags": []
+  }
+]

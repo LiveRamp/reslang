@@ -52,6 +52,7 @@ event StartSignal {
     /payload
         name: string
         address: string[1..10]
+        // The followin should appear in refs as v2TestResourceFoo2Output
         foo: value-of v2/TestResource::Foo2
 }
 produces StartSignal

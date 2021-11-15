@@ -302,7 +302,7 @@ components:
           maxItems: 10
           type: array
         foo:
-          $ref: '#/components/schemas/v2TestResourceFoo2'
+          $ref: '#/components/schemas/v2TestResourceFoo2Output'
           type: object
       required:
         - name
