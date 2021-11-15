@@ -1,5 +1,20 @@
 [
   {
+    "definitions": [],
+    "diagrams": [
+      {
+        "category": "diagram",
+        "diagram": "main",
+        "groups": []
+      }
+    ],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
     "definitions": [
       {
         "attributes": [
