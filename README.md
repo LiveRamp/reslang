@@ -4,7 +4,7 @@ Reslang is a simple language for describing resource-oriented APIs & turning the
 
 It can also generate an [AsyncAPI specification](https://www.asyncapi.com/), describing events, from the same spec. Recently we have added the ability to generate [JSON schema](https://json-schema.org/) from the Reslang spec too.
 
-[Release notes, v2.2.5 9/16/2020](./docs/releases.md)
+[Release notes](./docs/releases.md)
 
 Reslang is licensed under [Apache V2](https://www.apache.org/licenses/LICENSE-2.0)
 
