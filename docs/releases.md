@@ -1,6 +1,7 @@
 ## 6.2.3 11/23/2021
 
 - Include the descriptions from `/events` syntax in the generated description for operations in asyncapi spec.
+- Fix error when running `--events --open` flags: `The programmatic API was removed in npm v8.0.0`
 
 ## 6.2.2 11/15/2021
 
