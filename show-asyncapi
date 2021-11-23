@@ -2,12 +2,6 @@
 
 rm -rf /tmp/asyncapi
 mkdir /tmp/asyncapi
-open_site(){
-  sleep 3
-  open /tmp/asyncapi/index.html
-}
-
 pbpaste > /tmp/asyncapi-spec.yaml
-
-open_site &
-./node_modules/.bin/ag /tmp/asyncapi-spec.yaml html --output /tmp/asyncapi
+npx -p @asyncapi/generator ag /tmp/asyncapi-spec.yaml @asyncapi/html-template --output /tmp/asyncapi
+open /tmp/asyncapi/index.html

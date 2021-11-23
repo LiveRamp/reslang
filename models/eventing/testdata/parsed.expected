@@ -257,6 +257,7 @@
         ],
         "events": [
           {
+            "comment": "expected event subscribe comment",
             "operation": "POST"
           },
           {

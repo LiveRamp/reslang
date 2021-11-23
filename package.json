@@ -1,6 +1,6 @@
 {
     "name": "@liveramp/reslang",
-    "version": "6.2.2",
+    "version": "6.2.3",
     "main": "index.js",
     "license": "Apache-2.0",
     "engines": {
@@ -24,7 +24,7 @@
         "typescript": "^3.4.5"
     },
     "dependencies": {
-        "@asyncapi/generator": "^0.34.3",
+        "@asyncapi/generator": "^1.8.23",
         "@types/pluralize": "^0.0.29",
         "@types/tmp": "^0.1.0",
         "clipboardy": "^2.0.0",

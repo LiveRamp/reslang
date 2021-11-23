@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:12.16.1
+FROM mhart/alpine-node:16
 RUN apk add --update --no-cache bash
 
 WORKDIR /app/reslang

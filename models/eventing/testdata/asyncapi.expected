@@ -21,6 +21,7 @@ channels:
     description: A test REST resource
     subscribe:
       summary: 'REST: v2/TestResource'
+      description: expected event subscribe comment
       operationId: v2/TestResource
       message:
         $ref: '#/components/messages/v2TestResource'

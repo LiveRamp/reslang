@@ -22,6 +22,7 @@ resource v2/TestResource {
     /operations
         POST GET
     /events
+        "expected event subscribe comment"
         POST GET completed
 }
 
