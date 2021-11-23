@@ -1,6 +1,7 @@
 # Reslang features
 
 (WIP, currently borrowing from why.md)
+(TODO: Separate categories for positive attributes &  functional features)
 
 * Conformance with our API ruleset
 * Resource driven:
