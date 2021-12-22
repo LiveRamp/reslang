@@ -48,7 +48,7 @@ Test it out by typing:
 This should bring up the options.
 
 <details>
-  <summary>Click to see internal LiveRamp Installation options</summary>
+  <summary>Click to see Installation options</summary>
 
 ## Running in Docker (for internal LiveRamp users only)
 
@@ -56,7 +56,7 @@ Individuals who do not want to build Reslang from scratch are free to use the `r
 This script outputs the generated swagger to STDOUT and requires an absolute path to function.
 
 ```
-    bash ./reslang-docker.sh <full-path-to-reslang-folder>
+    bash ./reslang-docker.sh $PWD/models/distribution
 ```
 
 </details>
