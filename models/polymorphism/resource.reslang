@@ -1,0 +1,31 @@
+resource MyResource {
+    id: string
+    basic: BasicUnion
+    normal: NormalUnion
+
+    /operations
+        MULTIGET POST
+}
+
+union BasicUnion {
+    myFirstStruct: MyFirstStruct
+}
+
+structure MyFirstStruct {
+    attributeA: int
+    attributeB: int optional
+}
+
+union NormalUnion {
+    mySecondStruct: MySecondStruct
+    myThirdStruct: MyThirdStruct
+}
+
+structure MySecondStruct {
+    attributeC: string
+    attributeD: string optional
+}
+
+structure MyThirdStruct {
+    attributeE: string
+}
