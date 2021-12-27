@@ -23,5 +23,6 @@ export const allModels = [
     "singleton",
     "stringmaps",
     "table",
-    "upversion"
+    "upversion",
+    "polymorphism"
 ]
