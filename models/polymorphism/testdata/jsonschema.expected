@@ -2,6 +2,56 @@
   "$id": "https://schemas.liveramp.com/noroot",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "MyResourceInput": {
+      "type": "object",
+      "properties": {
+        "basic": {
+          "$ref": "#/definitions/BasicUnion",
+          "type": "object"
+        },
+        "normal": {
+          "$ref": "#/definitions/NormalUnion",
+          "type": "object"
+        }
+      },
+      "required": [
+        "basic",
+        "normal"
+      ]
+    },
+    "MyResourceOutput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "basic": {
+          "$ref": "#/definitions/BasicUnion",
+          "type": "object"
+        },
+        "normal": {
+          "$ref": "#/definitions/NormalUnion",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "basic",
+        "normal"
+      ]
+    },
+    "MyResourceMultiResponse": {
+      "type": "object",
+      "properties": {
+        "myResources": {
+          "description": "Array of retrieved MyResources",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MyResourceOutput"
+          }
+        }
+      }
+    },
     "BasicUnion": {
       "type": "object",
       "properties": {
@@ -38,22 +88,6 @@
             }
           }
         }
-      ]
-    },
-    "MyFirstStruct": {
-      "type": "object",
-      "properties": {
-        "attributeA": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "attributeB": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "required": [
-        "attributeA"
       ]
     },
     "NormalUnion": {
@@ -109,29 +143,27 @@
         }
       ]
     },
-    "MySecondStruct": {
+    "StandardError": {
       "type": "object",
       "properties": {
-        "attributeC": {
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorCode": {
+          "description": "Service specific error code, more granular",
           "type": "string"
         },
-        "attributeD": {
+        "message": {
+          "description": "General, human readable error message",
           "type": "string"
         }
       },
       "required": [
-        "attributeC"
-      ]
-    },
-    "MyThirdStruct": {
-      "type": "object",
-      "properties": {
-        "attributeE": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "attributeE"
+        "httpStatus",
+        "errorCode",
+        "message"
       ]
     }
   }
