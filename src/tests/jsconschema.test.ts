@@ -3,7 +3,10 @@ import {strip} from "./utilities"
 import {allModels} from "./allmodels"
 import JsonSchemaGen from "../genjsonschema"
 
-/** dotviz generation tests
+/**
+ * json schema tests
+ * the expected output is generated with --jsonschema=noroot --followresources
+ * or specified in the second (root) and fourth (follow) paremeter of compare() in this file
  */
 describe("JSON schema generation tests", () => {
     test.each(allModels)("JSON schema(%s)", (a) => {
