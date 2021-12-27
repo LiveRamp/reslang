@@ -1,5 +1,6 @@
 import SwagGen from "./genswagger"
 import { isResourceLike, isUnion, isStructure, isEnum } from "./treetypes"
+import { clean } from "./parse"
 
 /**
  * generate jsonschema from the parsed representation
@@ -52,7 +53,7 @@ export default class JsonSchemaGen extends SwagGen {
 
     // tslint:disable-next-line: member-ordering
     public static generateSchemaAndStringify(jsonSchema: JsonSchemaGen) {
-        const schema = jsonSchema.generate()
+        const schema = clean(jsonSchema.generate())
         // turn into a json string and repoint for the different definition locations
         const json = JSON.stringify(schema, null, 2).replace(
             /\#\/components\/schemas/gm,
