@@ -36,6 +36,7 @@ import {
     lowercaseFirst
 } from "./names"
 import { Verbs, Operations } from "./operations"
+import { None } from "./swagger/pagination"
 
 const LOCAL = "local.reslang"
 const LOCAL_INCLUDE = lpath.join(__dirname, "library", LOCAL)
@@ -144,7 +145,8 @@ export abstract class BaseGen {
         protected vars: string = "",
         expandInlines = false,
         protected omitNamespace = false,
-        protected generateAllOf = true
+        protected generateAllOf = true,
+        protected oneOfPolymorphism = false
     ) {
         this.processDefinitions()
         this.checkMandatoryRules()
@@ -812,6 +814,14 @@ Actions cannot have subresources`
         const attrs = def.attributes || []
         const mapping: { [key: string]: string } = {}
 
+        /**
+         * Each attribute in a reslang Union structure definition,
+         * represents the possible subclasses of the Union
+         * which will be exposed under discriminator.mapping or oneOf
+         * depending on the oneOfPolymorphism flag
+         * See pullUpUnionAttributes() method for the default reslang polymorphism approach
+         * See buildSchemaOneOfReferences() method oneOfPolymorphism flag usages for oneof polymorphism approach.
+         */
         const name = camelCase(def.name) + suffix
         for (const attr of attrs) {
             // cannot have a competing definition already
@@ -829,7 +839,8 @@ Actions cannot have subresources`
         const required = new Set<string>(["type"])
         const request = {
             type: "object",
-            properties: { type: { type: "string" } },
+            oneOf: this.buildSchemaOneOfReferences(mapping),
+            properties: this.buildDiscriminatorPropertiesParentClass(),
             discriminator: {
                 propertyName: "type",
                 mapping
@@ -840,44 +851,118 @@ Actions cannot have subresources`
 
         // now do the options
         for (const attr of attrs) {
-            const properties: any = {}
+            const localreq = new Set<string>(["type"])
+            const properties: any = this.buildDiscriminatorPropertiesSubClass()
             if (!isPrimitiveType(attr.type.name)) {
-                this.pullUpUnionAttributes(attr, def, properties, required)
+                this.pullUpUnionAttributes(attr, def, properties, localreq)
+                localreq.forEach(x => required.add(x))
             } else {
                 properties[attr.name] = this.addType(attr, {}, false)
                 if (!attr.modifiers.optional) {
                     required.add(attr.name)
+                    localreq.add(attr.name)
                 }
             }
-            if (this.generateAllOf) {
-                definitions[
-                    capitalizeFirst(name) + capitalizeFirst(attr.name)
-                ] = {
-                    allOf: [
-                        { $ref: `#/components/schemas/${name}` },
-                        {
-                            type: "object",
-                            properties
-                        }
-                    ]
-                }
-            } else {
-                definitions[
-                    capitalizeFirst(name) + capitalizeFirst(attr.name)
-                ] = {
-                    allOf: [
-                        { $ref: `#/components/schemas/${name}` },
-                        {
-                            type: "object",
-                            properties
-                        }
-                    ]
-                }
-            }
+            this.relateSchemaRefs(definitions, name, attr, properties, localreq);
         }
         if (required.size !== 0) {
             request.required = Array.from(required.values())
         }
+    }
+
+    private relateSchemaRefs(definitions: any, name: string, attr: IAttribute, properties: any, localreq: Set<string>) {
+        if (this.generateAllOf) {
+            definitions[
+            capitalizeFirst(name) + capitalizeFirst(attr.name)
+                ] = {
+                allOf: [
+                    this.relatedParentClass(name),
+                    {
+                        type: "object",
+                        properties
+                    }
+                ].filter((x): x is any => x !== null),
+                "required": this.buildRequiredPropertiesSubClass(localreq)
+            }
+        } else {
+            definitions[
+            capitalizeFirst(name) + capitalizeFirst(attr.name)
+                ] = {
+                allOf: [
+                    this.relatedParentClass(name),
+                    {
+                        type: "object",
+                        properties
+                    }
+                ].filter((x): x is any => x !== null),
+                "required": this.buildRequiredPropertiesSubClass(localreq)
+            }
+        }
+    }
+
+    /**
+     * There's two approaches for polymorphism in Swagger/OpenAPI.
+     * oneOf polymorphism approach (bottom-up)
+     *  in which each schema might include a list of subclasses under
+     *   a attribute called oneOf, and keeps a flat hierarchy in the allOf attribute.
+     *
+     * The original approach by reslang (top-down) uses allOf attribute to define a hierarchy tree
+     *
+     * This is used for ruby code genenration, and might be incompatible with java code gen.
+     * @param oneof
+     * @private
+     */
+    private buildSchemaOneOfReferences(mappings: { [key: string]: string }) {
+        if (!this.oneOfPolymorphism) {
+            return null
+        }
+
+        return Object.values(mappings).map(x => {return {"$ref": x}});
+    }
+
+    /**
+     * In oneOf polymorphism approach.
+     * Adding a reference to the parent class in the `allOf` attribute
+     * will cause a infinite loop in the ruby code generator.
+     *
+     * @param name
+     * @private
+     */
+    private relatedParentClass(name: string) {
+        if (this.oneOfPolymorphism) {
+            return null;
+        }
+        return {$ref: `#/components/schemas/${name}`};
+    }
+
+    private buildRequiredPropertiesSubClass(localreq: Set<string>) {
+        if (this.oneOfPolymorphism) {
+            return Array.from(localreq.values());
+        }
+        return null;
+    }
+
+    private buildDiscriminatorPropertiesSubClass() {
+        if (this.oneOfPolymorphism) {
+            return {type: {type: "string"}};
+        }
+        return {}; // Only oneOf polimorphism requires discriminator properties in sub classes
+    }
+
+    /**
+     * See buildSchemaOneOfReferences
+     *
+     * Unions/Polymorphism need an attribute which will be used to dispatch the correct subclass
+     * during deserialization.
+     * Reslang by default uses the attribute named `type` as a string
+     *
+     * @private
+     */
+    private buildDiscriminatorPropertiesParentClass() {
+        if (this.oneOfPolymorphism) {
+            return null;
+        }
+        return {type: {type: "string"}};
     }
 
     protected pullUpUnionAttributes(

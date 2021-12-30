@@ -1,0 +1,28 @@
+digraph G {
+        graph [fontname = "helvetica"];
+        node [fontname = "helvetica"];
+        edge [fontname = "helvetica"];
+        node [shape=none];
+        
+"MyResource" [label=<
+                    <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
+                    <tr><td><b>MyResource        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">basic: BasicUnion</td></tr><tr><td align="left">normal: NormalUnion</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> MULTIGET POST</font></td></tr></table>>];
+"BasicUnion" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>BasicUnion        </b></td></tr>        </table> >];
+"MyFirstStruct" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>MyFirstStruct        </b></td></tr>        <hr/><tr><td align="left">attributeA: int</td></tr><tr><td align="left">attributeB: int</td></tr></table> >];
+"NormalUnion" [label=<
+                    <table border="1" cellborder="0" cellspacing="1" style='dashed'  >
+                    <tr><td><b>NormalUnion        </b></td></tr>        </table> >];
+"MySecondStruct" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>MySecondStruct        </b></td></tr>        <hr/><tr><td align="left">attributeC: string</td></tr><tr><td align="left">attributeD: string</td></tr></table> >];
+"MyThirdStruct" [label=<
+                    <table border="1" cellborder="0" cellspacing="1"   >
+                    <tr><td><b>MyThirdStruct        </b></td></tr>        <hr/><tr><td align="left">attributeE: string</td></tr></table> >];
+"BasicUnion" -> "MyFirstStruct" [dir="back" arrowtail="diamond" label=< <font point-size="8"> myFirstStruct</font> >];
+"NormalUnion" -> "MySecondStruct" [dir="back" arrowtail="diamond" label=< <font point-size="8"> mySecondStruct</font> >];
+"NormalUnion" -> "MyThirdStruct" [dir="back" arrowtail="diamond" label=< <font point-size="8"> myThirdStruct</font> >];
+}

@@ -1,0 +1,4 @@
+namespace {
+    title "Polymorphism example"
+    version 0.0.1
+}

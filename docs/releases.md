@@ -1,3 +1,7 @@
+## 6.2.4 12/30/2021
+
+- Include flag `--oneof-polymorphism` to translate `union` reslang definitions into swagger `oneOf` field instead of `allOf`
+
 ## 6.2.3 11/23/2021
 
 - Include the descriptions from `/events` syntax in the generated description for operations in asyncapi spec.

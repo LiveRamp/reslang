@@ -5,6 +5,7 @@ import { allModels } from "./allmodels"
 
 /** parse the reslang files and check that the correct
  * abstract syntax tree is being generated
+ * This are generated with the flag --parsed
  */
 describe("reslang parsing tests", () => {
     test("strip", () => {

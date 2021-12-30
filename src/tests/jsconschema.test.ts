@@ -1,9 +1,12 @@
-import { readFile } from "../parse"
-import { strip } from "./utilities"
-import { allModels } from "./allmodels"
+import {readFile} from "../parse"
+import {strip} from "./utilities"
+import {allModels} from "./allmodels"
 import JsonSchemaGen from "../genjsonschema"
 
-/** dotviz generation tests
+/**
+ * json schema tests
+ * the expected output is generated with --jsonschema=noroot --followresources
+ * or specified in the second (root) and fourth (follow) paremeter of compare() in this file
  */
 describe("JSON schema generation tests", () => {
     test.each(allModels)("JSON schema(%s)", (a) => {
@@ -48,18 +51,17 @@ function compare(
     schemaGen.root = root
     schemaGen.followResources = followResources
 
-    let got = ""
+    let got
     try {
-        got = strip(JsonSchemaGen.generateSchemaAndStringify(schemaGen))
+        got = JSON.parse(strip(JsonSchemaGen.generateSchemaAndStringify(schemaGen)))
     } catch (err) {
-        got = "" + err
+        let expected = strip(
+            readFile(`models/${module}/testdata/${file || "jsonschema.expected"}`)
+        )
+        expect("" + err).toBe(expected)
+        return
     }
-    const expected = strip(
-        readFile(`models/${module}/testdata/${file || "jsonschema.expected"}`)
-    )
 
-    if (got !== expected) {
-        console.log(got)
-    }
-    expect(got).toBe(expected)
+    let expected = JSON.parse(readFile(`models/${module}/testdata/${file || "jsonschema.expected"}`))
+    expect(got).toStrictEqual(expected)
 }
