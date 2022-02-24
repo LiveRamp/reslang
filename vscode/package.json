@@ -36,7 +36,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "vsce": "^1.75.0"
+        "vsce": "^1.88.0"
     },
     "scripts": {
         "package": "./node_modules/.bin/vsce package",
