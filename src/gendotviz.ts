@@ -60,6 +60,7 @@ export default class DotvizGen extends BaseGen {
             const bgcolor = [
                 "request-resource",
                 "asset-resource",
+                "subresource",
                 "resource",
                 "configuration-resource"
             ].includes(def.type)
