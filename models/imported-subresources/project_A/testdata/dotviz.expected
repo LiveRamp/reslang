@@ -8,7 +8,7 @@ digraph G {
     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
     <tr><td><b>Top </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
     "project_B.Top::Sub" [label=<
-    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
+    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
     <tr><td><b>Sub </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">isCool: boolean</td></tr></table>>];
     "project_B.Top" -> "project_B.Top::Sub" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
     "ReeSource" [label=<

@@ -8,7 +8,7 @@ node [shape=none];
 <table border="3" cellborder="0" cellspacing="1" style='rounded' bgcolor='#ffffcc'>
 <tr><td><b>UpperResource </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">subresource: LowerResource</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr></table>>];
 "UpperResource::LowerResource" [label=<
-<table border="1" cellborder="0" cellspacing="1" style='rounded' >
+<table border="1" cellborder="0" cellspacing="1" style='rounded' bgcolor='#ffffcc'>
 <tr><td><b>LowerResource </b></td></tr><hr/><tr><td align="left">name: string</td></tr></table>>];
 "UpperResource" -> "UpperResource::LowerResource" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 }

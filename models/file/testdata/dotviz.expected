@@ -14,7 +14,7 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Specification        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "Directory::File" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>File        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="left">contents: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST MULTIGET contents</font></td></tr></table>>];
 "Directory" -> "Directory::File" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "DirectoryDeleteRequest" [label=<

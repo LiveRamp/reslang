@@ -14,11 +14,11 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">a: int</td></tr><tr><td align="left">b: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  PUT GET</font></td></tr></table>>];
 "simple-resource.Foo::Subfoo" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Subfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
 "simple-resource.Foo" -> "simple-resource.Foo::Subfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "simple-resource.Foo::Subfoo::Subsubfoo" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded' color='gray' bgcolor='#ffffcc'>
                     <tr><td><b>Subsubfoo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr></table>>];
 "simple-resource.Foo::Subfoo" -> "simple-resource.Foo::Subfoo::Subsubfoo" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "simple-resource.Bar" [label=<
@@ -37,7 +37,7 @@ digraph G {
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>Specification        </b></td></tr>        <hr/><tr><td align="left">type: string</td></tr><tr><td align="left">documentation: string</td></tr></table> >];
 "Car::Wheel" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Wheel        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">radius: double</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET PUT POST MULTIGET id</font></td></tr></table>>];
 "Car" -> "Car::Wheel" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "BrandEnum" [label=<

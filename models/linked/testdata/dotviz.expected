@@ -8,7 +8,7 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Foo        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr></table>>];
 "Foo::Bar" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Bar        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET</font></td></tr></table>>];
 "Foo" -> "Foo::Bar" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Linking" [label=<

@@ -8,23 +8,23 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>A        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">outputName: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
 "A::B" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>B        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
 "A" -> "A::B" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "A::B::C" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>C        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
 "A::B" -> "A::B::C" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "A::B::C::start" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded' >
                     <tr><td><b>start        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
 "A::B::C" -> "A::B::C::start" [dir="none" label=< <font point-size="8">action</font> >];
 "A::B::stop" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded' >
                     <tr><td><b>stop        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET</font></td></tr></table>>];
 "A::B" -> "A::B::stop" [dir="none" label=< <font point-size="8">action</font> >];
 "A::B::stop::Deep" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Deep        </b></td></tr><hr/><tr><td align="left">id: int</td></tr></table>>];
 "A::B::stop" -> "A::B::stop::Deep" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Asset" [label=<

@@ -8,11 +8,11 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name</font></td></tr></table>>];
 "Destination::TaxonomyConfiguration" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>TaxonomyConfiguration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">mappingsMacro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET id</font></td></tr></table>>];
 "Destination" -> "Destination::TaxonomyConfiguration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Destination::Integration" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Integration        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET name</font></td></tr></table>>];
 "Destination" -> "Destination::Integration" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "IdentifierTypeMapping" [label=<
@@ -22,22 +22,22 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>IdentifierPool        </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "Destination::Endpoint" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Endpoint        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">url: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST PUT GET MULTIGET name</font></td></tr></table>>];
 "Destination" -> "Destination::Endpoint" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "EndpointProperty" [label=<
                     <table border="1" cellborder="0" cellspacing="1"   >
                     <tr><td><b>EndpointProperty        </b></td></tr>        <hr/><tr><td align="left">name: string</td></tr><tr><td align="left">default: string</td></tr><tr><td align="left">externallyConfigurable: boolean</td></tr></table> >];
 "Destination::Packager" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Packager        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="left">compressionType: CompressionTypeEnum</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
 "Destination" -> "Destination::Packager" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Destination::Formatter" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Formatter        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
 "Destination" -> "Destination::Formatter" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Destination::Deliverer" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Deliverer        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">protocol: ProtocolEnum</td></tr><tr><td align="left">macro: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET</font></td></tr></table>>];
 "Destination" -> "Destination::Deliverer" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "CompressionTypeEnum" [label=<
