@@ -52,7 +52,7 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Destination        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "Destination::Endpoint" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Endpoint        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">FUTURE </font></td></tr></table>>];
 "Destination" -> "Destination::Endpoint" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "DistributionRequest" -> "Destination::Endpoint" [label=< <font point-size="8"> destinationEndpointId</font> > arrowhead="vee"];

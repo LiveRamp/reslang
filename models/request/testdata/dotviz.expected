@@ -8,15 +8,15 @@ digraph G {
                     <table border="3" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>UploadRequest        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">name: string</td></tr><tr><td align="left">status: UploadRequestStatusEnum</td></tr><tr><td align="left">client: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> POST GET MULTIGET name</font></td></tr></table>>];
 "UploadRequest::Status" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Status        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">recordsProcessed: int</td></tr><tr><td align="left">completed: boolean</td></tr><tr><td align="right"><font color="#0000ff" point-size="8">singleton  GET</font></td></tr></table>>];
 "UploadRequest" -> "UploadRequest::Status" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "UploadRequest::RecordSet" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>RecordSet        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">company: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST</font></td></tr></table>>];
 "UploadRequest" -> "UploadRequest::RecordSet" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "UploadRequest::RecordSet::Deep" [label=<
-                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  >
+                    <table border="1" cellborder="0" cellspacing="1" style='rounded'  bgcolor='#ffffcc'>
                     <tr><td><b>Deep        </b></td></tr><hr/><tr><td align="left">id: int</td></tr><tr><td align="left">company: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> GET POST</font></td></tr></table>>];
 "UploadRequest::RecordSet" -> "UploadRequest::RecordSet::Deep" [dir="back" arrowtail="ediamond" label=< <font point-size="8">subresource</font> >];
 "Record" [label=<

@@ -472,17 +472,7 @@ export default class SwagGen extends BaseGen {
         if (ops.multiput) {
             const content = {
                 "application/json": {
-                    schema: {
-                        type: "array",
-                        items: {
-                            type: "object",
-                            properties: {
-                                status: {
-                                    $ref: "#/components/schemas/StandardError"
-                                }
-                            }
-                        }
-                    }
+                    schema: this.getMultiStatusSchema(el)
                 }
             }
             const responses: { [code: number]: any } = {
@@ -494,10 +484,10 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multiput, responses)
-            let operationId = this.formOperationId(el, Verbs.MULTIPUT);
+            const operationId = this.formOperationId(el, Verbs.MULTIPUT);
             path.put = {
                 tags: [tagKeys[unique]],
-                operationId: operationId,
+                operationId,
                 description: this.translateDoc(ops.multiput.comment),
                 summary: ops.multiput.summary || operationId,
                 requestBody: {
@@ -528,17 +518,7 @@ export default class SwagGen extends BaseGen {
         if (ops.multipatch) {
             const content = {
                 "application/json": {
-                    schema: {
-                        type: "array",
-                        items: {
-                            type: "object",
-                            properties: {
-                                status: {
-                                    $ref: "#/components/schemas/StandardError"
-                                }
-                            }
-                        }
-                    }
+                    schema: this.getMultiStatusSchema(el)
                 }
             }
             const responses: { [code: number]: any } = {
@@ -549,10 +529,10 @@ export default class SwagGen extends BaseGen {
             }
 
             this.formErrors(ops.multipatch, responses)
-            let operationId = this.formOperationId(el, Verbs.MULTIPATCH);
+            const operationId = this.formOperationId(el, Verbs.MULTIPATCH);
             path.patch = {
                 tags: [tagKeys[unique]],
-                operationId: operationId,
+                operationId,
                 description: this.translateDoc(ops.multipatch.comment),
                 summary: ops.multipatch.summary || operationId,
                 requestBody: {
@@ -583,17 +563,7 @@ export default class SwagGen extends BaseGen {
         if (ops.multidelete) {
             const content = {
                 "application/json": {
-                    schema: {
-                        type: "array",
-                        items: {
-                            type: "object",
-                            properties: {
-                                status: {
-                                    $ref: "#/components/schemas/StandardError"
-                                }
-                            }
-                        }
-                    }
+                    schema: this.getMultiStatusSchema(el)
                 }
             }
             const responses: { [code: number]: any } = {
@@ -708,6 +678,27 @@ export default class SwagGen extends BaseGen {
             }
             if (gparams.length) {
                 path.get.parameters = gparams
+            }
+        }
+    }
+
+    /**
+     * Gets the multistatus schema for a resource. Applicable to MULTIPOST, MULTIDELETE, MULTIPATCH, and MULTIPUT
+     * @param el resource with multi http-verbage
+     * @returns multistatus payload schema
+     * @private
+     */
+    private getMultiStatusSchema(el: IResourceLike) {
+        return {
+            type: "array",
+            items: {
+                type: "object",
+                properties: {
+                    id: this.addType(this.extractId(el), {}, false),
+                    status: {
+                        $ref: "#/components/schemas/StandardError"
+                    }
+                }
             }
         }
     }
