@@ -616,6 +616,12 @@ Actions cannot have subresources`
                     continue
                 }
             }
+
+            // do not display input params on the responses
+            if (attr.modifiers.input && suffix === "Output") {
+                continue
+            }
+
             // if this is marked as output, suppress all other verbs
             if (attr.modifiers.output && verb !== Verbs.GET) {
                 continue
