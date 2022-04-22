@@ -67,6 +67,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -95,6 +96,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -123,6 +125,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -182,6 +185,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -224,6 +228,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -252,6 +257,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": true,
               "optionalGet": false,
@@ -294,6 +300,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -322,6 +329,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -364,6 +372,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -392,6 +401,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": true,
               "optionalGet": false,
@@ -434,6 +444,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -487,6 +498,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -516,6 +528,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,
@@ -545,6 +558,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalGet": false,

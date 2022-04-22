@@ -68,6 +68,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -96,6 +97,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -124,6 +126,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -152,6 +155,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -217,6 +221,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -245,6 +250,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -273,6 +279,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -327,6 +334,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -355,6 +363,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -386,6 +395,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -446,6 +456,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -474,6 +485,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -505,6 +517,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -566,6 +579,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -594,6 +608,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -637,6 +652,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -665,6 +681,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -720,6 +737,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -748,6 +766,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -809,6 +828,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -837,6 +857,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -899,6 +920,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -927,6 +949,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -990,6 +1013,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -1018,6 +1042,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -1109,6 +1134,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -1138,6 +1164,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,
@@ -1167,6 +1194,7 @@
             "full": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "optional": false,
               "optionalPost": false,

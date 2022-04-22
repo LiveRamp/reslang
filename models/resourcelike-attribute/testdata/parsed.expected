@@ -25,6 +25,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,
@@ -53,6 +54,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,
@@ -108,6 +110,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,
@@ -173,6 +176,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,
@@ -202,6 +206,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,
@@ -231,6 +236,7 @@
             "linked": false,
             "modifiers": {
               "flag": false,
+              "input": false,
               "mutable": false,
               "nullable": false,
               "optional": false,

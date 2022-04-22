@@ -22,6 +22,7 @@ describe("reslang default parsing tests", () => {
                     "optionalPost": false,
                     "optionalPut": false,
                     "output": false,
+                    "input": false,
                     "query": false,
                     "queryonly": false,
                     "representation": false,
