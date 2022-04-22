@@ -226,6 +226,7 @@ export interface IArray {
 export interface IModifiers {
     flag: boolean
     mutable: boolean
+    input: boolean
     output: boolean
     optional: boolean
     optionalPost: boolean
