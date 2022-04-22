@@ -1,0 +1,211 @@
+openapi: 3.0.1
+info:
+  title: A simple resource API
+  description: This is the description of the API
+  version: 0.1.2
+servers:
+  - description: ''
+    url: 'https://api.liveramp.com/input-resource'
+tags:
+  - name: InputResource
+    description: (resource)  This is a description of a garage
+paths:
+  /v1/input-resources:
+    post:
+      tags:
+        - InputResource
+      operationId: Create InputResource
+      description: Actual POST comment
+      summary: Create InputResource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputResourceInput'
+      responses:
+        '201':
+          description: InputResource created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 10
+                    maxLength: 300
+    get:
+      tags:
+        - InputResource
+      operationId: Get InputResources
+      description: ''
+      summary: Get InputResources
+      responses:
+        '200':
+          description: InputResources retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputResourceMultiResponse'
+      parameters:
+        - in: query
+          name: limit
+          description: Number of InputResources to return
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: after
+          description: >-
+            This value is a cursor that enables continued paginated queries. Its
+            value can be found under "_pagination.after" in the previous
+            response from this endpoint.
+          schema:
+            type: string
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+  '/v1/input-resources/{id}':
+    get:
+      tags:
+        - InputResource
+      operationId: Get InputResource
+      description: ''
+      summary: Get InputResource
+      responses:
+        '200':
+          description: InputResource retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputResourceOutput'
+        '404':
+          description: InputResource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+    put:
+      tags:
+        - InputResource
+      operationId: Modify InputResource
+      description: Actual PUT comment
+      summary: Modify InputResource
+      responses:
+        '200':
+          description: InputResource modified successfully
+        '404':
+          description: InputResource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+    delete:
+      tags:
+        - InputResource
+      operationId: Delete InputResource
+      description: ''
+      summary: Delete InputResource
+      responses:
+        '200':
+          description: InputResource deleted successfully
+        '404':
+          description: InputResource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minLength: 10
+            maxLength: 300
+components:
+  parameters: {}
+  schemas:
+    InputResourceInput:
+      type: object
+      properties:
+        requestedBy:
+          type: string
+      required:
+        - requestedBy
+      description: This is a description of a garage
+    InputResourceOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 10
+          maxLength: 300
+      required:
+        - id
+      description: This is a description of a garage
+    InputResourceMultiResponse:
+      type: object
+      properties:
+        inputResources:
+          description: Array of retrieved InputResources
+          type: array
+          items:
+            $ref: '#/components/schemas/InputResourceOutput'
+        _pagination:
+          $ref: '#/components/schemas/InputResourceMultiResponsePagination'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: 'Service specific error code, more granular'
+          type: string
+        message:
+          description: 'General, human readable error message'
+          type: string
+      required:
+        - httpStatus
+        - errorCode
+        - message
+    InputResourceMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+          description: >-
+            This field is a cursor to be passed as a query parameter in
+            subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request
+            left off.
+
+            When "after" is  null, there are no more records to fetch.

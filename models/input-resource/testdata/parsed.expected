@@ -1,0 +1,307 @@
+[
+  {
+    "definitions": [],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [
+      {
+        "category": "namespace",
+        "comment": "This is the description of the API",
+        "title": "A simple resource API",
+        "version": "0.1.2"
+      }
+    ],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [],
+    "diagrams": [
+      {
+        "category": "diagram",
+        "diagram": "main",
+        "groups": [],
+        "include": [
+          {
+            "module": "resources",
+            "name": "resources.reslang",
+            "parentName": "",
+            "parentShort": "",
+            "parents": [],
+            "short": "reslang"
+          }
+        ]
+      }
+    ],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [
+      {
+        "attributes": [
+          {
+            "constraints": {
+              "maxLength": 300,
+              "minLength": 10
+            },
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "input": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": true,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "id",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          },
+          {
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "input": true,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "requestedBy",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          }
+        ],
+        "category": "definition",
+        "comment": "This is a description of a garage",
+        "file": "resources.reslang",
+        "future": false,
+        "kind": "resource-like",
+        "name": "InputResource",
+        "namespace": "",
+        "operations": [
+          {
+            "comment": "Actual PUT comment",
+            "errors": [],
+            "operation": "PUT",
+            "options": [],
+            "summary": ""
+          },
+          {
+            "comment": "Actual POST comment",
+            "errors": [],
+            "operation": "POST",
+            "options": [],
+            "summary": ""
+          },
+          {
+            "errors": [],
+            "operation": "GET",
+            "options": [],
+            "summary": ""
+          },
+          {
+            "errors": [],
+            "operation": "DELETE",
+            "options": [],
+            "summary": ""
+          },
+          {
+            "errors": [],
+            "operation": "MULTIGET",
+            "options": [],
+            "summary": ""
+          }
+        ],
+        "parentName": "",
+        "parentShort": "",
+        "parents": [],
+        "secondary": false,
+        "short": "InputResource",
+        "singleton": false,
+        "type": "resource"
+      }
+    ],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [
+      {
+        "attributes": [
+          {
+            "comment": "HTTP error status code for this problem",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "input": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "httpStatus",
+            "stringMap": false,
+            "type": {
+              "name": "int",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "int"
+            }
+          },
+          {
+            "comment": "Service specific error code, more granular",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "input": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "errorCode",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          },
+          {
+            "comment": "General, human readable error message",
+            "constraints": {},
+            "full": false,
+            "inline": false,
+            "linked": false,
+            "modifiers": {
+              "flag": false,
+              "input": false,
+              "mutable": false,
+              "nullable": false,
+              "optional": false,
+              "optionalGet": false,
+              "optionalPost": false,
+              "optionalPut": false,
+              "output": false,
+              "query": false,
+              "queryonly": false,
+              "representation": false
+            },
+            "name": "message",
+            "stringMap": false,
+            "type": {
+              "name": "string",
+              "parentName": "",
+              "parentShort": "",
+              "parents": [],
+              "short": "string"
+            }
+          }
+        ],
+        "category": "definition",
+        "file": "local.reslang",
+        "kind": "structure",
+        "name": "StandardError",
+        "parentName": "",
+        "parentShort": "",
+        "parents": [],
+        "secondary": false,
+        "short": "StandardError",
+        "type": "structure"
+      }
+    ],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [],
+    "tags": []
+  },
+  {
+    "definitions": [],
+    "diagrams": [],
+    "docs": [],
+    "imports": [],
+    "namespace": [],
+    "servers": [
+      {
+        "category": "servers",
+        "events": [
+          {
+            "comment": "Production Google Pubsub server",
+            "environment": "PROD",
+            "protocol": "GOOGLE_PUBSUB",
+            "url": "https://pubsub.googleapis.com/v1/projects/liveramp-events-prod"
+          }
+        ],
+        "rest": [
+          {
+            "environment": "PROD",
+            "url": "https://api.liveramp.com"
+          }
+        ]
+      }
+    ],
+    "tags": []
+  }
+]

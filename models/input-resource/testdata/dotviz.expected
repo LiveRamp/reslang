@@ -1,0 +1,10 @@
+digraph G {
+graph [fontname = "helvetica"];
+node [fontname = "helvetica"];
+edge [fontname = "helvetica"];
+node [shape=none];
+
+"InputResource" [label=<
+<table border="3" cellborder="0" cellspacing="1" style='rounded' bgcolor='#ffffcc'>
+<tr><td><b>InputResource </b></td></tr><hr/><tr><td align="left">id: string</td></tr><tr><td align="left">requestedBy: string</td></tr><tr><td align="right"><font color="#0000ff" point-size="8"> PUT POST GET DELETE MULTIGET id</font></td></tr></table>>];
+}
