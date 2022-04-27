@@ -8,6 +8,7 @@ export const allModels = [
     "distribution",
     "eventing",
     "file",
+    "input-resource",
     "imported-subresources/project_A",
     "linked",
     "milkman",

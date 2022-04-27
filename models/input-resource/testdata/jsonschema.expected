@@ -1,0 +1,67 @@
+{
+  "$id": "https://schemas.liveramp.com/noroot",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "InputResourceInput": {
+      "description": "This is a description of a garage",
+      "properties": {
+        "requestedBy": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestedBy"
+      ],
+      "type": "object"
+    },
+    "InputResourceMultiResponse": {
+      "properties": {
+        "inputResources": {
+          "description": "Array of retrieved InputResources",
+          "items": {
+            "$ref": "#/definitions/InputResourceOutput"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InputResourceOutput": {
+      "description": "This is a description of a garage",
+      "properties": {
+        "id": {
+          "maxLength": 300,
+          "minLength": 10,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "StandardError": {
+      "properties": {
+        "errorCode": {
+          "description": "Service specific error code, more granular",
+          "type": "string"
+        },
+        "httpStatus": {
+          "description": "HTTP error status code for this problem",
+          "format": "int32",
+          "type": "integer"
+        },
+        "message": {
+          "description": "General, human readable error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "httpStatus",
+        "errorCode",
+        "message"
+      ],
+      "type": "object"
+    }
+  }
+}

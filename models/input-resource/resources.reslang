@@ -1,0 +1,16 @@
+
+// A garage is a place to store cars
+"This is a description of a garage"
+resource InputResource {
+	// simple id
+	id: string query min-length:10 max-length: 300
+	requestedBy: string input
+
+	/operations
+		"Actual PUT comment"
+		// this is a PUT comment
+		PUT
+		// this is a POST comment
+		"Actual POST comment"
+		POST GET DELETE MULTIGET
+}

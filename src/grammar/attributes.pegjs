@@ -55,6 +55,7 @@ modifiers = modifiers:modifiers_elem* { return Object.assign({
     "optionalPost": false,
     "optionalPut": false,
     "output": false,
+    "input": false,
     "query": false,
     "queryonly": false,
     "representation": false,
@@ -65,6 +66,7 @@ modifier =
   ( "flag"
   / "mutable"
   / "output"
+  / "input"
   / "optional-post"
   / "optional-put"
   / "optional-get"
