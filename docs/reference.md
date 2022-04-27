@@ -410,7 +410,9 @@ The following modifiers can be placed after the attribute type to indicate that 
 -   no modifier
     -   The default is that the field is included for POST and GET
 -   mutable
-    -   The field is included also for PUT and PATCH
+    - The field is included also for PUT and PATCH
+-   input
+    - The field is included in the request body but not the response body for CU operations (CRUD)
 -   output
     -   The field is only included for GET
 -   flag
