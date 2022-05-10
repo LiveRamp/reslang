@@ -12,17 +12,19 @@
     call-me-maybe "^1.0.1"
     js-yaml "^4.1.0"
 
-"@asyncapi/avro-schema-parser@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@asyncapi/avro-schema-parser/-/avro-schema-parser-0.6.0.tgz#e58833d1132dc1a787bc1dda785d0121991d45f9"
-  integrity sha512-zkCEudMfhdDuiqnuTii4jC365C7AQCD8AZ/CCHh3wB/s8UNkl8ydDA1KcDE35F5/s0mUFg0Z9VMxBX4rbLBdUA==
-
-"@asyncapi/generator-react-sdk@^0.2.21":
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/@asyncapi/generator-react-sdk/-/generator-react-sdk-0.2.21.tgz#0d647bbb82b0f96b85fabb71a86b42579e9148b6"
-  integrity sha512-n6kkWOYlvUmc5xkDDN23msgxAZTIaDK/wsx2c8H+jXS72qN6tRzYSnXOI34edc/gMxuXMS0TNipBXXwJ5XznxQ==
+"@asyncapi/avro-schema-parser@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@asyncapi/avro-schema-parser/-/avro-schema-parser-1.0.1.tgz#b9c5a8fc98f2cfa092216e0d2ab4c71bfc1bf82e"
+  integrity sha512-j3JWLDkzWARlo2v/olOAgJ1aB9HNsvUUUHPKkx54ZNHUUbyVcDpQhBNSdvm8OBNKVa53QxLoDK7g59jhgUJZ9g==
   dependencies:
-    "@asyncapi/parser" "^1.11.0"
+    avsc "^5.7.3"
+
+"@asyncapi/generator-react-sdk@^0.2.23":
+  version "0.2.23"
+  resolved "https://registry.yarnpkg.com/@asyncapi/generator-react-sdk/-/generator-react-sdk-0.2.23.tgz#be3ab612423a15151d6d1b28780b548ac4183144"
+  integrity sha512-q/6yajFzqYyQ/vC2e1gicJ7MZxRGAjYB/to0lo9i5An2MqFquBfuvediocbjoDC8En4pIt/JePgKc+9STnckYA==
+  dependencies:
+    "@asyncapi/parser" "^1.13.0"
     "@babel/core" "7.12.9"
     "@babel/preset-env" "^7.12.7"
     "@babel/preset-react" "^7.12.7"
@@ -33,15 +35,15 @@
     rollup "^2.60.1"
     source-map-support "^0.5.19"
 
-"@asyncapi/generator@^1.8.23":
-  version "1.8.23"
-  resolved "https://registry.yarnpkg.com/@asyncapi/generator/-/generator-1.8.23.tgz#0c70964b4f7a9de469f74e341a5592dee48ed917"
-  integrity sha512-pvrt2WW45xgoOS2m9T0RxagXkx/EJoiNZuF6BNHraIb+4+w8nPJ16e09NW8a6kFPL7hwb4zSqoMicNYbFxKIyQ==
+"@asyncapi/generator@^1.8.27":
+  version "1.8.27"
+  resolved "https://registry.yarnpkg.com/@asyncapi/generator/-/generator-1.8.27.tgz#e0a4720971a0462dc0323a34668eb1cddd666343"
+  integrity sha512-fMyk/6NxkTdJ72eOkYmXnSlPJHGCQYouobReEH7pO9Ns5/QUng+ype8DdQrfnbi01vtzbYg5LHmcKIqajr37/g==
   dependencies:
-    "@asyncapi/avro-schema-parser" "^0.6.0"
-    "@asyncapi/generator-react-sdk" "^0.2.21"
+    "@asyncapi/avro-schema-parser" "^1.0.0"
+    "@asyncapi/generator-react-sdk" "^0.2.23"
     "@asyncapi/openapi-schema-parser" "^2.0.1"
-    "@asyncapi/parser" "^1.11.1"
+    "@asyncapi/parser" "^1.13.0"
     "@asyncapi/raml-dt-schema-parser" "^2.0.1"
     "@npmcli/arborist" "^2.2.4"
     ajv "^6.10.2"
@@ -73,10 +75,10 @@
   dependencies:
     "@openapi-contrib/openapi-schema-to-json-schema" "^3.0.0"
 
-"@asyncapi/parser@^1.11.0", "@asyncapi/parser@^1.11.1":
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/@asyncapi/parser/-/parser-1.11.1.tgz#110c1aa97a3e3ec85414e2f27d9a1a3a6011a6a8"
-  integrity sha512-9ugfMHw1IYQVuUk5e4NQol4XPmfLUvniTX6tIo/AxUToDv/ag3Wy+m+2Pc92wPiuHQBYFbBnCam+hN8/cHwMuA==
+"@asyncapi/parser@^1.13.0":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@asyncapi/parser/-/parser-1.13.2.tgz#ba12e122c2bc22bdb2773854ad1057df83a7f684"
+  integrity sha512-orviZ01Hxo0iNLaA8IuHMlHzUYMP5ysVIfY7OgiiO73UIhJRCuC5cntVy2kCzWnDPM+d0uasBxvwHBp+FlNzZA==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.6"
     "@asyncapi/specs" "^2.11.0"
@@ -2855,6 +2857,11 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+avsc@^5.7.3:
+  version "5.7.3"
+  resolved "https://registry.yarnpkg.com/avsc/-/avsc-5.7.3.tgz#c5a57147c0c7f6d9cbbdf6f02576eda94d293cd9"
+  integrity sha512-uUbetCWczQHbsKyX1C99XpQHBM8SWfovvaZhPIj23/1uV7SQf0WeRZbiLpw0JZm+LHTChfNgrLfDJOVoU2kU+A==
 
 aws-sign2@~0.7.0:
   version "0.7.0"
