@@ -15,5 +15,5 @@ steps:
     waitFor: ['reslang-build']
     id: 'reslang-push'
 
-timeout: 300s
+timeout: 600s
 tags: ['reslang']
