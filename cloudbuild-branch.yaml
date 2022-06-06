@@ -1,5 +1,11 @@
 # This build only runs after a push to non-master branches.
 steps:
+  - name: node
+    entrypoint: yarn
+    args: ['install']
+  - name: node
+    entrypoint: yarn
+    args: ['test']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA', '.']
     waitFor: ['-']
