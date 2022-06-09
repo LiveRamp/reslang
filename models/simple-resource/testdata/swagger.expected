@@ -13,8 +13,6 @@ tags:
     description: (resource)  A resource with no ID
   - name: 'Foo::Subfoo'
     description: '(subresource)  '
-  - name: 'Foo::Subfoo::Subsubfoo'
-    description: '(subresource)  '
   - name: Bar
     description: '(resource)  '
   - name: Test
@@ -439,4 +437,3 @@ components:
             left off.
 
             When "after" is  null, there are no more records to fetch.
-

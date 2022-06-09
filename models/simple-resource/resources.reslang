@@ -38,9 +38,11 @@ subresource Foo::Subfoo {
 	id: string
 }
 
+// The maximum depth a resource can be nested is 2 levels.
+/*
 subresource Foo::Subfoo::Subsubfoo {
 	id: string
-}
+}*/
 
 // another resource with no id
 resource Bar {
