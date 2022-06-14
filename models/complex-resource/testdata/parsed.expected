@@ -49,15 +49,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -78,15 +78,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": true,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -107,15 +107,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -136,15 +136,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -165,15 +165,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -195,15 +195,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -225,15 +225,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -258,15 +258,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -287,15 +287,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": true,
               "nullable": false
             },
@@ -305,21 +305,21 @@
         "operations": [
           {
             "operation": "POST",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "GET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "MULTIGET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [],
@@ -370,15 +370,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -399,15 +399,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -443,15 +443,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -472,15 +472,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -490,27 +490,27 @@
         "operations": [
           {
             "operation": "GET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "PUT",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "POST",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "MULTIGET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [
@@ -614,15 +614,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -646,15 +646,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": true,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -675,15 +675,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -694,34 +694,34 @@
           {
             "operation": "PUT",
             "comment": "Actual PUT comment",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "POST",
             "comment": "Actual POST comment",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "GET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "DELETE",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "MULTIGET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [],
@@ -757,15 +757,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -787,15 +787,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -820,15 +820,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -850,15 +850,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": true,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -883,15 +883,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -912,15 +912,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -956,15 +956,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": true,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -985,15 +985,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1003,15 +1003,15 @@
         "operations": [
           {
             "operation": "PUT",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           },
           {
             "operation": "GET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [],
@@ -1045,15 +1045,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1067,54 +1067,6 @@
         "name": "simple-resource.Foo::Subfoo",
         "parentShort": "Foo",
         "parentName": "simple-resource.Foo",
-        "secondary": true,
-        "file": "resources.reslang"
-      },
-      {
-        "category": "definition",
-        "kind": "resource-like",
-        "future": false,
-        "singleton": false,
-        "type": "subresource",
-        "attributes": [
-          {
-            "name": "id",
-            "stringMap": false,
-            "type": {
-              "parents": [],
-              "short": "string",
-              "name": "string",
-              "parentShort": "",
-              "parentName": ""
-            },
-            "inline": false,
-            "linked": false,
-            "full": false,
-            "modifiers": {
-              "flag": false,
-              "input": false,
-              "mutable": false,
-              "optional": false,
-              "optionalPost": false,
-              "optionalPut": false,
-              "optionalGet": false,
-              "output": false,
-              "queryonly": false,
-              "query": false,
-              "representation": false,
-              "nullable": false
-            },
-            "constraints": {}
-          }
-        ],
-        "parents": [
-          "Foo",
-          "Subfoo"
-        ],
-        "short": "Subsubfoo",
-        "name": "simple-resource.Foo::Subfoo::Subsubfoo",
-        "parentShort": "Foo",
-        "parentName": "simple-resource.Foo::Subfoo",
         "secondary": true,
         "file": "resources.reslang"
       },
@@ -1140,15 +1092,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": true,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1158,9 +1110,9 @@
         "operations": [
           {
             "operation": "MULTIGET",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [],
@@ -1194,15 +1146,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1212,9 +1164,9 @@
         "operations": [
           {
             "operation": "POST",
+            "summary": "",
             "options": [],
-            "errors": [],
-            "summary": ""
+            "errors": []
           }
         ],
         "parents": [],
@@ -1259,15 +1211,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1289,15 +1241,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1319,15 +1271,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1400,15 +1352,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1430,15 +1382,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
@@ -1460,15 +1412,15 @@
             "full": false,
             "modifiers": {
               "flag": false,
-              "input": false,
               "mutable": false,
               "optional": false,
+              "optionalGet": false,
               "optionalPost": false,
               "optionalPut": false,
-              "optionalGet": false,
               "output": false,
-              "queryonly": false,
+              "input": false,
               "query": false,
+              "queryonly": false,
               "representation": false,
               "nullable": false
             },
