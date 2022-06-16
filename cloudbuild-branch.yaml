@@ -1,13 +1,11 @@
 # This build only runs after a push to non-master branches.
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA', '.']
-    waitFor: ['-']
-    id: 'reslang-build'
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/liveramp-eng/reslang:$SHORT_SHA']
-    waitFor: ['reslang-build']
-    id: 'reslang-push'
+  - name: node
+    entrypoint: yarn
+    args: ['install']
+  - name: node
+    entrypoint: yarn
+    args: ['test']
 
-timeout: 300s
+timeout: 400s
 tags: ['reslang']
