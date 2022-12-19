@@ -28,7 +28,7 @@
         "@types/pluralize": "^0.0.29",
         "@types/tmp": "^0.1.0",
         "clipboardy": "^2.0.0",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "js-yaml": "^3.13.1",
         "open": "^6.3.0",
         "pegjs": "^0.10.0",
