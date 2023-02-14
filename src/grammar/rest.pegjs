@@ -267,6 +267,7 @@ bool = b: ("true" / "false") {
 
 httpHeader = _ comment:description? _ type:("http-header")  _ name:name  _ "{" _
     "name:" _ headerName:[a-zA-Z0-9\-]+ _
+    required:("required:" _ bool _)?
 "}" _ ";"? _ {
-    return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName.join("")}
+    return {category: "definition", kind: type, "type": type, parents: [], "short": name, "comment": comment, "headerName": headerName.join(""), "required": required?required[2]:true}
 }
