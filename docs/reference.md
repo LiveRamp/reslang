@@ -122,7 +122,7 @@ Note that versioning is not possible (or necessary) for subresources
 
 ### HTTP Request Headers
 
-When requests to your API need to include HTTP headers (for example, to pass
+When requests to your API need to include optional HTTP headers (for example, to pass
 authentication or authorization information) you can use a `/request-headers`
 section. Any Reslang structure that supports `/operations` sections also
 supports `/request-headers` sections.
@@ -133,13 +133,16 @@ In order to require a specific HTTP header on requests, you must first add an
 ```
 "The standard header for passing bearer tokens. e.g. `Bearer $ACCESS_TOKEN`"
 http-header AuthHeader {
-  name: Authorization
+  name: Authorization,
+  required: true
 }
 ```
 
 In this example, `AuthHeader` is the name of the `http-header` definition,
 `"The standard header...` is the description that will appear with the header
-parameter in the generated Swagger, and `Authorization` is the header name.
+parameter in the generated Swagger, and `Authorization` is the header name,
+and the `required` attribute indicates whether the header is optional. 
+If you do not write `required`, it is `required`: true by default.
 
 Now, the `AuthHeader` header can be referenced in the `/request-headers`
 section in a resource, subresource, or action definition. For example:
