@@ -182,7 +182,8 @@ const sampleReslangDefinitions = [
         kind: "http-header",
         name: "MyCoolHeaderDef",
         headerName: "MyCoolHeader",
-        comment: "This is the header you use for cool things"
+        comment: "This is the header you use for cool things",
+        required: true,
     } as IHTTPHeader
 ] as AnyKind[]
 
