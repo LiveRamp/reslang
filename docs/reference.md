@@ -122,7 +122,7 @@ Note that versioning is not possible (or necessary) for subresources
 
 ### HTTP Request Headers
 
-When requests to your API need to include optional HTTP headers (for example, to pass
+When requests to your API need to include HTTP headers (for example, to pass
 authentication or authorization information) you can use a `/request-headers`
 section. Any Reslang structure that supports `/operations` sections also
 supports `/request-headers` sections.
