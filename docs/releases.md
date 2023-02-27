@@ -1,3 +1,6 @@
+## 6.2.5 2/23/2023
+- Add `required` attribute to httpHeader. Support optional HTTP request headers.
+
 ## 6.2.4 12/30/2021
 
 - Include flag `--oneof-polymorphism` to translate `union` reslang definitions into swagger `oneOf` field instead of `allOf`

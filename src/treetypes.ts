@@ -164,6 +164,7 @@ export interface IResourceLike extends IDefinition {
 export interface IHTTPHeader extends IDefinition {
     kind: "http-header"
     headerName: string
+    required: boolean
 }
 
 export interface IEnum extends IDefinition {

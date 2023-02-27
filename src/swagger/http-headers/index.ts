@@ -78,7 +78,7 @@ function addHeaderParamToSwaggerPath(
         description: headerDef.comment,
         in: "header",
         name: headerDef.headerName,
-        required: true,
+        required: headerDef.required,
         schema: {
             type: "string"
         }

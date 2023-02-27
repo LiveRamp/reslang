@@ -134,12 +134,16 @@ In order to require a specific HTTP header on requests, you must first add an
 "The standard header for passing bearer tokens. e.g. `Bearer $ACCESS_TOKEN`"
 http-header AuthHeader {
   name: Authorization
+  required: true //it's optional and will give true if not provided
 }
 ```
 
 In this example, `AuthHeader` is the name of the `http-header` definition,
 `"The standard header...` is the description that will appear with the header
 parameter in the generated Swagger, and `Authorization` is the header name.
+
+The `required` attribute indicates if the header is required when calling the API.
+And the attribute itself is optional, the default value is `true`.
 
 Now, the `AuthHeader` header can be referenced in the `/request-headers`
 section in a resource, subresource, or action definition. For example:
