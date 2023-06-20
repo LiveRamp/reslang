@@ -1,0 +1,26 @@
+# BEGIN TERRAFORM MANAGED BLOCK
+"apiVersion": "backstage.io/v1alpha1"
+"kind": "Location"
+"metadata":
+  "annotations":
+    "github.com/project-slug": "LiveRamp/reslang"
+  "description": "A language for describing resource-oriented APIs & turning them
+    into Swagger or resource diagrams. Oriented around the concepts we want to expose
+    in the APIs."
+  "name": "reslang"
+  "tags":
+  - "api"
+  - "api-documentation"
+  - "api-lifecycle-management"
+  - "api-modeling"
+  - "api-rest"
+  - "asyncapi"
+  - "documentation-generator"
+  - "domain-driven-design"
+  - "events"
+  - "json"
+  - "openapi"
+  - "openapi3"
+  - "swagger"
+"spec": {}
+# END TERRAFORM MANAGED BLOCK
