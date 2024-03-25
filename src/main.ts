@@ -130,7 +130,7 @@ const files = args._
 // read in the rules structure
 const rulesData = readFile(args.rulefile || LOCAL_RULES)
 const rules = JSON.parse(rulesData) as IRules
-rules.ignoreRules = args.ignorerules ? true : false
+rules.ignoreRules = !!args.ignorerules
 
 const testwrite = args.testwrite
 if (testwrite) {

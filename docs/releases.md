@@ -1,3 +1,7 @@
+## 6.2.6 3/25/2024
+- The definition of version in Reslang support semver format goes something like (Major.Minor.Patch-<pre-release>).
+
+
 ## 6.2.5 2/23/2023
 - Add `required` attribute to httpHeader. Support optional HTTP request headers.
 
