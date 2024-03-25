@@ -18,7 +18,7 @@ import JsonSchemaGen from "./genjsonschema"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v6.2.5"
+export const VERSION = "v6.2.6"
 
 // parse the cmd line
 const args = yargs
