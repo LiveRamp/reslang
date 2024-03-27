@@ -18,7 +18,7 @@ import JsonSchemaGen from "./genjsonschema"
 const RULES = "rules.json"
 const LOCAL_RULES = lpath.join(__dirname, "library", RULES)
 
-export const VERSION = "v6.2.5"
+export const VERSION = "v6.2.6"
 
 // parse the cmd line
 const args = yargs
@@ -130,7 +130,7 @@ const files = args._
 // read in the rules structure
 const rulesData = readFile(args.rulefile || LOCAL_RULES)
 const rules = JSON.parse(rulesData) as IRules
-rules.ignoreRules = args.ignorerules ? true : false
+rules.ignoreRules = !!args.ignorerules
 
 const testwrite = args.testwrite
 if (testwrite) {

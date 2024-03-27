@@ -35,7 +35,7 @@ description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {
 }
 
 // version
-semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+) { return semver.flat().join(""); }
+semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+ ("-" [a-zA-Z0-9.-]+)?) { return semver.flat(2).join(""); }
 
 // whitespace or comment
 _  = ([ \t\r\n]+ / comment)*
