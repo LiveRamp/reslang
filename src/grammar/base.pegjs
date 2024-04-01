@@ -35,7 +35,10 @@ description = "\"" _ inner:(!"\"" i:. {return i})* "\"" {
 }
 
 // version
-semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+ ("-" [a-zA-Z0-9.-]+)?) { return semver.flat(2).join(""); }
+semver = semver:([0-9]+ "." [0-9]+ "." [0-9]+ preRelease) { return semver.flat(Infinity).join(""); }
+preRelease = ('-' preReleaseIdentifiers)?;
+preReleaseIdentifiers = identifier ('.' [0-9a-zA-Z-]+)*;
+identifier = [a-zA-Z-] ([a-zA-Z-] / [0-9])*;
 
 // whitespace or comment
 _  = ([ \t\r\n]+ / comment)*
