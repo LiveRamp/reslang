@@ -35,7 +35,7 @@
     rollup "^2.60.1"
     source-map-support "^0.5.19"
 
-"@asyncapi/generator@^2.4.0":
+"@asyncapi/generator@^2.3.0":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@asyncapi/generator/-/generator-2.4.1.tgz#08eba2fe4e3807bb710273ad21260b2e5aa957c0"
   integrity sha512-wdBNnVWcuFrZAKeQyNdIl3lhHOQ2wNO4LUsjl9nnP/VQSiXWegtySfvGaRjGsHkMrebnY1sQXI2K8sM6W3pIog==

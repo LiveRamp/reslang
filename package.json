@@ -24,7 +24,7 @@
         "typescript": "^3.4.5"
     },
     "dependencies": {
-        "@asyncapi/generator": "^2.4.0",
+        "@asyncapi/generator": "^2.3.0",
         "@types/pluralize": "^0.0.29",
         "@types/tmp": "^0.1.0",
         "clipboardy": "^2.0.0",
