@@ -10,6 +10,8 @@ request-resource DistributionRequest {
     inputDataURL: url
       "Mapping configs required for a given platform. See docs: DistMVP.dataMappingConfig"
     dataMappingConfigs: DataMappingConfig[]
+      "LR input fields. Applicable for LR1 Ingestion S2 output processing "
+    lrIFields: LRIField[]
       "Datetime in UTC, formatted as ISO-8601, when the request was created"
     createdAt: datetime output
       "Status of the given DistributionRequest"
@@ -116,6 +118,13 @@ structure BatchOutputMetadata {
 structure FileDetails {
     fileName: string
     lineCount: int
+}
+
+structure LRIField {
+    name: string
+    aliasName: string optional
+    identifierCategory: string optional
+    isGroupingIndicator: bool optional
 }
 
 /**
