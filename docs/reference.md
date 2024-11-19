@@ -405,6 +405,21 @@ E.g.
 
 View will turn into a query parameter on both GET and MULTIGET.
 
+### GetOnly parameters
+
+A get-only parameter is used to a query parameter to GET but not to MULTIGET.
+
+E.g.
+
+    resource Car {
+        id: uuid
+        newQueryParameter: boolean get-only optional
+        default = true
+        /operations
+            GET POST MULTIGET
+    }
+
+
 ## Attribute Modifiers
 
 The underlying intuition is that you mark fields as "mutable" if you want to be able to change them with PUT or PATCH, and you can mark something as output only by using "output". You can then mark them as optional by using "optional" or "optional-post" etc for specific verbs. PATCH always has every field as optional.

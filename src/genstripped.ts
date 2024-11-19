@@ -177,6 +177,7 @@ export default class StripGen extends BaseGen {
             l(mod.queryonly ? keyword("queryonly ") : "")
             l(mod.query ? keyword("query ") : "")
             l(mod.representation ? keyword("representation ") : "")
+            l(mod.getOnly ? keyword("get-only ") : "")
         }
 
         function printConstraints(attr: IAttribute) {

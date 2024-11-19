@@ -578,7 +578,7 @@ Actions cannot have subresources`
             description: string
         }
         for (const attr of attrs as IAttribute[]) {
-            if (attr.modifiers.queryonly || attr.modifiers.representation) {
+            if (attr.modifiers.queryonly || attr.modifiers.representation || attr.modifiers.getOnly) {
                 continue
             }
             // no id types for input ever
@@ -787,7 +787,7 @@ Actions cannot have subresources`
         const sane = camelCase(def.name) + suffix
 
         for (const attr of attrs as IAttribute[]) {
-            if (attr.modifiers.queryonly || attr.modifiers.representation) {
+            if (attr.modifiers.queryonly || attr.modifiers.representation || attr.modifiers.getOnly) {
                 continue
             }
             // if this optional?

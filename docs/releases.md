@@ -1,3 +1,7 @@
+## 6.2.7 19/11/2024
+- Add `get-only` keyword to support adding a query parameter to GET but not to MULTIGET.
+
+
 ## 6.2.6 3/25/2024
 - The definition of version in Reslang support semver format goes something like (Major.Minor.Patch-<pre-release>).
 
