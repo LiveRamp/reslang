@@ -237,6 +237,7 @@ export interface IModifiers {
     queryonly: boolean
     representation: boolean
     nullable: boolean
+    getOnly: boolean
 }
 
 export interface IConstraints {

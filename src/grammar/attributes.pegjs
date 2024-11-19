@@ -59,6 +59,7 @@ modifiers = modifiers:modifiers_elem* { return Object.assign({
     "query": false,
     "queryonly": false,
     "representation": false,
+    "getOnly": false,
     "nullable": false
 }, ...modifiers) }
 modifiers_elem = _  it:modifier (__ / ";") { return it }
@@ -73,6 +74,7 @@ modifier =
   / "queryonly"
   / "query"
   / "representation"
+  / "get-only"
   / "optional"
   / "nullable"
   ) {

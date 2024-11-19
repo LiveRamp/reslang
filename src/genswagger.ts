@@ -843,7 +843,16 @@ export default class SwagGen extends BaseGen {
                             description: this.translateDoc(attr.comment),
                             required: false
                         })
-                    ])
+                    ]);
+                } else if (attr.modifiers.getOnly) {
+                    path.get.parameters = path.get.parameters.concat([
+                        this.addType(attr, {
+                            in: "query",
+                            name: attr.name,
+                            description: this.translateDoc(attr.comment),
+                            required: false
+                        })
+                    ]);
                 }
             }
         }
