@@ -1377,6 +1377,10 @@ Actions cannot have subresources`
         delete schema.$ref
         delete schema.allOf
         schema.type = "array"
+        if (schema.additionalProperties === true) {
+            delete schema.additionalProperties
+            schema.items.additionalProperties = true
+        }
     }
 
     protected translateDoc(comment?: string) {
