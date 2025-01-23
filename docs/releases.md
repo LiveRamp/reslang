@@ -1,3 +1,7 @@
+## 6.2.8 23/1/2025
+- Support `arbitraryObject` array.
+
+
 ## 6.2.7 19/11/2024
 - Add `get-only` keyword to support adding a query parameter to GET but not to MULTIGET.
 
