@@ -3,14 +3,11 @@
 @Library('liveramp-base@v2')
 import groovy.transform.Field
 
+imageToDockerfileDir = ['api/reslang': '.']
+
 pipeline {
 	agent {
 		label 'jenkins-agent-ubuntu-2004-n1-standard-8'
-	}
-
-	environment {
-		DOCKER_IMAGE = 'us-central1-docker.pkg.dev/liveramp-eng/shared/api/reslang'
-		SHORT_SHA = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 	}
 
 	stages {
@@ -46,35 +43,14 @@ pipeline {
 			}
 		}
 
-		stage('Build') {
-			when {
-				branch 'master'
-			}
-			steps {
-				withCredentials([usernamePassword(credentialsId: 'svc-jenkins-docker-hub-creds', passwordVariable: 'DOCKER_TOKEN', usernameVariable: 'DOCKER_USERNAME')]) {
-					script {
-						sh 'mkdir -p ${WORKSPACE}/.docker-config'
-						sh 'export DOCKER_CONFIG=${WORKSPACE}/.docker-config'
-						sh 'echo ${DOCKER_TOKEN} | docker --config ${WORKSPACE}/.docker-config login -u ${DOCKER_USERNAME} --password-stdin'
-						sh 'docker build -t ${DOCKER_IMAGE}:${SHORT_SHA} .'
-						sh 'docker build -t ${DOCKER_IMAGE}:master .'
-						sh 'docker logout'
-						sh 'rm -rf ${WORKSPACE}/.docker-config'
-					}
-				}
-			}
-		}
-
-		stage('Push') {
+		stage('Build and Push Docker Image') {
 			when {
 				branch 'master'
 			}
 			steps {
 				script {
-					withGCPServiceAccount('gcp-gcr--liveramp-jenkins') {
-						sh 'docker push ${DOCKER_IMAGE}:${SHORT_SHA}'
-						sh 'docker push ${DOCKER_IMAGE}:master'
-					}
+					tagAndPushDockerImage(imageToDockerfileDir, '', 'gar', true)
+					tagAndPushDockerImage(imageToDockerfileDir, 'master', 'gar', true)
 				}
 			}
 		}
