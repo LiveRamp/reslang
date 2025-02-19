@@ -44,13 +44,13 @@ pipeline {
 		}
 
 		stage('Build and Push Docker Image') {
-			//when {
-			//	branch 'master'
-			//}
+			when {
+				branch 'master'
+			}
 			steps {
 				script {
 					tagAndPushDockerImage(imageToDockerfileDir, '', 'gar', true)
-					//tagAndPushDockerImage(imageToDockerfileDir, 'master', 'gar', true)
+					tagAndPushDockerImage(imageToDockerfileDir, 'master', 'gar', true)
 				}
 			}
 		}
