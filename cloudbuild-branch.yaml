@@ -1,0 +1,2 @@
+# This build only runs after a push to non-master branches.
+# Empty the contents of the file. Use jenkins to trigger
