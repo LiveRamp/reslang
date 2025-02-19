@@ -56,10 +56,6 @@ pipeline {
 		}
 	}
 
-	options {
-		timeout(time: 7, unit: 'MINUTES')
-	}
-
 	post {
 		always {
 			cleanWs()

@@ -2,7 +2,7 @@
 
 set -eu
 
-RESLANG_IMG=gcr.io/liveramp-eng/reslang:master
+RESLANG_IMG=us-central1-docker.pkg.dev/liveramp-eng/shared/api/reslang:master
 
 usage() {
   cat <<USAGE
