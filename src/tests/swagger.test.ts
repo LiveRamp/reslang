@@ -13,6 +13,32 @@ describe("swagger generation tests", () => {
     test("swagger oneof polymorphism", () => {
         compare("polymorphism", true, "oneof.expected")
     })
+
+    test("structure with all optional fields should not have required array", () => {
+        const swag = new SwagGen(
+            ["models/patchable"],
+            { ignoreRules: true, pagination: "cursor", limit: 10, maxLimit: 100 },
+            "PROD",
+            "",
+            true,
+            false,
+            true,
+            false
+        )
+        const result = swag.generate() as any
+        const schemas = result.components.schemas
+        
+        expect(schemas.PersonPatchable).toBeDefined()
+        expect(schemas.PersonPatchable.required).toBeUndefined()
+        
+        for (const schemaName in schemas) {
+            const schema = schemas[schemaName]
+            if (schema.required !== undefined) {
+                expect(Array.isArray(schema.required)).toBe(true)
+                expect(schema.required.length).toBeGreaterThan(0)
+            }
+        }
+    })
 })
 
 /** compare the output with saved swagger */

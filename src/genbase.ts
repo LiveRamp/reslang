@@ -802,6 +802,8 @@ Actions cannot have subresources`
 
         if (required.size !== 0) {
             request.required = Array.from(required.values())
+        } else {
+            delete request.required
         }
 
         if (Object.keys(properties).length !== 0) {
@@ -873,6 +875,8 @@ Actions cannot have subresources`
         }
         if (required.size !== 0) {
             request.required = Array.from(required.values())
+        } else {
+            delete request.required
         }
     }
 
