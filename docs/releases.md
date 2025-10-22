@@ -1,3 +1,6 @@
+## 6.2.9 10/22/2025
+- If a structure has all it's fields as optional, remove the `required` property in OpenAPI/Swagger generation.
+
 ## 6.2.8 23/1/2025
 - Support `arbitraryObject` array.
 
