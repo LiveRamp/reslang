@@ -1,4 +1,4 @@
-#!/usr/bin/env npx ts-node
+#!/usr/bin/env -S npx ts-node
 
 import clip from "clipboardy"
 import yaml from "js-yaml"

@@ -8,7 +8,5 @@ cd \"$BASEDIR\"
 ./src/main.ts \"\$@\"
 " > run-reslang
 chmod +x run-reslang
-yarn unlink >& /dev/null
+yarn unlink >/dev/null 2>&1
 yarn link
-
-
