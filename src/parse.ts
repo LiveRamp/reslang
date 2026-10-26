@@ -40,7 +40,7 @@ export function loadParser() {
         let col = error.location?.start?.column
         throw new Error(`
 Problem reading grammar: ${error.message}
-${line ? ("location: " + line + col ? ":" + col : "") : ""}
+${line ? ("location: " + line + (col ? ":" + col : "")) : ""}
 ${error.stack}`)
     }
 }

@@ -47,7 +47,7 @@ export function addHeaderParams(
             !el.operations.find((op) => op.operation === header.opOrWildcard)
         ) {
             throw new Error(
-                `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as a allowed operation`
+                `request headers defined for "${header.opOrWildcard}" requests, but ${el.name} does not define ${header.opOrWildcard} as an allowed operation`
             )
         } else {
             addHeaderParamToSwaggerPath(
